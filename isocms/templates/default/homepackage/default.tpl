@@ -339,7 +339,7 @@
                         scelerisque ipsum id. Fringilla ipsum elementum aliquam aliquam sed duis feugiat molestie nisl.
                         Sed sit cursus vulputate dignissim.</p>
                     <a class="readyToStart-btn">LET’S PLAN YOUR TRIP
-                        <img src="https://unikasia.vietiso.com/isocms/templates/default/skin/images/hotel/ArrowRight.svg" alt="error">
+                        <img class="ms-2" src="https://unikasia.vietiso.com/isocms/templates/default/skin/images/hotel/ArrowRight.svg" alt="error">
                     </a>
                 </div>
             </div>
@@ -447,7 +447,7 @@
     autocomplete(document.getElementById("homeInputSearch"), {$clsTour})
     $('#slider-area').owlCarousel({
         loop: true,
-        autoplay: false,
+        autoplay: true,
         items: 1
     })
 </script>
