@@ -1,0 +1,209 @@
+function default_detailDoc()
+{
+	global $assign_list, $_CONFIG, $core, $dbconn, $mod, $act, $_LANG_ID, $title_page, $description_page, $keyword_page, $global_image_seo_page, $clsISO;
+	#
+	$assign_list['clsISO'] =   $clsISO;
+
+	$clsCategory    =   new Category();
+	$assign_list['clsCategory'] =   $clsCategory;
+	#
+	$clsBlog        =   new Blog();
+	$assign_list['clsBlog']     =   $clsBlog;
+	#
+	$clsTag         =   new Tag();
+	$assign_list['clsTag']      =   $clsTag;
+	#
+	$clsTagBlog     =   new TagBlog();
+	$assign_list['clsTagBlog']  =   $clsTagBlog;
+	#
+	$preview    =   isset($_GET['preview']) ? $_GET['preview'] : '';
+	$assign_list['preview']     =   $preview;
+	#
+	$slug   =   isset($_GET['slug']) ? $_GET['slug'] : '';
+
+	// Loại bỏ '/' ở đầu chuỗi slug để tránh gây lỗi
+	$slug   =   str_replace('/', '', $slug);
+	$all    =   $clsBlog->getAll("is_trash=0 and is_online=1 and slug='$slug' LIMIT 0,1", $clsBlog->pkey);
+
+	if ($preview == 'ADMIN') {
+		$all    =   $clsBlog->getAll("is_trash=0 and slug='$slug' LIMIT 0,1", $clsBlog->pkey);
+	}
+
+	$blog_id    =   $all[0][$clsBlog->pkey];
+	if ($blog_id == '') {
+		header('location:' . PCMS_URL . '/blog');
+	}
+
+	$assign_list['blog_id']     =   $blog_id;
+
+	$oneTable   =   $clsBlog->getOne($blog_id);
+	$assign_list['oneTable']    =   $oneTable;
+	#
+	$cat_id     =   $oneTable['cat_id'];
+	$is_update  =   $oneTable['is_update'];
+	$assign_list["is_update"]   =   $is_update;
+	#
+	$HTMLLanding    =   $oneTable['html_file_url'];
+	$assign_list["HTMLLanding"] =   $HTMLLanding;
+	#
+	$check_landing_page =   $HTMLLanding ? 1 : 0;
+	$assign_list["check_landing_page"]  =   $check_landing_page;
+	#
+	//$clsBlog->updateOne($blog_id,"number_comment='".$clsISO->fb_comment_count($clsBlog->getLink($blog_id,1))."'");
+	#
+	// List bài liên quan 
+	$lstRelatedBlog =   $clsBlog->getAll("is_trash = 0 AND is_online = 1 AND cat_id = $cat_id AND blog_id<>'$blog_id' ORDER BY order_no  LIMIT 3", "blog_id, cat_id, title");
+	$assign_list['lstRelatedBlog']  =   $lstRelatedBlog;
+	// $clsISO->dd($lstRelatedBlog);
+	#
+	// List danh sách tài liệu con 
+	$lstCateChild   =   $clsCategory->getAll("is_trash = 0 AND is_online = 1 AND parent_id = $cat_id ORDER BY order_no LIMIT 4",  "cat_id, doc_title, doc_description, image");
+	$assign_list['lstCateChild']    =   $lstCateChild;
+	// $clsISO->pre($lstCateChild);
+	#
+	// Thông tin danh mục tài liệu
+	$doc_title          =   $clsCategory->getDocTitle($cat_id);
+	$assign_list["doc_title"]       =   $doc_title;
+
+	$doc_description    =   $clsCategory->getDocDesc($cat_id);
+	$assign_list["doc_description"] =   $doc_description;
+	#
+	// List lĩnh vực hoạt động
+	$list_industry  =   array(
+		INDUSTRY_TRAVEL_AGENCY          =>  'Doanh nghiệp Lữ hành',
+		INDUSTRY_ACCOMMODATION_PROVIDER =>  'Doanh nghiệp Lưu trú',
+		INDUSTRY_TRANSPORT_COMPANY      =>  'Doanh nghiệp Vận tải du lịch',
+		INDUSTRY_DMC                    =>  'DMC',
+		INDUSTRY_TOURISM_TRAINING       =>  'Cơ sở đào tạo Du lịch',
+		INDUSTRY_TOURISM_STUDENT        =>  'Sinh viên du lịch',
+		INDUSTRY_OTHER                  =>  'Khác'
+	);
+	$assign_list["list_industry"]   =   $list_industry;
+
+
+	// $clsISO->dd($list_industry);
+	// $clsTracklink   =   new Tracklink();
+	// $clsTracklink->crawler($blog_id, $_SERVER['REQUEST_URI'], $mod, $act);
+	// $sessionKey     =   'blog_' . $blog_id;
+	// $sessionView    =   $_SESSION[$sessionKey];
+
+	// if (!$sessionView) {
+	//     $_SESSION[$sessionKey] = 1;
+	//     $clsBlog->updateOne($blog_id, 'view_num=view_num+1');
+	// }
+
+	/*=============Title & Description Page==================*/
+	$title_page = $clsBlog->getTitle($blog_id) . ' | ' . $core->get_Lang('Tài nguyên') . ' | ' . PAGE_NAME;
+	$assign_list["title_page"] = $title_page;
+	$description_page = $clsISO->getMetaDescription($blog_id, 'Blog');
+	$assign_list["description_page"] = $description_page;
+	$global_image_seo_page = $clsISO->getPageImageShare($blog_id, 'Blog');
+	$assign_list["global_image_seo_page"] = $global_image_seo_page;
+	unset($clsBlog);
+}
+
+function default_confirmDoc()
+{
+	global $assign_list, $_CONFIG, $core, $dbconn, $mod, $act, $_LANG_ID, $title_page, $description_page, $keyword_page, $global_image_seo_page, $clsISO;
+	#
+	// $clsISO->dd($_POST);
+	$assign_list['clsISO'] =   $clsISO;
+	#
+	$clsCategory    =   new Category();
+	$assign_list['clsCategory'] =   $clsCategory;
+	#
+	$clsBlog        =   new Blog();
+	$assign_list['clsBlog']     =   $clsBlog;
+	#
+	$clsDocument    =   new Document();
+	$assign_list['clsDocument']     =   $clsDocument;
+	#
+	$arr_data   =   $_POST;
+	if (!empty($arr_data)) {
+		$fullname       =   $arr_data['fullname'];
+		$blog_id        =   $arr_data['blog_id'];
+		$email          =   $arr_data['email'];
+		$phone          =   $arr_data['phone'];
+		$company        =   $arr_data['company'];
+		$industry       =   $arr_data['industry'];
+		$check_advise   =   $arr_data['check_advise'];
+
+		$f  =   'document_id, blo_id, fullname, email, phone, company, industry, check_advise, reg_date, upd_date, is_trash, is_online';
+		$document_id = $clsDocument->getMaxId();
+
+		$v  =   "'" . $document_id . "',
+                    '$blog_id',
+                    '$fullname',
+                    '$email',
+                    '$phone',
+                    '$company',
+                    '$industry',
+                    '$check_advise',
+                    '" . time() . "',
+                    '" . time() . "',
+                    0,
+                    1";
+
+		if ($clsDocument->insertOne($f, $v)) {
+			// Gửi mail cho customer
+			$clsDocument->sendQuickEmail($document_id);
+			// Gửi mail cho admin
+			// $clsDocument->sendEmailAdmin($document_id);
+			#
+			echo 'INSERT_SUCCESS';
+			die();
+			#
+			// $redirectUrl = '/blog/tai-lieu/xac-nhan/' . $blog_id . '.html';
+			// header("Location: $redirectUrl");
+			// exit;
+		} else {
+			echo 'INSERT_ERROR';
+			die();
+		}
+	}
+
+	$slug   =   isset($_GET['slug']) ? $_GET['slug'] : '';
+	// // Loại bỏ '/' ở đầu chuỗi slug để tránh gây lỗi
+	// $slug   =   str_replace('/', '', $slug);
+	$all    =   $clsBlog->getAll("is_trash=0 and is_online=1 and blog_id='$slug' LIMIT 0,1", $clsBlog->pkey);
+
+	$blog_id    =   $all[0][$clsBlog->pkey];
+	if ($blog_id == '') {
+		header('location:' . PCMS_URL . '/blog');
+	}
+
+	$assign_list['blog_id'] = $blog_id;
+	$oneTable   =   $clsBlog->getOne($blog_id);
+	$assign_list['oneTable']    =   $oneTable;
+	#
+	$cat_id     =   $oneTable['cat_id'];
+	$assign_list["cat_id"]      =   $cat_id;
+	$is_update  =   $oneTable['is_update'];
+	$assign_list["is_update"]   =   $is_update;
+	#
+	// $blog_image =   $oneTable['image'];
+	// $assign_list["blog_image"]   =   $blog_image;
+	// $clsISO->dd($blog_image);
+	#
+	// List danh sách tài liệu con 
+	$lstCateChild   =   $clsCategory->getAll("is_trash = 0 AND is_online = 1 AND parent_id = $cat_id ORDER BY order_no LIMIT 4",  "cat_id, doc_title, doc_description, image");
+	$assign_list['lstCateChild']    =   $lstCateChild;
+	// $clsISO->pre($lstCateChild);
+	#
+	// Thông tin danh mục tài liệu
+	$doc_title          =   $clsCategory->getDocTitle($cat_id);
+	$assign_list["doc_title"]       =   $doc_title;
+
+	$doc_description    =   $clsCategory->getDocDesc($cat_id);
+	$assign_list["doc_description"] =   $doc_description;
+	#
+
+	/*=============Title & Description Page==================*/
+	$title_page = $clsBlog->getTitle($blog_id) . ' | ' . $core->get_Lang('Tài nguyên') . ' | ' . PAGE_NAME;
+	$assign_list["title_page"] = $title_page;
+	$description_page = $clsISO->getMetaDescription($blog_id, 'Blog');
+	$assign_list["description_page"] = $description_page;
+	$global_image_seo_page = $clsISO->getPageImageShare($blog_id, 'Blog');
+	$assign_list["global_image_seo_page"] = $global_image_seo_page;
+	unset($clsBlog);
+}

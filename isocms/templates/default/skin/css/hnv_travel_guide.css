@@ -1,0 +1,12 @@
+body {
+    font-family: "SF Pro Display", sans-serif;
+}
+.trvg_page_container {
+    border-radius: 40px 40px 0px 0px;
+    background: #fff;
+    padding-top: 32px;
+    margin-top: -52px;
+}
+.destination_travel_guide_body .des_tailor_btn {
+    display: none;
+}

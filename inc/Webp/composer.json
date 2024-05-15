@@ -1,0 +1,6 @@
+{
+    "require": {
+        "google/analytics-data": "^0.9.4",
+        "rosell-dk/webp-convert": "^2.9"
+    }
+}
