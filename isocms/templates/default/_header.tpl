@@ -32,7 +32,7 @@
                         <div class="col-lg-8 col-md-12 col-sm1-12 d-none d-md-flex align-items-center justify-content-center">
                             <div class="dropdown">
                                 <button class="btn dropdown-toggle txt_dropdown" type="button" data-bs-toggle="dropdown">
-                                    Destinations
+                                    Destinations <i class="fas fa-angle-down"></i>
                                 </button>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="#">Destination 1</a>
@@ -42,7 +42,7 @@
                             </div>
                             <div class="dropdown">
                                 <button class="btn dropdown-toggle txt_dropdown" type="button" data-bs-toggle="dropdown">
-                                    Travel Styles
+                                    Travel Styles <i class="fas fa-angle-down"></i>
                                 </button>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="#">TS 1</a>
@@ -52,7 +52,7 @@
                             </div>
                             <div class="dropdown txt_dropdown">
                                 <button class="btn dropdown-toggle txt_dropdown" type="button" data-bs-toggle="dropdown">
-                                    Stay
+                                    Stay <i class="fas fa-angle-down"></i>
                                 </button>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="#">Stay 1</a>
@@ -62,7 +62,7 @@
                             </div>
                             <div class="dropdown txt_dropdown">
                                 <button class="btn dropdown-toggle txt_dropdown" type="button" data-bs-toggle="dropdown">
-                                    Cruises
+                                    Cruises <i class="fas fa-angle-down"></i>
                                 </button>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="#">Cruise 1</a>
@@ -72,7 +72,7 @@
                             </div>
                             <div class="dropdown txt_dropdown">
                                 <button class="btn dropdown-toggle txt_dropdown" type="button" data-bs-toggle="dropdown">
-                                    Blog
+                                    Blog <i class="fas fa-angle-down"></i>
                                 </button>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="#">Cruise 1</a>
@@ -88,6 +88,7 @@
                             <div class="drop_down ml-3">
                                 <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: none;">
                                     <i class="flag-icon flag-icon-us"></i>
+                                    <i class="far fa-angle-down text-white ms-2"></i>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="#"><i class="flag-icon flag-icon-vn"></i> Vietnamese</a>

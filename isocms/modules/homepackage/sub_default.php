@@ -18,6 +18,8 @@ function default_default(){
     $assign_list['clsPartner'] = $listPartner;
     $assign_list['lstCountry'] = $lstCountry;
 
+    $countries = array_map(function($item) {return $item["slug"]; }, $lstCountry);
+    $assign_list["countries"] = $countries;
     # Tour Cateogry
     $clsClassTable = new TourCategory();
     $cond = "1=1 and parent_id=0";
