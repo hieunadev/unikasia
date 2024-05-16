@@ -88,24 +88,24 @@
                     <h2 class="reviewViewed-title">{$core->get_Lang('Reviews')}</h2>
                 </div>
                 <div class="reviewViewed-list">
-                    <div class="reviewViewed owl-carousel_overview owl-carousel ">
+                    <div class="reviewViewed owl-carousel_overview owl-carousel">
                         {section name=i loop=$allTestimonial}
                             <div class="reviewViewed-items">
-                                {assign var = getImageStar value = $clsHotel->getHotelStar($lstHotel[i].hotel_id)}
+                                {assign var = getImageStar value = $clsHotel->getHotelStar($allTestimonial[i].hotel_id)}
 
-                                <a class="photo" href="{$lstHotel[i].link}" title="{$lstHotel[i].title}">
+                                <a class="photo" href="{$allTestimonial[i].link}" title="{$allTestimonial[i].title}">
                                     <img class="img-responsive img100" id="images"
-                                        src="{$clsHotel->getImage($lstHotel[i].hotel_id, 405, 326)}"
-                                        alt="{$lstHotel[i].title}" />
+                                        src="{$clsHotel->getImage($allTestimonial[i].hotel_id, 405, 326)}"
+                                        alt="{$allTestimonial[i].title}" />
                                 </a>
                                 <div class="reviewViewed-content">
                                     {if $getImageStar != null}
                                         <img class="star" height="19" src="{$getImageStar}" alt="star" style="width: auto" />
                                     {/if}
                                     <h3 class="reviewViewed-content_title">
-                                        <a title="{$lstHotel[i].title}" href="{$lstHotel[i].link}">{$lstHotel[i].title}</a>
+                                        <a title="{$allTestimonial[i].title}" href="{$allTestimonial[i].link}">{$allTestimonial[i].title}</a>
                                     </h3>
-                                    <p class="reviewViewed-content_txt">{$lstHotel[i].address}</p>
+                                    <p class="reviewViewed-content_txt">{$allTestimonial[i].address}</p>
                                     <div class="reviewViewed-user">
 
                                         <img src="{$URL_IMAGES}/hotel/no-image.png" id="user-icon" alt="error" />

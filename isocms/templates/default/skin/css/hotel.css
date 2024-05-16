@@ -1230,12 +1230,32 @@ margin-bottom: 32px;
     background: #FFA718 !important;
     width: 100%;
 }
+.nsdt_filter-price-hotel {
+    padding: 0 10px;
+}
+.nsdt_filter-price-hotel .nsdt_getPriceHotel {
+    display: none;
+}
+.nsdt_filter-price-hotel .nsdt_checkPriceHotel {
+    display: none;
+}
+.nsdt_getPriceHotelTitle{
+    display: none;
+}
 .hotel_default_body .ui-slider-horizontal .ui-slider-handle {
     top: -10px !important;
 }
 .hotel_default_body .ui-widget-content {
     height: 2px;
     border-radius: 26px;
+}
+.hotel_place_body .ui-slider-horizontal .ui-slider-handle {
+    top: -10px !important;
+}
+.hotel_place_body .ui-widget-content {
+    height: 2px;
+    border-radius: 26px;
+    border: 1px solid #FFA718;
 }
 .sec_relate_box .owl-next {
     position: absolute;

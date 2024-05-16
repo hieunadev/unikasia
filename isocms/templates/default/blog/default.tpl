@@ -333,7 +333,7 @@
                                     
                                     <li class="page-item">
                                         <a class='page-link next' href='news.php?page='>
-									<i class="fa-solid fa-chevron-right" style="color: #111d37;"></i>                                        </a>
+									<i class="fa-solid fa-chevron-right" style="color: #111d37;"></i> </a>
                                         </li>
                                   </ul> 
                             </nav>
@@ -517,9 +517,31 @@
 						<p class="txt_recentlyview">Have confidence when discovering the street food of Hanoi’s
                         Old Quarter by traveling...</p>
 					</div>
-					
+					 <p class="date-time">
+                        <i class="fa-regular fa-clock" style="color: #74C0FC;"></i> 10 Feb,
+                        2024 | Places to visit & things to do
+                     </p>
 				</div>
 			</div>
+			
+				<div class="col-sm-3">
+				<div class="blog-item-recently">
+					<a href="#" class="text-decoration-none">
+					<img class="img-blog" src="{URL_IMAGES}/blog/img_recently_blog2.jpg" alt="image-recent"></a>
+					<h2 class="txt_recently">
+					<a href="#">What To Do In Mai Chau Vietnam In 2 Days? Itinerary Mai Chau 2 Days</a>
+					</h2>
+					<div class="recently-view-content">
+						<p class="txt_recentlyview">Have confidence when discovering the street food of Hanoi’s
+                        Old Quarter by traveling...</p>
+					</div>
+					 <p class="date-time">
+                        <i class="fa-regular fa-clock" style="color: #74C0FC;"></i> 10 Feb,
+                        2024 | Places to visit & things to do
+                     </p>
+				</div>
+			</div>
+			
 		</div>
 		
 		</div>

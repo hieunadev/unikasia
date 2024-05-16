@@ -34,6 +34,8 @@
 
 	{if $mod eq 'hotel'}
 	<link rel="stylesheet" href="{$URL_CSS}/hotel.css?v={$upd_version}" as="style" />
+	<script src="{$URL_JS}/hotel.js?v={$upd_version}"></script>
+    <script src="{$URL_JS}/hotelSlide.js?v={$upd_version}"></script>
 	{/if}
 
 
@@ -44,8 +46,8 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-Knob/1.2.13/jquery.knob.min.js"></script>
 -->
 
-	<script src="{$URL_JS}/hotel.js?v={$upd_version}"></script>
-	<script src="{$URL_JS}/hotelSlide.js?v={$upd_version}"></script>
+
+
 	<script src="{$URL_JS}/common-new.js?v={$upd_version}"></script>
 	{if $noindex eq 'noindex'}
 	<meta name="robots" content="noindex,nofollow" />

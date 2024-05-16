@@ -91,14 +91,13 @@
                     <div class="nsdt_checkPriceHotel">
                         {section name=i loop=$lstPriceRange}
                             {assign var=check value=$clsISO->checkInArray($price_range,$lstPriceRange[i].hotel_price_range_id)}
-                            <div class="check_ipt ">
+                            <div class="check_ipt">
                                 <input type="checkbox" name="price_range[]" class="input_item typeSearch"
                                     value="{$lstPriceRange[i].hotel_price_range_id}" {if $check} checked {/if}
                                     id="priceRange{$smarty.section.i.iteration}">
                                 <label for="priceRange{$smarty.section.i.iteration}"
                                     class="labelCheck">{$lstPriceRange[i].title}</label>
                             </div>
-
                         {/section}
                     </div>
 
@@ -107,6 +106,11 @@
                     {section name=i loop=$price_range}
                         <div class="nsdt_getPriceHotel">
                             {$price_range[i]}
+                        </div>
+                    {/section}
+                    {section name=i loop=$PriceRange_title}
+                        <div class="nsdt_getPriceHotelTitle" data-id="{$lstPriceRange[i].hotel_price_range_id}">
+                            {$PriceRange_title[i]}
                         </div>
                     {/section}
 
@@ -174,24 +178,82 @@
     var min_price_value = '{$price_range_min}';
     var min_price_search = '{$min_price_search}';
     var max_price_search = '{$max_price_search}';
+    var price_range_title_min = '{$lstPriceRange[0].title}';
+    var price_range_title_max = '{$lstPriceRange[count($lstPriceRange)-1].title}';
+
     var price_range = [];
     $('.nsdt_getPriceHotel').each(function(index, element) {
         price_range.push(parseFloat($(element).text().trim()));
+    });
+
+    var PriceRange_title = {};
+    $('.nsdt_getPriceHotelTitle').each(function(index, element) {
+        var id = $(element).data('id');
+        var title = $(element).text().trim();
+        PriceRange_title[id] = title;
     });
 </script>
 
 {literal}
     <script>
-        $(function() {
-            var PriceRange_title = {
-            {/literal}
-            {foreach from=$PriceRange_title key=k item=v}
-                "{$k}": "{$v}",
-            {/foreach}
-            {literal}
-            };
+        var minPrice = Math.min.apply(null, price_range);
+        var maxPrice = Math.max.apply(null, price_range);
+
+        function updateSliderTitles(ui) {
+            var id0 = ui.values[0];
+            var id1 = ui.values[1];
+            $("#price_0").html(PriceRange_title[id0] || ui.values[0]);
+            $("#price_1").html(PriceRange_title[id1] || ui.values[1]);
+        }
+
+        $("#slider-price2").slider({
+            range: true,
+            min: parseInt(min_price_value),
+            max: parseInt(max_price_value),
+            values: [parseInt(min_price_value), parseInt(max_price_value)],
+            slide: function(event, ui) {
+                updateSliderTitles(ui);
+            },
+            stop: function(event, ui) {
+                minPrice = ui.values[0];
+                maxPrice = ui.values[1];
+                if (minPrice >= maxPrice) {
+                    minPrice = maxPrice - 1;
+                    $("#slider-price2").slider("values", [minPrice, maxPrice]);
+                }
+
+                if (maxPrice <= minPrice) {
+                    maxPrice = minPrice + 1;
+                    $("#slider-price2").slider("values", [minPrice, maxPrice]);
+                }
+                $("input[name='price_range[]']").each(function() {
+                    var price = parseInt($(this).val());
+                    if (price >= minPrice && price <= maxPrice) {
+                        $(this).prop("checked", true);
+                    } else {
+                        $(this).prop("checked", false);
+                    }
+                });
+                $('#search_hotel_left').submit();
+                $('#filters_form2').submit();
+            }
         });
 
+        updateSliderTitles({ values: [0, 1] });
+
+        function updatePriceElements() {
+            var minPrice = Math.min.apply(null, price_range);
+            var maxPrice = Math.max.apply(null, price_range);
+            $("#slider-price2").slider("values", [minPrice, maxPrice]);
+
+            $("#price_0").html(PriceRange_title[minPrice] || minPrice);
+            $("#price_1").html(PriceRange_title[maxPrice] || maxPrice);
+
+        }
+        updatePriceElements();
+
+        console.log(PriceRange_title[minPrice]);
+        console.log(PriceRange_title[maxPrice]);
 
         $(function() {
             var valueMin = $('#value_min').text();

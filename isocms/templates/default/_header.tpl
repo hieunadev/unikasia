@@ -19,7 +19,7 @@
                 </div>
             </div>
         </nav>
-        <div class="text-light mt-3">
+        <div class="text-light py-3">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-2 col-md-2 d-flex align-items-center ps-0">
@@ -29,7 +29,7 @@
                     </div>
                     <div class="col-lg-8 col-md-12 col-sm1-12 d-none d-md-flex align-items-center justify-content-center">
                         <div class="dropdown">
-                            <button class="btn text-light dropdown-toggle txt_dropdown" type="button" data-bs-toggle="dropdown">
+                            <button class="btn dropdown-toggle txt_dropdown" type="button" data-bs-toggle="dropdown">
                                 Destinations
                             </button>
                             <div class="dropdown-menu">
@@ -39,7 +39,7 @@
                             </div>
                         </div>
                         <div class="dropdown">
-                            <button class="btn text-light dropdown-toggle txt_dropdown" type="button" data-bs-toggle="dropdown">
+                            <button class="btn dropdown-toggle txt_dropdown" type="button" data-bs-toggle="dropdown">
                                 Travel Styles
                             </button>
                             <div class="dropdown-menu">
@@ -49,7 +49,7 @@
                             </div>
                         </div>
                         <div class="dropdown txt_dropdown">
-                            <button class="btn text-light dropdown-toggle txt_dropdown" type="button" data-bs-toggle="dropdown">
+                            <button class="btn dropdown-toggle txt_dropdown" type="button" data-bs-toggle="dropdown">
                                 Stay
                             </button>
                             <div class="dropdown-menu">
@@ -59,7 +59,7 @@
                             </div>
                         </div>
                         <div class="dropdown txt_dropdown">
-                            <button class="btn text-light dropdown-toggle txt_dropdown" type="button" data-bs-toggle="dropdown">
+                            <button class="btn dropdown-toggle txt_dropdown" type="button" data-bs-toggle="dropdown">
                                 Cruises
                             </button>
                             <div class="dropdown-menu">
@@ -69,7 +69,7 @@
                             </div>
                         </div>
                         <div class="dropdown txt_dropdown">
-                            <button class="btn text-light dropdown-toggle txt_dropdown" type="button" data-bs-toggle="dropdown">
+                            <button class="btn dropdown-toggle txt_dropdown" type="button" data-bs-toggle="dropdown">
                                 Blog
                             </button>
                             <div class="dropdown-menu">
@@ -79,7 +79,7 @@
                             </div>
                         </div>
                         <div class="button txt_dropdown">
-                            <button class="btn text-light txt_dropdown">About Us</button>
+                            <button class="btn txt_dropdown">About Us</button>
                         </div>
                     </div>
                     <div class="col-lg-2 col-md-2 d-flex align-items-center justify-content-end pe-0">
