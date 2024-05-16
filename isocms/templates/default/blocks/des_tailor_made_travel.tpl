@@ -269,7 +269,120 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                                        <div class="des_travel_guide_item">
+                                            <div class="des_travel_guide_image">
+                                                <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fG5hdHVyZXxlbnwwfHwwfHx8MA%3D%3D" alt="Cau Vang, Da Nang" width="292" height="219">
+                                                <a href="#" class="des_travel_guide_link" title="Cau Vang, Da Nang">SEE DETAILS</a>
+                                            </div>
+                                            <div class="des_travel_guide_intro">
+                                                <div class="des_travel_guide_title">
+                                                    <h3><a href="#" title="Cau Vang, Da Nang">Cau Vang, Da Nang</a></h3>
+                                                </div>
+                                                <div class="des_travel_guide_place">
+                                                    <i class="fa-sharp fa-light fa-location-dot"></i> Da Nang, Vietnam
+                                                </div>
+                                                <div class="des_travel_guide_description">
+                                                    Explore several breathtaking landscapes - Discover local daily lifestyles - Get closer to the...
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                                        <div class="des_travel_guide_item">
+                                            <div class="des_travel_guide_image">
+                                                <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fG5hdHVyZXxlbnwwfHwwfHx8MA%3D%3D" alt="Cau Vang, Da Nang" width="292" height="219">
+                                                <a href="#" class="des_travel_guide_link" title="Cau Vang, Da Nang">SEE DETAILS</a>
+                                            </div>
+                                            <div class="des_travel_guide_intro">
+                                                <div class="des_travel_guide_title">
+                                                    <h3><a href="#" title="Cau Vang, Da Nang">Cau Vang, Da Nang</a></h3>
+                                                </div>
+                                                <div class="des_travel_guide_place">
+                                                    <i class="fa-sharp fa-light fa-location-dot"></i> Da Nang, Vietnam
+                                                </div>
+                                                <div class="des_travel_guide_description">
+                                                    Explore several breathtaking landscapes - Discover local daily lifestyles - Get closer to the...
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                                        <div class="des_travel_guide_item">
+                                            <div class="des_travel_guide_image">
+                                                <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fG5hdHVyZXxlbnwwfHwwfHx8MA%3D%3D" alt="Cau Vang, Da Nang" width="292" height="219">
+                                                <a href="#" class="des_travel_guide_link" title="Cau Vang, Da Nang">SEE DETAILS</a>
+                                            </div>
+                                            <div class="des_travel_guide_intro">
+                                                <div class="des_travel_guide_title">
+                                                    <h3><a href="#" title="Cau Vang, Da Nang">Cau Vang, Da Nang</a></h3>
+                                                </div>
+                                                <div class="des_travel_guide_place">
+                                                    <i class="fa-sharp fa-light fa-location-dot"></i> Da Nang, Vietnam
+                                                </div>
+                                                <div class="des_travel_guide_description">
+                                                    Explore several breathtaking landscapes - Discover local daily lifestyles - Get closer to the...
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                                        <div class="des_travel_guide_item">
+                                            <div class="des_travel_guide_image">
+                                                <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fG5hdHVyZXxlbnwwfHwwfHx8MA%3D%3D" alt="Cau Vang, Da Nang" width="292" height="219">
+                                                <a href="#" class="des_travel_guide_link" title="Cau Vang, Da Nang">SEE DETAILS</a>
+                                            </div>
+                                            <div class="des_travel_guide_intro">
+                                                <div class="des_travel_guide_title">
+                                                    <h3><a href="#" title="Cau Vang, Da Nang">Cau Vang, Da Nang</a></h3>
+                                                </div>
+                                                <div class="des_travel_guide_place">
+                                                    <i class="fa-sharp fa-light fa-location-dot"></i> Da Nang, Vietnam
+                                                </div>
+                                                <div class="des_travel_guide_description">
+                                                    Explore several breathtaking landscapes - Discover local daily lifestyles - Get closer to the...
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                                        <div class="des_travel_guide_item">
+                                            <div class="des_travel_guide_image">
+                                                <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fG5hdHVyZXxlbnwwfHwwfHx8MA%3D%3D" alt="Cau Vang, Da Nang" width="292" height="219">
+                                                <a href="#" class="des_travel_guide_link" title="Cau Vang, Da Nang">SEE DETAILS</a>
+                                            </div>
+                                            <div class="des_travel_guide_intro">
+                                                <div class="des_travel_guide_title">
+                                                    <h3><a href="#" title="Cau Vang, Da Nang">Cau Vang, Da Nang</a></h3>
+                                                </div>
+                                                <div class="des_travel_guide_place">
+                                                    <i class="fa-sharp fa-light fa-location-dot"></i> Da Nang, Vietnam
+                                                </div>
+                                                <div class="des_travel_guide_description">
+                                                    Explore several breathtaking landscapes - Discover local daily lifestyles - Get closer to the...
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                                        <div class="des_travel_guide_item">
+                                            <div class="des_travel_guide_image">
+                                                <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fG5hdHVyZXxlbnwwfHwwfHx8MA%3D%3D" alt="Cau Vang, Da Nang" width="292" height="219">
+                                                <a href="#" class="des_travel_guide_link" title="Cau Vang, Da Nang">SEE DETAILS</a>
+                                            </div>
+                                            <div class="des_travel_guide_intro">
+                                                <div class="des_travel_guide_title">
+                                                    <h3><a href="#" title="Cau Vang, Da Nang">Cau Vang, Da Nang</a></h3>
+                                                </div>
+                                                <div class="des_travel_guide_place">
+                                                    <i class="fa-sharp fa-light fa-location-dot"></i> Da Nang, Vietnam
+                                                </div>
+                                                <div class="des_travel_guide_description">
+                                                    Explore several breathtaking landscapes - Discover local daily lifestyles - Get closer to the...
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="des_travel_guide_paginate">
@@ -330,13 +443,8 @@
                             </div>
                         </div>
                         <div class="col-12 col-sm-12 col-md-3">
-                            <div class="des_travel_guide_search">
-                                <i class="fa-light fa-magnifying-glass"></i><input type="text">
-
-                            </div>
+                            {$core->getBlock('des_travel_guide_side')}
                         </div>
-
-
                     </div>
                 </div>
             </div>

@@ -30,6 +30,7 @@ function default_default(){
         //print_r($source);die('xxx');
     }
     
+
     
     
     #
@@ -133,6 +134,8 @@ function default_default(){
 		exit();
 	}
 	$assign_list['lstBlogs']=$lstBlogs; 
+	
+	
 	unset($lstBlogs);
 	$assign_list['page_view']=$page_view; unset($page_view);
 	$assign_list['totalPage'] = $clsPagination->getTotalPage();

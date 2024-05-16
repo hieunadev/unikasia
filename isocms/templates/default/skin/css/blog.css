@@ -14,8 +14,15 @@ body {
     /* height: auto; */
 }
 
+/* CSS Desktop */
+
 /* CSS Header */
 
+.img_logoheader {
+/*	width: 100%;*/
+	max-width: 143px !important;
+	height: 53px;
+}
 .bground_header {
     background-image: url("../images/blog/bground_blog.png");
     background-size: cover;
@@ -142,7 +149,11 @@ body {
     margin-top: 40px;
   }
 
+
+
 /* CSS Body Blog*/
+
+/* CSS BreadCrumb And 6 Blogs*/
 
 .listblog_breadcrumb {
 	padding: 1px 0 0px 0;
@@ -228,7 +239,7 @@ body {
 
 
 
-  .blog-top .blog-item .blog-item-center a {
+  .blog-item-center a {
     color: #111d37;
     font-size: 32px;
     font-style: normal;
@@ -237,7 +248,7 @@ body {
     margin-top: 24px;
   }
   
-  .blog-top .blog-item h2 a {
+  .txt_blogitem a {
     color: #111d37;
     font-size: 20px;
     font-style: normal;
@@ -276,11 +287,21 @@ body {
     font-weight: 400;
     line-height: 20px;
   }
+.txt_blogitemmid a {
+	color: #111D37;
+	font-size: 24px;
+	font-style: normal;
+	font-weight: 600;
+	line-height: 36px;
+	text-decoration: none;
+}
   
   .blog-top .blog-item-center-second {
     flex-direction: unset;
     gap: 0 !important;
   }
+
+/* End BreadCrumb And 6 Blogs */
 
   /* CSS Lastest Blog */
 
@@ -301,14 +322,15 @@ body {
   }
 
 .title-lastest-blog::after {
-  width: 10%;
+  width: 14%;
   left: 7%;
   bottom: 18%;
 }
 
   .title-lastest-blog::after,
   .title-recently-view::after,
-  .read-next-title::after {
+  .read-next-title::after,
+  .txtreviews_::after{
     content: "";
     position: absolute;
     transform: translate(-50%, -50%);
@@ -343,14 +365,6 @@ img.img-last-blog  {
 
 .last-blog-item .date-time {
   margin: 16px 0;
-}
-
-@media only screen and (max-width: 575px) {
-  .txt_introblog, .txt_h1, .txt_pp {
-    display: block;
-    padding-top: 0px;
-    margin: 0;
-  }
 }
 
 .pagination {
@@ -429,28 +443,14 @@ div.last-blog-paginate .paginate-active .page-link {
   line-height: 24px;
 }
 
-@media only screen and (max-width: 1350px) {
-  .search-item .search-item-txt input {
-    background-color: #f0f0f0;
-    width: 100%;
-    color: #959aa4;
-    font-weight: 500;
-    font-size: 14px;
-  }
-}
+
 .search-item .search-item-txt input::placeholder {
   color: #959aa4;
   font-weight: 500;
   font-size: 16px;
 }
 
-@media only screen and (max-width: 1350px) {
-  .search-item .search-item-txt input::placeholder {
-    color: #959aa4;
-    font-weight: 500;
-    font-size: 14px;
-  }
-}
+
 
 
 input[type="radio"],
@@ -462,12 +462,7 @@ input[type="checkbox"] {
   background-color: #ffa718;
 }
 
-/* @media only screen and (max-width: 575px) {
-  .list_filter {
-    display: block;
-    padding-top: 0;
-  }
-} */
+
 
 .list_filter {
   display: flex;
@@ -516,12 +511,12 @@ input[type="checkbox"] {
   padding-bottom: 20px;
 }
 
-div.filter-articles .filter-checkbox {
+.filter-articles .filter-checkbox {
   padding-top: 20px;
   padding-bottom: 23px;
 }
 
-div.filter-articles .form-check {
+.filter-articles .form-check {
   padding-bottom: 16px;
 }
 
@@ -532,6 +527,14 @@ div.filter-articles .form-check {
   font-weight: 600;
   line-height: 32px;
   padding: 16px;
+}
+
+.view-more {
+	color: #FFA718;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: 24px; /* 150% */
 }
 
 .featured-blogs {
@@ -569,12 +572,7 @@ div.filter-articles .form-check {
     border-radius: 8px;
 }
 
-@media only screen and (max-width: 576px) {
-  .featured-blogs .featured-blog img {
-    width: 100%;
-    height: auto;
-  }
-}
+
 
 /* CSS Recently view */
 
@@ -617,6 +615,125 @@ div.filter-articles .form-check {
 	line-height: 24px;
 }
 
+/* CSS Review */
+
+.txtreviews_ {
+	color: var(--Neutral-1);
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 52px;
+    text-align: center;
+    margin-bottom: 32px;
+	position: sticky;
+}
+
+.txtreviews_::after {
+	width: 6%;
+    left: 52%;
+    bottom: 13%;
+}
+
+/* CSS Desktop End */
+
+/* CSS Mobile */
+
+@media only screen and (max-width: 575px) { /* Text Intro blog Header*/
+  .txt_introblog, .txt_h1, .txt_pp {
+    display: block;
+    padding-top: 0px;
+    margin: 0;
+  }
+}
+
+@media only screen and (max-width: 575px) { /*Dropdown menu Header*/
+  .list_dropdownmenu {
+    display: block;
+    padding-top: 0px;
+    margin: 0;
+	content-visibility: hidden;
+  }
+}
+
+@media only screen and (max-width: 575px) {
+  .title-lastest-blog::after { /*Lastest Blog*/
+    display: block;
+    padding-top: 0px;
+    margin: 0;
+	width: 46% !important;
+  left: 23% !important;
+  bottom: 18% !important;
+  }
+}
+
+@media only screen and (max-width: 575px) {
+  .title-recently-view::after { /*Recently Views*/
+    display: block;
+    padding-top: 0px;
+    margin: 0;
+	width: 39% !important;
+  	left: 20% !important;
+  	bottom: 18% !important;
+  }
+}
+
+
+
+@media only screen and (max-width: 575px) {
+	.blog-item img {
+		width: 100%;
+		height: auto;
+	}
+}
+
+@media only screen and (max-width: 575px) {
+  .txtreviews_::after { /*Reviews*/
+    display: block;
+    padding-top: 0px;
+    margin: 0;
+	width: 24% !important;
+  	left: 54% !important;
+  	bottom: 18% !important;
+  }
+}
+
+
+
+
+
+@media only screen and (max-width: 1350px) {
+  .search-item .search-item-txt input {
+    background-color: #f0f0f0;
+    width: 100%;
+    color: #959aa4;
+    font-weight: 500;
+    font-size: 14px;
+  }
+}
+
+
+@media only screen and (max-width: 576px) {
+  .featured-blogs .featured-blog img {
+    width: 100%;
+    height: auto;
+  }
+}
+
+@media only screen and (max-width: 1350px) {
+  .search-item .search-item-txt input::placeholder {
+    color: #959aa4;
+    font-weight: 500;
+    font-size: 14px;
+  }
+}
+
+/* @media only screen and (max-width: 575px) {
+  .list_filter {
+    display: block;
+    padding-top: 0;
+  }
+} */
+
+/* CSS Mobile End */
 
 
 

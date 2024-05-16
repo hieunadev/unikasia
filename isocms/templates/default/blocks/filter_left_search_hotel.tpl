@@ -2,9 +2,9 @@
     {* <div class="filter_left_title">
         {$core->get_Lang('Filter')}
     </div> *}
-
     <form action="" method="post" id="search_hotel_left">
         <input type="hidden" name="search_hotel_left" value="search_hotel_left" />
+
         {if $act eq 'default'}
 
             {if $lstCountryHotel}
@@ -96,7 +96,7 @@
                                     value="{$lstPriceRange[i].hotel_price_range_id}" {if $check} checked {/if}
                                     id="priceRange{$smarty.section.i.iteration}">
                                 <label for="priceRange{$smarty.section.i.iteration}"
-                                    class="labelCheck">{$lstPriceRange[i].title}</label>
+                                    class="labelCheck">{$lstPriceRange[i].max_rate}</label>
                             </div>
                         {/section}
                     </div>
@@ -119,59 +119,60 @@
                         <div id="price_1" class="price-hotel-itemMax"></div>
                     </div>
                     <div id="slider-price2" class="mb10"></div>
-                </div>
-            </div>
-        </div>
-        <div class="find_Box">
-            <div class="box_body_filter_title">
-                {$core->get_Lang('Rank')}
-            </div>
-            <div class="box_filter_body">
-                <div class="filter_list_item">
-                    {assign var=stars value=$clsISO->listStar(6)}
-                    {section name=i loop=$stars}
-                        {assign var=check value=$clsISO->checkInArray($star_id,$stars[i].star_id)}
-                        <div class="check_ipt">
-                            <input type="checkbox" name="star_id[]" class="form-check-input input_item typeSearch"
-                                value="{$stars[i].star_id}" {if $check} checked {/if}
-                                id="star{$smarty.section.i.iteration}">
-                            {if $stars[i].star_id == 1}
-                                <label class="labelCheck" for="star{$smarty.section.i.iteration}">{$stars[i].title}</label>
-                            {else}
-                                <label class="labelCheck" for="star{$smarty.section.i.iteration}">{$stars[i].star_id} <img
-                                        style="margin-left: 8px;" src="{$URL_IMAGES}/hotel/star.svg" alt="error"></label>
-                            {/if}
-                        </div>
-                    {/section}
 
                 </div>
-                <span class="readmore">{$core->get_Lang('More')}</span>
             </div>
         </div>
-        <div class="find_Box">
-            <div class="box_body_filter_title">
-                {$core->get_Lang('Type of accommodations')}
-            </div>
-            <div class="box_filter_body">
-                <div class="filter_list_item">
-                    {section name=i loop=$listTypeHotel}
-                        {assign var=hotel_property_id value=$listTypeHotel[i].property_id}
-                        {assign var=hotel_property_title value=$listTypeHotel[i].title}
-                        {assign var=check value=$clsISO->checkInArray($type_hotel,$hotel_property_id)}
-                        <div class="check_ipt checkSizeFilter">
-                            <input type="checkbox" class="form-check-input input_item typeSearch" name="type_hotel[]"
-                                value="{$hotel_property_id}" {if $check} checked {/if}
-                                id="typeHotel{$smarty.section.i.iteration}">
-                            <label class="labelCheck"
-                                for="typeHotel{$smarty.section.i.iteration}">{$hotel_property_title}</label>
-                        </div>
-                    {/section}
-
+</div>
+<div class="find_Box">
+    <div class="box_body_filter_title">
+        {$core->get_Lang('Rank')}
+    </div>
+    <div class="box_filter_body">
+        <div class="filter_list_item">
+            {assign var=stars value=$clsISO->listStar(6)}
+            {section name=i loop=$stars}
+                {assign var=check value=$clsISO->checkInArray($star_id,$stars[i].star_id)}
+                <div class="check_ipt">
+                    <input type="checkbox" name="star_id[]" class="form-check-input input_item typeSearch"
+                        value="{$stars[i].star_id}" {if $check} checked {/if} id="star{$smarty.section.i.iteration}">
+                    {if $stars[i].star_id == 1}
+                        <label class="labelCheck" for="star{$smarty.section.i.iteration}">{$stars[i].title}</label>
+                    {else}
+                        <label class="labelCheck" for="star{$smarty.section.i.iteration}">{$stars[i].star_id} <img
+                                style="margin-left: 8px;" src="{$URL_IMAGES}/hotel/star.svg" alt="error"></label>
+                    {/if}
                 </div>
-                <span class="readmore">{$core->get_Lang('More')}</span>
-            </div>
+            {/section}
+
         </div>
-    </form>
+        <span class="readmore">{$core->get_Lang('More')}</span>
+    </div>
+</div>
+<div class="find_Box">
+    <div class="box_body_filter_title">
+        {$core->get_Lang('Type of accommodations')}
+    </div>
+    <div class="box_filter_body">
+        <div class="filter_list_item">
+            {section name=i loop=$listTypeHotel}
+                {assign var=hotel_property_id value=$listTypeHotel[i].property_id}
+                {assign var=hotel_property_title value=$listTypeHotel[i].title}
+                {assign var=check value=$clsISO->checkInArray($type_hotel,$hotel_property_id)}
+                <div class="check_ipt checkSizeFilter">
+                    <input type="checkbox" class="form-check-input input_item typeSearch" name="type_hotel[]"
+                        value="{$hotel_property_id}" {if $check} checked {/if} id="typeHotel{$smarty.section.i.iteration}">
+                    <label class="labelCheck" for="typeHotel{$smarty.section.i.iteration}">{$hotel_property_title}</label>
+                </div>
+            {/section}
+
+        </div>
+        <span class="readmore">{$core->get_Lang('More')}</span>
+    </div>
+</div>
+
+</form>
+{* <button id="nsdt_btnSubmitFilterMobile">{$core->get_Lang('See results')}</button> *}
 </div>
 <script>
     var max_price_value = '{$price_range_max}';
@@ -187,6 +188,7 @@
     });
 
     var PriceRange_title = {};
+
     $('.nsdt_getPriceHotelTitle').each(function(index, element) {
         var id = $(element).data('id');
         var title = $(element).text().trim();
@@ -200,11 +202,13 @@
         var maxPrice = Math.max.apply(null, price_range);
 
         function updateSliderTitles(ui) {
+
             var id0 = ui.values[0];
             var id1 = ui.values[1];
-            $("#price_0").html(PriceRange_title[id0] || ui.values[0]);
-            $("#price_1").html(PriceRange_title[id1] || ui.values[1]);
+            $("#price_0").html("$" + PriceRange_title[id0]);
+            $("#price_1").html("$" + PriceRange_title[id1]);
         }
+
 
         $("#slider-price2").slider({
             range: true,
@@ -234,26 +238,35 @@
                         $(this).prop("checked", false);
                     }
                 });
-                $('#search_hotel_left').submit();
-                $('#filters_form2').submit();
+                // $('#search_hotel_left').submit();
+                // $('#filters_form2').submit();
             }
         });
 
-        updateSliderTitles({ values: [0, 1] });
 
         function updatePriceElements() {
             var minPrice = Math.min.apply(null, price_range);
             var maxPrice = Math.max.apply(null, price_range);
             $("#slider-price2").slider("values", [minPrice, maxPrice]);
 
-            $("#price_0").html(PriceRange_title[minPrice] || minPrice);
-            $("#price_1").html(PriceRange_title[maxPrice] || maxPrice);
-
+            $("#price_0").html("$" + PriceRange_title[minPrice]);
+            $("#price_1").html("$" + PriceRange_title[maxPrice]);
         }
+
+        updateSliderTitles({ values: [0, 1] });
         updatePriceElements();
 
-        console.log(PriceRange_title[minPrice]);
-        console.log(PriceRange_title[maxPrice]);
+        // if (minPrice < 2) {
+        //     document.getElementById("price_0").innerHTML = 0;
+        // } else if (minPrice >= 2 && minPrice <= 6) {
+        //     $("#price_0").html(PriceRange_title[minPrice]);
+        //     $("#price_0").text($("#slider-price2").slider("values", 0));
+        // } else {
+        //     document.getElementById("price_0").innerHTML = minPrice;
+        // }
+        // $("#price_0").text($("#slider-price2").slider("values", 0));
+        // $("#price_1").text($("#price-range2").slider("values", 1));
+
 
         $(function() {
             var valueMin = $('#value_min').text();

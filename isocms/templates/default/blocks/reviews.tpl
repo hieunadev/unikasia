@@ -1,11 +1,11 @@
 {assign var=maxStars value=5}
 <section class="customersay">
     <div class="container">
-        <h2 class="txtwhatsay">What Our Customers Say</h2>
+        <h2 class="txtreviews_">Reviews</h2>
         <div class="customer_cards owl-carousel owl-theme" id="home_customer_reivews">
             {section name=i loop=$listReview}
                 <div class="customer_card item">
-                    <div class="customer_card_container overflow-hidden"><img class="customer_card_thumb" src="{$listReview[i].image}" alt=""></div>
+                    <img class="customer_card_thumb" src="{$listReview[i].image}" alt="">
                     <div class="customer_review">
                         <div class="customer_stars">
                             {assign var=numStars value=$listReview[i].rates}

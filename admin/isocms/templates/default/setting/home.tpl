@@ -123,23 +123,6 @@
 					</div>
 				</div>
 			</fieldset>
-            <fieldset>
-				<legend>{$core->get_Lang("Self-sufficient travel")}</legend>
-				<div class="row-span">
-					<div class="fieldlabel">{$core->get_Lang('Title')}</div>
-					{assign var = TitleSufficient value = TitleSufficient_|cat:$_LANG_ID}
-					<div class="fieldarea">
-						<input type="text" class="text_32 full-width border_aaa" value="{$clsConfiguration->getValue($TitleSufficient)}" name="iso-{$TitleSufficient}"/>
-					</div>
-				</div>
-				<div class="row-span">
-					<div class="fieldlabel">{$core->get_Lang('Short description')}</div>
-					<div class="fieldarea">
-						{assign var = IntroSufficient value = IntroSufficient_|cat:$_LANG_ID}
-						<textarea style="width:100%" class="textarea_intro_editor_simple" name="iso-{$IntroSufficient}" id="IntroSufficient" cols="255" rows="2">{$clsConfiguration->getValue($IntroSufficient)}</textarea>
-					</div>
-				</div>
-			</fieldset>
 			<fieldset>
 				<legend>{$core->get_Lang("Travel inspiration")}</legend>
 				<div class="row-span">
@@ -249,8 +232,6 @@
 								{assign var = IconHowItWorkStep value = IconHowItWorkStep|cat:$k|cat:_|cat:$_LANG_ID}
 								<img class="float-left mr-3" src="{$clsConfiguration->getValue($IconHowItWorkStep)}" width="40px" height="40px" />
 								<input class="text_32 border_aaa bold" type="text" id="isoman_hidden_file_programme_{$k}" name="iso-{$IconHowItWorkStep}" value="{$clsConfiguration->getValue($IconHowItWorkStep)}" style="width:100%; max-width:300px; float:left" onClick="loadHelp(this)" readonly><a style="float:left; margin-left:4px; margin-top:-4px;" href="#" class="ajOpenDialog" isoman_for_id="file_programme_{$k}" isoman_name="file_programme_{$k}"><img src="{$URL_IMAGES}/general/folder-32.png" border="0" title="Open" alt="Open" /></a>
-								<div class="text_help"
-									 hidden="">{$clsConfiguration->getValue($file_tour)|html_entity_decode}</div>
 							</div>
 						</div>
 						<div class="row-span">
@@ -280,6 +261,38 @@
 					<div class="fieldarea">
 						{assign var = IntroPerfectTrip value = IntroPerfectTrip_|cat:$_LANG_ID}
 						<textarea style="width:100%" class="textarea_intro_editor_simple" name="iso-{$IntroPerfectTrip}" id="IntroPerfectTrip" cols="255" rows="2">{$clsConfiguration->getValue($IntroPerfectTrip)}</textarea>
+					</div>
+				</div>
+			</fieldset>
+			<fieldset>
+				<legend>{$core->get_Lang("SO, READY TO START?")}</legend>
+				<div class="row-span">
+					<div class="fieldlabel">{$core->get_Lang('Title')}</div>
+					{assign var = TitleVideoPerfect value = TitleVideoPerfect_|cat:$_LANG_ID}
+					<div class="fieldarea">
+						<input type="text" class="text_32 full-width border_aaa" value="{$clsConfiguration->getValue($TitleVideoPerfect)}" name="iso-{$TitleVideoPerfect}"/>
+					</div>
+				</div>
+				<div class="row-span">
+					<div class="fieldlabel">{$core->get_Lang('Short description')}</div>
+					<div class="fieldarea">
+						{assign var = IntroVideoPerfect value = IntroVideoPerfect_|cat:$_LANG_ID}
+						<textarea style="width:100%" class="textarea_intro_editor_simple" name="iso-{$IntroVideoPerfect}" id="IntroVideoPerfect" cols="255" rows="2">{$clsConfiguration->getValue($IntroVideoPerfect)}</textarea>
+					</div>
+				</div>
+				<div class="row-span">
+					<div class="fieldlabel">{$core->get_Lang('Link Youtube')}</div>
+					{assign var = LinkVideoPerfect value = LinkVideoPerfect_|cat:$_LANG_ID}
+					<div class="fieldarea">
+						<input type="text" class="text_32 full-width border_aaa" value="{$clsConfiguration->getValue($LinkVideoPerfect)}" name="iso-{$LinkVideoPerfect}"/>
+					</div>
+				</div>
+				<div class="row-span">
+					<div class="fieldlabel">{$core->get_Lang("Thumbnail")}</div>
+					<div class="fieldarea">
+						{assign var = ThumbnailYoutube value = ThumbnailYoutube_|cat:$_LANG_ID}
+						<img class="float-left mr-3" src="{$clsConfiguration->getValue($ThumbnailYoutube)}" width="40px" height="40px" />
+						<input class="text_32 border_aaa bold" type="text" id="isoman_hidden_file_programme_ThumbnailYoutube" name="iso-{$ThumbnailYoutube}" value="{$clsConfiguration->getValue($ThumbnailYoutube)}" style="width:100%; max-width:300px; float:left" onClick="loadHelp(this)" readonly><a style="float:left; margin-left:4px; margin-top:-4px;" href="#" class="ajOpenDialog" isoman_for_id="file_programme_ThumbnailYoutube" isoman_name="file_programme_ThumbnailYoutube"><img src="{$URL_IMAGES}/general/folder-32.png" border="0" title="Open" alt="Open" /></a>
 					</div>
 				</div>
 			</fieldset>

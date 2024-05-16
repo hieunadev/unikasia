@@ -10,3 +10,6 @@ body {
 .destination_travel_guide_body .des_tailor_btn {
     display: none;
 }
+.destination_travel_guide_body .readyToStart {
+    display: none;
+}

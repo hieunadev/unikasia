@@ -93,7 +93,7 @@
 							</div>
 							<div class="d-flex flex-column align-items-end">
 								<p class="txt-contact">Share your trip with us</p>
-								<div class="d-flex icon-mxh">
+								<div class="d-flex icon-mxh" style="gap: 20px">
 									<a class="link-secondary" href="#">
 										<i class="fa-brands fa-youtube fa-xl"></i>
 									</a>
@@ -128,6 +128,7 @@
 			</footer>
 		</div>
 	</section>
+	{if $mod eq "homepackage"}
 	<div id="btn-tailor-fixed"><a href="#" class="tailor_btn_fixed" title="TAILOR-MADE TRAVEL"> <div class="tailor_img_fixed"> <img src="https://unikasia.vietiso.com/isocms/templates/default/skin/images/destination/hn_voyages.png" alt=""> </div>
 		TAILOR-MADE TRAVEL
 	</a></div>
@@ -145,6 +146,7 @@
 						src="{$URL_IMAGES}/icon/fb.svg" alt="error-fb"
 						id="footer-icon-mess"> </a></div>
 	</div>
+	{/if}
 {/if}
 {/if}
 <script>

@@ -133,6 +133,7 @@
 
 </div>
 <script type="text/javascript">
+    var url = window.location.href;
     var $_View_more = '{$core->get_Lang("View more")}';
     var $_Less_more = '{$core->get_Lang("Less more")}';
     var $Loading = '{$core->get_Lang("Loading")}';

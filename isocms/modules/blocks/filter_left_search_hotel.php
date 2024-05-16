@@ -17,13 +17,13 @@ if($country_id){
 
 $clsHotelPriceRange=new HotelPriceRange();$smarty->assign('clsHotelPriceRange',$clsHotelPriceRange);
 #
-$lstPriceRange=$clsHotelPriceRange->getAll("1=1 order by order_no asc",$clsHotelPriceRange->pkey.',title');
+$lstPriceRange=$clsHotelPriceRange->getAll("1=1 order by order_no asc",$clsHotelPriceRange->pkey.',title, max_rate');
 $smarty->assign('lstPriceRange',$lstPriceRange);
 $PriceRange_title = [];
 
 // validation city
 foreach ($lstPriceRange as $priceRange) {
-    $PriceRange_title[$priceRange['hotel_price_range_id']] = $priceRange['title'];
+    $PriceRange_title[$priceRange['hotel_price_range_id']] = $priceRange['max_rate'];
 }
 $smarty->assign('PriceRange_title',$PriceRange_title);
 if(isset($_POST['search_hotel_left']) &&  $_POST['search_hotel_left']=='search_hotel_left'){

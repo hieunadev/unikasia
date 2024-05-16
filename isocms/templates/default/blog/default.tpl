@@ -4,8 +4,8 @@
         <div class="breadcrumb">
             <h2 class="txt_youarehere">You are here:</h2>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Blog</a></li>
+                <li class="breadcrumb-item"><a href="{PCMS_URL}" title="{$core->get_Lang('Home')}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{PCMS_URL}blog" title="{$core->get_Lang('Blog')}">Blog</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Vietnam</li>
             </ol>
         </div>
@@ -17,70 +17,63 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-3 col-sm-3 blog-left">
+						
+						{section name =i loop=2}
+					 	{assign var=title_blog value=$clsBlog->getTitle($lstBlogs[i].blog_id,$lstBlogs[i])}
+                        {assign var=link_blog value=$clsBlog->getLink($lstBlogs[i].blog_id,$lstBlogs[i])}
+						{assign var=intro_blog value=$clsBlog->getIntro($lstBlog[i].blog_id, $lstBlogs[i])}
+						
+						
+						
+					
+						{assign var=img_blog value=$clsBlog->getImage($lstBlogs[i].blog_id,296,193,$lstBlog[i])}
+						{assign var=img_blog2 value=$clsBlog->getImage($lstBlogs[i].blog_id,624,408,$lstBlog[i])}
+						
+						{assign var=slug_blog value=$clsBlog->getSlug($lstBlog[i].blog_id,$lstBlogs[i])}
+
+
+						
                         <div class="blog-item">
-                            <a href="#" class="text-decoration-none">
-                                <img class="img-blog" src="{$URL_IMAGES}/blog/pic_blogleft1.jpg" alt="image-blog">
-                                <h2>
-                                    <a href="blog/detail">Old Quarter Street Food Tour Review
-                                    </a>
+                            <a class="text-decoration-none" href="{$link_blog}" title="{$title_blog}">
+                                <img class="img-blog" src="{$img_blog}" alt="{$lstBlogs[i].slug}" title="{$title_blog}">
+                                <h2 class="txt_blogitem">{$title_blog}</a>
                                 </h2>
-                                <div class="blog-item-content">
-                                    Have confidence when discovering the street food of Hanoi's Old
-                                    Quarter by traveling with a guide who shows you...
-                                </div>
+                                {$title_blog}
+                                
                                 <p class="date-time">
                                     <i class="fa-regular fa-clock" style="color: #74C0FC;"></i> 10 Feb, 2024 |
                                     <span>Travel blog</span>
                                 </p>
                                 <hr style="margin-bottom: 24px">
-        
                         </div>
+						{/section}
+					</div>
+					        							
         
-        
-                        <div class="blog-item">
-                            <a href="#" class="text-decoration-none">
-                                <img class="img-blog" src="{$URL_IMAGES}/blog/pic_blogleft2.jpg" alt="image-blog">
-                                <h2>
-                                    Discover The Black Thai Communities In Pu Luong Nature Reserve, Vietnam
-                            </a>
-                            </h2>
-                            <div class="blog-item-content">
-                                Have confidence when discovering the street food of Hanoi's Old
-                                Quarter by traveling with a guide who shows you...
-                            </div>
-                            <p class="date-time">
-                                <i class="fa-regular fa-clock" style="color: #74C0FC;"></i> 10 Feb, 2024 |
-                                <span>Travel blog</span>
-                            </p>
-                        </div>
-                    </div>
-        
+					{section name=i loop=1}
                     <div class="col-lg-6 col-sm-6 blog-mid">
                         <div class="blog-item">
-                            <a href="#" class="text-decoration-none" title="sahdja">
-                                <img class="img-blog-mid" src="{$URL_IMAGES}/blog/pic_blogmid1.jpg" alt="image-blog">
-                                <h2 class="blog-item-center">
-                                    Vietnam In July: Weather, Where To Go, What To See, Itinerary And FAQ
+                            <a href="{$link_blog}" class="text-decoration-none" title="{$title_blog}">
+                                <img class="img-blog-mid" src="{$img_blog2}" alt="image-blog">
+                                <h2 class="blog-item-center">{$title_blog}
                             </a>
                             </h2>
-                            <div class="blog-item-content">
-                                Have confidence when discovering the street food of Hanoi's Old
-                                Quarter by traveling with a guide who shows you...
-                            </div>
+                             {$intro_blog}
+
                             <p class="date-time">
-                                <i class="fa-regular fa-clock" style="color: #74C0FC;"></i> 10 Feb, 2024 |
+                                <i class="fa-regular fa-clock" style="color: #74C0FC;"></i> {$lstBlogs[i].formatted_reg_date} |
                                 <span>Useful infos</span>
                             </p>
                             <hr style="margin-bottom: 24px">
-        
+        				{/section}
                         </div>
         
                         <div class="row blog-item blog-item-center-second card-bodyblog">
                             <div class="col-sm d-flex flex-column" style="gap: 16px">
-                                <h2 class="m-0">
-                                    <a href="#" title="sjadja">
-                                        Old Quarter Street Food Tour Review
-                                    </a>
+                                <h2 class="m-0 txt_blogitemmid">
+                                    <a href="{$link_blog}" title="{$title_blog}">
+									{$title_blog}                                    
+									</a>
         
                                 </h2>
                                 <div class="blog-item-content">
@@ -100,8 +93,7 @@
                         <div class="blog-item">
                             <a href="#" class="text-decoration-none">
                                 <img class="img-blog" src="{$URL_IMAGES}/blog/pic_blogend1.jpg" alt="image-blog">
-                                <h2>
-                                    What To Do In Mai Chau Vietnam In 2 Days? Itinerary Mai Chau 2 Days</a>
+                                <h2 class="txt_blogitem">What To Do In Mai Chau Vietnam In 2 Days? Itinerary Mai Chau 2 Days</a>
                             </h2>
         
                             <div class="blog-item-content">
@@ -119,8 +111,7 @@
                         <div class="blog-item">
                             <a href="#" class="text-decoration-none">
                                 <img class="img-blog" src="{$URL_IMAGES}/blog/pic_blogend2.jpg" alt="image-blog">
-                                <h2>
-                                    Old Quarter Street Food Tour Review</a>
+                                <h2 class="txt_blogitem">Old Quarter Street Food Tour Review</a>
                             </h2>
                             <div class="blog-item-content">
                                 Have confidence when discovering the street food of Hanoi's Old
@@ -141,18 +132,19 @@
             <div class="container">
                 <div class="row">
                     <div class="last-blog-item col-sm-9">
+						<h2 class="title-lastest-blog">LASTEST BLOG</h2>
+
+						{section name=i loop=$lstBlogs}
 						<div class="lastblog">
                         <div class="row">
-							                <h2 class="title-lastest-blog mb-4">LASTEST BLOG</h2>
-
                             <div class="col-sm-5 col position-relative">
                                 <a href="#">
-                                    <img class="img-last-blog" src="{$URL_IMAGES}/blog/pic_imglastest1.png">
+                                    <img class="img-last-blog" src="{$img_blog}">
                                 </a>
                             </div>
                             <div class="col-sm-7 col">
                                 <h3>
-                                    <a href="blog-detail/{$listBlog[i].slug}">Old Quarter Street Food Tour Review</a>
+                                    <a href="blog-detail/{$lstBlogs[i].slug}">Old Quarter Street Food Tour Review</a>
                                 </h3>
                                 <p class="date-time">
                                     <span><i class="fa-regular fa-clock" style="color: #74C0FC;"></i>
@@ -167,7 +159,9 @@
                             <hr style="margin: 32px 0 0 0">
                         </div>
 							</div>
+						{/section}
         
+<!--
 						<div class="lastblog">
                         <div class="row">
                             <div class="col-sm-5 col position-relative">
@@ -302,6 +296,7 @@
 
 							</div>
                         </div>
+-->
 
                         <div class="last-blog-paginate d-flex justify-content-center mt-5">
                             <nav aria-label="Page navigation">
@@ -537,7 +532,25 @@
 					</div>
 					 <p class="date-time">
                         <i class="fa-regular fa-clock" style="color: #74C0FC;"></i> 10 Feb,
-                        2024 | Places to visit & things to do
+                        2024 | Travel blogs
+                     </p>
+				</div>
+			</div>
+			
+			<div class="col-sm-3">
+				<div class="blog-item-recently">
+					<a href="#" class="text-decoration-none">
+					<img class="img-blog" src="{URL_IMAGES}/blog/img_recently_blog3.jpg" alt="image-recent"></a>
+					<h2 class="txt_recently">
+					<a href="#">Old Quarter Street Food Tour Review</a>
+					</h2>
+					<div class="recently-view-content">
+						<p class="txt_recentlyview">Have confidence when discovering the street food of Hanoi’s
+                        Old Quarter by traveling...</p>
+					</div>
+					 <p class="date-time">
+                        <i class="fa-regular fa-clock" style="color: #74C0FC;"></i> 10 Feb,
+                        2024 | Travel blogs
                      </p>
 				</div>
 			</div>
@@ -545,35 +558,7 @@
 		</div>
 		
 		</div>
-	
 </section>
-{$core->getBlock('top_attraction')};
-
-
-
-
-
-
-<!--    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>-->
-
-
-
-
-<!--
-<div class="icon-fixed">
-<div class="social-icons">
-<a href="#" class="social-icon">
-            <i class="fa-brands fa-youtube"></i>
-       </a>
-        <a href="#" class="social-icon">
-			<i class="fa-brands fa-twitter"></i>
-        </a>
-        <a href="#" class="social-icon">
-            <i class="fa-brands fa-instagram"></i>
-        </a>
-       <a href="#" class="social-icon">           
-		   <i class="fa-brands fa-facebook"></i>
-       </a>
-   </div>
-</div>
--->
+{$core->getBlock('top_attraction')}
+{$core->getBlock('reviews')}
+{$core->getBlock('also_like')}
