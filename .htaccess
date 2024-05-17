@@ -94,12 +94,15 @@ RewriteRule ^diem-den/(.*)/(.*).html$				            index.php?mod=guide&act=cat
 
 RewriteRule ^diem-den/(.*)-c([0-9]*).html$			            index.php?mod=guide&act=cat&slug_guidecat=$1&guidecat_id=$2&show=GuideCat&lang=vn [L]
 
+
+#---// BLOG LANGUAGE EN //-------/
+
 #-- Mod Blog.
-RewriteRule ^b([0-9]*)-(.*).html$						index.php?mod=blog&act=detail&blog_id=$1&slug=$2&lang=vn [L]
-RewriteRule ^blog/tag/(.*)/&page=([0-9]*)$ 				index.php?mod=blog&act=tag&slug=$1&page=$2&show=tag&lang=vn [L]
-RewriteRule ^blog/tag/(.*)$ 							index.php?mod=blog&act=tag&slug=$1&show=tag&lang=vn [L]
-RewriteRule ^blog/&page=([0-9]*)$ 						index.php?mod=blog&page=$1&show=Default&lang=vn [L]
-RewriteRule ^blog$ 										index.php?mod=blog&show=Default&lang=vn [L]
+RewriteRule ^b([0-9]*)-(.*).html$						index.php?mod=blog&act=detail&blog_id=$1&slug=$2&lang=en [L]
+RewriteRule ^blog/tag/(.*)/&page=([0-9]*)$ 				index.php?mod=blog&act=tag&slug=$1&page=$2&show=tag&lang=en [L]
+RewriteRule ^blog/tag/(.*)$ 							index.php?mod=blog&act=tag&slug=$1&show=tag&lang=en [L]
+RewriteRule ^blog/&page=([0-9]*)$ 						index.php?mod=blog&page=$1&show=Default&lang=en [L]
+RewriteRule ^blog$ 										index.php?mod=blog&show=Default&lang=en [L]
 
 RewriteRule ^blog/(.*).html&page=([0-9]*)$				index.php?mod=blog&act=cat&slug_cat=$1&page=$2&show=Cat&lang=vn [L]
 RewriteRule ^blog/(.*).html$ 							index.php?mod=blog&act=cat&slug_cat=$1&show=Cat&lang=vn [L]
@@ -237,14 +240,14 @@ RewriteRule ^hh([0-9]*)-(.*).html$					index.php?mod=hotel&act=detail&hotel_id=$
 RewriteRule ^h([0-9]*)-(.*).html$					index.php?mod=hotel&act=detail&hotel_id=$1&slug=$2&lang=en [L]
 
 
-RewriteRule ^khach-san$					            index.php?mod=hotel&lang=vn [L]
+RewriteRule ^khach-san$					            index.php?mod=hotel&lang=en [L]
 
-RewriteRule ^khach-san/(.*)/booking.html$					index.php?mod=hotel&act=book&slug=$1&lang=vn [L]
-RewriteRule ^khach-san/(.*)/&page=([0-9]*)$					index.php?mod=hotel&act=place&slug_country=$1&page=$2&show=Country&lang=vn [QSA,L]
-RewriteRule ^khach-san/(.*)$								index.php?mod=hotel&act=place&slug_country=$1&show=Country&lang=vn [QSA,L]
-RewriteRule ^khach-san/(.*)/(.*)-rg([0-9]*)$				index.php?mod=hotel&act=place&slug_country=$1&slug_region=$2&region_id=$3&show=Region&lang=vn [L]
-RewriteRule ^khach-san/(.*)/(.*)$							index.php?mod=hotel&act=place&slug_country=$1&slug_city=$2&show=City&lang=vn [L]
-RewriteRule ^tim-kiem-khach-san/(.*)$ 						index.php?mod=hotel&act=search&cond=$1&lang=vn [L]
+RewriteRule ^khach-san/(.*)/booking.html$					index.php?mod=hotel&act=book&slug=$1&lang=en [L]
+RewriteRule ^khach-san/(.*)/&page=([0-9]*)$					index.php?mod=hotel&act=place&slug_country=$1&page=$2&show=Country&lang=en [QSA,L]
+RewriteRule ^khach-san/(.*)$								index.php?mod=hotel&act=place&slug_country=$1&show=Country&lang=en [QSA,L]
+RewriteRule ^khach-san/(.*)/(.*)-rg([0-9]*)$				index.php?mod=hotel&act=place&slug_country=$1&slug_region=$2&region_id=$3&show=Region&lang=en [L]
+RewriteRule ^khach-san/(.*)/(.*)$							index.php?mod=hotel&act=place&slug_country=$1&slug_city=$2&show=City&lang=en [L]
+RewriteRule ^tim-kiem-khach-san/(.*)$ 						index.php?mod=hotel&act=search&cond=$1&lang=en [L]
 
 
 
@@ -301,6 +304,8 @@ RewriteRule ^$ index.php?mod=homepackage&lang=en [L]
 RewriteRule ^unikasia$	index.php?mod=home&act=default&templates=unika_templates&lang=fr [QSA,L]
 
 
+
+
 #-- Mod About.
 RewriteRule ^([a-z]{2})/about/(.*).html$							index.php?mod=about&slug=$2&lang=$1 [L]
 RewriteRule ^([a-z]{2})/promotion$									index.php?mod=promotion&lang=$1 [L]
@@ -346,6 +351,8 @@ RewriteRule ^([a-z]{2})/v([0-9]*)-(.*).html$						index.php?mod=voucher&act=deta
 RewriteRule ^([a-z]{2})/destinations$					            index.php?mod=destination&act=place&lang=$1 [QSA,L]
 RewriteRule ^([a-z]{2})/destinations/travel-style$					index.php?mod=destination&act=travel_style&lang=$1 [QSA,L]
 RewriteRule ^([a-z]{2})/destinations/travel-guide$					index.php?mod=destination&act=travel_guide&lang=$1 [QSA,L]
+RewriteRule ^([a-z]{2})/destinations/travel-guide-detail$			index.php?mod=destination&act=travel_guide_detail&lang=$1 [QSA,L]
+RewriteRule ^([a-z]{2})/destinations/attraction$			        index.php?mod=destination&act=attraction&lang=$1 [QSA,L]
 
 RewriteRule ^([a-z]{2})/destinations/(.*)/(.*)$					            index.php?mod=destination&act=place&slug_country=$2&slug_city=$3&show=City&lang=$1 [QSA,L]
 
@@ -396,8 +403,13 @@ RewriteRule ^([a-z]{2})/shopping-cart/booking.html$				index.php?mod=cart&act=bo
 RewriteRule ^([a-z]{2})/get_promotion$								index.php?mod=cart&act=get_promotion&lang=$1 [L]
 
 
+#-- Mod Cusstomised.
+
+RewriteRule ^customised$					            index.php?mod=customised&lang=en [L]
+RewriteRule ^customised/(.*)$								index.php?mod=customised&act=default&slug_country=$1&show=Country&lang=en [QSA,L]
+
 #-- Mod Hotel.
-RewriteRule ^stay&page=([0-9]*)$					index.php?mod=hotel&page=$1&lang=en [L]
+RewriteRule ^stay&page=([0-9]*)$					index.php?mod=hotel&page=$1&lang=en [QSA,L]
 RewriteRule ^h([0-9]*)-(.*).html$					index.php?mod=hotel&act=detail&hotel_id=$1&slug=$2&lang=en [L]
 RewriteRule ^stay$					            index.php?mod=hotel&lang=en [L]
 

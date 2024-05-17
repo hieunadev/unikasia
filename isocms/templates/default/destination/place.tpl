@@ -247,29 +247,40 @@
             </div>
             <div class="des_gallery_content">
                 <div class="owl-carousel owl-theme des_gallery_list">
-                    <div class="item des_grow">
+                    <div class="item des_grow" data-merge="1">
                         <div class="des_gallery_item">
-                            <img src="{$URL_IMAGES}/destination/gallery.png" alt="Gallery">
+                            <a data-fancybox="gallery" href="{$URL_IMAGES}/destination/gallery.png">
+                                <img src="{$URL_IMAGES}/destination/gallery.png" width="479" height="403" alt="Gallery" class="img100" title="Gallery">
+                            </a>
                         </div>
                     </div>
-                    <div class="item des_grow">
+
+                    <div class="item des_grow" data-merge="1">
                         <div class="des_gallery_item">
-                            <img src="{$URL_IMAGES}/destination/gallery.png" alt="Gallery">
+                            <a data-fancybox="gallery" href="https://images.unsplash.com/photo-1715586042534-4534fad6863d?q=80&w=1975&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                                <img src="https://images.unsplash.com/photo-1715586042534-4534fad6863d?q=80&w=1975&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" width="479" height="403" alt="Gallery" class="img100" title="Gallery">
+                            </a>
                         </div>
                     </div>
-                    <div class="item des_grow">
+                    <div class="item des_grow" data-merge="1">
                         <div class="des_gallery_item">
-                            <img src="{$URL_IMAGES}/destination/gallery.png" alt="Gallery">
+                            <a data-fancybox="gallery" href="{$URL_IMAGES}/destination/gallery.png">
+                                <img src="{$URL_IMAGES}/destination/gallery.png" width="479" height="403" alt="Gallery" class="img100" title="Gallery">
+                            </a>
                         </div>
                     </div>
-                    <div class="item des_grow">
+                    <div class="item des_grow" data-merge="1">
                         <div class="des_gallery_item">
-                            <img src="{$URL_IMAGES}/destination/gallery.png" alt="Gallery">
+                            <a data-fancybox="gallery" href="{$URL_IMAGES}/destination/gallery.png">
+                                <img src="{$URL_IMAGES}/destination/gallery.png" width="479" height="403" alt="Gallery" class="img100" title="Gallery">
+                            </a>
                         </div>
                     </div>
-                    <div class="item des_grow">
+                    <div class="item des_grow" data-merge="1">
                         <div class="des_gallery_item">
-                            <img src="{$URL_IMAGES}/destination/gallery.png" alt="Gallery">
+                            <a data-fancybox="gallery" href="{$URL_IMAGES}/destination/gallery.png">
+                                <img src="{$URL_IMAGES}/destination/gallery.png" width="479" height="403" alt="Gallery" class="img100" title="Gallery">
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -366,3 +377,74 @@
     var country_id = "{$country_id}";
     var city_id = "{$city_id}";
 </script>
+
+<script>
+    Fancybox.bind("[data-fancybox]", {});
+</script>
+
+{literal}
+<script>
+    if ($('.des_gallery_list').length > 0) {
+        var $owl = $('.des_gallery_list');
+        $owl.owlCarousel({
+            lazyLoad: true,
+            loop: false,
+            margin: 0,
+            nav: true,
+            navText: ["<i class='fa-solid fa-angle-left'></i>", "<i class='fa-solid fa-angle-right'></i>"],
+            dots: false,
+            // autoplay: false,
+            // autoplayTimeout:3000,	
+            // animateOut: 'fadeOut',
+            // animateIn: 'fadeIn',
+            merge: true,
+            autoHeight: true,
+            responsiveClass: true,
+            responsive: {
+                0: {
+                    items: 1.3,
+                    nav: false,
+                    margin: 15,
+                },
+                600: {
+                    items: 3
+                },
+                1000: {
+                    items: 4
+                }
+            }
+        });
+    }
+
+    if ($('.des_list_hotel_carousel').length > 0) {
+        var $owl = $('.des_list_hotel_carousel');
+        $owl.owlCarousel({
+            lazyLoad: true,
+            loop: false,
+            margin: 32,
+            nav: true,
+            navText: ["<i class='fa-solid fa-angle-left'></i>", "<i class='fa-solid fa-angle-right'></i>"],
+            dots: false,
+            // autoplay: false,
+            // autoplayTimeout:3000,	
+            // animateOut: 'fadeOut',
+            // animateIn: 'fadeIn',
+            merge: true,
+            autoHeight: true,
+            responsiveClass: true,
+            responsive: {
+                0: {
+                    items: 1.3,
+                    nav: false,
+                },
+                600: {
+                    items: 3
+                },
+                1000: {
+                    items: 4
+                }
+            }
+        });
+    }
+</script>
+{/literal}

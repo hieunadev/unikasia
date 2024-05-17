@@ -347,6 +347,12 @@ body {
     z-index: 100;
     box-shadow: 0px 12px 24px 0px rgba(255, 167, 24, 0.36);
 }
+.des_gallery_item {
+    height: 270px;
+}
+.des_gallery_item img {
+    height: 100%;
+}
 .owl-item.active {
     z-index: 1;
 }
@@ -547,6 +553,24 @@ body {
 }
 .destination_place_body #nah_also_like .alsoLike {
     margin-top: 0;
+}
+.destination_place_body .btn-exploremore {
+    transition: ease-in-out all 0.3s;
+}
+.destination_place_body .btn-exploremore:hover {
+    background: #e88f00 !important;
+}
+.destination_place_body .txt_btn {
+    transition: ease-in-out all 0.3s;
+}
+.destination_place_body .txt_btn:hover {
+    background: #e88f00 !important;
+}
+.destination_place_body .btn-viewmore {
+    transition: ease-in-out all 0.3s;
+}
+.destination_place_body .btn-viewmore:hover {
+    background: #e88f00 !important;
 }
 /** --- CSS fix hộ các trang khác @@ --- **/
 .hnv_item_holiday img {

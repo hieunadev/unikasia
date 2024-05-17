@@ -543,6 +543,11 @@
         border-radius: 8px;
         background: var(--Primary, #ffa718);
         color: #fff;
+        transition: ease-in-out all 0.3s;
+    }
+
+    .des_group_dream .des_dream_rec a:hover {
+        background: #E88F00;
     }
 
     .des_group_dream .des_dream_rec .fa-arrow-right-long {

@@ -94,7 +94,6 @@ if(isset($_POST['search_hotel_left']) &&  $_POST['search_hotel_left']=='search_h
         $link .= ($hasCond?'&':'?').'type_hotel='.$clsISO->makeSlashListFromArrayComma($type_hotel);
         $hasCond = true;
     }
-
     header('location:'.trim($link));
     exit();
 } else {

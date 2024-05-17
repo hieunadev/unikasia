@@ -31,6 +31,10 @@
 							<div class="text_help" hidden="">{$clsConfiguration->getValue($fullname_testimonial)|html_entity_decode}</div>
 						</div>
 						<div class="inpt_tour">
+							<img class="float-left mr-3" src="{$oneItem.avatar}" width="40px" height="40px" />
+							<input class="text_32 border_aaa bold" type="text" id="avatar_testimonial" name="iso-avatar" value="{$oneItem.avatar}" style="width:100%; max-width:300px; float:left" onClick="loadHelp(this)" readonly><a style="float:left; margin-left:4px; margin-top:-4px;" href="#" class="ajOpenDialog" isoman_for_id="avatar_testimonial" isoman_name="avatar_testimonial"><img src="{$URL_IMAGES}/general/folder-32.png" border="0" title="Open" alt="Open" /></a>
+						</div>
+						<div class="inpt_tour">
 							<label for="title">{$core->get_Lang('Rate')} <span class="required_red">*</span>
 							{assign var= rate_testimonial value='rate_testimonial'}
 							{if $CHECKHELP eq 1}

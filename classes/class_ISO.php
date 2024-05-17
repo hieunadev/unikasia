@@ -5212,4 +5212,61 @@ AND COLUMN_NAME = '" . $name . "'";
 		$html .= '</select>';
 		return $html;
 	}
+
+	/**
+	 * Author: 2024-HoangNv
+	 * dump()
+	 * Dump data to debug at local.
+	 * @param mixed $data
+	 * @return
+	 */
+	function dump($data)
+	{
+
+
+
+		$name       = "";
+		$back_track = debug_backtrace();
+		$caller     = array_shift($back_track);
+		foreach ($GLOBALS as $var_name => $value) {
+			if ($value === $data) {
+				$name = $var_name;
+				break;
+			}
+		}
+
+		echo '<pre style="position: relative;float: left; z-index: 99999; background: black; color: #FFF; width: 100%; max-height: 600px; overflow: auto; padding: 5px; border-top: 3px solid #d31a1a;">';
+		echo '<span style="display:block; text-align: center; background: #D6D61F; font-weight: 600; color: #111;">DUMP IN (' . $caller['file'] . ' -- line: ' . $caller['line'] . ')</span>';
+		//echo "<span style='display:block; text-align: center;font-weight: 600;padding: 4px 0px;color: #00B8FF;'>$" . $name . "</span>";
+
+		switch (gettype($data)) {
+			case "boolean":
+			case "object":
+				var_dump($data);
+				break;
+
+			case "array":
+				print_r($data);
+				break;
+
+			default:
+				echo $data;
+				break;
+		}
+
+		echo '</pre>';
+	}
+
+	/**
+	 * Author: 2024-HoangNv
+	 * dd()
+	 * Dump and đie
+	 * @param mixed $data
+	 * @return void
+	 */
+	function dd($data)
+	{
+		self::dump($data);
+		exit;
+	}
 }

@@ -537,5 +537,47 @@ class Country extends dbBasic{
         $this->deleteOne($country_id);
         return 1;
     }
+
+    function getSelectCountryCitySearch($selected=''){
+        global $core, $core;
+        $clsTour = new Tour();
+        $clsCity = new City();
+
+        $where = "is_trash=0 and is_online=1";
+
+        $limit = " order by order_no ASC";
+
+        $html='<option value="" data-label="null"></option>';
+
+        $lstCountry= $this->getAll($where.$limit,$this->pkey.",title,slug");
+        if(is_array($lstCountry) && count($lstCountry) > 0){
+            $i=0;
+            foreach($lstCountry as $k=>$v){
+                $total_tour_country=$clsTour->countTourGolobal($v[$this->pkey]);
+                if($total_tour_country>0){
+                    $selected_index=($selected==$v[$this->pkey])?'selected="selected"':'';
+                    $html.='<option data-label="Country" data-number_tour="'.$total_tour_country.'" data-slug="'.strtolower($v['slug']).'" data-strtolower_title="'.strtolower($v['title']).'" value="Country'.$v[$this->pkey].'">'.$v['title'].'</option>';
+                }
+                ++$i;
+            }
+        }
+
+        $lstCity= $clsCity->getAll($where.$limit,$clsCity->pkey.",title,slug,country_id");
+        if(is_array($lstCity) && count($lstCity) > 0){
+            $j=0;
+            foreach($lstCity as $k=>$v){
+                $total_tour_city=$clsTour->countTourGolobal($v['country_id'],$v[$clsCity->pkey]);
+                if($total_tour_city>0){
+                    $selected_index=($selected==$v[$clsCity->pkey])?'selected="selected"':'';
+                    $html.='<option data-label="City" data-number_tour="'.$total_tour_city.'" data-slug="'.strtolower($v['slug']).'" data-strtolower_title="'.strtolower($v['title']).'" value="City'.$v[$clsCity->pkey].'" data-country="'.$this->getTitle($v['country_id']).'" >'.$v['title'].'</option>';
+                }
+                ++$j;
+            }
+        }
+        if(empty($lstCountry)&& empty($lstCity)){
+            $html .= '_EMPTY';
+        }
+        return $html;
+    }
 }
 ?>

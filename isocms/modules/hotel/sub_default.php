@@ -2,13 +2,14 @@
 function default_default() {
     global $assign_list, $_CONFIG, $core, $dbconn, $mod, $act, $_LANG_ID, $title_page, $description_page, $keyword_page, $domain,$clsISO;
    	#
+
 	$clsCountryEx = new Country();$assign_list['clsCountryEx'] = $clsCountryEx;
 	$clsCity = new City();$assign_list['clsCity'] = $clsCity;
 	$clsHotel = new Hotel();$assign_list['clsHotel'] = $clsHotel;
 	$clsProperty = new Property();$assign_list["clsProperty"] = $clsProperty;
 	$clsHotelPriceRange=new HotelPriceRange(); $assign_list["clsHotelPriceRange"] = $clsHotelPriceRange;
-	$clsPagination = new Pagination();
     $clsTestimonial = new Testimonial();$assign_list['clsTestimonial']=$clsTestimonial;
+    $clsConfigSetting = new Configuration();
 
 
     $assign_list['country_id'] = $country_id;
@@ -16,9 +17,10 @@ function default_default() {
 	$recordPerPage = 8;
 	$currentPage = isset($_GET['page'])?intval($_GET['page']):1;
 
-
 	$cond = "is_trash=0 and is_online=1";
-	
+	$lstConfigSetting = $clsConfigSetting->getAll($cond);
+    $assign_list['lstConfigSetting']=$lstConfigSetting;
+
 	$star_id = isset($_GET['star_id']) ? $_GET['star_id'] : '';
 	$type_hotel = isset($_GET['type_hotel']) ? $_GET['type_hotel'] : '';
 	$price_range = isset($_GET['price_range']) ? $_GET['price_range'] : ''; $assign_list["price_range"] = $price_range;
@@ -53,6 +55,7 @@ function default_default() {
 	if(!empty($star_id)){
 		$cond .= " and star_id IN ({$star_id})";
 	}
+
 	if(!empty($type_hotel)){
 		$cond .= " and list_TypeHotel IN (
 			SELECT property_id FROM ".$clsProperty->tbl." 
@@ -75,23 +78,25 @@ function default_default() {
 	$assign_list["check_out_date"] = $check_out_date;
 	
 	$order_by = " order by order_no ASC";
+
 	$totalItem = $clsHotel->getAll($cond,$clsHotel->pkey);
 	$totalRecord = $totalItem?count($totalItem):0;
 	$assign_list['totalRecord']=$totalRecord;
 
 	$lnk=$_SERVER['REQUEST_URI'];
-	if(isset($_GET['page'])){
-		$tmp = explode('&',$lnk);
-		$n = count($tmp)-1;
-		$la_it = '&'.$tmp[$n];
-		$str_len = -strlen($la_it);
-		$link_page = substr($lnk, 0, $str_len);
-	}else{
-		$link_page = $lnk;
-	}
+
+	// if(isset($_GET['page'])){
+	// 	$tmp = explode('&',$lnk);
+	// 	$n = count($tmp)-1;
+	// 	$la_it = '&'.$tmp[$n];
+	// 	$str_len = -strlen($la_it);
+	// 	$link_page = substr($lnk, 0, $str_len);
+	// }else{
+	// 	$link_page = $lnk;
+	// }
 	
 	
-	$order_by = " ORDER BY order_no ASC";
+	// $order_by = " ORDER BY order_no ASC";
 	
 
 	#
@@ -103,14 +108,56 @@ function default_default() {
 		'link'	=> str_replace('.html','/',$link_page),
 		'link_page_1'	=> $link_page
 	);
-	
-	$clsPagination->initianize($config);
-	$page_view = $clsPagination->create_links(false);
+ 
+    $totalPage = ceil($totalRecord / $recordPerPage);
+	$order_by = " ORDER BY order_no ASC";
+
+    $queryString = parse_url($lnk, PHP_URL_QUERY);
+    parse_str($queryString, $queryParams);
 	
 	$offset = ($currentPage-1)*$recordPerPage;
 	$limit = " LIMIT $offset,$recordPerPage";
-	$listHotel = $clsHotel->getAll($cond.$order_by.$limit,$clsHotel->pkey.',star_id');
+
+    if ($queryString == null) {
+        $listHotel = $clsHotel->getAll($cond.$order_by.$limit,$clsHotel->pkey.',star_id');
+    } else {
+        $listHotel = $clsHotel->getAll($cond.' and '.$queryString.$order_by.$limit,$clsHotel->pkey.',star_id');
+    }
+
+    $paginationLinks = array();
+    // for ($i = 1; $i <= $totalPage; $i++) {
+    //     $paginationLinks[] = array(
+    //         'page' => $i,
+    //         'url' => $link_page.'&page='.$i.'?'.$queryString,
+    //         'is_current' => ($i == $currentPage)
+    //     );
+    // }
+
+    for ($i = 1; $i <= $totalPage; $i++) {
+        $url = $link_page . '&amp;page=' . $i;
+        if ($queryString !== null && $queryString !== '') {
+            $url .= '?' . $queryString;
+        }
+        $paginationLinks[] = array(
+            'page' => $i,
+            'url' => $url,
+            'is_current' => ($i == $currentPage)
+        );
+    }
+
+
+    if(isset($_GET['page'])){
+		$tmp = explode('&',$lnk);
+		$n = count($tmp)-1;
+		$la_it = '&'.$tmp[$n];
+		$str_len = -strlen($la_it);
+		$link_page = substr($lnk, 0, $str_len);
+	}else{
+		$link_page = $lnk;
+	}
+	
 	$lstHotel = $clsHotel->getAll($cond);
+
     $lstCountry = $clsCountryEx->getAll($cond);
     $country_title = array();
     foreach ($lstCountry as $country) {
@@ -122,9 +169,9 @@ function default_default() {
 	$assign_list['listHotel'] = $listHotel; unset($listHotel);
 	$assign_list['country_title'] = $country_title; unset($country_title);
 	$assign_list['lstHotel'] = $lstHotel; unset($lstHotel);
-	$assign_list['totalPage'] = $clsPagination->getTotalPage();
-	
-	$assign_list['page_view'] = $page_view; unset($page_view);
+	$assign_list['totalPage'] = $totalPage;
+	$assign_list['currentPage'] = $currentPage;
+	$assign_list['paginationLinks'] = $paginationLinks;
 
 
     /* =============Title & Description Page================== */

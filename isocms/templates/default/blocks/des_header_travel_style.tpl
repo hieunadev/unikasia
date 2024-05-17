@@ -47,6 +47,11 @@
         border-radius: 8px;
         background: var(--Primary, #FFA718);
         color: #fff !important;
+        transition: ease-in-out all 0.3s;
+    }
+
+    .trvs_header_link:hover {
+        background: #E88F00;
     }
 
     .trvs_header {

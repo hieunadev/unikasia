@@ -36,7 +36,13 @@
         display: table;
         margin: 0 auto;
         margin-top: 48px;
-        color: #fff !important; 
+        color: #fff !important;
+        transition: ease-in-out all 0.3s;
+
+    }
+
+    .trvg_header_link:hover {
+        background: #E88F00;
     }
 </style>
 {/literal}

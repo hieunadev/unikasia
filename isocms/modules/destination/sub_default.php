@@ -27,6 +27,11 @@ function default_place()
     $clsPromotion = new Promotion();
     $assign_list["clsPromotion"] = $clsPromotion;
     #	
+    // $clsCountry->SetDebug(1);
+    $arr    =   $clsCountry->getAll('is_trash=0 and is_online=1 and country_id = 1', '*');
+    // die;
+    $clsISO->dump($arr);
+
     // $city_id	=	1;
     // $assign_list['city_id'] = $city_id;
     // $slug_city	=	'ha-noi';

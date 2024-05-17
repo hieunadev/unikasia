@@ -1,6 +1,6 @@
 <section class="reasonandrecom">
     <div class="container">
-        <h2 class="reasonsbook">The reasons you should book with us </h2>
+        <h2 class="reasonsbook">{$core->get_Lang('The reasons you should book with us')} </h2>
         <div class="row justify-content-center text-center">
             {section name=i loop=$listWhy}
             <div class="col-lg-4 col-md-4 col-sm-4">
@@ -11,7 +11,7 @@
                 </div>
             </div>
             {/section}
-            <h2 class="txtfamous">The famous travel guide books recommended us</h2>
+            <h2 class="txtfamous">{$core->get_Lang('The famous travel guide books recommended us')}</h2>
             <div class="img-guidebook">
                 <div class="row">
                     {section name=i loop=$listPartner}

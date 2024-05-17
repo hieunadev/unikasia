@@ -57,15 +57,14 @@
                     {section name=i loop=$hotelFacility}
                         {if $clsProperty->getImage($hotelFacility[i]) && $smarty.section.i.index lt 5}
                             <img data-bs-title="{$clsProperty->getTitle($hotelFacility[i])}" data-bs-custom-class="custom-tooltip"
-                                data-bs-toggle="tooltip" data-bs-placement="top"
-                                src="{$clsProperty->getImage($hotelFacility[i])}"
+                                data-bs-toggle="tooltip" data-bs-placement="top" src="{$clsProperty->getImage($hotelFacility[i])}"
                                 alt="{$clsProperty->getTitle($hotelFacility[i])}" />
                         {/if}
                     {/section}
                     {if $hotelFacility|@count > 5}
                         <div data-bs-title="{$core->get_Lang('More')}" data-bs-custom-class="custom-tooltip"
-                        data-bs-toggle="tooltip" data-bs-placement="top" class="box_body-service-item">
-                        +{$hotelFacility|@count-5}</div>
+                            data-bs-toggle="tooltip" data-bs-placement="top" class="box_body-service-item">
+                            +{$hotelFacility|@count-5}</div>
                     {/if}
                 {/if}
 

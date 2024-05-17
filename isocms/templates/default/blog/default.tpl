@@ -1,3 +1,32 @@
+<!--
+<div class="page_container">
+	<nav class="breadcrumb-main breadcrumb-{$mod} bg_fff">
+        <div class="container">
+            <ol class="breadcrumb hidden-xs mt0 bg_fff" itemscope itemtype="https://schema.org/BreadcrumbList">
+				<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+					<a itemprop="item" href="{$PCMS_URL}" title="{$core->get_Lang('Home')}">
+						<span itemprop="name" class="reb">{$core->get_Lang('Home')}</span>
+					</a>
+					<meta itemprop="position" content="1" />
+				</li>
+				<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+					<a itemprop="item" href="{$clsISO->getLink('blog')}" title="{$core->get_Lang('Blog')}">
+						<span itemprop="name" class="reb">{$core->get_Lang('Blog')}</span>
+					</a>
+					<meta itemprop="position" content="2" />
+				</li>
+				
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+					<a itemprop="item" href="{$clsBlogCategory->getLink($cat_id,$itemCat)}" title="{$itemCat.title}">
+						<span itemprop="name" class="reb">{$itemCat.title}</span></a>
+					<meta itemprop="position" content="3" />
+				</li> 
+				
+            </ol>
+        </div>
+    </nav>
+-->
+
 <section class="listblog_breadcrumb">
 <div class="breadcrumb_list">
     <div class="container">
@@ -12,6 +41,8 @@
     </div>
 </div>
 	</section>
+
+
 
         <section class="blog-top">
             <div class="container">
@@ -447,7 +478,7 @@
 									<div class="col-lg-4">
 								<a href="#"><img class="img_featureblog" src="{URL_IMAGES}/blog/pic_featureblog1.png" alt="featured-blog"/></a>
 									</div>
-									<h3 class="col-lg-8 mt-log-0">
+									<h3 class="col-lg-8 mt-log-0 txt_featuredblogs">
 									<a href="#">Vietnam Airlines Launches New Routes To Singapore, Cambodia</a></h3>
 									
 								</div>
@@ -456,7 +487,7 @@
 									<div class="col-lg-4">
 								<a href="#"><img class="img_featureblog" src="{URL_IMAGES}/blog/pic_featureblog2.png" alt="featured-blog"/></a>
 									</div>
-									<h3 class="col-lg-8 mt-log-0">
+									<h3 class="col-lg-8 mt-log-0 txt_featuredblogs">
 									<a href="#">Ninh Binh Day Tour (Hoa Lu- Tam Coc- Mua cave) - Review</a></h3>
 									
 								</div>
@@ -465,7 +496,7 @@
 									<div class="col-lg-4">
 								<a href="#"><img class="img_featureblog" src="{URL_IMAGES}/blog/pic_featureblog3.png" alt="featured-blog"/></a>
 									</div>
-									<h3 class="col-lg-8 mt-log-0">
+									<h3 class="col-lg-8 mt-log-0 txt_featuredblogs">
 									<a href="#">Ninh Binh Day Tour (Hoa Lu- Tam Coc- Mua cave) - Review</a></h3>
 									
 								</div>
@@ -474,7 +505,7 @@
 									<div class="col-lg-4">
 								<a href="#"><img src="{URL_IMAGES}/blog/pic_featureblog4.png" alt="featured-blog"/></a>
 									</div>
-									<h3 class="col-lg-8 mt-log-0">
+									<h3 class="col-lg-8 mt-log-0 txt_featuredblogs">
 									<a href="#">Ninh Binh Day Tour (Hoa Lu- Tam Coc- Mua cave) - Review</a></h3>
 									
 								</div>
@@ -483,7 +514,7 @@
 									<div class="col-lg-4">
 								<a href="#"><img src="{URL_IMAGES}/blog/pic_featureblog5.png" alt="featured-blog"/></a>
 									</div>
-									<h3 class="col-lg-8 mt-log-0">
+									<h3 class="col-lg-8 mt-log-0 txt_featuredblogs">
 									<a href="#">Ninh Binh Day Tour (Hoa Lu- Tam Coc- Mua cave) - Review</a></h3>
 									
 								</div>
@@ -559,6 +590,7 @@
 		
 		</div>
 </section>
+						 
 {$core->getBlock('top_attraction')}
 {$core->getBlock('reviews')}
 {$core->getBlock('also_like')}

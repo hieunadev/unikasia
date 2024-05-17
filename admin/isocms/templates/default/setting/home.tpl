@@ -14,33 +14,30 @@
 	</div>
 	<div class="container-fluid">
 		<form id="forums" method="post" class="filterForm" action="">
-
 			<fieldset>
-				<legend>{$core->get_Lang("Attractive tour")}</legend>
+				<legend>{$core->get_Lang("Agence Hyour")}</legend>
 				<div class="row-span">
 					<div class="fieldlabel">{$core->get_Lang('Title')}</div>
-					{assign var = TitleAttractiveTour value = TitleAttractiveTour_|cat:$_LANG_ID}
+					{assign var = TitleAgenceHyour value = TitleAgenceHyour_|cat:$_LANG_ID}
 					<div class="fieldarea">
-						<input type="text" class="text_32 full-width border_aaa" value="{$clsConfiguration->getValue($TitleAttractiveTour)}" name="iso-{$TitleAttractiveTour}"/>
+						<textarea style="width:100%" class="textarea_intro_editor_simple" name="iso-{$TitleAgenceHyour}" id="TitleAgenceHyour" cols="255" rows="2">{$clsConfiguration->getValue($TitleAgenceHyour)}</textarea>
 					</div>
 				</div>
 				<div class="row-span">
 					<div class="fieldlabel">{$core->get_Lang('Short description')}</div>
 					<div class="fieldarea">
-						{assign var = IntroAttractiveTour value = IntroAttractiveTour_|cat:$_LANG_ID}
-						<textarea style="width:100%" class="textarea_intro_editor_simple" name="iso-{$IntroAttractiveTour}" id="IntroAttractiveTour" cols="255" rows="2">{$clsConfiguration->getValue($IntroAttractiveTour)}</textarea>
+						{assign var = IntroAgenceHyour value = IntroAgenceHyour_|cat:$_LANG_ID}
+						<textarea style="width:100%" class="textarea_intro_editor_simple" name="iso-{$IntroAgenceHyour}" id="IntroAgenceHyour" cols="255" rows="2">{$clsConfiguration->getValue($IntroAgenceHyour)}</textarea>
 					</div>
 				</div>
 			</fieldset>
-            {if $package_id !=1}
-			{if $_LANG_ID ne 'vn'}
 			<fieldset>
-				<legend>{$core->get_Lang("Outstanding Travel Styles")}</legend>
+				<legend>{$core->get_Lang("EXPLORE OUR TRAVEL STYLES")}</legend>
 				<div class="row-span">
 					<div class="fieldlabel">{$core->get_Lang('Title')}</div>
 					{assign var = TitleCatTour value = TitleCatTour_|cat:$_LANG_ID}
 					<div class="fieldarea">
-						<input type="text" class="text_32 full-width border_aaa" value="{$clsConfiguration->getValue($TitleCatTour)}" name="iso-{$TitleCatTour}"/>
+						<textarea style="width:100%" class="textarea_intro_editor_simple" name="iso-{$TitleCatTour}" id="TitleCatTour" cols="155" rows="2">{$clsConfiguration->getValue($TitleCatTour)}</textarea>
 					</div>
 				</div>
 				<div class="row-span">
@@ -51,7 +48,6 @@
 					</div>
 				</div>
 			</fieldset>
-			{/if}
 			<fieldset>
 				<legend>{$core->get_Lang("Favorite destination")}</legend>
 				<div class="row-span">
@@ -69,50 +65,13 @@
 					</div>
 				</div>
 			</fieldset>
-			{if $_LANG_ID eq 'vn'}
 			<fieldset>
-				<legend>{$core->get_Lang("Tour Inbound")}</legend>
-				<div class="row-span">
-					<div class="fieldlabel">{$core->get_Lang('Title')}</div>
-					{assign var = TitleTourInbound value = TitleTourInbound_|cat:$_LANG_ID}
-					<div class="fieldarea">
-						<input type="text" class="text_32 full-width border_aaa" value="{$clsConfiguration->getValue($TitleTourInbound)}" name="iso-{$TitleTourInbound}"/>
-					</div>
-				</div>
-				<div class="row-span">
-					<div class="fieldlabel">{$core->get_Lang('Short description')}</div>
-					<div class="fieldarea">
-						{assign var = IntroTourInbound value = IntroTourInbound_|cat:$_LANG_ID}
-						<textarea style="width:100%" class="textarea_intro_editor_simple" name="iso-{$IntroTourInbound}" id="IntroTourInbound" cols="255" rows="2">{$clsConfiguration->getValue($IntroTourInbound)}</textarea>
-					</div>
-				</div>
-			</fieldset>
-			<fieldset>
-				<legend>{$core->get_Lang("Tour Outbound")}</legend>
-				<div class="row-span">
-					<div class="fieldlabel">{$core->get_Lang('Title')}</div>
-					{assign var = TitleTourOutbound value = TitleTourOutbound_|cat:$_LANG_ID}
-					<div class="fieldarea">
-						<input type="text" class="text_32 full-width border_aaa" value="{$clsConfiguration->getValue($TitleTourOutbound)}" name="iso-{$TitleTourOutbound}"/>
-					</div>
-				</div>
-				<div class="row-span">
-					<div class="fieldlabel">{$core->get_Lang('Short description')}</div>
-					<div class="fieldarea">
-						{assign var = IntroTourOutbound value = IntroTourOutbound_|cat:$_LANG_ID}
-						<textarea style="width:100%" class="textarea_intro_editor_simple" name="iso-{$IntroTourOutbound}" id="IntroTourOutbound" cols="255" rows="2">{$clsConfiguration->getValue($IntroTourOutbound)}</textarea>
-					</div>
-				</div>
-			</fieldset>
-			{/if}
-			{/if}
-			<fieldset>
-				<legend>{$core->get_Lang("Testimonials Box")}</legend>
+				<legend>{$core->get_Lang("What Our Customers Say")}</legend>
 				<div class="row-span">
 					<div class="fieldlabel">{$core->get_Lang('Title')}</div>
 					{assign var = TitleTestimonialsHome value = TitleTestimonialsHome_|cat:$_LANG_ID}
 					<div class="fieldarea">
-						<input type="text" class="text_32 full-width border_aaa" value="{$clsConfiguration->getValue($TitleTestimonialsHome)}" name="iso-{$TitleTestimonialsHome}"/>
+						<textarea style="width:100%" class="textarea_intro_editor_simple" name="iso-{$TitleTestimonialsHome}" id="TitleTestimonialsHome" cols="255" rows="2">{$clsConfiguration->getValue($TitleTestimonialsHome)}</textarea>
 					</div>
 				</div>
 				<div class="row-span">
@@ -124,82 +83,12 @@
 				</div>
 			</fieldset>
 			<fieldset>
-				<legend>{$core->get_Lang("Travel inspiration")}</legend>
-				<div class="row-span">
-					<div class="fieldlabel">{$core->get_Lang('Title')}</div>
-					{assign var = TitleTravelInspiration value = TitleTravelInspiration_|cat:$_LANG_ID}
-					<div class="fieldarea">
-						<input type="text" class="text_32 full-width border_aaa" value="{$clsConfiguration->getValue($TitleTravelInspiration)}" name="iso-{$TitleTravelInspiration}"/>
-					</div>
-				</div>
-				<div class="row-span">
-					<div class="fieldlabel">{$core->get_Lang('Short description')}</div>
-					<div class="fieldarea">
-						{assign var = IntroTravelInspiration value = IntroTravelInspiration_|cat:$_LANG_ID}
-						<textarea style="width:100%" class="textarea_intro_editor_simple" name="iso-{$IntroTravelInspiration}" id="IntroTravelInspiration" cols="255" rows="2">{$clsConfiguration->getValue($IntroTravelInspiration)}</textarea>
-					</div>
-				</div>
-			</fieldset>
-			<fieldset>
-				<legend>{$core->get_Lang("Partner")}</legend>
-				<div class="row-span">
-					<div class="fieldlabel">{$core->get_Lang('Title')}</div>
-					{assign var = TitlePartner value = TitlePartner_|cat:$_LANG_ID}
-					<div class="fieldarea">
-						<input type="text" class="text_32 full-width border_aaa" value="{$clsConfiguration->getValue($TitlePartner)}" name="iso-{$TitlePartner}"/>
-					</div>
-				</div>
-				<div class="row-span">
-					<div class="fieldlabel">{$core->get_Lang('Short description')}</div>
-					<div class="fieldarea">
-						{assign var = IntroPartner value = IntroPartner_|cat:$_LANG_ID}
-						<textarea style="width:100%" class="textarea_intro_editor_simple" name="iso-{$IntroPartner}" id="IntroPartner" cols="255" rows="2">{$clsConfiguration->getValue($IntroPartner)}</textarea>
-					</div>
-				</div>
-			</fieldset>
-			<fieldset>
-				<legend>{$core->get_Lang("Press news")}</legend>
-				<div class="row-span">
-					<div class="fieldlabel">{$core->get_Lang('Title')}</div>
-					{assign var = TitlePressNews value = TitlePressNews_|cat:$_LANG_ID}
-					<div class="fieldarea">
-						<input type="text" class="text_32 full-width border_aaa" value="{$clsConfiguration->getValue($TitlePressNews)}" name="iso-{$TitlePressNews}"/>
-					</div>
-				</div>
-				<div class="row-span">
-					<div class="fieldlabel">{$core->get_Lang('Short description')}</div>
-					<div class="fieldarea">
-						{assign var = IntroPressNews value = IntroPressNews_|cat:$_LANG_ID}
-						<textarea style="width:100%" class="textarea_intro_editor_simple" name="iso-{$IntroPressNews}" id="IntroPressNews" cols="255" rows="2">{$clsConfiguration->getValue($IntroPressNews)}</textarea>
-					</div>
-				</div>
-			</fieldset>
-
-			<fieldset>
-				<legend>{$core->get_Lang("Agence Hyour")}</legend>
-				<div class="row-span">
-					<div class="fieldlabel">{$core->get_Lang('Title')}</div>
-					{assign var = TitleAgenceHyour value = TitleAgenceHyour_|cat:$_LANG_ID}
-					<div class="fieldarea">
-						<input type="text" class="text_32 full-width border_aaa" value="{$clsConfiguration->getValue($TitleAgenceHyour)}" name="iso-{$TitleAgenceHyour}"/>
-					</div>
-				</div>
-				<div class="row-span">
-					<div class="fieldlabel">{$core->get_Lang('Short description')}</div>
-					<div class="fieldarea">
-						{assign var = IntroAgenceHyour value = IntroAgenceHyour_|cat:$_LANG_ID}
-						<textarea style="width:100%" class="textarea_intro_editor_simple" name="iso-{$IntroAgenceHyour}" id="IntroAgenceHyour" cols="255" rows="2">{$clsConfiguration->getValue($IntroAgenceHyour)}</textarea>
-					</div>
-				</div>
-			</fieldset>
-
-			<fieldset>
 				<legend>{$core->get_Lang("Explore our trips")}</legend>
 				<div class="row-span">
 					<div class="fieldlabel">{$core->get_Lang('Title')}</div>
 					{assign var = TitleExploreTrips value = TitleExploreTrips_|cat:$_LANG_ID}
 					<div class="fieldarea">
-						<input type="text" class="text_32 full-width border_aaa" value="{$clsConfiguration->getValue($TitleExploreTrips)}" name="iso-{$TitleExploreTrips}"/>
+						<textarea style="width:100%" class="textarea_intro_editor_simple" name="iso-{$TitleExploreTrips}" id="TitleExploreTrips" cols="255" rows="2">{$clsConfiguration->getValue($TitleExploreTrips)}</textarea>
 					</div>
 				</div>
 				<div class="row-span">
@@ -210,9 +99,15 @@
 					</div>
 				</div>
 			</fieldset>
-
 			<fieldset>
 				<legend>{$core->get_Lang("How it works")}</legend>
+				<div class="row-span">
+					<div class="fieldlabel">{$core->get_Lang('Title')}</div>
+					{assign var = TitleHowItWork value = TitleHowItWork_|cat:$_LANG_ID}
+					<div class="fieldarea">
+						<textarea style="width:100%" class="textarea_intro_editor_simple" name="iso-{$TitleHowItWork}" id="TitleHowItWork" cols="255" rows="2">{$clsConfiguration->getValue($TitleHowItWork)}</textarea>
+					</div>
+				</div>
 				{section name=i loop=5 start=1}
 					{assign var = k value = $smarty.section.i.index}
 					<fieldset class="how_it_work_{$k}">
@@ -246,14 +141,23 @@
 					</fieldset>
 				{/section}
 			</fieldset>
-
+			<fieldset>
+				<legend>{$core->get_Lang("The update news")}</legend>
+				<div class="row-span">
+					<div class="fieldlabel">{$core->get_Lang('Title')}</div>
+					{assign var = TitleUpdateNew value = TitleUpdateNew_|cat:$_LANG_ID}
+					<div class="fieldarea">
+						<textarea style="width:100%" class="textarea_intro_editor_simple" name="iso-{$TitleUpdateNew}" id="TitleUpdateNew" cols="255" rows="2">{$clsConfiguration->getValue($TitleUpdateNew)}</textarea>
+					</div>
+				</div>
+			</fieldset>
 			<fieldset>
 				<legend>{$core->get_Lang("Your perfect trip begins with a conversation")}</legend>
 				<div class="row-span">
 					<div class="fieldlabel">{$core->get_Lang('Title')}</div>
 					{assign var = TitlePerfectTrip value = TitlePerfectTrip_|cat:$_LANG_ID}
 					<div class="fieldarea">
-						<input type="text" class="text_32 full-width border_aaa" value="{$clsConfiguration->getValue($TitlePerfectTrip)}" name="iso-{$TitlePerfectTrip}"/>
+						<textarea style="width:100%" class="textarea_intro_editor_simple" name="iso-{$TitlePerfectTrip}" id="TitlePerfectTrip" cols="255" rows="2">{$clsConfiguration->getValue($TitlePerfectTrip)}</textarea>
 					</div>
 				</div>
 				<div class="row-span">
@@ -263,6 +167,38 @@
 						<textarea style="width:100%" class="textarea_intro_editor_simple" name="iso-{$IntroPerfectTrip}" id="IntroPerfectTrip" cols="255" rows="2">{$clsConfiguration->getValue($IntroPerfectTrip)}</textarea>
 					</div>
 				</div>
+				{section name=i loop=4 start=1}
+					{assign var = k value = $smarty.section.i.index}
+					<fieldset>
+						<legend>{$core->get_Lang("Photo $k")}</legend>
+						<div class="row-span">
+							<div class="fieldlabel">{$core->get_Lang("Choose pic")}</div>
+							<div class="fieldarea">
+								{assign var = TripPhoto value = TripPhoto|cat:$k|cat:_|cat:$_LANG_ID}
+								<img class="float-left mr-3" src="{$clsConfiguration->getValue($TripPhoto)}"
+									 width="40px" height="40px"/>
+								<input class="text_32 border_aaa bold" type="text" id="{$TripPhoto}"
+									   name="iso-{$TripPhoto}"
+									   value="{$clsConfiguration->getValue($TripPhoto)}"
+									   style="width:100%; max-width:300px; float:left" onClick="loadHelp(this)"
+									   readonly><a style="float:left; margin-left:4px; margin-top:-4px;" href="#"
+												   class="ajOpenDialog" isoman_for_id="{$TripPhoto}"
+												   isoman_name="{$TripPhoto}"><img
+											src="{$URL_IMAGES}/general/folder-32.png" border="0" title="Open"
+											alt="Open"/></a>
+							</div>
+						</div>
+						<div class="row-span">
+							<div class="fieldlabel">{$core->get_Lang("Photo name $k")}</div>
+							{assign var = TripPhotoName value = TripPhotoName|cat:$k|cat:_|cat:$_LANG_ID}
+							<div class="fieldarea">
+								<input type="text" class="text_32 full-width border_aaa"
+									   value="{$clsConfiguration->getValue($TripPhotoName)}"
+									   name="iso-{$TripPhotoName}"/>
+							</div>
+						</div>
+					</fieldset>
+				{/section}
 			</fieldset>
 			<fieldset>
 				<legend>{$core->get_Lang("SO, READY TO START?")}</legend>
@@ -270,7 +206,7 @@
 					<div class="fieldlabel">{$core->get_Lang('Title')}</div>
 					{assign var = TitleVideoPerfect value = TitleVideoPerfect_|cat:$_LANG_ID}
 					<div class="fieldarea">
-						<input type="text" class="text_32 full-width border_aaa" value="{$clsConfiguration->getValue($TitleVideoPerfect)}" name="iso-{$TitleVideoPerfect}"/>
+						<textarea style="width:100%" class="textarea_intro_editor_simple" name="iso-{$TitleVideoPerfect}" id="TitleVideoPerfect" cols="255" rows="2">{$clsConfiguration->getValue($TitleVideoPerfect)}</textarea>
 					</div>
 				</div>
 				<div class="row-span">

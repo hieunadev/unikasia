@@ -1,7 +1,7 @@
 <main>
     <section class="agencehnvoyces">
         <div class="container">
-            <h2 class="txthnvoyces">{$clsConfiguration->getValue('TitleAgenceHyour_'|cat:$_LANG_ID)}</h2>
+            <h2 class="txthnvoyces txt_underline">{$clsConfiguration->getValue('TitleAgenceHyour_'|cat:$_LANG_ID)|html_entity_decode}</h2>
             <div class="txtdeschnvoyces">{$clsConfiguration->getValue('IntroAgenceHyour_'|cat:$_LANG_ID)|html_entity_decode}</div>
             <div class="btn_viewm text-center">
                 <a href="#" class="btn btn_startnow">LET'S GO. START PLANNING NOW! <i class="fa-solid fa-right-long"
@@ -14,22 +14,22 @@
                     <p>{$core->get_Lang('WHERE DO YOU WANT TO GO?')}</p>
                     <button class="img-search" type="submit"><img src="{$URL_IMAGES}/home/Search.png" alt=""></button>
                     <div class="form-search">
-                        <input id="homeInputSearch" type="text" class="form-control" placeholder="{$core->get_Lang('Find a destination')}"
-                               autocomplete="on">
+                        <div class="inputSelectOption">
+                            <select theme="google" class="form-control" name="destination" id="destination_key" placeholder="{$core->get_Lang('Find a destination')}"  data-search="true">
+                                {$clsCountryEx->getSelectCountryCitySearch()}
+                            </select>
+                        </div>
                     </div>
                 </div>
             </form>
         </div>
     </section>
-
     <section class="explore_travel_styles">
         <div class="container">
             <div class="row">
                 <div class="col-4">
                     <div class="container justify-content-start">
-                        <h2 class="txt_travelstyle"><a href="#"
-                                                       title="Explore">{$clsConfiguration->getValue('TitleCatTour_'|cat:$_LANG_ID)}</a>
-                        </h2>
+                        <h2 class="txt_travelstyle txt_underline">{$clsConfiguration->getValue('TitleCatTour_'|cat:$_LANG_ID)|html_entity_decode}</h2>
                         <div class="txt_intro_travelstyle">{$clsConfiguration->getValue('IntroCatTour_'|cat:$_LANG_ID)|html_entity_decode}</div>
                     </div>
                 </div>
@@ -223,7 +223,7 @@
     {$core->getBlock("explore_our_trips")}
     <section class="icontxtworks">
         <div class="container justify-content-center">
-            <h2 class="txthowwork">{$core->get_Lang('How It Works')}</h2>
+            <h2 class="txthowwork txt_underline">{$clsConfiguration->getValue('TitleHowItWork_'|cat:$_LANG_ID)|html_entity_decode}</h2>
             <div class="row text-center">
                 <img src="{$URL_IMAGES}/home/duong_day.svg" alt="round" class="img_day">
                 {section name=i loop=5 start=1}
@@ -234,8 +234,8 @@
                                 <img src="{$clsConfiguration->getValue('IconHowItWorkStep'|cat:$k|cat:_|cat:$_LANG_ID)}"
                                      alt="Image">
                             </div>
-                            <h3>{$clsConfiguration->getValue('TitleHowItWorkStep'|cat:$k|cat:_|cat:$_LANG_ID)}</h3>
-                            <p>{$clsConfiguration->getValue('IntroHowItWorkStep'|cat:$k|cat:_|cat:$_LANG_ID)}</p>
+                            <h3>{$clsConfiguration->getValue('TitleHowItWorkStep'|cat:$k|cat:_|cat:$_LANG_ID)|html_entity_decode}</h3>
+                            <div class="introhowitwork">{$clsConfiguration->getValue('IntroHowItWorkStep'|cat:$k|cat:_|cat:$_LANG_ID)|html_entity_decode}</div>
                         </div>
                     </div>
                 {/section}
@@ -249,7 +249,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-8 d-flex flex-column justify-content-center">
-                    <h2 class="txt_pertrip">{$clsConfiguration->getValue('TitlePerfectTrip_'|cat:$_LANG_ID)}</h2>
+                    <h2 class="txt_pertrip txt_underline">{$clsConfiguration->getValue('TitlePerfectTrip_'|cat:$_LANG_ID)|html_entity_decode}</h2>
                     <p>Let's contact your back </p>
                     <div class="contact-txtico">
                         <a href="mailto:{$clsConfiguration->getValue('CompanyEmail')}">
@@ -267,23 +267,24 @@
                                     href="https://maps.google.it/maps?q={$clsConfiguration->getValue('CompanyAddress1_'|cat:$_LANG_ID)}" class="txtlinkmap" target="_blank">View Map</a>
                       </span>
                     </div>
-                    <p class="destxt">{$clsConfiguration->getValue('IntroPerfectTrip_'|cat:$_LANG_ID)}</p>
+                    <div class="destxt">{$clsConfiguration->getValue('IntroPerfectTrip_'|cat:$_LANG_ID)|html_entity_decode}</div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-8 ">
-                    <img src="{$URL_IMAGES}/home/pictrip1.png" alt="Image large" class="img-fluid img-cust-lar">
+                    <div class="infotripbegin_centerpic position-relative">
+                        <img src="{$clsConfiguration->getValue('TripPhoto1_'|cat:$_LANG_ID)}" alt="Image large" class="img-fluid img-cust-lar">
+                        <span class="alt_photo_trip">{$clsConfiguration->getValue('TripPhotoName1_'|cat:$_LANG_ID)}</span>
+                    </div>
                     <div class="row picsmall">
-                        <div class="col-6">
-                            <div class="image-wrapper">
-                                <img src="{$URL_IMAGES}/home/pictrip2.png" alt="Image Small 1"
-                                     class="img-fluid img-cust-smal">
+                        {section name=i loop=4 start=2}
+                            {assign var = k value = $smarty.section.i.index}
+                            <div class="col-6">
+                                <div class="image-wrapper position-relative">
+                                    <img src="{$clsConfiguration->getValue("TripPhoto$k"|cat:_|cat:$_LANG_ID)}" alt="Image Small 1"
+                                         class="img-fluid img-cust-smal">
+                                    <span class="alt_photo_trip">{$clsISO->limit_textIso($clsConfiguration->getValue("TripPhotoName$k"|cat:_|cat:$_LANG_ID), 5)}</span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="image-wrapper">
-                                <img src="{$URL_IMAGES}/home/pictrip3.png" alt="Image Small 2"
-                                     class="img-fluid img-cust-smal">
-                            </div>
-                        </div>
+                        {/section}
                     </div>
                 </div>
             </div>
@@ -304,9 +305,9 @@
                     </a>
                 </div>
                 <div class="col-lg-6 d-flex flex-column justify-content-center txt_readylets">
-                    <h2 class="txtready">{$clsConfiguration->getValue('TitleVideoPerfect_'|cat:$_LANG_ID)}</h2>
+                    <h2 class="txtready">{$clsConfiguration->getValue('TitleVideoPerfect_'|cat:$_LANG_ID)|html_entity_decode}</h2>
                     <div class="txtcomt">{$clsConfiguration->getValue('IntroVideoPerfect_'|cat:$_LANG_ID)|html_entity_decode}</div>
-                    <a class="readyToStart-btn">LET’S PLAN YOUR TRIP
+                    <a class="readyToStart-btn">{$core->get_Lang('LET’S PLAN YOUR TRIP')}
                         <img class="ms-2" src="https://unikasia.vietiso.com/isocms/templates/default/skin/images/hotel/ArrowRight.svg" alt="error">
                     </a>
                 </div>
@@ -314,7 +315,8 @@
         </div>
     </section>
 </main>
-
+<link rel="stylesheet" href="https://auasiatravel.com/isocms/templates/default/skin/js/select/select.css?ver=1715937452"/>
+<script src="https://auasiatravel.com/isocms/templates/default/skin/js/select/select.js?ver=1715937452"></script>
 <script>
     function autocomplete(inp, arr) {
         let currentFocus;
@@ -382,7 +384,7 @@
         }
     }
 
-    autocomplete(document.getElementById("homeInputSearch"), {$clsTour})
+    {*autocomplete(document.getElementById("homeInputSearch"), {$clsTour})*}
     $('#slider-area').owlCarousel({
         loop: true,
         autoplay: true,
@@ -429,4 +431,13 @@
             showDestination(country);
         })
     });
+    $(function() {
+        $('#destination_key').selectstyle({
+            width: 500,
+            height: 532,
+            theme: 'light',
+            onchange: function (val) {
+            }
+        });
+    })
 </script>

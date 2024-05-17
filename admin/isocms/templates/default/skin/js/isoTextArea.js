@@ -58,14 +58,13 @@
 			mobile: {
 				theme: 'mobile'
 			},
-			menubar: false,
 			selector: '#'+$editorID,
 			plugins: [
 				'advlist autolink lists link image charmap print preview anchor',
 				'searchreplace visualblocks code fullscreen',
 				'insertdatetime media table contextmenu paste code'
 		  	],
-			toolbar: 'undo redo | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link',
+			toolbar: 'undo redo | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link',
 			extended_valid_elements : "iframe[src|frameborder|style|scrolling|class|width|height|name|align]",
 			menubar: true,
             relative_urls: false,

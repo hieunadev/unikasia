@@ -13,7 +13,7 @@
                     {/if}
 
                     <div class="intro_top short_content wrap_form_banner-txt" data-height="150">
-                        {$HOTEL_INTRO}
+                    {$clsConfiguration->getValue($site_hotel_intro)|html_entity_decode}
                     </div>
             {* <form class="form_banner d-flex" action="" method="post">
                 <div class="search_hotel">

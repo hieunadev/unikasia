@@ -88,11 +88,8 @@
                         <div class="item-hotel-list">
                             <h2 class="head-title-hotel">{$TD}: <span>{$core->get_Lang('Find')} {$totalRecord}
                                     {$core->get_Lang('accommodations')}</span></h2>
-                            {* <div class="intro_top short_content" data-height="100">
-                    {$HOTEL_INTRO}
-                </div> *}
-                            <div class="intro_top short_content content-hotelss-txt" data-height="150">
-                                {$clsConfiguration->getValue($site_hotel_intro)|html_entity_decode}
+                            <div class="intro_top short_content content-hotelss-txt" data-height="100">
+                                {$HOTEL_INTRO}
                             </div>
                             {assign var=totalHotel value=$listHotelPlace|@count}
                             <div class="box-hotel-style">
@@ -120,44 +117,7 @@
 
             </div>
 
-
-            <h2 class="reviewViewed">{$core->get_Lang('Reviews')}</h2>
-            {assign var=totalHotel value=$listHotel|@count}
-            <div class="reviewViewed-list">
-                <div class="images-slide owl-carousel_overview owl-carousel ">
-                    {section name=i loop=$allTestimonial}
-                        {$allTestimonial[i]}
-                        <div class="reviewViewed-items">
-                            {assign var = getImageStar value = $clsHotel->getHotelStar($allTestimonial[i].hotel_id)}
-                            <a class="photo" href="{$allTestimonial[i].link}" title="{$allTestimonial[i].title}">
-                                <img class="img-responsive img100" id="images"
-                                    src="{$clsHotel->getImage($allTestimonial[i].hotel_id, 405, 326)}"
-                                    alt="{$allTestimonial[i].title}" />
-                            </a>
-                            <div class="reviewViewed-content">
-                                {if $getImageStar != null}
-                                    <img class="star" height="19" src="{$getImageStar}" alt="star" style="width: auto" />
-                                {/if}
-                                <h3 class="reviewViewed-content_title">
-                                    <a title="{$allTestimonial[i].title}"
-                                        href="{$allTestimonial[i].link}">{$allTestimonial[i].title}</a>
-                                </h3>
-                                <p class="reviewViewed-content_txt">{$allTestimonial[i].address}</p>
-                                <div class="reviewViewed-user">
-                                    <img class="img-responsive img100" id="user-icon"
-                                        src="{$clsHotel->getImage($allTestimonial[i].hotel_id, 48, 48)}"
-                                        alt="{$allTestimonial[i].title}" />
-                                    <div class="reviewViewed-info_user">
-                                        <h4>{$allTestimonial[i].title}</h4>
-                                        <p>{$allTestimonial[i].title}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    {/section}
-                </div>
-            </div>
+            {$core->getBlock('customer_review')}
 
             <div class="attractions">
                 {$core->getBlock('top_attraction')}
@@ -171,8 +131,8 @@
 
 </div>
 <script type="text/javascript">
-    // var $_View_more = '{$core->get_Lang("View more")}';
-    // var $_Less_more = '{$core->get_Lang("Less more")}';
+    var $_View_more = '{$core->get_Lang("View more")}';
+    var $_Less_more = '{$core->get_Lang("Less more")}';
     var $Loading = '{$core->get_Lang("Loading")}';
     var selectmonth='{$core->get_Lang("select month")}';
     var $_Expand_all = '{$core->get_Lang("Expand all")}';
@@ -182,38 +142,38 @@
 
 {literal}
     <script>
-        // function toggleShorted(_this, e){
-        // 	e.preventDefault();
-        // 	if(!$(_this).hasClass('clicked')){
-        // 		$(_this).parent('.short_content')
-        // 				.css('height','auto')
-        // 				.removeClass('shorted')
-        // 				.addClass('lessmore');
-        // 		$(_this).addClass('clicked').text($_Less_more);
-        // 	} else {
-        // 		var max_height = $(_this).attr('max_height');
-        // 		$(_this).parent('.short_content')
-        // 				.css('height',max_height)
-        // 				.addClass('shorted')
-        // 				.removeClass('lessmore');
-        // 		$(_this).removeClass('clicked').text($_View_more);
-        // 	}
-        // 	return false;
-        // }
-        // $(function(){
-        // 	if($('.short_content').length){
-        // 		$('.short_content').each((_i, _elem) => {
-        // 			var _max_height = $(_elem).data('height'),
-        // 					_origin_height = $(_elem).outerHeight(false);
-        // 			if(parseInt(_max_height) < _origin_height){
-        // 				$(_elem)
-        // 						.height(_max_height)
-        // 						.addClass('shorted')
-        // 						.append('<a class="more" max_height="'+_max_height+'" onClick="toggleShorted(this,event)">'+$_View_more+'</a>');
-        // 			}
-        // 		});
-        // 	}
-        // });
+        function toggleShorted(_this, e){
+        	e.preventDefault();
+        	if(!$(_this).hasClass('clicked')){
+        		$(_this).parent('.short_content')
+        				.css('height','auto')
+        				.removeClass('shorted')
+        				.addClass('lessmore');
+        		$(_this).addClass('clicked').text($_Less_more);
+        	} else {
+        		var max_height = $(_this).attr('max_height');
+        		$(_this).parent('.short_content')
+        				.css('height',max_height)
+        				.addClass('shorted')
+        				.removeClass('lessmore');
+        		$(_this).removeClass('clicked').text($_View_more);
+        	}
+        	return false;
+        }
+        $(function(){
+        	if($('.short_content').length){
+        		$('.short_content').each((_i, _elem) => {
+        			var _max_height = $(_elem).data('height'),
+        					_origin_height = $(_elem).outerHeight(false);
+        			if(parseInt(_max_height) < _origin_height){
+        				$(_elem)
+        						.height(_max_height)
+        						.addClass('shorted')
+        						.append('<a class="more" max_height="'+_max_height+'" onClick="toggleShorted(this,event)">'+$_View_more+'</a>');
+        			}
+        		});
+        	}
+        });
     </script>
 {/literal}
 <script src="{$URL_JS}/jquery.countdown.min.js?v={$upd_version}"></script>

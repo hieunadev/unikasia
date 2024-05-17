@@ -318,10 +318,10 @@ class Hotel extends dbBasic {
 			$image = $oneTable['image'];
 			return $clsISO->tripslashImage($image,$w,$h);
 		}
-
-		$noimage = URL_IMAGES.'/hotels/no-image.png';
+		$noimage = URL_IMAGES.'/hotel/no-image.png';
 		return $noimage;
 	}
+    
 	function getUrlImage($pvalTable){
 		global $clsISO;
 		$oneTable = $this->getOne($pvalTable, "image");

@@ -1,0 +1,122 @@
+.destination_travel_guide_detail_body .trvgd_page_container {
+    padding-top: 20px;
+}
+
+.trvgd_main {
+    margin-top: 40px;
+}
+
+.trvgd_similar {
+    margin-top: 92px;
+    margin-bottom: 80px;
+}
+
+.trvgd_similar_title h2 {
+    color: var(--Neutral-1, #111d37);
+    font-family: "SF Pro Display";
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 52px;
+    margin-bottom: 24px;
+}
+
+.trvgd_similar_content {
+    position: relative;
+}
+
+.trvgd_similar_content .owl-prev,
+.trvgd_similar_content .owl-next {
+    display: flex;
+    width: 48px;
+    height: 48px;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    border-radius: 100px;
+    background: var(--Neutral-6, #fff);
+    box-shadow: 0px 12px 32px 0px rgba(125, 135, 158, 0.09);
+}
+
+.trvgd_similar_content .owl-prev {
+    position: absolute;
+    top: 50%;
+    left: -79px;
+}
+
+.trvgd_similar_content .owl-next {
+    position: absolute;
+    top: 50%;
+    right: -79px;
+}
+
+.trvgd_similar_item img {
+    border-radius: 8px;
+}
+
+.trvgd_similar_item_intro {
+    padding: 25px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    border-radius: 8px;
+    border: 1px solid var(--Neutral-5, #f0f0f0);
+    background: #fff;
+    margin-top: -16px;
+    position: relative;
+}
+
+.trvgd_similar_item_title h3 a {
+    color: var(--Neutral-1, #111d37);
+    font-family: "SF Pro Display";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 32px;
+}
+
+.trvgd_similar_item_place {
+    color: var(--Neutral-2, #434b5c);
+    font-family: "SF Pro Display";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+.trvgd_similar_item_place .fa-location-dot {
+    /* width: 24px;
+    height: 24px; */
+    color: #004ea8;
+    margin-right: 8px;
+}
+
+.trvgd_similar_item_description {
+    color: var(--Neutral-3, #959aa4);
+    font-family: "SF Pro Display";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+}
+
+.trvgd_recent_view {
+    margin-bottom: 120px;
+}
+
+.trvgd_recent_view_title h2 {
+    color: var(--Neutral-1, #111d37);
+    text-align: left;
+    font-family: "SF Pro Display";
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 52px;
+    margin-bottom: 24px;
+}
+
+.trvgd_similar_item img {
+    width: 100%;
+}

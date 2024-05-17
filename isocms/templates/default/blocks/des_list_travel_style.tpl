@@ -112,63 +112,7 @@
             });
         }
 
-        if ($('.des_gallery_list').length > 0) {
-            var $owl = $('.des_gallery_list');
-            $owl.owlCarousel({
-                lazyLoad: true,
-                loop: true,
-                margin: 0,
-                nav: true,
-                navText: ["<i class='fa-solid fa-angle-left'></i>", "<i class='fa-solid fa-angle-right'></i>"],
-                dots: false,
-                // autoplay: false,
-                // autoplayTimeout:3000,	
-                // animateOut: 'fadeOut',
-                // animateIn: 'fadeIn',
-                autoHeight: true,
-                responsiveClass: true,
-                responsive: {
-                    0: {
-                        items: 1
-                    },
-                    600: {
-                        items: 3
-                    },
-                    1000: {
-                        items: 4
-                    }
-                }
-            });
-        }
-
-        if ($('.des_list_hotel_carousel').length > 0) {
-            var $owl = $('.des_list_hotel_carousel');
-            $owl.owlCarousel({
-                lazyLoad: true,
-                loop: true,
-                margin: 32,
-                nav: true,
-                navText: ["<i class='fa-solid fa-angle-left'></i>", "<i class='fa-solid fa-angle-right'></i>"],
-                dots: false,
-                // autoplay: false,
-                // autoplayTimeout:3000,	
-                // animateOut: 'fadeOut',
-                // animateIn: 'fadeIn',
-                autoHeight: true,
-                responsiveClass: true,
-                responsive: {
-                    0: {
-                        items: 1
-                    },
-                    600: {
-                        items: 3
-                    },
-                    1000: {
-                        items: 4
-                    }
-                }
-            });
-        }
+        
     });
 </script>
 {/literal}

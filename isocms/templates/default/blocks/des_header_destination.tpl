@@ -76,6 +76,11 @@
         border-radius: 8px;
         background: var(--Primary, #FFA718);
         color: #fff !important;
+        transition: ease-in-out all 0.3s;
+    }
+
+    .des_header_link:hover {
+        background: #E88F00;
     }
 </style>
 {/literal}

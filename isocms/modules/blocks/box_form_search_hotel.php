@@ -5,6 +5,10 @@ global $mod,$act,$smarty,$core,$extLang,$clsISO,$package_id,$show,$_LANG_ID,$cls
 
 
 $clsCountry=new Country();$smarty->assign('clsCountry',$clsCountry);
+$cond = "is_trash=0 and is_online=1";
+
+$assign_list['country_id'] = $country_id;
+
 
 $clsCity=new City();$smarty->assign('clsCity',$clsCity);
 

@@ -5,6 +5,8 @@ function default_default() {
     $cond = "is_trash=0 and is_online=1";
     $lstHotel = $clsHotel->getAll($cond);
     $assign_list['lstHotel'] = $lstHotel;
+    $clsCountryEx = new Country();
+    $assign_list["clsCountryEx"] = $clsCountryEx;
 }
 function default_tag() {
 	global $assign_list, $_CONFIG, $core, $dbconn, $mod, $act, $_LANG_ID, $title_page, $description_page, $keyword_page, $extLang,$cat_id, $tag_id;

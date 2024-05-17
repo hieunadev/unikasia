@@ -5,6 +5,7 @@
         </div>
     </form>
     <div class="des_travel_guide_category">
+        {if ($mod eq 'destination' && $act eq 'travel_guide') || ($mod eq 'destination' && $act eq 'travel_guide_detail')}
         <div class="des_travel_guide_category_title">
             <h2>Vietnam</h2>
         </div>
@@ -15,7 +16,20 @@
             <a href="#" title="Preparing for your trip">Preparing for your trip</a>
             <a href="#" title="Travel files">Travel files</a>
         </div>
+        {elseif $mod eq 'destination' && $act eq 'attraction'}
+        <div class="des_travel_guide_category_title">
+            <h2>Hanoi</h2>
+        </div>
+        <div class="des_travel_guide_category_list">
+            <a href="#" title="Exciting trip">Exciting trip</a>
+            <a href="#" title="Hotel">Hotel</a>
+            <a href="#" title="Place to go">Place to go</a>
+            <a href="#" title="Cusine">Cusine</a>
+            <a href="#" title="Culture Hanoi">Culture Hanoi</a>
+        </div>
+        {/if}
     </div>
+    {if ($mod eq 'destination' && $act eq 'travel_guide') || ($mod eq 'destination' && $act eq 'travel_guide_detail')}
     <div class="des_travel_guide_exciting_trip">
         <div class="des_travel_guide_exciting_trip_title">
             <h2>EXCITING TRIP</h2>
@@ -117,6 +131,67 @@
         </div>
 
     </div>
+    {elseif $mod eq 'destination' && $act eq 'attraction'}
+    <div class="des_travel_guide_most_read">
+        <div class="des_travel_guide_most_read_title">
+            <h2>MOST READ</h2>
+        </div>
+        <div class="des_travel_guide_most_read_content">
+            <div class="des_travel_guide_most_read_item">
+                <div class="row">
+                    <div class="col-4 col-sm-3 col-md-12 col-lg-4">
+                        <img src="https://images.unsplash.com/photo-1715522196138-1da0d3669bc5?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDl8RnpvM3p1T0hONnd8fGVufDB8fHx8fA%3D%3D" width="83" height="83" alt="Vietnam Airlines Launches New Routes To Singapore, Cambodia">
+                    </div>
+                    <div class="col-8 col-sm-9 col-md-12 col-lg-8">
+                        <h3>Vietnam Airlines Launches New Routes To Singapore, Cambodia</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="des_travel_guide_most_read_item">
+                <div class="row">
+                    <div class="col-4 col-sm-3 col-md-12 col-lg-4">
+                        <img src="https://images.unsplash.com/photo-1715522196138-1da0d3669bc5?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDl8RnpvM3p1T0hONnd8fGVufDB8fHx8fA%3D%3D" width="83" height="83" alt="Vietnam Airlines Launches New Routes To Singapore, Cambodia">
+                    </div>
+                    <div class="col-8 col-sm-9 col-md-12 col-lg-8">
+                        <h3>Vietnam Airlines Launches New Routes To Singapore, Cambodia</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="des_travel_guide_most_read_item">
+                <div class="row">
+                    <div class="col-4 col-sm-3 col-md-12 col-lg-4">
+                        <img src="https://images.unsplash.com/photo-1715522196138-1da0d3669bc5?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDl8RnpvM3p1T0hONnd8fGVufDB8fHx8fA%3D%3D" width="83" height="83" alt="Vietnam Airlines Launches New Routes To Singapore, Cambodia">
+                    </div>
+                    <div class="col-8 col-sm-9 col-md-12 col-lg-8">
+                        <h3>Vietnam Airlines Launches New Routes To Singapore, Cambodia</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="des_travel_guide_most_read_item">
+                <div class="row">
+                    <div class="col-4 col-sm-3 col-md-12 col-lg-4">
+                        <img src="https://images.unsplash.com/photo-1715522196138-1da0d3669bc5?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDl8RnpvM3p1T0hONnd8fGVufDB8fHx8fA%3D%3D" width="83" height="83" alt="Vietnam Airlines Launches New Routes To Singapore, Cambodia">
+                    </div>
+                    <div class="col-8 col-sm-9 col-md-12 col-lg-8">
+                        <h3>Vietnam Airlines Launches New Routes To Singapore, Cambodia</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="des_travel_guide_most_read_item">
+                <div class="row">
+                    <div class="col-4 col-sm-3 col-md-12 col-lg-4">
+                        <img src="https://images.unsplash.com/photo-1715522196138-1da0d3669bc5?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDl8RnpvM3p1T0hONnd8fGVufDB8fHx8fA%3D%3D" width="83" height="83" alt="Vietnam Airlines Launches New Routes To Singapore, Cambodia">
+                    </div>
+                    <div class="col-8 col-sm-9 col-md-12 col-lg-8">
+                        <h3>Vietnam Airlines Launches New Routes To Singapore, Cambodia</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {/if}
+
 </div>
 
 {literal}
@@ -313,6 +388,12 @@
         font-style: normal;
         font-weight: 400;
         line-height: 24px;
+        transition: ease-in-out all 0.3s;
+    }
+
+    .des_travel_guide_exciting_trip_detail .box_right a:hover,
+    .des_travel_guide_tour_more_title a:hover {
+        background: #E88F00;
     }
 
     .des_travel_guide_exciting_trip_item {
@@ -364,6 +445,56 @@
         border-radius: 8px;
         background: var(--Primary, #FFA718);
         color: #fff;
+        transition: ease-in-out all 0.3s;
     }
+
+    .des_travel_guide_most_read {
+        padding: 32px 0 8px;
+        border-top: 1px solid var(--Neutral-4, #D3DCE1);
+        border-bottom: 1px solid var(--Neutral-4, #D3DCE1);
+    }
+
+    .des_travel_guide_most_read_title h2 {
+        color: var(--Neutral-2, #434B5C);
+        font-family: "SF Pro Display";
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 32px;
+        margin-bottom: 24px;
+    }
+
+    .des_travel_guide_most_read_item {
+        margin-bottom: 24px;
+    }
+
+    .des_travel_guide_most_read_item img {
+        border-radius: 4px;
+    }
+
+    .des_travel_guide_most_read_item h3 {
+        color: var(--Neutral-1, #111D37);
+        font-family: "SF Pro Display";
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 20px;
+    }
+
+    @media (min-width: 1200px) {}
+
+    @media (min-width: 992px) and (max-width: 1199px) {}
+
+    @media (min-width: 768px) and (max-width: 991px) {
+        .des_travel_guide_most_read_item img {
+            width: unset;
+            height: auto;
+            margin-bottom: 7px;
+        }
+    }
+
+    @media (min-width: 576px) and (max-width: 767px) {}
+
+    @media (max-width: 575px) {}
 </style>
 {/literal}

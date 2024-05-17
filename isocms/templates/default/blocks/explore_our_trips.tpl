@@ -1,6 +1,6 @@
 <section class="exploretrip">
     <div class="container">
-        <h2 class="txtourtrip">{$clsConfiguration->getValue('TitleExploreTrips_'|cat:$_LANG_ID)|html_entity_decode}</h2>
+        <h2 class="txtourtrip txt_underline">{$clsConfiguration->getValue('TitleExploreTrips_'|cat:$_LANG_ID)|html_entity_decode}</h2>
         <p class="txtexper">{$clsConfiguration->getValue('IntroExploreTrips_'|cat:$_LANG_ID)|html_entity_decode}</p>
         <div class="row justify-content-center">
             {section name=i loop=$listTourExplore}

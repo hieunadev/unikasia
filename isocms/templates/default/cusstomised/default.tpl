@@ -60,9 +60,9 @@
                     <div class="col-lg-9">
                         <h2 class="result_searchss">{$core->get_Lang('Find')}: {$totalRecord}
                             {$core->get_Lang('accommodations')}</h2>
-                        {* <div class="intro_top short_content content-hotelss-txt" data-height="150">
+                        <div class="intro_top short_content content-hotelss-txt" data-height="150">
                             {$clsConfiguration->getValue($site_hotel_intro)|html_entity_decode}
-                        </div> *}
+                        </div>
                         {assign var=totalHotel value=$listHotel|@count}
                         <div class="box-hotel-style">
                             {section name=i loop=$listHotel}
@@ -73,56 +73,28 @@
                         </div>
                         {if $totalPage gt '1'}
                             <div class="pagination pager">
-                                {assign var="prevPage" value=null}
-                                {foreach from=$paginationLinks item=page}
-                                    {if $prevPage !== null and $page.page != $prevPage + 1}
-                                        {if $page.page != 2 and $prevPage != $totalPage - 1}
-                                            <li class="page-item">
-                                                <span class="hideTextPaging">...</span>
-                                            </li>
-                                        {/if}
-                                    {/if}
-                                    <li class="page-item {if $page.is_current}active{/if}">
-                                        <a class="page-item-link" href="{$page.url}">{$page.page}</a>
-                                    </li>
-                                    {assign var="prevPage" value=$page.page}
-                                {/foreach}
+                                {$page_view}
                             </div>
                         {/if}
 
                         <h2 class="recentlyViewed">{$core->get_Lang('Recently viewed')}</h2>
-                        <div class="recentlyViewed-dev">
-                            <div class="clicked-details"></div>
-                        </div>
-
-
-                        <div class="recentlyViewed-mobile">
-                            <div class="sec_relate_box-slide owl-carousel_overviewReviews owl-carousel ">
-                                <div class="clicked-details">
-
-                                </div>
-                            </div>
-                        </div>
-
+                        <div class="clicked-details"></div>
                         <button class="btnShowViewed">{$core->get_Lang('More')}</button>
-
                         <button class="btnNoneViewed">{$core->get_Lang('Collapse all')}</button>
-
-
                     </div>
                 </div>
 
             </div>
-            {* <div class="reviewViewed">
+            <div class="reviewViewed">
                 {$core->getBlock('customer_review')}
-            </div> *}
+            </div>
         </div>
     </div>
 </div>
 
-{* <div class="attractions">
+<div class="attractions">
     {$core->getBlock('top_attraction')}
-</div> *}
+</div>
 <div class="alsoLike">
     {$core->getBlock('alsoLike_hotel')}
 </div>

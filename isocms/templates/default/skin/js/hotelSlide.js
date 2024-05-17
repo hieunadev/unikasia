@@ -141,4 +141,25 @@ $(document).ready(function(){
             }
         }
     });
+
+    $('.owl-carousel_overviewReviews').owlCarousel({
+        margin: 36,
+        center: true,
+        loop: true,
+        nav: true,
+        dots: false,
+        autoplay: true,
+        autoplayTimeout: 3000,
+        smartSpeed: 1000,
+        navText: ["<i class='fa fa-chevron-left fa-2xl'></i>", "<i class='fa fa-chevron-right fa-2xl'></i>"],
+        responsive: {
+            0: {
+                items: 1
+            },
+            600: {
+                items: 1
+            },
+        }
+    });
+
 });

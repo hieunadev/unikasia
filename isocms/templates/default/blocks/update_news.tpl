@@ -1,6 +1,6 @@
 <section class="newsupdate">
     <div class="container">
-        <h2 class="txtupnews">{$core->get_Lang('The Update News')}</h2>
+        <h2 class="txtupnews txt_underline">{$clsConfiguration->getValue('TitleUpdateNew_'|cat:$_LANG_ID)|html_entity_decode}</h2>
         <div id="carousel_home_news" class="owl-carousel owl-theme">
             {section name=i loop=$lstBlog}
             <div class="item">

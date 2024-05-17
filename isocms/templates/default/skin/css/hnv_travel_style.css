@@ -277,12 +277,19 @@ body {
     gap: 12px;
     border-radius: 8px;
     background: var(--Primary, #ffa718);
+    transition: ease-in-out all 0.3s;
 }
 .trvs_when_vn .tab_destination .des_item .btn_link_act a {
     color: #fff;
 }
+.trvs_when_vn .tab_destination .des_item .btn_link_act:hover {
+    background: #e88f00;
+}
 .trvs_when_vn .tab_destination .owl-item:nth-child(2n) {
     margin-top: 110px;
+}
+.des_item .map .fa-map-marker-alt {
+    color: #004ea8;
 }
 .trvs_when_vn .owl-prev,
 .trvs_when_vn .owl-next {
@@ -380,6 +387,11 @@ body {
     border: 1px solid var(--Primary, #ffa718);
     color: #ffa718;
     margin-top: 78px;
+    transition: ease-in-out all 0.3s;
+}
+.trvs_list_blog .trvs_item_blog_link:hover {
+    background: #e88f00;
+    color: #fff;
 }
 .trvs_list_blog .box_right .trvs_item_blog {
     padding: 16px;
@@ -521,6 +533,12 @@ body {
 }
 .destination_travel_style_body #nah_also_like .readyToStart {
     display: none;
+}
+.destination_travel_style_body .btn-exploremore {
+    transition: ease-in-out all 0.3s;
+}
+.destination_travel_style_body .btn-exploremore:hover {
+    background: #e88f00 !important;
 }
 @media screen and (max-width: 1170px) {
 }
