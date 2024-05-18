@@ -4,7 +4,9 @@ global $_FRONTLANG;
 
 $_FRONTLANG["Reviews, Q&amp;A"]="Reviews";
 $_FRONTLANG["Title (optional)"]="Title";
+$_FRONTLANG["See results"]="See results";
 $_FRONTLANG["Only from"]="From";
+$_FRONTLANG["Show Sort & filter"]="Show Sort & filter";
 $_FRONTLANG["STAY TO"]="STAY TO";
 $_FRONTLANG["Show all reviews"]="Show all reviews";
 $_FRONTLANG["Overview"]="Overview";

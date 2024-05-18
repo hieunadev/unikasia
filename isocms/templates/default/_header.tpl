@@ -5,7 +5,7 @@
                 <div class="container">
                     <div class="row border-bottom" id="header_top">
                         <div class="col-md-6 d-flex align-items-center ps-0">
-                            <p class="txt_pcust">Who knows Asia better than us? We are his children, we live there!</p>
+                            <p class="txt_pcust">{$core->get_Lang('Who knows Asia better than us? We are his children, we live there!')}</p>
                         </div>
                         <div class="col-md-6 d-flex align-items-center justify-content-end icon-txt-mail-span pe-0">
                             <img src="{$URL_IMAGES}/home/Message.png" alt="ico_mail" class="img_icon">
@@ -30,9 +30,13 @@
                                 </a></h1>
                         </div>
                         <div class="col-lg-8 col-md-12 col-sm1-12 d-none d-md-flex align-items-center justify-content-center">
-                            <div class="dropdown">
+                            <div class="dropdown txt_dropdown">
                                 <button class="btn dropdown-toggle txt_dropdown" type="button" data-bs-toggle="dropdown">
+<<<<<<< Updated upstream
                                     Destinations <i class="fas fa-angle-down"></i>
+=======
+                                    {$core->get_Lang('Destinations')} <i class="fas fa-angle-down ms-1"></i>
+>>>>>>> Stashed changes
                                 </button>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="#">Destination 1</a>
@@ -40,6 +44,7 @@
                                     <a class="dropdown-item" href="#">Destination 3</a>
                                 </div>
                             </div>
+<<<<<<< Updated upstream
                             <div class="dropdown">
                                 <button class="btn dropdown-toggle txt_dropdown" type="button" data-bs-toggle="dropdown">
                                     Travel Styles <i class="fas fa-angle-down"></i>
@@ -53,6 +58,11 @@
                             <div class="dropdown txt_dropdown">
                                 <button class="btn dropdown-toggle txt_dropdown" type="button" data-bs-toggle="dropdown">
                                     Stay <i class="fas fa-angle-down"></i>
+=======
+                            <div class="dropdown txt_dropdown">
+                                <button class="btn dropdown-toggle txt_dropdown" type="button" data-bs-toggle="dropdown">
+                                    {$core->get_Lang('Stay')} <i class="fas fa-angle-down ms-1"></i>
+>>>>>>> Stashed changes
                                 </button>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="#">Stay 1</a>
@@ -62,7 +72,11 @@
                             </div>
                             <div class="dropdown txt_dropdown">
                                 <button class="btn dropdown-toggle txt_dropdown" type="button" data-bs-toggle="dropdown">
+<<<<<<< Updated upstream
                                     Cruises <i class="fas fa-angle-down"></i>
+=======
+                                    {$core->get_Lang('Cruises')} <i class="fas fa-angle-down ms-1"></i>
+>>>>>>> Stashed changes
                                 </button>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="#">Cruise 1</a>
@@ -72,7 +86,11 @@
                             </div>
                             <div class="dropdown txt_dropdown">
                                 <button class="btn dropdown-toggle txt_dropdown" type="button" data-bs-toggle="dropdown">
+<<<<<<< Updated upstream
                                     Blog <i class="fas fa-angle-down"></i>
+=======
+                                    {$core->get_Lang('Blog')} <i class="fas fa-angle-down ms-1"></i>
+>>>>>>> Stashed changes
                                 </button>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="#">Cruise 1</a>
@@ -81,18 +99,21 @@
                                 </div>
                             </div>
                             <div class="button txt_dropdown">
-                                <button class="btn txt_dropdown">About Us</button>
+                                <button class="btn txt_dropdown">{$core->get_Lang('About Us')}</button>
                             </div>
                         </div>
                         <div class="col-lg-2 col-md-2 d-flex align-items-center justify-content-end pe-0">
                             <div class="drop_down ml-3">
                                 <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: none;">
+<<<<<<< Updated upstream
                                     <i class="flag-icon flag-icon-us"></i>
+=======
+                                    <img src="{$URL_IMAGES}/home/flag_us.png" alt="">
+>>>>>>> Stashed changes
                                     <i class="far fa-angle-down text-white ms-2"></i>
                                 </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="#"><i class="flag-icon flag-icon-vn"></i> Vietnamese</a>
-                                    <a class="dropdown-item" href="#"><i class="flag-icon flag-icon-fr"></i> Français</a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="--bs-dropdown-min-width: unset;">
+                                    <a class="dropdown-item" href="#"><img src="{$URL_IMAGES}/home/flag_france.png" alt=""></a>
                                 </div>
                             </div>
                         </div>
@@ -112,8 +133,8 @@
         {if ($mod eq 'destination' && $act eq 'travel_guide_detail') || ($mod eq 'destination' && $act eq 'attraction')}
         {$core->getBlock('des_header_travel_guide_detail')}
         {/if}
+        {if $mod eq 'homepackage'}
+            {$core->getBlock('slider_home')}
+        {/if}
     </div>
-    {if $mod eq 'homepackage'}
-    {$core->getBlock('slider_home')}
-    {/if}
 </header>

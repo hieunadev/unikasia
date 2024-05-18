@@ -72,6 +72,7 @@
                             {/section}
                         </div>
                         {if $totalPage gt '1'}
+<<<<<<< Updated upstream
                             <div class="pagination pager">
                                 {assign var="prevPage" value=null}
                                 {foreach from=$paginationLinks item=page}
@@ -100,6 +101,55 @@
                             <div class="sec_relate_box-slide owl-carousel_overviewReviews owl-carousel ">
                                 <div class="clicked-details">
 
+=======
+                                <div class="pagination pager">
+                                    {if $currentPage > 1}
+                                        <li class="pagin-prev">
+                                            <a class="pagin-prev-link" href="{$prevLink}" aria-label="Previous">
+                                            <img src="{$URL_IMAGES}/hotel/prevPage.svg" alt="error" />
+                                            
+                                            </a>
+                                        </li>
+                                    {/if}
+
+                                    {assign var="prevPage" value=null}
+                                    {foreach from=$paginationLinks item=page}
+                                        {if $page.page == 1 or $page.page == $totalPage or 
+                    ($page.page >= $currentPage - 2 and $page.page <= $currentPage + 2)}
+                                        {if $prevPage !== null and $page.page != $prevPage + 1}
+                                            <li class="page-item">
+                                                <span class="hideTextPaging">...</span>
+                                            </li>
+                                        {/if}
+                                        <li class="page-item {if $page.is_current}active{/if}">
+                                            <a class="page-item-link" href="{$page.url}">{$page.page}</a>
+                                        </li>
+                                        {assign var="prevPage" value=$page.page}
+                                    {/if}
+                                {/foreach}
+
+                                {if $currentPage < $totalPage}
+                                    <li class="pagin-next">
+                                        <a class="pagin-next-link" href="{$nextLink}" aria-label="Next">
+                                        <img src="{$URL_IMAGES}/hotel/nextPage.svg" alt="error" />
+                                        </a>
+                                    </li>
+                                {/if}
+                            </div>
+
+                        {/if}
+
+                        <h2 class="recentlyViewed">{$core->get_Lang('Recently viewed')}</h2>
+                        <div class="recentlyViewed-dev">
+                            <div class="clicked-details"></div>
+                        </div>
+
+
+                        <div class="recentlyViewed-mobile">
+                            <div class="sec_relate_box-slide owl-carousel_overviewReviews owl-carousel ">
+                                <div class="clicked-details">
+
+>>>>>>> Stashed changes
                                 </div>
                             </div>
                         </div>
@@ -112,6 +162,12 @@
                     </div>
                 </div>
 
+<<<<<<< Updated upstream
+=======
+            </div>
+            <div class="reviewViewed">
+                {$core->getBlock('customer_review')}
+>>>>>>> Stashed changes
             </div>
             {* <div class="reviewViewed">
                 {$core->getBlock('customer_review')}
@@ -120,9 +176,15 @@
     </div>
 </div>
 
+<<<<<<< Updated upstream
 {* <div class="attractions">
     {$core->getBlock('top_attraction')}
 </div> *}
+=======
+<div class="attractions">
+    {$core->getBlock('top_attraction')}
+</div>
+>>>>>>> Stashed changes
 <div class="alsoLike">
     {$core->getBlock('alsoLike_hotel')}
 </div>

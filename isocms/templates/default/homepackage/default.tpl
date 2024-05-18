@@ -1,5 +1,5 @@
 <main>
-    <section class="agencehnvoyces">
+        <section class="agencehnvoyces">
         <div class="container">
             <h2 class="txthnvoyces txt_underline">{$clsConfiguration->getValue('TitleAgenceHyour_'|cat:$_LANG_ID)|html_entity_decode}</h2>
             <div class="txtdeschnvoyces">{$clsConfiguration->getValue('IntroAgenceHyour_'|cat:$_LANG_ID)|html_entity_decode}</div>
@@ -12,7 +12,7 @@
             <form action="" method="post" class="find__trip--form">
                 <div class="input_key_word">
                     <p>{$core->get_Lang('WHERE DO YOU WANT TO GO?')}</p>
-                    <button class="img-search" type="submit"><img src="{$URL_IMAGES}/home/Search.png" alt=""></button>
+                    <i class="fa-sharp fa-light fa-magnifying-glass img-search"></i>
                     <div class="form-search">
                         <div class="inputSelectOption">
                             <select theme="google" class="form-control" name="destination" id="destination_key" placeholder="{$core->get_Lang('Find a destination')}"  data-search="true">
@@ -383,16 +383,26 @@
             return word.replace(regex, "<strong>$&</strong>");
         }
     }
-
     {*autocomplete(document.getElementById("homeInputSearch"), {$clsTour})*}
+
+<<<<<<< Updated upstream
+    {*autocomplete(document.getElementById("homeInputSearch"), {$clsTour})*}
+=======
+>>>>>>> Stashed changes
     $('#slider-area').owlCarousel({
         loop: true,
         autoplay: true,
-        items: 1
+        items: 1,
+        dots: false,
+        nav: false
     })
+    $("#header_fixed").css("position", "relative")
     $(window).scroll(function () {
         let isScrolled = $(this).scrollTop() > 0;
-        $("#header_fixed").toggleClass("nah_header_sticky", isScrolled);
+        $("#header_fixed").toggleClass("nah_header_sticky", isScrolled).css({
+            "box-shadow": isScrolled ? "0px 12px 32px 0px #7d879e17" : "",
+            "position": isScrolled ? "" : "relative"
+        });
         $(".bground_header .txt_header1").toggleClass('nah_header_top_scroll', isScrolled);
         $(".nah_bg_header_bot").toggleClass('bg-white', isScrolled);
         $("#header_top").toggleClass('border-bottom', !isScrolled);

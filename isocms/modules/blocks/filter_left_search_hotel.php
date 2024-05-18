@@ -4,9 +4,11 @@ global $mod,$act,$assign_list, $act,$dbconn,$show,$smarty, $core,$extLang,$clsIS
 
 $clsProperty = new Property();$smarty->assign('clsProperty',$clsProperty);
 $clsCity = new City();$smarty->assign('clsCity',$clsCity);
+$clsHotel = new Hotel();$smarty->assign('clsHotel',$clsHotel);
+$listHotel = $clsHotel->getAll("is_trash=0 and is_online=1", $clsHotel->pkey.",title, price_avg");
+$assign_list['listHotel'] = $currentPage;
 $listTypeHotel = $clsProperty->getAll("is_trash=0 and type='TypeHotel' order by order_no asc",$clsProperty->pkey.",title");
 $smarty->assign('listTypeHotel',$listTypeHotel);
-
 $slug_country=Input::get('slug_country','');
 $res = $clsCountryEx->getAll("is_trash=0 and is_online=1 and slug='$slug_country' LIMIT 0,1",$clsCountryEx->pkey);
 $country_id = $res[0][$clsCountryEx->pkey];
@@ -87,6 +89,7 @@ if(isset($_POST['search_hotel_left']) &&  $_POST['search_hotel_left']=='search_h
     }
     if(!empty($star_id)) {
         $link .= ($hasCond?'&':'?').'star_id='.$clsISO->makeSlashListFromArrayComma($star_id);
+        $smarty->assign('star_id', $star_id);
         $hasCond = true;
     }
 
@@ -115,6 +118,7 @@ if(isset($_POST['search_hotel_left']) &&  $_POST['search_hotel_left']=='search_h
 	$smarty->assign('number_adults', $number_adults);
 	$number_child = Input::get('number_child','');
 	$smarty->assign('number_child', $number_child);
+
 }
 
 ?>

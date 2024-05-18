@@ -14,7 +14,32 @@ p {
 #Overview {
     margin-top: 60px;
 }
+<<<<<<< Updated upstream
 
+=======
+.pagination a .fa-angle-left:before {
+    font-size: 16px !important;
+}
+.pagination a .fa-angle-right:before {
+    font-size: 16px !important;
+}
+.customerSayTitle .txt_reviews:nth-last-child(-n+2)::after {
+    content: "";
+    position: absolute;
+    bottom: 11px;
+    right: 50%;
+    left: 68%;
+    width: 60%;
+    transform: translate(-50%, -50%);
+    height: 5px;
+    background-color: #FFA718;
+    z-index: -1;
+}
+.hotel_default_body .customerSayTitle h2 {
+    z-index: 2;
+    position: relative;
+}
+>>>>>>> Stashed changes
 .filter-title-mobile {
     font-size: 18px;
     font-weight: 600;
@@ -1287,6 +1312,7 @@ ul {
     width: calc(100% - 296px - 33px);
 }
 
+<<<<<<< Updated upstream
 /* .list-hotel-item {
     display: flex;
     gap: 0 33px;
@@ -1295,6 +1321,16 @@ ul {
     display: flex;
     gap: 0 33px;
 }
+=======
+.list-hotel-item {
+    display: flex;
+    gap: 0 33px;
+}
+.nsdt_row_content {
+    display: flex;
+    gap: 0 33px;
+}
+>>>>>>> Stashed changes
 
 .container {
     max-width: 1396px;
@@ -3403,6 +3439,7 @@ align-items: center; */
 .box_body_title label {
     display: block !important;
 }
+<<<<<<< Updated upstream
 
 .hotelPlacePage .pager {
     padding-left: 0;
@@ -3469,6 +3506,81 @@ align-items: center; */
     padding: 10px 16px;
 }
 
+=======
+.box_body_filter_titleRank {
+    color: #434B5C;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 36px;
+    margin: 32px 0;
+}
+.hotelPlacePage .pager {
+    padding-left: 0;
+    margin-bottom: 78px;
+    text-align: center;
+    list-style: none;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin-top: 60px
+}
+
+.pagination .active .page-item-link {
+    background-color: rgba(255, 167, 24, 0.2);
+    color: #434B5C;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    border-radius: 4px;
+    text-align: center;
+    padding: 8px;
+}
+
+.pagination .total_page {
+    border: 1px solid #d7d7d7;
+    width: auto;
+    padding: 0 20px
+}
+
+.pagination a {
+    display: inline-block;
+    float: none;
+    text-align: center;
+    color: #D3DCE1;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    background: #fff;
+    border: none;
+    margin-right: 0;
+    position: relative;
+}
+
+.pagination .disabled {
+    display: none
+}
+
+.pagination a.current {
+    background: linear-gradient(rgba(255, 167, 24, 0.4), rgba(255, 167, 24, 0.4));
+    color: #434B5C;
+    border-radius: 3px;
+}
+
+.mapModal iframe {
+    width: 100%;
+}
+
+.mapModal .modal-header {
+    padding: 0;
+    justify-content: right;
+}
+
+.mapModal .modal-header .btn-close {
+    margin: 0;
+    padding: 10px 16px;
+}
+
+>>>>>>> Stashed changes
 .share_box {
     position: relative
 }

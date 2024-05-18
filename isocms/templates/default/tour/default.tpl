@@ -1,3 +1,31 @@
+{literal}
+<style>
+    .destination_ul li {
+        margin: 0 0 5px;
+    }
+    .destination_ul li .d-flex .title_place {
+        font-size: 14px;
+        font-weight: 600;
+        display: flex;
+        flex-direction: column;
+    }
+    .destination_ul li .d-flex span.label_place {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 5px;
+        width: auto;
+        min-width: 65px;
+        text-align: center;
+        margin-left: auto;
+        font-size: 14px;
+    }
+    .destination_ul li .d-flex span.label_place .text {
+        color: #EBA743;
+    }
+</style>
+{/literal}
 <main id="nah_list_tour">
     <section class="title_tour_h2"><h2>VIETNAM TOURS PACKAGES</h2></section>
     <section class="breadcrumb container">
@@ -287,3 +315,21 @@
     {$core->getBlock("top_attraction")}
     {$core->getBlock('also_like')}
 </main>
+<select theme="google" class="form-control" name="destination" id="destination_key" placeholder="{$core->get_Lang('Country, City')}..."  data-search="true">
+    {$clsCountryEx->getSelectCountryCitySearch()}
+</select>
+<link rel="stylesheet" href="https://auasiatravel.com/isocms/templates/default/skin/js/select/select.css?ver=1715937452"/>
+<script src="https://auasiatravel.com/isocms/templates/default/skin/js/select/select.js?ver=1715937452"></script>
+{literal}
+<script>
+    $(function() {
+        $('#destination_key').selectstyle({
+            width: 500,
+            height: 532,
+            theme: 'light',
+            onchange: function (val) {
+            }
+        });
+    })
+</script>
+{/literal}

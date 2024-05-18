@@ -4,7 +4,9 @@ global $_FRONTLANG;
 
 $_FRONTLANG["HOTELS"]="HÔTELS";
 $_FRONTLANG["Overview"]="Aperçu";
+$_FRONTLANG["See results"]="Voir les résultats";
 $_FRONTLANG["STAY"]="RESTER";
+$_FRONTLANG["Show Sort & filter"]="Afficher Trier et filtrer";
 $_FRONTLANG["STAY TO"]="RESTER À";
 $_FRONTLANG["Accommodation"]="Hébergement";
 $_FRONTLANG["Add-ons"]="Modules complémentaires";

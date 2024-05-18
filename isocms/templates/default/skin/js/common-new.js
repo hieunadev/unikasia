@@ -58,6 +58,9 @@ $(document).ready(function () {
         items:4
     })
 
+
+
+
     var clickedDetails = JSON.parse(sessionStorage.getItem('clickedDetails')) || [];
     var maxItemsToShow = 3;
     

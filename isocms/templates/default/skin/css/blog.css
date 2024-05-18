@@ -49,6 +49,22 @@ body {
     line-height: 24px;  
   }
 
+.breadcrumb-item + .breadcrumb-item::before {
+  content: none; 
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+  content: "";
+  display: inline-block;
+  margin: 0 8px; 
+  font-family: "Font Awesome 6 Pro";
+  font-weight: 900;
+  content: "\f054";
+  color: #ffa718; 
+}
+
+
+
 .breadcrumb .container {
     display: flex;
     align-items: center;
@@ -695,7 +711,11 @@ input[type="checkbox"] {
 	display: inline-flex;
 	flex-direction: column;
 	gap: 24px;
+<<<<<<< Updated upstream
 	width: 908px;
+=======
+	max-width: 908px;
+>>>>>>> Stashed changes
 }
 
 .introduct_txt  {
@@ -912,7 +932,11 @@ input[type="checkbox"] {
 }
 
 .border_exploremore {
+<<<<<<< Updated upstream
 	width: 296px;
+=======
+	max-width: 296px;
+>>>>>>> Stashed changes
 	height: 152px;
 	flex-shrink: 0;
 	fill: linear-gradient(180deg, rgba(24, 28, 26, 0.48) 0%, rgba(24, 28, 26, 0.00) 100%);

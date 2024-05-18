@@ -62,7 +62,7 @@
 
                             </div>
                             <div class="offcanvas-body">
-                                {$core->getBlock('filter_left_search_hotel')}
+                                {* {$core->getBlock('filter_left_search_hotel')} *}
                             </div>
                         </div>
                         <div class="modal fade" id="filter_search" tabindex="-1" role="dialog"
@@ -101,8 +101,38 @@
                             </div>
                             {if $totalPage gt '1'}
                                 <div class="pagination pager">
-                                    {$page_view}
-                                </div>
+                                {if $currentPage > 1}
+                                    <li class="pagin-prev">
+                                        <a class="pagin-prev-link" href="{$prevLink}" aria-label="Previous">
+                                        <img src="{$URL_IMAGES}/hotel/prevPage.svg" alt="error" />
+                                        </a>
+                                    </li>
+                                {/if}
+
+                                {assign var="prevPage" value=null}
+                                {foreach from=$paginationLinks item=page}
+                                    {if $page.page == 1 or $page.page == $totalPage or 
+                ($page.page >= $currentPage - 2 and $page.page <= $currentPage + 2)}
+                                    {if $prevPage !== null and $page.page != $prevPage + 1}
+                                        <li class="page-item">
+                                            <span class="hideTextPaging">...</span>
+                                        </li>
+                                    {/if}
+                                    <li class="page-item {if $page.is_current}active{/if}">
+                                        <a class="page-item-link" href="{$page.url}">{$page.page}</a>
+                                    </li>
+                                    {assign var="prevPage" value=$page.page}
+                                {/if}
+                            {/foreach}
+
+                            {if $currentPage < $totalPage}
+                                <li class="pagin-next">
+                                    <a class="pagin-next-link" href="{$nextLink}" aria-label="Next">
+                                    <img src="{$URL_IMAGES}/hotel/nextPage.svg" alt="error" />
+                                    </a>
+                                </li>
+                            {/if}
+                        </div>
                             {/if}
 
                             <h2 class="recentlyViewed">{$core->get_Lang('Recently viewed')}</h2>

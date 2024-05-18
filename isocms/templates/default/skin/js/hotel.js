@@ -1,4 +1,6 @@
 $(document).ready(function () {
+
+    
     $(".result_search").click(function() {
         $("#filter_search").show();
     });

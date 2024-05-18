@@ -1,7 +1,8 @@
 <div id="wrapper">
     <div id="slider-area" class="owl-carousel">
         {section name=i loop=$listSlide}
-        <div class="slider-area-child" style="background-image: url({$listSlide[i].image});">
+        <div class="slider-area-child">
+            <img src="{$clsSlide->getImage($listSlide[i].slide_id, 1920, 791)}" alt="{$listSlide[i].slug}">
             <div class="txt_header_center">
                 <h2 class="txt_h2">{$listSlide[i].title}</h2>
                 <div class="text_pp">{$listSlide[i].text}</div>

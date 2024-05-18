@@ -132,20 +132,27 @@
 	<div id="btn-tailor-fixed"><a href="#" class="tailor_btn_fixed" title="TAILOR-MADE TRAVEL"> <div class="tailor_img_fixed"> <img src="https://unikasia.vietiso.com/isocms/templates/default/skin/images/destination/hn_voyages.png" alt=""> </div>
 		TAILOR-MADE TRAVEL
 	</a></div>
-	<div class="footer-content-nav-icon">
-		<div class="footer-icon-img"><a href="#" title="Youtube"> <img
-						src="{$URL_IMAGES}/icon/yt.svg" alt="error-yt"
-						id="footer-icon-mess"> </a></div>
-		<div class="footer-icon-img"><a href="#" title="Twitter"> <img
-						src="{$URL_IMAGES}/icon/tw.svg" alt="error-tw"
-						id="footer-icon-mess" class="icon-color"> </a></div>
-		<div class="footer-icon-img"><a href="#" title="instagram"> <img
-						src="{$URL_IMAGES}/icon/ins.svg" alt="error-ins"
-						id="footer-icon-mess"> </a></div>
-		<div class="footer-icon-img"><a href="#" title="Facebook"> <img
-						src="{$URL_IMAGES}/icon/fb.svg" alt="error-fb"
-						id="footer-icon-mess"> </a></div>
-	</div>
+{*	<div class="footer-content-nav-icon">*}
+{*		<div class="footer-icon-img"><a href="#" title="Youtube"> <img*}
+{*						src="{$URL_IMAGES}/icon/yt.svg" alt="error-yt"*}
+{*						id="footer-icon-mess"> </a></div>*}
+{*		<div class="footer-icon-img"><a href="#" title="Twitter"> <img*}
+{*						src="{$URL_IMAGES}/icon/tw.svg" alt="error-tw"*}
+{*						id="footer-icon-mess" class="icon-color"> </a></div>*}
+{*		<div class="footer-icon-img"><a href="#" title="instagram"> <img*}
+{*						src="{$URL_IMAGES}/icon/ins.svg" alt="error-ins"*}
+{*						id="footer-icon-mess"> </a></div>*}
+{*		<div class="footer-icon-img"><a href="#" title="Facebook"> <img*}
+{*						src="{$URL_IMAGES}/icon/fb.svg" alt="error-fb"*}
+{*						id="footer-icon-mess"> </a></div>*}
+{*	</div>*}
+		<div id="icon-fixed">
+			<div class="social-icons"><a href="#" class="social-icon"> <i class="fa-brands fa-youtube"></i> </a> <a
+						href="#" class="social-icon"> <i class="fa-brands fa-twitter"></i> </a> <a href="#"
+																								   class="social-icon">
+					<i class="fa-brands fa-instagram"></i> </a> <a href="#" class="social-icon"> <i class="fa-brands fa-facebook-f"></i> </a>
+			</div>
+		</div>
 	{/if}
 {/if}
 {/if}
