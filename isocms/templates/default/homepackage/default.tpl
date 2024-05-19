@@ -385,10 +385,6 @@
     }
     {*autocomplete(document.getElementById("homeInputSearch"), {$clsTour})*}
 
-<<<<<<< Updated upstream
-    {*autocomplete(document.getElementById("homeInputSearch"), {$clsTour})*}
-=======
->>>>>>> Stashed changes
     $('#slider-area').owlCarousel({
         loop: true,
         autoplay: true,
