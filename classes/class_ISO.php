@@ -1316,7 +1316,7 @@ class ISO
 			1 => $last_name
 		);
 	}
-	function limit_textIso($text, $limit)
+	function limit_textIso($text, `$limit`)
 	{
 		$text = strip_tags($text);
 		if (str_word_count($text, 0) > $limit) {

@@ -23,9 +23,9 @@
 </div>
 
 <div class="readyToStart">
-    <h2 class="readyToStart-title">{$clsConfiguration->getValue('TitleVideoPerfect_'|cat:$_LANG_ID|html_entity_decode)}</h2>
+    <h2 class="readyToStart-title">{$clsConfiguration->getValue('TitleVideoPerfect_'|cat:$_LANG_ID)|@html_entity_decode}</h2>
     <div class="txt-readyToStart">
-        {$clsConfiguration->getValue('IntroVideoPerfect_'|cat:$_LANG_ID)|html_entity_decode}
+        {$clsConfiguration->getValue('IntroVideoPerfect_'|cat:$_LANG_ID)|@html_entity_decode}
     </div>
     <div class="btn-readyToStart">
         <button class="readyToStart-btn">
@@ -35,5 +35,4 @@
             </a>
         </button>
     </div>
-
 </div>

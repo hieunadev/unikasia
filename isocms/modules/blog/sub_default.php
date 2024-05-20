@@ -14,12 +14,7 @@ function default_default(){
 	$clsBlogCategory = new BlogCategory(); $assign_list['clsBlogCategory'] = $clsBlogCategory;
 	$clsPagination = new Pagination();
 	$clsHotel = new Hotel(); $assign_list['clsHotel']=$clsHotel;
-	$clsGuide=new Guide(); $assign_list["clsGuide"] = $clsGuide;
-	$clsGuideCat = new GuideCat(); $assign_list["clsGuideCat"] = $clsGuideCat;
-	$clsGuideCatStore = new GuideCatStore(); 
-	$assign_list["clsGuideCatStore"] = $clsGuideCatStore;
-    
-   
+
 	ini_set('display_errors',1);
     error_reporting(E_ERROR & ~E_STRICT);//E_ALL
     $WebpImage = new WebpImage(); 
@@ -30,22 +25,22 @@ function default_default(){
         //print_r($source);die('xxx');
     }
     
-
-    
-    
     #
-	$listGuideCat = $clsGuideCat->getAll("is_trash=0 and is_online=1 order by order_no ASC",$clsGuideCat->pkey.',slug,title');
-	$assign_list['listGuideCat'] = $listGuideCat; 
-	unset($listGuideCat);
+	$lstBlogCat = $clsBlogCategory->getAll("is_trash=0 and is_online=1 order by order_no ASC",$clsBlogCategory->pkey.',slug,title');
+	$assign_list['lstBlogCat'] = $lstBlogCat;
+
 	#
 	$show = isset($_GET['show']) ? $_GET['show'] : '';
 	$assign_list['show'] = $show;
 	$type = isset($_GET['type']) ? $_GET['type'] : '';
 	$assign_list['type'] = $type;
-	
-	if($show=='Default'){
-			
+	$listCountry = $clsCountryEx->getAll("is_trash=0 order by order_no",$clsCountryEx->pkey.',slug,title');
+	$assign_list['listCountry'] = $listCountry;
+
+	if ($show=='Default'){
+
 	}else{
+
 		$slug_country = isset($_GET['slug_country'])?$_GET['slug_country']:'';
 		$res = $clsCountryEx->getAll("is_trash=0 and is_online=1 and slug='$slug_country' LIMIT 0,1",$clsCountryEx->pkey.',slug,title');
 		$country_id = $res[0][$clsCountryEx->pkey];
@@ -133,8 +128,7 @@ function default_default(){
 		header("Location: ".$clsISO->getLink('blog'));
 		exit();
 	}
-	$assign_list['lstBlogs']=$lstBlogs; 
-	
+	$assign_list['lstBlogs']=$lstBlogs;
 	
 	unset($lstBlogs);
 	$assign_list['page_view']=$page_view; unset($page_view);
@@ -191,7 +185,7 @@ function default_cat(){
 	$clsTag = new Tag(); $assign_list['clsTag']=$clsTag;
 	$clsBlogCategory = new BlogCategory(); $assign_list['clsBlogCategory'] = $clsBlogCategory;
 	$clsPagination = new Pagination();
-	
+
 	if($show!='Cat'){
 	$slug_country = isset($_GET['slug_country'])?$_GET['slug_country']:'';
 	$res = $clsCountryEx->getAll("is_trash=0 and is_online=1 and slug='$slug_country' LIMIT 0,1",$clsCountryEx->pkey.',title');
@@ -225,6 +219,7 @@ function default_cat(){
 	}
 	$assign_list['blogcat_id']=$assign_list['cat_id']=$blogcat_id;
 	$assign_list['oneItem']=$oneItem;
+
 	
 	#
 	$title_page = $oneItem[0]['title'];

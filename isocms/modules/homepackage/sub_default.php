@@ -5,7 +5,7 @@ function default_default(){
     #
     $clsTour = new Tour();
     $clsPartner = new Partner();
-    $clsCountry = new Country();
+    $clsCountry = new Country(); $assign_list["clsCountry"] = $clsCountry;
 
     $listTour = $clsTour->getAll("", "title");
     $listTourExplore = $clsTour->getAll("is_trash=0 limit 6");
@@ -18,7 +18,13 @@ function default_default(){
     $assign_list['clsPartner'] = $listPartner;
     $assign_list['lstCountry'] = $lstCountry;
 
-    $countries = array_map(function($item) {return $item["slug"]; }, $lstCountry);
+//    $countries = array_map(function($item) {return $item["slug"]; }, $lstCountry);
+    $countries = array_map(function($country) {
+        return [
+            'country_id' => $country['country_id'],
+            'slug' => $country['slug']
+        ];
+    }, $lstCountry);
     $assign_list["countries"] = $countries;
     # Tour Cateogry
     $clsClassTable = new TourCategory();

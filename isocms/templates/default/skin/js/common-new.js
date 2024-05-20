@@ -19,7 +19,7 @@ $(document).ready(function () {
 
     $('#explore_travel_styles_carousel').owlCarousel({
         loop: true,
-        margin: 10,
+        margin: 0,
         dots: false,
         nav: true,
         navText: ["<i class='fa fa-chevron-left'></i>", "<i class='fa fa-chevron-right'></i>"],

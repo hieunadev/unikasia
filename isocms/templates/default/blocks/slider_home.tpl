@@ -7,7 +7,7 @@
                 <h2 class="txt_h2">{$listSlide[i].title}</h2>
                 <div class="text_pp">{$listSlide[i].text}</div>
                 <div class="btn_follows text-center">
-                    <a href="#" class="btn btn-follows">{$listSlide[i].btn_slide}<i class="fa fa-long-arrow-right"
+                    <a href="#" class="btn btn-follows btn-hover-home">{$listSlide[i].btn_slide}<i class="fa fa-long-arrow-right"
                                                                      style="color: #ffffff; margin-left: 8px;"></i></a>
                 </div>
             </div>

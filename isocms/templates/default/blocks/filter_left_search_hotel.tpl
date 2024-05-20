@@ -89,8 +89,12 @@
             <div class="box_filter_body">
                 <div class="filter_list_item nsdt_filter-price-hotel">
                     <div class="nsdt_checkPriceHotel">
+
                         {section name=i loop=$lstPriceRange}
                             {assign var=check value=$clsISO->checkInArray($price_range,$lstPriceRange[i].hotel_price_range_id)}
+                            {assign var=checkPriceRange value={$queryString}}
+                            {assign var=starIdArray value=explode(',', $starIds)}
+
                             <div class="check_ipt">
                                 <input type="checkbox" name="price_range[]" class="input_item typeSearch"
                                     value="{$lstPriceRange[i].hotel_price_range_id}" {if $check} checked {/if}
@@ -103,10 +107,6 @@
 
                     {assign var=price_range_min value=$lstPriceRange[0].hotel_price_range_id}
                     {assign var=price_range_max value=$lstPriceRange[count($lstPriceRange)-1].hotel_price_range_id}
-<<<<<<< Updated upstream
-                    {* {$lstPriceRange|var_dump} *}
-=======
->>>>>>> Stashed changes
                     {section name=i loop=$lstPriceRange}
                         <div class="nsdt_getPriceHotel">
                             {$lstPriceRange[i].hotel_price_range_id}
@@ -121,7 +121,6 @@
                     <div class="price-hotel-items">
                         <div id="price_0" class="price-hotel-itemMin"></div>
                         <div id="price_1" class="price-hotel-itemMax"></div>
-
                     </div>
 
                     <div id="slider-price2" class="mb10"></div>
@@ -129,27 +128,6 @@
                 </div>
             </div>
         </div>
-<<<<<<< Updated upstream
-</div>
-<div class="find_Box">
-    <div class="box_body_filter_title">
-        {$core->get_Lang('Rank')}
-    </div>
-    <div class="box_filter_body">
-        <div class="filter_list_item">
-            {assign var=stars value=$clsISO->listStar(6)}
-            {section name=i loop=$stars}
-                {assign var=check value=$clsISO->checkInArray($star_id,$stars[i].star_id)}
-                <div class="check_ipt">
-                    <input type="checkbox" name="star_id[]" class="form-check-input input_item typeSearch checkRankHotel"
-                        value="{$stars[i].star_id}" {if $check} checked {/if} id="star{$smarty.section.i.iteration}">
-                    {if $stars[i].star_id == 1}
-                        <label class="labelCheck" for="star{$smarty.section.i.iteration}">{$stars[i].title}</label>
-                    {else}
-                        <label class="labelCheck" for="star{$smarty.section.i.iteration}">{$stars[i].star_id} <img
-                                style="margin-left: 8px;" src="{$URL_IMAGES}/hotel/star.svg" alt="error"></label>
-                    {/if}
-=======
 
         <div class="find_Box">
             <div class="box_body_filter_titleRank">
@@ -173,31 +151,10 @@
                         </div>
                     {/section}
 
->>>>>>> Stashed changes
                 </div>
                 <span class="readmore">{$core->get_Lang('More')}</span>
             </div>
         </div>
-<<<<<<< Updated upstream
-        <span class="readmore">{$core->get_Lang('More')}</span>
-    </div>
-</div>
-<div class="find_Box">
-    <div class="box_body_filter_title">
-        {$core->get_Lang('Type of accommodations')}
-    </div>
-    <div class="box_filter_body">
-        <div class="filter_list_item">
-            {section name=i loop=$listTypeHotel}
-                {assign var=hotel_property_id value=$listTypeHotel[i].property_id}
-                {assign var=hotel_property_title value=$listTypeHotel[i].title}
-                {assign var=check value=$clsISO->checkInArray($type_hotel,$hotel_property_id)}
-                <div class="check_ipt checkSizeFilter">
-                    <input type="checkbox" class="form-check-input input_item typeSearch checkTypeAccountHotel"
-                        name="type_hotel[]" value="{$hotel_property_id}" {if $check} checked {/if}
-                        id="typeHotel{$smarty.section.i.iteration}">
-                    <label class="labelCheck" for="typeHotel{$smarty.section.i.iteration}">{$hotel_property_title}</label>
-=======
         <div class="find_Box">
             <div class="box_body_filter_title">
                 {$core->get_Lang('Type of accommodations')}
@@ -217,7 +174,6 @@
                         </div>
                     {/section}
 
->>>>>>> Stashed changes
                 </div>
                 <span class="readmore">{$core->get_Lang('More')}</span>
             </div>
@@ -227,11 +183,6 @@
     </form>
 </div>
 
-<<<<<<< Updated upstream
-</form>
-<button id="nsdt_btnSubmitFilterMobile">{$core->get_Lang('See results')}</button>
-=======
->>>>>>> Stashed changes
 </div>
 <script>
     var max_price_value = '{$price_range_max}';
@@ -259,77 +210,6 @@
 
 {literal}
     <script>
-<<<<<<< Updated upstream
-        // $(function() {
-        //     var minPrice = Math.min.apply(null, price_range);
-        //     var maxPrice = Math.max.apply(null, price_range);
-
-        //     function updateSliderTitles(ui) {
-        //         var id0 = ui.values[0];
-        //         var id1 = ui.values[1];
-        //         $("#price_0").html("$" + PriceRange_title[id0]);
-        //         $("#price_1").html("$" + PriceRange_title[id1]);
-        //     }
-
-        //     $("#slider-price2").slider({
-        //         range: true,
-        //         min: parseInt(min_price_value),
-        //         max: parseInt(max_price_value),
-        //         values: [parseInt(min_price_value), parseInt(max_price_value)],
-        //         slide: function(event, ui) {
-        //             updateSliderTitles(ui);
-        //         },
-        //         stop: function(event, ui) {
-        //             minPrice = ui.values[0];
-        //             maxPrice = ui.values[1];
-        //             if (minPrice >= maxPrice) {
-        //                 minPrice = maxPrice - 1;
-        //                 $("#slider-price2").slider("values", [minPrice, maxPrice]);
-        //             }
-
-        //             if (maxPrice <= minPrice) {
-        //                 maxPrice = minPrice + 1;
-        //                 $("#slider-price2").slider("values", [minPrice, maxPrice]);
-        //             }
-        //             $("input[name='price_range[]']").each(function() {
-        //                 var price = parseInt($(this).val());
-        //                 if (price >= minPrice && price <= maxPrice) {
-        //                     $(this).prop("checked", true);
-        //                 } else {
-        //                     $(this).prop("checked", false);
-        //                 }
-        //             });
-        //             $('#search_hotel_left').submit();
-        //         }
-        //     });
-
-
-
-        //     function updatePriceElements() {
-        //         var minPrice = Math.min.apply(null, price_range);
-        //         var maxPrice = Math.max.apply(null, price_range);
-        //         $("#slider-price2").slider("values", [minPrice, maxPrice]);
-
-        //         $("#price_0").html("$" + PriceRange_title[minPrice]);
-        //         $("#price_1").html("$" + PriceRange_title[maxPrice]);
-        //     }
-
-        //     updateSliderTitles({ values: [0, 1] });
-        //     updatePriceElements();
-
-        //     if (minPrice < 2) {
-        //         document.getElementById("price_0").innerHTML = 0;
-        //     } else if (minPrice >= 2 && minPrice <= 6) {
-        //         $("#price_0").html(PriceRange_title[minPrice]);
-        //         $("#price_0").text($("#slider-price2").slider("values", 0));
-        //     } else {
-        //         document.getElementById("price_0").innerHTML = minPrice;
-        //     }
-        //     $("#price_0").text($("#slider-price2").slider("values", 0));
-        //     $("#price_1").text($("#price-range2").slider("values", 1));
-
-        // });
-=======
         $(function() {
             var minPrice = Math.min.apply(null, price_range);
             var maxPrice = Math.max.apply(null, price_range);
@@ -361,6 +241,11 @@
                         maxPrice = minPrice + 1;
                         $("#slider-price2").slider("values", [minPrice, maxPrice]);
                     }
+
+                    $("#price_0").text("$" + PriceRange_title[minPrice]);
+                    $("#price_1").text("$" + PriceRange_title[maxPrice]);
+
+                    
                     $("input[name='price_range[]']").each(function() {
                         var price = parseInt($(this).val());
                         if (price >= minPrice && price <= maxPrice) {
@@ -394,12 +279,11 @@
             } else {
                 document.getElementById("price_0").innerHTML = minPrice;
             }
-            $("#price_0").text($("#slider-price2").slider("values", 0));
-            $("#price_1").text($("#price-range2").slider("values", 1));
+
 
         });
->>>>>>> Stashed changes
-
+        $("#price_0").text($("#slider-price2").slider("values", 0));
+        $("#price_1").text($("#price-range2").slider("values", 1));
 
 
         $(function() {
@@ -438,10 +322,7 @@
             });
         });
 
-
         $(function() {
-<<<<<<< Updated upstream
-=======
             $('.checkCityDesTop').click(function() {
                 var url = $(this).next('label').find('a.filter_link').attr('href');
                 window.location.href = url;
@@ -450,7 +331,6 @@
 
 
         $(function() {
->>>>>>> Stashed changes
             function debounce(func, delay) {
                 let debounceTimer;
                 return function() {
@@ -460,23 +340,10 @@
                     debounceTimer = setTimeout(() => func.apply(context, args), delay);
                 };
             }
-<<<<<<< Updated upstream
-            $('.checkRankHotel').change(function() {
-                var checkboxValue = $(this).val();
-                $('#search_hotel_left').submit();
-            });
-            $('.checkTypeAccountHotel').change(function() {
-                var checkboxValueType = $(this).val();
-                debounce(function() {
-                    $('#cityFilterForm').submit();
-                }, 2000)();
-            });
-=======
 
             $('#checkCityDesTop').click(function() {
                 $('#search_hotel_left').submit();
             });
->>>>>>> Stashed changes
 
             $('#search_hotel_left .typeSearch').change(function() {
                 $(this).closest('form').submit();

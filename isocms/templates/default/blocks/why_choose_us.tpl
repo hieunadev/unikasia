@@ -5,7 +5,7 @@
             {section name=i loop=$listWhy}
             <div class="col-lg-4 col-md-4 col-sm-4">
                 <div class="white-box">
-                    <img src="{$listWhy[i].image}" alt="{$listWhy[i].title}">
+                    <img class="reason_img" src="{$listWhy[i].image}" alt="{$listWhy[i].title}">
                     <h3>{$listWhy[i].title}</h3>
                     <p>{$listWhy[i].intro|html_entity_decode}</p>
                 </div>
@@ -16,7 +16,7 @@
                 <div class="row">
                     {section name=i loop=$listPartner}
                     <div class="linkbooktour">
-                        <a href="{$listPartner[i].url}" title="{$listPartner[i].title}">
+                        <a href="{$listPartner[i].url}" title="{$listPartner[i].title}" target="_blank">
                             <img src="{$listPartner[i].image}" alt="{$listPartner[i].slug}" class="img-fluid"
                                  width="138" height="66">
                         </a>

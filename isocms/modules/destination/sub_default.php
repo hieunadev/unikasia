@@ -30,7 +30,7 @@ function default_place()
     // $clsCountry->SetDebug(1);
     $arr    =   $clsCountry->getAll('is_trash=0 and is_online=1 and country_id = 1', '*');
     // die;
-    $clsISO->dump($arr);
+    // $clsISO->dump($arr);
 
     // $city_id	=	1;
     // $assign_list['city_id'] = $city_id;

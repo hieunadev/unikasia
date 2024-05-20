@@ -4,9 +4,19 @@ global $core, $smarty, $mod, $act,$clsISO,$package_id,$deviceType;
 
 $clsWhy = new Why();
 $clsPartner = new Partner();
-$listWhy = $clsWhy->getAll("is_trash = 0 and is_online = 1 order by order_no ASC limit 3");
-$listPartner = $clsPartner->getAll("is_trash = 0 and is_online = 1 order by order_no ASC limit 3");
 
+switch ($mod) {
+    case "homepackage":
+        $type = "HOME";
+        break;
+    case "destination":
+        $type = "DESTINATION";
+        break;
+    default:
+        $type = "";
+}
+
+$listWhy = $clsWhy->getAll("is_trash = 0 and type = '$type' order by order_no ASC limit 3");
 $smarty->assign('listWhy', $listWhy);
 //$smarty->assign('listPartner', $listPartner);
 

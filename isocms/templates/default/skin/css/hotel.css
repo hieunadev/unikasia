@@ -14,9 +14,6 @@ p {
 #Overview {
     margin-top: 60px;
 }
-<<<<<<< Updated upstream
-
-=======
 .pagination a .fa-angle-left:before {
     font-size: 16px !important;
 }
@@ -39,7 +36,6 @@ p {
     z-index: 2;
     position: relative;
 }
->>>>>>> Stashed changes
 .filter-title-mobile {
     font-size: 18px;
     font-weight: 600;
@@ -1312,16 +1308,6 @@ ul {
     width: calc(100% - 296px - 33px);
 }
 
-<<<<<<< Updated upstream
-/* .list-hotel-item {
-    display: flex;
-    gap: 0 33px;
-} */
-.nsdt_row_content {
-    display: flex;
-    gap: 0 33px;
-}
-=======
 .list-hotel-item {
     display: flex;
     gap: 0 33px;
@@ -1330,7 +1316,6 @@ ul {
     display: flex;
     gap: 0 33px;
 }
->>>>>>> Stashed changes
 
 .container {
     max-width: 1396px;
@@ -3209,8 +3194,10 @@ padding: 0 7.5px;
 }
 
 .reviews_box_top .box_score {
-    /* display: flex;
-align-items: center; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 
 #ratingInput {
@@ -3439,74 +3426,6 @@ align-items: center; */
 .box_body_title label {
     display: block !important;
 }
-<<<<<<< Updated upstream
-
-.hotelPlacePage .pager {
-    padding-left: 0;
-    margin-bottom: 78px;
-    text-align: center;
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    margin-top: 60px
-}
-
-.pagination .active .page-item-link {
-    background-color: rgba(255, 167, 24, 0.2);
-    color: #434B5C;
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 24px;
-    border-radius: 4px;
-    text-align: center;
-    padding: 8px;
-}
-
-.pagination .total_page {
-    border: 1px solid #d7d7d7;
-    width: auto;
-    padding: 0 20px
-}
-
-.pagination a {
-    display: inline-block;
-    float: none;
-    text-align: center;
-    color: #D3DCE1;
-    width: 40px;
-    height: 40px;
-    line-height: 40px;
-    background: #fff;
-    border: none;
-    margin-right: 0;
-    position: relative;
-}
-
-.pagination .disabled {
-    display: none
-}
-
-.pagination a.current {
-    background: linear-gradient(rgba(255, 167, 24, 0.4), rgba(255, 167, 24, 0.4));
-    color: #434B5C;
-    border-radius: 3px;
-}
-
-.mapModal iframe {
-    width: 100%;
-}
-
-.mapModal .modal-header {
-    padding: 0;
-    justify-content: right;
-}
-
-.mapModal .modal-header .btn-close {
-    margin: 0;
-    padding: 10px 16px;
-}
-
-=======
 .box_body_filter_titleRank {
     color: #434B5C;
     font-size: 24px;
@@ -3580,7 +3499,6 @@ align-items: center; */
     padding: 10px 16px;
 }
 
->>>>>>> Stashed changes
 .share_box {
     position: relative
 }
@@ -4257,6 +4175,8 @@ div[slider]>input[type=range]::-ms-tooltip {
 
 .score_text {
     position: absolute;
+    top: 35px;
+    z-index: 9999;
 }
 
 .score_text h3 {
@@ -4272,7 +4192,7 @@ div[slider]>input[type=range]::-ms-tooltip {
 .semi-donut {
     --percentage: 0;
     --fill: #ff0;
-    width: 300px;
+    width: 160px;
     height: 150px;
     position: relative;
     color: #fff;
@@ -4288,9 +4208,9 @@ div[slider]>input[type=range]::-ms-tooltip {
 
 .semi-donut:after {
     content: '';
-    width: 300px;
-    height: 300px;
-    border: 50px solid;
+    width: 160px;
+    height: 160px;
+    border: 15px solid;
     border-color: rgba(0, 0, 0, 0.15) rgba(0, 0, 0, 0.15) var(--fill) var(--fill);
     position: absolute;
     border-radius: 50%;
@@ -4299,6 +4219,16 @@ div[slider]>input[type=range]::-ms-tooltip {
     box-sizing: border-box;
     transform: rotate(calc(1deg * (-45 + var(--percentage) * 1.8)));
     animation: fillAnimation 1s ease-in;
+}
+.semi-donut::before {
+    content: '';
+    width: 160px;
+    height: 70px;
+    background: white;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: 9999;
 }
 
 .semi-donut-model-2 {

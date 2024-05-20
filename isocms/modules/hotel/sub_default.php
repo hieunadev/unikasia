@@ -18,11 +18,8 @@ function default_default() {
 	$currentPage = isset($_GET['page'])?intval($_GET['page']):1;
 
 	$cond = "is_trash=0 and is_online=1";
-<<<<<<< Updated upstream
-=======
 
 
->>>>>>> Stashed changes
 	$lstConfigSetting = $clsConfigSetting->getAll($cond);
     $assign_list['lstConfigSetting']=$lstConfigSetting;
 
@@ -89,10 +86,6 @@ function default_default() {
 	$assign_list['totalRecord']=$totalRecord;
 
 	$lnk=$_SERVER['REQUEST_URI'];
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 	// if(isset($_GET['page'])){
 	// 	$tmp = explode('&',$lnk);
 	// 	$n = count($tmp)-1;
@@ -122,57 +115,15 @@ function default_default() {
 
     $queryString = parse_url($lnk, PHP_URL_QUERY);
     parse_str($queryString, $queryParams);
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
 	
 	$offset = ($currentPage-1)*$recordPerPage;
 	$limit = " LIMIT $offset,$recordPerPage";
 
-<<<<<<< Updated upstream
-    if ($queryString == null) {
-        $listHotel = $clsHotel->getAll($cond.$order_by.$limit,$clsHotel->pkey.',star_id');
-    } else {
-        $listHotel = $clsHotel->getAll($cond.' and '.$queryString.$order_by.$limit,$clsHotel->pkey.',star_id');
-    }
-
-    $paginationLinks = array();
-    // for ($i = 1; $i <= $totalPage; $i++) {
-    //     $paginationLinks[] = array(
-    //         'page' => $i,
-    //         'url' => $link_page.'&page='.$i.'?'.$queryString,
-    //         'is_current' => ($i == $currentPage)
-    //     );
-    // }
-=======
     $conditionArray = [];
     $lstPriceRange=$clsHotelPriceRange->getAll("1=1 order by order_no asc",$clsHotelPriceRange->pkey.',title, max_rate');
     $priceRangeIds = [];
-    
-    // foreach ($queryParams as $key => $value) {
-    //     if ($key == 'price_range') {
-    //         if (strpos($value, ',') !== false) {
-    //             $priceRangeIds = array_map('intval', explode(',', $value));
-    //         } else {
-    //             $priceRangeIds = [intval($value)];
-    //         }
-    //     } else {
-    //         if (strpos($value, ',') !== false) {
-    //             $values = explode(',', $value);
-    //             $escapedValues = array_map('intval', $values); // Ensure values are integers to prevent SQL injection
-    //             $conditionArray[] = "$key IN (" . implode(',', $escapedValues) . ")";
-    //         } else {
-    //             $conditionArray[] = "$key = " . intval($value);
-    //         }
-    //     }
-    // }
-
-    // $filteredPriceRanges = array_filter($lstPriceRange, function ($range) use ($priceRangeIds) {
-    //     return in_array($range['hotel_price_range_id'], $priceRangeIds);
-    // });
-    // $maxRates = array_column($filteredPriceRanges, 'max_rate');
-    
+ 
     
     foreach ($queryParams as $key => $value) {
         if (strpos($value, ',') !== false) {
@@ -198,25 +149,24 @@ function default_default() {
 
     $paginationLinks = array();
 
->>>>>>> Stashed changes
+    $baseURL = $link_page;
 
     for ($i = 1; $i <= $totalPage; $i++) {
-        $url = $link_page . '&amp;page=' . $i;
+        $url = $baseURL . '&page=' . $i;
+        
         if ($queryString !== null && $queryString !== '') {
             $url .= '?' . $queryString;
         }
+
         $paginationLinks[] = array(
             'page' => $i,
             'url' => $url,
             'is_current' => ($i == $currentPage)
         );
     }
-<<<<<<< Updated upstream
 
-=======
-    $prevLink = $currentPage > 1 ? $link_page . '?page=' . ($currentPage - 1) : '';
-    $nextLink = $currentPage < $totalPage ? $link_page . '?page=' . ($currentPage + 1) : '';
->>>>>>> Stashed changes
+    $prevLink = $currentPage > 1 ? $baseURL . '&page=' . ($currentPage - 1) . (empty($queryString) ? '' : '?' . $queryString) : '';
+    $nextLink = $currentPage < $totalPage ? $baseURL . '&page=' . ($currentPage + 1) . (empty($queryString) ? '' : '?' . $queryString) : '';
 
     if(isset($_GET['page'])){
 		$tmp = explode('&',$lnk);
@@ -236,19 +186,22 @@ function default_default() {
 		$country_title[$country['country_id']] = $country['title'];
 	}
 
+    $link_page = strtok($lnk, '?');
+    $queryString = parse_url($lnk, PHP_URL_QUERY);
+    parse_str($queryString, $queryParams);
+
+
     $allTestimonial = $clsTestimonial->getAll($cond,$clsTestimonial->pkey);
 	$assign_list['allTestimonial'] = $allTestimonial; unset($allTestimonial);
 	$assign_list['listHotel'] = $listHotel; unset($listHotel);
 	$assign_list['country_title'] = $country_title; unset($country_title);
 	$assign_list['lstHotel'] = $lstHotel; unset($lstHotel);
 	$assign_list['totalPage'] = $totalPage;
+    $assign_list['queryString'] = $queryString;
 	$assign_list['currentPage'] = $currentPage;
 	$assign_list['paginationLinks'] = $paginationLinks;
-<<<<<<< Updated upstream
-=======
 	$assign_list['prevLink'] = $prevLink;
 	$assign_list['nextLink'] = $nextLink;
->>>>>>> Stashed changes
 
 
     /* =============Title & Description Page================== */
@@ -487,7 +440,7 @@ function default_place() {
 	$limit = " LIMIT $offset,$recordPerPage";
 	#
 	$listHotelPlace=$clsHotel->getAll($cond.$order_by.$limit,$clsHotel->pkey.',star_id,slug,title,address,intro,image');
-//	var_dump($listHotelPlace);die;
+
 	$assign_list['listHotelPlace'] = $listHotelPlace;
 	$assign_list['page_view']=$page_view; 	
 	unset($listHotelPlace);
@@ -517,7 +470,7 @@ function default_place() {
 			}
 		}
 		$assign_list['letter']= $letter;
-		//print_r($letter); die();
+
 	}
 
     $clsCountryEx = new Country();$assign_list['clsCountryEx'] = $clsCountryEx;
@@ -604,7 +557,7 @@ function default_place() {
 
 	$lnk=$_SERVER['REQUEST_URI'];
     $link_page = strtok($lnk, '?');
-    
+
     $config = array(
         'total' => $totalRecord,
         'number_per_page' => $recordPerPage,
@@ -627,10 +580,20 @@ function default_place() {
     $lstPriceRange=$clsHotelPriceRange->getAll("1=1 order by order_no asc",$clsHotelPriceRange->pkey.',title, max_rate');
     $priceRangeIds = [];
 
+    foreach ($queryParams as $key => $value) {
+        if (strpos($value, ',') !== false) {
+            $values = explode(',', $value);
+            $escapedValues = array_map('intval', $values); 
+            $conditionArray[] = "$key IN (" . implode(',', $escapedValues) . ")";
+        } else {
+            $conditionArray[] = "$key = " . intval($value);
+        }
+    }
+
     $additionalConditions = !empty($conditionArray) ? ' AND ' . implode(' AND ', $conditionArray) : '';
     
     $listHotel = $clsHotel->getAll($sql, $clsHotel->pkey.',star_id,price_range');
- 
+
     if ($queryString == null) {
         $listHotel = $clsHotel->getAll($cond.$order_by.$limit, $clsHotel->pkey.',star_id');
     } else {
@@ -639,23 +602,32 @@ function default_place() {
 
 
     $paginationLinks = array();
+    $baseURL = strtok($link_page, '?');
+    $hasPageParam = strpos($baseURL, 'page=') !== false;
 
     for ($i = 1; $i <= $totalPage; $i++) {
-        $tempQueryParams = $queryParams;
-        $tempQueryParams['page'] = $i;
-        $newQueryString = http_build_query($tempQueryParams);
-        $url = $link_page;
-        if (!empty($newQueryString)) {
-            $url .= '?' . $newQueryString;
+        $url = $baseURL;
+        
+        if (!$hasPageParam) {
+            $url .= ($i == 1 ? '?' : '&') . 'page=' . $i;
+        } else {
+            $url = preg_replace('/(&|\?)page=\d+/', '$1page=' . $i, $url);
         }
+    
+        if ($queryString !== null && $queryString !== '') {
+            $url .= '?' . $queryString;
+        }
+        
         $paginationLinks[] = array(
             'page' => $i,
             'url' => $url,
             'is_current' => ($i == $currentPage)
         );
     }
-    $prevLink = $currentPage > 1 ? $link_page . '?page=' . ($currentPage - 1) : '';
-    $nextLink = $currentPage < $totalPage ? $link_page . '?page=' . ($currentPage + 1) : '';
+
+    $prevLink = ($currentPage > 1 ? ($hasPageParam ? preg_replace('/(&|\?)page=\d+/', '$1page=' . ($currentPage - 1), $baseURL) : ($currentPage - 1 == 1 ? $baseURL . '?' : $baseURL . '&') . 'page=' . ($currentPage - 1)) . ($queryString !== null && $queryString !== '' ? '?' . $queryString : '') : '');
+
+    $nextLink = ($currentPage < $totalPage ? ($hasPageParam ? preg_replace('/(&|\?)page=\d+/', '$1page=' . ($currentPage + 1), $baseURL) : $baseURL . '&page=' . ($currentPage + 1)) . ($queryString !== null && $queryString !== '' ? '?' . $queryString : '') : '');
 
     if(isset($_GET['page'])){
 		$tmp = explode('&',$link_page);
