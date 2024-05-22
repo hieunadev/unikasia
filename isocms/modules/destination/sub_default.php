@@ -1,7 +1,7 @@
 <?php
 function default_place()
 {
-    global $assign_list, $_CONFIG, $core, $dbconn, $mod, $act, $clsISO, $_LANG_ID, $title_page, $description_page, $keyword_page, $domain, $deviceType, $country_id, $package_id;
+    global $assign_list, $smarty, $_CONFIG, $core, $dbconn, $mod, $act, $clsISO, $_LANG_ID, $title_page, $description_page, $keyword_page, $domain, $deviceType, $country_id, $package_id;
     global $min_duration_value, $max_duration_value, $min_price_value, $max_price_value, $min_duration_search, $max_duration_search;
     #
     $clsCountry = new Country();
@@ -26,11 +26,19 @@ function default_place()
     $assign_list["clsPagination"] = $clsPagination;
     $clsPromotion = new Promotion();
     $assign_list["clsPromotion"] = $clsPromotion;
+    $clsHotel = new Hotel();
+    $assign_list["clsHotel"] = $clsHotel;
     #	
     // $clsCountry->SetDebug(1);
-    $arr    =   $clsCountry->getAll('is_trash=0 and is_online=1 and country_id = 1', '*');
+
+    if (!empty($_GET['slug_country'])) {
+        $id_country     =   $clsCountry->getBySlug($_GET['slug_country']);
+        $info_country   =   $clsCountry->getOne($id_country);
+    }
+    $list_hotel_country =   $clsHotel->getAll("is_trash = 0 AND is_online = 1 AND country_id = $id_country ORDER BY order_no ASC LIMIT 10");
+    $smarty->assign('list_hotel_country', $list_hotel_country);
     // die;
-    // $clsISO->dump($arr);
+    // $clsISO->dump($list_hotel_country);
 
     // $city_id	=	1;
     // $assign_list['city_id'] = $city_id;

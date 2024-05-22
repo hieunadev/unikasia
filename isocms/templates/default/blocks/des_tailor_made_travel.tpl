@@ -16,12 +16,15 @@
                                     <a class="nav-link" data-link="des_tailor_detail_place" href="#" title="OVERVIEW">OVERVIEW</a>
                                 </li>
                                 <li class="nav-item dropdown des_tailor_dropdown">
-                                    <a class="nav-link dropdown-toggle" data-link="des_tailor_detail_travel_style" href="#" id="navbarDropdownMenuLink1" role="button" data-bs-toggle="dropdown" aria-expanded="false" title="VIETNAM TOURS">
-                                        VIETNAM TOURS <i class="fa-light fa-angle-down"></i>
+                                    <a class="nav-link dropdown-toggle" data-link="des_tailor_detail_travel_style" href="#" id="navbarDropdownMenuLink1" role="button" data-bs-toggle="dropdown" aria-expanded="false" title="{$clsCountry->getTitle($id_country)} TOURS">
+                                        {$clsCountry->getTitle($id_country)} TOURS <i class="fa-light fa-angle-down"></i>
                                     </a>
                                     <ul class="dropdown-menu des_tailor_dropdown_menu" aria-labelledby="navbarDropdownMenuLink1">
-                                        <li><a class="dropdown-item" href="#" title="VIETNAM TOURS 1">VIETNAM TOURS 1</a></li>
-                                        <li><a class="dropdown-item" href="#" title="VIETNAM TOURS 2">VIETNAM TOURS 2</a></li>
+                                        {if $arr_trvs_country}
+                                        {foreach from=$arr_trvs_country key=key item=item}
+                                        <li><a class="dropdown-item" href="{$clsTourCategory->getLink($item.cat_id)}" title="{$clsTourCategory->getTitle($tourcat_id)}">{$clsTourCategory->getTitle($item.cat_id)}</a></li>
+                                        {/foreach}
+                                        {/if}
                                     </ul>
                                 </li>
                                 <li class="nav-item">
@@ -32,8 +35,11 @@
                                         TRAVEL GUIDE <i class="fa-light fa-angle-down"></i>
                                     </a>
                                     <ul class="dropdown-menu des_tailor_dropdown_menu" aria-labelledby="navbarDropdownMenuLink2">
-                                        <li><a class="dropdown-item" href="#" title="TRAVEL GUIDE 1">TRAVEL GUIDE 1</a></li>
-                                        <li><a class="dropdown-item" href="#" title="TRAVEL GUIDE 2">TRAVEL GUIDE 2</a></li>
+                                        {if $arr_trvg}
+                                        {foreach from=$arr_trvg key=key item=item}
+                                        <li><a class="dropdown-item" href="{$clsGuideCat->getLink($item.guidecat_id)}" title="{$clsGuideCat->getTitle($item.guidecat_id)}">{$clsGuideCat->getTitle($item.guidecat_id)}</a></li>
+                                        {/foreach}
+                                        {/if}
                                     </ul>
                                 </li>
                                 <li class="nav-item">
@@ -51,90 +57,48 @@
             <div class="des_tailor_detail_place hnv_hide">
                 <div class="des_tailor_mid">
                     <div class="des_tailor_title">
-                        <h1>A HOLIDAYS VIETNAM AWAIT</h1>
+                        <h2>{$clsCountry->getOverviewTitle($id_country)}</h2>
                     </div>
                     <div class="des_tailor_description">
-                        From sandy beaches in the South to the rich history in the North, discover hidden gems, taste local Vietnamese food and experience authentic homestays! All that, surrounded by cities, nature and history.
-                        Our private Vietnam tours and Vietnam holiday packages contain all of the best places to visit. 
-                        Your tailor-made non-catalogue itinerary is full of unique activities, authentic accommodation and discovering Vietnam on your own pace and terms.
-                        We are ready and your adventures await!
+                        {$clsCountry->getOverviewDescription($id_country)}
                     </div>
                 </div>
                 <div class="des_tailor_bot">
-                    <div class="row">
-                        <div class="col-sm-12 col-md-6 col-lg-3">
-                            <div class="des_tailor_item">
-                                <div class="des_tailor_item_img">
-                                    <img src="{$URL_IMAGES}/destination/tailor.png" alt="Tailor Image">
-                                </div>
-                                <div class="des_tailor_item_title">
-                                    <h2>Beautiful beach</h2>
-                                </div>
-                                <div class="des_tailor_item_description">
-                                    Vietnam boasts a stunning coastline that stretches over 3,000 kilometers, offering an array of beautiful beaches that rival those found in any tropical paradise.
-                                </div>
+                    {if $arr_why}
+                    <div class="owl-carousel owl-theme des_list_why_choose_country">
+                        {foreach from=$arr_why key=key item=item}
+                        {assign var=why_id value=$item.why_id}
+                        <div class="item des_tailor_item">
+                            <div class="des_tailor_item_img">
+                                <img src="{$clsWhy->getImageUrl($why_id)}" alt="Tailor Image">
+                            </div>
+                            <div class="des_tailor_item_title">
+                                <h2>{$clsWhy->getTitle($why_id)}</h2>
+                            </div>
+                            <div class="des_tailor_item_description">
+                                {$clsWhy->getIntro($why_id)}
                             </div>
                         </div>
-                        <div class="col-sm-12 col-md-6 col-lg-3">
-                            <div class="des_tailor_item">
-                                <div class="des_tailor_item_img">
-                                    <img src="{$URL_IMAGES}/destination/tailor.png" alt="Tailor Image">
-                                </div>
-                                <div class="des_tailor_item_title">
-                                    <h2>Beautiful beach</h2>
-                                </div>
-                                <div class="des_tailor_item_description">
-                                    Vietnam boasts a stunning coastline that stretches over 3,000 kilometers, offering an array of beautiful beaches that rival those found in any tropical paradise.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-6 col-lg-3">
-                            <div class="des_tailor_item">
-                                <div class="des_tailor_item_img">
-                                    <img src="{$URL_IMAGES}/destination/tailor.png" alt="Tailor Image">
-                                </div>
-                                <div class="des_tailor_item_title">
-                                    <h2>Beautiful beach</h2>
-                                </div>
-                                <div class="des_tailor_item_description">
-                                    Vietnam boasts a stunning coastline that stretches over 3,000 kilometers, offering an array of beautiful beaches that rival those found in any tropical paradise.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-6 col-lg-3">
-                            <div class="des_tailor_item">
-                                <div class="des_tailor_item_img">
-                                    <img src="{$URL_IMAGES}/destination/tailor.png" alt="Tailor Image">
-                                </div>
-                                <div class="des_tailor_item_title">
-                                    <h2>Beautiful beach</h2>
-                                </div>
-                                <div class="des_tailor_item_description">
-                                    Vietnam boasts a stunning coastline that stretches over 3,000 kilometers, offering an array of beautiful beaches that rival those found in any tropical paradise.
-                                </div>
-                            </div>
-                        </div>
+                        {/foreach}
                     </div>
+                    {/if}
                 </div>
             </div>
             <div class="des_tailor_detail_travel_style hnv_hide">
                 <div class="des_tailor_travel_style_image">
-                    <img src="https://images.unsplash.com/photo-1632908112019-0e27ef1e70d8?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" width="1280" height="552" alt="Travel Style">
+                    <img src="{$clsCountry->getImageTour($id_country, 1280, 552)}" width="1280" height="552" alt="Travel Style">
                     <div class="des_tailor_travel_style_content">
                         <div class="des_tailor_travel_style_title">
-                            <h2>Travel Vietnam, land of rice fields, “MOTHER NATURE” dazzles us!</h2>
+                            <h2>{$clsCountry->getTourTitle($id_country)}</h2>
                         </div>
                         <div class="des_tailor_travel_style_description">
-                            Its internationally renowned natural sites, classified and protected,
-                            majestic mountain landscapes that the rice terraces sculpt harmoniously,
-                            natural parks with exuberant vegetation, aquatic and tropical atmospheres,
-                            a coastline of blond sand, turquoise water…and warm…
-                            This is all Vietnam
-                            Children of the country, our goal is to make you LOVE THE VN, not just to MAKE you VISIT IT
+                            {$clsCountry->getTourDescription($id_country)}
                         </div>
+                        {if $info_country.tour_video}
                         <div class="des_tailor_travel_style_play">
                             PLAY <i class="fa-sharp fa-solid fa-circle-play"></i>
                         </div>
+                        {/if}
                     </div>
                 </div>
                 <div class="des_travel_style_dream">
@@ -459,6 +423,10 @@
         margin-bottom: 80px;
     }
 
+    .des_tailor_travel_style_image img {
+        border-radius: 8px;
+    }
+
     .des_tailor_travel_style_content {
         position: absolute;
         top: 124px;
@@ -483,6 +451,10 @@
         line-height: 24px;
         margin-top: 24px;
         margin-bottom: 48px;
+    }
+
+    .des_tailor_travel_style_description p {
+        margin-bottom: 0;
     }
 
     .des_tailor_travel_style_play {
@@ -778,5 +750,41 @@
             $('.' + dataLink).show();
         });
     });
+
+    $(window).scroll(function() {
+        if ($(this).scrollTop() >= 500) {
+            $('.des_tailor_top').addClass('des_tailor_top_sticky');
+        } else {
+            $('.des_tailor_top').removeClass('des_tailor_top_sticky');
+        }
+    });
+
+    if ($('.des_list_why_choose_country').length > 0) {
+        var $owl = $('.des_list_why_choose_country');
+        $owl.owlCarousel({
+            lazyLoad: true,
+            loop: false,
+            margin: 0,
+            nav: false,
+            navText: ["<i class='fa-solid fa-angle-left'></i>", "<i class='fa-solid fa-angle-right'></i>"],
+            dots: false,
+            // autoplay: false,
+            // autoplayTimeout:3000,	
+            // animateOut: 'fadeOut',
+            // animateIn: 'fadeIn',
+            responsiveClass: true,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 3
+                },
+                1000: {
+                    items: 4
+                }
+            }
+        });
+    }
 </script>
 {/literal}

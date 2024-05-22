@@ -19,7 +19,7 @@ $(document).ready(function () {
 
     $('#explore_travel_styles_carousel').owlCarousel({
         loop: true,
-        margin: 0,
+        margin: 15,
         dots: false,
         nav: true,
         navText: ["<i class='fa fa-chevron-left'></i>", "<i class='fa fa-chevron-right'></i>"],
@@ -29,6 +29,9 @@ $(document).ready(function () {
                 items: 1
             },
             600: {
+                items: 2
+            },
+            1000: {
                 items: 3
             }
         }
@@ -58,7 +61,21 @@ $(document).ready(function () {
         items:4
     })
 
-
+    $(window).scroll(function () {
+        let isScrolled = $(this).scrollTop() > 0;
+        $("#header_fixed").toggleClass("nah_header_sticky", isScrolled).css({
+            "box-shadow": isScrolled ? "0px 12px 32px 0px #7d879e17" : "",
+            "position": isScrolled ? "" : "relative"
+        });
+        $(".bground_header .txt_header1").toggleClass('nah_header_top_scroll', isScrolled);
+        $(".nah_bg_header_bot").toggleClass('bg-white', isScrolled);
+        $("#header_top").toggleClass('border-bottom', !isScrolled);
+        $(".txt_dropdown").css("color", isScrolled ? "#111D37" : "");
+        $(".drop_down").css("background-color", isScrolled ? "#F0F0F0" : "");
+        $(".img_logo_voyages_2").toggleClass("d-none", !isScrolled);
+        $(".img_logo_voyages_1").toggle(!isScrolled);
+        $("#header_fixed #navbarDropdown .fa-angle-down").toggleClass("text-secondary", isScrolled).toggleClass("text-white", !isScrolled);
+    });
 
 
     var clickedDetails = JSON.parse(sessionStorage.getItem('clickedDetails')) || [];

@@ -17,14 +17,29 @@ function default_default(){
 
 	ini_set('display_errors',1);
     error_reporting(E_ERROR & ~E_STRICT);//E_ALL
-    $WebpImage = new WebpImage(); 
-    $source = $_SERVER['DOCUMENT_ROOT'].'/uploads/VietISO/anh-30.jpg.webp';
-    
-    
-    if(getimagesize($source) >0){
-        //print_r($source);die('xxx');
-    }
-    
+
+	$cond = "is_trash=0 and is_online=1 ";
+	$order_by = " order by order_no ASC";
+	$limit_left = " limit 2";
+	$limit_right = " limit 2 offset 4";
+
+	$lstBlogLeft = $clsBlog->getAll($cond . $order_by . $limit_left);
+	$lstBlogCenterTop = $clsBlog->getAll($cond . $order_by. " limit 1 offset 2");
+	$lstBlogCenterBot = $clsBlog->getAll($cond . $order_by ." limit 1 offset 3");
+	$lstBlogRight = $clsBlog->getAll($cond . $order_by . $limit_right);
+	$blog_ids = array_merge(
+		array_column($lstBlogLeft, 'blog_id'),
+		array_column($lstBlogCenterTop, 'blog_id'),
+		array_column($lstBlogCenterBot, 'blog_id'),
+		array_column($lstBlogRight, 'blog_id')
+	);
+
+	$assign_list["lstBlogLeft"] = $lstBlogLeft;
+	$assign_list["lstBlogCenterTop"] = $lstBlogCenterTop;
+	$assign_list["lstBlogCenterBot"] = $lstBlogCenterBot;
+	$assign_list["lstBlogRight"] = $lstBlogRight;
+
+	$assign_list["lstFeatureBlog"] = $clsBlog->getAll($cond." order by num_view DESC LIMIT 5");
     #
 	$lstBlogCat = $clsBlogCategory->getAll("is_trash=0 and is_online=1 order by order_no ASC",$clsBlogCategory->pkey.',slug,title');
 	$assign_list['lstBlogCat'] = $lstBlogCat;
@@ -36,76 +51,59 @@ function default_default(){
 	$assign_list['type'] = $type;
 	$listCountry = $clsCountryEx->getAll("is_trash=0 order by order_no",$clsCountryEx->pkey.',slug,title');
 	$assign_list['listCountry'] = $listCountry;
-
 	if ($show=='Default'){
-
+		if (isset($_POST["filter"]) && $_POST["filter"] == "filter"){
+			header('Location:'. $clsISO->getLink("blog") . "/".$_POST["slug_country"]);
+			exit();
+		}
 	}else{
-
+		if (isset($_POST["filter"]) && $_POST["filter"] == "filter"){
+			$link = $clsISO->getLink("blog") . "/";
+			$link .= !empty($_POST["slug_country"]) ? $_POST["slug_country"] : "";
+			$link .= (!empty($_POST['blogcat_id']))?'&blogcat_id='.$clsISO->makeSlashListFromArrayComma($_POST['blogcat_id']):'';
+			header('Location:'. trim($link));
+			exit();
+		}
 		$slug_country = isset($_GET['slug_country'])?$_GET['slug_country']:'';
+		$assign_list["slug_country"] = $slug_country;
 		$res = $clsCountryEx->getAll("is_trash=0 and is_online=1 and slug='$slug_country' LIMIT 0,1",$clsCountryEx->pkey.',slug,title');
 		$country_id = $res[0][$clsCountryEx->pkey];
 		if(intval($country_id)==0) {
-			header('Location:'.PCMS_URL.$extLang);
+			header('Location:' . $clsISO->getLink("blog"));
 			exit();
 		}
 		$assign_list['country_id'] = $country_id;
 		$oneItemCountry = $res[0];
 		$assign_list['oneItemCountry'] = $oneItemCountry;
-	
-		if($show=='City'){
-			$slug_city = isset($_GET['slug_city']) ? $_GET['slug_city'] : '';
-			$city_id = $clsCity->getBySlug($slug_city);
-			if(intval($city_id)==0) {
-				header('Location:'.PCMS_URL.$extLang);
-				exit();
-			}
-			$oneItemCity = $clsCity->getOne($city_id,'title,slug');
-		}
-		
-		$assign_list['city_id'] = $city_id;
-		$assign_list['oneItemCity'] = $oneItemCity;
-		
-		if($show=='Region'){
-			$region_id = isset($_GET['region_id']) ? $_GET['region_id'] : '';
-			if(intval($region_id)==0) {
-				header('Location:'.PCMS_URL.$extLang);
-				exit();
-			}
-			$oneItemCountry = $clsRegion->getOne($region_id,'title,slug');
-		}
-		
-		$assign_list['region_id'] = $region_id;
-		$assign_list['oneItemRegion'] = $oneItemCountry;
 	}
 	
-	$recordPerPage = 8;
+	$recordPerPage = 10;
 	$currentPage = isset($_GET['page'])?intval($_GET['page']):1;
 	$page_Seo = isset($_GET['page'])?intval($_GET['page']):'';
 	$assign_list['page_Seo']=$page_Seo;
 
-	if($show=='Default'){
-		$cond = "is_trash=0 and is_approve=1 and is_online=1";
-	}else{
-		if($show=='Country'){
-		$cond = "is_trash=0 and is_approve=1 and is_online=1 and blog_id IN (select blog_id FROM ".DB_PREFIX."blog_destination WHERE country_id='$country_id')";
-		}else if($show=='City'){
-		$cond = "is_trash=0 and is_approve=1 and is_online=1 and blog_id IN (select blog_id FROM ".DB_PREFIX."blog_destination WHERE country_id='$country_id' and city_id ='$city_id')";
-		}else{
-		$cond = "is_trash=0 and is_approve=1 and is_online=1 and blog_id IN (select blog_id FROM ".DB_PREFIX."blog_destination WHERE country_id='$country_id' and region_id='$region_id')";
-		}
+	$cond = "is_trash=0 and is_approve=1 and is_online=1";
+
+	if ($slug_country) {
+		$cond .= " and country_id = '$country_id' and blog_id NOT IN (". implode(',', $blog_ids) .")";
 	}
-	//print_r($cond); die();
-	$order_by = " order by order_no ASC"; 
+
+	$blogcat_id =  $_GET["blogcat_id"];
+	if (isset($blogcat_id) && !empty($blogcat_id)) {
+		$assign_list["blogcat_id"] = $blogcat_id;
+		$cond .= " and cat_id IN ( " . $blogcat_id . ")";
+	}
+
 	$allItem = $clsBlog->getAll($cond,$clsBlog->pkey);
 	$totalRecord =$allItem?count($allItem):'0';
-	//echo $totalRecord; die;
+
 	if($show=='Default'){
 		$link_page = $extLang.'/blog/';
 	}else{
 		if($show=='City'){
 			$link_page = $extLang.'/blog/'.$clsCountryEx->getSlug($country_id,$oneItemCountry).'/'.$clsCity->getSlug($city_id,$oneItemCity).'/';
 		}else if($show=='Country'){
-			$link_page = $extLang.'/blog/'.$clsCountryEx->getSlug($country_id,$oneItemCountry).'/';
+			$link_page = $extLang.'/blog/'.$clsCountryEx->getSlug($country_id,$oneItemCountry);
 		}else{
 			$link_page = $extLang.'/blog/'.$clsCountryEx->getSlug($country_id,$oneItemCountry).'/'.$clsRegion->getSlug($region_id,$oneItemRegion).'-rg'.$region_id;
 		}
@@ -120,6 +118,7 @@ function default_default(){
 	$clsPagination->initianize($config);
 	$page_view = $clsPagination->create_links(false);
 	#
+
 	$offset = ($currentPage-1)*$recordPerPage;
 	$limit = " LIMIT $offset,$recordPerPage";
 
@@ -129,8 +128,7 @@ function default_default(){
 		exit();
 	}
 	$assign_list['lstBlogs']=$lstBlogs;
-	
-	unset($lstBlogs);
+
 	$assign_list['page_view']=$page_view; unset($page_view);
 	$assign_list['totalPage'] = $clsPagination->getTotalPage();
 	
@@ -376,6 +374,8 @@ function default_detail(){
 		exit();
 	}
 	
+
+	
 	
 	$sessionKey = 'blog_' . $blog_id;
 	$sessionView = $_SESSION[$sessionKey];
@@ -396,6 +396,8 @@ function default_detail(){
 	#
 	$lstRelated = $clsBlog->getAll($cond." order by order_no desc limit 0,5",$clsBlog->pkey.',title,slug');
 	$assign_list['lstRelated']=$lstRelated; unset($lstRelated);
+	$assign_list["lstFeatureBlog"] = $clsBlog->getAll($cond." order by num_view DESC LIMIT 5");
+
 	
 	/*=============Title & Description Page==================*/
 	$title_page = $clsBlog->getTitle($blog_id,$blogItem).' | '.$core->get_Lang('blogs').' | '.PAGE_NAME;

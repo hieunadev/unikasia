@@ -1,5 +1,5 @@
 <main>
-        <section class="agencehnvoyces">
+    <section class="agencehnvoyces">
         <div class="container">
             <h2 class="txthnvoyces txt_underline">{$clsConfiguration->getValue('TitleAgenceHyour_'|cat:$_LANG_ID)|html_entity_decode}</h2>
             <div class="txtdeschnvoyces">{$clsConfiguration->getValue('IntroAgenceHyour_'|cat:$_LANG_ID)|html_entity_decode}</div>
@@ -27,22 +27,22 @@
     <section class="explore_travel_styles">
         <div class="container">
             <div class="row">
-                <div class="col-4">
+                <div class="col-lg-4 col-12 px-0">
                     <div class="container justify-content-start">
                         <h2 class="txt_travelstyle txt_underline">{$clsConfiguration->getValue('TitleCatTour_'|cat:$_LANG_ID)|html_entity_decode}</h2>
                         <div class="txt_intro_travelstyle">{$clsConfiguration->getValue('IntroCatTour_'|cat:$_LANG_ID)|html_entity_decode}</div>
                     </div>
                 </div>
-                <div class="col-8">
+                <div class="col-lg-8 col-12 px-0">
                     <div class="list_ts">
-                        <div class="owl-carousel owl-theme container" id="explore_travel_styles_carousel">
+                        <div class="owl-carousel owl-theme" id="explore_travel_styles_carousel">
                             {section name=i loop=$lstTourCate}
                                 <div class="item">
                                     <a href="#">
                                         <div class="nah_explore_img"><img class="travel-style_img" src="{$lstTourCate[i].image}" alt=""></div>
                                         <div class="travel-style_content">
                                             <h3 class="txt-hover-home">{$lstTourCate[i].title}</h3>
-                                            <p class="txt_intro_travel_style">{$clsISO->limit_textIso($lstTourCate[i].intro|@html_entity_decode, 20)}</p>
+                                            <p class="txt_intro_travel_style">{$clsISO->limit_textIso($lstTourCate[i].intro|@html_entity_decode, 13)}</p>
                                         </div>
                                     </a>
                                 </div>
@@ -311,7 +311,7 @@
                 <div class="col-lg-6 d-flex flex-column justify-content-center txt_readylets">
                     <h2 class="txtready">{$clsConfiguration->getValue('TitleVideoPerfect_'|cat:$_LANG_ID)|html_entity_decode}</h2>
                     <div class="txtcomt">{$clsConfiguration->getValue('IntroVideoPerfect_'|cat:$_LANG_ID)|html_entity_decode}</div>
-                    <a href="/customised" class="readyToStart-btn">{$core->get_Lang('LET’S PLAN YOUR TRIP')}
+                    <a href="/customised" class="btn readyToStart-btn">{$core->get_Lang('LET’S PLAN YOUR TRIP')}
                         <img class="ms-2" src="https://unikasia.vietiso.com/isocms/templates/default/skin/images/hotel/ArrowRight.svg" alt="error">
                     </a>
                 </div>
@@ -320,76 +320,9 @@
 
     </section>
 </main>
-<link rel="stylesheet" href="https://auasiatravel.com/isocms/templates/default/skin/js/select/select.css?ver=1715937452"/>
-<script src="https://auasiatravel.com/isocms/templates/default/skin/js/select/select.js?ver=1715937452"></script>
+<link rel="stylesheet" href="{$URL_JS}/select/select.css"/>
+<script src="{$URL_JS}/select/select.js"></script>
 <script>
-    function autocomplete(inp, arr) {
-        let currentFocus;
-        $(inp).on("input", function (e) {
-            let val = $(this).val();
-            closeAllLists();
-            if (!val) {
-                return false;
-            }
-            currentFocus = -1;
-            let a = $("<div></div>").attr("id", this.id + "autocomplete-list").addClass("autocomplete-items");
-            $(this).parent().append(a);
-            for (let i = 0; i < arr.length; i++) {
-                if (arr[i].toUpperCase().includes(val.toUpperCase())) {
-                    let b = $("<div></div>").html(highlightMatch(arr[i], val));
-                    b.append("<input type='hidden' value='" + arr[i] + "'>");
-                    b.on("click", function (e) {
-                        $(inp).val($(this).find("input").val());
-                        closeAllLists();
-                    });
-                    a.append(b);
-                }
-            }
-        });
-
-        $(inp).on("keydown", function (e) {
-            var x = $("#" + this.id + "autocomplete-list div");
-            if (e.keyCode === 40) {
-                currentFocus++;
-                addActive(x);
-            } else if (e.keyCode === 38) {
-                currentFocus--;
-                addActive(x);
-            } else if (e.keyCode === 13) {
-                e.preventDefault();
-                if (currentFocus > -1) {
-                    $(x[currentFocus]).click();
-                }
-            }
-        });
-
-        function addActive(x) {
-            if (!x) return false;
-            removeActive(x);
-            if (currentFocus >= x.length) currentFocus = 0;
-            if (currentFocus < 0) currentFocus = (x.length - 1);
-            $(x[currentFocus]).addClass("autocomplete-active");
-        }
-
-        function removeActive(x) {
-            x.removeClass("autocomplete-active");
-        }
-
-        function closeAllLists(element) {
-            $(".autocomplete-items").not(element).remove();
-        }
-
-        $(document).on("click", function (e) {
-            closeAllLists(e.target);
-        });
-
-        function highlightMatch(word, match) {
-            let regex = new RegExp(match, "gi");
-            return word.replace(regex, "<strong>$&</strong>");
-        }
-    }
-    {*autocomplete(document.getElementById("homeInputSearch"), {$clsTour})*}
-
     $('#slider-area').owlCarousel({
         loop: true,
         autoplay: false,

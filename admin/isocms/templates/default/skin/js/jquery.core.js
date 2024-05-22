@@ -238,7 +238,7 @@ $Core = (function($, window, document, undefined) {
                 if ($("#" + id).length)
                     return tinyMCE.get(id).getContent();
                 else
-                    return '';
+					return '';
             },
 			stopEventHandler: function(e){
 				e.preventDefault();

@@ -186,12 +186,11 @@
     <link rel="preload" href="{$URL_JS}/vietiso.js?v={$upd_version}" as="script" />
     <script src="{$URL_JS}/vietiso.js?v={$upd_version}"></script>
 
-    {if $mod eq 'cruise' && $act eq 'detail' || $mod eq 'hotel' && $act eq 'detail' || $mod eq 'about' || $mod eq 'homepackage' || $mod eq 'destination'}
     <link rel="preload" href="{$URL_JS}/fancybox4/fancybox.css?v={$upd_version}" as="css" />
     <link rel="preload" href="{$URL_JS}/fancybox4/fancybox.umd.js?v={$upd_version}" as="script" />
     <link rel="stylesheet" href="{$URL_JS}/fancybox4/fancybox.css?v={$upd_version}" />
     <script src="{$URL_JS}/fancybox4/fancybox.umd.js?v={$upd_version}"></script>
-    {/if}
+
 
     {if $mod eq 'member'}
     <link rel="preload" href="{$URL_JS}/jquery.member.validate.js?v={$upd_version}" as="script" />

@@ -133,8 +133,13 @@
                         <span>70+ Tour packages with 20K+ bookings</span>
                     </div>
                     <div class="list-tour">
+						
+						 
+
+						{section name=i loop=1}
+
                         <div class="list-tour-item">
-                            <div class="img_tour"><a class="photo" href="#">
+                            <div class="img_tour"><a class="photo" href="{$clsTour->getLink(160)}">
                                     <img class="img-tour"
                                          src="https://isocms.com/files/thumb/277/181/uploads/content/2023-07-18-09-20-51-64b5f703a4a3f081363791.jpg"
                                          alt="">
@@ -175,6 +180,7 @@
                                     <span>View tour</span><i class="fa fa-arrow-right" aria-hidden="true"></i>
                                 </div>
                             </div>
+							{/section}
                         </div>
                         <div class="list-tour-item">
                             <div class="img_tour"><a class="photo" href="#">
@@ -315,11 +321,6 @@
     {$core->getBlock("top_attraction")}
     {$core->getBlock('also_like')}
 </main>
-<select theme="google" class="form-control" name="destination" id="destination_key" placeholder="{$core->get_Lang('Country, City')}..."  data-search="true">
-    {$clsCountryEx->getSelectCountryCitySearch()}
-</select>
-<link rel="stylesheet" href="https://auasiatravel.com/isocms/templates/default/skin/js/select/select.css?ver=1715937452"/>
-<script src="https://auasiatravel.com/isocms/templates/default/skin/js/select/select.js?ver=1715937452"></script>
 {literal}
 <script>
     $(function() {

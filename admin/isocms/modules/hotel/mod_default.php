@@ -444,7 +444,6 @@ error_reporting(E_ALL);*/
 			'other_policy',
 		))){
 		$valueField = Input::post($currentstep);
-		
 		$clsClassTable->updateOne($table_id, array(
 			$currentstep => $valueField
 		));

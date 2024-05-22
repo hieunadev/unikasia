@@ -14,25 +14,29 @@
             <div class="des_list_hotel_content">
                 <div class="container">
                     <div class="owl-carousel owl-theme des_list_hotel_carousel">
+                        {if $list_hotel_country}
+                        {foreach from=$list_hotel_country key=key item=item}
+                        {assign var=hotel_id value=$item.hotel_id}
                         <div class="des_list_hotel_item item">
-                            <a href="#" title="Waldschenke Stendenitz Übernachten im Wald am See">
-                                <img src="{$URL_IMAGES}/destination/hotel.png" alt="Waldschenke Stendenitz Übernachten im Wald am See">
+                            <a href="{$clsHotel->getLink($hotel_id)}" title="{$clsHotel->getTitle($hotel_id)}">
+                                <div class="des_list_hotel_item_image">
+                                    <img src="{$clsHotel->getImage($hotel_id, 296, 200)}" width="296" height="200" alt="{$clsHotel->getTitle($hotel_id)}">
+                                </div>
                             </a>
                             <div class="des_list_hotel_item_intro">
                                 <div class="des_list_hotel_item_title">
-                                    <h3><a href="#" title="Waldschenke Stendenitz Übernachten im Wald am See">Waldschenke Stendenitz Übernachten im Wald am See</a></h3>
+                                    <h3><a href="{$clsHotel->getLink($hotel_id)}" title="{$clsHotel->getTitle($hotel_id)}">{$clsHotel->getTitle($hotel_id)}</a></h3>
                                     <div class="des_list_hotel_item_star">
+                                        {section name=i start=0 loop=$item.star_id step=1}
                                         <i class="fa-sharp fa-solid fa-star"></i>
-                                        <i class="fa-sharp fa-solid fa-star"></i>
-                                        <i class="fa-sharp fa-solid fa-star"></i>
-                                        <i class="fa-sharp fa-solid fa-star"></i>
+                                        {/section}
                                     </div>
                                 </div>
                                 <div class="des_list_hotel_item_type">
-                                    <i class="fa-light fa-house"></i> Apartments
+                                    <i class="fa-light fa-house"></i> {$clsHotel->getTypeHotel($hotel_id)}
                                 </div>
                                 <div class="des_list_hotel_item_place">
-                                    <i class="fa-light fa-location-dot"></i> Khanh Hoa, Viet Nam
+                                    <i class="fa-light fa-location-dot"></i> {$clsHotel->getAddress($hotel_id)}
                                 </div>
                                 <div class="des_list_hotel_item_rate">
                                     <span class="des_rate_number">4.5</span>
@@ -42,139 +46,12 @@
                                 <div class="des_list_hotel_item_price">
                                     <span class="des_price_title">Avg price per night</span>
                                     <span class="des_price_show_text">US</span>
-                                    <span class="des_price_show_number">$650</span>
+                                    <span class="des_price_show_number">${$item.price_avg}</span>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="des_list_hotel_item item">
-                            <a href="#" title="Waldschenke Stendenitz Übernachten im Wald am See">
-                                <img src="{$URL_IMAGES}/destination/hotel.png" alt="Waldschenke Stendenitz Übernachten im Wald am See">
-                            </a>
-                            <div class="des_list_hotel_item_intro">
-                                <div class="des_list_hotel_item_title">
-                                    <h3><a href="#" title="Waldschenke Stendenitz Übernachten im Wald am See">Waldschenke Stendenitz Übernachten im Wald am See</a></h3>
-                                    <div class="des_list_hotel_item_star">
-                                        <i class="fa-sharp fa-solid fa-star"></i>
-                                        <i class="fa-sharp fa-solid fa-star"></i>
-                                        <i class="fa-sharp fa-solid fa-star"></i>
-                                        <i class="fa-sharp fa-solid fa-star"></i>
-                                    </div>
-                                </div>
-                                <div class="des_list_hotel_item_type">
-                                    <i class="fa-thin fa-house"></i> Apartments
-                                </div>
-                                <div class="des_list_hotel_item_place">
-                                    <i class="fa-light fa-location-dot"></i> Khanh Hoa, Viet Nam
-                                </div>
-                                <div class="des_list_hotel_item_rate">
-                                    <span class="des_rate_number">4.5</span>
-                                    <span class="des_rate_text">Very good</span>
-                                    <span class="des_rate_total">(9 reviews)</span>
-                                </div>
-                                <div class="des_list_hotel_item_price">
-                                    <span class="des_price_title">Avg price per night</span>
-                                    <span class="des_price_show_text">US</span>
-                                    <span class="des_price_show_number">$650</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="des_list_hotel_item item">
-                            <a href="#" title="Waldschenke Stendenitz Übernachten im Wald am See">
-                                <img src="{$URL_IMAGES}/destination/hotel.png" alt="Waldschenke Stendenitz Übernachten im Wald am See">
-                            </a>
-                            <div class="des_list_hotel_item_intro">
-                                <div class="des_list_hotel_item_title">
-                                    <h3><a href="#" title="Waldschenke Stendenitz Übernachten im Wald am See">Waldschenke Stendenitz Übernachten im Wald am See</a></h3>
-                                    <div class="des_list_hotel_item_star">
-                                        <i class="fa-sharp fa-solid fa-star"></i>
-                                        <i class="fa-sharp fa-solid fa-star"></i>
-                                        <i class="fa-sharp fa-solid fa-star"></i>
-                                        <i class="fa-sharp fa-solid fa-star"></i>
-                                    </div>
-                                </div>
-                                <div class="des_list_hotel_item_type">
-                                    <i class="fa-thin fa-house"></i> Apartments
-                                </div>
-                                <div class="des_list_hotel_item_place">
-                                    <i class="fa-light fa-location-dot"></i> Khanh Hoa, Viet Nam
-                                </div>
-                                <div class="des_list_hotel_item_rate">
-                                    <span class="des_rate_number">4.5</span>
-                                    <span class="des_rate_text">Very good</span>
-                                    <span class="des_rate_total">(9 reviews)</span>
-                                </div>
-                                <div class="des_list_hotel_item_price">
-                                    <span class="des_price_title">Avg price per night</span>
-                                    <span class="des_price_show_text">US</span>
-                                    <span class="des_price_show_number">$650</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="des_list_hotel_item item">
-                            <a href="#" title="Waldschenke Stendenitz Übernachten im Wald am See">
-                                <img src="{$URL_IMAGES}/destination/hotel.png" alt="Waldschenke Stendenitz Übernachten im Wald am See">
-                            </a>
-                            <div class="des_list_hotel_item_intro">
-                                <div class="des_list_hotel_item_title">
-                                    <h3><a href="#" title="Waldschenke Stendenitz Übernachten im Wald am See">Waldschenke Stendenitz Übernachten im Wald am See</a></h3>
-                                    <div class="des_list_hotel_item_star">
-                                        <i class="fa-sharp fa-solid fa-star"></i>
-                                        <i class="fa-sharp fa-solid fa-star"></i>
-                                        <i class="fa-sharp fa-solid fa-star"></i>
-                                        <i class="fa-sharp fa-solid fa-star"></i>
-                                    </div>
-                                </div>
-                                <div class="des_list_hotel_item_type">
-                                    <i class="fa-thin fa-house"></i> Apartments
-                                </div>
-                                <div class="des_list_hotel_item_place">
-                                    <i class="fa-light fa-location-dot"></i> Khanh Hoa, Viet Nam
-                                </div>
-                                <div class="des_list_hotel_item_rate">
-                                    <span class="des_rate_number">4.5</span>
-                                    <span class="des_rate_text">Very good</span>
-                                    <span class="des_rate_total">(9 reviews)</span>
-                                </div>
-                                <div class="des_list_hotel_item_price">
-                                    <span class="des_price_title">Avg price per night</span>
-                                    <span class="des_price_show_text">US</span>
-                                    <span class="des_price_show_number">$650</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="des_list_hotel_item item">
-                            <a href="#" title="Waldschenke Stendenitz Übernachten im Wald am See">
-                                <img src="{$URL_IMAGES}/destination/hotel.png" alt="Waldschenke Stendenitz Übernachten im Wald am See">
-                            </a>
-                            <div class="des_list_hotel_item_intro">
-                                <div class="des_list_hotel_item_title">
-                                    <h3><a href="#" title="Waldschenke Stendenitz Übernachten im Wald am See">Waldschenke Stendenitz Übernachten im Wald am See</a></h3>
-                                    <div class="des_list_hotel_item_star">
-                                        <i class="fa-sharp fa-solid fa-star"></i>
-                                        <i class="fa-sharp fa-solid fa-star"></i>
-                                        <i class="fa-sharp fa-solid fa-star"></i>
-                                        <i class="fa-sharp fa-solid fa-star"></i>
-                                    </div>
-                                </div>
-                                <div class="des_list_hotel_item_type">
-                                    <i class="fa-thin fa-house"></i> Apartments
-                                </div>
-                                <div class="des_list_hotel_item_place">
-                                    <i class="fa-light fa-location-dot"></i> Khanh Hoa, Viet Nam
-                                </div>
-                                <div class="des_list_hotel_item_rate">
-                                    <span class="des_rate_number">4.5</span>
-                                    <span class="des_rate_text">Very good</span>
-                                    <span class="des_rate_total">(9 reviews)</span>
-                                </div>
-                                <div class="des_list_hotel_item_price">
-                                    <span class="des_price_title">Avg price per night</span>
-                                    <span class="des_price_show_text">US</span>
-                                    <span class="des_price_show_number">$650</span>
-                                </div>
-                            </div>
-                        </div>
+                        {/foreach}
+                        {/if}
                     </div>
                 </div>
             </div>
@@ -211,10 +88,10 @@
                         <div class="col-sm-12 col-md-4 col-lg-3">
                             <div class="des_our_team_item">
                                 <div class="des_our_team_item_img">
-                                    <img src="{$URL_IMAGES}/destination/our_team.png" alt="Enthusiasm">
+                                    <img src="{$URL_IMAGES}/destination/our_team2.png" alt="Enthusiasm">
                                 </div>
                                 <div class="des_our_team_item_info">
-                                    <h3>Enthusiasm</h3>
+                                    <h3>Dedicated, 24/7 care</h3>
                                     <div class="des_our_team_item_description">
                                         Who knows Asia better than us?  We are his children, we live there!  Let’s create your private trip together
                                     </div>
@@ -224,10 +101,10 @@
                         <div class="col-sm-12 col-md-4 col-lg-3">
                             <div class="des_our_team_item">
                                 <div class="des_our_team_item_img">
-                                    <img src="{$URL_IMAGES}/destination/our_team.png" alt="Enthusiasm">
+                                    <img src="{$URL_IMAGES}/destination/our_team3.png" alt="Enthusiasm">
                                 </div>
                                 <div class="des_our_team_item_info">
-                                    <h3>Enthusiasm</h3>
+                                    <h3>No fees incurred</h3>
                                     <div class="des_our_team_item_description">
                                         Who knows Asia better than us?  We are his children, we live there!  Let’s create your private trip together
                                     </div>
@@ -241,7 +118,7 @@
     </div>
     {$core->getBlock('customer_review')}
     <div class="des_gallery">
-        <div class="container">
+        <div class="container-fluid">
             <div class="des_gallery_title">
                 <h2>Vietnam is beautiful through the lens</h2>
             </div>
@@ -264,22 +141,22 @@
                     </div>
                     <div class="item des_grow" data-merge="1">
                         <div class="des_gallery_item">
-                            <a data-fancybox="gallery" href="{$URL_IMAGES}/destination/gallery.png">
-                                <img src="{$URL_IMAGES}/destination/gallery.png" width="479" height="403" alt="Gallery" class="img100" title="Gallery">
+                            <a data-fancybox="gallery" href="https://media.istockphoto.com/id/1481276382/photo/panorama-of-phang-nga-bay-with-mountains-at-sunset-in-thailand.webp?b=1&s=170667a&w=0&k=20&c=nafyVsrlYfAblKjR4SbpbpzKU56zaxAEEQ1PJhjV5Ko=">
+                                <img src="https://media.istockphoto.com/id/1481276382/photo/panorama-of-phang-nga-bay-with-mountains-at-sunset-in-thailand.webp?b=1&s=170667a&w=0&k=20&c=nafyVsrlYfAblKjR4SbpbpzKU56zaxAEEQ1PJhjV5Ko=" width="479" height="403" alt="Gallery" class="img100" title="Gallery">
                             </a>
                         </div>
                     </div>
                     <div class="item des_grow" data-merge="1">
                         <div class="des_gallery_item">
-                            <a data-fancybox="gallery" href="{$URL_IMAGES}/destination/gallery.png">
-                                <img src="{$URL_IMAGES}/destination/gallery.png" width="479" height="403" alt="Gallery" class="img100" title="Gallery">
+                            <a data-fancybox="gallery" href="https://media.istockphoto.com/id/1254474165/photo/tropical-leaves-abstract-green-leaves-texture-nature-background.webp?b=1&s=170667a&w=0&k=20&c=biSlIchE6-xYY0_MLX5yrboockYYaGF04uM79eTKSX8=">
+                                <img src="https://media.istockphoto.com/id/1254474165/photo/tropical-leaves-abstract-green-leaves-texture-nature-background.webp?b=1&s=170667a&w=0&k=20&c=biSlIchE6-xYY0_MLX5yrboockYYaGF04uM79eTKSX8=" width="479" height="403" alt="Gallery" class="img100" title="Gallery">
                             </a>
                         </div>
                     </div>
                     <div class="item des_grow" data-merge="1">
                         <div class="des_gallery_item">
-                            <a data-fancybox="gallery" href="{$URL_IMAGES}/destination/gallery.png">
-                                <img src="{$URL_IMAGES}/destination/gallery.png" width="479" height="403" alt="Gallery" class="img100" title="Gallery">
+                            <a data-fancybox="gallery" href="https://media.istockphoto.com/id/1480110801/photo/small-abstract-wave-splashing-in-golden-light-on-shoreline.webp?b=1&s=170667a&w=0&k=20&c=jRQfsM7HN4rjVBVeHuEFLV1JQpt1vFDuxbcY-m74KJA=">
+                                <img src="https://media.istockphoto.com/id/1480110801/photo/small-abstract-wave-splashing-in-golden-light-on-shoreline.webp?b=1&s=170667a&w=0&k=20&c=jRQfsM7HN4rjVBVeHuEFLV1JQpt1vFDuxbcY-m74KJA=" width="479" height="403" alt="Gallery" class="img100" title="Gallery">
                             </a>
                         </div>
                     </div>

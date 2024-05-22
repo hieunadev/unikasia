@@ -1,4 +1,6 @@
-        <header class="bground_header">
+
+
+<header class="bground_header">
             <nav class="txt_header1">
                 <div class="container">
                     <div class="row border-bottom">
@@ -106,12 +108,13 @@
                         </div>
                     </div>
                 </div>
-            </div>
-    
-			<div class="txt_blogvn">
+							<div class="txt_blogvn">
             <div class="container">
             <h1 class="txt_h1">BLOG VIETNAM</h1>
             <p class="text_pp">Culturels, zen ou plage, nos séjours au Vietnam conjuguent charme, élégance, dépaysement et authenticité. À découvrir urgemment pour une extension en fin de circuit accompagné, à enrichir des idées d’excursions de nos spécialistes de l’Asie du Sud-Est, ou un voyage de noces au Vietnam d’Hanoi à la baie d’Halong, perle du Nord du Vietnam classée au patrimoine mondial idéale pour un intermède romantique.</p>
         </div>
 				</div>
+            </div>
+    
+
         </header>

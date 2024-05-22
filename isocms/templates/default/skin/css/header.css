@@ -750,25 +750,47 @@ border: none;
 
 }
 
+/*@font-face {*/
+/*    font-family: 'SF Pro Display';*/
+/*    src: url('fonts/unikasia/SF-Pro-Display-Regular.otf') format('woff2'),*/
+/*    url('fonts/unikasia/SF-Pro-Display-Regular.otf') format('woff');*/
+/*    font-weight: normal;*/
+/*    font-style: normal;*/
+/*}*/
 
+/*@font-face {*/
+/*    font-family: 'SF Pro Display';*/
+/*    src: url('fonts/unikasia/SF-Pro-Display-Bold.otf') format('woff2'),*/
+/*    url('fonts/unikasia/SF-Pro-Display-Bold.otf') format('woff');*/
+/*    font-weight: bold;*/
+/*    font-style: normal;*/
+/*}*/
 
 @font-face {
-
-    font-family: "Reey";
-
-    src: url("fonts/unikasia/Reey-Regular.otf") format("opentype");
-
-}
-
-
-
-@font-face {
-
     font-family: "SF Pro Display";
-
-    src: url("fonts/unikasia/SF-Pro-Display-Regular.otf") format("opentype");
-
+    src:
+    /*url("fonts/unikasia/SF-Pro-Display-Black.otf") format("opentype"),*/
+    /*url("fonts/unikasia/SF-Pro-Display-BlackItalic.otf") format("opentype"),*/
+    /*url("fonts/unikasia/SF-Pro-Display-Bold.otf") format("opentype"),*/
+    /*url("fonts/unikasia/SF-Pro-Display-BoldItalic.otf") format("opentype");*/
+    /*url("fonts/unikasia/SF-Pro-Display-Heavy.otf") format("opentype"),*/
+    /*url("fonts/unikasia/SF-Pro-Display-HeavyItalic.otf") format("opentype"),*/
+    /*url("fonts/unikasia/SF-Pro-Display-Light.otf") format("opentype"),*/
+    /*url("fonts/unikasia/SF-Pro-Display-LightItalic.otf") format("opentype"),*/
+    /*url("fonts/unikasia/SF-Pro-Display-Medium.otf") format("opentype"),*/
+    /*url("fonts/unikasia/SF-Pro-Display-MediumItalic.otf") format("opentype"),*/
+    url("fonts/unikasia/SF-Pro-Display-Regular.otf") format("opentype"),
+    /*url("fonts/unikasia/SF-Pro-Display-RegularItalic.otf") format("opentype"),*/
+    url("fonts/unikasia/SF-Pro-Display-Semibold.otf") format("opentype"),
+    /*url("fonts/unikasia/SF-Pro-Display-SemiboldItalic.otf") format("opentype"),*/
+    url("fonts/unikasia/SF-Pro-Display-Thin.otf") format("opentype");
+    /*url("fonts/unikasia/SF-Pro-Display-ThinItalic.otf") format("opentype"),*/
+    /*url("fonts/unikasia/SF-Pro-Display-Ultralight.otf") format("opentype"),*/
+    /*url("fonts/unikasia/SF-Pro-Display-UltralightItalic.otf") format("opentype");*/
+    font-weight: normal;
+    font-style: normal;
 }
+
 
 *{
 

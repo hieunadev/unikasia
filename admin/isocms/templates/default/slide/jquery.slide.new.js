@@ -94,7 +94,7 @@ $().ready(function() {
 		var options = {};
 		if($('.textarea_intro_editor[table_id='+table_id+']').length){
 			$('.textarea_intro_editor[table_id='+table_id+']').each(function(){
-				var column = $(this).data('column'),
+				let column = $(this).data('column'),
 					editorId = $(this).attr('id');
 				options[column] = $Core.util.getTextAreaContent(editorId);
 			});
@@ -169,6 +169,7 @@ $().ready(function() {
 			} else if(currentstep == 'age'){
 				
 			}
+			
 			if(parseInt(_validated) == 0){
 				$Core.util.toggleIndicatior(0);
 				$_form.ajaxSubmit({
@@ -180,9 +181,9 @@ $().ready(function() {
 						$Core.util.toggleIndicatior(0);
 						alertify.success(update_success);
 						if(nextstep !=='_last' && nextstep !=='_first'){
-							loadMainFormStep(table_id, nextstep);
+							// loadMainFormStep(table_id, nextstep);
 						} else if(nextstep == '_last'){
-							loadMainFormStep(table_id, 'slide');
+							// loadMainFormStep(table_id, 'slide');
 						}
 					}
 				});

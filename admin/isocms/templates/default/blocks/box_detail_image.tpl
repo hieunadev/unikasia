@@ -49,7 +49,7 @@
 			</div>
 			<div class="col-sm-12 col-md-6">
 				<div class="aspect-ratio aspect-ratio--square aspect-ratio--square--full aspect-ratio--interactive">
-                    <img alt="{$oneItem.title}" class="aspect-ratio__content radius-3" id="isoman_show_image"src="{$clsClassTable->getImage($pvalTable,250,170)}" onerror="this.src='{$URL_IMAGES}/none_image.png'" style="width:100%; height:auto" />
+                    <img alt="{$oneItem.title}" class="aspect-ratio__content radius-3" id="isoman_show_image" src="{$clsClassTable->getImage($pvalTable,250,170)}" onerror="this.src='{$URL_IMAGES}/none_image.png'" style="width:100%; height:auto" />
 				</div>
 			</div>
 		</div><!-- /file list -->

@@ -1,21 +1,40 @@
 <div class="des_header_description">
-    <div class="des_header_bg">VIETNAM</div>
+    <div class="des_header_bg">{$info_country.title}</div>
     <div class="des_header_intro">
-        <h1 class="des_header_title">VIETNAM HOLIDAYS</h1>
+        <h1 class="des_header_title">{$info_country.header_title}</h1>
         <div class="des_header_info">
-            Private Vietnam trip, “between you”, in a private car with driver, with private French-speaking guide. Entrust us with your project, we will create it together
+            {$info_country.header_description}
         </div>
-        <a href="#" title="Create your trip to Vietnam" class="des_header_link">Create your trip to Vietnam</a>
+        <a href="#" title="Create your trip to Vietnam" class="des_header_link">
+            Create your trip to Vietnam <i class="fa-sharp fa-regular fa-arrow-right"></i>
+        </a>
     </div>
+</div>
+<div class="des_header_background_image">
+    <img src="https://unikasia.vietiso.com/isocms/templates/default/skin/images/destination/bg_des.png" alt="Vietnam">
 </div>
 
 {literal}
 <style>
     .destination_place_body .bground_header {
-        background: linear-gradient(rgba(24, 28, 26, 0.4), rgba(24, 28, 26, 0.4)),
+        /* background: linear-gradient(rgba(24, 28, 26, 0.4), rgba(24, 28, 26, 0.4)),
             url("https://unikasia.vietiso.com/isocms/templates/default/skin/images/destination/bg_des.png");
         background-repeat: no-repeat;
-        background-size: cover;
+        background-size: cover; */
+        position: relative;
+    }
+
+    .des_header_background_image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        filter: brightness(50%);
+        width: 100%;
+        z-index: 1;
+    }
+
+    .des_header_background_image img {
+        width: 100%;
     }
 
     .des_header_description {
@@ -24,8 +43,10 @@
         text-align: center;
         color: #fff;
         padding-top: 20px;
-        padding-bottom: 142px;
+        padding-bottom: 139px;
         position: relative;
+        z-index: 2;
+        user-select: none;
     }
 
     .des_header_bg {
@@ -36,11 +57,12 @@
         font-weight: 900;
         line-height: normal;
         letter-spacing: -2.61px;
+        text-transform: uppercase;
     }
 
     .des_header_intro {
         position: absolute;
-        top: 25%;
+        top: 30%;
         left: 50%;
         transform: translateX(-50%);
     }
@@ -53,6 +75,7 @@
         font-style: normal;
         font-weight: 600;
         line-height: 64px;
+        text-transform: uppercase;
     }
 
     .des_header_info {
@@ -81,6 +104,10 @@
 
     .des_header_link:hover {
         background: #E88F00;
+    }
+
+    .des_header_link .fa-arrow-right {
+        margin-left: 8px;
     }
 </style>
 {/literal}

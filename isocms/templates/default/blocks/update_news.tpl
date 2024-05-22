@@ -8,11 +8,11 @@
                     <div class="update_news_img overflow-hidden"><img class="card-img-top" src="{$lstBlog[i].image}"
                          alt="{$lstBlog[i].slug}"></div>
                     <div class="card-body card_txt_btn">
-                        <h3 class="card-title txt_title txt-hover-home">{$lstBlog[i].title}</h3>
-                        <p class="card-text txt_desc">{$clsISO->limit_textIso($lstBlog[i].intro|html_entity_decode, 25)}</p>
+                        <h3 class="card-title txt_title txt-hover-home" title="{$lstBlog[i].title}">{$clsISO->limit_textIso($lstBlog[i].title, 20)}</h3>
+                        <div class="card-text txt_desc">{$lstBlog[i].intro|html_entity_decode}</div>
                         <div class="timestamp">
                             <i class="fa-regular fa-clock" style="color: #0091ff;"></i> <span
-                                    class="txt_timedate">10 Feb, 2024 | Travel Blog </span>
+                                    class="txt_timedate">{$lstBlog[i].upd_date|date_format:"%d %b, %Y"} | {$clsBlogCat->getTitle($lstBlog[i].cat_id)} </span>
                         </div>
                         <div class="btn_viewm">
                             <a href="#" class="btn btn-viewmore btn-hover-home">{$core->get_Lang('View More')}<i

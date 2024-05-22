@@ -1,6 +1,6 @@
 <header class="header-home">
     <div class="bground_header">
-        <div id="header_fixed" style="position: relative">
+        <div id="header_fixed">
             <nav class="txt_header1">
                 <div class="container">
                     <div class="row border-bottom" id="header_top">
@@ -35,19 +35,35 @@
                                     {$core->get_Lang('Destinations')} <i class="fas fa-angle-down ms-1"></i>
                                 </button>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="#">Destination 1</a>
-                                    <a class="dropdown-item" href="#">Destination 2</a>
-                                    <a class="dropdown-item" href="#">Destination 3</a>
+                                    <div class=" dropdown_destination">
+                                        <div class="dropdown-menu_country">
+                                            {section name=i loop=$lstCountry}
+                                                <a class="dropdown-item" href="#" data-img="img_{$lstCountry[i].title}">{$lstCountry[i].title}</a>
+                                            {/section}
+                                        </div>
+                                        <div class="dropdown-menu_img_country">
+                                            {section name=i loop=$lstCountry}
+                                                <div class="menu_img_country">
+                                                    <img id="img_{$lstCountry[i].title}" src="{$lstCountry[i].image}" onerror="this.src='{$URL_IMAGES}/none_image.png'" alt="{$lstCountry[i].slug}">
+                                                </div>
+                                            {/section}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="dropdown txt_dropdown">
                                 <button class="btn dropdown-toggle txt_dropdown" type="button" data-bs-toggle="dropdown">
                                     {$core->get_Lang('Stay')} <i class="fas fa-angle-down ms-1"></i>
                                 </button>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="#">Stay 1</a>
-                                    <a class="dropdown-item" href="#">Stay 2</a>
-                                    <a class="dropdown-item" href="#">Stay 3</a>
+                                <div class="dropdown-menu dropdown-stay-parent">
+                                    <div class="dropdown-menu-stay">
+                                        {section name=i loop=$lstCountry}
+                                        <a class="dropdown-item position-relative overflow-hidden" href="#">
+                                            <img src="{$lstCountry[i].image}" onerror="this.src='{$URL_IMAGES}/none_image.png'" alt="{$lstCountry[i].slug}">
+                                            <span class="text-light">{$lstCountry[i].title}</span>
+                                        </a>
+                                        {/section}
+                                    </div>
                                 </div>
                             </div>
                             <div class="dropdown txt_dropdown">
@@ -89,20 +105,99 @@
                 </div>
             </div>
         </div>
-        {if $mod eq 'destination' && $act eq 'place'}
-        {$core->getBlock('des_header_destination')}
-        {/if}
-        {if $mod eq 'destination' && $act eq 'travel_style'}
-        {$core->getBlock('des_header_travel_style')}
-        {/if}
-        {if $mod eq 'destination' && $act eq 'travel_guide'}
-        {$core->getBlock('des_header_travel_guide')}
-        {/if}
-        {if ($mod eq 'destination' && $act eq 'travel_guide_detail') || ($mod eq 'destination' && $act eq 'attraction')}
-        {$core->getBlock('des_header_travel_guide_detail')}
-        {/if}
-        {if $mod eq 'homepackage'}
-        {$core->getBlock('slider_home')}
-        {/if}
+            {$core->getBlock('slider_home')}
     </div>
 </header>
+
+<style>
+.txt_dropdown .dropdown-menu {
+    border: none;
+    box-shadow: 0px 12px 32px 0px rgba(125, 135, 158, 0.09);;
+}
+.dropdown-menu_img_country img {
+    display: none;
+}
+.dropdown-menu {
+    padding: 24px;
+}
+
+.dropdown-menu_img_country .menu_img_country:hover img,
+.dropdown-menu-stay .dropdown-item img:hover{
+    transform: scale(1.2);
+}
+/* Menu Destination */
+.dropdown-menu_img_country img.active {
+    display: block;
+}
+.dropdown_destination {
+    display: flex;
+    width: 578px;
+    max-height: 482px;
+    justify-content: space-between;
+    overflow: hidden;
+}
+.dropdown-item {
+    padding: 0 0 12px 0;
+    text-transform: none;
+}
+
+.dropdown-menu_img_country .menu_img_country{
+    max-width: 344px;
+    max-height: 434px;
+    overflow: hidden;
+    border-radius: 8px;
+}
+.dropdown-menu_img_country .menu_img_country img{
+    width: 344px;
+    height: 434px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.dropdown-menu_img_country img {
+    width: 100%;
+    height: auto;
+}
+
+/* Menu Stay */
+.dropdown-stay-parent {
+    transform: translate(-37%, 38px) !important;
+}
+.dropdown-menu-stay {
+    display: flex;
+    gap: 10px;
+    max-width: 928px;
+    max-height: 311px;
+}
+.dropdown-menu-stay .dropdown-item{
+    width: 166px;
+    max-height: 261px;
+    border-radius: 8px;
+}
+.dropdown-menu-stay .dropdown-item img{
+    height: 261px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+.dropdown-menu-stay .dropdown-item span{
+    position: absolute;
+    left: 50%;
+    bottom: 12px;
+    z-index: 1;
+    transform: translateX(-50%);
+}
+</style>
+{literal}
+    <script>
+        $(document).ready(function() {
+            $('.menu_img_country img').first().addClass('active');
+            $('.dropdown-item').hover(
+                function() {
+                    $('.menu_img_country img').removeClass('active');
+                    var imgId = $(this).data('img');
+                    $('#' + imgId).addClass('active');
+                }
+            );
+        });
+    </script>
+{/literal}

@@ -1,16 +1,16 @@
 <div class="page_container">
 	<div class="page-title d-flex">
-        <div class="title">
-			<h2>{$core->get_Lang('Why with us')} ?  <div class="info_module" data-toggle="tooltip" data-placement="right" title="Chức năng quản lý danh sách các {$core->get_Lang('Why with us')} trong hệ thống isoCMS">i</div>
+		<div class="title">
+			<h2>{$core->get_Lang('Why with us')} ? <div class="info_module" data-toggle="tooltip" data-placement="right" title="Chức năng quản lý danh sách các {$core->get_Lang('Why with us')} trong hệ thống isoCMS">i</div>
 			</h2>
 		</div>
-  		<div class="button_right">
+		<div class="button_right">
 			<a class="btn btn-main add_new_ads" href="{$PCMS_URL}/?mod={$mod}&act=edit" title="{$core->get_Lang('Add')} {$core->get_Lang('Why with us')}">{$core->get_Lang('Add')} {$core->get_Lang('Why with us')}</a>
 		</div>
-   		{*<div class="button_right">
+		{*<div class="button_right">
 			<a class="btn btn-main btn-addnew add_new_why" type="{$type}" title="{$core->get_Lang('Add')} {$core->get_Lang('Why with us')}">{$core->get_Lang('Add')} {$core->get_Lang('Why with us')}</a>
 		</div>*}
-    </div>
+	</div>
 	<div class="breadcrumb">
 		<strong>{$core->get_Lang('You are here')}:</strong>
 		<a href="{$PCMS_URL}">{$core->get_Lang('Home')}</a>
@@ -37,8 +37,8 @@
 					<div class="fr group_buttons">
 						<a href="{$PCMS_URL}/?mod={$mod}" class="btn btn-warning btnNew" style="color:#fff"> <i class="icon-folder-open icon-white"></i> <span>{$core->get_Lang('all')}({$number_all})</span> </a>
 						<a href="{$PCMS_URL}/?mod={$mod}&type_list=Trash" class="btn btn-danger btnNew" style="color:#fff"> <i class="icon-warning-sign icon-white"></i> <span>{$core->get_Lang('trash')} ({$number_trash})</span> </a>
-                    </div>
-				</form>	
+					</div>
+				</form>
 			</div>
 		</div>
 		<div id="tab_content">
@@ -63,6 +63,7 @@
 							<th class="gridheader hiden767" style="width:60px">{$core->get_Lang('ID')}</th>
 							<th class="gridheader name_responsive" style="text-align:left"><strong>{$core->get_Lang('Content')}</strong></th>
 							<th class="gridheader hiden_responsive" style="text-align:left"><strong>{$core->get_Lang('Type')}</strong></th>
+							<th class="gridheader hiden_responsive" style="text-align:left"><strong>{$core->get_Lang('Country')}</strong></th>
 							<th class="gridheader hiden_responsive" style="width:60px"><strong>{$core->get_Lang('status')}</strong></th>
 							<th class="gridheader hiden_responsive" style="width:70px"><strong>{$core->get_Lang('Action')}</strong></th>
 						</tr>
@@ -72,19 +73,24 @@
 						<tr style="cursor:move" id="order_{$allItem[i].why_id}" class="{if $smarty.section.i.index%2 eq 0}row1{else}row2{/if}">
 							<th class="check_40"><input name="p_key[]" class="chkitem" type="checkbox" value="{$allItem[i].why_id}" /></th>
 							<th class="index hiden767" style="width: 5%; text-align: center;">{$allItem[i].why_id}</th>
-							<td class="name_service">							
+							<td class="name_service">
 								<a title="Edit" href="{$PCMS_URL}/index.php?mod={$mod}&act=edit&why_id={$allItem[i].why_id}">
-								   <strong>{$clsClassTable->getTitle($allItem[i].why_id)}</strong>
+									<strong>{$clsClassTable->getTitle($allItem[i].why_id)}</strong>
 								</a>
 								{if $allItem[i].is_trash eq '1'}
 								<span style="color:#ccc;">[In Trash]</span>
 								{/if}
 								<button type="button" class="toggle-row inline_block767" style="display:none"><i class="fa fa-caret fa-caret-down"></i></button>
 							</td>
-							<td data-title="{$core->get_Lang('Type')}" class="block_responsive border_top_responsive">{if $clsClassTable->getOneField('Type',$allItem[i].why_id) ne ''}						
+							<td data-title="{$core->get_Lang('Type')}" class="block_responsive border_top_responsive">{if $clsClassTable->getOneField('Type',$allItem[i].why_id) ne ''}
 								{$clsClassTable->getOneField('Type',$allItem[i].why_id)}
 								{else}
 								{$core->get_Lang('Default')}
+								{/if}
+							</td>
+							<td data-title="{$core->get_Lang('Country')}" class="block_responsive border_top_responsive">
+								{if $clsClassTable->getOneField('country_id',$allItem[i].why_id) ne ''}
+								{$list_country[$clsClassTable->getOneField('country_id',$allItem[i].why_id)]}
 								{/if}
 							</td>
 							<td data-title="{$core->get_Lang('status')}" class="block_responsive" style="text-align:center">
@@ -96,7 +102,7 @@
 									{/if}
 								</a>
 							</td>
-							<td data-title="{$core->get_Lang('func')}" class="block_responsive" style="vertical-align: middle; width: 40px; text-align: right; white-space: nowrap;"> 
+							<td data-title="{$core->get_Lang('func')}" class="block_responsive" style="vertical-align: middle; width: 40px; text-align: right; white-space: nowrap;">
 								<div class="btn-group">
 									<button class="btn btn_dropdown dropdown-toggle" type="button" data-toggle="dropdown">
 										<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
@@ -112,7 +118,7 @@
 									</ul>
 								</div>
 							</td>
-						</tr>	
+						</tr>
 						{/section}
 					</tbody>
 				</table>
@@ -133,22 +139,22 @@
 	$("#SortAble").sortable({
 		opacity: 0.8,
 		cursor: 'move',
-		start: function(){
+		start: function() {
 			vietiso_loading(1);
 		},
-		stop: function(){
+		stop: function() {
 			vietiso_loading(0);
 		},
-		update: function(){
+		update: function() {
 			var recordPerPage = $recordPerPage;
 			var currentPage = $currentPage;
-			var order = $(this).sortable("serialize")+'&update=update'+'&recordPerPage='+recordPerPage+'&currentPage='+currentPage;
-			$.post(path_ajax_script+"/index.php?mod="+mod+"&act=ajUpdPosSortListWhy", order, 
-			
-			function(html){
-				vietiso_loading(0);
-				location.href = REQUEST_URI;
-			});
+			var order = $(this).sortable("serialize") + '&update=update' + '&recordPerPage=' + recordPerPage + '&currentPage=' + currentPage;
+			$.post(path_ajax_script + "/index.php?mod=" + mod + "&act=ajUpdPosSortListWhy", order,
+
+				function(html) {
+					vietiso_loading(0);
+					location.href = REQUEST_URI;
+				});
 		}
 	});
 </script>

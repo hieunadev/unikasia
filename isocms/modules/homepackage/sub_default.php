@@ -18,7 +18,7 @@ function default_default(){
     $assign_list['clsPartner'] = $listPartner;
     $assign_list['lstCountry'] = $lstCountry;
 
-//    $countries = array_map(function($item) {return $item["slug"]; }, $lstCountry);
+
     $countries = array_map(function($country) {
         return [
             'country_id' => $country['country_id'],

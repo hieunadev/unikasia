@@ -1,2 +1,2 @@
 <?
-global $core, $smarty, $clsISO;
+global $core, $smarty, $clsISO, $assign_list;

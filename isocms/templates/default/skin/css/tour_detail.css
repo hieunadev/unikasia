@@ -20,7 +20,7 @@ body {
     position: relative;
     z-index: 2;
     top: 10%;
-    margin-top: -2.75rem
+    margin-top: -2.75rem;
 }
 .breadcrumb_list {
     display: flex;
@@ -579,6 +579,67 @@ font-style: normal;
 font-weight: 400;
 line-height: 24px; /* 150% */
 }
+
+.price_tour {
+  width: 100%;
+  max-width: 840px;
+  height: 190px;
+  border-radius: 8px;
+  background: #004EA8;
+  margin-top: 68px;
+  padding: 24px 0px 0px 20px;
+}
+
+.txt_price {
+  color:  #FFF;
+  /* text-align: center; */
+    font-size: 32px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 52px; /* 162.5% */
+}
+
+.txt_pricedes {
+  color: #D3DCE1;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px; /* 150% */
+}
+
+.select_pricetour {
+  display: flex; /* Sắp xếp các phần tử thành hàng */
+  align-items: center; /* Căn giữa theo chiều dọc */
+  /* flex-wrap: wrap; */
+}
+
+.select_pricetour > * {
+  margin-right: 10px; /* Khoảng cách giữa các phần tử */
+}
+
+.date_selecttour {
+  width: 100%;
+  max-width: 292px;
+  height: 48px;
+  flex-shrink: 0;
+  flex: 1 1 auto;
+}
+
+.check-btnn {
+  width: 100%;
+  max-width: 197px;
+  height: 48px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  background:  #FFA718;
+  color: #FFF !important;
+}
+
+#btn {
+  flex: 0 0 auto; /* Không cho phép co giãn, giữ nguyên kích thước */
+}
+
+
 
 
 

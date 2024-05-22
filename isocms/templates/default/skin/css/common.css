@@ -40,7 +40,7 @@
 
 .top-attractions .holiday .img_holiday {
     width: 257px;
-    height: auto;
+    /* height: auto; */
     border-radius: 8px 0px 0px 8px;
 }
 
@@ -53,11 +53,15 @@
     flex-direction: column;
     gap: 8px;
     margin-left: -1rem;
+    position: relative;
+    z-index: 1;
 }
 
 .top-attractions .content_holiday .title_hodiday {
     color: var(--Neutral-1);
+    font-family: "SF Pro Display";
     font-size: 20px;
+    font-style: normal;
     font-weight: 500;
     line-height: 32px;
 }
@@ -66,12 +70,14 @@
     font-size: 16px;
     font-weight: 400;
     line-height: 24px;
+    margin-bottom: 0;
 }
 .top-attractions .content_holiday .txt_detail_holiday {
     color: var(--Primary);
     font-size: 16px;
     font-weight: 400;
     line-height: 24px;
+    margin-bottom: 0;
 }
 .top-attractions .btn-attraction .txt_btn {
     color: #ffffff;

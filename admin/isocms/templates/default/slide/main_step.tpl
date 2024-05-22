@@ -61,8 +61,10 @@
 									<button data-key="{$bannerContent_slide}" data-label="{$core->get_Lang('Slide Link')}" type="button" title="Thêm mô tả" onclick="open_texthelp(this, event)" class="btn btn-xs btn-default"><i class="fa fa-plus-circle"></i></button>
 									{/if}
 								</label>
-								 <textarea name="iso-text" id="" cols="30" rows="10" style="width:100%"  onClick="loadHelp(this)">{$oneItem.text}</textarea>
-								 <div class="text_help" hidden="">{$clsConfiguration->getValue($bannerContent_slide)|html_entity_decode}</div>
+{*								 <textarea name="iso-text" id="" cols="30" rows="10" style="width:100%"  onClick="loadHelp(this)">{$oneItem.text}</textarea>*}
+								<div class="inpt_tour">
+									<textarea style="width:100%" table_id="{$pvalTable}" class="textarea_intro_editor" data-column="iso-text" id="SlideText" cols="255" rows="2">{$oneItem.text}</textarea>
+								</div>
 							</div>
 							<div class="inpt_tour">
 								<label for="title">{$core->get_Lang('Follow us')}</label>

@@ -34,19 +34,17 @@
                                     <span>Honduras, Guatemala, El Salvador</span>
                                 </div>
                                 <div class="description">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Egestas lorem et
-                                        sollicitudin et. Facilisi scelerisque faucibus eu dolor enim risus sed. Sed
-                                        enim auctor nibh sapien. </p>
+                                    <div>{$clsTour->getTripOverview($listTourExplore[i].tour_id)}</div>
                                 </div>
                                 <div class="details">
                                     <div>
                                         <i class="fa-regular fa-clock" style="color: #0091ff;"></i>
-                                        <span>19 days</span>
+                                        <span>{$clsTour->getNumberDayDuration($listTourExplore[i].tour_id)}</span>
                                     </div>
                                     <div class="txtfromprice">
                                         <span class="txtfrom">From</span>
                                         <span class="txt_unit">US</span>
-                                        <span class="numbprice">$650</span>
+                                        <span class="numbprice">${$clsTour->getTripPriceNewPro2020($listTourExplore[i].tour_id,$smarty.now,0,'value')}</span>
                                     </div>
                                 </div>
                             </div>

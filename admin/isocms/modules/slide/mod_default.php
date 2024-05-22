@@ -182,7 +182,7 @@ function default_ajSaveMainStep(){
 	$table_id = Input::post('table_id',0);
 	$currentstep = Input::post('currentstep');
 	if($currentstep=='slide'){
-		$title = Input::post('title');	
+		$title = Input::post('title');
         $title=html_entity_decode($title);
 		$image = Input::post('image','');		
 		$arr_update = [
@@ -191,9 +191,8 @@ function default_ajSaveMainStep(){
 			'upd_date' 			=> time(),
 			'image' 			=> $image,
 			'user_id' 			=> addslashes($core->_SESS->user_id),
-			'user_id_update'	=>	addslashes($core->_SESS->user_id)
+			'user_id_update'	=>	addslashes($core->_SESS->user_id),
 		];
-		
 		
 		foreach($_POST as $key=>$val){
 			$tmp = explode('-',$key);
@@ -201,8 +200,7 @@ function default_ajSaveMainStep(){
 				$arr_update[$tmp[1]] = addslashes($val);
 			}
 		}
-		$clsClassTable->updateOne($table_id, $arr_update);	
-		
+		$clsClassTable->updateOne($table_id, $arr_update);
 	} else{
 		$val_post = input::post();
 		$arr_update = [];

@@ -2,7 +2,7 @@
     <div class="container d-flex">
         <span class="breadcrumb-item des_breadcrumb_title">You are here:</span>
         <ol class="breadcrumb des_breadcrumb">
-            <li class="breadcrumb-item des_breadcrumb_link"><a href="#" title="Home">Home</a></li>
+            <li class="breadcrumb-item des_breadcrumb_link"><a href="/" title="Home">Home</a></li>
             <li class="breadcrumb-item des_breadcrumb_link"><a href="#" title="Destinations">Destinations</a></li>
             {if $mod eq 'destination' && $act eq 'place'}
             <li class="breadcrumb-item active des_breadcrumb_active" aria-current="page">Vietnam</li>

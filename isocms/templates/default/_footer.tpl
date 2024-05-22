@@ -12,14 +12,18 @@
 					<div class="row">
 						<div class="col-lg-4 col-md-5 col-sm-6">
 							<form method="post" action="#" class="form-sub">
-								<input type="text" id="email-sub" placeholder="Enter your email" class="import-txt-email">
-								<input type="text" id="email-check" class="check-txt-email" value>
-								<input class="btn-reg btn_reg" id="subreg" type="button" name="btnSubmit" value="Submit">
+								<div class="footer-filters">
+									<div class="search"><input type="text" class="form-control" id="validationTooltip05"
+															   required="" placeholder="Entrer your email">
+										<button type="submit" class="btn-hover-home">Submit</button>
+									</div>
+								</div>
 							</form>
 							<h3 class="txtfindus">Unikasia Travel</h3>
 							<p class="txtheadersmll absolute-bar">
 								<a href="#">
-                         <span class="txtadress">4-5 floors, 13 Kim Ma Thuong, Ba Dinh dist, Hanoi, Vietnam
+									{assign var=CompanyAddress1 value=CompanyAddress1_|cat:$_LANG_ID}
+                         <span class="txtadress">{$clsConfiguration->getValue($CompanyAddress1)}
                          </span>
 								</a>
 							</p>
@@ -30,13 +34,13 @@
 							</p>
 							<p class="txtheadersmll absolute-bar">
 								<a href="mailto:info@hanoivoyage.com">
-                         <span class="txtwebsite">info@hanoivoyage.com
+                         <span class="txtwebsite">{$clsConfiguration->getValue('CompanyEmail')}
                          </span>
 								</a>
 							</p>
 							<p class="txtheadersmll absolute-bar">
 								<a href="tel:+842437153012">
-									<span class="txtwebsite">+84 243 715 3012</span>
+									<span class="txtwebsite">{$clsConfiguration->getValue('CompanyPhone')}</span>
 								</a>
 							</p>
 						</div>
@@ -57,27 +61,24 @@
 									</ul>
 								</div>
 								<div class="col-lg-4 col-sm-6 col-xs-6">
-									<p class="txtheaderlarge">DESTINATIONS</p>
+									<p class="txtheaderlarge">{$core->get_Lang('DESTINATIONS')}</p>
 									<ul class="list-unstyled txthreflink">
-										<li><a href="#">Travel to Vietnam</a></li>
-										<li><a href="#">Travel to Cambodia</a></li>
-										<li><a href="#">Travel to Laos</a></li>
-										<li><a href="#">Travel to Burma</a></li>
-										<li><a href="#">Travel to Thailand</a></li>
-										<li><a href="#">Combined travel</a></li>
-										<li><a href="#">Cruises</a></li>
+										<li><a href="#">{$core->get_Lang('Travel to Vietnam')}</a></li>
+										<li><a href="#">{$core->get_Lang('Travel to Cambodia')}</a></li>
+										<li><a href="#">{$core->get_Lang('Travel to Laos')}</a></li>
+										<li><a href="#">{$core->get_Lang('Travel to Myanmar')}</a></li>
+										<li><a href="#">{$core->get_Lang('Travel to Thailand')}</a></li>
+										<li><a href="#">{$core->get_Lang('Combined travel')}</a></li>
 									</ul>
 								</div>
 								<div class="col-lg-4 col-sm-6 col-xs-6">
-									<p class="txtheaderlarge">Tell you more
+									<p class="txtheaderlarge">{$core->get_Lang('OTHERS')}
 									</p>
 									<ul class="list-unstyled txthreflink">
-										<li><a href="#">Homestay</a></li>
-										<li><a href="#">Experiences</a></li>
-										<li><a href="#">Extensions</a></li>
-										<li><a href="#">Favorite hotels</a></li>
-										<li><a href="#">Our blog</a></li>
-										<li><a href="#">Miscellaneous news</a></li>
+										<li><a href="#">{$core->get_Lang('Stay')}</a></li>
+										<li><a href="#">{$core->get_Lang('Cruise')}</a></li>
+										<li><a href="#">{$core->get_Lang('Experiences')}</a></li>
+										<li><a href="#">{$core->get_Lang('Blog')}</a></li>
 									</ul>
 								</div>
 							</div>
@@ -85,14 +86,14 @@
 						<div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-5 border-top">
 							<div class="d-flex flex-nowrap align-items-center">
 								<div class="img_logohn">
-									<a href="https://hanoivoyage.com/" title="logohn" target="_blank">
-										<img title="logohanoi" src="{$URL_IMAGES}/home/logo-hnvoyages.png" alt="img-hanoi">
+									<a href="/" title="logohn">
+										<img title="logohanoi" src="{$clsConfiguration->getValue('FooterLogo')}" alt="img-hanoi">
 									</a>
 								</div>
 								<p class="txtlogo">International tour operator approved by the National Tourism Administration in Vietnam. <br>LICENCE N°: 01 - 02 /TCDL-GP LHQT</p>
 							</div>
 							<div class="d-flex flex-column align-items-end">
-								<p class="txt-contact">Share your trip with us</p>
+								<p class="txt-contact">{$core->get_Lang('Follow our social networks')}</p>
 								<div class="d-flex icon-mxh" style="gap: 20px">
 									<a class="link-secondary" href="#">
 										<i class="fa-brands fa-youtube fa-xl"></i>
@@ -128,7 +129,7 @@
 			</footer>
 		</div>
 	</section>
-	{if $mod eq "homepackage"}
+
 	<div id="btn-tailor-fixed"><a href="#" class="tailor_btn_fixed" title="TAILOR-MADE TRAVEL"> <div class="tailor_img_fixed"> <img src="https://unikasia.vietiso.com/isocms/templates/default/skin/images/destination/hn_voyages.png" alt=""> </div>
 		TAILOR-MADE TRAVEL
 	</a></div>
@@ -153,7 +154,7 @@
 					<i class="fa-brands fa-instagram"></i> </a> <a href="#" class="social-icon"> <i class="fa-brands fa-facebook-f"></i> </a>
 			</div>
 		</div>
-	{/if}
+
 {/if}
 {/if}
 <script>
