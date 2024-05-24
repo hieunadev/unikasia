@@ -16,7 +16,7 @@ switch ($mod) {
         $type = "";
 }
 
-$listWhy = $clsWhy->getAll("is_trash = 0 and type = '$type' order by order_no ASC limit 3");
+$listWhy = $clsWhy->getAll("is_trash = 0 and is_online = 1 and type = '$type' order by order_no ASC");
 $smarty->assign('listWhy', $listWhy);
 //$smarty->assign('listPartner', $listPartner);
 

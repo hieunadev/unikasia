@@ -1317,6 +1317,7 @@ function default_edit()
     $show = Input::get('show');
     $message = Input::get('message', "");
     $run_ajax = Input::get('run_ajax', "");
+
     $cat_run = Input::get('cat_run', "");
     $tour_id = $pvalTable = (int) Input::get('tour_id', 0);
 
@@ -4286,6 +4287,7 @@ function default_SiteTourCategory()
 							<input type="hidden" id="isoman_hidden_image" value="' . $clsTourCategory->getOneField('image', $tourcat_id) . '">
 							<input style="width:70% !important;float:left;margin-left:4px;" type="text" id="isoman_url_image" name="image" value="' . $clsTourCategory->getOneField('image', $tourcat_id) . '"><a style="float:left; margin-left:4px; margin-top:-4px;" href="#" class="ajOpenDialog" isoman_for_id="image" isoman_val="' . $clsTourCategory->getOneField('image', $tourcat_id) . '" isoman_name="image"><img src="' . URL_IMAGES . '/general/folder-32.png" border="0" title="Open" alt="Open"></a>
 						</div>
+						<span>' . $core->get_Lang('Size') . ' (WxH=281x441)</span>
 					</div>';
         if ($clsConfiguration->getValue('Video_Teaser_TourCategory')) {
             $html .= '<div class="row-span">

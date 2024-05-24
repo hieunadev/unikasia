@@ -29,7 +29,6 @@
 
 					</div>
 				</div>
-
 			</div>
 		</div>
 	</div>
@@ -39,38 +38,35 @@
 
 
 <script type="text/javascript">
-    var table_id = '{$pvalTable}';
-    var panel = '{$panel}';
-    var currentstep = '{$currentstep}';
-    var nextstep = '{$nextstep}';
-    var continent_id = "{$oneItem.continent_id}";
+	var table_id = '{$pvalTable}';
+	var panel = '{$panel}';
+	var currentstep = '{$currentstep}';
+	var nextstep = '{$nextstep}';
+	var continent_id = "{$oneItem.continent_id}";
 	var country_id = "{$oneItem.country_id}";
-    var region_id = "{$oneItem.region_id}";
-    var city_id = "{$oneItem.city_id}";
-	var map_lo="{$oneItem.map_lo}";
-	var map_la="{$oneItem.map_la}";
+	var region_id = "{$oneItem.region_id}";
+	var city_id = "{$oneItem.city_id}";
+	var map_lo = "{$oneItem.map_lo}";
+	var map_la = "{$oneItem.map_la}";
 	var map_zoom = '{$oneItem.map_zoom}';
 	var map_type = '{$oneItem.map_tyle}';
 	var Select = 'Select';
-	
-
 </script>
 {literal}
 <script>
-	$(function () {
-		
+	$(function() {
+
 		$(window).scroll(function() {
 			var sticky = $('.box_top_opt_set'),
 				scroll = $(window).scrollTop();
 			if (scroll >= 40) {
 				sticky.addClass('fixed');
-			}else {
+			} else {
 				sticky.removeClass('fixed');
 			}
 		});
-		loadMainFormStep(table_id,currentstep,nextstep);
+		loadMainFormStep(table_id, currentstep, nextstep);
 	});
-	
 </script>
 {/literal}
 <script type="text/javascript" src="{$URL_THEMES}/faqs/jquery.faqs.new.js?v={$upd_version}"></script>

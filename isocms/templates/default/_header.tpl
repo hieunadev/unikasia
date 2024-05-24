@@ -104,5 +104,8 @@
         {if $mod eq 'homepackage'}
         {$core->getBlock('slider_home')}
         {/if}
+		{if $mod eq 'blog' && $act eq 'default'}
+        {$core->getBlock('des_header_blog')}
+        {/if}
     </div>
 </header>

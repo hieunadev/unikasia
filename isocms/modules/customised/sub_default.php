@@ -1,5 +1,8 @@
 <?php
+
+
 function default_default() {
+
     global $assign_list, $_CONFIG, $core, $dbconn, $mod, $act, $_LANG_ID, $title_page, $description_page, $keyword_page, $domain,$clsISO;
    	#
 	$clsCountryEx = new Country();$assign_list['clsCountryEx'] = $clsCountryEx;
@@ -16,7 +19,6 @@ function default_default() {
 	#
 	$recordPerPage = 8;
 	$currentPage = isset($_GET['page'])?intval($_GET['page']):1;
-
 
 	$cond = "is_trash=0 and is_online=1";
 	$lstConfigSetting = $clsConfigSetting->getAll($cond);

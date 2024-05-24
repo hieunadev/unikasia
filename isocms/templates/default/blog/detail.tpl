@@ -4,6 +4,8 @@
 {assign var=author value=$blogItem.author}
 {assign var=imgBlog value=$clsBlog->getImage($blog_id,800,535,$blogItem)}
 {assign var=listTag value=$clsBlog->getArrayTag($blog_id,$blogItem)}
+{assign var=cateBlog value=$clsBlogCategory->getTitle($cat_id,$blogItem)}
+{assign var=regionBlog value=$clsCountryEx->getTitle($country_id,$blogItem)}
 
 
 {literal}
@@ -70,7 +72,7 @@
             <div class="col-md-6">
                 <div class="rounded_right">
                     <div class="textdesblog">
-                        <p class="txt_blogdes">VIETNAM | TRAVEL TIPS</p>
+                        <p class="txt_blogdes">{$regionBlog} | {$cateBlog}</p>
                         <h2 class="txth2_blogdetail">{$title_blog}</h2>
                         <p class="txt_blogdetaildes">If you are traveling throughout the North and are looking for a
                             destination that combines a rich exploration of Vietnamese history and culture with the

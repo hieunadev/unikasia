@@ -17,7 +17,7 @@
             <p class="readyToStart-txt">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam recusandae molestias eligendi natus maxime quia id hic a, voluptatem, doloribus voluptatum quibusdam neque aut consequuntur consequatur optio. Ab, accusantium, iste.</p>
         </div>
         <div class="btn-readyToStart">
-            <button class="readyToStart-btn"><a href="#" class="btn">{$core->get_Lang('PLAN YOUR TRIP')}
+            <button class="readyToStart-btn"><a href="#" class="btn readyToStart-btn">{$core->get_Lang('PLAN YOUR TRIP')}
                 <img src="{$URL_IMAGES}/hotel/ArrowRight.svg" alt="error"></a></button>
         </div>
     </div>

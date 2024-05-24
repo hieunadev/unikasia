@@ -11,6 +11,15 @@ p {
     margin: 32px 0 80px;
 }
 
+.banner_img_hotel {
+    margin-top: -130px;
+    max-height: 600px;
+}
+
+.banner_img_hotel img{
+    height: 600px;
+}
+
 #Overview {
     margin-top: 60px;
 }
@@ -188,7 +197,7 @@ padding: 12px 0;
     padding: 0 !important;
 }
 
-/* 
+/*
 .hotel_place_body .wrap_form_banner {
     position: absolute;
     bottom: 50%;
@@ -1323,7 +1332,14 @@ ul {
     margin: 0 auto;
     padding: 0 15px;
 }
-
+#breadcrumb-hotel {
+    margin-top: -2rem;
+    position: relative;
+    z-index: 1;
+    background: #fff;
+    border-radius: 40px 40px 0px 0px;
+    padding: 32px;
+}
 .breadcrumb-activeItem {
     color: #FFA718;
     font-size: 16px;

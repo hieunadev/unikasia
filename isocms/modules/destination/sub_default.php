@@ -22,23 +22,31 @@ function default_place()
     $assign_list["clsRegion"] = $clsRegion;
     $clsReview = new Reviews();
     $assign_list["clsReview"] = $clsReview;
-    $clsPagination = new Pagination();
-    $assign_list["clsPagination"] = $clsPagination;
-    $clsPromotion = new Promotion();
-    $assign_list["clsPromotion"] = $clsPromotion;
+    // $clsPagination = new Pagination();
+    // $assign_list["clsPagination"] = $clsPagination;
+    // $clsPromotion = new Promotion();
+    // $assign_list["clsPromotion"] = $clsPromotion;
     $clsHotel = new Hotel();
     $assign_list["clsHotel"] = $clsHotel;
+    $clsFAQ = new FAQ();
+    $assign_list["clsFAQ"] = $clsFAQ;
     #	
-    // $clsCountry->SetDebug(1);
-
     if (!empty($_GET['slug_country'])) {
         $id_country     =   $clsCountry->getBySlug($_GET['slug_country']);
+        $smarty->assign('id_country', $id_country);
         $info_country   =   $clsCountry->getOne($id_country);
+        $smarty->assign('info_country', $info_country);
     }
+    #
+    // List hotel from country
     $list_hotel_country =   $clsHotel->getAll("is_trash = 0 AND is_online = 1 AND country_id = $id_country ORDER BY order_no ASC LIMIT 10");
     $smarty->assign('list_hotel_country', $list_hotel_country);
-    // die;
-    // $clsISO->dump($list_hotel_country);
+    #
+    // List FAQ from country
+    $list_faq_country   =   $clsFAQ->getAll("is_trash = 0 AND is_online = 1 AND country_id = $id_country ORDER BY order_no ASC LIMIT 12");
+    $smarty->assign('list_faq_country', $list_faq_country);
+    #
+    // $clsISO->dd($list_faq_country);
 
     // $city_id	=	1;
     // $assign_list['city_id'] = $city_id;
@@ -235,32 +243,7 @@ function default_place()
     // $assign_list["min_price_search"] = $min_price_search;
     // $assign_list["max_price_search"] = $max_price_search;
 
-
-
-
-
-
-
-
-
-
-
-
-
     // if (1 == 2) {
-
-
-
-
-
-
-
-
-
-
-
-
-
     // 	$cond = "is_trash=0 and is_online=1";
 
     // 	$orderby = " order by order_no asc";
@@ -356,35 +339,39 @@ function default_place()
     // }
 
 
-    // /*=============Title & Description Page==================*/
-    // $titleCity = '';
-    // if ($city_id) {
-    // 	$titleCity = ' | ' . $clsCity->getTitle($city_id, $cityItem);
-    // 	$place_id = $city_id;
-    // 	$clsClassTable = 'City';
-    // } else {
-    // 	$place_id = $country_id;
-    // 	$clsClassTable = 'Country';
-    // }
-    // if ($_LANG_ID == 'vn') {
-    // 	$title_page = $core->get_Lang('Du lịch nước ngoài') . ' | ' . $clsCountry->getTitle($country_id) . $titleCity . ' | ' . PAGE_NAME;
-    // } else {
-    // 	$title_page = $core->get_Lang('Destinations') . ' | ' . $clsCountry->getTitle($country_id) . $titleCity . ' | ' . PAGE_NAME;
-    // }
+    /*=============Title & Description Page==================*/
+    $titleCity = '';
+    // Khai báo tạm để tránh gây lỗi code
+    $city_id    =   0;
+    $cityItem   =   0;
+    #
+    if ($city_id) {
+        $titleCity = ' | ' . $clsCity->getTitle($city_id, $cityItem);
+        $place_id = $city_id;
+        $clsClassTable = 'City';
+    } else {
+        $place_id = $country_id;
+        $clsClassTable = 'Country';
+    }
+    if ($_LANG_ID == 'vn') {
+        $title_page = $core->get_Lang('Du lịch nước ngoài') . ' | ' . $clsCountry->getTitle($country_id) . $titleCity . ' | ' . PAGE_NAME;
+    } else {
+        $title_page = $core->get_Lang('Destinations') . ' | ' . $clsCountry->getTitle($country_id) . $titleCity . ' | ' . PAGE_NAME;
+    }
+    #
+    $assign_list["title_page"] = $title_page;
+    $description_page = $title_page;
+    $assign_list["description_page"] = $description_page;
+    $keyword_page = $title_page;
+    $assign_list["keyword_page"] = $keyword_page;
 
-    // $assign_list["title_page"] = $title_page;
-    // $description_page = $title_page;
-    // $assign_list["description_page"] = $description_page;
-    // $keyword_page = $title_page;
-    // $assign_list["keyword_page"] = $keyword_page;
-
-    // /* =============Title & Description Page================== */
-    // $title_page = $core->get_Lang('Destinations in') . ' ' . $title_page . ' | ' . PAGE_NAME;
-    // $assign_list["title_page"] = $title_page;
-    // $description_page = $clsISO->getMetaDescription($place_id, $clsClassTable);
-    // $assign_list["description_page"] = $description_page;
-    // $global_image_seo_page = $clsISO->getPageImageShare($place_id, $clsClassTable);
-    // $assign_list["global_image_seo_page"] = $global_image_seo_page;
+    /* =============Title & Description Page================== */
+    $title_page = $core->get_Lang('Destinations in') . ' ' . $title_page . ' | ' . PAGE_NAME;
+    $assign_list["title_page"] = $title_page;
+    $description_page = $clsISO->getMetaDescription($place_id, $clsClassTable);
+    $assign_list["description_page"] = $description_page;
+    $global_image_seo_page = $clsISO->getPageImageShare($place_id, $clsClassTable);
+    $assign_list["global_image_seo_page"] = $global_image_seo_page;
 }
 function default_travel_style()
 {

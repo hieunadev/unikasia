@@ -17,7 +17,7 @@
                         {elseif $mod=='ads'}
                          <p>{$core->get_Lang('Image size')} (WxH=1280x294px)<br />
                         {elseif $mod=='testimonial'}
-                         <p>{$core->get_Lang('Image size')} (WxH=260x200px)<br />
+                         <p>{$core->get_Lang('Image size')} (WxH=405x326px)<br />
                        {elseif $mod=='news'}
                          <p>{$core->get_Lang('Image size')} (WxH=850x547px)<br />
                         {elseif $mod=='country'}

@@ -38,7 +38,7 @@
                                     <div class=" dropdown_destination">
                                         <div class="dropdown-menu_country">
                                             {section name=i loop=$lstCountry}
-                                                <a class="dropdown-item" href="#" data-img="img_{$lstCountry[i].title}">{$lstCountry[i].title}</a>
+                                                <a class="dropdown-item" href="{$clsCountry->getLink($lstCountry[i].country_id)}" data-img="img_{$lstCountry[i].title}">{$lstCountry[i].title}</a>
                                             {/section}
                                         </div>
                                         <div class="dropdown-menu_img_country">
@@ -58,7 +58,7 @@
                                 <div class="dropdown-menu dropdown-stay-parent">
                                     <div class="dropdown-menu-stay">
                                         {section name=i loop=$lstCountry}
-                                        <a class="dropdown-item position-relative overflow-hidden" href="#">
+                                        <a class="dropdown-item position-relative overflow-hidden" href="{$clsCountry->getLink($lstCountry[i].country_id, "Hotel")}">
                                             <img src="{$lstCountry[i].image}" onerror="this.src='{$URL_IMAGES}/none_image.png'" alt="{$lstCountry[i].slug}">
                                             <span class="text-light">{$lstCountry[i].title}</span>
                                         </a>
@@ -117,13 +117,18 @@
 .dropdown-menu_img_country img {
     display: none;
 }
-.dropdown-menu {
+.txt_dropdown .dropdown-menu {
     padding: 24px;
 }
 
 .dropdown-menu_img_country .menu_img_country:hover img,
 .dropdown-menu-stay .dropdown-item img:hover{
     transform: scale(1.2);
+}
+
+.txt_dropdown .dropdown-item {
+    padding: 0 0 12px 0;
+    text-transform: none;
 }
 /* Menu Destination */
 .dropdown-menu_img_country img.active {
@@ -135,10 +140,6 @@
     max-height: 482px;
     justify-content: space-between;
     overflow: hidden;
-}
-.dropdown-item {
-    padding: 0 0 12px 0;
-    text-transform: none;
 }
 
 .dropdown-menu_img_country .menu_img_country{
@@ -194,7 +195,7 @@
             $('.dropdown-item').hover(
                 function() {
                     $('.menu_img_country img').removeClass('active');
-                    var imgId = $(this).data('img');
+                    let imgId = $(this).data('img');
                     $('#' + imgId).addClass('active');
                 }
             );

@@ -1,5 +1,3 @@
-
-
 <div id="header_fix" class="nah_header_sticky" style="box-shadow: rgba(125, 135, 158, 0.09) 0px 12px 32px 0px;">
   <nav class="txt_header1 nah_header_top_scroll">
     <div class="container">
@@ -46,35 +44,34 @@
   </div>
 </div>
 
-
 <style>
-	
-#header_fix .nah_bg_header_bot {
-    background-color: white;
+/* Đảm bảo phần tử luôn hiển thị khi có lớp này */
+.force-show {
+    display: block !important; /* Hoặc flex, tùy thuộc vào cách bố trí của bạn */
 }
-
-
-
-
 </style>
+
+
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const headerBot = document.querySelector('.nah_bg_header_bot');
-    
-    function ensureBgWhite() {
-        if (!headerBot.classList.contains('bg-white')) {
-            headerBot.classList.add('bg-white');
+    const headerFix = document.getElementById('header_fix');
+
+    function checkAndFixHeader() {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const headerFixHeight = headerFix.offsetHeight;
+
+        if (scrollTop <= headerFixHeight) {
+            headerBot.classList.add('force-show'); 
+        } else {
+            headerBot.classList.remove('force-show');
         }
     }
 
-    window.addEventListener('scroll', ensureBgWhite); // Kiểm tra khi cuộn
-    setInterval(ensureBgWhite, 100); // Kiểm tra định kỳ (có thể điều chỉnh thời gian)
+    window.addEventListener('scroll', checkAndFixHeader);
+    checkAndFixHeader(); // Kiểm tra ngay khi trang tải
 });
-
-
-
-
 
 
 </script>

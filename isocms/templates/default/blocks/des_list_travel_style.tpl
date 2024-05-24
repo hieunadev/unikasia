@@ -1,9 +1,9 @@
 <div class="des_list_travel_style">
     <div class="container">
         <div class="des_travel_style_title">
-            <h2>Ways to travel that may meet your interest </h2>
+            <h2>{$clsConfiguration->getOutTeam('TravelStyleTitle')}</h2>
             <div class="des_travel_style_description">
-                Our range of travel types includes classic, luxury, honeymoons, family, beach breaks and solo travel, as well as wellness and lots more.
+                {$clsConfiguration->getOutTeam('TravelStyleDescription')}
             </div>
         </div>
         <div class="des_travel_style_content">
@@ -13,13 +13,13 @@
                     {foreach from=$list_travel_style key=key item=item}
                     {assign var=tourcat_id value=$item.tourcat_id}
                     <div class="des_travel_style_item item">
-                        <a href="{$clsTourCategory->getLink($tourcat_id)}" title="{$clsTourCategory->getTitle($tourcat_id)}">
+                        <a href="{$clsTourCategory->getLink($item.tourcat_id)}" title="{$clsTourCategory->getTitle($item.tourcat_id)}">
                             <div class="des_travel_style_item_image">
-                                <img src="{$clsTourCategory->getImage($tourcat_id, 294, 462)}" width="294" height="462" alt="{$clsTourCategory->getTitle($tourcat_id)}">
+                                <img src="{$clsTourCategory->getImage($tourcat_id, 294, 462)}" width="294" height="462" alt="{$clsTourCategory->getTitle($item.tourcat_id)}">
                             </div>
                             <div class="des_travel_style_item_intro">
                                 <div class="des_travel_style_item_title">
-                                    <h3><a href="{$clsTourCategory->getLink($tourcat_id)}" title="{$clsTourCategory->getTitle($tourcat_id)}">{$clsTourCategory->getTitle($tourcat_id)}</a></h3>
+                                    <h3><a href="{$clsTourCategory->getLink($item.tourcat_id)}" title="{$clsTourCategory->getTitle($item.tourcat_id)}">{$clsTourCategory->getTitle($item.tourcat_id)}</a></h3>
                                 </div>
                                 <div class="des_travel_style_item_description">
                                     {$clsTourCategory->getIntro($tourcat_id)}

@@ -34,6 +34,7 @@ function FilterYieldEstimate(tour_id){
 }
 function openURL(href){
     var link = href;
+	console.log(link)
     $.ajax({
         url: link,
         type: 'GET',

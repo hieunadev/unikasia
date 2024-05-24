@@ -113,7 +113,7 @@ function default_getMainFormStep(){
 	$oneItem =$clsSlide->getOne($table_id);
 	$tableName = $clsSlide->tbl;
     $pkeyTable = $clsSlide->pkey;
-	$classTable                     = "Slide";
+	$classTable = "Slide";
 	$assign_list["classTable"] = $classTable;
 	$assign_list["clsClassTable"] = $clsSlide;
     $assign_list["pkeyTable"] = $pkeyTable;
@@ -166,10 +166,9 @@ function default_getMainFormStep(){
 	$clsForm->addInputTextArea("full", "other_policy", "", "other_policy", 255, 25, 8, 1, "style='width:100%'");
 	
 	#
-	
 	// Output
 	$html = $core->build('main_step.tpl');
-	echo $html; die();
+	print_r($html); die();
 }
 function default_ajSaveMainStep(){
 //	ini_set('display_errors', '1');
@@ -196,7 +195,7 @@ function default_ajSaveMainStep(){
 		
 		foreach($_POST as $key=>$val){
 			$tmp = explode('-',$key);
-			if($tmp[0]=='iso'){
+            if($tmp[0]=='iso'){
 				$arr_update[$tmp[1]] = addslashes($val);
 			}
 		}

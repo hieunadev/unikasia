@@ -8,10 +8,11 @@ $assign_list["clsCountry"]  =   $clsCountry;
 #
 if (!empty($_GET['slug_country'])) {
     $id_country     =   $clsCountry->getBySlug($_GET['slug_country']);
+    $smarty->assign('id_country', $id_country);
     $info_country   =   $clsCountry->getOne($id_country);
     $smarty->assign('info_country', $info_country);
     #
-    $url_banner     =   $info_country['image'];
+    $url_banner     =   $info_country['header_background'];
     $smarty->assign('url_banner', $url_banner);
 }
 

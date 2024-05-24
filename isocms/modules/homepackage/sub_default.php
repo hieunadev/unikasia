@@ -11,7 +11,8 @@ function default_default(){
     $listTourExplore = $clsTour->getAll("is_trash=0 limit 6");
     $lstDestination = array_map(function($item) {return $item[0]; }, $listTour);
     $listPartner = $clsPartner->getAll("is_trash=0");
-    $lstCountry = $clsCountry->getAll("1=1 order by order_no asc");
+    $lstCountry = $clsCountry->getAll("1=1 and is_online = 1 order by order_no asc");
+    $lstCountryMap = $clsCountry->getAll("1=1 order by order_no asc");
 
     $assign_list['clsTour'] = json_encode($lstDestination, JSON_UNESCAPED_UNICODE);
     $assign_list['listTourExplore'] = $listTourExplore;
@@ -24,18 +25,18 @@ function default_default(){
             'country_id' => $country['country_id'],
             'slug' => $country['slug']
         ];
-    }, $lstCountry);
+    }, $lstCountryMap);
     $assign_list["countries"] = $countries;
     # Tour Cateogry
-    $clsClassTable = new TourCategory();
-    $cond = "1=1 and parent_id=0";
+    $clsTourCategory = new TourCategory();
+    $cond = "1=1 and parent_id=0 and is_online=1";
     $orderBy = " order by order_no asc";
-    $LISTALL = $clsClassTable->getAll($cond . $orderBy);
+    $LISTALL = $clsTourCategory->getAll($cond . $orderBy);
     if (is_array($LISTALL) && count($LISTALL) > 0) {
         for ($i = 0; $i < count($LISTALL); $i++) {
             $lstTourCate[] = array(
                 'idx' => ($i + 1),
-                'title' => $clsClassTable->getTitle($LISTALL[$i][$clsClassTable->pkey]),
+                'title' => $clsTourCategory->getTitle($LISTALL[$i][$clsTourCategory->pkey]),
                 'intro' => $LISTALL[$i]['intro'],
                 'image' => $LISTALL[$i]['image']
             );
@@ -43,6 +44,14 @@ function default_default(){
         unset($LISTALL);
     }
     $assign_list["lstTourCate"] = $lstTourCate;
+
+    /*=============Title & Description Page==================*/
+    $title_page = $clsConfiguration->getValue('SiteMetaTitle');
+    $assign_list["title_page"] = $title_page;
+    $description_page = $clsConfiguration->getValue('SiteMetaDescription');
+    $assign_list["description_page"] = $description_page;
+    $global_image_seo_page = $clsConfiguration->getValue('ImageShareSocial');
+    $assign_list["global_image_seo_page"] = $global_image_seo_page;
 }
 function default_default2(){
 	global $assign_list, $_CONFIG, $core, $dbconn, $mod, $act, $_LANG_ID,$title_page,$description_page,$global_image_seo_page,$clsConfiguration,$clsISO,$package_id;

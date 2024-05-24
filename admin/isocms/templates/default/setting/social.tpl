@@ -73,7 +73,7 @@
 										</select>
 									</td>
 								</tr>
-								<tr>
+								{*<tr>
 									<td class="fieldlabel">{$core->get_Lang('TripAdvisor Link')}</td>
 									<td class="fieldarea" style="width:100px">
 										<select name="iso-TripAdvisor_Link">
@@ -81,7 +81,7 @@
 											<option value="1" {if $clsConfiguration->getValue('TripAdvisor_Link')}selected="selected"{/if}>ON</option>
 										</select>
 									</td>
-								</tr>
+								</tr>*}
 							</table>
 						</div>
 					</tr>
@@ -96,7 +96,7 @@
 						<a class="social-icon facebook ir" href="{$clsConfiguration->getValue('SiteTwitterLink')}" target="_blank"></a><span class="hiden767">{$core->get_Lang('Facebook Link')}</span>
 					</div>
 					<div class="fieldarea inputGroup" style="width:50%">
-						<span class="input-group-addon">http://www.facebook.com/</span>
+						<span class="input-group-addon">https://www.facebook.com/</span>
 						<input type="text" name="iso-SiteFacebookLink" value="{$clsConfiguration->getValue('SiteFacebookLink')}">
 					</div>
 				</div>
@@ -107,7 +107,7 @@
 						<a class="social-icon twitter ir" href="{$clsConfiguration->getValue('SiteTwitterLink')}" target="_blank"></a><span class="hiden767">{$core->get_Lang('Twitter Link')}</span>
 					</div>
 					<div class="fieldarea inputGroup" style="width:50%">
-						<span class="input-group-addon">http://www.twitter.com/</span>
+						<span class="input-group-addon">https://x.com/</span>
 						<input type="text" name="iso-SiteTwitterLink" value="{$clsConfiguration->getValue('SiteTwitterLink')}">
 					</div>
 				</div>
@@ -118,7 +118,7 @@
 						<a class="social-icon youtube ir" href="{$clsConfiguration->getValue('SiteTwitterLink')}" target="_blank"></a><span class="hiden767">{$core->get_Lang('Youtube Link')}</span>
 					</div>
 					<div class="fieldarea inputGroup" style="width:50%">
-						<span class="input-group-addon">http://www.youtube.com/</span>
+						<span class="input-group-addon">https://www.youtube.com/</span>
 						<input type="text" name="iso-SiteYoutubeLink" value="{$clsConfiguration->getValue('SiteYoutubeLink')}">
 					</div>
 				</div>
@@ -129,7 +129,7 @@
 						<a class="social-icon google-plus ir" href="{$clsConfiguration->getValue('SiteTwitterLink')}" target="_blank"></a><span class="hiden767">{$core->get_Lang('Google+')}</span>
 					</div>
 					 <div class="fieldarea inputGroup" style="width:50%">
-						<span class="input-group-addon">http://plus.google.com/</span>
+						<span class="input-group-addon">https://plus.google.com/</span>
 						<input type="text" name="iso-SiteGoogleLink" value="{$clsConfiguration->getValue('SiteGoogleLink')}">
 					</div>
 				</div>
@@ -151,7 +151,7 @@
 						<a class="social-icon pinterest ir" href="{$clsConfiguration->getValue('SiteTwitterLink')}" target="_blank"></a><span class="hiden767">{$core->get_Lang('Printest Link')}</span>
 					</div>
 					 <div class="fieldarea inputGroup" style="width:50%">
-						<span class="input-group-addon">http://pinterest.com/</span>
+						<span class="input-group-addon">https://pinterest.com/</span>
 						<input type="text" name="iso-SitePrintestLink" value="{$clsConfiguration->getValue('SitePrintestLink')}">
 					</div>
 				</div>

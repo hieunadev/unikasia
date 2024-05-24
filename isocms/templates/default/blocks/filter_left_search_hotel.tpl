@@ -2,6 +2,7 @@
     {* <div class="filter_left_title">
         {$core->get_Lang('Filter')}
     </div> *}
+
     <form action="" method="post" id="search_hotel_left">
         <input type="hidden" name="search_hotel_left" value="search_hotel_left" />
 
@@ -10,7 +11,7 @@
             {if $lstCountryHotel}
                 <div class="find_Box">
                     <div class="box_body_filter_title">
-                        {$core->get_Lang('Country')}
+                        {$core->get_Lang('Destinations')}
                     </div>
                     <div class="box_filter_body">
                         <div class="filter_list_item">
@@ -36,7 +37,7 @@
             {if $lstCountryHotel}
                 <div class="find_Box">
                     <div class="box_body_filter_title">
-                        {$core->get_Lang('Country')}
+                        {$core->get_Lang('Destinations')}
                     </div>
                     <div class="box_filter_body">
                         <div class="filter_list_item">
@@ -62,7 +63,7 @@
             {if $lstCity}
                 <div class="find_Box">
                     <div class="box_body_filter_title">
-                        {$core->get_Lang('City')}
+                        {$core->get_Lang('Visit cities')}
                     </div>
                     <div class="box_filter_body">
                         <div class="filter_list_item">
@@ -84,7 +85,7 @@
         {/if}
         <div class="find_Box">
             <div class="box_body_filter_title">
-                {$core->get_Lang('Price range')}
+                {$core->get_Lang('Price')}
             </div>
             <div class="box_filter_body">
                 <div class="filter_list_item nsdt_filter-price-hotel">
@@ -131,7 +132,7 @@
 
         <div class="find_Box">
             <div class="box_body_filter_titleRank">
-                {$core->get_Lang('Rank')}
+                {$core->get_Lang('Property rating')}
             </div>
             <div class="box_filter_body">
                 <div class="filter_list_item">
@@ -150,14 +151,12 @@
                             {/if}
                         </div>
                     {/section}
-
                 </div>
-                <span class="readmore">{$core->get_Lang('More')}</span>
             </div>
         </div>
         <div class="find_Box">
             <div class="box_body_filter_title">
-                {$core->get_Lang('Type of accommodations')}
+                {$core->get_Lang('Property type')}
             </div>
             <div class="box_filter_body">
                 <div class="filter_list_item">
@@ -210,6 +209,21 @@
 
 {literal}
     <script>
+        $(".box_filter_body").find(".checkSizeFilter:gt(4)").hide();
+        $(document).on("click", ".readmore", function() {
+            var $_this = $(this);
+            if (!$_this.hasClass("less")) {
+                $_this.addClass("less");
+                $_this.closest(".find_Box").find(".filter_list_item").removeClass("short");
+                $_this.closest(".find_Box").find(".checkSizeFilter").show();
+                $_this.html('Less');
+            } else {
+                $_this.removeClass("less");
+                $_this.closest(".find_Box").find(".filter_list_item").addClass("short");
+                $_this.closest(".find_Box").find(".checkSizeFilter:gt(4)").hide();
+                $_this.html('More');
+            }
+        });
         $(function() {
             var minPrice = Math.min.apply(null, price_range);
             var maxPrice = Math.max.apply(null, price_range);
@@ -303,21 +317,6 @@
                 } else {
                     $(elm).removeClass("short");
                     $_this.closest(".find_Box").find(".readmore").hide();
-                }
-            });
-
-            $(document).on("click", ".readmore", function() {
-                var $_this = $(this);
-                if (!$_this.hasClass("less")) {
-                    $_this.addClass("less");
-                    $_this.closest(".find_Box").find(".filter_list_item").removeClass("short");
-                    $_this.closest(".find_Box").find(".checkSizeFilter").show();
-                    $_this.html('{/literal}{$core->get_Lang("Less")}{literal}');
-                } else {
-                    $_this.removeClass("less");
-                    $_this.closest(".find_Box").find(".filter_list_item").addClass("short");
-                    $_this.closest(".find_Box").find(".checkSizeFilter:gt(4)").hide();
-                    $_this.html('{/literal}{$core->get_Lang("More")}{literal}');
                 }
             });
         });

@@ -20,7 +20,8 @@
                 </div>
             </div>
             <div class="row-span">
-                <div class="fieldlabel bold"><strong>{$core->get_Lang('Type')}</strong> <span class="color_r">* </span></div>
+                <div class="fieldlabel bold"><strong>{$core->get_Lang('Type')}</strong> <span class="color_r">* </span>
+                </div>
                 <div class="fieldarea">
                     <select class="text full" name="iso-type" maxlength="255" style="width:200px">
                         <option value="" {if $clsClassTable->getOneField('type',$pvalTable) eq ''}selected="selected"{/if}>Default</option>
@@ -28,34 +29,38 @@
                         <option value="TOUR" {if $clsClassTable->getOneField('type',$pvalTable) eq 'TOUR'}selected="selected"{/if}>Tour</option>
                         <option value="DESTINATION" {if $clsClassTable->getOneField('type',$pvalTable) eq 'DESTINATION'}selected="selected"{/if}>Destination</option>
                         <option value="CRUISE" {if $clsClassTable->getOneField('type',$pvalTable) eq 'CRUISE'}selected="selected"{/if}>Cruise</option>
-                        <option value="HOTEL" {if $clsClassTable->getOneField('type',$pvalTable) eq 'HOTEL'}selected="selected"{/if}>Hotel</option>
-                        <option value="VOUCHER" {if $clsClassTable->getOneField('type',$pvalTable) eq 'HOTEL'}selected="selected"{/if}>Voucher</option>
+                        <option value="STAY" {if $clsClassTable->getOneField('type',$pvalTable) eq 'STAY'}selected="selected"{/if}>Stay</option>
                     </select>
-                </div>
-            </div>
-            <div class="row-span">
-                <div class="fieldlabel bold"><strong>{$core->get_Lang('Icon')}</strong> <span class="color_r">*</span></div>
-                <div class="fieldarea">
-                    <img class="isoman_img_pop" id="isoman_show_image" src="{$clsClassTable->getOneField('image',$pvalTable)}" style="width:32px" height="32px" />
-                    <input type="hidden" id="isoman_hidden_image" value="{$clsClassTable->getOneField('image',$pvalTable)}">
-                    <input type="text" id="isoman_url_image" name="image" value="{$clsClassTable->getOneField('image',$pvalTable)}" class="text_32 border_aaa ml10" style="width:calc(100% - 80px) !important; display:inline-block !important; float:left"><a style="float:left; margin-left:4px; margin-top:-4px;" href="#" class="ajOpenDialog" isoman_for_id="image" isoman_val="{$clsClassTable->getOneField('image',$pvalTable)}" isoman_name="image"><img src="{$URL_IMAGES}/general/folder-32.png" border="0" title="Open" alt="Open"></a>
                 </div>
             </div>
             <div class="row-span">
                 <div class="fieldlabel bold"><strong>{$core->get_Lang('Country')}</strong></div>
                 <div class="fieldarea">
                     <select class="text full" name="iso-country_id" maxlength="255" style="width:200px">
-                        <option value="" {if $clsClassTable->getOneField('country_id',$pvalTable) eq ''}selected="selected"{/if}>Default</option>
+                        <option value="0" {if $clsClassTable->getOneField('country_id',$pvalTable) eq ''}selected="selected"{/if}>Default</option>
+                        {if $list_country}
                         {foreach from=$list_country key=key item=item}
                         <option value="{$item.country_id}" {if $clsClassTable->getOneField('country_id', $pvalTable) == ($item.country_id)} selected="selected" {/if}" >{$item.title}</option>
                         {/foreach}
+                        {/if}
                     </select>
                 </div>
             </div>
             <div class="row-span">
+                <div class="fieldlabel bold"><strong>{$core->get_Lang('Icon')}</strong> <span class="color_r">*</span>
+                    <p style="margin-top: -1.5rem">({$core->get_Lang('Size')} WxH=40x40)</p>
+                </div>
+                <div class="fieldarea">
+                    <img class="isoman_img_pop" id="isoman_show_image" src="{$clsClassTable->getOneField('image',$pvalTable)}" style="width:32px" height="32px" />
+                    <input type="hidden" id="isoman_hidden_image" value="{$clsClassTable->getOneField('image',$pvalTable)}">
+                    <input type="text" id="isoman_url_image" name="image" value="{$clsClassTable->getOneField('image',$pvalTable)}" class="text_32 border_aaa ml10" style="width:calc(100% - 80px) !important; display:inline-block !important; float:left"><a style="float:left; margin-left:4px; margin-top:-4px;" href="#" class="ajOpenDialog" isoman_for_id="image" isoman_val="{$clsClassTable->getOneField('image',$pvalTable)}" isoman_name="image"><img src="{$URL_IMAGES}/general/folder-32.png" border="0" title="Open" alt="Open"></a>
+                </div>
+            </div>
+
+            <div class="row-span">
                 <div class="fieldlabel bold"><strong>{$core->get_Lang('status')}</strong></div>
                 <div class="fieldarea">
-                    <div class="checkbox-switch">
+                    <div class="checkbox-switch switch_public">
                         {if $clsClassTable->getOneField("is_online",$pvalTable) eq 1}
                         <input type="checkbox" checked value="1" name="is_online" class="input-checkbox" id="toolbar-active">
                         {else}

@@ -57,7 +57,7 @@
 							{$core->get_Lang('Official Website')}
 						</div>
 						<div class="fieldarea" style="width:50%">
-							<input class="inputFix url"type="text" name="iso-CompanyWebsite" value="{$clsConfiguration->getValue('CompanyWebsite')}">
+							<input class="inputFix" type="text" name="iso-CompanyWebsite" value="{$clsConfiguration->getValue('CompanyWebsite')}">
 						</div>
 					</div>
                     

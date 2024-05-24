@@ -43,6 +43,11 @@ function default_default(){
     #
 	$lstBlogCat = $clsBlogCategory->getAll("is_trash=0 and is_online=1 order by order_no ASC",$clsBlogCategory->pkey.',slug,title');
 	$assign_list['lstBlogCat'] = $lstBlogCat;
+//
+//	$lstBlogRecently = array(1,2);
+//	vnSessionSetVar('lstBlogRecently',$lstBlogRecently);
+//	$assign_list["lstBlogRecently"] = $clsBlog->getAll($cond. "limit 3");
+	
 
 	#
 	$show = isset($_GET['show']) ? $_GET['show'] : '';
@@ -360,14 +365,23 @@ function default_tag(){
 }
 
 function default_detail(){
-	global $assign_list, $_CONFIG, $core, $dbconn, $mod, $act, $_LANG_ID,$title_page,$description_page,$global_image_seo_page, $extLang, $blog_id,$clsISO,$package_id,$blogItem;
+	global $assign_list, $_CONFIG, $core, $dbconn, $mod, $act, $_LANG_ID,$title_page,$description_page,$global_image_seo_page, $extLang, $blog_id,$clsISO,$package_id,$blogItem, $country_id;
 	#
 	$clsBlog = new Blog(); $assign_list['clsBlog']=$clsBlog;
 	$clsTag = new Tag(); $assign_list['clsTag']=$clsTag;
-	$clsBlogCategory = new BlogCategory(); $assign_list['clsBlogCategory'] = $clsBlogCategory;	
+	$clsBlogCategory = new BlogCategory(); $assign_list['clsBlogCategory'] = $clsBlogCategory;
+	
+	$clsCountryEx = new Country(); $assign_list['clsCountryEx']=$clsCountryEx;
+	
+	$listCountry = $clsCountryEx->getAll("is_trash=0 order by order_no",$clsCountryEx->pkey.',slug,title');
+	$assign_list['listCountry'] = $listCountry;
+
 	#
 	$blog_id = isset($_GET['blog_id'])?$_GET['blog_id']:0;
 	$slug = isset($_GET['slug'])?$_GET['slug']:'';
+	
+	$lstBlogCat = $clsBlogCategory->getAll("is_trash=0 and is_online=1 order by order_no ASC",$clsBlogCategory->pkey.',slug,title');
+	$assign_list['lstBlogCat'] = $lstBlogCat;
 	
 	if(empty($clsBlog->checkOnlineBySlug($blog_id,$slug))){
 		header('location:'.$clsISO->getLink('blog'));
@@ -385,7 +399,7 @@ function default_detail(){
 	}
 	
 	$assign_list['blog_id']=$blog_id;
-	$blogItem = $clsBlog->getOne($blog_id,'cat_id,title,publish_date,upd_date,author,image,list_tag_id,author,intro,content,slug,intro');
+	$blogItem = $clsBlog->getOne($blog_id,'cat_id,title,publish_date,upd_date,author,image,list_tag_id,author,intro,content,slug,intro, country_id');
 	$assign_list['blogItem']=$blogItem;
 	$cat_id=$blogItem['cat_id'];
     $assign_list['cat_id']=$cat_id;

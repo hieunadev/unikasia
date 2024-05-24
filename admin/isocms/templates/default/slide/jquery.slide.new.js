@@ -87,7 +87,7 @@ $().ready(function() {
 			table_id = $_this.data('table_id'),
 			currentstep = $_this.data('currentstep'),
 			nextstep = $_this.data('next_step');
-		
+		console.log(currentstep)
 		if($_this.hasClass('js_save_back')){
 			nextstep= $_this.data('prevstep');
 		}
@@ -181,7 +181,7 @@ $().ready(function() {
 						$Core.util.toggleIndicatior(0);
 						alertify.success(update_success);
 						if(nextstep !=='_last' && nextstep !=='_first'){
-							// loadMainFormStep(table_id, nextstep);
+							loadMainFormStep(table_id, nextstep);
 						} else if(nextstep == '_last'){
 							// loadMainFormStep(table_id, 'slide');
 						}

@@ -43,7 +43,7 @@
 							</div>
 						{elseif $currentstep=='longText'}
 						<div class="inpt_tour">
-							<h3 class="title_box">{$core->get_Lang('Long text')} 
+							<h3 class="title_box">{$core->get_Lang('Long text')}
 								{assign var= longText_category_country value='longText_category_country'}
 								{assign var= help_first value=$longText_category_country}
 								{if $CHECKHELP eq 1}
@@ -56,9 +56,9 @@
 							$(".showdate").datepicker({dateFormat: "dd/mm/yy"});
 							</script>
 							{/literal}
-						</div>						
+						</div>
 						{elseif $currentstep=='banner'}
-							{$core->getBlock('box_detail_category_country_banner')}	
+							{$core->getBlock('box_detail_category_country_banner')}
 						{/if}
 						<div class="btn_save_titile_table_code mt30">
 							<a data-table_id="{$pvalTable}" data-panel="{$arrStep[$step].panel}" data-currentstep="{$arrStep[$step].key}" data-prevstep="{$prevstep}" class="back_step js_save_back_main_step">{$core->get_Lang('Back')}</a>

@@ -19,13 +19,13 @@
 						<div class="form-group form-keyword">
 							<input class="form-control" type="text" name="keyword" value="{$keyword}" placeholder="{$core->get_Lang('search')}">
 						</div>
-						{if $SiteHasGroup_Tours}
-							<div class="form-group">
-								<select class="slb form-control" data-width="100%"  onchange="_reload()" name="tour_group_id">
-								{$clsTourGroup->makeSelectboxOption($tour_group_id)}
-								</select>
-							</div>
-						{/if}
+{*						{if $SiteHasGroup_Tours}*}
+{*							<div class="form-group">*}
+{*								<select class="slb form-control" data-width="100%"  onchange="_reload()" name="tour_group_id">*}
+{*								{$clsTourGroup->makeSelectboxOption($tour_group_id)}*}
+{*								</select>*}
+{*							</div>*}
+{*						{/if}*}
 						<div class="form-group form-button">
 							<button type="submit" class="btn btn-main" id="findtBtn">{$core->get_Lang('Search')}</button>
 							<input type="hidden" name="filter" value="filter">
@@ -76,9 +76,9 @@
 							<th class="gridheader" style="width:40px"><input id="check_all" type="checkbox" class="el-checkbox" /></th>
 							<th class="gridheader hiden767" style="width:80px"><strong>ID</strong></th>
 							<th class="gridheader name_responsive" style="text-align:left"><strong>{$core->get_Lang('title')}</strong></th>
-							{if $SiteHasGroup_Tours}
-							<th class="gridheader text-left hiden_responsive" width="16%"><strong>{$core->get_Lang('tourgroup')}</strong></th>
-							{/if}
+{*							{if $SiteHasGroup_Tours}*}
+{*							<th class="gridheader text-left hiden_responsive" width="16%"><strong>{$core->get_Lang('tourgroup')}</strong></th>*}
+{*							{/if}*}
 							{if $clsConfiguration->getValue('SiteHasTourCat_slide')}<th class="gridheader hiden_responsive"></th>{/if}
 							<th class="gridheader hiden_responsive"><strong>{$core->get_Lang('status')}</strong></th>
 							<th class="gridheader text-left hiden_responsive" width="6%"><strong>{$core->get_Lang('update')}</strong></th>
@@ -98,11 +98,11 @@
 									<i class="fa fa-caret fa-caret-down"></i>
 								</button>
 							</td>
-							{if $SiteHasGroup_Tours}
-							<td class="block_responsive" data-title="{$core->get_Lang('tourgroup')}">
-								<a href="{$PCMS_URL}/index.php?mod={$mod}&act={$act}&tour_group_id={$allItem[i].tour_group_id}"><img src="{$URL_IMAGES}/v2/node-select-child.png" align="absmiddle" /> {$clsTourGroup->getTitle($allItem[i].tour_group_id)}</a>
-							</td>
-							{/if}
+{*							{if $SiteHasGroup_Tours}*}
+{*							<td class="block_responsive" data-title="{$core->get_Lang('tourgroup')}">*}
+{*								<a href="{$PCMS_URL}/index.php?mod={$mod}&act={$act}&tour_group_id={$allItem[i].tour_group_id}"><img src="{$URL_IMAGES}/v2/node-select-child.png" align="absmiddle" /> {$clsTourGroup->getTitle($allItem[i].tour_group_id)}</a>*}
+{*							</td>*}
+{*							{/if}*}
 							{if $clsConfiguration->getValue('SiteHasTourCat_slide')}
 							<td class="block_responsive">
 								<a href="{$PCMS_URL}/index.php?mod=slide&mod_page={$mod}&act_page={$act}&target_id={$allItem[i].tourcat_id}&clsTable=TourCategory" title="{$core->get_Lang('listslide')}">

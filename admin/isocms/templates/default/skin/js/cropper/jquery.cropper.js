@@ -39,7 +39,7 @@ function upload_file_picker(file, params){
         if(params.clsTable=='Ads'){
         	var aspectRatio=(1280/294);
         }else if(params.clsTable=='Slide'){  
-        	var aspectRatio=(1920/545);
+        	var aspectRatio=(1920/791);
         }else if(params.clsTable=='Configuration'){  
         	if(params.toField=='site_about_page_banner'){
              var aspectRatio=(1280/600);
@@ -53,7 +53,7 @@ function upload_file_picker(file, params){
                var aspectRatio=(151/65);
            }
         }else if(params.clsTable=='Testimonial'){  
-        	var aspectRatio=(260/200);
+        	var aspectRatio=(405/326);
         }else if(params.clsTable=='News'){  
         	var aspectRatio=(850/547);
         }else if(params.clsTable=='Hotel'){  
@@ -108,6 +108,7 @@ function upload_file_picker(file, params){
 			uploadedImageType = 'image/png',
 			uploadedImageURL, $target;
         $cropper.cropper(options);
+		
 		$('.ui-cropper-tool').on('click', function(e){
 			$Core.util.stopEventHandler(e);
 			var $_this = $(this),

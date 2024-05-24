@@ -1,20 +1,22 @@
 <div class="page_container">
     <div class="banner">
+        <div class="banner_img_hotel">
         {if $show eq 'City'}
-            <img src="{$clsCity->getImageBannerHotel($city_id,1920,500,$oneItem)}" class="img100"
+            <img src="{$clsCity->getImageBannerHotel($city_id,1920,600,$oneItem)}" class="img100"
                 alt="{$core->get_Lang('Hotels in')} {$TD}" />
         {else}
             {if !isset($clsCountryEx->getImageBannerHotel($country_id,1920,500,$oneItem)) || !$clsCountryEx->getImageBannerHotel($country_id,1920,500,$oneItem)}
                 <img src="{$URL_IMAGES}/hotel/no-image.png" alt="error" class="img100" />
             {else}
-                <img src="{$clsCountryEx->getImageBannerHotel($country_id,1920,500,$oneItem)}" class="img100"
+                <img src="{$clsCountryEx->getImage($country_id,1920,600)}" class="img100"
                     alt="{$core->get_Lang('Hotels in')} {$TD}" />
             {/if}
 
         {/if}
+        </div>
         {$core->getBlock('box_form_search_hotel')}
     </div>
-    <nav class="">
+    <section id="breadcrumb-hotel">
         <div class="container">
             <ul class="breadcrumb-nav" itemscope itemtype="https://schema.org/BreadcrumbList">
                 <li class="breadcrumb-nav-first">{$core->get_Lang('You are here')}</li>
@@ -39,7 +41,7 @@
                 </li>
             </ul>
         </div>
-    </nav>
+    </section>
     <div id="contentPage" class="hotelPlacePage pdt40">
         <div class="container">
             {* <h1>{$core->get_Lang('Hotels in')} {$TD}</h1>
@@ -147,19 +149,17 @@
 
             </div>
 
-            {$core->getBlock('customer_review')}
-
-            <div class="attractions">
-                {$core->getBlock('top_attraction')}
-            </div>
-
         </div>
-        <div class="alsoLike">
-            {$core->getBlock('alsoLike_hotel')}
-        </div>
+
+
     </div>
 
 </div>
+
+
+{$core->getBlock('customer_review')}
+{$core->getBlock('top_attraction')}
+{$core->getBlock('also_like')}
 <script type="text/javascript">
     var $_View_more = '{$core->get_Lang("View more")}';
     var $_Less_more = '{$core->get_Lang("Less more")}';

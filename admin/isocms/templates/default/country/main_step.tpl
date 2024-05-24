@@ -26,23 +26,30 @@
 							<label for="header_title">
 								{$core->get_Lang('Header title')}
 							</label>
-							<input class="input_text_form input-title" data-table_id="{$pvalTable}" name="header_title" value="{$oneItem.header_title}" maxlength="255" type="text" />
+							<input class="input_text_form" data-table_id="{$pvalTable}" name="header_title" value="{$oneItem.header_title}" maxlength="255" type="text" />
 						</div>
 						<div class="inpt_tour">
 							<label for="header_title">
 								{$core->get_Lang('Header description')}
 							</label>
-							<textarea style="width:100%" table_id="{$pvalTable}" name="header_description" id="header_description" class="textarea_intro_editor_simple" cols="255" rows="2" data-column="iso-header_description">
+							<textarea style="width:100%" table_id="{$pvalTable}" name="header_description" id="header_description_{time()}" data-column="iso-header_description" class="textarea_intro_editor_simple" cols="255" rows="2">
 								{$oneItem.header_description}
 							</textarea>
 						</div>
 						<div class="inpt_tour">
 							<label class="col-form-label" for="title">
-								{$core->get_Lang('Thumnail video')} (Kích thước chuẩn: 1280x552)
+								{$core->get_Lang('Header banner')} (Kích thước chuẩn: 1920x600)
 							</label>
 							<div class="fieldarea">
-								<img class="float-left mr-3" src="{$oneItem.image}" width="40px" height="40px" />
-								<input class="text_32 border_aaa bold" type="text" id="isoman_hidden_file_programme_image" name="iso-image" value="{$oneItem.image}" style="width:100%; max-width:300px; float:left" onClick="loadHelp(this)" readonly><a style="float:left; margin-left:4px; margin-top:-4px;" href="#" class="ajOpenDialog" isoman_for_id="file_programme_image" isoman_name="file_programme_image"><img src="{$URL_IMAGES}/general/folder-32.png" border="0" title="Open" alt="Open" /></a>
+								<div class="row">
+									<div class="col-md-6 col-sm-12">
+										<input class="text_32 border_aaa bold" type="text" id="header_background" name="iso-header_background" value="{$oneItem.header_background}" style="float: right;width: 85%;" onClick="loadHelp(this)" readonly>
+										<a style="float:left" href="#" class="ajOpenDialog" isoman_for_id="header_background" isoman_name="header_background"><img src="{$URL_IMAGES}/general/folder-32.png" border="0" title="Open" alt="Open" /></a>
+									</div>
+									<div class="col-sm-12 col-md-6">
+										<img id="isoman_show_header_background" class="float-left mr-3" src="{$oneItem.header_background}" width="480" height="150" />
+									</div>
+								</div>
 							</div>
 						</div>
 						{elseif $currentstep=='des_overview'}
@@ -50,15 +57,15 @@
 							<label for="overview_title">
 								{$core->get_Lang('Overview title')}
 							</label>
-							<textarea style="width:100%" table_id="{$pvalTable}" name="overview_title" id="overview_title" class="textarea_intro_editor_simple" data-column="iso-overview_title" cols="255" rows="2">
+							<textarea style="width:100%" table_id="{$pvalTable}" name="overview_title" id="overview_title_{time()}" class="textarea_intro_editor_simple" data-column="iso-overview_title" cols="255" rows="2">
 								{$oneItem.overview_title}
 							</textarea>
 						</div>
 						<div class="inpt_tour">
-							<label for="title">
+							<label for="overview_description">
 								{$core->get_Lang('Overview description')}
 							</label>
-							<textarea style="width:100%" table_id="{$pvalTable}" name="overview_description" id="overview_description" class="textarea_intro_editor_simple" data-column="iso-overview_description" cols="255" rows="2">
+							<textarea style="width:100%" table_id="{$pvalTable}" name="overview_description" id="overview_description_{time()}" class="textarea_intro_editor_simple" data-column="iso-overview_description" cols="255" rows="2">
 								{$oneItem.overview_description}
 							</textarea>
 						</div>
@@ -67,7 +74,7 @@
 							<label for="tour_title">
 								{$core->get_Lang('Tour title')}
 							</label>
-							<textarea style="width:100%" table_id="{$pvalTable}" name="tour_title" id="tour_title" class="textarea_intro_editor_simple" data-column="iso-tour_title" cols="255" rows="2">
+							<textarea style="width:100%" table_id="{$pvalTable}" name="tour_title" id="tour_title_{time()}" class="textarea_intro_editor_simple" data-column="iso-tour_title" cols="255" rows="2">
 								{$oneItem.tour_title}
 							</textarea>
 						</div>
@@ -75,7 +82,7 @@
 							<label for="tour_description">
 								{$core->get_Lang('Tour description')}
 							</label>
-							<textarea style="width:100%" table_id="{$pvalTable}" name="tour_description" id="tour_description" class="textarea_intro_editor_simple" data-column="iso-tour_description" cols="255" rows="2">
+							<textarea style="width:100%" table_id="{$pvalTable}" name="tour_description" id="tour_description_{time()}" class="textarea_intro_editor_simple" data-column="iso-tour_description" cols="255" rows="2">
 								{$oneItem.tour_description}
 							</textarea>
 						</div>
@@ -90,10 +97,147 @@
 								{$core->get_Lang('Thumnail video')} (Kích thước chuẩn: 1280x552)
 							</label>
 							<div class="fieldarea">
-								<img class="float-left mr-3" src="{$oneItem.tour_image}" width="40px" height="40px" />
-								<input class="text_32 border_aaa bold" type="text" id="isoman_hidden_file_programme_tour_image" name="iso-tour_image" value="{$oneItem.tour_image}" style="width:100%; max-width:300px; float:left" onClick="loadHelp(this)" readonly><a style="float:left; margin-left:4px; margin-top:-4px;" href="#" class="ajOpenDialog" isoman_for_id="file_programme_tour_image" isoman_name="file_programme_tour_image"><img src="{$URL_IMAGES}/general/folder-32.png" border="0" title="Open" alt="Open" /></a>
+								<div class="row">
+									<div class="col-md-6 col-sm-12">
+										<input class="text_32 border_aaa bold" type="text" id="tour_image" name="iso-tour_image" value="{$clsConfiguration->getValue($OurTeamStepIcon)}" style="float: right;width: 85%;" onClick="loadHelp(this)" readonly>
+										<a style="float:left" href="#" class="ajOpenDialog" isoman_for_id="tour_image" isoman_name="tour_image"><img src="{$URL_IMAGES}/general/folder-32.png" border="0" title="Open" alt="Open" /></a>
+									</div>
+									<div class="col-sm-12 col-md-6">
+										<img id="isoman_show_tour_image" class="float-left mr-3" src="{$oneItem.tour_image}" width="480" height="208" />
+									</div>
+								</div>
 							</div>
 						</div>
+						{elseif $currentstep=='des_gallery'}
+						<div class="box_title_trip_code">
+							<div class="row d-flex full-height">
+								<div class="col-md-9">
+									<div class="fill_data_box">
+										<h3 class="title_box">{$core->get_Lang('Photo Gallery')}
+											{assign var= photo_gallery_tour value='photo_gallery_tour'}
+											{if $CHECKHELP eq 1}
+											<button data-key="{$photo_gallery_tour}" data-label="{$core->get_Lang('Photo Gallery')}" type="button" title="Thêm mô tả" onclick="open_texthelp(this, event)" class="btn btn-xs btn-default"><i class="fa fa-plus-circle"></i></button>
+											{/if}
+										</h3>
+										<div class="form_option_tour">
+											<div class="inpt_tour">
+												<div class="row">
+													<div class="col-md-5 col-sm-12">
+														<div class="filedrop-picker">
+															<div class="filedrop" onclick="file_explorer(this,event);" ondrop="file_drop(this,event)" toId="selectFile" data-options='{ldelim}"openFrom":"gallery","table_id":"{$pvalTable}","clsTableGal":"CountryImage"{rdelim}' ondragover="return false">
+																<h3>Kéo ảnh vào đây để tải lên</h3>
+																<p>Kích thước (WxH=582x490px)<br>
+																	Các loại tệp được hỗ trợ là: .png,.jpg,.jpeg</p>
+																<button type="button" class="btn btn-upload">{$core->get_Lang('From computer')}</button>
+															</div>
+															<input class="hidden" id="selectFile" type="file" data-options='{ldelim}"openFrom":"gallery","clsTableGal":"CountryImage","table_id":"{$pvalTable}"{rdelim}' name="image">
+															<input style="display:none" type="file" multiple name="image[]" id="ajAttachFile">
+															<div class="clearfix mt-half"></div>
+															<a table_id="{$pvalTable}" isoman_multiple="1" isoman_callback='isoman_gallery_callback({ldelim}"openFrom":"gallery","clsTableGal":"CountryImage","table_id":"{$pvalTable}"{rdelim})' class="btn btn-upload-choice ajOpenDialog" isoman_for_id="image_val" isoman_name="image">{$clsISO->makeIcon('folder-o', $core->get_Lang('From library'))}</a>
+														</div>
+													</div>
+													<div class="col-md-7 col-sm-12">
+														<div id="holder_gallery" class="list-unstyled gallery"></div>
+													</div>
+												</div>
+											</div>
+											<div class="media-body mb-1 hidden">
+												<p class="mb-2">
+													<strong>%%filename%%</strong> - Status: <span class="text-muted">Waiting</span>
+												</p>
+												<div class="progress mb-2">
+													<div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+													</div>
+												</div>
+											</div>
+										</div>
+										<!-- <div class="btn_save_titile_trip_code">
+											<a tour_id="{$pvalTable}" cat_run="{$cat_run}" prev_step="{if $child_cat_menu_j_index_prev eq ''}{if $list_cat_menu_prev eq ''}{$child_cat_menu_j}{/if}{if $list_cat_menu_prev ne ''}{$list_cat_menu_prev}/{$child_cat_menu_prev[$count_child_cat_menu_prev]}{/if}{else}{$child_cat_menu_j_index_prev}{/if}" class="back_step">{$core->get_Lang('Back')}</a>
+											<a id="btn-save-img-file" tour_id="{$pvalTable}" cat_run="{$cat_run}" status="" present_step="{$child_cat_menu_j}" next_step="{if $child_cat_menu_j_index_next eq ''}{if $list_menu_tour_i_index_next.cat_menu eq ''}SaveAll{/if}{if $list_menu_tour_i_index_next.cat_menu ne ''}{$list_cat_menu_next}/{$child_cat_menu_next[0]}{/if}{else}{$child_cat_menu_j_index_next}{/if}" class="save_and_continue_tour">{$core->get_Lang('Save &amp; Continue')}</a>
+										</div> -->
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="instruction_fill_data_box">
+										<p class="title_box"><i class="fa fa-question-circle text-red " aria-hidden="true"></i> {$core->get_Lang('Instructions')}</p>
+										<div class="content_box">
+											<p class="mb0">{$clsConfiguration->getValue($photo_gallery_tour)|html_entity_decode}</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<script type="text/javascript">
+							var table_id = '{$pvalTable}';
+							var clsTableGal = 'CountryImage';
+						</script>
+						{literal}
+						<script type="text/javascript">
+							var options_gallery = {
+								"openFrom": 'gallery',
+								"clsTableGal": clsTableGal,
+								"table_id": table_id
+							};
+							$(function() {
+								loadGallery(table_id, {
+									"clsTable": clsTableGal
+								});
+							});
+
+							function loadGallery($table_id, options) {
+								var $_adata = options || {};
+								$_adata['tp'] = 'L';
+								$_adata['table_id'] = table_id;
+								console.log($_adata);
+								console.log($_adata['tp']);
+								console.log($_adata['table_id']);
+
+								$.post(path_ajax_script + '/index.php?mod=home&act=ajOpenGallery', $_adata, function(html) {
+									$('#holder_gallery').html(html);
+									if ($("#holder_gallery").find(".gallery-item").length > 0) {
+										$('#image-gallery').closest('li').removeAttr('class').addClass('check_success');
+									} else {
+										$('#image-gallery').closest('li').removeAttr('class').addClass('check_caution');
+									}
+								});
+							}
+
+							function isoman_gallery_callback(options) {
+								var $_adata = options || {},
+									$list_images = isoman_selected_files();
+								$_adata['tp'] = '_insert';
+								$_adata['list_images'] = $list_images;
+								$.post(path_ajax_script + '/?mod=cropper&act=upload_gallery', $_adata, function(res) {
+									loadGallery(options.table_id, {
+										"clsTable": clsTableGal
+									});
+								});
+							}
+
+							function delete_gallery(_this) {
+								var table_id = $(_this).attr('table_id'),
+									table_image_id = $(_this).attr('table_image_id');
+								$Core.alert.confirm(__['Confirm'], __['Are you sure you want to delete this?'], function() {
+									var $_adata = {
+										'table_id': table_id,
+										'clsTable': clsTableGal,
+										'image_id': table_image_id
+									};
+									$Core.util.toggleIndicatior(1);
+									$.post(path_ajax_script + '/index.php?mod=home&act=ajDeleteGallery', $_adata, function(respJson) {
+										$Core.util.toggleIndicatior(0);
+										if (respJson.result.indexOf('success') >= 0) {
+											loadGallery(table_id, {
+												"clsTable": clsTableGal
+											});
+										}
+									}, 'json');
+								});
+							}
+						</script>
+						{/literal}
+
+
 
 						{if $lstContinent}
 						<div class="inpt_tour">
@@ -393,13 +537,13 @@
 		</div>
 	</div>
 </form>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 	var list_check_target = {
 		$list_check_target
 	};
-</script>
+</script> -->
 {literal}
-<script>
+<!-- <script>
 	$('.toggle-row').click(function() {
 		$(this).closest('tr').toggleClass('open_tr');
 	});
@@ -410,21 +554,19 @@
 			$('#step_' + val.key).closest('li').removeAttr('class').addClass("check_caution");
 		}
 	});
-</script>
+</script> -->
 {/literal}
 
 {literal}
 <script type="text/javascript">
-	$(function() {
-		if ($('.textarea_intro_editor_simple').length > 0) {
-			$('.textarea_intro_editor_simple').each(function() {
-				var $_this = $(this);
-				var $editorID = $_this.attr('id');
-				$('#' + $editorID).isoTextAreaFix();
-			});
-		}
-
-
-	});
+	// $(function() {
+	// 	if ($('.textarea_intro_editor_simple').length > 0) {
+	// 		$('.textarea_intro_editor_simple').each(function() {
+	// 			var $_this = $(this);
+	// 			var $editorID = $_this.attr('id');
+	// 			$('#' + $editorID).isoTextAreaFix();
+	// 		});
+	// 	}
+	// });
 </script>
 {/literal}

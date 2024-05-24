@@ -5,7 +5,7 @@ body {
     border-radius: 40px 40px 0px 0px;
     background: #fff;
     padding-top: 32px;
-    margin-top: -32px;
+    margin-top: -58px;
     position: relative;
     z-index: 1;
 }
@@ -124,12 +124,24 @@ body {
     margin-bottom: 38px;
     text-transform: uppercase;
 }
-.des_tailor_title span {
+.des_tailor_title span,
+.des_travel_style_title span,
+.des_list_hotel_title span,
+.des_our_team_title span,
+.des_gallery_title span,
+.des_list_faq_title span,
+.txt_title_attractions span {
     position: relative;
     z-index: 0;
     text-decoration: none !important;
 }
-.des_tailor_title span::after {
+.des_tailor_title span::after,
+.des_travel_style_title span::after,
+.des_list_hotel_title span::after,
+.des_our_team_title span::after,
+.des_gallery_title span::after,
+.des_list_faq_title span::after,
+.txt_title_attractions span::after {
     content: "";
     position: absolute;
     background-color: #ffa718;
@@ -150,6 +162,9 @@ body {
     width: 839px;
     margin: 0 auto;
     margin-bottom: 60px;
+}
+.des_tailor_description p {
+    margin-bottom: unset;
 }
 .des_tailor_item {
     border-radius: 8px;
@@ -214,18 +229,6 @@ body {
     font-weight: 600;
     line-height: 52px;
     margin-bottom: 6px;
-    position: relative;
-    z-index: 0;
-}
-.des_travel_style_title h2::after {
-    content: "";
-    position: absolute;
-    background-color: #ffa718;
-    z-index: -1;
-    height: 8px;
-    width: 125px;
-    left: 53%;
-    bottom: 14px;
 }
 .des_travel_style_description {
     margin-bottom: 32px;
@@ -365,19 +368,6 @@ body {
     font-style: normal;
     font-weight: 600;
     line-height: 52px;
-    position: relative;
-    z-index: 0;
-}
-.des_our_team_title h2::after {
-    content: "";
-    position: absolute;
-    background-color: #ffa718;
-    z-index: -1;
-    height: 8px;
-    width: 50px;
-    left: 45%;
-
-    bottom: 14px;
 }
 .des_our_team_description {
     color: var(--Neutral-2, #434b5c);
@@ -407,6 +397,7 @@ body {
 .des_our_team_item_img {
     width: 48px;
     height: 48px;
+    flex-shrink: 0;
 }
 .des_our_team_item_img img {
     width: 100%;
@@ -428,6 +419,9 @@ body {
     line-height: 21px;
     margin-top: 8px;
 }
+.des_gallery .container-fluid {
+    padding: unset;
+}
 .des_gallery_title h2 {
     color: var(--Neutral-1, #111d37);
     text-align: center;
@@ -437,20 +431,7 @@ body {
     font-weight: 600;
     line-height: 52px;
     margin-bottom: 46px;
-    position: relative;
-    z-index: 0;
 }
-.des_gallery_title h2::after {
-    content: "";
-    position: absolute;
-    background-color: #ffa718;
-    z-index: -1;
-    height: 8px;
-    width: 100px;
-    left: 52%;
-    bottom: 14px;
-}
-
 .des_grow {
     transition: all 0.3s ease-in-out;
 }
@@ -497,18 +478,6 @@ body {
     font-style: normal;
     font-weight: 600;
     line-height: 52px;
-    position: relative;
-    z-index: 0;
-}
-.des_list_hotel .des_list_hotel_title h2::after {
-    content: "";
-    position: absolute;
-    background-color: #ffa718;
-    z-index: -1;
-    height: 8px;
-    width: 100px;
-    left: 50%;
-    bottom: 14px;
 }
 .des_list_hotel .des_list_hotel_description {
     color: var(--Neutral-2, #434b5c);
@@ -630,18 +599,6 @@ body {
     text-align: center;
     margin-top: 120px;
     margin-bottom: 48px;
-    position: relative;
-    z-index: 0;
-}
-.des_list_faq_title h2::after {
-    content: "";
-    position: absolute;
-    background-color: #ffa718;
-    z-index: -1;
-    height: 8px;
-    width: 125px;
-    left: 39%;
-    bottom: 14px;
 }
 .des_list_faq_content .box_left,
 .des_list_faq_content .box_right {
@@ -687,18 +644,6 @@ body {
 }
 .destination_place_body .top-attractions .txt_title_attractions {
     margin-bottom: 50px;
-    position: relative;
-    z-index: 0;
-}
-.destination_place_body .top-attractions .txt_title_attractions::after {
-    content: "";
-    position: absolute;
-    background-color: #ffa718;
-    z-index: -1;
-    height: 8px;
-    width: 200px;
-    left: 37%;
-    bottom: 14px;
 }
 .destination_place_body .newsupdate .txtupnews {
     margin-bottom: 32px;
@@ -727,6 +672,9 @@ body {
 /* .destination_place_body #header_fixed {
     position: relative;
 } */
+.des_header_info p {
+    margin-bottom: unset;
+}
 /** --- CSS fix hộ các trang khác @@ --- **/
 .hnv_item_holiday img {
     width: unset;

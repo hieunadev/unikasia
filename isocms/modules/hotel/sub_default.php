@@ -1,6 +1,6 @@
 <?php
 function default_default() {
-    global $assign_list, $_CONFIG, $core, $dbconn, $mod, $act, $_LANG_ID, $title_page, $description_page, $keyword_page, $domain,$clsISO, $lnk;
+    global $assign_list, $_CONFIG, $core, $_LANG_ID, $title_page, $description_page, $keyword_page,$clsISO, $lnk, $country_id;
    	#
 
 	$clsCountryEx = new Country();$assign_list['clsCountryEx'] = $clsCountryEx;
@@ -214,7 +214,7 @@ function default_default() {
 	$assign_list["keyword_page"] = $keyword_page;
 }
 function default_place() {
-    global $assign_list, $_CONFIG, $core, $dbconn, $mod, $act, $_LANG_ID,$title_page,$description_page,$keyword_page,$country_id,$city_id;
+    global $assign_list, $_CONFIG, $core, $_LANG_ID,$title_page,$description_page,$keyword_page,$country_id,$city_id;
 	global $clsISO,$package_id,$lnk;
 
     #

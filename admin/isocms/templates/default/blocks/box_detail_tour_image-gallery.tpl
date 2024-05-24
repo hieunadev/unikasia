@@ -57,12 +57,13 @@
 				</div>
 			</div>
 		</div>
+	</div>
+</div>
 				
 				
 <script type="text/javascript">
 	var table_id = '{$pvalTable}';
 	var clsTableGal = 'TourImage';
-	
 </script>
 {literal}
 <script type="text/javascript">
@@ -112,6 +113,7 @@
 	}
 </script>
 {/literal}
+
 {if 1==2}
 <div class="box_title_trip_code">
 	<div class="row d-flex full-height">

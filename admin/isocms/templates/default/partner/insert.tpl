@@ -11,7 +11,7 @@
                     {else}
                     <a class="go_overview" href="{$PCMS}/admin/partner/insert/{$pvalTable}/overview">{$core->get_Lang('Go to overview')}</a>
                     {/if}
-                </span> 
+                </span>
 				</p>
 			</div>
 		</div>
@@ -23,9 +23,9 @@
 				<a class="online_tour" data-clstable="Partner" data-pkey="{$clsClassTable->pkey}" data-val="1" data-sourse_id="{$pvalTable}" data-text_last="{$core->get_Lang('Private')}">{$core->get_Lang('Public')}</a>
 				{/if}
 			</div>
-			<div class="action_tour btn_preview">
-				<a class="btn_preview_tour preview_tour_ex" {if $oneItem.is_trash eq 1}style="pointer-events: none;color: rgb(204, 204, 204);border-color: rgb(204, 204, 204);background-color: rgb(255, 255, 255);cursor: not-allowed;"{/if} href="{$clsClassTable->getLink($pvalTable)}" target="_blank" title="{$clsClassTable->getTitle($pvalTable)}">{$core->get_Lang('Preview')}</a>
-			</div>
+{*			<div class="action_tour btn_preview">*}
+{*				<a class="btn_preview_tour preview_tour_ex" {if $oneItem.is_trash eq 1}style="pointer-events: none;color: rgb(204, 204, 204);border-color: rgb(204, 204, 204);background-color: rgb(255, 255, 255);cursor: not-allowed;"{/if} href="{$clsClassTable->getLink($pvalTable)}" target="_blank" title="{$clsClassTable->getTitle($pvalTable)}">{$core->get_Lang('Preview')}</a>*}
+{*			</div>*}
 			<div class="action_tour btn_delete" id="is_delete_tour">
 				<a class="btn_preview_tour delete_tour_ex confirm_delete" type_btn="delete" href="{$PCMS_URL}/?mod={$mod}&act=delete&faq_id={$core->encryptID($pvalTable)}{$pUrl}&page={$currentPage}" title="{$clsClassTable->getTitle($pvalTable)}">{$core->get_Lang('Delete')}</a>
 			</div>
@@ -65,13 +65,13 @@
 	var Select = 'Select';
 	var $type = '{$type}';
 	var $cat_id = '{$cat_id}';
-	
+
 
 </script>
 {literal}
 <script>
 	$(function () {
-		
+
 		$(window).scroll(function() {
 			var sticky = $('.box_top_opt_set'),
 				scroll = $(window).scrollTop();
@@ -83,7 +83,7 @@
 		});
 		loadMainFormStep(table_id,currentstep,nextstep);
 	});
-	
+
 </script>
 {/literal}
 <script type="text/javascript" src="{$URL_THEMES}/partner/jquery.partner.new.js?v={$upd_version}"></script>

@@ -1,22 +1,74 @@
 @import url('https://fonts.cdnfonts.com/css/sf-pro-display');
 
-body {
+.blog_default_body {
   width: 100%;
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-  display: block;  
-  font-family: "SF Pro Display";
+    display: flex; /* Hoặc grid */
+    flex-direction: column; /* Hoặc các thuộc tính grid khác */}
+
+
+.blog_default_body .owl-carousel {
+	z-index: auto;
 }
 
+.blog_default_body .top-attractions .content_holiday {
+	z-index: auto !important;
+}
 
+.blog_default_body #nah_also_like .alsoLike-title {
+	z-index: auto !important;
+}
 
 .img100 {
     width: 100%;
     /* height: auto; */
 }
 
-/* CSS Desktop */
+.header-home {
+  z-index: 10; /* Giá trị z-index lớn hơn cho header */
+}
+
+.txt_title_attractions {
+	position: sticky !important;
+}
+
+.title_hodiday a {
+	color: #333;
+}
+
+.txt_title_attractions::after{
+    content: "";
+    position: absolute;
+    transform: translate(-50%, -50%);
+    height: 10px;
+    background-color: #ffa718;
+    z-index: -1;
+	width: 17%;
+	left: 44%;
+	bottom: 18%;
+  }
+
+
+.txt_blogvn {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 305px;
+        z-index: 1;
+        transform: translate(0%, -56%);
+    }
+
+.txt_h1 {
+        color: #FFF;
+        text-align: center;
+        font-size: 48px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 64px; /* 133.333% */
+        /*    margin-top: 127px;*/
+    }
 
 
 
@@ -25,11 +77,15 @@ body {
 
 /* CSS BreadCrumb And 6 Blogs*/
 
-.listblog_breadcrumb {
-	padding: 1px 0 0px 0;
+.bread_crumb {
+	display: flex;
+	gap:unset;
+}
+
+.blog_des_destination {
+	padding: 32px 0 0px 0;
     background: #fff;
-    border-top-left-radius: 54px;
-    border-top-right-radius: 54px;
+	border-radius: 54px 54px 0 0;
     position: relative;
     z-index: 2;
     top: 10%;
@@ -107,16 +163,44 @@ body {
     gap: 16px;
     border-bottom: 1px solid #D3DCE1;
     margin-top: 24px;
+	overflow: hidden;
   }
 
 .blog-item:last-child {
   border-bottom: none;
 }
 
-  .img-blog {
+.blog_itemblog {
+	border-radius: 8px;
+		overflow: hidden;
+		
+}
 
+  .img-blog {
     border-radius: 8px;
+	overflow: hidden;
   }
+
+.blog-top .blog-item .img_blog_left,
+.blog-top .blog-item .img_blog_mid1,
+.blog-top .blog-item .blog-mid_img,
+.lastest-blog .lastblog .lastest-blog-img,
+.featured-blogs .featured-blog .featuredblog-img
+{
+/*    width: 296px;*/
+/*    height: 100%;*/
+    transition: transform 0.3s ease;
+}
+
+
+.blog-top .blog-item:hover .img_blog_left,
+.blog-top .blog-item:hover .img_blog_mid1,
+.blog-top .blog-item:hover .blog-mid_img,
+.lastest-blog .lastblog:hover .lastest-blog-img,
+.featured-blogs .featured-blog:hover .featuredblog-img
+{
+    transform: scale(1.2);
+}
 
   .blog-item .img-blog-mid {
 /*
@@ -146,6 +230,15 @@ body {
     text-decoration: none;
   }
 
+.txt_blogitem a:hover,
+.blog-item-center a:hover, 
+.txt_blogitemmid a:hover,
+.txt_blogitem a:hover,
+.txt_titlebloglastest a:hover,
+.txt_featuredblogs a:hover{
+  	color: #FFA718;
+}
+
   .title_blog_mid {
     color: #111D37;
     font-size: 32px;
@@ -160,6 +253,15 @@ body {
     font-weight: 400;
     line-height: 24px; /* 150% */
   }
+
+.blog-item-content {
+  display: -webkit-box; /* Sử dụng thuộc tính này cho trình duyệt webkit */
+  -webkit-line-clamp: 3; /* Số dòng muốn hiển thị */
+  -webkit-box-orient: vertical; 
+  overflow: hidden;
+  text-overflow: ellipsis; /* Thêm dấu "..." khi văn bản bị ẩn */
+
+}
   
   .blog-top p {
     color: #434b5c;
@@ -188,6 +290,8 @@ body {
   .blog-top .blog-item-center-second {
     flex-direction: unset;
     gap: 0 !important;
+	  overflow: hidden;
+	  border-radius: 8px;
   }
 
 /* End BreadCrumb And 6 Blogs */
@@ -200,9 +304,14 @@ body {
 /*    gap: 32px;*/
     border-bottom: 1px solid #D3DCE1;
     padding-bottom: 32px;
+	overflow: hidden;
+	border-radius: 8px;
   }
 
-
+.lastblog .col-md-6 {
+	overflow: hidden;
+	border-radius: 8px;
+}
 
   .title-lastest-blog {
     color: #111d37;
@@ -214,16 +323,30 @@ body {
     margin-top: 61px;
   }
 
+.last-blog-content {
+  display: -webkit-box; /* Sử dụng thuộc tính này cho trình duyệt webkit */
+  -webkit-line-clamp: 3; /* Số dòng muốn hiển thị */
+  -webkit-box-orient: vertical; 
+  overflow: hidden;
+  text-overflow: ellipsis; /* Thêm dấu "..." khi văn bản bị ẩn */
+}
+
+
   .lastest-blog .last-blog-item {
     display: flex;
     flex-direction: column;
     gap: 32px
   }
 
+.lastest-blog-img {
+	overflow: hidden;
+	border-radius: 8px;
+}
+
 .title-lastest-blog::after {
-  width: 14%;
-  left: 7%;
-  bottom: 18%;
+  width: 135px;
+  left: 70px;
+  bottom: 10px;
 }
 
   .title-lastest-blog::after,
@@ -253,6 +376,7 @@ body {
 */
 	width: 100%;
 	border-radius: 8px;
+	overflow: hidden;
 	
 }
 
@@ -485,6 +609,8 @@ input[type="checkbox"] {
 }
 
 .featured-blogs {
+	overflow: hidden;
+	border-radius: 4px;
   margin-top: 40px;
 }
 
@@ -509,8 +635,16 @@ input[type="checkbox"] {
 }
 
 .featured-blogs .featured-blog {
+	border-radius: 4px;
+	overflow: hidden;
   margin-bottom: 24px;
   text-decoration: none;
+	max-height: none;
+}
+
+.featured-blog a {
+	overflow: hidden;
+	border-radius: 4px;
 }
 
 img.img_featureblog {
@@ -518,13 +652,12 @@ img.img_featureblog {
 /*    max-width: 83px;*/
     height: auto;
     border-radius: 8px;
+	overflow: hidden;
 }
 
 .customersay {
 	background-color: #FFF !important;
 }
-
-
 
 /* CSS Recently view */
 
@@ -539,9 +672,9 @@ img.img_featureblog {
 }
 
 .title-recently-view::after {
-	width: 12%;
-	left: 6%;
-	bottom: 10%;
+	width: 131px;
+	left: 68px;
+	bottom: 13%;
 }
 
 .blog-item-recently {
@@ -656,10 +789,6 @@ img.img_featureblog {
   }
 }
 
-
-
-
-
 @media only screen and (max-width: 1350px) {
   .search-item .search-item-txt input {
     background-color: #f0f0f0;
@@ -738,6 +867,7 @@ img.img_featureblog {
 	font-weight: 600;
 	line-height: 24px;
 	margin-top: 12px;
+	text-transform: uppercase;
 }
 
 .infor_dateauthor {
@@ -1187,78 +1317,6 @@ img.img_featureblog {
     width: 100%;
 }
 
-.readyToStart {
-    padding-top: 60px;
-    background-image: url("../images/hotel/Frames.png");
-    background-image: url("../images/hotel/Frames1.png");
-    background-repeat: no-repeat, repeat;
-    background-position: center;
-    background-color: #FFA718;
-    height: 348px;
-}
-
-
-.btn-readyToStart {
-    display: flex;
-    justify-content: center;
-}
-
-.readyToStart-btn a {
-    border: none;
-    font-size: 16px;
-    color: #FFFFFF;
-    font-weight: 500;
-    line-height: 24px;
-    background-color: #111D37;
-    border-radius: 8px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0 8px;
-    text-align: center;
-    padding: 12px 20px;
-}
-
-.txt-readyToStart {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.txt-readyToStart p {
-    max-width: 604px;
-    width: 100%;
-    color: #434B5C;
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 24px;
-    margin-bottom: 48px;
-    text-align: center;
-}
-
-.readyToStart-btn {
-    border: none;
-    font-size: 16px;
-    color: #FFFFFF;
-    font-weight: 500;
-    line-height: 24px;
-    background-color: #111D37;
-    border-radius: 8px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0 8px;
-    text-align: center;
-}
-
-.readyToStart-title {
-    color: #111D37;
-    font-size: 32px;
-    font-weight: 600;
-    line-height: 52px;
-    margin-bottom: 8px;
-    text-align: center;
-}
 
 #slide-items {
     background-repeat: no-repeat;

@@ -45,6 +45,7 @@
 			</div>
 		</div>
 	</div>
+{*
 	{if $clsISO->getCheckActiveModulePackage($package_id,'booking','booking_tour','default')}
 	<div class="home_box performance_box">
 		<div class="header_box">
@@ -140,6 +141,7 @@
 		</div>
 	</div>
     {/if}
+*}
 	<div class="home_box actions_required_box">
 		<div class="header_box">
 			<h2 class="title_box">{$core->get_Lang('Actions Required')}</h2>

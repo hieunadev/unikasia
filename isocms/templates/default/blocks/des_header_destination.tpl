@@ -3,7 +3,7 @@
     <div class="des_header_intro">
         <h1 class="des_header_title">{$info_country.header_title}</h1>
         <div class="des_header_info">
-            {$info_country.header_description}
+            {$clsCountry->getHeaderDescription($id_country)}
         </div>
         <a href="#" title="Create your trip to Vietnam" class="des_header_link">
             Create your trip to Vietnam <i class="fa-sharp fa-regular fa-arrow-right"></i>
@@ -11,7 +11,13 @@
     </div>
 </div>
 <div class="des_header_background_image">
-    <img src="https://unikasia.vietiso.com/isocms/templates/default/skin/images/destination/bg_des.png" alt="Vietnam">
+    <img src="
+    {if $url_banner}
+        {$clsCountry->getBannerDescription($id_country, 1920, 600)}
+    {else}
+        https://unikasia.vietiso.com/isocms/templates/default/skin/images/destination/bg_des.png
+    {/if}
+    " width="1920" height="600" alt="{$info_country.title}">
 </div>
 
 {literal}
@@ -28,7 +34,7 @@
         position: absolute;
         top: 0;
         left: 0;
-        filter: brightness(50%);
+        filter: brightness(65%);
         width: 100%;
         z-index: 1;
     }

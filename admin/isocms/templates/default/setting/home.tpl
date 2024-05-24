@@ -54,7 +54,7 @@
 					<div class="fieldlabel">{$core->get_Lang('Title')}</div>
 					{assign var = TitleFavoriteDestination value = TitleFavoriteDestination_|cat:$_LANG_ID}
 					<div class="fieldarea">
-						<input type="text" class="text_32 full-width border_aaa" value="{$clsConfiguration->getValue($TitleFavoriteDestination)}" name="iso-{$TitleFavoriteDestination}"/>
+						<textarea style="width:100%" class="textarea_intro_editor_simple" name="iso-{$TitleFavoriteDestination}" id="TitleFavoriteDestination" cols="255" rows="2">{$clsConfiguration->getValue($TitleFavoriteDestination)}</textarea>
 					</div>
 				</div>
 				<div class="row-span">
@@ -125,7 +125,7 @@
 							<div class="fieldlabel">{$core->get_Lang("Icon")}</div>
 							<div class="fieldarea">
 								{assign var = IconHowItWorkStep value = IconHowItWorkStep|cat:$k|cat:_|cat:$_LANG_ID}
-								<img class="float-left mr-3" src="{$clsConfiguration->getValue($IconHowItWorkStep)}" width="40px" height="40px" />
+								<img id="isoman_show_file_programme_{$k}" class="float-left mr-3" src="{$clsConfiguration->getValue($IconHowItWorkStep)}" width="40px" height="40px" />
 								<input class="text_32 border_aaa bold" type="text" id="isoman_hidden_file_programme_{$k}" name="iso-{$IconHowItWorkStep}" value="{$clsConfiguration->getValue($IconHowItWorkStep)}" style="width:100%; max-width:300px; float:left" onClick="loadHelp(this)" readonly><a style="float:left; margin-left:4px; margin-top:-4px;" href="#" class="ajOpenDialog" isoman_for_id="file_programme_{$k}" isoman_name="file_programme_{$k}"><img src="{$URL_IMAGES}/general/folder-32.png" border="0" title="Open" alt="Open" /></a>
 							</div>
 						</div>
@@ -172,16 +172,18 @@
 					<fieldset>
 						<legend>{$core->get_Lang("Photo $k")}</legend>
 						<div class="row-span">
-							<div class="fieldlabel">{$core->get_Lang("Choose pic")}</div>
+							<div class="fieldlabel">{$core->get_Lang("Choose pic")}
+								<p style="margin-top: -1.5rem;">{$core->get_Lang("Size")} (WxH=1600x460)</p>
+							</div>
 							<div class="fieldarea">
 								{assign var = TripPhoto value = TripPhoto|cat:$k|cat:_|cat:$_LANG_ID}
-								<img class="float-left mr-3" src="{$clsConfiguration->getValue($TripPhoto)}"
+								<img id="isoman_show_{$TripPhoto}" class="float-left mr-3" src="{$clsConfiguration->getValue($TripPhoto)}"
 									 width="40px" height="40px"/>
 								<input class="text_32 border_aaa bold" type="text" id="{$TripPhoto}"
 									   name="iso-{$TripPhoto}"
 									   value="{$clsConfiguration->getValue($TripPhoto)}"
 									   style="width:100%; max-width:300px; float:left" onClick="loadHelp(this)"
-									   readonly><a style="float:left; margin-left:4px; margin-top:-4px;" href="#"
+									   readonly ><a style="float:left; margin-left:4px; margin-top:-4px;" href="#"
 												   class="ajOpenDialog" isoman_for_id="{$TripPhoto}"
 												   isoman_name="{$TripPhoto}"><img
 											src="{$URL_IMAGES}/general/folder-32.png" border="0" title="Open"
@@ -227,12 +229,12 @@
 					<div class="fieldlabel">{$core->get_Lang("Thumbnail")}</div>
 					<div class="fieldarea">
 						{assign var = ThumbnailYoutube value = ThumbnailYoutube_|cat:$_LANG_ID}
-						<img class="float-left mr-3" src="{$clsConfiguration->getValue($ThumbnailYoutube)}" width="40px" height="40px" />
+						<img id="isoman_show_file_programme_ThumbnailYoutube" class="float-left mr-3" src="{$clsConfiguration->getValue($ThumbnailYoutube)}" width="40px" height="40px" />
 						<input class="text_32 border_aaa bold" type="text" id="isoman_hidden_file_programme_ThumbnailYoutube" name="iso-{$ThumbnailYoutube}" value="{$clsConfiguration->getValue($ThumbnailYoutube)}" style="width:100%; max-width:300px; float:left" onClick="loadHelp(this)" readonly><a style="float:left; margin-left:4px; margin-top:-4px;" href="#" class="ajOpenDialog" isoman_for_id="file_programme_ThumbnailYoutube" isoman_name="file_programme_ThumbnailYoutube"><img src="{$URL_IMAGES}/general/folder-32.png" border="0" title="Open" alt="Open" /></a>
 					</div>
 				</div>
 			</fieldset>
-			<fieldset class="submit-buttons">
+			<fieldset class="submit-buttons fixed" >
 				{$saveBtn}
 				<input value="UpdateConfiguration" name="submit" type="hidden">
 			</fieldset>

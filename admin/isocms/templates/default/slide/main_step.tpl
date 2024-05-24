@@ -13,7 +13,7 @@
 									<button data-key="{$title_slide}" data-label="{$core->get_Lang('Slide Title')}" type="button" title="Thêm mô tả" onclick="open_texthelp(this, event)" class="btn btn-xs btn-default"><i class="fa fa-plus-circle"></i></button>
 									{/if}
 								</label>
-								<input class="input_text_form input-title" data-table_id="{$pvalTable}" name="title" value="{$clsClassTable->getTitle($pvalTable)}" maxlength="255" type="text" onClick="loadHelp(this)" >
+								<input class="input_text_form input-title" data-table_id="{$pvalTable}" name="iso-title" value="{$clsClassTable->getTitle($pvalTable)}" maxlength="255" type="text" onClick="loadHelp(this)" >
 								<div class="text_help" hidden="">{$clsConfiguration->getValue($title_slide)|html_entity_decode}</div>
 							</div>
 							<div class="inpt_tour">
@@ -38,8 +38,8 @@
 										<div class="drop_gallery" onClick="loadHelp(this)">
 											<div class="filedrop full" onClick="file_explorer(this,event);" ondrop="file_drop(this,event)" toid="selectFile" toel="isoman_show_image" data-options='{ldelim}"openFrom":"image","clsTable":"Slide", "table_id":"{$pvalTable}","toId":"isoman_show_image" {rdelim}' ondragover="return false">
 												<h3>{$core->get_Lang('Drop files to upload')}</h3>
-												<p>Kích thước (WxH=1600x460)<br />
-												Các loại tệp được hỗ trợ là: .png,.jpg,.jpeg</p>
+												<p>{$core->get_Lang('Size')} (WxH=1920x791)<br />
+													{$core->get_Lang('File formats supported')}: .png,.jpg,.jpeg</p>
 												<button type="button" class="btn btn-upload">{if $oneItem.image}Thay ảnh{else}Tải ảnh lên{/if}</button>
 											</div>
 											<input class="hidden" id="selectFile" type="file" data-options='{ldelim}"openFrom":"image","clsTable":"Slide", "table_id":"{$pvalTable}","toId":"isoman_show_image"{rdelim}' name="image">
@@ -61,10 +61,7 @@
 									<button data-key="{$bannerContent_slide}" data-label="{$core->get_Lang('Slide Link')}" type="button" title="Thêm mô tả" onclick="open_texthelp(this, event)" class="btn btn-xs btn-default"><i class="fa fa-plus-circle"></i></button>
 									{/if}
 								</label>
-{*								 <textarea name="iso-text" id="" cols="30" rows="10" style="width:100%"  onClick="loadHelp(this)">{$oneItem.text}</textarea>*}
-								<div class="inpt_tour">
-									<textarea style="width:100%" table_id="{$pvalTable}" class="textarea_intro_editor" data-column="iso-text" id="SlideText" cols="255" rows="2">{$oneItem.text}</textarea>
-								</div>
+								<textarea style="width:100%" table_id="{$pvalTable}" class="textarea_intro_editor" data-column="iso-text" id="slide_text" cols="255" rows="2">{$oneItem.text}</textarea>
 							</div>
 							<div class="inpt_tour">
 								<label for="title">{$core->get_Lang('Follow us')}</label>
@@ -92,15 +89,17 @@
 </script>
 {literal}
 <script>
-if($('.textarea_intro_editor').length > 0){
-	$('.textarea_intro_editor').each(function(){
-		var $_this = $(this);
-		var $editorID = $_this.attr('id');
-		$('#'+$editorID).isoTextArea();
-	});
-}
-	$('.toggle-row').click(function(){
-		$(this).closest('tr').toggleClass('open_tr');
-	});
+	$( document ).ready(function() {
+		if ($('.textarea_intro_editor').length > 0) {
+			$('.textarea_intro_editor').each(function () {
+				var $_this = $(this);
+				var $editorID = $_this.attr('id');
+				$('#' + $editorID).isoTextArea();
+			});
+		}
+		$('.toggle-row').click(function () {
+			$(this).closest('tr').toggleClass('open_tr');
+		});
+	})
 </script>
 {/literal}

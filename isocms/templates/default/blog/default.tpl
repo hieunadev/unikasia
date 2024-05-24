@@ -42,27 +42,18 @@
 
 {*{assign var=cat_blog value=$clsBlogCategory->getTitle($lstBlogCat[i].cat_id, $lstBlogCat[i])}*}
 
-<div class="txt_blogvn">
-    <div class="container">
-        <h1 class="txt_h1 text-uppercase">BLOG {$clsCountryEx->getTitle($country_id)}</h1>
-        <div class="text_pp">{$clsCountryEx->getIntro($country_id)}</div>
-    </div>
-</div>
+<section class="page_container blog_des_destination">
+	    <div class="container bread_crumb">
+	<span class="breadcrumb-item txt_youarehere">You are here:</span>
 
-<section class="listblog_breadcrumb">
-    <div class="breadcrumb_list">
-        <div class="container">
-            <div class="breadcrumb">
-                <h2 class="txt_youarehere">You are here:</h2>
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{PCMS_URL}" title="{$core->get_Lang('Home')}">Home</a></li>
+  <ol class="breadcrumb">
+		<li class="breadcrumb-item"><a href="{PCMS_URL}" title="{$core->get_Lang('Home')}">Home</a></li>
                     <li class="breadcrumb-item"><a href="{PCMS_URL}blog" title="{$core->get_Lang('Blog')}">Blog</a></li>
                     <li class="breadcrumb-item active" aria-current="page">{$clsCountryEx->getTitle($country_id)}</li>
-                </ol>
-            </div>
-        </div>
-    </div>
-</section>
+
+  </ol>
+	</div>
+</nav>
 
 <section class="blog-top">
     <div class="container">
@@ -70,15 +61,17 @@
             <div class="col-lg-3 col-sm-3 blog-left">
                 {section name =i loop=$lstBlogLeft}
                     <div class="blog-item">
-                        <a class="text-decoration-none"
+                        <a class="text-decoration-none blog_itemblog"
                            href="{$clsBlog->getLink($lstBlogLeft[i].blog_id,$lstBlogLeft[i])}" title="{$title_blog}">
-                            <img class="img-blog" src="{$clsBlog->getImage($lstBlogLeft[i].blog_id, 296, 193)}" alt="{$lstBlogLeft[i].slug}">
+							<div class="img_blog_left overflow-hidden">
+                            <img class="img-blog img-fluid" src="{$clsBlog->getImage($lstBlogLeft[i].blog_id, 296, 193)}" alt="{$lstBlogLeft[i].slug}">
+								</div>
                             <h2 class="txt_blogitem">{$lstBlogLeft[i].title}</a>
                         </h2>
                         <div class="blog-item-content">{$clsISO->limit_textIso($clsBlog->getIntro($lstBlogLeft[i].blog_id), 20)}</div>
                         <p class="date-time">
                             <i class="fa-regular fa-clock"
-                               style="color: #74C0FC;"></i>{$lstBlogLeft[i].reg_date|date_format:"%d %b, %Y"} |
+                               style="color: #74C0FC;"></i>{$lstBlogLeft[i].publish_date|date_format:"%d %b, %Y"} |
                             <span>{$clsBlogCategory->getTitle($lstBlogLeft[i].cat_id)}</span>
                         </p>
 <!--                        <hr style="margin-bottom: 24px">-->
@@ -89,9 +82,11 @@
             <div class="col-lg-6 col-sm-6 blog-mid">
                 {section name=i loop=$lstBlogCenterTop}
                     <div class="blog-item">
-                        <a href="{$clsBlog->getLink($lstBlogCenterTop[i].blog_id)}" class="text-decoration-none"
+                        <a href="{$clsBlog->getLink($lstBlogCenterTop[i].blog_id)}" class="text-decoration-none blog_itemblog"
                            title="{$lstBlogCenterTop[i].title}">
-                            <img class="img-blog-mid" src="{$clsBlog->getImage($lstBlogCenterTop[i].blog_id, 624, 408)}" alt="image-blog">
+							<div class="img_blog_mid1 overflow-hidden">
+                            <img class="img-blog-mid img-fluid" src="{$clsBlog->getImage($lstBlogCenterTop[i].blog_id, 624, 408)}" alt="image-blog">
+								</div>
                             <h2 class="blog-item-center">{$lstBlogCenterTop[i].title}
                         </a>
                         </h2>
@@ -109,7 +104,7 @@
                         <div class="col-sm d-flex flex-column" style="gap: 16px">
                             <h2 class="m-0 txt_blogitemmid">
                                 <a href="{$clsBlog->getLink($lstBlogCenterBot[i].blog_id)}"
-                                   title="{$lstBlogCenterBot[i].slug}">
+                                   title="{$lstBlogCenterBot[i].slug}" class="blog_itemblog">
                                     {$lstBlogCenterBot[i].title}
                                 </a>
 
@@ -119,14 +114,16 @@
                             </div>
                             <p class="date-time">
                                 <i class="fa-regular fa-clock"
-                                   style="color: #74C0FC;"></i> {$lstBlogCenterBot[i].reg_date|date_format:"%d %b, %Y"}
+                                   style="color: #74C0FC;"></i> {$lstBlogCenterBot[i].publish_date|date_format:"%d %b, %Y"}
                                 |
                                 <span>{$clsBlogCategory->getTitle($lstBlogCenterBot[i].cat_id)}</span>
                             </p>
 
                         </div>
-                        <div class="col-sm">
-                            <img class="img-blog mb-3 mb-sm-0" src="{$clsBlog->getImage($lstBlogCenterBot[i].blog_id, 296, 193)}" alt="img">
+                        <div class="col-sm img_blog_mid2">
+							<div class="blog-mid_img overflow-hidden">
+                            <img class="img-blog mb-3 mb-sm-0 img-fluid" src="{$clsBlog->getImage($lstBlogCenterBot[i].blog_id, 296, 193)}" alt="img">
+								</div>
                         </div>
                     </div>
                 {/section}
@@ -134,8 +131,10 @@
             <div class="col-sm-3 blog-end">
                 {section name=i loop=$lstBlogRight}
                     <div class="blog-item">
-                        <a href="{$clsBlog->getLink($lstBlogRight[i].blog_id,$lstBlogRight[i])}" class="text-decoration-none">
-                            <img class="img-blog" src="{$clsBlog->getImage($lstBlogRight[i].blog_id, 296, 193)}" alt="{$lstBlogLeft[i].slug}">
+                        <a href="{$clsBlog->getLink($lstBlogRight[i].blog_id,$lstBlogRight[i])}" class="text-decoration-none blog_itemblog">
+							<div class="img_blog_left overflow-hidden">
+                            <img class="img-blog img-fluid" src="{$clsBlog->getImage($lstBlogRight[i].blog_id, 296, 193)}" alt="{$lstBlogLeft[i].slug}">
+								</div>
                             <h2 class="txt_blogitem">{$lstBlogRight[i].title}
                         </a>
                         </h2>
@@ -143,7 +142,7 @@
                             {$clsISO->limit_textIso($clsBlog->getIntro($lstBlogRight[i].blog_id), 20)}
                         </div>
                         <p class="date-time">
-                            <i class="fa-regular fa-clock" style="color: #74C0FC;"></i> {$lstBlogRight[i].reg_date|date_format:"%d %b, %Y"} |
+                            <i class="fa-regular fa-clock" style="color: #74C0FC;"></i> {$lstBlogRight[i].publish_date|date_format:"%d %b, %Y"} |
                             <span>{$clsBlogCategory->getTitle($lstBlogRight[i].cat_id)}</span>
                         </p>
 <!--                        <hr style="margin-bottom: 24px">-->
@@ -163,18 +162,20 @@
                     <div class="lastblog">
                         <div class="row">
                             <div class="col-md-6">
-                                <a href="{$clsBlog->getLink($lstBlogs[i].blog_id)}">
-                                    <img class="img-last-blog"
+                                <a href="{$clsBlog->getLink($lstBlogs[i].blog_id)}" class="blog_itemblog">
+									<div class="lastest-blog-img overflow-hidden">
+                                    <img class="img-last-blog img-fluid"
                                          src="{$clsBlog->getImage($lstBlogs[i].blog_id, 405, 237)}">
+									</div>
                                 </a>
                             </div>
                             <div class="col-md-6">
-                                <h3>
+                                <h3 class="txt_titlebloglastest">
                                     <a href="{$clsBlog->getLink($lstBlogs[i].blog_id)}">{$lstBlogs[i].title}</a>
                                 </h3>
                                 <p class="date-time">
                                     <span><i class="fa-regular fa-clock" style="color: #74C0FC;"></i>
-                                    {$lstBlogs[i].reg_date|date_format:"%d %b, %Y"}</span>
+                                    {$lstBlogs[i].publish_date|date_format:"%d %b, %Y"}</span>
                                     <span class="ms-3"><i class="fa-light fa-folder-open" style="color: #004ea8;"></i> {$clsBlogCategory->getTitle($lstBlogs[i].cat_id)}</span>
                                 </p>
                                 <div class="last-blog-content fw-normal">
@@ -257,9 +258,12 @@
                         <h2 class="txt_featureblog">FEATURED BLOG</h2>
                         {section name=i loop=$lstFeatureBlog}
                         <div class="row featured-blog">
-                            <div class="col-lg-5">
-                                <a href="{$clsBlog->getLink($lstFeatureBlog[i].blog_id)}"><img class="img_featureblog" src="{$clsBlog->getImage($lstFeatureBlog[i].blog_id, 83, 83)}"
+                            <div class="col-lg-5 overflow-hidden">
+                                <a href="{$clsBlog->getLink($lstFeatureBlog[i].blog_id)}">
+									<div class="featuredblog-img overflow-hidden">
+									<img class="img_featureblog" src="{$clsBlog->getImage($lstFeatureBlog[i].blog_id, 83, 83)}"
                                                  alt="featured-blog"/></a>
+									</div>
                             </div>
                             <h3 class="col-lg-7 mt-log-0 txt_featuredblogs">
                                 <a href="{$clsBlog->getLink($lstFeatureBlog[i].blog_id)}">{$lstFeatureBlog[i].title}</a></h3>
@@ -340,43 +344,72 @@
 {$core->getBlock('top_attraction')}
 
 {$core->getBlock('also_like')}
+	
+	</section>
 
-
+{literal}
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const selectedFiltersDiv = document.getElementById("selectedFilters");
-        const countryRadios = document.querySelectorAll('input[name="slug_country"]');
-        const cityCheckboxes = document.querySelectorAll('.city');
-        const viewMoreLink = document.getElementById('viewMore');
-        const removeAllFiltersButton = document.getElementById("removeAllFilters");
+document.addEventListener('DOMContentLoaded', () => {
+    const selectedFiltersDiv = document.getElementById("selectedFilters");
+    const countryRadios = document.querySelectorAll('input[name="slug_country"]');
+    const cityCheckboxes = document.querySelectorAll('.city');
+    const viewMoreLink = document.getElementById('viewMore');
+    const removeAllFiltersButton = document.getElementById("removeAllFilters");
 
-        const cityCheckboxContainer = document.querySelector('.filter-checkbox'); 
-        const maxVisibleCheckboxes = 5; 
+    const cityCheckboxContainer = document.querySelector('.filter-checkbox');
+    const maxVisibleCheckboxes = 5;
 
-        let isExpanded = false;
+    let isExpanded = false;
 
+    // Ẩn các checkbox ban đầu
+    cityCheckboxes.forEach((checkbox, index) => {
+        if (index >= maxVisibleCheckboxes) {
+            checkbox.parentElement.style.display = 'none';
+        }
+    });
+
+    // Hàm cập nhật trạng thái của nút và checkbox
+    function updateViewMore() {
+        const visibleCheckboxes = Array.from(cityCheckboxes).filter(checkbox => !checkbox.classList.contains('disabled-checkbox')); // Chỉ đếm những checkbox active
+
+        if (visibleCheckboxes.length > maxVisibleCheckboxes) {
+            viewMoreLink.style.display = 'block';
+            viewMoreLink.textContent = isExpanded ? "View less" : "View more";
+            viewMoreLink.classList.remove('disabled'); // Loại bỏ lớp disabled khi có nhiều hơn 5 checkbox
+        } else {
+            viewMoreLink.style.display = 'none';
+            isExpanded = false; 
+        }
+    }
+
+    // Xử lý sự kiện click cho nút "View more/less"
+    viewMoreLink.addEventListener("click", () => {
+        isExpanded = !isExpanded;
         cityCheckboxes.forEach((checkbox, index) => {
             if (index >= maxVisibleCheckboxes) {
-                checkbox.parentElement.style.display = 'none';
+                checkbox.parentElement.style.display = isExpanded ? 'block' : 'none';
             }
         });
+        updateViewMore();
+    });
 
 
-        function updateSelectedFilters() {
-            selectedFiltersDiv.innerHTML = "";
+    function updateSelectedFilters() {
+        selectedFiltersDiv.innerHTML = "";
+        countryRadios.forEach(radio => {
+            if (radio.checked) {
+                addSelectedFilter(radio.parentElement.textContent.trim(), 'country');
+            }
+        });
+        cityCheckboxes.forEach(checkbox => {
+            if (checkbox.checked) {
+                addSelectedFilter(checkbox.parentElement.textContent.trim(), 'city');
+            }
+        });
+        updateViewMore(); // Cập nhật lại giao diện sau khi thay đổi checkbox
+    }
 
-            countryRadios.forEach(radio => {
-                if (radio.checked) {
-                    addSelectedFilter(radio.parentElement.textContent.trim(), 'country');
-                }
-            });
 
-            cityCheckboxes.forEach(checkbox => {
-                if (checkbox.checked) {
-                    addSelectedFilter(checkbox.parentElement.textContent.trim(), 'city');
-                }
-            });
-        }
 
         function addSelectedFilter(text, type) {
             const filterItem = document.createElement("div");
@@ -433,17 +466,10 @@
 
             updateSelectedFilters();
         });
+    updateViewMore();
 
-        viewMoreLink.addEventListener("click", () => {
-            isExpanded = !isExpanded;
-            viewMoreLink.textContent = isExpanded ? "View less" : "View more"; // Thay đổi text của nút
 
-            cityCheckboxes.forEach((checkbox, index) => {
-                if (index >= maxVisibleCheckboxes) {
-                    checkbox.parentElement.style.display = isExpanded ? 'block' : 'none';
-                }
-            });
-        });
+
 
         
         updateSelectedFilters();
@@ -456,61 +482,19 @@
         cityCheckboxes.forEach(checkbox => {
             checkbox.addEventListener('change', updateSelectedFilters);
         });
-    });
+    
 
     $('#countryForm .typeSearch').change(function(){
         $(this).closest('form').submit();
     });
 	
-	document.addEventListener('DOMContentLoaded', function() {
   const lastBlogs = document.querySelectorAll('.lastblog');
   if (lastBlogs.length > 0) {
     lastBlogs[lastBlogs.length - 1].style.borderBottom = 'none';
   }
-});
-	
+});	
 	
 
 </script>
-<style>
+{/literal}
 
-    .bground_header {
-        background-image: url("https://unikasia.vietiso.com/isocms/templates/default/skin/images/blog/bground_blog.png");
-        background-size: cover;
-        background-position: center;
-        height: 600px;
-        /* padding: 0px 0 30px 0; */
-        position: relative;
-        z-index: 1;
-    }
-
-    .bground_header:after {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(180deg, rgba(24, 28, 26, 0.48) 0%, rgba(24, 28, 26, 0.00) 100%);
-        z-index: -1;
-    }
-
-    .txt_blogvn {
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 305px;
-        z-index: 1;
-        transform: translate(0%, -56%);
-    }
-
-    .txt_h1 {
-        color: #FFF;
-        text-align: center;
-        font-size: 48px;
-        font-style: normal;
-        font-weight: 600;
-        line-height: 64px; /* 133.333% */
-        /*    margin-top: 127px;*/
-    }
-</style>
