@@ -65,11 +65,22 @@
                     </div>
                 </div>
                 <div class="row-span">
-                    <div class="fieldlabel">{$core->get_Lang("Banner")}</div>
+                    <div class="fieldlabel">
+                        {$core->get_Lang("Banner")}
+                        <p>Kích thước chuẩn (1047x403)</p>
+                    </div>
+
                     <div class="fieldarea">
                         {assign var = OurTeamBanner value = OurTeamBanner}
-                        <img id="isoman_show_{$OurTeamBanner}" class="float-left mr-3" src="{$clsConfiguration->getValue($OurTeamBanner)}" width="40px" height="40px" />
-                        <input class="text_32 border_aaa bold" type="text" id="{$OurTeamBanner}" name="iso-{$OurTeamBanner}" value="{$clsConfiguration->getValue($OurTeamBanner)}" style="width:100%; max-width:300px; float:left" onClick="loadHelp(this)" readonly><a style="float:left; margin-left:4px; margin-top:-4px;" href="#" class="ajOpenDialog" isoman_for_id="{$OurTeamBanner}" isoman_name="{$OurTeamBanner}"><img src="{$URL_IMAGES}/general/folder-32.png" border="0" title="Open" alt="Open" /></a>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                <input class="text_32 border_aaa bold" type="text" id="{$OurTeamBanner}" name="iso-{$OurTeamBanner}" value="{$clsConfiguration->getValue($OurTeamBanner)}" style="float: right;width: 85%;" onClick="loadHelp(this)" readonly>
+                                <a style="float:left" href="#" class="ajOpenDialog" isoman_for_id="{$OurTeamBanner}" isoman_name="{$OurTeamBanner}"><img src="{$URL_IMAGES}/general/folder-32.png" border="0" title="Open" alt="Open" /></a>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <img id="isoman_show_{$OurTeamBanner}" class="float-left mr-3" src="{$clsConfiguration->getValue($OurTeamBanner)}" width="480" height="192" />
+                            </div>
+                        </div>
                     </div>
                 </div>
                 {section name=i loop=4 start=1}

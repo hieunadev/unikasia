@@ -2,13 +2,13 @@
 	<ul class="ul_menu_setting">
 		{assign var=lstProperty value=$clsProperty->getListType()}
 		{foreach from=$lstProperty key=k item=v}
-		{if $clsISO->getCheckActiveModulePackage($package_id,hotel,'property','default',$k)}
+{*		{if $clsISO->getCheckActiveModulePackage($package_id,'hotel', 'property', 'default', $k)}*}
 		<li class="{if $type==$k}current{/if}">
 			<a title="{$v}" href="{$PCMS_URL}/index.php?mod=hotel&act=property&type={$k}" >
 				<span class="text">{$v}</span>
 			</a>
 		</li>
-		{/if}
+{*		{/if}*}
 		{/foreach}
         {if $clsISO->getCheckActiveModulePackage($package_id,hotel,'price_range','default')}
 		<li class="{if $act=='price_range'}current{/if}">

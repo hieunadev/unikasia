@@ -5,9 +5,41 @@
 				<div class="fill_data_box">
 					<div class="form_title_and_table_code">
 						{if $currentstep=='image'}
-						{assign var= image_detail value='image_country'}
-						{$core->getBlock('box_detail_image')}
+						{* {assign var= image_detail value='image_country'} *}
+						{* {$core->getBlock('box_detail_image')} *}
 
+						<div class="inpt_tour">
+							<label class="col-form-label" for="title">
+								{$core->get_Lang('Main Image')} ({$core->get_Lang('Standard image size')}: 1200x800)
+							</label>
+							<div class="fieldarea">
+								<div class="row">
+									<div class="col-md-6 col-sm-12">
+										<input class="text_32 border_aaa bold" type="text" id="image" name="iso-image" value="{$oneItem.image}" style="float: right;width: 85%;" onClick="loadHelp(this)" readonly>
+										<a style="float:left" href="#" class="ajOpenDialog" isoman_for_id="image" isoman_name="image"><img src="{$URL_IMAGES}/general/folder-32.png" border="0" title="Open" alt="Open" /></a>
+									</div>
+									<div class="col-sm-12 col-md-6">
+										<img id="isoman_show_image" class="float-left mr-3" src="{$oneItem.image}" width="480" height="360" />
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="inpt_tour">
+							<label class="col-form-label" for="title">
+								{$core->get_Lang('Sub Image')} ({$core->get_Lang('Standard image size')}: 480x698)
+							</label>
+							<div class="fieldarea">
+								<div class="row">
+									<div class="col-md-6 col-sm-12">
+										<input class="text_32 border_aaa bold" type="text" id="image_sub" name="iso-image_sub" value="{$oneItem.image_sub}" style="float: right;width: 85%;" onClick="loadHelp(this)" readonly>
+										<a style="float:left" href="#" class="ajOpenDialog" isoman_for_id="image_sub" isoman_name="image_sub"><img src="{$URL_IMAGES}/general/folder-32.png" border="0" title="Open" alt="Open" /></a>
+									</div>
+									<div class="col-sm-12 col-md-6">
+										<img id="isoman_show_image_sub" class="float-left mr-3" src="{$oneItem.image_sub}" width="480" height="698" />
+									</div>
+								</div>
+							</div>
+						</div>
 						{elseif $currentstep=='basic'}
 						<div class="inpt_tour">
 							<h3 class="title_box">{$core->get_Lang('Basic')}</h3>
@@ -111,57 +143,43 @@
 						{elseif $currentstep=='des_gallery'}
 						<div class="box_title_trip_code">
 							<div class="row d-flex full-height">
-								<div class="col-md-9">
-									<div class="fill_data_box">
-										<h3 class="title_box">{$core->get_Lang('Photo Gallery')}
-											{assign var= photo_gallery_tour value='photo_gallery_tour'}
-											{if $CHECKHELP eq 1}
-											<button data-key="{$photo_gallery_tour}" data-label="{$core->get_Lang('Photo Gallery')}" type="button" title="Thêm mô tả" onclick="open_texthelp(this, event)" class="btn btn-xs btn-default"><i class="fa fa-plus-circle"></i></button>
-											{/if}
-										</h3>
-										<div class="form_option_tour">
-											<div class="inpt_tour">
-												<div class="row">
-													<div class="col-md-5 col-sm-12">
-														<div class="filedrop-picker">
-															<div class="filedrop" onclick="file_explorer(this,event);" ondrop="file_drop(this,event)" toId="selectFile" data-options='{ldelim}"openFrom":"gallery","table_id":"{$pvalTable}","clsTableGal":"CountryImage"{rdelim}' ondragover="return false">
-																<h3>Kéo ảnh vào đây để tải lên</h3>
-																<p>Kích thước (WxH=582x490px)<br>
-																	Các loại tệp được hỗ trợ là: .png,.jpg,.jpeg</p>
-																<button type="button" class="btn btn-upload">{$core->get_Lang('From computer')}</button>
-															</div>
-															<input class="hidden" id="selectFile" type="file" data-options='{ldelim}"openFrom":"gallery","clsTableGal":"CountryImage","table_id":"{$pvalTable}"{rdelim}' name="image">
-															<input style="display:none" type="file" multiple name="image[]" id="ajAttachFile">
-															<div class="clearfix mt-half"></div>
-															<a table_id="{$pvalTable}" isoman_multiple="1" isoman_callback='isoman_gallery_callback({ldelim}"openFrom":"gallery","clsTableGal":"CountryImage","table_id":"{$pvalTable}"{rdelim})' class="btn btn-upload-choice ajOpenDialog" isoman_for_id="image_val" isoman_name="image">{$clsISO->makeIcon('folder-o', $core->get_Lang('From library'))}</a>
+								<div class="">
+									<h3 class="title_box">{$core->get_Lang('Photo Gallery')}
+										{assign var= photo_gallery_tour value='photo_gallery_tour'}
+										{if $CHECKHELP eq 1}
+										<button data-key="{$photo_gallery_tour}" data-label="{$core->get_Lang('Photo Gallery')}" type="button" title="Thêm mô tả" onclick="open_texthelp(this, event)" class="btn btn-xs btn-default"><i class="fa fa-plus-circle"></i></button>
+										{/if}
+									</h3>
+									<div class="form_option_tour">
+										<div class="inpt_tour">
+											<div class="row">
+												<div class="col-md-5 col-sm-12">
+													<div class="filedrop-picker" style="min-width: 230px">
+														<div class="filedrop" onclick="file_explorer(this,event);" ondrop="file_drop(this,event)" toId="selectFile" data-options='{ldelim}"openFrom":"gallery","table_id":"{$pvalTable}","clsTableGal":"CountryImage"{rdelim}' ondragover="return false">
+															<h3>Kéo ảnh vào đây để tải lên</h3>
+															<p>Kích thước (WxH=480x403px)<br>
+																Các loại tệp được hỗ trợ là: .png,.jpg,.jpeg</p>
+															<!-- <button type="button" class="btn btn-upload">{$core->get_Lang('From computer')}</button> -->
 														</div>
-													</div>
-													<div class="col-md-7 col-sm-12">
-														<div id="holder_gallery" class="list-unstyled gallery"></div>
+														<input class="hidden" id="selectFile" type="file" data-options='{ldelim}"openFrom":"gallery","clsTableGal":"CountryImage","table_id":"{$pvalTable}"{rdelim}' name="image">
+														<input style="display:none" type="file" multiple name="image[]" id="ajAttachFile">
+														<div class="clearfix mt-half"></div>
+														<a table_id="{$pvalTable}" isoman_multiple="1" isoman_callback='isoman_gallery_callback({ldelim}"openFrom":"gallery","clsTableGal":"CountryImage","table_id":"{$pvalTable}"{rdelim})' class="btn btn-upload-choice ajOpenDialog" isoman_for_id="image_val" isoman_name="image">{$clsISO->makeIcon('folder-o', $core->get_Lang('From library'))}</a>
 													</div>
 												</div>
-											</div>
-											<div class="media-body mb-1 hidden">
-												<p class="mb-2">
-													<strong>%%filename%%</strong> - Status: <span class="text-muted">Waiting</span>
-												</p>
-												<div class="progress mb-2">
-													<div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-													</div>
+												<div class="col-md-7 col-sm-12">
+													<div id="holder_gallery" class="list-unstyled gallery"></div>
 												</div>
 											</div>
 										</div>
-										<!-- <div class="btn_save_titile_trip_code">
-											<a tour_id="{$pvalTable}" cat_run="{$cat_run}" prev_step="{if $child_cat_menu_j_index_prev eq ''}{if $list_cat_menu_prev eq ''}{$child_cat_menu_j}{/if}{if $list_cat_menu_prev ne ''}{$list_cat_menu_prev}/{$child_cat_menu_prev[$count_child_cat_menu_prev]}{/if}{else}{$child_cat_menu_j_index_prev}{/if}" class="back_step">{$core->get_Lang('Back')}</a>
-											<a id="btn-save-img-file" tour_id="{$pvalTable}" cat_run="{$cat_run}" status="" present_step="{$child_cat_menu_j}" next_step="{if $child_cat_menu_j_index_next eq ''}{if $list_menu_tour_i_index_next.cat_menu eq ''}SaveAll{/if}{if $list_menu_tour_i_index_next.cat_menu ne ''}{$list_cat_menu_next}/{$child_cat_menu_next[0]}{/if}{else}{$child_cat_menu_j_index_next}{/if}" class="save_and_continue_tour">{$core->get_Lang('Save &amp; Continue')}</a>
-										</div> -->
-									</div>
-								</div>
-								<div class="col-md-3">
-									<div class="instruction_fill_data_box">
-										<p class="title_box"><i class="fa fa-question-circle text-red " aria-hidden="true"></i> {$core->get_Lang('Instructions')}</p>
-										<div class="content_box">
-											<p class="mb0">{$clsConfiguration->getValue($photo_gallery_tour)|html_entity_decode}</p>
+										<div class="media-body mb-1 hidden">
+											<p class="mb-2">
+												<strong>%%filename%%</strong> - Status: <span class="text-muted">Waiting</span>
+											</p>
+											<div class="progress mb-2">
+												<div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+												</div>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -188,10 +206,6 @@
 								var $_adata = options || {};
 								$_adata['tp'] = 'L';
 								$_adata['table_id'] = table_id;
-								console.log($_adata);
-								console.log($_adata['tp']);
-								console.log($_adata['table_id']);
-
 								$.post(path_ajax_script + '/index.php?mod=home&act=ajOpenGallery', $_adata, function(html) {
 									$('#holder_gallery').html(html);
 									if ($("#holder_gallery").find(".gallery-item").length > 0) {
@@ -236,8 +250,96 @@
 							}
 						</script>
 						{/literal}
+						{elseif $currentstep=='des_header_blog'}
+						<div class="inpt_tour">
+							<label for="header_title">
+								{$core->get_Lang('Header blog title')}
+							</label>
+							<input class="input_text_form" data-table_id="{$pvalTable}" name="iso-blog_title" value="{$oneItem.blog_title}" maxlength="255" type="text" />
+						</div>
+						<div class="inpt_tour">
+							<label for="header_blog_title">
+								{$core->get_Lang('Header blog description')}
+							</label>
+							<textarea style="width:100%" table_id="{$pvalTable}" name="blog_description" id="blog_description_{time()}" class="textarea_intro_editor_simple" data-column="iso-blog_description" cols="255" rows="2">
+								{$oneItem.blog_description}
+							</textarea>
+						</div>
+						<div class="inpt_tour">
+							<label class="col-form-label" for="title">
+								{$core->get_Lang('Header banner')} (Kích thước chuẩn: 1920x600)
+							</label>
+							<div class="fieldarea">
+								<div class="row">
+									<div class="col-md-6 col-sm-12">
+										<input class="text_32 border_aaa bold" type="text" id="blog_image" name="iso-blog_image" value="{$oneItem.blog_image}" style="float: right;width: 85%;" onClick="loadHelp(this)" readonly>
+										<a style="float:left" href="#" class="ajOpenDialog" isoman_for_id="blog_image" isoman_name="iso-blog_image"><img src="{$URL_IMAGES}/general/folder-32.png" border="0" title="Open" alt="Open" /></a>
+									</div>
+									<div class="col-sm-12 col-md-6">
+										<img id="isoman_show_blog_image" class="float-left mr-3" src="{$oneItem.blog_image}" width="480" height="150" />
+									</div>
+								</div>
+							</div>
+						</div>
+						{elseif $currentstep=='header_stay'}
+						<div class="inpt_tour">
+							<label for="header_title">
+								{$core->get_Lang('Header stay title')}
+							</label>
+							<input class="input_text_form" data-table_id="{$pvalTable}" name="iso-title_hotel" value="{$oneItem.title_hotel}" maxlength="255" type="text" />
+						</div>
+						<div class="inpt_tour">
+							<label for="header_blog_title">
+								{$core->get_Lang('Header stay description')}
+							</label>
+							<textarea style="width:100%" table_id="{$pvalTable}" name="intro_hotel" id="intro_hotel_{time()}" class="textarea_intro_editor_simple" data-column="iso-intro_hotel" cols="255" rows="2">
+								{$oneItem.intro_hotel}
+							</textarea>
+						</div>
+						<div class="inpt_tour">
+							<label class="col-form-label" for="title">
+								{$core->get_Lang('Stay banner')} ({$core->get_Lang('Size')}: 1920x600)
+							</label>
+							<div class="fieldarea">
+								<div class="row">
+									<div class="col-md-6 col-sm-12">
+										<input class="text_32 border_aaa bold" type="text" id="image_hotel" name="iso-image_hotel" value="{$oneItem.image_hotel}" style="float: right;width: 85%;" onClick="loadHelp(this)" readonly>
+										<a style="float:left" href="#" class="ajOpenDialog" isoman_for_id="image_hotel" isoman_name="iso-image_hotel"><img src="{$URL_IMAGES}/general/folder-32.png" border="0" title="Open" alt="Open" /></a>
+									</div>
+									<div class="col-sm-12 col-md-6">
+										<img id="isoman_show_image_hotel" class="float-left mr-3" src="{$oneItem.image_hotel}" width="480" height="150" />
+									</div>
+								</div>
+							</div>
+						</div>
 
+						<div class="inpt_tour">
+							<label class="col-form-label" for="title">
+								{$core->get_Lang('Stay image vertical')} ({$core->get_Lang('Size')}: 166x261)
+							</label>
+							<div class="fieldarea">
+								<div class="row">
+									<div class="col-xs-12 col-md-4">
+										<div class="drop_gallery" onClick="loadHelp(this)">
+											<div class="filedrop full" onClick="file_explorer(this,event);" ondrop="file_drop(this,event)" toid="selectFile" toel="isoman_show_image_hotel_sub" data-options='{ldelim}"openFrom":"image_hotel_sub","clsTable":"Country", "table_id":"{$pvalTable}","toId":"isoman_show_image_hotel_sub" {rdelim}' ondragover="return false">
+												<h3>{$core->get_Lang('Drop files to upload')}</h3>
+												<p>{$core->get_Lang('Size')} (WxH=1920x791)<br />
+													{$core->get_Lang('File formats supported')}: .png,.jpg,.jpeg</p>
+												<button type="button" class="btn btn-upload">{if $oneItem.image}Thay ảnh{else}Tải ảnh lên{/if}</button>
+											</div>
+											<input class="hidden" id="selectFile" type="file" data-options='{ldelim}"openFrom":"image_hotel_sub","clsTable":"Country", "table_id":"{$pvalTable}","toId":"isoman_show_image_hotel_sub"{rdelim}' name="image_hotel_sub">
 
+											<input type="hidden" value="{$oneItem.image_hotel_sub}" name="image_hotel_sub" id="image_hotel_sub" />
+											<a table_id="{$pvalTable}" isoman_multiple="0" isoman_callback='isoman_callback({ldelim}"openFrom":"image_hotel_sub", "clsTable":"Country", "pvalTable":"{$pvalTable}","toField":"image_hotel_sub","toId":"isoman_show_image_hotel_sub"{rdelim})' class="btn-upload-2 ajOpenDialog" isoman_for_id="image_hotel_sub" isoman_name="image_hotel_sub">{$clsISO->makeIcon('folder-o', $core->get_Lang('From library'))}</a>
+											<div class="text_help" hidden="">{$clsConfiguration->getValue($banner_slide)|html_entity_decode}</div>
+										</div>
+									</div>
+									<div class="col-xs-12 col-md-8">
+										<img class="img-responsive radius-3" id="isoman_show_image_hotel_sub" src="{$oneItem.image_hotel_sub}" onerror="this.src='{$URL_IMAGES}/none_image.png'" alt="{$core->get_Lang('image_hotel_sub')}" style="width:100%; height:250px;object-fit: contain" />
+									</div>
+								</div>
+							</div>
+						</div>
 
 						{if $lstContinent}
 						<div class="inpt_tour">

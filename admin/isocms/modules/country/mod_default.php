@@ -38,11 +38,11 @@ function getFrame($country_id = null)
 
                 ),
 
-                'des_tour' => array(
+                // 'des_tour' => array(
 
-                    'name' => $core->get_Lang('Tour')
+                //     'name' => $core->get_Lang('Tour')
 
-                ),
+                // ),
 
                 'image' => array(
 
@@ -58,6 +58,12 @@ function getFrame($country_id = null)
                 'des_header_blog' => array(
 
                     'name' => $core->get_Lang('Header Blog')
+
+                ),
+
+                'header_stay' => array(
+
+                    'name' => $core->get_Lang('Header Stay')
 
                 ),
 
@@ -114,25 +120,25 @@ function getFrame($country_id = null)
         );
     }
 
-    $frames['seo'] = array(
+    // $frames['seo'] = array(
 
-        'name'    => $core->get_Lang('seosdvanced'),
+    //     'name'    => $core->get_Lang('seosdvanced'),
 
-        'href_group'    => 'seo',
+    //     'href_group'    => 'seo',
 
-        'icon'    => '',
+    //     'icon'    => '',
 
-        'steps'    => array(
+    //     'steps'    => array(
 
-            'seo' => array(
+    //         'seo' => array(
 
-                'name' =>  $core->get_Lang('seosdvanced')
+    //             'name' =>  $core->get_Lang('seosdvanced')
 
-            )
+    //         )
 
-        )
+    //     )
 
-    );
+    // );
 
     return $frames;
 }
@@ -140,7 +146,6 @@ function getFrame($country_id = null)
 function default_insert()
 
 {
-
     //ini_set('display_errors', '1');
 
     //ini_set('display_startup_errors', '1');
@@ -627,7 +632,6 @@ function default_ajSaveMainStep()
         $arr_update['title'] = $title;
 
         $arr_update['slug'] = $slug;
-
         foreach ($_POST as $key => $val) {
 
             $tmp = explode('-', $key);
@@ -709,11 +713,20 @@ function default_ajSaveMainStep()
 
         $clsClassTable->updateOne($table_id, $arr_update);
     } else if ($currentstep == 'image') {
-
-        $image = Input::post('image', '');
-
-        $arr_update['image'] = addslashes($image);
-
+        // // Ảnh chính (ảnh ngang)
+        // $image = Input::post('image', '');
+        // $arr_update['image'] = addslashes($image);
+        // // Ảnh phụ (ảnh dọc)
+        // $image_sub = Input::post('image_sub', '');
+        // $arr_update['image_sub'] = addslashes($image_sub);
+        #
+        foreach ($_POST as $key => $val) {
+            $tmp = explode('-', $key);
+            if ($tmp[0] == 'iso') {
+                $arr_update[$tmp[1]] = addslashes($val);
+            }
+        }
+        #
         $clsClassTable->updateOne($table_id, $arr_update);
     } else if ($currentstep == 'banner') {
 
@@ -751,17 +764,7 @@ function default_ajSaveMainStep()
         $clsClassTable->updateOne($table_id, $arr_update);
     } elseif ($currentstep == 'des_header_blog') {
 
-        // $clsISO->dd($_POST);
-
-        $header_blog_title       =     Input::post('header_blog_title');
-
-        $header_blog_title       =     html_entity_decode($header_blog_title);
-
-        $arr_update['header_blog_title']         =   $header_blog_title;
-
         #
-
-        // Code xử lý dữ liệu lấy từ editor
 
         foreach ($_POST as $key => $val) {
 
@@ -772,7 +775,6 @@ function default_ajSaveMainStep()
                 $arr_update[$tmp[1]] = addslashes($val);
             }
         }
-
         $clsClassTable->updateOne($table_id, $arr_update);
     } else if ($currentstep == 'seo') {
 
@@ -798,17 +800,11 @@ function default_ajSaveMainStep()
 
             ));
         } else {
-
             $clsClassTable->updateOne($meta_id, array(
-
                 'config_value_title' => $config_value_title,
-
                 'config_value_intro' => $config_value_intro,
-
                 'image' => $config_value_image,
-
                 'upd_date' => time()
-
             ));
         }
     } else {

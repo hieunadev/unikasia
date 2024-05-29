@@ -1,33 +1,3 @@
-<!--
-<div class="page_container">
-	<nav class="breadcrumb-main breadcrumb-{$mod} bg_fff">
-        <div class="container">
-            <ol class="breadcrumb hidden-xs mt0 bg_fff" itemscope itemtype="https://schema.org/BreadcrumbList">
-				<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-					<a itemprop="item" href="{$PCMS_URL}" title="{$core->get_Lang('Home')}">
-						<span itemprop="name" class="reb">{$core->get_Lang('Home')}</span>
-					</a>
-					<meta itemprop="position" content="1" />
-				</li>
-				<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-					<a itemprop="item" href="{$clsISO->getLink('blog')}" title="{$core->get_Lang('Blog')}">
-						<span itemprop="name" class="reb">{$core->get_Lang('Blog')}</span>
-					</a>
-					<meta itemprop="position" content="2" />
-				</li>
-				
-                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-					<a itemprop="item" href="{$clsBlogCategory->getLink($cat_id,$itemCat)}" title="{$itemCat.title}">
-						<span itemprop="name" class="reb">{$itemCat.title}</span></a>
-					<meta itemprop="position" content="3" />
-				</li> 
-				
-            </ol>
-        </div>
-    </nav>
--->
-
-
 {*{assign var=title_blog value=$clsBlog->getTitle($lstBlogs[i].blog_id,$lstBlogs[i])}*}
 {*{assign var=link_blog value=$clsBlog->getLink($lstBlogs[i].blog_id,$lstBlogs[i])}*}
 {*{assign var=intro_blog value=$clsBlog->getIntro($lstBlogs[i].blog_id, $lstBlogs[i])}*}
@@ -49,11 +19,11 @@
   <ol class="breadcrumb">
 		<li class="breadcrumb-item"><a href="{PCMS_URL}" title="{$core->get_Lang('Home')}">Home</a></li>
                     <li class="breadcrumb-item"><a href="{PCMS_URL}blog" title="{$core->get_Lang('Blog')}">Blog</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">{$clsCountryEx->getTitle($country_id)}</li>
+                    {if $country_id}
+                    <li class="breadcrumb-item active" aria-current="page">{$clsCountryEx->getTitle($country_id)}</li>{/if}
 
   </ol>
 	</div>
-</nav>
 
 <section class="blog-top">
     <div class="container">
@@ -61,11 +31,13 @@
             <div class="col-lg-3 col-sm-3 blog-left">
                 {section name =i loop=$lstBlogLeft}
                     <div class="blog-item">
+						<div class="bloglastest">
                         <a class="text-decoration-none blog_itemblog"
                            href="{$clsBlog->getLink($lstBlogLeft[i].blog_id,$lstBlogLeft[i])}" title="{$title_blog}">
 							<div class="img_blog_left overflow-hidden">
                             <img class="img-blog img-fluid" src="{$clsBlog->getImage($lstBlogLeft[i].blog_id, 296, 193)}" alt="{$lstBlogLeft[i].slug}">
 								</div>
+							</div>
                             <h2 class="txt_blogitem">{$lstBlogLeft[i].title}</a>
                         </h2>
                         <div class="blog-item-content">{$clsISO->limit_textIso($clsBlog->getIntro($lstBlogLeft[i].blog_id), 20)}</div>
@@ -74,7 +46,6 @@
                                style="color: #74C0FC;"></i>{$lstBlogLeft[i].publish_date|date_format:"%d %b, %Y"} |
                             <span>{$clsBlogCategory->getTitle($lstBlogLeft[i].cat_id)}</span>
                         </p>
-<!--                        <hr style="margin-bottom: 24px">-->
                     </div>
                 {/section}
             </div>
@@ -82,11 +53,13 @@
             <div class="col-lg-6 col-sm-6 blog-mid">
                 {section name=i loop=$lstBlogCenterTop}
                     <div class="blog-item">
+						<div class="bloglastest">
                         <a href="{$clsBlog->getLink($lstBlogCenterTop[i].blog_id)}" class="text-decoration-none blog_itemblog"
                            title="{$lstBlogCenterTop[i].title}">
 							<div class="img_blog_mid1 overflow-hidden">
                             <img class="img-blog-mid img-fluid" src="{$clsBlog->getImage($lstBlogCenterTop[i].blog_id, 624, 408)}" alt="image-blog">
 								</div>
+							</div>
                             <h2 class="blog-item-center">{$lstBlogCenterTop[i].title}
                         </a>
                         </h2>
@@ -96,7 +69,6 @@
                                style="color: #74C0FC;"></i> {$lstBlogCenterTop[i].upd_date|date_format:"%d %b, %Y"} |
                             <span>{$clsBlogCategory->getTitle($lstBlogCenterTop[i].cat_id)}</span>
                         </p>
-<!--                        <hr style="margin-bottom: 24px">-->
                     </div>
                 {/section}
                 {section name=i loop=$lstBlogCenterBot}
@@ -120,9 +92,11 @@
                             </p>
 
                         </div>
-                        <div class="col-sm img_blog_mid2">
+                        <div class="col-sm img_blog_mid2 bloglastest">
+							<div class="bloglastest">
 							<div class="blog-mid_img overflow-hidden">
                             <img class="img-blog mb-3 mb-sm-0 img-fluid" src="{$clsBlog->getImage($lstBlogCenterBot[i].blog_id, 296, 193)}" alt="img">
+								</div>
 								</div>
                         </div>
                     </div>
@@ -145,7 +119,6 @@
                             <i class="fa-regular fa-clock" style="color: #74C0FC;"></i> {$lstBlogRight[i].publish_date|date_format:"%d %b, %Y"} |
                             <span>{$clsBlogCategory->getTitle($lstBlogRight[i].cat_id)}</span>
                         </p>
-<!--                        <hr style="margin-bottom: 24px">-->
                     </div>
                 {/section}
             </div>
@@ -162,6 +135,7 @@
                     <div class="lastblog">
                         <div class="row">
                             <div class="col-md-6">
+								<div class="bloglastest">
                                 <a href="{$clsBlog->getLink($lstBlogs[i].blog_id)}" class="blog_itemblog">
 									<div class="lastest-blog-img overflow-hidden">
                                     <img class="img-last-blog img-fluid"
@@ -169,6 +143,8 @@
 									</div>
                                 </a>
                             </div>
+														</div>
+
                             <div class="col-md-6">
                                 <h3 class="txt_titlebloglastest">
                                     <a href="{$clsBlog->getLink($lstBlogs[i].blog_id)}">{$lstBlogs[i].title}</a>
@@ -182,7 +158,6 @@
                                     {$lstBlogs[i].intro|html_entity_decode}
                                 </div>
                             </div>
-<!--                            <hr style="margin: 32px 0 0 0">-->
                         </div>
                     </div>
                 {/section}
@@ -259,12 +234,14 @@
                         {section name=i loop=$lstFeatureBlog}
                         <div class="row featured-blog">
                             <div class="col-lg-5 overflow-hidden">
+								<div class="bloglastest">
                                 <a href="{$clsBlog->getLink($lstFeatureBlog[i].blog_id)}">
 									<div class="featuredblog-img overflow-hidden">
 									<img class="img_featureblog" src="{$clsBlog->getImage($lstFeatureBlog[i].blog_id, 83, 83)}"
                                                  alt="featured-blog"/></a>
 									</div>
                             </div>
+							</div>
                             <h3 class="col-lg-7 mt-log-0 txt_featuredblogs">
                                 <a href="{$clsBlog->getLink($lstFeatureBlog[i].blog_id)}">{$lstFeatureBlog[i].title}</a></h3>
 
@@ -277,74 +254,44 @@
     </div>
 </section>
 
+{if $lstBlogRecent}
 <section class="recentlyview">
     <div class="container">
         <h2 class="title-recently-view">Recently viewed</h2>
         <div class="row blog-recently-view">
+            {section name=i loop=$lstBlogRecent}
             <div class="col-sm-3">
                 <div class="blog-item-recently">
-                    <a href="#" class="text-decoration-none">
-                        <img class="img-blog" src="{URL_IMAGES}/blog/img_recently_blog1.jpg" alt="image-recent"></a>
-                    <h2 class="txt_recently">
-                        <a href="#">Discover The Black Thai Communities In Pu Luong Nature Reserve, Vietnam</a>
-                    </h2>
-                    <div class="recently-view-content">
-                        <p class="txt_recentlyview">Have confidence when discovering the street food of Hanoi’s
-                            Old Quarter by traveling...</p>
+                    <div class="bloglastest">
+                        <a href="{$clsBlog->getLink($lstBlogRecent[i].blog_id)}" class="text-decoration-none">
+                            <div class="img-blogrecently">
+                                <img class="img-blog" src="{$clsBlog->getImage($lstBlogRecent[i].blog_id, 296, 193)}" alt="image-recent">
+                        </a>
                     </div>
-                    <p class="date-time">
-                        <i class="fa-regular fa-clock" style="color: #74C0FC;"></i> 10 Feb,
-                        2024 | Places to visit & things to do
-                    </p>
                 </div>
-            </div>
-
-            <div class="col-sm-3">
-                <div class="blog-item-recently">
-                    <a href="#" class="text-decoration-none">
-                        <img class="img-blog" src="{URL_IMAGES}/blog/img_recently_blog2.jpg" alt="image-recent"></a>
-                    <h2 class="txt_recently">
-                        <a href="#">What To Do In Mai Chau Vietnam In 2 Days? Itinerary Mai Chau 2 Days</a>
-                    </h2>
-                    <div class="recently-view-content">
-                        <p class="txt_recentlyview">Have confidence when discovering the street food of Hanoi’s
-                            Old Quarter by traveling...</p>
-                    </div>
-                    <p class="date-time">
-                        <i class="fa-regular fa-clock" style="color: #74C0FC;"></i> 10 Feb,
-                        2024 | Travel blogs
-                    </p>
+                <h2 class="txt_recently">
+                    <a href="{$clsBlog->getLink($lstBlogRecent[i].blog_id)}">{$lstBlogRecent[i].title}</a>
+                </h2>
+                <div class="recently-view-content">
+                    <div class="txt_recentlyview">{$clsISO->limit_textIso($clsBlog->getIntro($lstBlogRecent[i].blog_id), 18)}</div>
                 </div>
+                <p class="date-time">
+                    <i class="fa-regular fa-clock" style="color: #74C0FC;"></i> {$lstBlogRecent[i].publish_date|date_format:"%d %b, %Y"} | {$clsBlogCategory->getTitle($lstBlogRecent[i].cat_id)}
+                </p>
             </div>
-
-            <div class="col-sm-3">
-                <div class="blog-item-recently">
-                    <a href="#" class="text-decoration-none">
-                        <img class="img-blog" src="{URL_IMAGES}/blog/img_recently_blog3.jpg" alt="image-recent"></a>
-                    <h2 class="txt_recently">
-                        <a href="#">Old Quarter Street Food Tour Review</a>
-                    </h2>
-                    <div class="recently-view-content">
-                        <p class="txt_recentlyview">Have confidence when discovering the street food of Hanoi’s
-                            Old Quarter by traveling...</p>
-                    </div>
-                    <p class="date-time">
-                        <i class="fa-regular fa-clock" style="color: #74C0FC;"></i> 10 Feb,
-                        2024 | Travel blogs
-                    </p>
-                </div>
-            </div>
-
         </div>
-
+            {/section}
+        </div>
     </div>
 </section>
+    {/if}
+
 {$core->getBlock('customer_review')}
 
 {$core->getBlock('top_attraction')}
 
 {$core->getBlock('also_like')}
-	
+
 	</section>
 
 {literal}
@@ -378,7 +325,7 @@ document.addEventListener('DOMContentLoaded', () => {
             viewMoreLink.classList.remove('disabled'); // Loại bỏ lớp disabled khi có nhiều hơn 5 checkbox
         } else {
             viewMoreLink.style.display = 'none';
-            isExpanded = false; 
+            isExpanded = false;
         }
     }
 
@@ -415,7 +362,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const filterItem = document.createElement("div");
             filterItem.classList.add("selected-filter-item");
             filterItem.textContent = text;
-            filterItem.dataset.type = type; 
+            filterItem.dataset.type = type;
 
             const removeButton = document.createElement("span");
             removeButton.classList.add("remove-filter-button");
@@ -471,10 +418,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-        
+
         updateSelectedFilters();
 
-        
+
         countryRadios.forEach(radio => {
             radio.addEventListener('change', updateSelectedFilters);
         });
@@ -482,18 +429,18 @@ document.addEventListener('DOMContentLoaded', () => {
         cityCheckboxes.forEach(checkbox => {
             checkbox.addEventListener('change', updateSelectedFilters);
         });
-    
+
 
     $('#countryForm .typeSearch').change(function(){
         $(this).closest('form').submit();
     });
-	
+
   const lastBlogs = document.querySelectorAll('.lastblog');
   if (lastBlogs.length > 0) {
     lastBlogs[lastBlogs.length - 1].style.borderBottom = 'none';
   }
-});	
-	
+});
+
 
 </script>
 {/literal}

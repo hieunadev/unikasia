@@ -958,86 +958,52 @@ function default_ajOpenGallery()
 	global $assign_list, $_CONFIG, $_SITE_ROOT, $mod, $_LANG_ID, $act, $menu_current, $current_page, $oneSetting;
 	global $core, $clsModule, $clsButtonNav, $dbconn, $clsISO;
 	#
-	$clsPagination = new Pagination();
-
-	// $clsISO->dump($_POST);
-
-	$tour_image_id = isset($_POST['tour_image_id']) ? intval($_POST['tour_image_id']) : 0;
-	$table_id = isset($_POST['table_id']) ? intval($_POST['table_id']) : 0;
-	$clsTable = isset($_POST['clsTable']) ? $_POST['clsTable'] : '';
-	$keyword = isset($_POST['keyword']) ? $_POST['keyword'] : '';
-	$tp = isset($_POST['tp']) ? $_POST['tp'] : '';
-
-	// $clsISO->dump($table_id);
-	// $clsISO->dump($clsTable);
-	// $clsISO->dump($keyword);
-	// $clsISO->dump($tp);
-	// die;
-	$clsClassTable = new $clsTable();
+	$clsPagination	= 	new Pagination();
+	#
+	$tour_image_id 	= 	isset($_POST['tour_image_id']) ? intval($_POST['tour_image_id']) : 0;
+	$table_id	= 	isset($_POST['table_id']) ? intval($_POST['table_id']) : 0;
+	$clsTable 	= 	isset($_POST['clsTable']) ? $_POST['clsTable'] : '';
+	$keyword 	= 	isset($_POST['keyword']) ? $_POST['keyword'] : '';
+	$tp 		= 	isset($_POST['tp']) ? $_POST['tp'] : '';
+	#
+	$clsClassTable	= 	new $clsTable();
+	#
 	// Load List
 	if ($tp == 'L') {
-		$page = isset($_POST['page']) ? intval($_POST['page']) : 1;
-		$number_per_page = isset($_POST['number_per_page']) ? intval($_POST['number_per_page']) : 10;
-		//echo $number_per_page; die();
+		$page	= 	isset($_POST['page']) ? intval($_POST['page']) : 1;
+		$number_per_page	= 	isset($_POST['number_per_page']) ? intval($_POST['number_per_page']) : 10;
 		#
-		$cond = "is_trash=0 and table_id='$table_id'";
+		$cond 	= 	"is_trash = 0 AND table_id = '$table_id'";
 		if (trim($keyword) != '' && $keyword != '0') {
-			$slug = $core->replaceSpace($keyword);
-			$cond .= " and (title like '%$keyword%' or slug like '%$slug%')";
+			$slug 	= 	$core->replaceSpace($keyword);
+			$cond 	.= 	" and (title like '%$keyword%' or slug like '%$slug%')";
 		}
 		#
-		$html = '';
-		$totalRecord = $clsClassTable->countItem($cond);
-		$pageview = $clsPagination->pagination_ajax($totalRecord, $number_per_page, $page, '', '', false);
+		$html	= 	'';
+		$totalRecord	= 	$clsClassTable->countItem($cond);
+		$pageview 		= 	$clsPagination->pagination_ajax($totalRecord, $number_per_page, $page, '', '', false);
 		#
-		$offset = ($page - 1) * $number_per_page;
-		$order_by = " ORDER BY order_no asc";
-		$limit = " LIMIT $offset,$number_per_page";
-
-		if ($clsTable === 'CountryImage') {
-			// die('123');
-			$tbl_name	=	'default_country_image';
-			$sql 		=	"SELECT * FROM " . $tbl_name . " WHERE lang_id IS NULL and is_trash=0 and table_id='" . $table_id . "' ORDER BY order_no asc";
-			$lstItem	=	$dbconn->Execute($sql);
-
-			// Đếm số lượng phần tử trong mảng
-			$countlstItem	=	$lstItem->RecordCount();
-
-			$clsISO->dd($lstItem[$i][$clsClassTable->pkey]);
-			if (!empty($lstItem)) {
-				for ($i = 0; $i < $countlstItem; $i++) {
-
-					$table_image_id = $lstItem[$i][$clsClassTable->pkey];
-					$html .= '<div class="gallery-item bootstrap">';
-					$html .= '<a><img class="img-responsive mr-3 mb-2 preview-img" src="' . $ftp_abs_path_image . $clsClassTable->getImage($table_image_id, 140, 100, $lstItem[$i]) . '" alt="' . $lstItem[$i]['title'] . '" ></a>';
-					$html .= '  <div class="gallery-toolbar">
-							<a class="text-white" onClick="delete_gallery(this)" table_id="' . $table_id . '" table_image_id="' . $lstItem[$i][$clsClassTable->pkey] . '">' . $clsISO->makeIcon('times') . '</a>
-						</div>
-					</div>';
-				}
-			}
-		} else {
-			$lstItem = $clsClassTable->getAll($cond . $order_by);
-
-			if (!empty($lstItem)) {
-				for ($i = 0; $i < count($lstItem); $i++) {
-					$table_image_id = $lstItem[$i][$clsClassTable->pkey];
-					$html .= '<div class="gallery-item bootstrap">';
-					$html .= '<a><img class="img-responsive mr-3 mb-2 preview-img" src="' . $ftp_abs_path_image . $clsClassTable->getImage($table_image_id, 140, 100, $lstItem[$i]) . '" alt="' . $lstItem[$i]['title'] . '" ></a>';
-					$html .= '  <div class="gallery-toolbar">
-							<a class="text-white" onClick="delete_gallery(this)" table_id="' . $table_id . '" table_image_id="' . $lstItem[$i][$clsClassTable->pkey] . '">' . $clsISO->makeIcon('times') . '</a>
-						</div>
-					</div>';
-				}
+		$offset		= 	($page - 1) * $number_per_page;
+		$order_by 	= 	" ORDER BY order_no ASC";
+		$limit 		= 	" LIMIT $offset,$number_per_page";
+		#
+		$lstItem	= 	$clsClassTable->getAll($cond . $order_by);
+		if (!empty($lstItem)) {
+			for ($i = 0; $i < count($lstItem); $i++) {
+				$table_image_id	= 	$lstItem[$i][$clsClassTable->pkey];
+				$html	.= 	'<div class="gallery-item bootstrap">';
+				$html 	.= 	'<a><img class="img-responsive mr-3 mb-2 preview-img" src="' . $ftp_abs_path_image . $clsClassTable->getImage($table_image_id, 140, 100, $lstItem[$i]) . '" alt="' . $lstItem[$i]['title'] . '" ></a>';
+				$html 	.= 	'<div class="gallery-toolbar">
+						<a class="text-white" onClick="delete_gallery(this)" table_id="' . $table_id . '" table_image_id="' . $lstItem[$i][$clsClassTable->pkey] . '">' . $clsISO->makeIcon('times') . '</a>
+					</div>
+				</div>';
 			}
 		}
-
-
-		$html .= '';
-		echo $html;
+		$html	.= 	'';
+		echo 	$html;
 		die();
 	} else {
-		echo 'error';
+		echo 	'error';
 		die();
 	}
 }

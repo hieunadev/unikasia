@@ -13,11 +13,11 @@
                         <div class="collapse navbar-collapse" id="navbarNavDropdown">
                             <ul class="navbar-nav des_tailor_menu">
                                 <li class="nav-item">
-                                    <a class="nav-link" data-link="des_tailor_detail_place" href="#" title="OVERVIEW">OVERVIEW</a>
+                                    <a class="nav-link" data-link="des_tailor_detail_destination_place" href="#" title="OVERVIEW">OVERVIEW</a>
                                 </li>
                                 <li class="nav-item dropdown des_tailor_dropdown">
-                                    <a class="nav-link dropdown-toggle" data-link="des_tailor_detail_travel_style" href="#" id="navbarDropdownMenuLink1" role="button" data-bs-toggle="dropdown" aria-expanded="false" title="{$clsCountry->getTitle($id_country)} TOURS">
-                                        {$clsCountry->getTitle($id_country)} TOURS <i class="fa-light fa-angle-down"></i>
+                                    <a class="nav-link dropdown-toggle" data-link="des_tailor_detail_tour_cat" href="#" id="navbarDropdownMenuLink1" role="button" data-bs-toggle="dropdown" aria-expanded="false" title="{$clsCountry->getTitle($country_id)} TOURS">
+                                        {$clsCountry->getTitle($country_id)} TOURS <i class="fa-light fa-angle-down"></i>
                                     </a>
                                     <ul class="dropdown-menu des_tailor_dropdown_menu" aria-labelledby="navbarDropdownMenuLink1">
                                         {if $arr_trvs_country}
@@ -54,13 +54,13 @@
                 </nav>
             </div>
 
-            <div class="des_tailor_detail_place hnv_hide">
+            <div class="des_tailor_detail_destination_place hnv_hide">
                 <div class="des_tailor_mid">
                     <div class="des_tailor_title">
-                        <h2>{$clsCountry->getOverviewTitle($id_country)}</h2>
+                        <h2>{$clsCountry->getOverviewTitle($country_id)}</h2>
                     </div>
                     <div class="des_tailor_description">
-                        {$clsCountry->getOverviewDescription($id_country)}
+                        {$clsCountry->getOverviewDescription($country_id)}
                     </div>
                 </div>
                 <div class="des_tailor_bot">
@@ -84,27 +84,30 @@
                     {/if}
                 </div>
             </div>
-            <div class="des_tailor_detail_travel_style hnv_hide">
+            <div class="des_tailor_detail_tour_cat hnv_hide">
                 <div class="des_tailor_travel_style_image">
-                    <img src="{$clsCountry->getImageTour($id_country, 1280, 552)}" width="1280" height="552" alt="Travel Style">
+                    <img src="{$clsCategory_Country->getImageHorizontal($id_current_trvs, 1280, 552)}" width="1280" height="552" alt="Travel Style">
                     <div class="des_tailor_travel_style_content">
                         <div class="des_tailor_travel_style_title">
-                            <h2>{$clsCountry->getTourTitle($id_country)}</h2>
+                            <h2>{$clsCategory_Country->getIntroTitle($id_current_trvs)}</h2>
                         </div>
                         <div class="des_tailor_travel_style_description">
-                            {$clsCountry->getTourDescription($id_country)}
+                            {$clsCategory_Country->getIntroDescription($id_current_trvs)}
                         </div>
-                        {if $info_country.tour_video}
-                        <div class="des_tailor_travel_style_play">
+                        {if $intro_youtube}
+                        <a href="{$intro_youtube}" data-fancybox="gallery" class="des_tailor_travel_style_play">
                             PLAY <i class="fa-sharp fa-solid fa-circle-play"></i>
-                        </div>
+                            <span class="wave_1"></span>
+                            <span class="wave_2"></span>
+                        </a>
                         {/if}
                     </div>
                 </div>
                 <div class="des_travel_style_dream">
                     <div class="des_group_dream">
                         <div class="des_dream_rec">
-                            <p> Are you already dreaming? so entrust us with your dream! </p> <a href="#" title="Ask">ASK FOR A QUOTE <i class="fa-solid fa-arrow-right-long"></i></a>
+                            <p>{$core->get_Lang('Are you already dreaming? so entrust us with your dream!')}</p>
+                            <a href="#" title="Ask">ASK FOR A QUOTE <i class="fa-solid fa-arrow-right-long"></i></a>
                         </div>
                     </div>
                 </div>
@@ -465,6 +468,54 @@
         gap: 12px;
         border-radius: 8px;
         background: var(--Neutral-6, #FFF);
+        color: #333;
+        transform: scaleX(1);
+    }
+
+    /* Video Animate */
+    .wave_1,
+    .wave_2 {
+        content: "";
+        position: absolute;
+        z-index: -1;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        display: block;
+        border: 1px solid white;
+        border-radius: 12px;
+    }
+
+    .wave_1 {
+        width: 115px;
+        height: 60px;
+        animation: pulse-border 1200ms ease-out infinite;
+    }
+
+    .wave_2 {
+        width: 120px;
+        height: 65px;
+        animation: pulse-border 1500ms ease-out infinite;
+    }
+
+    @keyframes pulse-border {
+        0% {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+
+        100% {
+            transform: translate(-50%, -50%) scale(var(--scale-end, 1.1));
+            opacity: 0;
+        }
+    }
+
+    .wave_1 {
+        --scale-end: 1.05;
+    }
+
+    .wave_2 {
+        --scale-end: 1.25;
     }
 
     /* dream */
@@ -679,6 +730,12 @@
         margin-bottom: 24px;
     }
 
+    .des_list_why_choose_country .owl-item {
+        margin-right: unset;
+        height: unset;
+        min-width: unset;
+    }
+
     @media screen and (max-width: 1170px) {}
 
     @media screen and (max-width: 1024px) {}
@@ -731,13 +788,13 @@
         // Act .nav-link tương ứng khi load trang
         $('.nav-link').each(function() {
             var dataLink = $(this).data('link');
-            if (dataLink === 'des_tailor_detail_' + act) {
+            if (dataLink === 'des_tailor_detail_' + mod + '_' + act) {
                 $(this).addClass('hnv_active');
             }
         });
         // Show data .nav-link tương ứng khi load trang
         $('.hnv_hide').hide();
-        $('.des_tailor_detail_' + act).show();
+        $('.des_tailor_detail_' + mod + '_' + act).show();
         // Xử lý sự kiện click .nav-link
         $('.nav-link').click(function(e) {
             e.preventDefault();

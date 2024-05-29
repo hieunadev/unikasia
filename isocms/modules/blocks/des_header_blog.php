@@ -18,7 +18,7 @@ if (!empty($_GET['slug_blog'])) {
 
     #
 
-    $url_banner     =   $info_blog['image'];
+    $url_banner     =   $info_blog['blog_image'];
 
     $smarty->assign('url_banner', $url_banner);
 

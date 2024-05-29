@@ -11,7 +11,7 @@
     <div id="slider-area" class="owl-carousel">
             {section name=i loop=$listSlide}
                 <div class="slider-area-child">
-                    <img src="{$clsSlide->getImage($listSlide[i].slide_id, 1920, 791)}" alt="{$listSlide[i].slug}">
+                    <img src="{$clsSlide->getImage($listSlide[i].slide_id, 1920, 791)}" alt="{$listSlide[i].slug}" onerror="this.src='{$URL_IMAGES}/none_image.png'">
                     <div class="overlay"></div>
                     <div class="txt_header_center">
                         <h2 class="txt_h2">{$listSlide[i].title}</h2>

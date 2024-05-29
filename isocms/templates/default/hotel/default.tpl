@@ -1,9 +1,11 @@
 <div class="page_container page{$mod}{$act}">
+<!--
     <div class="banner">
         <img src="{$clsConfiguration->getImage('site_hotel_banner',1920,400)}" width="1920" height="400" class="img100"
             alt="{$core->get_Lang('Hotels')}" />
         {$core->getBlock('box_form_search_hotel')}
     </div>
+-->
     <nav class="breadcrumb-main breadcrumb-cruise bg-default breadcrumb-more bg_fff">
         <div class="container">
 

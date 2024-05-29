@@ -24,7 +24,7 @@
                                 <i class="fa-regular fa-star"></i>
                             {/section}
                         </div>
-                        <h3 class="customer_review_h3">{$listReview[i].title}</h3>
+                        <h3 class="customer_review_h3 txt-hover-home">{$listReview[i].title}</h3>
                         <div class="content">{$clsISO->limit_textIso($listReview[i].intro|html_entity_decode, 50)}</div> <a class="more_review" data-fancybox data-src="#modalViewMore{$k}" href="javascript:;">{$core->get_Lang('View more')}</a>
                         <div class="customer_avt">
                             <img src="{$listReview[i].avatar}" alt="avatar" onerror="this.src='{$URL_IMAGES}/none_image.png'" >
@@ -43,6 +43,7 @@
         </div>
     </div>
 </section>
+
 {literal}
     <script>
         document.addEventListener("DOMContentLoaded", function() {

@@ -25,7 +25,7 @@ function default_upload_image()
     $clsTable = Input::post('clsTable');
     $openFrom = Input::post('openFrom');
     $table_id = (int) Input::post('table_id', 0);
-    $toField = Input::post('toField', 'image');
+    $toField = ($openFrom == 'image_hotel_sub') ? Input::post('toField', 'image_hotel_sub'):Input::post('toField', 'image');
     // print_r($toField);die();
     $imgdata = Input::post('imgdata');
     $filename = Input::post('filename', "");
@@ -116,20 +116,20 @@ function default_upload_image()
 } */
 function default_upload_gallery()
 {
-    ini_set('display_errors', '1');
-    ini_set('display_startup_errors', '1');
-    error_reporting(E_ALL);
+    // ini_set('display_errors', '1');
+    // ini_set('display_startup_errors', '1');
+    // error_reporting(E_ALL);
     global $dbconn, $assign_list, $_CONFIG, $_SITE_ROOT, $mod, $_LANG_ID, $act, $menu_current, $current_page, $core, $clsModule;
     global $clsConfiguration, $clsISO, $package_id;
 
-    $tp = Input::post('tp', "_crop");
-    $table_id = (int) Input::post('table_id', 0);
-    $clsTableGal = Input::post('clsTableGal');
-    $clsClassTableGal = new $clsTableGal();
+    $tp                 =   Input::post('tp', "_crop");
+    $table_id           =   (int) Input::post('table_id', 0);
+    $clsTableGal        =   Input::post('clsTableGal');
+    $clsClassTableGal   =   new $clsTableGal();
 
-    $clsISO->dump($tp);
+    // $clsISO->dump($tp);
     // $clsISO->dump($table_id);
-    $clsISO->dump($clsTableGal);
+    // $clsISO->dump($clsTableGal);
     // $clsISO->dump($clsClassTableGal);
     // die;
 
@@ -137,61 +137,55 @@ function default_upload_gallery()
         $clsClassTableGal = new Image();
     }
     #
-    $msg = '_error';
+    $msg    =   '_error';
     if ($tp == '_crop') {
-        $imgdata = Input::post('imgdata');
-        $img_title = Input::post('img_title');
-        $filename = Input::post('filename');
+        $imgdata    =   Input::post('imgdata');
+        $img_title  =   Input::post('img_title');
+        $filename   =   Input::post('filename');
         if (!$filename) {
-            $filename = md5(uniqid(rand(), true)) . '.jpg';
+            $filename   =   md5(uniqid(rand(), true)) . '.jpg';
         }
-        $image = '';
-        $msg = 'error';
+        $image  =   '';
+        $msg    =   'error';
         if ($imgdata) {
-            $clsUploadFile = new UploadFile();
-            $image = $clsUploadFile->base642imagejpeg($imgdata, $filename, "/content");
+            $clsUploadFile  =   new UploadFile();
+            $image  =   $clsUploadFile->base642imagejpeg($imgdata, $filename, "/content");
         }
         if (!empty($image) && file_exists(ABSPATH . $image)) {
             if ($clsClassTableGal->insert(array(
                 $clsClassTableGal->pkey => $clsClassTableGal->getMaxId(),
-                'type' => $clsTableGal,
-                'table_id'     => $table_id,
-                'image'     => $image,
-                'title'     => $img_title,
-                'slug'     => $core->replaceSpace($img_title),
-                'order_no'     => $clsClassTableGal->getMaxOrderNo(),
-                'reg_date'     => time()
+                'type'      =>  $clsTableGal,
+                'table_id'  =>  $table_id,
+                'image'     =>  $image,
+                'title'     =>  $img_title,
+                'slug'      =>  $core->replaceSpace($img_title),
+                'order_no'  =>  $clsClassTableGal->getMaxOrderNo(),
+                'reg_date'  =>  time()
             ))) {
                 $msg = 'success';
             }
         }
     } else {
-        // $clsISO->dump($_POST);
-        // die;
-        $list_images = Input::post('list_images');
-        $list_images = explode('|', $list_images);
-
-        // $clsISO->dump($list_images);
-        // die;
+        $list_images    =   Input::post('list_images');
+        $list_images    =   explode('|', $list_images);
+        #
         foreach ($list_images as $key => $image) {
-            // $clsISO->dump($image);
-            // die;
             if (!empty($image) && file_exists(ABSPATH . $image)) {
-                // $clsISO->dd('123');
-
                 if ($clsClassTableGal->insert(array(
-                    $clsClassTableGal->pkey => $clsClassTableGal->getMaxId(),
-                    // 'type' => $clsTableGal,
-                    'table_id'      =>  $table_id,
-                    'image'         =>  $image,
-                    'title'         =>  "",
-                    'slug'          =>  "",
-                    'order_no'      =>  $clsClassTableGal->getMaxOrderNo(),
-                    'reg_date'      =>  time(),
-                    'is_trash'      =>  0,
-                    'is_online'     =>  1
+                    $clsClassTableGal->pkey =>  $clsClassTableGal->getMaxId(),
+                    'type'      =>  $clsTableGal,
+                    'table_id'  =>  $table_id,
+                    'image'     =>  $image,
+                    'title'     =>  '',
+                    'slug'      =>  '',
+                    'order_no'  =>  $clsClassTableGal->getMaxOrderNo(),
+                    'reg_date'  =>  time(),
+                    'is_trash'  =>  0,
+                    'is_online' =>  1,
+                    'lang_id'   =>  ''
+
                 ))) {
-                    $msg = 'success';
+                    $msg    =   'success';
                 }
             }
         }

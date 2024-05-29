@@ -1,7 +1,8 @@
 {assign var = link value = $clsHotel->getLink($hotel_id,$arrHotel)}
 {assign var = title value = $clsHotel->getTitle($hotel_id,$arrHotel)}
-{assign var = getImageStar value = $clsHotel->getHotelStar($hotel_id,$arrHotel)}
+{*{assign var = getImageStar value = $clsHotel->getHotelStar($hotel_id,$arrHotel)}*}
 {assign var= hotelFacility value= $clsHotel->getListHotelFacility($hotel_id,$arrHotel)}
+{assign var = getImageStar value = $clsHotel->getStarNumber($hotel_id)}
 
 {if $clsISO->getCheckActiveModulePackage($package_id,'member','default','default')}
     {assign var= ratingValue value= $clsReviews->getRateAvg($hotel_id,'hotel','10')}
@@ -17,21 +18,22 @@
 <div class="box_hotel_item {$package_id}">
     <div class="img_hotel">
         <a class="photo" href="{$link}" title="{$title}">
-            <img class="img-responsive img100" src="{$clsHotel->getImage($hotel_id,277,181,$arrHotel)}"
+            <img class="img-responsive img100" src="{$clsHotel->getImage($hotel_id,277,181,$arrHotel)}" onerror="this.src='{$URL_IMAGES}/none_image.png'"
                 alt="{$title}" />
         </a>
     </div>
     <div class="box_item_body">
         <div class="box_left_body">
             <h3 class="box_body_title">
-                <a href="{$link}" title="{$title}">{$title}</a>
-                {$clsHotel->getStarNew($hotel_id,$arrHotel)}
+                <a class="text-decoration-none txt-hover-home" href="{$link}" title="{$title}">{$title}</a>
+                {*{$clsHotel->getStarNew($hotel_id,$arrHotel)}
                 {if $getImageStar != null}<img class="star" height="19" src="{$getImageStar}" alt="star"
-                    style="width: auto" />{/if}
+                    style="width: auto" />{/if}*}
+                <div class="star_hotel">{$getImageStar}</div>
             </h3>
             <div class="box_body-hotel">
                 <img src="{$URL_IMAGES}/hotel/iconHome.svg" alt="error">
-                <p>{$core->get_Lang('Apartments')}</p>
+                <p>{$clsHotel->getTypeHotel($hotel_id)}</p>
 
             </div>
             <div class="address">
@@ -70,8 +72,6 @@
 
             </div>
         </div>
-
-
         <div class="btn_view_detail phone"><a class="bg_main" href="{$link}"
                 title="{$core->get_Lang('View Detail')}">{$core->get_Lang('View Detail')} <i class="fa fa-angle-right"
                     aria-hidden="true"></i></a></div>
@@ -79,14 +79,19 @@
     <div class="box_right-body_mobile">
         <div class="box_right_body">
             {if !isset($ratingCount) || !$ratingCount}
-                <div class="review" style=""></div>
+                <div class="review" style="">
+                    <p>No review
+                        <span>
+                            (0 {$core->get_Lang('review')})
+                        </span>
+                    </p>
+                    <div class="rate">0.0</div>
+                </div>
             {else}
                 <div class="review">
                     <p>{$textRateAvg}
                         <span>
-
                             ({$ratingCount} {$core->get_Lang('reviews')})
-
                         </span>
                     </p>
                     <div class="rate">{$ratingValue|number_format:1}</div>
@@ -99,8 +104,8 @@
                 </div>
                 <div class="box_right-price">
                 </div>
-                <div class="btn_view_detail no_phone"><a href="{$link}"
-                        title="{$core->get_Lang('View Detail')}">{$core->get_Lang('View Detail')} <img
+                <div class="btn_view_detail no_phone"><a class=" btn-hover-home" href="{$link}"
+                        title="{$core->get_Lang('View Detail')}">{$core->get_Lang('Explore')} <img
                             style="margin-left: 8px;" src="{$URL_IMAGES}/hotel/ArrowRight.svg" alt="error">
                     </a></div>
             </div>

@@ -43,7 +43,7 @@ class Pagination{
 			// Trang trước
 			if($this->current_page > 1)
 			{
-				// $pagination_system.= '<a class="prev page" href="'.$this->link.'&page='.$previous_page.'" title="'.$previous_page.'"><i class="fa fa-angle-double-left"></i></a>'; 
+				// $pagination_system.= '<a class="prev page" href="'.$this->link.'&page='.$previous_page.'" title="'.$previous_page.'"><i class="fa fa-angle-double-left"></i></a>';
 				$pagination_system.= '<a class="prev page" href="'.$this->link.'&page='.$previous_page.'" title="'.$previous_page.'"><i class="fa fa-angle-left perPages"></i></a>'; 
 			}
 			else

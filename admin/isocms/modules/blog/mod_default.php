@@ -95,8 +95,7 @@ function default_insert() {
 	$show=isset($_GET['show']) ? $_GET['show'] : '';
 	$assign_list["show"] = $show;
     $assign_list["msg"] = isset($_GET['message']) ? $_GET['message'] : '';
-
-	
+    $assign_list["country_id"] = "hieu";
 	$pvalTable =Input::get('blog_id',0);$assign_list["pvalTable"] = $pvalTable;
 	$panel =Input::get('panel','');$assign_list["panel"] = $panel;
 
@@ -140,7 +139,6 @@ function default_insert() {
 
     $assign_list["clsClassTable"] = $clsClassTable;
     $assign_list["pkeyTable"] = $pkeyTable;
-	
 	require_once DIR_COMMON."/clsForm.php";
 	$clsForm = new Form();
 	$clsForm->setDbTable($tableName, $pkeyTable, $pvalTable);
@@ -167,9 +165,10 @@ function default_insert() {
 	
 }
 function default_getMainFormStep(){
-	global $smarty,$assign_list,$_frontIsLoggedin_user_id,$core,$clsISO,$clsProperty,$clsUser,$_company_iom_id,$dbconn,$nextstep,$clsConfiguration,$mod,$package_id,$pvalTable,$package_id;
+	global $smarty,$assign_list,$_frontIsLoggedin_user_id,$core,$clsISO,$clsProperty,$clsUser,$_company_iom_id,$dbconn,$nextstep,$clsConfiguration,$mod,$package_id,$pvalTable,$package_id, $country_id;
 	$clsBlog = new Blog();
 	$clsBlogCategory = new BlogCategory();$assign_list["clsBlogCategory"] = $clsBlogCategory;
+	$clsCountry = new Country();$assign_list["clsCountry"] = $clsCountry;
 	$clsTag = new Tag();$assign_list["clsTag"] = $clsTag;
 	$clsContinent                   = new Continent();	$assign_list["clsContinent"]    = $clsContinent;
 	
@@ -186,9 +185,11 @@ function default_getMainFormStep(){
 	$assign_list["clsTable"] = $classTable;
 	$assign_list["clsClassTable"] = $clsBlog;
     $assign_list["pkeyTable"] = $pkeyTable;
+    $assign_list["country_id"] = $oneItem["country_id"];
 	$smarty->assign('pvalTable',$table_id);
 	$smarty->assign('oneItem',$oneItem);
-	
+
+
 	$frames = getFrame();
 	#Step follow index
 	$ii = 0; $arrStep = array();

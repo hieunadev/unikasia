@@ -29,10 +29,19 @@
 			"kakao": {
 				"name": "Kakao Story",
 				"url": "https://story.kakao.com/s/share?url=%url%&text=%title%+%description%"
-			}
+			},
+			"youtube": {
+				"name": "Youtube",
+				"url": "https://www.youtube.com/sharer.php?u=%url%"
+		},
+			"instagram": {
+				"name": "Instagram",
+				"url": "https://www.instagram.com/direct/new/?url=%url%"
+		}
+			
 		},
 		"options": {
-			"networks": ["facebook", "twitter", "linkedin", "reddit", "pinterest", "tumblr", "kakao"], 
+			"networks": ["facebook", "twitter", "linkedin", "reddit", "pinterest", "tumblr", "kakao", "youtube", "instagram"], 
 			"template": $('<a class="sharer-icon"></a>'),
 			"class": "sharer-icon-%network.id%",
 			"label": "Share on %network.name%",

@@ -35,19 +35,35 @@
                                     {$core->get_Lang('Destinations')} <i class="fas fa-angle-down ms-1"></i>
                                 </button>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="#">Destination 1</a>
-                                    <a class="dropdown-item" href="#">Destination 2</a>
-                                    <a class="dropdown-item" href="#">Destination 3</a>
+                                    <div class=" dropdown_destination">
+                                        <div class="dropdown-menu_country">
+                                            {section name=i loop=$lstCountry}
+                                            <a class="dropdown-item" href="{$clsCountryEx->getLink($lstCountry[i].country_id)}" data-img="img_{$lstCountry[i].title}">{$lstCountry[i].title}</a>
+                                            {/section}
+                                        </div>
+                                        <div class="dropdown-menu_img_country">
+                                            {section name=i loop=$lstCountry}
+                                            <div class="menu_img_country">
+                                                <img id="img_{$lstCountry[i].title}" src="{$lstCountry[i].image_sub}" onerror="this.src='{$URL_IMAGES}/none_image.png'" alt="{$lstCountry[i].slug}">
+                                            </div>
+                                            {/section}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="dropdown txt_dropdown">
                                 <button class="btn dropdown-toggle txt_dropdown" type="button" data-bs-toggle="dropdown">
                                     {$core->get_Lang('Stay')} <i class="fas fa-angle-down ms-1"></i>
                                 </button>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="#">Stay 1</a>
-                                    <a class="dropdown-item" href="#">Stay 2</a>
-                                    <a class="dropdown-item" href="#">Stay 3</a>
+                                <div class="dropdown-menu dropdown-stay-parent">
+                                    <div class="dropdown-menu-stay">
+                                        {section name=i loop=$lstCountry}
+                                        <a class="dropdown-item position-relative overflow-hidden" href="{$clsCountryEx->getLink($lstCountry[i].country_id, "Hotel")}">
+                                            <img src="{$lstCountry[i].image_hotel_sub}" onerror="this.src='{$URL_IMAGES}/none_image.png'" alt="{$lstCountry[i].slug}">
+                                            <span class="text-light">{$lstCountry[i].title}</span>
+                                        </a>
+                                        {/section}
+                                    </div>
                                 </div>
                             </div>
                             <div class="dropdown txt_dropdown">
@@ -55,9 +71,11 @@
                                     {$core->get_Lang('Cruises')} <i class="fas fa-angle-down ms-1"></i>
                                 </button>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="#">Cruise 1</a>
-                                    <a class="dropdown-item" href="#">Cruise 2</a>
-                                    <a class="dropdown-item" href="#">Cruise 3</a>
+                                    <a class="dropdown-item" href="#">Vietnam</a>
+                                    <a class="dropdown-item" href="#">Cambodia</a>
+                                    <a class="dropdown-item" href="#">Laos</a>
+                                    <a class="dropdown-item" href="#">Thailand</a>
+                                    <a class="dropdown-item" href="#">Myanmar</a>
                                 </div>
                             </div>
                             <div class="dropdown txt_dropdown">
@@ -65,9 +83,9 @@
                                     {$core->get_Lang('Blog')} <i class="fas fa-angle-down ms-1"></i>
                                 </button>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="#">Cruise 1</a>
-                                    <a class="dropdown-item" href="#">Cruise 2</a>
-                                    <a class="dropdown-item" href="#">Cruise 3</a>
+                                    {section name=i loop=$lstCountry}
+                                    <a class="dropdown-item" href="{$clsCountryEx->getLink($lstCountry[i].country_id, "Blog")}">{$lstCountry[i].title}</a>
+                                    {/section}
                                 </div>
                             </div>
                             <div class="button txt_dropdown">
@@ -92,7 +110,7 @@
         {if $mod eq 'destination' && $act eq 'place'}
         {$core->getBlock('des_header_destination')}
         {/if}
-        {if $mod eq 'destination' && $act eq 'travel_style'}
+        {if $mod eq 'destination' && $act eq 'travel_style' || $mod eq 'tour' && $act eq 'cat'}
         {$core->getBlock('des_header_travel_style')}
         {/if}
         {if $mod eq 'destination' && $act eq 'travel_guide'}
@@ -104,8 +122,28 @@
         {if $mod eq 'homepackage'}
         {$core->getBlock('slider_home')}
         {/if}
-		{if $mod eq 'blog' && $act eq 'default'}
+        {if $mod eq 'blog' && $act eq 'default'}
         {$core->getBlock('des_header_blog')}
+        {/if}
+		{if $mod eq 'hotel' && $act eq 'default'}
+        {$core->getBlock('des_header_stay')}
+        {/if}
+		{if $mod eq 'cruise' && $act eq 'cat2'}
+        {$core->getBlock('des_header_cruise')}
         {/if}
     </div>
 </header>
+{literal}
+<script>
+    $(document).ready(function() {
+        $('.menu_img_country img').first().addClass('active');
+        $('.dropdown-item').hover(
+            function() {
+                $('.menu_img_country img').removeClass('active');
+                let imgId = $(this).data('img');
+                $('#' + imgId).addClass('active');
+            }
+        );
+    });
+</script>
+{/literal}

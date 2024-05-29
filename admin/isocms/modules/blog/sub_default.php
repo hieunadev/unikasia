@@ -7,8 +7,12 @@ function default_default()
 	$assign_list["clsModule"]       = $clsModule;
 	$user_id                        = $core->_USER['user_id'];
     #
+	$clsCountryEx 					= new Country();
+	$assign_list["clsCountryEx"] 		= $clsCountryEx; 
+	
 	$clsBlogCategory                = new BlogCategory();
 	$assign_list["clsBlogCategory"] = $clsBlogCategory;
+
 
 	/* Get type of list blog */
 	$type_list                    = isset($_GET['type_list']) ? $_GET['type_list'] : '';
@@ -16,6 +20,11 @@ function default_default()
 	
 	$blogcat_id                   = isset($_GET['blogcat_id']) ? intval($_GET['blogcat_id']) : 0;
 	$assign_list["blogcat_id"]    = $blogcat_id;
+    $blogcountry_id                   = isset($_GET['blogcountry_id']) ? intval($_GET['blogcountry_id']) : 0;
+	$assign_list["blogcountry_id"]    = $blogcountry_id;
+	
+	$country_id 				  = isset($_GET['country_id']) ? intval($_GET['country_id']): 0;
+	$assign_list["country_id"] 	  = $country_id; 
 	/**/
 	$classTable                   = "Blog";
 	$clsClassTable                = new $classTable;
@@ -28,6 +37,9 @@ function default_default()
 		$link = '';
 		if (isset($_POST['blogcat_id']) && $_POST['blogcat_id'] != '') {
 			$link .= '&blogcat_id=' . $_POST['blogcat_id'];
+		}
+		if (isset($_POST['blogcountry_id']) && $_POST['blogcountry_id'] != '') {
+			$link .= '&blogcountry_id=' . $_POST['blogcountry_id'];
 		}
 		if($_POST['user_ctv_id']!=''&& intval($_POST['user_ctv_id'])!=0){
 			$link .= '&user_ctv_id='.$_POST['user_ctv_id'];
@@ -43,6 +55,9 @@ function default_default()
 		}
 		if ($_POST['keyword'] != '' && $_POST['keyword'] != 'testimonial title, intro') {
 			$link .= '&keyword=' . $_POST['keyword'];
+		}
+		if (isset($_POST['country_id']) && $_POST['country_id'] != '') {
+			$link .= '&country_id=' . $_POST['country_id'];
 		}
 		header('location: ' . PCMS_URL . '/?mod=' . $mod . $link);
 	}
@@ -61,6 +76,10 @@ function default_default()
 	if ($blogcat_id > 0) {
 		$cond .= " and cat_id = '" . $blogcat_id . "'";
 		$pUrl .= '&blogcat_id=' . $blogcat_id;
+	}
+	if ($blogcountry_id > 0) {
+		$cond .= " and country_id = '" . $blogcountry_id . "'";
+		$pUrl .= '&blogcountry_id=' . $blogcountry_id;
 	}
 	
 	if(isset($_GET['user_ctv_id']) && intval($_GET['user_ctv_id']) > 0){
@@ -135,7 +154,6 @@ function default_default()
 	$stt=($currentPage-1)*$recordPerPage;
 	$assign_list['stt'] = $stt;
 	
-	
 	$listPageNumber               = array();
 	for ($i = 1; $i <= $totalPage; $i++) {
 		$listPageNumber[] = $i;
@@ -162,6 +180,7 @@ function default_default()
 	$allItem                            = $clsClassTable->getAll($cond . " order by " . $orderBy . $limit);
     //print_r($cond." order by ".$orderBy.$limit);die();
 	$assign_list["allItem"]             = $allItem;
+	//var_dump($allItem); die();
 	unset($allItem);
     #
 	$allTrash                    = $clsClassTable->getAll("is_trash=1 and " . $cond2,$clsClassTable->pkey);
@@ -174,7 +193,7 @@ function default_default()
 	$assign_list["number_all"]   = $allAll[0][$pkeyTable] != '' ? count($allAll) : 0;
     #----
 	if (isset($_POST['submit'])) {
-		if ($_POST['submit'] == 'UpdateBlogIntro') {
+		if ($_POST['submit'] == 'UpdateBlogIntroUpdateBlogIntro') {
 			foreach ($_POST as $key => $val) {
 				$tmp = explode('-', $key);
 				if ($tmp[0] == 'iso') {

@@ -7,9 +7,9 @@
 				<div class="filedrop full" onClick="file_explorer(this,event);" ondrop="file_drop(this,event)" toid="selectFile" toel="isoman_show_banner" data-options='{ldelim}"openFrom":"banner","clsTable":"Configuration", "table_id":"{$pvalTable}","toId":"isoman_show_banner" {rdelim}' ondragover="return false">
 					<h3>{$core->get_Lang('Drop files to upload')}</h3>
 					<p>
-						Image size (WxH=1920x400px)<br>
+						Image size (WxH=1920x600px)<br>
 						Các loại tệp được hỗ trợ là: .png,.jpg,.jpeg</p>
-					<button type="button" class="btn btn-upload">{if $oneItem.banner}Thay ảnh{else}Tải ảnh lên{/if}</button>
+<!--					<button type="button" class="btn btn-upload">{if $oneItem.banner}Thay ảnh{else}Tải ảnh lên{/if}</button>-->
 				</div>
 				<input class="hidden" id="selectFile" type="file" data-options='{ldelim}"openFrom":"banner","clsTable":"Configuration", "table_id":"{$pvalTable}","toId":"isoman_show_banner"{rdelim}' name="iso-{$site_mod_banner}">
 

@@ -11,18 +11,18 @@
                 <div class="owl-carousel owl-theme des_list_travel_style_carousel">
                     {if $list_travel_style}
                     {foreach from=$list_travel_style key=key item=item}
-                    {assign var=tourcat_id value=$item.tourcat_id}
+                    {assign var=category_country_id value=$item.category_country_id}
                     <div class="des_travel_style_item item">
-                        <a href="{$clsTourCategory->getLink($item.tourcat_id)}" title="{$clsTourCategory->getTitle($item.tourcat_id)}">
+                        <a href="{$clsTourCategory->getLink($item.cat_id)}" title="{$clsCategory_Country->getTitle($item.category_country_id)}">
                             <div class="des_travel_style_item_image">
-                                <img src="{$clsTourCategory->getImage($tourcat_id, 294, 462)}" width="294" height="462" alt="{$clsTourCategory->getTitle($item.tourcat_id)}">
+                                <img src="{$clsCategory_Country->getImageVertical($category_country_id, 294, 462)}" width="294" height="462" alt="{$clsCategory_Country->getTitle($item.category_country_id)}">
                             </div>
                             <div class="des_travel_style_item_intro">
                                 <div class="des_travel_style_item_title">
-                                    <h3><a href="{$clsTourCategory->getLink($item.tourcat_id)}" title="{$clsTourCategory->getTitle($item.tourcat_id)}">{$clsTourCategory->getTitle($item.tourcat_id)}</a></h3>
+                                    <h3><a href="{$clsTourCategory->getLink($item.cat_id)}" title="{$clsCategory_Country->getTitle($item.category_country_id)}">{$clsTourCategory->getTitle($item.cat_id)}</a></h3>
                                 </div>
                                 <div class="des_travel_style_item_description">
-                                    {$clsTourCategory->getIntro($tourcat_id)}
+                                    {$clsCategory_Country->getContent($category_country_id)}
                                 </div>
                             </div>
                         </a>
@@ -34,6 +34,16 @@
         </div>
     </div>
 </div>
+
+{literal}
+<style>
+    .des_list_travel_style_carousel .owl-item {
+        margin-right: unset;
+        height: unset;
+        min-width: unset;
+    }
+</style>
+{/literal}
 
 {literal}
 <script>

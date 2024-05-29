@@ -22,6 +22,8 @@ function default_place()
     $assign_list["clsRegion"] = $clsRegion;
     $clsReview = new Reviews();
     $assign_list["clsReview"] = $clsReview;
+    $clsCountryImage    =   new CountryImage();
+    $smarty->assign('clsCountryImage', $clsCountryImage);
     // $clsPagination = new Pagination();
     // $assign_list["clsPagination"] = $clsPagination;
     // $clsPromotion = new Promotion();
@@ -32,21 +34,25 @@ function default_place()
     $assign_list["clsFAQ"] = $clsFAQ;
     #	
     if (!empty($_GET['slug_country'])) {
-        $id_country     =   $clsCountry->getBySlug($_GET['slug_country']);
-        $smarty->assign('id_country', $id_country);
-        $info_country   =   $clsCountry->getOne($id_country);
-        $smarty->assign('info_country', $info_country);
+        $country_id     =   $clsCountry->getBySlug($_GET['slug_country']);
+        $smarty->assign('country_id', $country_id);
+        $country_info   =   $clsCountry->getOne($country_id);
+        $smarty->assign('country_info', $country_info);
     }
     #
     // List hotel from country
-    $list_hotel_country =   $clsHotel->getAll("is_trash = 0 AND is_online = 1 AND country_id = $id_country ORDER BY order_no ASC LIMIT 10");
+    $list_hotel_country =   $clsHotel->getAll("is_trash = 0 AND is_online = 1 AND country_id = $country_id ORDER BY order_no ASC LIMIT 10");
     $smarty->assign('list_hotel_country', $list_hotel_country);
     #
     // List FAQ from country
-    $list_faq_country   =   $clsFAQ->getAll("is_trash = 0 AND is_online = 1 AND country_id = $id_country ORDER BY order_no ASC LIMIT 12");
+    $list_faq_country   =   $clsFAQ->getAll("is_trash = 0 AND is_online = 1 AND country_id = $country_id ORDER BY order_no ASC LIMIT 12");
     $smarty->assign('list_faq_country', $list_faq_country);
     #
+    // Gallery from country
+    $gallery_country    =   $clsCountryImage->getAll("is_trash = 0 AND is_online = 1 AND table_id = $country_id ORDER BY order_no ASC LIMIT 12", "country_image_id, image");
+    $smarty->assign('gallery_country', $gallery_country);
     // $clsISO->dd($list_faq_country);
+
 
     // $city_id	=	1;
     // $assign_list['city_id'] = $city_id;

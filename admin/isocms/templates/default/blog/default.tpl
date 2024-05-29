@@ -26,6 +26,14 @@
 							 {$clsBlogCategory->makeSelectboxOption($blogcat_id)}
 						</select>
 					</div>
+					
+						<div class="form-group form-countries">
+						<select name="blogcountry_id" class="form-control" data-width="100%" id="slb_countries">
+							 {$clsCountryEx->makeSelectboxOption($blogcountry_id)}
+						</select>
+					</div>
+					
+					
 					<div class="form-group form-button">
 						<button type="submit" class="btn btn-main" id="findtBtn">Tìm kiếm</button>
 						<input type="hidden" name="filter" value="filter" />
@@ -69,6 +77,9 @@
 							{if $blog_category_check}
 							<th class="gridheader hiden_responsive" style="text-align:left; width:220px">{$core->get_Lang('Category')}</th>
 							{/if}
+							
+							<th class="gridheader hiden_responsive" style="text-align:left; width:128px">{$core->get_Lang('Country')}</th>
+
 							<th class="gridheader hiden_responsive" style="width:60px" align="right">{$core->get_Lang('viewer')}</th>
 							{if $_loged_id eq 1 || $_user_group_id eq 5}
 							<th class="gridheader hiden_responsive" style="width:10%">{$core->get_Lang('Approved')}</th>
@@ -77,6 +88,8 @@
 							<th class="gridheader hiden_responsive" style="width:130px;" align="right">{$core->get_Lang('timeup')}</th>
 							<th class="gridheader hiden_responsive" style="width:130px;" align="right">{$core->get_Lang('update')}</th>
 							<th class="gridheader hiden_responsive" style="width:70px"></th>
+
+
 						</tr></thead>
 						{if $allItem[0].blog_id ne ''}
 						<tbody id="SortAble">
@@ -103,7 +116,10 @@
 									</a>
 								</td>
 								{/if}
-								<td  class="block_responsive" style="text-align:center" data-title="{$core->get_Lang('viewer')}">{$allItem[i].num_view}</td>
+						
+								<td class="block_responsive" style="text-align:left" data-title="{$core->get_Lang('country')}">{$clsCountryEx->getTitle($allItem[i].country_id)}</td>
+						
+								<td class="block_responsive" style="text-align:center" data-title="{$core->get_Lang('viewer')}">{$allItem[i].num_view}</td>
 								{if $_loged_id eq 1 || $_user_group_id eq 5}
 								<td  class="block_responsive" style="text-align:center" data-title="{$core->get_Lang('Approved')}">
 									<a href="javascript:void(0);" {if $_loged_id eq 1}class="SiteClickPublic"{/if} clsTable="Blog" pkey="blog_id" toField="is_approve" sourse_id="{$allItem[i].blog_id}" rel="{$clsClassTable->getOneField('is_approve',$allItem[i].blog_id)}" title="{$core->get_Lang('Click to change status')}"> {if $allItem[i].is_approve eq '1'}<i class="fa fa-check-circle green"></i>{else}<i class="fa fa-minus-circle red"></i>{/if}</a>
@@ -118,8 +134,9 @@
 										{/if}
 									</a>
 								</td>
-								<td class="block_responsive" style="text-align:right" data-title="{$core->get_Lang('timeup')}">{$allItem[i].reg_date|date_format:"%d/%m/%Y %H:%M"}</td>
-								<td class="block_responsive" style="text-align:right" data-title="{$core->get_Lang('update')}">{$allItem[i].upd_date|date_format:"%d/%m/%Y %H:%M"}</td>
+								<td class="block_responsive" style="text-align:right; width: 156px" data-title="{$core->get_Lang('timeup')}">{$allItem[i].reg_date|date_format:"%d/%m/%Y %H:%M"}</td>
+								<td class="block_responsive" style="text-align:right; width: 156px" data-title="{$core->get_Lang('update')}">{$allItem[i].upd_date|date_format:"%d/%m/%Y %H:%M"}</td>
+
 								<td class="block_responsive text-center" align="center" style="vertical-align: middle; text-align:center; width: 40px; white-space: nowrap;" data-title="{$core->get_Lang('func')}">
 									<div class="btn-group">
 										<button class="btn btn_dropdown dropdown-toggle" type="button" data-toggle="dropdown">

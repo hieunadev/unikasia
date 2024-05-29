@@ -12408,3 +12408,41 @@ span[class*="error_row_"] {
     position: sticky !important;
     top: 100px;
 }
+
+.boxinput_txtblog {
+	display: inline-block;
+    width: 100%;
+}
+
+.inpt_blog {
+	margin-bottom: 30px;
+    display: inline-block;
+    width: 100%;
+}
+
+.input_text_form {
+    width: 100%;
+    padding: 5px 15px;
+}
+
+.inpt_blog input {
+	    height: 40px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border: 1px solid #DEDEDE;
+    font-size: 14px;
+    color: #1c1c1c;
+}
+
+.input_text_form::placeholder {
+    color: #bebebe;
+}
+
+.boxinput_txtblog .inpt_blog label {
+    font-weight: bold !important;
+    font-size: 15px;
+    line-height: 17px;
+    color: #1C1C1C;
+    margin-bottom: 11px;
+}

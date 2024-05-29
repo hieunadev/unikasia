@@ -18,7 +18,49 @@ function default_default(){
 	ini_set('display_errors',1);
     error_reporting(E_ERROR & ~E_STRICT);//E_ALL
 
-	$cond = "is_trash=0 and is_online=1 ";
+    #
+	$lstBlogCat = $clsBlogCategory->getAll("is_trash=0 and is_online=1 order by order_no ASC",$clsBlogCategory->pkey.',slug,title');
+	$assign_list['lstBlogCat'] = $lstBlogCat;
+
+	#
+	$show = isset($_GET['show']) ? $_GET['show'] : '';
+	$assign_list['show'] = $show;
+	$type = isset($_GET['type']) ? $_GET['type'] : '';
+	$assign_list['type'] = $type;
+	$listCountry = $clsCountryEx->getAll("is_trash=0 order by order_no",$clsCountryEx->pkey.',slug,title');
+	$assign_list['listCountry'] = $listCountry;
+	if ($show=='Default'){
+		if (isset($_POST["filter"]) && $_POST["filter"] == "filter"){
+			header('Location:'. $clsISO->getLink("blog") . "/".$_POST["slug_country"]);
+			exit();
+		}
+
+	}else{
+		if (isset($_POST["filter"]) && $_POST["filter"] == "filter"){
+			$link = $clsISO->getLink("blog") . "/";
+			$link .= !empty($_POST["slug_country"]) ? $_POST["slug_country"] : "";
+			$link .= (!empty($_POST['blogcat_id']))?'&blogcat_id='.$clsISO->makeSlashListFromArrayComma($_POST['blogcat_id']):'';
+			header('Location:'. trim($link));
+			exit();
+		}
+		$slug_country = isset($_GET['slug_country'])?$_GET['slug_country']:'';
+		$assign_list["slug_country"] = $slug_country;
+		$res = $clsCountryEx->getAll("is_trash=0 and is_online=1 and slug='$slug_country' LIMIT 0,1",$clsCountryEx->pkey.',slug,title');
+		$country_id = $res[0][$clsCountryEx->pkey];
+		if(intval($country_id)==0) {
+			header('Location:' . $clsISO->getLink("blog"));
+			exit();
+		}
+		$assign_list['country_id'] = $country_id;
+		$oneItemCountry = $res[0];
+		$assign_list['oneItemCountry'] = $oneItemCountry;
+	}
+	$slug_country = isset($_GET['slug_country'])?$_GET['slug_country']:'';
+	$res = $clsCountryEx->getAll("is_trash=0 and is_online=1 and slug='$slug_country' LIMIT 0,1",$clsCountryEx->pkey.',slug,title');
+	$country_id = $res[0][$clsCountryEx->pkey];
+	$country_id_1 = !empty($country_id) ? " and country_id = $country_id" : '';
+	$cond = "is_trash=0 and is_online=1 $country_id_1";
+
 	$order_by = " order by order_no ASC";
 	$limit_left = " limit 2";
 	$limit_right = " limit 2 offset 4";
@@ -40,54 +82,13 @@ function default_default(){
 	$assign_list["lstBlogRight"] = $lstBlogRight;
 
 	$assign_list["lstFeatureBlog"] = $clsBlog->getAll($cond." order by num_view DESC LIMIT 5");
-    #
-	$lstBlogCat = $clsBlogCategory->getAll("is_trash=0 and is_online=1 order by order_no ASC",$clsBlogCategory->pkey.',slug,title');
-	$assign_list['lstBlogCat'] = $lstBlogCat;
-//
-//	$lstBlogRecently = array(1,2);
-//	vnSessionSetVar('lstBlogRecently',$lstBlogRecently);
-//	$assign_list["lstBlogRecently"] = $clsBlog->getAll($cond. "limit 3");
-	
 
-	#
-	$show = isset($_GET['show']) ? $_GET['show'] : '';
-	$assign_list['show'] = $show;
-	$type = isset($_GET['type']) ? $_GET['type'] : '';
-	$assign_list['type'] = $type;
-	$listCountry = $clsCountryEx->getAll("is_trash=0 order by order_no",$clsCountryEx->pkey.',slug,title');
-	$assign_list['listCountry'] = $listCountry;
-	if ($show=='Default'){
-		if (isset($_POST["filter"]) && $_POST["filter"] == "filter"){
-			header('Location:'. $clsISO->getLink("blog") . "/".$_POST["slug_country"]);
-			exit();
-		}
-	}else{
-		if (isset($_POST["filter"]) && $_POST["filter"] == "filter"){
-			$link = $clsISO->getLink("blog") . "/";
-			$link .= !empty($_POST["slug_country"]) ? $_POST["slug_country"] : "";
-			$link .= (!empty($_POST['blogcat_id']))?'&blogcat_id='.$clsISO->makeSlashListFromArrayComma($_POST['blogcat_id']):'';
-			header('Location:'. trim($link));
-			exit();
-		}
-		$slug_country = isset($_GET['slug_country'])?$_GET['slug_country']:'';
-		$assign_list["slug_country"] = $slug_country;
-		$res = $clsCountryEx->getAll("is_trash=0 and is_online=1 and slug='$slug_country' LIMIT 0,1",$clsCountryEx->pkey.',slug,title');
-		$country_id = $res[0][$clsCountryEx->pkey];
-		if(intval($country_id)==0) {
-			header('Location:' . $clsISO->getLink("blog"));
-			exit();
-		}
-		$assign_list['country_id'] = $country_id;
-		$oneItemCountry = $res[0];
-		$assign_list['oneItemCountry'] = $oneItemCountry;
-	}
-	
 	$recordPerPage = 10;
 	$currentPage = isset($_GET['page'])?intval($_GET['page']):1;
 	$page_Seo = isset($_GET['page'])?intval($_GET['page']):'';
 	$assign_list['page_Seo']=$page_Seo;
 
-	$cond = "is_trash=0 and is_approve=1 and is_online=1";
+	$cond = "is_trash=0 and is_approve=1 and is_online=1 and blog_id NOT IN (". implode(',', $blog_ids) .")";
 
 	if ($slug_country) {
 		$cond .= " and country_id = '$country_id' and blog_id NOT IN (". implode(',', $blog_ids) .")";
@@ -156,6 +157,19 @@ function default_default(){
 		$letter[] = $i;
 	}
 	$assign_list['letter']= $letter;
+
+	if (isset($_COOKIE['recent_posts'])) {
+		$recent_posts = json_decode($_COOKIE['recent_posts'], true);
+
+		if (!empty($recent_posts)) {
+			$ids = implode(',', array_map('intval', $recent_posts));
+
+			$cond = "blog_id IN ($ids)";
+			$limit = " LIMIT 3";
+			$lstBlogRecent = $clsBlog->getAll("$cond $limit");
+			$assign_list["lstBlogRecent"] = $lstBlogRecent;
+		}
+	}
 	
     /*=============Title & Description Page==================*/
 	if($show=='Default'){
@@ -387,15 +401,20 @@ function default_detail(){
 		header('location:'.$clsISO->getLink('blog'));
 		exit();
 	}
-	
 
-	
-	
-	$sessionKey = 'blog_' . $blog_id;
-	$sessionView = $_SESSION[$sessionKey];
-	if (!$sessionView) { // nếu chưa có session
-		$_SESSION[$sessionKey] = 1; //set giá trị cho session
-		$clsBlog->updateOne($blog_id,'num_view=num_view+1');
+
+	if (isset($_GET['blog_id']) && !empty($_GET['blog_id'])) {
+		$post_id = intval($_GET['blog_id']);
+		if (isset($_COOKIE['recent_posts'])) {
+			$recent_posts = json_decode($_COOKIE['recent_posts'], true);
+		} else {
+			$recent_posts = array();
+		}
+		if (!in_array($post_id, $recent_posts)) {
+			$recent_posts[] = $post_id;
+		}
+
+		setcookie('recent_posts', json_encode($recent_posts), time() + (86400), "/");
 	}
 	
 	$assign_list['blog_id']=$blog_id;
@@ -403,6 +422,8 @@ function default_detail(){
 	$assign_list['blogItem']=$blogItem;
 	$cat_id=$blogItem['cat_id'];
     $assign_list['cat_id']=$cat_id;
+	$country_id=$blogItem['country_id'];
+	$assign_list['country_id']=$country_id;
 	$cond="is_trash=0 and is_approve=1 and is_online=1 and blog_id <> '$blog_id' ";
 	if($clsISO->getCheckActiveModulePackage($package_id,'blog','category','default')){
 		$cond.=" and cat_id='$cat_id'";
@@ -411,6 +432,19 @@ function default_detail(){
 	$lstRelated = $clsBlog->getAll($cond." order by order_no desc limit 0,5",$clsBlog->pkey.',title,slug');
 	$assign_list['lstRelated']=$lstRelated; unset($lstRelated);
 	$assign_list["lstFeatureBlog"] = $clsBlog->getAll($cond." order by num_view DESC LIMIT 5");
+	
+	if (isset($_COOKIE['recent_posts'])) {
+		$recent_posts = json_decode($_COOKIE['recent_posts'], true);
+
+		if (!empty($recent_posts)) {
+			$ids = implode(',', array_map('intval', $recent_posts));
+
+			$cond = "blog_id IN ($ids)";
+			$limit = " LIMIT 3";
+			$lstBlogRecent = $clsBlog->getAll("$cond $limit");
+			$assign_list["lstBlogRecent"] = $lstBlogRecent;
+		}
+	}
 
 	
 	/*=============Title & Description Page==================*/

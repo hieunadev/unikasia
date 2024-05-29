@@ -1150,13 +1150,13 @@ function default_ajaxLoadTourDestination(){
 			}
 			if(intval($v['country_id']) > 0){
 				$title.= ($SiteModActive_continent?' &raquo; ':'') . $clsCountry->getTitle($v['country_id']);
-			}
+            }
 			if(intval($v['region_id']) > 0){
 				$title.= ' &raquo; '.$clsRegion->getTitle($v['region_id']);
 			}
 			if(intval($v['city_id']) > 0){
 				$title.= ' &raquo; '.$clsCity->getTitle($v['city_id']);
-			}
+            }
 			if(intval($v['placetogo_id']) > 0){
 				$title.= ' &raquo; '.$clsGuide->getTitle($v['placetogo_id']);
 			}
@@ -1184,65 +1184,6 @@ function default_ajaxLoadTourDestination(){
 				}
 			}).disableSelection();
 			$("#lstDestination").sortable({ cancel: \'.ui-sortable-unhandle\' });
-		</script>';
-		unset($lstDestination);
-	}
-	echo $html; die();
-}
-function default_ajaxLoadTourDestinationxxx(){
-	global $dbconn, $assign_list, $_CONFIG,  $_SITE_ROOT, $mod , $_LANG_ID, $act, $menu_current, $current_page, $core, $clsModule;
-	global $clsConfiguration;
-	#
-	$clsTourDestination = new TourDestination();
-	$clsContinent = new Continent();
-	$clsCountry = new Country();
-	$clsRegion = new Region();
-	$clsCity = new City();
-	$clsGuide = new Guide();
-	$clsTour = new Tour();
-	$tour_id = $_POST['tour_id'];
-	$html = '';
-	#
-	$lstDestination = $clsTourDestination->getAll("is_trash=0 and tour_id='$tour_id' order by order_no asc");
-	if(is_array($lstDestination) && count($lstDestination) > 0){
-		foreach($lstDestination as $k=>$v){
-			$title = '';
-			if(intval($v['chauluc_id']) > 0){
-				$title.= $clsContinent->getTitle($v['chauluc_id']);
-			}
-			if(intval($v['country_id']) > 0){
-				$title.= ' <span>&gt</span> '.$clsCountry->getTitle($v['country_id']);
-			}
-			if(intval($v['region_id']) > 0){
-				$title.= ' <span>&gt</span> '.$clsRegion->getTitle($v['region_id']);
-			}
-			if(intval($v['city_id']) > 0){
-				$title.= ' <span>&gt</span> '.$clsCity->getTitle($v['city_id']);
-			}if(intval($v['placetogo_id']) > 0){
-				$title.= ' <span>&gt</span> '.$clsGuide->getTitle($v['placetogo_id']);
-			}
-			$html.='<li style="cursor:move" id="order_'.$v[$clsTourDestination->pkey].'"><strong><a  title="'.$core->get_Lang('Drag & drop change position').'">'.$title.'</a></strong><span class="remove removeDestination" data="'.$v[$clsTourDestination->pkey].'">x</span></li>';
-		}
-		$html .= '
-		<li class="ajRemoveAllDestinationInTour btn_remove"><i class="ico ico-remove"></i> '.$core->get_Lang('removeall').'</li>';
-		$html.='
-		<script type="text/javascript">
-			$("#lstDestination").sortable({
-				opacity: 0.8,
-				cursor: \'move\',
-				start: function(){
-					vietiso_loading(1);
-				},
-				stop: function(){
-					vietiso_loading(0);
-				},
-				update: function(){
-					var order = $(this).sortable("serialize")+\'&update=update\';
-					$.post(path_ajax_script+"/index.php?mod=tour&act=ajUpdPosTourDestination", order, function(html){
-						vietiso_loading(0);
-					});
-				}
-			});
 		</script>';
 		unset($lstDestination);
 	}

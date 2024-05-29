@@ -33,7 +33,6 @@
 			<div class="row d-flex flex-wrap">
 				<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 box_left_opt_set">
 					{$core->getBlock('menu_step')}
-					
 				</div>
 				<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
 					<div class="main_step_box" id="frmMainStep_{$pvalTable}">

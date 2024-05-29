@@ -1,12 +1,12 @@
 <?php
-
-global $core, $smarty;
+global $core, $smarty, $clsISO;
 
 $clsCountry =   new Country();
+$smarty->assign("clsCountry", $clsCountry);
 if (!empty($_GET['slug_country'])) {
-    $id_country     =   $clsCountry->getBySlug($_GET['slug_country']);
-    $info_country   =   $clsCountry->getOne($id_country);
-    $cond           =   "is_trash = 0 AND is_online = 1 AND country_id <> $id_country";
+    $country_id     =   $clsCountry->getBySlug($_GET['slug_country']);
+    $info_country   =   $clsCountry->getOne($country_id);
+    $cond           =   "is_trash = 0 AND is_online = 1 AND country_id <> $country_id";
 } else {
     $cond   =   "is_trash = 0 AND is_online = 1";
 }

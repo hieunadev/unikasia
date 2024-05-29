@@ -10,9 +10,9 @@
         <h2>/lang/{$langid}.php</h2>
     </div>
     <p>{$core->get_Lang('Edit Language Details')}</p>
-    {if $lang_permission ne '0777'}
+  {*  {if $lang_permission ne '0777'}
     <h2 style="color:red; text-align:center; border:1px dashed red; margin-bottom:20px; padding:10px;">File này chưa CMOD 777!</h2>
-    {/if}
+    {/if}*}
     <form method="post" action="">
     	<table class="tbl-grid" style="width:100%;">
             <tbody>
@@ -77,12 +77,12 @@
             </tfoot>
         </table>
         <div class="clearfix"><br /></div>
-        {if $lang_permission eq '0777'}
+
         <fieldset class="submit-buttons">
             {$saveBtn}
             <input value="Updatelang" name="submit" type="hidden">
         </fieldset>
-        {/if}
+
         {literal}
         <script type="text/javascript">
 			$(document).ready(function(){

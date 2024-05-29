@@ -1,3 +1,33 @@
+<div class="boxinput_txtblog">
+	<div class="inpt_blog">
+
+							<label for="header_title">
+
+								{$core->get_Lang('Header blog title')}
+
+							</label>
+
+							<input class="input_text_form input-title" data-table_id="{$pvalTable}" name="iso-header_blogalltitle" value="{$clsConfiguration->getValue('header_blogalltitle')}" maxlength="255" type="text" />
+
+						</div>
+
+						<div class="inpt_blog">
+
+							<label for="header_title">
+
+								{$core->get_Lang('Header blog description')}
+
+							</label>
+
+							<textarea style="width:100%" table_id="{$pvalTable}" name="iso-header_blogall_description" id="header_blogall_description_{time()}" data-column="iso-header_blogall_description" class="textarea_intro_editor_simple" cols="255" rows="2">
+
+								{$clsConfiguration->getValue('header_blogall_description')}
+
+							</textarea>
+
+						</div>
+</div>
+
 <div class="box_title_trip_code" meta_id="{$meta_id}">
 	<div class="row d-flex full-height">
 		<div class="col-md-12">

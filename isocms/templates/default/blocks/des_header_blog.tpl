@@ -1,15 +1,23 @@
 <div class="txt_blogvn">
     <div class="container">
-        <h1 class="txt_h1 text-uppercase">BLOG {$clsCountryEx->getTitle($country_id)}</h1>
-        <div class="text_pp">{$clsCountryEx->getIntro($country_id)}</div>
+		{if !$country_id}
+		 <h1 class="txt_h1 text-uppercase">{$clsConfiguration->getValue('header_blogalltitle')|@html_entity_decode}</h1>
+		<div class="text_pp">{$clsConfiguration->getValue('header_blogall_description')|@html_entity_decode}</div>
+		{else}
+        <h1 class="txt_h1 text-uppercase">{$clsCountryEx->getBlogTitle($country_id)}</h1>
+		<div class="text_pp">{$clsCountryEx->getBlogDescription($country_id)|@html_entity_decode}</div>
+		{/if}
+		
+		
     </div>
 </div>
 
-
-
-
 <div class="des_header_background_image">
-   <img src="{$clsCountryEx->getImage($country_id, 1920, 600)}" width="1920" height="600" alt="{$clsCountryEx->getTitle($country_id)}">
+    {if !$country_id}
+        <img src="{$clsConfiguration->getImage('site_blog_banner', 1920, 600)}" width="1920" height="600" alt="{$clsCountryEx->getBlogTitle($country_id)}">
+    {else}
+        <img src="{$clsCountryEx->getBlogImage($country_id, 1920, 600)}" width="1920" height="600" alt="{$clsCountryEx->getBlogTitle($country_id)}">
+    {/if}
 </div>
 
 <style>
@@ -51,11 +59,12 @@
 
     .txt_h1 {
         color: #FFF;
-        text-align: center;
+/*        text-align: center;*/
         font-size: 48px;
         font-style: normal;
         font-weight: 600;
         line-height: 64px; /* 133.333% */
         /*    margin-top: 127px;*/
     }
+	
 </style>

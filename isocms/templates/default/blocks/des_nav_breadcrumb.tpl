@@ -2,14 +2,26 @@
     <div class="container d-flex">
         <span class="breadcrumb-item des_breadcrumb_title">You are here:</span>
         <ol class="breadcrumb des_breadcrumb">
-            <li class="breadcrumb-item des_breadcrumb_link"><a href="/" title="Home">Home</a></li>
-            <li class="breadcrumb-item des_breadcrumb_link"><a href="#" title="Destinations">Destinations</a></li>
+            <li class="breadcrumb-item des_breadcrumb_link">
+                <a href="/" title="{$core->get_Lang('Home')}">{$core->get_Lang('Home')}</a>
+            </li>
+            <li class="breadcrumb-item des_breadcrumb_link">
+                <a href="javascript:void(0);">{$core->get_Lang('Destinations')}</a>
+            </li>
             {if $mod eq 'destination' && $act eq 'place'}
-            <li class="breadcrumb-item active des_breadcrumb_active" aria-current="page">Vietnam</li>
-            {elseif $mod eq 'destination' && $act eq 'travel_style'}
-            <li class="breadcrumb-item des_breadcrumb_link"><a href="#" title="Vietnam">Vietnam</a></li>
-            <li class="breadcrumb-item des_breadcrumb_link"><a href="#" title="Vietnam tours">Vietnam tours</a></li>
-            <li class="breadcrumb-item active des_breadcrumb_active" aria-current="page">Family in Vietnam</li>
+            <li class="breadcrumb-item active des_breadcrumb_active" aria-current="page">
+                {$core->get_Lang($clsCountry->getTitle($country_id))}
+            </li>
+            {elseif $mod eq 'destination' && $act eq 'travel_style' || $mod eq 'tour' && $act eq 'cat'}
+            <li class="breadcrumb-item des_breadcrumb_link">
+                <a href="{$clsCountry->getLink($country_id)}" title="{$core->get_Lang($clsCountry->getTitle($country_id))}">{$core->get_Lang($clsCountry->getTitle($country_id))}</a>
+            </li>
+            <li class="breadcrumb-item des_breadcrumb_link">
+                <a href="{$clsCountry->getLink($country_id)}" title="{$core->get_Lang($clsCountry->getTitle($country_id))}">{$core->get_Lang($clsCountry->getTitle($country_id))} tour</a>
+            </li>
+            <li class="breadcrumb-item active des_breadcrumb_active" aria-current="page">
+                {$core->get_Lang($clsTourCategory->getTitle($cat_id))} in {$core->get_Lang($clsCountry->getTitle($country_id))}
+            </li>
             {elseif $mod eq 'destination' && $act eq 'travel_guide'}
             <li class="breadcrumb-item des_breadcrumb_link"><a href="#" title="Vietnam">Vietnam</a></li>
             <li class="breadcrumb-item des_breadcrumb_link"><a href="#" title="Travel guide">Travel guide</a></li>

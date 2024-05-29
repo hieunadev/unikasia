@@ -36,6 +36,18 @@
 								</div>
 							</div>
 							{/if}
+
+							<div class="inpt_tour">
+								<label for="title">{$core->get_Lang('Country')} <span class="required_red">*</span>
+								</label>
+								<div class="fieldarea">
+									<select class="glSlBox border_aaa required" name="iso-country_id" style="width:250px" onClick="loadHelp(this)">
+										{$clsCountry->makeSelectboxOption($country_id)}
+									</select>
+								</div>
+							</div>
+
+
 							{if $clsISO->getCheckActiveModulePackage($package_id,'$mod','tag','customize')}
 							<div class="inpt_tour">
 								<label for="title">{$core->get_Lang('Tags')}

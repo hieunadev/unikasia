@@ -13,7 +13,7 @@
                     <div class="box_body_filter_title">
                         {$core->get_Lang('Destinations')}
                     </div>
-                    <div class="box_filter_body">
+                    <div class="box_filter_body filter_destination">
                         <div class="filter_list_item">
                             {section name=i loop=$lstCountryHotel}
                                 {assign var=check value=$clsISO->checkInArray($country_id,$lstCountryHotel[i].country_id)}
@@ -36,10 +36,10 @@
         {else}
             {if $lstCountryHotel}
                 <div class="find_Box">
-                    <div class="box_body_filter_title">
+                    <div class="box_body_filter_title ">
                         {$core->get_Lang('Destinations')}
                     </div>
-                    <div class="box_filter_body">
+                    <div class="box_filter_body filter_destination">
                         <div class="filter_list_item">
                             {section name=i loop=$lstCountryHotel}
                                 {assign var=check value=$clsISO->checkInArray($country_id,$lstCountryHotel[i].country_id)}
@@ -65,7 +65,7 @@
                     <div class="box_body_filter_title">
                         {$core->get_Lang('Visit cities')}
                     </div>
-                    <div class="box_filter_body">
+                    <div class="box_filter_body filter_cities">
                         <div class="filter_list_item">
                             {section name=i loop=$lstCity}
                                 {assign var=check value=$clsISO->checkInArray($city,$lstCity[i].city_id)}
@@ -98,7 +98,7 @@
 
                             <div class="check_ipt">
                                 <input type="checkbox" name="price_range[]" class="input_item typeSearch"
-                                    value="{$lstPriceRange[i].hotel_price_range_id}" {if $check} checked {/if}
+                                    value="{$lstPriceRange[i].hotel_price_range_id}"
                                     id="priceRange{$smarty.section.i.iteration}">
                                 <label for="priceRange{$smarty.section.i.iteration}"
                                     class="labelCheck">{$lstPriceRange[i].max_rate}</label>
@@ -129,7 +129,7 @@
                 </div>
             </div>
         </div>
-
+		
         <div class="find_Box">
             <div class="box_body_filter_titleRank">
                 {$core->get_Lang('Property rating')}
@@ -158,7 +158,7 @@
             <div class="box_body_filter_title">
                 {$core->get_Lang('Property type')}
             </div>
-            <div class="box_filter_body">
+            <div class="box_filter_body filter_property">
                 <div class="filter_list_item">
                     {section name=i loop=$listTypeHotel}
                         {assign var=hotel_property_id value=$listTypeHotel[i].property_id}
@@ -202,14 +202,21 @@
         PriceRange_title[id] = title;
     });
 
-    $(".typeSearch").click(function() {
-        $(this).blur();
+    $('#search_hotel_left .typeSearch').change(function() {
+        $(this).closest('form').submit();
     });
 </script>
 
 {literal}
     <script>
-        $(".box_filter_body").find(".checkSizeFilter:gt(4)").hide();
+
+        $(".filter_cities").find(".checkSizeFilter:gt(4)").hide();
+        $(".filter_property").find(".checkSizeFilter:gt(4)").hide();
+        $(".filter_destination").find(".checkSizeFilter:gt(4)").hide();
+        if ($(".filter_destination .checkSizeFilter").length <= 5) $(".filter_destination .readmore").hide();
+        if ($(".filter_cities .checkSizeFilter").length <= 5) $(".filter_cities .readmore").hide();
+        if ($(".filter_property .checkSizeFilter").length <= 5) $(".filter_property .readmore").hide();
+        
         $(document).on("click", ".readmore", function() {
             var $_this = $(this);
             if (!$_this.hasClass("less")) {
@@ -223,6 +230,10 @@
                 $_this.closest(".find_Box").find(".checkSizeFilter:gt(4)").hide();
                 $_this.html('More');
             }
+        });
+
+        $('input[name="country[]"]').on('click', function() {
+            window.location.href = $(this).siblings('label').find('a.filter_link').attr('href');
         });
         $(function() {
             var minPrice = Math.min.apply(null, price_range);
@@ -259,7 +270,6 @@
                     $("#price_0").text("$" + PriceRange_title[minPrice]);
                     $("#price_1").text("$" + PriceRange_title[maxPrice]);
 
-                    
                     $("input[name='price_range[]']").each(function() {
                         var price = parseInt($(this).val());
                         if (price >= minPrice && price <= maxPrice) {
@@ -271,30 +281,17 @@
                     $('#search_hotel_left').submit();
                 }
             });
-
-
             function updatePriceElements() {
-                var minPrice = Math.min.apply(null, price_range);
-                var maxPrice = Math.max.apply(null, price_range);
+                let minPrice = (min_price_search.length !== 0) ? min_price_search : Math.min.apply(null, price_range);
+                let maxPrice = (max_price_search.length !== 0) ? max_price_search : Math.max.apply(null, price_range);
                 $("#slider-price2").slider("values", [minPrice, maxPrice]);
 
-                $("#price_0").html("$" + PriceRange_title[minPrice]);
+                $("#price_0").html("$" + ((PriceRange_title[minPrice] > 0) ? PriceRange_title[minPrice] : "0"));
                 $("#price_1").html("$" + PriceRange_title[maxPrice]);
             }
 
             updateSliderTitles({ values: [0, 1] });
             updatePriceElements();
-
-            if (minPrice < 2) {
-                document.getElementById("price_0").innerHTML = 0;
-            } else if (minPrice >= 2 && minPrice <= 6) {
-                $("#price_0").html(PriceRange_title[minPrice]);
-                $("#price_0").text($("#slider-price2").slider("values", 0));
-            } else {
-                document.getElementById("price_0").innerHTML = minPrice;
-            }
-
-
         });
         $("#price_0").text($("#slider-price2").slider("values", 0));
         $("#price_1").text($("#price-range2").slider("values", 1));
@@ -328,7 +325,6 @@
             });
         });
 
-
         $(function() {
             function debounce(func, delay) {
                 let debounceTimer;
@@ -343,10 +339,7 @@
             $('#checkCityDesTop').click(function() {
                 $('#search_hotel_left').submit();
             });
-
-            $('#search_hotel_left .typeSearch').change(function() {
-                $(this).closest('form').submit();
-            });
         });
+
     </script>
 {/literal}

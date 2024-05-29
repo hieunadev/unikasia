@@ -241,7 +241,7 @@ function default_place() {
 	}
 	if($show=='Country'){
 		$slug_country = isset($_GET['slug_country'])?$_GET['slug_country']:'';
-		$res = $clsCountryEx->getAll("is_trash=0 and is_online=1 and slug='$slug_country' LIMIT 0,1",$clsCountryEx->pkey.',slug,title,intro,content,intro_hotel,image_hotel');
+		$res = $clsCountryEx->getAll("is_trash=0 and is_online=1 and slug='$slug_country' LIMIT 0,1");
 		$country_id = $res[0][$clsCountryEx->pkey];
 		if(intval($country_id)==0) {
 			header('Location:'.PCMS_URL.$extLang);
@@ -253,7 +253,7 @@ function default_place() {
 		$clsClassTable='Country';
 		#		
 		$oneItem = $res[0];
-		$title_page = $clsCountryEx->getTitle($country_id,$oneItem);
+		$title_page = $oneItem["title_hotel"];
 		$intro_page = $clsCountryEx->getStripIntro($country_id,$oneItem);
 		$intro_hotel = $clsCountryEx->getIntro($country_id,'Hotel',false,$oneItem);
 		$content_page = $clsCountryEx->getContent($country_id,$oneItem);
@@ -309,6 +309,7 @@ function default_place() {
 	$lstHotel = $clsHotel->getAll($cond);
     $lstCountry = $clsCountryEx->getAll($cond);
     $country_title = array();
+
     foreach ($lstCountry as $country) {
 		$country_title[$country['country_id']] = $country['title'];
 	}
@@ -332,8 +333,8 @@ function default_place() {
 		$lstCityRegionOther=$clsCity->getAll("is_trash=0 and is_online=1 and country_id='$country_id' and region_id=0 and  city_id IN (SELECT city_id FROM ".DB_PREFIX."hotel WHERE is_trash=0 and is_online=1) order by order_no ASC",$clsCity->pkey.',title');
 		$assign_list['lstCityRegionOther'] = $lstCityRegionOther;  unset($lstCityRegionOther);
 	}
-	
-	
+
+
 	
 	$recordPerPage = 8;
 	$currentPage = isset($_GET['page'])?intval($_GET['page']):1;
@@ -352,7 +353,7 @@ function default_place() {
 	$star_id = isset($_GET['star_id']) ? $_GET['star_id'] : array();
 	$type_hotel = isset($_GET['type_hotel']) ? $_GET['type_hotel'] : array();
 	$city = isset($_GET['city']) ? $_GET['city'] : "";
-	
+
 	$price_range = isset($_GET['price_range']) ? $_GET['price_range'] : ''; $assign_list["price_range"] = $price_range;
 	$priceRange = ($price_range != '')?explode(",",$price_range):array();
 	if(count($priceRange) > 0){
@@ -391,6 +392,7 @@ function default_place() {
 			WHERE is_trash=0 and property_id IN ({$type_hotel})
 		)";
 	}
+
 	if(!empty($city)){
 		$cond .= " and city_id IN (".$city.")";
 	}
@@ -410,6 +412,7 @@ function default_place() {
 	$assign_list["check_out_date"] = $check_out_date;
 	
 	$order_by = " order by order_no ASC";
+    
 	$totalItem = $clsHotel->getAll($cond,$clsHotel->pkey);
 	$totalRecord = $totalItem?count($totalItem):0;
 	$assign_list['totalRecord']=$totalRecord;
@@ -446,6 +449,7 @@ function default_place() {
 	unset($listHotelPlace);
 	unset($page_view);
 	#
+
 	$totalPage= $clsPagination->getTotalPage();
 	$assign_list['totalPage']=$totalPage; 
 	#
@@ -497,6 +501,8 @@ function default_place() {
 	$type_hotel = isset($_GET['type_hotel']) ? $_GET['type_hotel'] : '';
 	$price_range = isset($_GET['price_range']) ? $_GET['price_range'] : ''; $assign_list["price_range"] = $price_range;
 	$priceRange = ($price_range != '')?explode(",",$price_range):array();
+    $assign_list["min_price_search"] = reset($priceRange);
+    $assign_list["max_price_search"] = end($priceRange);
 	if(count($priceRange) > 0){
 		$condPrice = " AND (";
 		$check_price_contact = 0;
@@ -553,7 +559,6 @@ function default_place() {
 
 	$totalItem = $clsHotel->getAll($cond,$clsHotel->pkey);
 	$totalRecord = $totalItem?count($totalItem):0;
-	$assign_list['totalRecord']=$totalRecord;
 
 	$lnk=$_SERVER['REQUEST_URI'];
     $link_page = strtok($lnk, '?');
@@ -941,6 +946,8 @@ function default_search(){
 	$assign_list["keyword_page"] = $keyword_page;
 	/*=============Content Page==================*/	
 	unset($clsHotel);		
+}function default_detail3() {
+	
 }
 function default_detail() {
      global $assign_list, $_CONFIG, $core, $dbconn, $mod, $act,$_LANG_ID,$title_page,$description_page,$global_image_seo_page,$curl;

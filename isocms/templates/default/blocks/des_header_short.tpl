@@ -45,32 +45,40 @@
 </div>
 
 <style>
-/* Đảm bảo phần tử luôn hiển thị khi có lớp này */
 .force-show {
     display: block !important; /* Hoặc flex, tùy thuộc vào cách bố trí của bạn */
 }
+	
+.text-light.py-3.nah_bg_header_bot.bg-white {
+  position: sticky;
+  top: 0;
+  z-index: 1001; /* Cao hơn z-index của header_fix */
+}
+
+
 </style>
 
 
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const headerBot = document.querySelector('.nah_bg_header_bot');
-    const headerFix = document.getElementById('header_fix');
+const headerBot = document.querySelector('.text-light.py-3.nah_bg_header_bot');
+let isAtTop = true; // Biến để theo dõi xem có đang ở đầu trang hay không
 
-    function checkAndFixHeader() {
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        const headerFixHeight = headerFix.offsetHeight;
+window.onscroll = function() {
+  let currentScrollPos = window.pageYOffset;
 
-        if (scrollTop <= headerFixHeight) {
-            headerBot.classList.add('force-show'); 
-        } else {
-            headerBot.classList.remove('force-show');
-        }
-    }
+  if (currentScrollPos === 0) {
+    headerBot.classList.add('bg-white');
+    isAtTop = true;
+  } else if (isAtTop) {
+    // Chỉ xóa lớp 'bg-white' khi đang ở đầu trang và bắt đầu cuộn xuống
+    headerBot.classList.remove('bg-white');
+    isAtTop = false;
+  }
+}
 
-    window.addEventListener('scroll', checkAndFixHeader);
-    checkAndFixHeader(); // Kiểm tra ngay khi trang tải
+
 });
 
 

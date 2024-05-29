@@ -1,6 +1,6 @@
 <section class="top-attractions">
     <div class="container">
-        <h2 class="txt_title_attractions">{$clsConfiguration->getOutTeam('TopDestinationTitle')}</h2>
+        <h2 class="txt_title_attractions d-flex justify-content-center">{$clsConfiguration->getOutTeam('TopDestinationTitle')} <p>&#160;{$clsCountry->getTitle($country_id)}</p></h2>
         <div class="row">
             <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                 <div class="list-holidays">

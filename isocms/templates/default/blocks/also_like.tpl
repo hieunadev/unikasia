@@ -1,11 +1,15 @@
 <section id="nah_also_like">
     <div class="alsoLike">
-        <div class="alsoLike-title-parent"><h2 class="alsoLike-title">{$core->get_Lang('also like')}</h2></div>
+        <div class="alsoLike-title-parent">
+            <h2 class="alsoLike-title">{$core->get_Lang('also like')}</h2>
+        </div>
         <div class="alsoLike-slide owl-carousel" id="tour_alsoLike_owl">
             {section name=i loop=$lstCountry}
             <div class="alsoLike-item item">
-                <img class="alsoLike_img" src="{$lstCountry[i].image}" alt="{$lstCountry[i].slug}">
-                <h3 class="alsoLike_item_title"><a href="#" class="text-light">{$lstCountry[i].title}</a></h3>
+                <a href="{$clsCountry->getLink($lstCountry[i].country_id)}" class="text-decoration-none">
+                    <img class="alsoLike_img" src="{$clsCountry->getImageSub($lstCountry[i].country_id, 480, 698)}" width="480" height="698" alt="{$clsCountry->getTitle($lstCountry[i].country_id)}">
+                </a>
+                <h3 class="alsoLike_item_title"><a href="{$clsCountry->getLink($lstCountry[i].country_id)}" class="text-light text-decoration-none">{$clsCountry->getTitle($lstCountry[i].country_id)}</a></h3>
             </div>
             {/section}
         </div>
@@ -18,7 +22,7 @@
         </div>
         <div class="btn-readyToStart">
             <button class="readyToStart-btn"><a href="#" class="btn readyToStart-btn">{$core->get_Lang('PLAN YOUR TRIP')}
-                <img src="{$URL_IMAGES}/hotel/ArrowRight.svg" alt="error"></a></button>
+                    <img src="{$URL_IMAGES}/hotel/ArrowRight.svg" alt="error"></a></button>
         </div>
     </div>
 </section>

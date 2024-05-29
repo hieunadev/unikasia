@@ -3626,9 +3626,10 @@ function default_category_country()
     }
     $assign_list['link_page_current_2'] = $link_page_current_2;
     #-------End Page Divide-----------------------------------------------------------
+    #
     $allItem = $clsClassTable->getAll($cond . " order by " . $orderBy . $limit);
     $assign_list["allItem"] = $allItem;
-
+    #
     $lstCityGuide = $clsCity->getAll("is_trash=0 and is_online=1 and country_id = '$country_id' order by title asc", $clsCity->pkey);
     $tmp = array();
     if (!empty($lstCityGuide)) {
@@ -3641,7 +3642,151 @@ function default_category_country()
     $assign_list["lstCityGuide"] = $tmp;
     // $clsISO->dd($lstCityGuide);
 }
+function default_why_travelstyle_country()
+{
+    global $assign_list, $_CONFIG, $_SITE_ROOT, $mod, $_LANG_ID, $act, $menu_current, $current_page, $oneSetting, $clsConfiguration;
+    global $core, $clsModule, $clsButtonNav, $oneSetting, $clsISO, $package_id;
+    $assign_list["clsModule"] = $clsModule;
+    $user_id = $core->_USER['user_id'];
+    #
+    // if (!$clsaISO->getCheckActiveModulePackage($package_id, $mod, $act, 'default')) {
+    //     heder('Location:/admin/index.php?lang=' . LANG_DEFAULT);
+    //     exit();
+    // }
+    #
+    $pUrl = '';
+    #-- Get Type List
+    $type_list = isset($_GET['type_list']) ? $_GET['type_list'] : '';
+    $assign_list["type_list"] = $type_list;
+    #
+    // $clsTourCategory = new TourCategory();
+    // $assign_list["clsTourCategory"] = $clsTourCategory;
+    $clsCountry = new Country();
+    $assign_list["clsCountry"] = $clsCountry;
+    // $clsCity = new City();
+    // $assign_list["clsCity"] = $clsCity;
+    #
+    $country_id =   isset($_GET['country_id']) ? intval($_GET['country_id']) : 0;
+    $assign_list["country_id"]  =   $country_id;
+    // $city_id = isset($_GET['city_id']) ? intval($_GET['city_id']) : 0;
+    // $assign_list["city_id"] = $city_id;
+    $cat_id     =   isset($_GET['cat_id']) ? intval($_GET['cat_id']) : 0;
+    $assign_list["cat_id"]      =   $cat_id;
+    #
+    $classTable =   "WhyTravelstyle";
+    $clsClassTable  =   new $classTable;
+    #
+    $tableName  =   $clsClassTable->tbl;
+    $pkeyTable  =   $clsClassTable->pkey;
+    $assign_list["clsClassTable"]   =   $clsClassTable;
+    $assign_list["pkeyTable"]       =   $pkeyTable;
+    #
+    if (isset($_POST['filter']) && $_POST['filter'] == 'filter') {
+        $link .= '&act=why_travelstyle_country';
+        if (isset($_POST['country_id']) && intval($_POST['country_id']) > 0) {
+            $link .= '&country_id=' . $_POST['country_id'];
+        }
+        // if (isset($_POST['city_id']) && intval($_POST['city_id']) > 0) {
+        //     $link .= '&city_id=' . $_POST['city_id'];
+        // }
+        if (isset($_POST['cat_id']) && intval($_POST['cat_id']) > 0) {
+            $link .= '&cat_id=' . $_POST['cat_id'];
+        }
 
+        if (isset($_POST['keyword']) && !empty($_POST['keyword'])) {
+            $link .= '&keyword=' . $_POST['keyword'];
+        }
+        header('location: ' . PCMS_URL . '/?mod=' . $mod . $link);
+    }
+
+    /* List all item */
+    $cond = "1=1";
+    if (intval($country_id) > 0) {
+        $cond .= " and country_id='$country_id'";
+        $pUrl .= '&country_id=' . $country_id;
+    }
+
+    if (intval($cat_id) > 0) {
+        $cond .= " and (cat_id='$cat_id' or list_cat_id like '%" . $cat_id . "%')";
+        $pUrl .= '&cat_id=' . $cat_id;
+    }
+
+    // if (intval($city_id) > 0) {
+    //     $cond .= " and (city_id='$city_id')";
+    //     $pUrl .= '&city_id=' . $city_id;
+    // }
+
+    #Filter By Keyword
+    if (isset($_GET['keyword']) && !empty($_GET['keyword'])) {
+        $keyword = $core->replaceSpace($_GET['keyword']);
+        $cond .= " and slug like '%" . $keyword . "%'";
+        $assign_list["keyword"] = $_GET['keyword'];
+    }
+    $assign_list["pUrl"] = $pUrl;
+    $cond2 = $cond;
+    if ($type_list == 'Active') {
+        $cond .= " and is_trash=0";
+    }
+    if ($type_list == 'Trash') {
+        $cond .= " and is_trash=1";
+    }
+    $orderBy = " order_no asc";
+
+
+
+
+
+    #-------Page Divide---------------------------------------------------------------
+    $recordPerPage = isset($_GET["recordperpage"]) ? $_GET["recordperpage"] : 20;
+    $currentPage = isset($_GET["page"]) ? $_GET["page"] : 1;
+    $start_limit = ($currentPage - 1) * $recordPerPage;
+    $limit = " limit $start_limit,$recordPerPage";
+    $lstAllItem = $clsClassTable->getAll($cond);
+    $totalRecord = (is_array($lstAllItem) && count($lstAllItem) > 0) ? count($lstAllItem) : 0;
+    $totalPage = ceil($totalRecord / $recordPerPage);
+    $assign_list['totalRecord'] = $totalRecord;
+    $assign_list['recordPerPage'] = $recordPerPage;
+    $assign_list['totalPage'] = $totalPage;
+    $assign_list['currentPage'] = $currentPage;
+    $listPageNumber = array();
+    for ($i = 1; $i <= $totalPage; $i++) {
+        $listPageNumber[] = $i;
+    }
+    $assign_list['listPageNumber'] = $listPageNumber;
+    $query_string = $_SERVER['QUERY_STRING'];
+    $lst_query_string = explode('&', $query_string);
+    $link_page_current = '';
+    for ($i = 0; $i < count($lst_query_string); $i++) {
+        $tmp = explode('=', $lst_query_string[$i]);
+        if ($tmp[0] != 'page')
+            $link_page_current .= ($i == 0) ? '?' . $lst_query_string[$i] : '&' . $lst_query_string[$i];
+    }
+    $assign_list['link_page_current'] = $link_page_current;
+    #
+    $link_page_current_2 = '';
+    for ($i = 0; $i < count($lst_query_string); $i++) {
+        $tmp = explode('=', $lst_query_string[$i]);
+        if ($tmp[0] != 'page' && $tmp[0] != 'type_list')
+            $link_page_current_2 .= ($i == 0) ? '?' . $lst_query_string[$i] : '&' . $lst_query_string[$i];
+    }
+    $assign_list['link_page_current_2'] = $link_page_current_2;
+    #-------End Page Divide-----------------------------------------------------------
+    $allItem = $clsClassTable->getAll($cond . " order by " . $orderBy . $limit);
+    $assign_list["allItem"] = $allItem;
+    // $clsISO->dump($allItem);
+
+    // $lstCityGuide = $clsCity->getAll("is_trash=0 and is_online=1 and country_id = '$country_id' order by title asc", $clsCity->pkey);
+    // $tmp = array();
+    // if (!empty($lstCityGuide)) {
+    //     foreach ($lstCityGuide as $item) {
+    //         if ($clsClassTable->countGuideGlobal(0, $item[$clsCity->pkey], $country_id) > 0) {
+    //             $tmp[] = $item[$clsCity->pkey];
+    //         }
+    //     }
+    // }
+    // $assign_list["lstCityGuide"] = $tmp;
+    // $clsISO->dd($lstCityGuide);
+}
 function default_edit_itinerary()
 {
     global $assign_list, $_CONFIG,  $_SITE_ROOT, $mod, $_LANG_ID, $act, $menu_current, $current_page, $oneSetting;

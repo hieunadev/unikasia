@@ -2067,11 +2067,12 @@ class Tour extends dbBasic{
 		global $core,$_LANG_ID;
 		$one=$this->getOne($tour_id,'duration_type,duration_custom,number_day,number_night');
 		$duration_type = $one['duration_type'];
-		if($duration_type==1){ 
+		if($duration_type==1){
 			return $one['duration_custom'];
 		}
 		$number_day = intval($one['number_day']);
 		$number_night = intval($one['number_night']);
+        if (empty($number_day)) return 'days';
 		if($number_day==1 && $number_night==0){
 			{ return $core->get_Lang('Full Day'); }
 		}
@@ -2900,7 +2901,7 @@ class Tour extends dbBasic{
 		foreach($arr_cat_id as $cat_id){
 			$arr_title[] = $clsTourCat->getTitle($cat_id);
 		}
-		return implode(' | ',$arr_title);
+		return implode(' - ',$arr_title);
 	}
 	function getTypeName($tour_id) {
 		$clsCategory = new Category();

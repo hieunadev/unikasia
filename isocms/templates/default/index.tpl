@@ -36,6 +36,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="{$URL_CSS}/hotel_detail.css?v={$upd_version}" as="style" />
     <link rel="stylesheet" href="{$URL_CSS}/hotel.css?v={$upd_version}" as="style" />
     <script src="{$URL_JS}/hotel.js?v={$upd_version}"></script>
     <script src="{$URL_JS}/hotelSlide.js?v={$upd_version}"></script>
@@ -62,10 +63,13 @@
     {$core->getBlock('var_javascript')}
 
 
-    <!--
+    
+<!--
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+-->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.css">
+<!--
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
@@ -76,6 +80,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/css/select2.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.css">
 -->
+
 
     {if IS_COMPRESS_CSS eq 0}
     <link rel="preload" href="{$URL_CSS}/iso.core.css?v={$upd_version}" as="style" />
@@ -116,8 +121,6 @@
     {/if}
     <link rel="stylesheet" href="{$URL_CSS}/common.css" />
 
-
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
@@ -155,6 +158,8 @@
     <link rel="preload" href="{$URL_JS}/jquery.countdown.min.js?v={$upd_version}" as="script" />
     <link rel="preload" href="{$URL_JS}/jquery.lockfixed.js?v={$upd_version}" as="script" />
     <link rel="preload" href="{$URL_JS}/swiper.min.js?v={$upd_version}" as="script" />
+	
+
 
 
     <!--
@@ -165,6 +170,8 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
 -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.js"></script>
+
     <script src="https://kit.fontawesome.com/42aa736347.js" crossorigin="anonymous"></script>
 
     <script src="{$URL_JS}/compress/jquery-2.2.4.min.js?v={$upd_version}"></script>
@@ -222,8 +229,8 @@
     {/if}
     {literal}
     <script type="text/javascript">
-        (function(c, l, a, r, i, t, y) {
-            c[a] = c[a] || function() {
+        (function (c, l, a, r, i, t, y) {
+            c[a] = c[a] || function () {
                 (c[a].q = c[a].q || []).push(arguments)
             };
             t = l.createElement(r);
@@ -243,7 +250,7 @@
     <div id="fb-root"></div>
     {literal}
     <script>
-        (function(d, s, id) {
+        (function (d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];
             if (d.getElementById(id)) return;
             js = d.createElement(s);
@@ -257,7 +264,7 @@
     <div class="fb-customerchat" attribution=setup_tool page_id="170710566975353"></div>
     {literal}
     <script>
-        (function(d, s, id) {
+        (function (d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];
             if (d.getElementById(id)) return;
             js = d.createElement(s);
@@ -279,7 +286,7 @@
 		<![endif]-->
     {literal}
     <script>
-        $(window).load(function() {
+        $(window).load(function () {
             $(".loader___page").fadeOut("slow");
         });
     </script>

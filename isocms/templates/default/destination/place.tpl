@@ -96,46 +96,22 @@
     <div class="des_gallery">
         <div class="container-fluid">
             <div class="des_gallery_title">
-                <h2>{$clsConfiguration->getOutTeam('GalleryTitle')}</h2>
+                <h2>{$clsCountry->getTitle($country_id)} {$clsConfiguration->getOutTeam('GalleryTitle')}</h2>
             </div>
             <div class="des_gallery_content">
                 <div class="owl-carousel owl-theme des_gallery_list">
+                    {if $gallery_country}
+                    {foreach from=$gallery_country key=key item=item}
+                    {assign var=country_image_id value=$item.country_image_id}
                     <div class="item des_grow" data-merge="1">
                         <div class="des_gallery_item">
-                            <a data-fancybox="gallery" href="{$URL_IMAGES}/destination/gallery.png">
-                                <img src="{$URL_IMAGES}/destination/gallery.png" width="479" height="403" alt="Gallery" class="img100" title="Gallery">
+                            <a data-fancybox="gallery" href="{$item.image}">
+                                <img src="{$clsCountryImage->getImage($country_image_id, 480, 403)}" width="480" height="403" alt="{$clsCountryImage->getTitle($country_image_id)}" class="img100" title="{$clsCountryImage->getTitle($country_image_id)}">
                             </a>
                         </div>
                     </div>
-
-                    <div class="item des_grow" data-merge="1">
-                        <div class="des_gallery_item">
-                            <a data-fancybox="gallery" href="https://images.unsplash.com/photo-1715586042534-4534fad6863d?q=80&w=1975&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
-                                <img src="https://images.unsplash.com/photo-1715586042534-4534fad6863d?q=80&w=1975&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" width="479" height="403" alt="Gallery" class="img100" title="Gallery">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="item des_grow" data-merge="1">
-                        <div class="des_gallery_item">
-                            <a data-fancybox="gallery" href="https://media.istockphoto.com/id/1481276382/photo/panorama-of-phang-nga-bay-with-mountains-at-sunset-in-thailand.webp?b=1&s=170667a&w=0&k=20&c=nafyVsrlYfAblKjR4SbpbpzKU56zaxAEEQ1PJhjV5Ko=">
-                                <img src="https://media.istockphoto.com/id/1481276382/photo/panorama-of-phang-nga-bay-with-mountains-at-sunset-in-thailand.webp?b=1&s=170667a&w=0&k=20&c=nafyVsrlYfAblKjR4SbpbpzKU56zaxAEEQ1PJhjV5Ko=" width="479" height="403" alt="Gallery" class="img100" title="Gallery">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="item des_grow" data-merge="1">
-                        <div class="des_gallery_item">
-                            <a data-fancybox="gallery" href="https://media.istockphoto.com/id/1254474165/photo/tropical-leaves-abstract-green-leaves-texture-nature-background.webp?b=1&s=170667a&w=0&k=20&c=biSlIchE6-xYY0_MLX5yrboockYYaGF04uM79eTKSX8=">
-                                <img src="https://media.istockphoto.com/id/1254474165/photo/tropical-leaves-abstract-green-leaves-texture-nature-background.webp?b=1&s=170667a&w=0&k=20&c=biSlIchE6-xYY0_MLX5yrboockYYaGF04uM79eTKSX8=" width="479" height="403" alt="Gallery" class="img100" title="Gallery">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="item des_grow" data-merge="1">
-                        <div class="des_gallery_item">
-                            <a data-fancybox="gallery" href="https://media.istockphoto.com/id/1480110801/photo/small-abstract-wave-splashing-in-golden-light-on-shoreline.webp?b=1&s=170667a&w=0&k=20&c=jRQfsM7HN4rjVBVeHuEFLV1JQpt1vFDuxbcY-m74KJA=">
-                                <img src="https://media.istockphoto.com/id/1480110801/photo/small-abstract-wave-splashing-in-golden-light-on-shoreline.webp?b=1&s=170667a&w=0&k=20&c=jRQfsM7HN4rjVBVeHuEFLV1JQpt1vFDuxbcY-m74KJA=" width="479" height="403" alt="Gallery" class="img100" title="Gallery">
-                            </a>
-                        </div>
-                    </div>
+                    {/foreach}
+                    {/if}
                 </div>
             </div>
         </div>
@@ -152,9 +128,11 @@
                         <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                             <div class="box_left">
                                 {if $list_faq_country}
-                                {foreach from=$list_faq_country key=key item=item}
-                                {assign var="faq_id" value=$item.faq_id}
-                                {if $key eq 0}
+                                {section name=i loop=$list_faq_country}
+                                {assign var=key value=$smarty.section.i.iteration}
+                                {assign var=faq_id value=$list_faq_country[i].faq_id}
+
+                                {if $key eq 1}
                                 <div class="accordion-item">
                                     <h2 class="accordion-header" id="heading_{$key}">
                                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_{$key}" aria-expanded="true" aria-controls="collapse_{$key}">
@@ -167,7 +145,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                {elseif $key gt 0 && $key le 5}
+                                {elseif $key gt 1 && $key % 2 eq 1}
                                 <div class="accordion-item">
                                     <h2 class="accordion-header" id="heading_{$key}">
                                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_{$key}" aria-expanded="false" aria-controls="collapse_{$key}">
@@ -181,16 +159,17 @@
                                     </div>
                                 </div>
                                 {/if}
-                                {/foreach}
+                                {/section}
                                 {/if}
                             </div>
                         </div>
                         <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                             <div class="box_right">
                                 {if $list_faq_country}
-                                {foreach from=$list_faq_country key=key item=item}
-                                {assign var="faq_id" value=$item.faq_id}
-                                {if $key gt 5}
+                                {section name=i loop=$list_faq_country}
+                                {assign var=key value=$smarty.section.i.iteration}
+                                {assign var=faq_id value=$list_faq_country[i].faq_id}
+                                {if $key gt 1 && $key % 2 eq 0}
                                 <div class="accordion-item">
                                     <h2 class="accordion-header" id="heading_{$key}">
                                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_{$key}" aria-expanded="false" aria-controls="collapse_{$key}">
@@ -204,7 +183,7 @@
                                     </div>
                                 </div>
                                 {/if}
-                                {/foreach}
+                                {/section}
                                 {/if}
                             </div>
                         </div>

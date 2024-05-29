@@ -15,7 +15,8 @@
                                     <div class="footer-filters">
                                         <div class="search"><input type="text" class="form-control"
                                                                    id="validationTooltip05"
-                                                                   required="" placeholder="Entrer your email">
+                                                                   required placeholder="Entrer your email"
+                                                                   oninvalid="this.setCustomValidity('{$core->get_Lang('Vui lòng điền vào trường này')}')">
                                             <button type="submit" class="btn-hover-home">Submit</button>
                                         </div>
                                     </div>
@@ -224,28 +225,25 @@
         }
     </style>
 <script>
-    $('.footer_info .footer_Link').each(function () {
-        var $_this = $(this);
-        if ($_this.height() > 140) {
-            $_this.css("height", "140px");
-            $_this.closest(".footer_info").find(".readmore").show();
-        } else {
-            $_this.closest(".footer_info").find(".readmore").hide();
-        }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var usernameInput = document.getElementById('username');
+        var usernameError = document.getElementById('usernameError');
+
+        usernameInput.addEventListener('invalid', function(event) {
+            event.preventDefault(); // Ngăn chặn thông báo lỗi mặc định của trình duyệt
+            if (!usernameInput.validity.valid) {
+                usernameInput.setCustomValidity('Vui lòng nhập tên người dùng!');
+                usernameError.textContent = usernameInput.validationMessage; // Hiển thị thông báo lỗi tùy chỉnh
+            }
+        });
+
+        usernameInput.addEventListener('input', function(event) {
+            // Xóa thông báo lỗi khi người dùng nhập vào
+            usernameInput.setCustomValidity('');
+            usernameError.textContent = '';
+        });
     });
-    $(document).on("click", ".footer_info .readmore", function () {
-        var $_this = $(this);
-        if (!$_this.hasClass("less")) {
-            $_this.addClass("less");
-            $_this.closest(".footer_info").find(".footer_Link").css("height", "auto");
-            $_this.html('{/literal}{$core->get_Lang("Hide")}{literal}');
-        } else {
-            $_this.removeClass("less");
-            $_this.closest(".footer_info").find(".footer_Link").css("height", "140px");
-            $_this.html('{/literal}{$core->get_Lang("See more")}{literal}');
-        }
-    });
-    //moreLessSetHeightNew('.footer_info','.footer_Link','.readmore','less');
 
 </script>
 {/literal}

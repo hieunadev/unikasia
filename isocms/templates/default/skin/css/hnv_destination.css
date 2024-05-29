@@ -5,12 +5,15 @@ body {
     border-radius: 40px 40px 0px 0px;
     background: #fff;
     padding-top: 32px;
-    margin-top: -58px;
+    margin-top: -35px;
     position: relative;
     z-index: 1;
 }
 .des_breadcrumb {
     margin: unset;
+}
+.des_breadcrumb li:nth-child(2) a {
+    cursor: auto;
 }
 .des_breadcrumb_title {
     color: var(--Neutral-1, #111d37);
@@ -51,6 +54,7 @@ body {
     padding-top: 60px;
     margin-bottom: 60px;
     border-bottom: 1px solid #f0f0f0;
+    z-index: 1;
 }
 .des_tailor_top_sticky {
     position: fixed;
@@ -220,6 +224,7 @@ body {
     background: #fff9f1;
     padding: 80px 0;
 }
+
 .des_travel_style_title h2 {
     color: var(--Neutral-1, #111d37);
     text-align: center;
@@ -272,9 +277,13 @@ body {
     bottom: -55px;
     left: 15px;
     right: 15px;
+    height: 155px;
 }
 .des_travel_style_item_title h3 {
     text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .des_travel_style_item_title a {
     color: var(--Neutral-1, #111d37);
@@ -298,6 +307,10 @@ body {
     -webkit-box-orient: vertical;
     max-height: 72px;
     overflow: hidden;
+}
+.des_travel_style_content .owl-stage {
+    display: flex;
+    justify-content: center;
 }
 .des_travel_style_content .owl-item.active {
     padding-bottom: 55px;
@@ -431,6 +444,9 @@ body {
     font-weight: 600;
     line-height: 52px;
     margin-bottom: 46px;
+    display: flex;
+    gap: 7px;
+    justify-content: center;
 }
 .des_grow {
     transition: all 0.3s ease-in-out;
@@ -669,13 +685,13 @@ body {
 .destination_place_body .btn-viewmore:hover {
     background: #e88f00 !important;
 }
-/* .destination_place_body #header_fixed {
-    position: relative;
-} */
-.des_header_info p {
-    margin-bottom: unset;
+.destination_place_body .txtheadersmll a {
+    color: #959aa4;
 }
 /** --- CSS fix hộ các trang khác @@ --- **/
+.hotel_place_body .wrap_form_banner h1 {
+    text-transform: uppercase;
+}
 .hnv_item_holiday img {
     width: unset;
     border-radius: 8px !important;
@@ -721,8 +737,9 @@ body {
 .destination_place_body .exploretrip {
     padding: unset;
 }
-.destination_place_body a:hover {
-    color: #e88f00;
+/***/
+footer a:hover {
+    color: #ffa718;
 }
 /** --- End of CSS fix hộ các trang khác @@ --- **/
 @media screen and (max-width: 1170px) {

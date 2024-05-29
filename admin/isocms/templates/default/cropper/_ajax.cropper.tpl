@@ -64,11 +64,11 @@
 									<div class="row">
 										<div class="col-md-6">
 											<label class="col-form-label">{$core->get_Lang('Width')}</label>
-											<input type="text" class="form-control numberonly" id="cropper-width" placeholder="width" value="0" readonly/>
+											<input type="text" class="form-control numberonly" id="cropper-width" placeholder="width" value="1920" readonly/>
 										</div>
 										<div class="col-md-6">
 											<label class="col-form-label">{$core->get_Lang('Height')}</label>
-											<input type="text" class="form-control numberonly" id="cropper-height" placeholder="height" value="0" readonly/>
+											<input type="text" class="form-control numberonly" id="cropper-height" placeholder="height" value="791" readonly/>
 										</div>
 									</div>
 								</div>

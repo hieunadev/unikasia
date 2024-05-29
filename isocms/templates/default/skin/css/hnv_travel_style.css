@@ -31,6 +31,7 @@ body {
 .trvs_goood_reason .trvs_goood_reason_intro .title_home_box {
     display: flex;
     margin-bottom: 20px;
+    font-weight: 600;
 }
 .trvs_goood_reason .trvs_goood_reason_intro .stt {
     width: 106px;
@@ -222,6 +223,7 @@ body {
 }
 .trvs_when_vn .tab_destination {
     padding-bottom: 80px;
+    border-bottom: 1px solid #d3dce1;
 }
 .trvs_when_vn .tab_destination .owl_when_vn {
     width: 990px;
@@ -241,6 +243,9 @@ body {
 }
 .trvs_when_vn .tab_destination .des_item:hover {
     box-shadow: 0px 12px 24px 0px rgba(255, 167, 24, 0.36);
+}
+.trvs_when_vn .tab_destination .des_item img {
+    border-radius: 8px;
 }
 .trvs_when_vn .tab_destination .des_item h3 a {
     color: var(--Neutral-1, #111d37);
@@ -333,8 +338,11 @@ body {
     border: 2px solid rgba(211, 220, 225, 0.3);
     background: #fff9f1;
 }
+.trvs_item_blog img {
+    border-radius: 8px;
+}
 .trvs_list_blog {
-    padding: 80px 0;
+    padding-top: 80px;
 }
 .trvs_list_blog_title h2 {
     color: var(--Neutral-1, #111d37);
@@ -345,6 +353,10 @@ body {
     line-height: 52px;
     margin-bottom: 60px;
     text-align: center;
+}
+.trvs_list_blog_content {
+    padding-bottom: 80px;
+    border-bottom: 1px solid #d3dce1;
 }
 .trvs_list_blog .box_left .trvs_item_blog_intro {
     margin-top: 24px;
@@ -434,6 +446,9 @@ body {
 .trvs_travel_file_item {
     position: relative;
     padding-bottom: 64px;
+}
+.trvs_travel_file_item img {
+    border-radius: 8px;
 }
 .trvs_travel_file_intro {
     position: absolute;
@@ -539,6 +554,28 @@ body {
 }
 .destination_travel_style_body .btn-exploremore:hover {
     background: #e88f00 !important;
+}
+.tour_cat_body .des_list_travel_style {
+    padding-bottom: 132px;
+}
+.owl_when_vn .owl-item {
+    margin-right: unset;
+    height: unset;
+    min-width: unset;
+}
+.trvs_travel_file_carousel .owl-item {
+    margin-right: unset;
+    height: unset;
+    min-width: unset;
+}
+.customer_cards .owl-item {
+    margin-right: unset;
+    height: unset;
+    min-width: unset;
+}
+.trvs_travel_file_content .owl-stage {
+    display: flex;
+    justify-content: center;
 }
 @media screen and (max-width: 1170px) {
 }

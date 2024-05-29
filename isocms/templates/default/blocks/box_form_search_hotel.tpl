@@ -1,64 +1,13 @@
 <section class="box_form_banner">
     <div class="container">
         <div class="wrap_form_banner">
-                    {* <h1>{$core->get_Lang('Hotels')}</h1> *}
                     {assign var=site_hotel_intro value=site_hotel_intro_|cat:$_LANG_ID}
-                    {* <div class="intro_top short_content content-hotelss-txt wrap_form_banner-txt" data-height="150">
-                        {$clsConfiguration->getValue($site_hotel_intro)|html_entity_decode}
-                    </div> *}
-                    {if !isset($TD) || !$TD}
-                        <h1>{$core->get_Lang('STAY')}</h1>
-                    {else}
-                        <h1>{$core->get_Lang('STAY TO')} {$TD}</h1>
-                    {/if}
+
+                        <h1>{$TD}</h1>
 
                     <div class="intro_top short_content wrap_form_banner-txt" data-height="150">
-                    {$clsConfiguration->getValue($site_hotel_intro)|html_entity_decode}
+                    	{$HOTEL_INTRO|html_entity_decode}
                     </div>
-            {* <form class="form_banner d-flex" action="" method="post">
-                <div class="search_hotel">
-                    <input type="text" name="key" value="{$keyword}" class="form-control" placeholder="{$core->get_Lang('Search for accommodation')}">
-                </div>
-                <div class="check_in_date">
-                    <label for="check_in_date_id">{$core->get_Lang('Check in')}</label>
-                    <input type="text" id="check_in_date_id" name="check_in_date" class="form-control"
-                           {if empty($check_in_date)}value="{$format_time_now}" {else} value="{$check_in_date}"{/if}>
-                </div>
-                <div class="box_departure_date">
-                    <label for="departure_date_id">{$core->get_Lang('Check out')}</label>
-                    <input type="text" id="departure_date_id" class="form-control" name="check_out_date"
-                           {if empty($check_out_date)}value="{$format_time_tomorrow}" {else} value="{$check_out_date}"{/if}>
-                </div>
-                <div class="number_travellers relative">
-                    <label for="pick_travellers">{$core->get_Lang('Quantity')}</label>
-                    <input type="text" readonly class="form-control pick_travellers" id="pick_travellers" value="{$core->get_Lang('Adults')} x 1">
-                    <div id="check_number_travellers" class="check_number_travellers" style="display:none;">
-                        <ul class="check_number_travellers--ul list_style_none">
-                            <li class="inputTraveller" id="li_adult" data-tour_property_id="1">
-                                <label>{$core->get_Lang('Adults')}</label>
-                                <div class="right__inputTraveller">
-                                    <a class="unNum text_main disabled" _type="number_adults" traveler_type_id="1" href="javascript:void(0);"><i class="fa fa-minus" aria-hidden="true"></i></a>
-                                    <input min-number="1" max-number="5" type="number" _type="number_adults" class="number_adults input_number find_select" tour_visitor_type_id="1" name="number_adults" id="national_visitor1" value="1" readonly />
-                                    <a class="upNum text_main" _type="number_adults" traveler_type_id="1" href="javascript:void(0);"><i class="fa fa-plus" aria-hidden="true"></i></a>
-                                </div>
-                            </li>
-                            <li class="inputTraveller">
-                                <label>{$core->get_Lang('Children')}</label>
-                                <div class="right__inputTraveller">
-                                    <a class="unNum text_main disabled" _type="number_child" traveler_type_id="2 " href="javascript:void(0);"><i class="fa fa-minus" aria-hidden="true"></i></a>
-                                    <input min-number="0" max-number="5" type="number" _type="number_child" class="number_child input_number find_select" tour_visitor_type_id="2" name="number_child" id="national_visitor2" value="0" readonly/>
-                                    <a class="upNum text_main" _type="number_child" traveler_type_id="2" href="javascript:void(0);"><i class="fa fa-plus" aria-hidden="true"></i></a>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="box_button_search">
-                    <input type="hidden" value="searchHotel" name="hid" />
-                    <button class="btn_search btn_main" type="submit">{$core->get_Lang('Search')}</button>
-                </div>
-
-            </form> *}
         </div>
     </div>
 </section>

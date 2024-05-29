@@ -1,153 +1,657 @@
-{assign var=title_country_cat value=$clsCountryEx->getTitle($country_id)}
-<div class="page_container">
-	<nav class="breadcrumb-main breadcrumb-{$mod} mb30 bg_fff">
-		<div class="container">
-			<ol class="breadcrumb hidden-xs bg_fff mt0" itemscope itemtype="https://schema.org/BreadcrumbList"> 
-			   <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-				   <a itemprop="item" href="{$PCMS_URL}" title="{$core->get_Lang('Home')}">
-					   <span itemprop="name" class="reb">{$core->get_Lang('Home')}</span></a>
-					<meta itemprop="position" content="1" />
-				</li>
-			   <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-				   <a itemprop="item" href="{$curl}" title="{$core->get_Lang('Travel styles')}">
-					   <span itemprop="name" class="reb">{$core->get_Lang('Travel styles')}</span></a>
-					<meta itemprop="position" content="2" />
-				</li>
-			   {if $show eq 'CatCountry'}
-			   <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-				   <a itemprop="item" href="{$clsCountryEx->getLink($country_id)}" title="{$title_country_cat}">
-					   <span itemprop="name" class="reb">{$title_country_cat}</span></a>
-					<meta itemprop="position" content="3" />
-				</li>
-				<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" class="active">
-				  <a itemprop="item" href="{$curl}" title="{$title_cat}">
-					  <span itemprop="name" class="reb">{$title_cat}</span></a>
-				   <meta itemprop="position" content="4" />
-			   </li>
-			   {else}
-				<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" class="active">
-				  <a itemprop="item" href="{$curl}" title="{$title_cat}">
-					  <span itemprop="name" class="reb">{$title_cat}</span></a>
-				   <meta itemprop="position" content="3" />
-			   </li>
-			   {/if}
-			</ol>
-		</div>
-	</nav>
-	<div id="ContentPage" class="maincontent pd50_0">
-		<section class="introPage">
-			<div class="container">
-			{if $show eq 'CatCountry'}
-				{assign var=contentMoreCatCountry value=$clsCategory_Country->getContent($category_country__id,500,true,$catCountryItem)}
-				<h1>{$title_country_cat} - {$title_cat}</h1>
-				{if $contentMoreCatCountry}
-				<div class="intro_cat mb30">
-					{$contentMoreCatCountry}
-				</div>
-				{/if}
-			{else}
-				<h1>{$title_cat}</h1>
-				{assign var=introMoreCat value=$clsTourCategory->getIntroMore($cat_id,400,true,$oneItem)}
-				{if $introMoreCat}
-				<div class="intro_cat mb30">
-					{$introMoreCat}
-				</div>
-				{/if}
-			{/if}
-			</div>
-		</section>
-        {if $listTour || $action=='search'}
-		<section class="contentPage padding50_0">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-3">
-                      	<div class="block991" style="display:none">
-							<div class="tag-search">
-								<div class="btn_open_modal btn_quick_search bg_main" data-bs-toggle="modal" data-bs-target="#filter_search" >
-									<span>{$core->get_Lang('Filter Trip')}</span> <i class="fa fa-sliders" aria-hidden="true"></i>
-								</div>
-							</div>
-						</div> 
-						<div class="modal fade" id="filter_search" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
-							<div class="modal-dialog">
-								<div class="modal-content">
-									<div class="filter_left">
-										<div class="modal-header">
-											<button type="button" class="close" data-bs-dismiss="modal"><span aria-hidden="true">X</span><span class="sr-only">{$core->get_Lang('Close')}</span></button> {$core->get_Lang('Search')}
-										</div>
-										<div class="modal-body">
-											<div class="totalTour mb20">
-											   <h2 class="totalTourpage bg_main h3">{$core->get_Lang('Find')} {$totalTour} {if $totalTour gt 1}{$core->get_Lang('Tours')}{else}{$core->get_Lang('Tour')}{/if}</h2>
-											</div>
-											{$core->getBlock('filter_left_trip')}
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-                  	</div>
-					<div class="col-lg-9">
-						<div class="loader"></div>
-                            {if $show =='CatCountry'}
-                            {assign var=lstCountryCat value=$clsCategory_Country->getListCatCountry($country_id)}
-								<div class="box_scroll">
-									<div class="list_tour_cat">
-										{section name=j loop=$lstCountryCat}
-											{assign var=oneCategoryCountry value=$clsTourCategory->getOne($lstCountryCat[j].cat_id,'title,slug')}
-											{assign var=title_category_country value=$oneCategoryCountry.title}
-											<div class="item_tour_cat {if $lstCountryCat[j].cat_id==$cat_id}active{/if}">
-												<a href="{$clsTourCategory->getLinkCatCountry($lstCountryCat[j].cat_id,$country_id,$oneCategoryCountry)}"
-												   title="{$title_category_country}">{$title_category_country}
-												</a>
-											</div>
-										{/section}
-									</div>
-								</div>
-                            {else}
-								<div class="box_scroll">
-									<div class="list_tour_cat">
-										{section name=j loop=$lstCatTour}
-											{assign var=title_category value=$lstCatTour[j].title}
-											<div class="item_tour_cat {if $lstCatTour[j].tourcat_id==$cat_id}active{/if}">
-												<a title="{$title_category}" href="{$clsTourCategory->getLink($lstCatTour[j].tourcat_id,$lstCatTour[i])}">{$title_category}
-												</a>
-											</div>
-										{/section}
-									</div>
-								</div>
-                            {/if}
-                        
-							<div class="listTour listTourItem search-results js-search-results row">
-								{section name=i loop=$listTour}
-								<div class="col-xl-4 col-lg-6 col-md-6 col-sm-6">
-								{assign var=tour_id value=$listTour[i].tour_id}
-								{assign var=oneTour value=$listTour[i]}
-								{$clsISO->getBlock('box_item_tour_mobile',["tour_id"=>$tour_id,"oneTour"=>$oneTour])}
-								</div>
-								{/section}                        
-							</div>
-							{if $totalPage gt '1'}
-							<div class="clearfix"></div>
-							<div class="pagination pager">
-								{$page_view}
-							</div>
-							{/if}         
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-        {/if}
-	</div>
-</div>
+<section class="page_container des_page_container">
+    {if $show eq 'CatCountry'}
+    {$core->getBlock('des_nav_breadcrumb')}
+    {$core->getBlock('des_tailor_made_travel')}
+    {$core->getBlock('explore_our_trips')}
+    <div class="trvs_goood_reason">
+        <div class="container">
+            <div class="trvs_goood_reason_intro">
+                <div class="header_home_box">
+                    <div class="stt">
+                        <div class="square">06</div>
+                    </div>
+                    <div class="intro">
+                        <h2 class="title_home_box"> good reasons to <br> TRAVELING TO VIETNAM </h2>
+                    </div>
+                </div>
+                <div class="content_home_box">
+                    <div class="description">
+                        Why take a Vietnam trip? Each of our customers asks themselves this question and asks it to <br> us. A trip to Vietnam as we discover it, from Tonkin to the Mekong Delta, is a mosaic of <br> enchanting images. <br> Vietnam is the country of many trips, and above all the country of favorites!
+                    </div>
+                </div>
+            </div>
+            <div class="trvs_goood_reason_list">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                        <div class="trvs_goood_reason_item">
+                            <img src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="item" width="406" height="333" loading="lazy">
+                            <div class="trvs_goood_reason_item_intro">
+                                <div class="trvs_goood_reason_item_title" title="Vietnam, the land of rice fields" data-bs-toggle="modal" data-bs-target="#goodRS1">
+                                    <h3> Vietnam, the land of rice fields </h3>
+                                </div>
+                                <div class="trvs_goood_reason_item_stt"> 01 </div>
+                            </div>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="goodRS1" tabindex="-1" aria-labelledby="goodRS1Label" aria-hidden="true">
+                                <div class="modal-dialog modal_xl">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="goodRS1Label">Modal title 1</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            ...
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                        <div class="trvs_goood_reason_item">
+                            <img src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="item" width="406" height="333" loading="lazy">
+                            <div class="trvs_goood_reason_item_intro">
+                                <div class="trvs_goood_reason_item_title" title="Vietnam, the land of rice fields" data-bs-toggle="modal" data-bs-target="#goodRS2">
+                                    <h3> Vietnam, the land of rice fields </h3>
+                                </div>
+                                <div class="trvs_goood_reason_item_stt"> 01 </div>
+                            </div>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="goodRS2" tabindex="-1" aria-labelledby="goodRS2Label" aria-hidden="true">
+                                <div class="modal-dialog modal_xl">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="goodRS2Label">Modal title 2</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            ...
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                        <div class="trvs_goood_reason_item">
+                            <img src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="item" width="406" height="333" loading="lazy">
+                            <div class="trvs_goood_reason_item_intro">
+                                <div class="trvs_goood_reason_item_title" title="Vietnam, the land of rice fields" data-bs-toggle="modal" data-bs-target="#goodRS3">
+                                    <h3> Vietnam, the land of rice fields </h3>
+                                </div>
+                                <div class="trvs_goood_reason_item_stt"> 01 </div>
+                            </div>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="goodRS3" tabindex="-1" aria-labelledby="goodRS3Label" aria-hidden="true">
+                                <div class="modal-dialog modal_xl">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="goodRS3Label">Modal title 3</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            ...
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                        <div class="trvs_goood_reason_item">
+                            <img src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="item" width="406" height="333" loading="lazy">
+                            <div class="trvs_goood_reason_item_intro">
+                                <div class="trvs_goood_reason_item_title" title="Vietnam, the land of rice fields" data-bs-toggle="modal" data-bs-target="#goodRS4">
+                                    <h3> Vietnam, the land of rice fields </h3>
+                                </div>
+                                <div class="trvs_goood_reason_item_stt"> 01 </div>
+                            </div>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="goodRS4" tabindex="-1" aria-labelledby="goodRS4Label" aria-hidden="true">
+                                <div class="modal-dialog modal_xl">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="goodRS4Label">Modal title 4</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            ...
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                        <div class="trvs_goood_reason_item">
+                            <img src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="item" width="406" height="333" loading="lazy">
+                            <div class="trvs_goood_reason_item_intro">
+                                <div class="trvs_goood_reason_item_title" title="Vietnam, the land of rice fields" data-bs-toggle="modal" data-bs-target="#goodRS5">
+                                    <h3> Vietnam, the land of rice fields </h3>
+                                </div>
+                                <div class="trvs_goood_reason_item_stt"> 01 </div>
+                            </div>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="goodRS5" tabindex="-1" aria-labelledby="goodRS5Label" aria-hidden="true">
+                                <div class="modal-dialog modal_xl">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="goodRS5Label">Modal title 5</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            ...
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                        <div class="trvs_goood_reason_item">
+                            <img src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="item" width="406" height="333" loading="lazy">
+                            <div class="trvs_goood_reason_item_intro">
+                                <div class="trvs_goood_reason_item_title" title="Vietnam, the land of rice fields" data-bs-toggle="modal" data-bs-target="#goodRS6">
+                                    <h3> Vietnam, the land of rice fields </h3>
+                                </div>
+                                <div class="trvs_goood_reason_item_stt"> 01 </div>
+                            </div>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="goodRS6" tabindex="-1" aria-labelledby="goodRS6Label" aria-hidden="true">
+                                <div class="modal-dialog modal_xl">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="goodRS6Label">Modal title 6</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            ...
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {$core->getBlock('des_list_travel_style')}
+    <div class="trvs_when_vn">
+        <div class="container">
+            <div class="header_home_box">
+                <h2 class="title_home_box">
+                    <span>WHEN TO GO TO VIETNAM</span>
+                </h2>
+                <p class="description text-center">
+                    Let yourself be guided by our Vietnam thematic
+                    offers.
+                </p>
+            </div>
+            <div class="content_home_box">
+                <div class="tab_month">
+                    <div class="row">
+                        <div class="col-4 col-md-4 col-lg-2 month">
+                            Janv <img src="{$URL_IMAGES}/destination/when_full.png" alt="Month" width="32" height="6" loading="lazy" />
+                        </div>
+                        <div class="col-4 col-md-4 col-lg-2 month">
+                            Fév <img src="{$URL_IMAGES}/destination/when_full.png" alt="Month" width="32" height="6" loading="lazy" />
+                        </div>
+                        <div class="col-4 col-md-4 col-lg-2 month">
+                            Mars <img src="{$URL_IMAGES}/destination/when_full.png" alt="Month" width="32" height="6" loading="lazy" />
+                        </div>
+                        <div class="col-4 col-md-4 col-lg-2 month month_act">
+                            Avr <img src="{$URL_IMAGES}/destination/when_act.png" alt="Month" width="32" height="6" loading="lazy" />
+                        </div>
+                        <div class="col-4 col-md-4 col-lg-2 month">
+                            Mai <img src="{$URL_IMAGES}/destination/when_hafl.png" alt="Month" width="32" height="6" loading="lazy" />
+                        </div>
+                        <div class="col-4 col-md-4 col-lg-2 month">
+                            Juin <img src="{$URL_IMAGES}/destination/when_hafl.png" alt="Month" width="32" height="6" loading="lazy" />
+                        </div>
+                        <div class="col-4 col-md-4 col-lg-2 month">
+                            Juil <img src="{$URL_IMAGES}/destination/when_hafl.png" alt="Month" width="32" height="6" loading="lazy" />
+                        </div>
+                        <div class="col-4 col-md-4 col-lg-2 month">
+                            Août <img src="{$URL_IMAGES}/destination/when_hafl.png" alt="Month" width="32" height="6" loading="lazy" />
+                        </div>
+                        <div class="col-4 col-md-4 col-lg-2 month">
+                            Sept <img src="{$URL_IMAGES}/destination/when_hafl.png" alt="Month" width="32" height="6" loading="lazy" />
+                        </div>
+                        <div class="col-4 col-md-4 col-lg-2 month">
+                            Oct <img src="{$URL_IMAGES}/destination/when_full.png" alt="Month" width="32" height="6" loading="lazy" />
+                        </div>
+                        <div class="col-4 col-md-4 col-lg-2 month">
+                            Nov <img src="{$URL_IMAGES}/destination/when_full.png" alt="Month" width="32" height="6" loading="lazy" />
+                        </div>
+                        <div class="col-4 col-md-4 col-lg-2 month">
+                            Déc <img src="{$URL_IMAGES}/destination/when_hafl.png" alt="Month" width="32" height="6" loading="lazy" />
+                        </div>
+                    </div>
+                </div>
+                <div class="tab_content">
+                    <p>
+                        Come visit Vietnam all year round, it’s good all
+                        year round. <br />
+                        From October to April: Overall, for a complete
+                        discovery of Vietnam, that is to say from north
+                        to south, this period is very <br />
+                        favorable. It combines bearable temperatures
+                        whatever the region, and very little rain.
+                    </p>
+                    <a href="#" title="LEARN MORE" class="view_more">View more
+                        <i class="fa-solid fa-arrow-right-long"></i></a>
+                </div>
+                <div class="tab_destination">
+                    <div class="container">
+                        <div class="owl-carousel owl-theme owl_when_vn">
+                            <div class="item">
+                                <div class="des_item">
+                                    <a href="#" title="Da Nang">
+                                        <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=1948&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Da Nang" width="424" height="315" loading="lazy" />
+                                    </a>
+                                    <div class="info">
+                                        <h3><a href="#" title="Da Nang">Da Nang</a></h3>
+                                        <p class="map">
+                                            <i class="fas fa-map-marker-alt"></i>Da Nang, Vietnam
+                                        </p>
+                                        <div class="description">
+                                            Explore several breathtaking landscapes - Discover local daily lifestyles - Get closer to the...
+                                        </div>
+                                    </div>
+                                    <div class="btn_link_act">
+                                        <a href="#" title="Da Nang">
+                                            <span class="btn_mobile">SEE DETAILS</span>
+                                            <i class="fa-solid fa-arrow-right-long"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <div class="des_item">
+                                    <a href="#" title="Da Nang">
+                                        <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=1948&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Da Nang" width="424" height="315" loading="lazy" />
+                                    </a>
+                                    <div class="info">
+                                        <h3><a href="#" title="Da Nang">Da Nang</a></h3>
+                                        <p class="map">
+                                            <i class="fas fa-map-marker-alt"></i>Da Nang, Vietnam
+                                        </p>
+                                        <div class="description">
+                                            Explore several breathtaking landscapes - Discover local daily lifestyles - Get closer to the...
+                                        </div>
+                                    </div>
+                                    <div class="btn_link_act">
+                                        <a href="#" title="Da Nang">
+                                            <span class="btn_mobile">SEE DETAILS</span>
+                                            <i class="fa-solid fa-arrow-right-long"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="des_item">
+                                    <a href="#" title="Da Nang">
+                                        <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=1948&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Da Nang" width="424" height="315" loading="lazy" />
+                                    </a>
+                                    <div class="info">
+                                        <h3><a href="#" title="Da Nang">Da Nang</a></h3>
+                                        <p class="map">
+                                            <i class="fas fa-map-marker-alt"></i>Da Nang, Vietnam
+                                        </p>
+                                        <div class="description">
+                                            Explore several breathtaking landscapes - Discover local daily lifestyles - Get closer to the...
+                                        </div>
+                                    </div>
+                                    <div class="btn_link_act">
+                                        <a href="#" title="Da Nang">
+                                            <span class="btn_mobile">SEE DETAILS</span>
+                                            <i class="fa-solid fa-arrow-right-long"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="when_vn_map">
+                    <img src="{$URL_IMAGES}/destination/when_vn_map.png" alt="vector" width="422" height="826" loading="lazy" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="trvs_list_blog">
+        <div class="container">
+            <div class="trvs_list_blog_title">
+                <h2>VIETNAM TRAVEL BLOG</h2>
+            </div>
+            <div class="trvs_list_blog_content">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                        <div class="box_left">
+                            <div class="trvs_item_blog">
+                                <a href="#" title="Why should you come to Vietnam">
+                                    <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bmF0dXJlfGVufDB8fDB8fHww" alt="Why should you come to Vietnam" width="373" height="270">
+                                </a>
+                                <div class="trvs_item_blog_intro">
+                                    <div class="trvs_item_blog_title">
+                                        <h3>Why should you come to Vietnam</h3>
+                                    </div>
+                                    <div class="trvs_item_blog_description">
+                                        Have confidence when discovering the street food of Hanoi’s Old Quarter by traveling with a guide...
+                                    </div>
+                                    <div class="trvs_item_blog_info">
+                                        <i class="fa-sharp fa-regular fa-clock"></i>
+                                        10 Feb, 2024
+                                        | Travel Blog
+                                    </div>
+                                    <a href="#" class="trvs_item_blog_link" title="Why should you come to Vietnam">
+                                        LEARN MORE <i class="fa-sharp fa-regular fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-8 col-lg-8">
+                        <div class="box_right box_right_top">
+                            <div class="trvs_item_blog">
+                                <div class="trvs_item_blog_intro order-2 order-md-1">
+                                    <div class="trvs_item_blog_title">
+                                        <a href="#" title="Why should you come to Vietnam">
+                                            <h3>Why should you come to Vietnam</h3>
+                                        </a>
+                                    </div>
+                                    <div class="trvs_item_blog_description">
+                                        Have confidence when discovering the street food of Hanoi’s Old Quarter by traveling with a guide...
+                                    </div>
+                                    <div class="trvs_item_blog_info">
+                                        <i class="fa-sharp fa-regular fa-clock"></i>
+                                        10 Feb, 2024
+                                        | Travel Blog
+                                    </div>
+                                    <a href="#" class="trvs_item_blog_link" title="Why should you come to Vietnam">
+                                        LEARN MORE <i class="fa-sharp fa-regular fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                                <a href="#" title="Why should you come to Vietnam" class="order-1 order-md-2">
+                                    <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bmF0dXJlfGVufDB8fDB8fHww" alt="Why should you come to Vietnam" width="373" height="270">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="box_right box_right_bot">
+                            <div class="trvs_item_blog">
+                                <a href="#" title="Why should you come to Vietnam">
+                                    <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bmF0dXJlfGVufDB8fDB8fHww" alt="Why should you come to Vietnam" width="373" height="270">
+                                </a>
+                                <div class="trvs_item_blog_intro">
+                                    <div class="trvs_item_blog_title">
+                                        <h3>Why should you come to Vietnam</h3>
+                                    </div>
+                                    <div class="trvs_item_blog_description">
+                                        Have confidence when discovering the street food of Hanoi’s Old Quarter by traveling with a guide...
+                                    </div>
+                                    <div class="trvs_item_blog_info">
+                                        <i class="fa-sharp fa-regular fa-clock"></i>
+                                        10 Feb, 2024
+                                        | Travel Blog
+                                    </div>
+                                    <a href="#" class="trvs_item_blog_link" title="Why should you come to Vietnam">
+                                        LEARN MORE <i class="fa-sharp fa-regular fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="trvs_travel_file">
+        <div class="container">
+            <div class="trvs_travel_file_title">
+                <h2>TRAVEL FILE ABOUT VIETNAM</h2>
+            </div>
+            <div class="trvs_travel_file_content">
+                <div class="owl-carousel owl-theme trvs_travel_file_carousel">
+                    <div class="item">
+                        <div class="trvs_travel_file_item">
+                            <a href="#" title="TRAVEL FILE">
+                                <img src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="TRAVEL FILE" width="405" height="352" loading="lazy" />
+                            </a>
+                            <div class="trvs_travel_file_intro">
+                                <h3><a href="#" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit. ">Lorem ipsum dolor sit amet, consectetur adipiscing elit. </a></h3>
+                                <div class="description">
+                                    Pulvinar ut molestie imperdiet sed hendrerit maecenas. Amet consectetur pellentesque morbi
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {$core->getBlock('why_choose_us')}
+    {$core->getBlock('customer_review')}
+    <div class="trvs_faq">
+        <div class="container">
+            <div class="content_trvs_faq">
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <div class="trvs_faq_list">
+                            <div class="header_trvs_faq">
+                                <h2 class="title_trvs_faq">
+                                    <span>PREPARE FOR YOUR TRIP TO VIETNAM</span>
+                                </h2>
+                            </div>
+                            <div class="list_faq">
+                                <div class="accordion accordion-flush" id="accordionFlushExample">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                                What to see and do while
+                                                traveling in Vietnam?
+                                            </button>
+                                        </h2>
+                                        <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                                            <div class="accordion-body">
+                                                Placeholder content for
+                                                this accordion, which is
+                                                intended to demonstrate
+                                                the
+                                                <code>.accordion-flush</code>
+                                                class. This is the first
+                                                item's accordion body.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                                                Getting around Vietnam
+                                            </button>
+                                        </h2>
+                                        <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                                            <div class="accordion-body">
+                                                Placeholder content for
+                                                this accordion, which is
+                                                intended to demonstrate
+                                                the
+                                                <code>.accordion-flush</code>
+                                                class. This is the
+                                                second item's accordion
+                                                body. Let's imagine this
+                                                being filled with some
+                                                actual content.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                                                Accommodations on a trip
+                                                to Vietnam
+                                            </button>
+                                        </h2>
+                                        <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                                            <div class="accordion-body">
+                                                Placeholder content for
+                                                this accordion, which is
+                                                intended to demonstrate
+                                                the
+                                                <code>.accordion-flush</code>
+                                                class. This is the third
+                                                item's accordion body.
+                                                Nothing more exciting
+                                                happening here in terms
+                                                of content, but just
+                                                filling up the space to
+                                                make it look, at least
+                                                at first glance, a bit
+                                                more representative of
+                                                how this would look in a
+                                                real-world application.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThreee" aria-expanded="false" aria-controls="flush-collapseThreee">
+                                                Experience “ECOTOURISM”,
+                                                the popular formula with
+                                                original experiences
+                                            </button>
+                                        </h2>
+                                        <div id="flush-collapseThreee" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                                            <div class="accordion-body">
+                                                Placeholder content for
+                                                this accordion, which is
+                                                intended to demonstrate
+                                                the
+                                                <code>.accordion-flush</code>
+                                                class. This is the third
+                                                item's accordion body.
+                                                Nothing more exciting
+                                                happening here in terms
+                                                of content, but just
+                                                filling up the space to
+                                                make it look, at least
+                                                at first glance, a bit
+                                                more representative of
+                                                how this would look in a
+                                                real-world application.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThreer" aria-expanded="false" aria-controls="flush-collapseThreer">
+                                                Travel diary for a trip
+                                                to Vietnam
+                                            </button>
+                                        </h2>
+                                        <div id="flush-collapseThreer" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                                            <div class="accordion-body">
+                                                Placeholder content for
+                                                this accordion, which is
+                                                intended to demonstrate
+                                                the
+                                                <code>.accordion-flush</code>
+                                                class. This is the third
+                                                item's accordion body.
+                                                Nothing more exciting
+                                                happening here in terms
+                                                of content, but just
+                                                filling up the space to
+                                                make it look, at least
+                                                at first glance, a bit
+                                                more representative of
+                                                how this would look in a
+                                                real-world application.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="trvs_faq_img">
+                            <img src="https://images.unsplash.com/photo-1475924156734-496f6cac6ec1?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="FAQ Image" width="456" height="447" loading="lazy" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {$core->getBlock('also_like')}
+    {/if}
+</section>
 
 {literal}
-	<script>
-		$(document).ready(function (){
-			var container = $(".list_tour_cat .item_tour_cat.active");
-			$('.box_scroll').animate({
-				scrollLeft: container.position().left - 10
-			});
-		});
-	</script>
+<script>
+    if ($('.owl_when_vn').length > 0) {
+        var $owl = $('.owl_when_vn');
+        $owl.owlCarousel({
+            lazyLoad: true,
+            loop: true,
+            margin: 23,
+            nav: true,
+            navText: ["<i class='fa-solid fa-angle-left'></i>", "<i class='fa-solid fa-angle-right'></i>"],
+            dots: false,
+            // autoplay: false,
+            // autoplayTimeout:3000,	
+            // animateOut: 'fadeOut',
+            // animateIn: 'fadeIn',
+            autoHeight: true,
+            responsiveClass: true,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 1
+                },
+                1000: {
+                    items: 2
+                }
+            }
+        });
+    }
+
+    if ($('.trvs_travel_file_carousel').length > 0) {
+        var $owl = $('.trvs_travel_file_carousel');
+        $owl.owlCarousel({
+            lazyLoad: true,
+            loop: true,
+            margin: 32,
+            nav: false,
+            navText: ["<i class='fa-solid fa-angle-left'></i>", "<i class='fa-solid fa-angle-right'></i>"],
+            dots: false,
+            // autoplay: false,
+            // autoplayTimeout:3000,	
+            // animateOut: 'fadeOut',
+            // animateIn: 'fadeIn',
+            autoHeight: true,
+            responsiveClass: true,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 2
+                },
+                1000: {
+                    items: 3
+                }
+            }
+        });
+    }
+</script>
 {/literal}

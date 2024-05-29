@@ -42,7 +42,7 @@ class Property extends dbBasic{
         $listType['HotelFacilities'] = $core->get_Lang('HotelFacilities');
         $listType['TypeHotel'] = $core->get_Lang('Hotel Type');
 		$listType['TypeRoom'] = $core->get_Lang('Room Type');
-		$listType['TypeBed'] = $core->get_Lang('Bed Type');
+//		$listType['TypeBed'] = $core->get_Lang('Bed Type');
 		$listType['RoomFacilities'] = $core->get_Lang('RoomFacilities');
 		return $listType;
 	}

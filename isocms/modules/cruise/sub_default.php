@@ -805,6 +805,9 @@ function default_search(){
 	$assign_list["keyword_page"] = $keyword_page;
 	/*=============Content Page==================*/			
 }
+function default_cat2(){
+	
+}
 function default_cat(){
 	global $assign_list, $_CONFIG, $core, $dbconn, $mod, $act, $_LANG_ID,$title_page,$description_page,$global_image_seo_page,$domain,$clsConfiguration,$cat_id,$clsISO,$now_month,$now_day;
 	#

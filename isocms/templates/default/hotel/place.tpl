@@ -8,10 +8,9 @@
             {if !isset($clsCountryEx->getImageBannerHotel($country_id,1920,500,$oneItem)) || !$clsCountryEx->getImageBannerHotel($country_id,1920,500,$oneItem)}
                 <img src="{$URL_IMAGES}/hotel/no-image.png" alt="error" class="img100" />
             {else}
-                <img src="{$clsCountryEx->getImage($country_id,1920,600)}" class="img100"
+                <img src="{$clsCountryEx->getImageBannerHotel($country_id,1920,600)}" class="img100"
                     alt="{$core->get_Lang('Hotels in')} {$TD}" />
             {/if}
-
         {/if}
         </div>
         {$core->getBlock('box_form_search_hotel')}
@@ -35,7 +34,7 @@
                     </div>
                     <div itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" class="active">
                         <a itemprop="item" href="{$curl}" title="{$TD}">
-                            <span itemprop="name" class="breadcrumb-item">{$TD}</span></a>
+                            <span itemprop="name" class="breadcrumb-item">{$clsCountryEx->getTitle($country_id)}</span></a>
                         <meta itemprop="position" content="3" />
                     </div>
                 </li>
@@ -44,10 +43,6 @@
     </section>
     <div id="contentPage" class="hotelPlacePage pdt40">
         <div class="container">
-            {* <h1>{$core->get_Lang('Hotels in')} {$TD}</h1>
-			<div class="intro_top short_content" data-height="150">
-				{$HOTEL_INTRO}
-			</div> *}
             <div class="nsdt_row_content">
                 <div class="list-hotel-item">
                     <div class="filter-hotel-item">
@@ -88,12 +83,12 @@
                             </div>
                         </div>
                         <div class="item-hotel-list">
-                            <h2 class="head-title-hotel">{$TD}: <span>{$core->get_Lang('Find')} {$totalRecord}
+                            <h2 class="head-title-hotel">{$clsCountryEx->getTitle($country_id)}: <span>{$core->get_Lang('Find')} {$totalRecord}
                                     {$core->get_Lang('accommodations')}</span></h2>
                             <div class="intro_top short_content content-hotelss-txt" data-height="100">
-                                {$HOTEL_INTRO}
+                                {$core->get_Lang("100% customizable {$clsCountryEx->getTitle($country_id)} stay. Idea to compose your trip as you wish")}
                             </div>
-                            {assign var=totalHotel value=$listHotelPlace|@count}
+
                             <div class="box-hotel-style">
                                 {section name=i loop=$listHotelPlace}
                                     {assign var = hotel_id value = $listHotelPlace[i].hotel_id}
@@ -102,56 +97,17 @@
                                 {/section}
                             </div>
                             {if $totalPage gt '1'}
-                                <div class="pagination pager">
-                                {if $currentPage > 1}
-                                    <li class="pagin-prev">
-                                        <a class="pagin-prev-link" href="{$prevLink}" aria-label="Previous">
-                                        <img src="{$URL_IMAGES}/hotel/prevPage.svg" alt="error" />
-                                        </a>
-                                    </li>
-                                {/if}
-
-                                {assign var="prevPage" value=null}
-                                {foreach from=$paginationLinks item=page}
-                                    {if $page.page == 1 or $page.page == $totalPage or 
-                ($page.page >= $currentPage - 2 and $page.page <= $currentPage + 2)}
-                                    {if $prevPage !== null and $page.page != $prevPage + 1}
-                                        <li class="page-item">
-                                            <span class="hideTextPaging">...</span>
-                                        </li>
-                                    {/if}
-                                    <li class="page-item {if $page.is_current}active{/if}">
-                                        <a class="page-item-link" href="{$page.url}">{$page.page}</a>
-                                    </li>
-                                    {assign var="prevPage" value=$page.page}
-                                {/if}
-                            {/foreach}
-
-                            {if $currentPage < $totalPage}
-                                <li class="pagin-next">
-                                    <a class="pagin-next-link" href="{$nextLink}" aria-label="Next">
-                                    <img src="{$URL_IMAGES}/hotel/nextPage.svg" alt="error" />
-                                    </a>
-                                </li>
+                                <div class="pagination pager">{$page_view}</div>
                             {/if}
-                        </div>
-                            {/if}
-
                             <h2 class="recentlyViewed">{$core->get_Lang('Recently viewed')}</h2>
                             <div class="clicked-details"></div>
                             <button class="btnShowViewed">{$core->get_Lang('More')}</button>
                             <button class="btnNoneViewed">{$core->get_Lang('Collapse all')}</button>
                         </div>
-
                     </div>
-
                 </div>
-
             </div>
-
         </div>
-
-
     </div>
 
 </div>
