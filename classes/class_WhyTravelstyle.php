@@ -13,6 +13,12 @@ class WhyTravelstyle extends dbBasic
         }
         return $one['title'];
     }
+    function getContent($pvalTable)
+    {
+        global $_LANG_ID;
+        $one = $this->getOne($pvalTable, 'content');
+        return html_entity_decode($one['content']);
+    }
     function getImageUrl($why_trvs_id)
     {
         global $clsISO;

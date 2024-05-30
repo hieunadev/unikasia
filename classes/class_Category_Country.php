@@ -415,37 +415,42 @@ class Category_Country extends dbBasic
 		$one = $this->getOne($pvalTable, 'intro_description');
 		return html_entity_decode($one['intro_description']);
 	}
-	function makeSelectboxOption($cat = 0, $country_id = 1)
+	function makeSelectboxOption($cat = 0, $country_id = 0)
 	{
 		global $core, $dbconn, $clsISO;
 		#
 		// $clsISO->dump($cat);
-		// $clsISO->dump($country_id);
+		// // $clsISO->dump($country_id);
+		// die;
 
 		$clsTourCategory	=	new TourCategory;
-		$cond = "is_trash=0 and is_online=1";
+		$cond	= 	"is_trash = 0 AND is_online = 1";
+		#
+		$html	=	'';
 		if (intval($country_id) != 0) {
-			$cond .= " AND country_id=" . $country_id;
-		}
-		$cond .= " ORDER BY order_no ASC";
-		#
-		$res = $this->getAll($cond, "{$this->pkey}, country_id, cat_id");
-		#
-		$new_arr	=	[];
-		foreach ($res as $v1) {
-			$new_arr[]	=	$v1['cat_id'];
-		}
-		$new_str	=	implode(", ", $new_arr);
-		$res2 = $clsTourCategory->getAll("is_trash=0 and is_online=1 AND tourcat_id IN ($new_str) ORDER BY order_no ASC", "tourcat_id, title");
-		#
-		$html = '<option value="0">-- ' . $core->get_Lang('Travel style') . ' --</option>';
-		if (!empty($res2)) {
-			foreach ($res2 as $item) {
-				$selected = ($cat == $item['tourcat_id']) ? ' selected="selected"' : '';
-				$html .= '<option value="' . $item['tourcat_id'] . '"' . $selected . '>' . $item['title'] . '</option>';
+			$cond .= " AND country_id = " . $country_id;
+			#
+			$cond	.= 	" ORDER BY order_no ASC";
+			#
+			$res	= 	$this->getAll($cond, "{$this->pkey}, country_id, cat_id");
+			#
+			$new_arr	=	[];
+			foreach ($res as $v1) {
+				$new_arr[]	=	$v1['cat_id'];
 			}
+			$new_str	=	implode(", ", $new_arr);
+			$res2 		= 	$clsTourCategory->getAll("is_trash=0 and is_online=1 AND tourcat_id IN ($new_str) ORDER BY order_no ASC", "tourcat_id, title");
+			#
+			if (!empty($res2)) {
+				$html	.= 	'<option value="0">-- ' . $core->get_Lang('Travel style') . ' --</option>';
+				foreach ($res2 as $item) {
+					$selected	= 	($cat == $item['tourcat_id']) ? ' selected="selected"' : '';
+					$html	.=	'<option value="' . $item['tourcat_id'] . '"' . $selected . '>' . $item['title'] . '</option>';
+				}
+			}
+			return $html;
+		} else {
+			return $html;
 		}
-
-		return $html;
 	}
 }

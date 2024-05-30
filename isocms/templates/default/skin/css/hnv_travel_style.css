@@ -73,8 +73,24 @@ body {
     margin-bottom: 32px;
     transition: all 0.2s ease-in-out;
 }
-.trvs_goood_reason_item:hover {
-    filter: brightness(80%);
+.trvs_goood_reason_item img,
+.trvs_goood_reason_item .trvs_goood_reason_item_title a {
+    transition: all 0.3s ease-in-out;
+}
+.trvs_goood_reason_item:hover img {
+    filter: brightness(70%);
+}
+.trvs_goood_reason_item:hover .trvs_goood_reason_item_title a {
+    color: #ffa718;
+}
+.trvs_goood_reason_item img {
+    border-radius: 8px;
+}
+.trvs_goood_reason_item_intro {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 .trvs_goood_reason_item_title {
     padding: 104px 24px 67px;
@@ -84,20 +100,19 @@ body {
         rgba(31, 36, 45, 0) 0%,
         rgba(22, 24, 29, 0.8) 100%
     );
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 1;
 }
 .trvs_goood_reason_item_title h3 {
-    color: var(--Neutral-6, #fff);
     font-family: "SF Pro Display";
     font-size: 24px;
     font-style: normal;
     font-weight: 600;
     line-height: 36px;
     cursor: pointer;
+    position: relative;
+    z-index: 1;
+}
+.trvs_goood_reason_item_title h3 a {
+    color: var(--Neutral-6, #fff);
 }
 .trvs_goood_reason_item_stt {
     color: rgba(255, 255, 255, 0.2);

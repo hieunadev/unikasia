@@ -1027,3 +1027,18 @@ function default_destination()
 		header('location:' . PCMS_URL . '?mod=' . $mod . '&act=' . $act . '&message=UpdateSuccess');
 	}
 }
+function default_travelstyle()
+{
+	global $assign_list, $_CONFIG, $_LANG_ID, $_SITE_ROOT, $mod, $act;
+	global $core, $clsModule, $clsConfiguration, $oneSetting, $clsISO;
+	#
+	if (isset($_POST['submit']) && $_POST['submit'] == 'UpdateConfiguration') {
+		foreach ($_POST as $key => $val) {
+			$tmp	= 	explode('-', $key);
+			if ($tmp[0] == 'iso') {
+				$clsConfiguration->updateValue($tmp[1], $val);
+			}
+		}
+		header('location:' . PCMS_URL . '?mod=' . $mod . '&act=' . $act . '&message=UpdateSuccess');
+	}
+}

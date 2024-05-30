@@ -22,162 +22,30 @@
             </div>
             <div class="trvs_goood_reason_list">
                 <div class="row">
+                    {if $arr_why_trvs_country}
+                    {foreach from=$arr_why_trvs_country key=key item=item }
+                    {assign var="why_trvs_id" value=$item.why_trvs_id}
                     <div class="col-12 col-sm-12 col-md-6 col-lg-4">
                         <div class="trvs_goood_reason_item">
-                            <img src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="item" width="406" height="333" loading="lazy">
+                            <img src="{$clsWhyTravelstyle->getImage($why_trvs_id, 406, 333)}" alt="{$clsWhyTravelstyle->getTitle($why_trvs_id)}" width="406" height="333" loading="lazy">
                             <div class="trvs_goood_reason_item_intro">
-                                <div class="trvs_goood_reason_item_title" title="Vietnam, the land of rice fields" data-bs-toggle="modal" data-bs-target="#goodRS1">
-                                    <h3> Vietnam, the land of rice fields </h3>
+                                <div class="trvs_goood_reason_item_title">
+                                    <h3>
+                                        <a data-fancybox data-src="#modalRS{$key + 1}" href="javascript:;" title="{$clsWhyTravelstyle->getTitle($why_trvs_id)}">
+                                            {$clsWhyTravelstyle->getTitle($why_trvs_id)}
+                                        </a>
+                                    </h3>
                                 </div>
-                                <div class="trvs_goood_reason_item_stt"> 01 </div>
-                            </div>
-
-                            <!-- Modal -->
-                            <div class="modal fade" id="goodRS1" tabindex="-1" aria-labelledby="goodRS1Label" aria-hidden="true">
-                                <div class="modal-dialog modal_xl">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="goodRS1Label">Modal title 1</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            ...
-                                        </div>
-                                    </div>
+                                <div class="trvs_goood_reason_item_stt"> 0{$key + 1} </div>
+                                <div style="display: none;" id="modalRS{$key + 1}">
+                                    <h3 class="mb-3">{$clsWhyTravelstyle->getTitle($why_trvs_id)}</h3>
+                                    <div>{$clsWhyTravelstyle->getContent($why_trvs_id)}</div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
-                        <div class="trvs_goood_reason_item">
-                            <img src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="item" width="406" height="333" loading="lazy">
-                            <div class="trvs_goood_reason_item_intro">
-                                <div class="trvs_goood_reason_item_title" title="Vietnam, the land of rice fields" data-bs-toggle="modal" data-bs-target="#goodRS2">
-                                    <h3> Vietnam, the land of rice fields </h3>
-                                </div>
-                                <div class="trvs_goood_reason_item_stt"> 01 </div>
-                            </div>
-
-                            <!-- Modal -->
-                            <div class="modal fade" id="goodRS2" tabindex="-1" aria-labelledby="goodRS2Label" aria-hidden="true">
-                                <div class="modal-dialog modal_xl">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="goodRS2Label">Modal title 2</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            ...
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
-                        <div class="trvs_goood_reason_item">
-                            <img src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="item" width="406" height="333" loading="lazy">
-                            <div class="trvs_goood_reason_item_intro">
-                                <div class="trvs_goood_reason_item_title" title="Vietnam, the land of rice fields" data-bs-toggle="modal" data-bs-target="#goodRS3">
-                                    <h3> Vietnam, the land of rice fields </h3>
-                                </div>
-                                <div class="trvs_goood_reason_item_stt"> 01 </div>
-                            </div>
-
-                            <!-- Modal -->
-                            <div class="modal fade" id="goodRS3" tabindex="-1" aria-labelledby="goodRS3Label" aria-hidden="true">
-                                <div class="modal-dialog modal_xl">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="goodRS3Label">Modal title 3</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            ...
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
-                        <div class="trvs_goood_reason_item">
-                            <img src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="item" width="406" height="333" loading="lazy">
-                            <div class="trvs_goood_reason_item_intro">
-                                <div class="trvs_goood_reason_item_title" title="Vietnam, the land of rice fields" data-bs-toggle="modal" data-bs-target="#goodRS4">
-                                    <h3> Vietnam, the land of rice fields </h3>
-                                </div>
-                                <div class="trvs_goood_reason_item_stt"> 01 </div>
-                            </div>
-
-                            <!-- Modal -->
-                            <div class="modal fade" id="goodRS4" tabindex="-1" aria-labelledby="goodRS4Label" aria-hidden="true">
-                                <div class="modal-dialog modal_xl">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="goodRS4Label">Modal title 4</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            ...
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
-                        <div class="trvs_goood_reason_item">
-                            <img src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="item" width="406" height="333" loading="lazy">
-                            <div class="trvs_goood_reason_item_intro">
-                                <div class="trvs_goood_reason_item_title" title="Vietnam, the land of rice fields" data-bs-toggle="modal" data-bs-target="#goodRS5">
-                                    <h3> Vietnam, the land of rice fields </h3>
-                                </div>
-                                <div class="trvs_goood_reason_item_stt"> 01 </div>
-                            </div>
-
-                            <!-- Modal -->
-                            <div class="modal fade" id="goodRS5" tabindex="-1" aria-labelledby="goodRS5Label" aria-hidden="true">
-                                <div class="modal-dialog modal_xl">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="goodRS5Label">Modal title 5</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            ...
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
-                        <div class="trvs_goood_reason_item">
-                            <img src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="item" width="406" height="333" loading="lazy">
-                            <div class="trvs_goood_reason_item_intro">
-                                <div class="trvs_goood_reason_item_title" title="Vietnam, the land of rice fields" data-bs-toggle="modal" data-bs-target="#goodRS6">
-                                    <h3> Vietnam, the land of rice fields </h3>
-                                </div>
-                                <div class="trvs_goood_reason_item_stt"> 01 </div>
-                            </div>
-
-                            <!-- Modal -->
-                            <div class="modal fade" id="goodRS6" tabindex="-1" aria-labelledby="goodRS6Label" aria-hidden="true">
-                                <div class="modal-dialog modal_xl">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="goodRS6Label">Modal title 6</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            ...
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {/foreach}
+                    {/if}
                 </div>
             </div>
         </div>

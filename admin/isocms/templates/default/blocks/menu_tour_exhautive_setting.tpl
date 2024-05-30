@@ -1,5 +1,10 @@
 <div class="menu_setting_box">
 	<ul class="ul_menu_setting">
+		<li class="{if $act=='setting'}current{/if}">
+			<a href="{$PCMS_URL}/?mod=tour_exhautive&act=setting">
+				<span class="text">{$core->get_Lang('Tour Settings')}</span>
+			</a>
+		</li>
 		{assign var=lstTourType value=$clsTourStore->getListType()}
 		{foreach from=$lstTourType key=k item=v}
 		<li class="{if $type==$k}current{/if}">

@@ -389,6 +389,7 @@ function default_detail(){
 	
 	$listCountry = $clsCountryEx->getAll("is_trash=0 order by order_no",$clsCountryEx->pkey.',slug,title');
 	$assign_list['listCountry'] = $listCountry;
+	
 
 	#
 	$blog_id = isset($_GET['blog_id'])?$_GET['blog_id']:0;
@@ -445,6 +446,9 @@ function default_detail(){
 			$assign_list["lstBlogRecent"] = $lstBlogRecent;
 		}
 	}
+	
+	$clsTour = new Tour(); $assign_list['clsTour'] = $clsTour;
+	$assign_list['lstRelatedTour'] = $clsTour->getAll(" is_trash=0 and is_online=1 order by order_no DESC LIMIT 3");
 
 	
 	/*=============Title & Description Page==================*/

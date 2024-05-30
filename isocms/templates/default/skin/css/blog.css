@@ -181,7 +181,10 @@ a.readyToStart-btn:hover {
 .blog-top .blog-item .blog-mid_img,
 .lastest-blog .lastblog .lastest-blog-img,
 .featured-blogs .featured-blog .featuredblog-img,
-.recentlyview .bloglastest .img-blogrecently
+.recentlyview .bloglastest .img-blogrecently,
+.related_tours .bloglastest .img_relatedtour,
+.read_blognext .blog_related_item .img_relatedtour,
+.read_blognext .item .img_relatedtour 
 
 {
 /*    width: 296px;*/
@@ -195,8 +198,10 @@ a.readyToStart-btn:hover {
 .blog-top .blog-item:hover .blog-mid_img,
 .lastest-blog .lastblog:hover .lastest-blog-img,
 .featured-blogs .featured-blog:hover .featuredblog-img,
-.recentlyview .bloglastest:hover .img-blogrecently
-
+.recentlyview .bloglastest:hover .img-blogrecently,
+.related_tours .bloglastest:hover .img_relatedtour,
+.read_blognext .blog_related_item:hover .img_relatedtour,
+.read_blognext .item:hover .img_relatedtour 
 {
     transform: scale(1.2);
 }
@@ -238,7 +243,9 @@ a.readyToStart-btn:hover {
 .txt_recently a:hover,
 .txth_relatedtour:hover,
 .txthigh_cateblog a:hover,
-.txthigh_cateblog_ a:hover{
+.txthigh_cateblog_ a:hover,
+a .btn_seealltour:hover,
+.txt_cateblog:hover{
   	color: #FFA718;
 }
 
@@ -1211,12 +1218,25 @@ img.img_featureblog {
 	flex-shrink: 0;
 	fill: linear-gradient(180deg, rgba(24, 28, 26, 0.48) 0%, rgba(24, 28, 26, 0.00) 100%);
 	position: absolute; 
-    bottom: 20px; /* Điều chỉnh vị trí từ dưới lên */
-    left: 50%;   /* Đặt button ở giữa theo chiều ngang */
-    transform: translateX(-50%); /* Điều chỉnh lại để chính giữa */
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
 	border-radius: 8px;
-	background: #FFA718 !important;
+	background: #FFA718;
+	color: #FFF;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: 24px;
+	border: none;
+}
+
+.btn_seealltour:hover {
+	background: #e88f00;
 	color: #FFF !important;
+	border: none;
+
+
 }
 
 /* CSS Related Tour End */
@@ -1291,6 +1311,7 @@ img.img_featureblog {
 	line-height: 24px; /* 150% */
 }
 
+
 .txthigh_cateblog a {
 	color: #111D37;
 	font-size: 32px;
@@ -1345,7 +1366,8 @@ img.img_featureblog {
 
 
 .list_readblog img {
-  width: 144px;
+	width: 100%;
+  max-width: 144px !important;
   height: 145px;
   object-fit: cover;
 	border-radius: 8px;
@@ -1521,6 +1543,20 @@ img.img_featureblog {
 .rating input:checked + label ~ label {
 	color: #ffc107; 
 }
+
+.txt_des_tour p {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical; 
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+
+
+
+
 
 
 

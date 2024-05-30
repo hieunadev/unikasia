@@ -1313,6 +1313,8 @@ function default_edit()
     $assign_list["clsProfile"] = $clsProfile;
     $clsAddOnService = new AddOnService();
     $assign_list["clsAddOnService"] = $clsAddOnService;
+    $clsMonth = new Month();
+    $assign_list["clsMonth"] = $clsMonth;
     #
     $show = Input::get('show');
     $message = Input::get('message', "");
@@ -1466,7 +1468,7 @@ function default_edit()
             $list_check_target[] = array('result' => 'check_caution', 'cat' => 'basic', 'target' => 'title-tripcode', 'name' => $core->get_Lang('Title and trip code'));
         }
 
-        if ($oneItem['list_cat_id'] != '' && $oneItem['list_cat_id'] != '|0|' && $oneItem['list_cat_id'] != '||' && $oneItem['list_departure_point_id'] != '' && $oneItem['list_departure_point_id'] != '|0|' && $oneItem['list_departure_point_id'] != '||') {
+        if ($oneItem['list_cat_id'] != '' && $oneItem['list_cat_id'] != '|0|' && $oneItem['list_cat_id'] != '||' && $oneItem['list_departure_point_id'] != '' && $oneItem['list_departure_point_id'] != '|0|' && $oneItem['list_departure_point_id'] != '||' && $oneItem['list_month_id'] != '' && $oneItem['list_month_id'] != '|0|' && $oneItem['list_month_id'] != '||') {
             $list_check_target[] = array('result' => 'check_success', 'cat' => 'basic', 'target' => 'option-tour', 'name' => $core->get_Lang('Option Tour'));
         } else {
             $list_check_target[] = array('result' => 'check_caution', 'cat' => 'basic', 'target' => 'option-tour', 'name' => $core->get_Lang('Option Tour'));
@@ -1664,6 +1666,16 @@ function default_edit()
                 $assign_list["lst_service_overview"] = $lst_activities_overview = '';
             }
 
+            if ($oneItem['list_month_id'] != '||' && $oneItem['list_month_id'] != '|0|' && $oneItem['list_month_id'] != '') {
+                $list_month_id = $oneItem['list_month_id'];
+                $list_month_id = rtrim($list_month_id, '|');
+                $list_month_id = ltrim($list_month_id, '|0|');
+                $list_month_id = explode('|', $list_month_id);
+                $assign_list["list_month_id"] = $list_month_id;
+            } else {
+                $assign_list["list_month_id"] = $list_month_id = '';
+            }
+
             $current_date = date('m/d/Y');
             $current_time = strtotime($current_date);
             $assign_list['now_day'] = $current_time;
@@ -1841,6 +1853,29 @@ function default_ajSaveDataasdsad()
                     $firstAdd = 1;
                 } else {
                     $value .= ",departure_point_id='" . $departure_point_id . "',list_departure_point_id='{$list_departure_point_id}'";
+                }
+            }
+
+            $month_ids = Input::post('month_id', array());
+            if (!empty($month_ids) && is_array($month_ids)) {
+                $list_month_id = '|';
+                foreach ($month_ids as $c_id) {
+                    $list_month_id .= $c_id . '|';
+                }
+                if ($firstAdd == 0) {
+                    $value .= "list_month_id='" . addslashes($list_month_id) . "'";
+                    $firstAdd = 1;
+                } else {
+                    $value .= ",list_month_id='" . addslashes($list_month_id) . "'";
+                }
+            } else {
+                $month_id = $month_ids;
+                $list_month_id = '|' . $month_id . '|';
+                if ($firstAdd == 0) {
+                    $value .= "list_month_id='{$list_month_id}'";
+                    $firstAdd = 1;
+                } else {
+                    $value .= ",list_month_id='{$list_month_id}'";
                 }
             }
         } else if ($type_post == 'seotool') {
@@ -2548,7 +2583,26 @@ function default_trash2()
         header('location: ' . PCMS_URL . '/?mod=' . $mod . $param_url . '&message=TrashSuccess');
     }
 }
-
+function default_trash3()
+{
+    global $assign_list, $_CONFIG, $_SITE_ROOT, $mod, $act;
+    global $core, $clsModule, $clsButtonNav, $oneSetting, $clsISO, $package_id;
+    #
+    $classTable     =   "WhyTravelstyle";
+    $clsClassTable  =   new $classTable;
+    $pkeyTable  =   $clsClassTable->pkey;
+    $pvalTable  =   isset($_GET[$pkeyTable]) ? intval($core->decryptID($_GET[$pkeyTable])) : "";
+    // $one =   $clsClassTable->getOne($pvalTable);
+    #
+    $param_url  =   '&act=why_travelstyle_country';
+    if ($pvalTable == "") {
+        header('location: ' . PCMS_URL . '/?mod=' . $mod . $param_url . '&message=notPermission');
+    }
+    #
+    if ($clsClassTable->updateOne($pvalTable, "is_trash='1'")) {
+        header('location: ' . PCMS_URL . '/?mod=' . $mod . $param_url . '&message=TrashSuccess');
+    }
+}
 function default_restore()
 {
     global $assign_list, $_CONFIG, $_SITE_ROOT, $mod, $act;
@@ -2577,7 +2631,6 @@ function default_restore()
         header('location: ' . PCMS_URL . '/index.php' . $pUrl . '&message=RestoreSuccess');
     }
 }
-
 function default_restore2()
 {
     global $assign_list, $_CONFIG, $_SITE_ROOT, $mod, $act;
@@ -2610,7 +2663,26 @@ function default_restore2()
         header('location: ' . PCMS_URL . '/?mod=' . $mod . $param_url . '&message=RestoreSuccess');
     }
 }
-
+function default_restore3()
+{
+    global $assign_list, $_CONFIG, $_SITE_ROOT, $mod, $act;
+    global $core, $clsModule, $clsButtonNav, $oneSetting, $clsISO, $package_id;
+    #
+    $classTable     =   "WhyTravelstyle";
+    $clsClassTable  =   new $classTable;
+    $pkeyTable      =   $clsClassTable->pkey;
+    $pvalTable      =   isset($_GET[$pkeyTable]) ? intval($core->decryptID($_GET[$pkeyTable])) : "";
+    // $one            =   $clsClassTable->getOne($pvalTable);
+    #
+    $param_url  =   '&act=why_travelstyle_country';
+    if ($pvalTable == "") {
+        header('location: ' . PCMS_URL . '/?mod=' . $mod . $param_url . '&message=notPermission');
+    }
+    #
+    if ($clsClassTable->updateOne($pvalTable, "is_trash='0'")) {
+        header('location: ' . PCMS_URL . '/?mod=' . $mod . $param_url . '&message=RestoreSuccess');
+    }
+}
 function default_delete()
 {
     global $assign_list, $_CONFIG, $_SITE_ROOT, $mod, $act;
@@ -2656,7 +2728,6 @@ function default_delete()
         header('location: ' . PCMS_URL . '/index.php' . $pUrl . '&message=DeleteSuccess');
     }
 }
-
 function default_delete2()
 {
     global $assign_list, $_CONFIG, $_SITE_ROOT, $mod, $act;
@@ -2688,7 +2759,25 @@ function default_delete2()
         header('location: ' . PCMS_URL . '/?mod=' . $mod . $param_url . '&message=DeleteSuccess');
     }
 }
-
+function default_delete3()
+{
+    global $assign_list, $_CONFIG, $_SITE_ROOT, $mod, $act;
+    global $core, $clsModule, $clsButtonNav, $oneSetting, $clsISO, $package_id;
+    #
+    $classTable     =   "WhyTravelstyle";
+    $clsClassTable  =   new $classTable;
+    $pkeyTable      =   $clsClassTable->pkey;
+    $pvalTable      =   isset($_GET[$pkeyTable]) ? intval($core->decryptID($_GET[$pkeyTable])) : "";
+    #
+    $param_url      =   '&act=why_travelstyle_country';
+    if ($pvalTable == "") {
+        header('location: ' . PCMS_URL . '/?mod=' . $mod . $param_url . '&message=notPermission');
+    }
+    #
+    if ($clsClassTable->doDelete($pvalTable)) {
+        header('location: ' . PCMS_URL . '/?mod=' . $mod . $param_url . '&message=DeleteSuccess');
+    }
+}
 function default_deleteTourProperty()
 {
     ini_set('display_errors', '1');
@@ -3259,7 +3348,6 @@ function default_liststore()
         }
     }
 }
-
 function default_ajUpdPosSortHotTour()
 {
     global $dbconn, $assign_list, $_CONFIG,  $_SITE_ROOT, $mod, $_LANG_ID, $act, $menu_current, $current_page, $core, $clsModule, $clsISO, $package_id;
@@ -3659,10 +3747,12 @@ function default_why_travelstyle_country()
     $type_list = isset($_GET['type_list']) ? $_GET['type_list'] : '';
     $assign_list["type_list"] = $type_list;
     #
-    // $clsTourCategory = new TourCategory();
-    // $assign_list["clsTourCategory"] = $clsTourCategory;
+    $clsTourCategory = new TourCategory();
+    $assign_list["clsTourCategory"] = $clsTourCategory;
     $clsCountry = new Country();
     $assign_list["clsCountry"] = $clsCountry;
+    $clsWhyTravelstyle = new WhyTravelstyle();
+    $assign_list["clsWhyTravelstyle"] = $clsWhyTravelstyle;
     // $clsCity = new City();
     // $assign_list["clsCity"] = $clsCity;
     #

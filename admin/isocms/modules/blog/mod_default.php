@@ -95,7 +95,7 @@ function default_insert() {
 	$show=isset($_GET['show']) ? $_GET['show'] : '';
 	$assign_list["show"] = $show;
     $assign_list["msg"] = isset($_GET['message']) ? $_GET['message'] : '';
-    $assign_list["country_id"] = "hieu";
+
 	$pvalTable =Input::get('blog_id',0);$assign_list["pvalTable"] = $pvalTable;
 	$panel =Input::get('panel','');$assign_list["panel"] = $panel;
 

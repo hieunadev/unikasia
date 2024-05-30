@@ -15,6 +15,7 @@ class TourStore extends dbBasic{
 		if($clsISO->getCheckActiveModulePackage($package_id,'tour_exhautive','store','default','REVQQVJUVVJFLVZpZXRJU08=')){
 			$lstType['DEPARTURE'] = $core->get_Lang('Tour Departure');
 		}
+//        $clsISO->dd($lstType);
 		return $lstType;
 	}
 	function getTitle($type){

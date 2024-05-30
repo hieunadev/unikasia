@@ -139,50 +139,63 @@
                         </div>
                         {elseif $currentstep=='why'}
                         <div class="inpt_tour">
-                            <label for="intro_title">{$core->get_Lang('Country')}</label>
-                            <select onchange="_reload()" name="country_id" class="form-control" style="width: 300px;">
-                                {$clsCountry->makeSelectboxOption($country_id)}
+                            <label for="intro_title">{$core->get_Lang('Country')} <span class="required_red">*</span></label>
+                            <select onchange="_reload()" id="country_id" name="country_id" class="form-control required" style="width: 300px;">
+                                {$clsCountry->makeSelectboxOption($oneItem.country_id)}
                             </select>
                         </div>
                         <div class="inpt_tour">
-                            <label for="intro_title">{$core->get_Lang('Travel style')}</label>
-                            <select onchange="_reload()" id="travelstyle_id" name="travelstyle_id" class="form-control" style="width: 300px;">
-                                <!-- {$clsCategory_Country->makeSelectboxOption()} -->
+                            <label for="intro_title">{$core->get_Lang('Travel style')} <span class="required_red">*</span></label>
+                            <select onchange="_reload()" id="travelstyle_id" name="travelstyle_id" class="form-control required" style="width: 300px;">
+                                {$clsCategory_Country->makeSelectboxOption($oneItem.travelstyle_id, $oneItem.country_id)}
                             </select>
                         </div>
                         {literal}
                         <script>
                             $(document).ready(function() {
-                                $('#travelstyle_id').change(function(e) {
+                                $('#country_id').change(function(e) {
                                     e.preventDefault();
-                                    var selectedValue = $(this).val();
-                                    console.log(selectedValue);
+                                    var selectedCountry_id = $(this).val();
+                                    $.ajax({
+                                        type: "POST",
+                                        url: path_ajax_script +
+                                            "/index.php?mod=" +
+                                            mod +
+                                            "&act=ajActionGetTravelStyleByCountry",
+                                        data: {
+                                            country_id: selectedCountry_id
+                                        },
+                                        success: function(data) {
+                                            $('#travelstyle_id').html(data);
+                                        },
+                                    });
                                 });
                             });
                         </script>
                         {/literal}
                         <div class="inpt_tour">
                             <label for="title">
-                                {$core->get_Lang('Title')}
+                                {$core->get_Lang('Title')} <span class="required_red">*</span>
                             </label>
-                            <input class="input_text_form" data-table_id="{$pvalTable}" name="title" value="{$oneItem.title}" maxlength="255" type="text" />
+                            <input class="input_text_form required" data-table_id="{$pvalTable}" name="title" value="{$oneItem.title}" maxlength="255" type="text" />
                         </div>
                         <div class="inpt_tour">
                             <label for="intro">{$core->get_Lang('Intro')}</label>
                             <textarea style="width:100%" table_id="{$pvalTable}" name="iso-intro" class="textarea_intro_editor" data-column="iso-intro" id="textarea_intro{$now}" cols="255" rows="2">{$oneItem.intro}</textarea>
                         </div>
                         <div class="inpt_tour">
-                            <label for="content">{$core->get_Lang('Content')}</label>
-                            <textarea style="width:100%" table_id="{$pvalTable}" name="iso-content" class="textarea_intro_editor" data-column="iso-content" id="textarea_content{$now}" cols="255" rows="2">{$oneItem.content}</textarea>
+                            <label for="content">{$core->get_Lang('Content')} <span class="required_red">*</span></label>
+                            <textarea style="width:100%" table_id="{$pvalTable}" name="iso-content" class="textarea_intro_editor required" data-column="iso-content" id="textarea_content{$now}" cols="255" rows="2">{$oneItem.content}</textarea>
                         </div>
                         <div class="inpt_tour">
                             <label class="col-form-label" for="image">
-                                {$core->get_Lang('Image')} ({$core->get_Lang('Standard image size')}: 406x333)
+                                {$core->get_Lang('Image')} <span class="required_red">*</span><br>
+                                ({$core->get_Lang('Standard image size')}: 406x333)
                             </label>
                             <div class="fieldarea">
                                 <div class="row">
                                     <div class="col-md-6 col-sm-12">
-                                        <input class="text_32 border_aaa bold" type="text" id="image" name="iso-image" value="{$oneItem.image}" style="float: right;width: 85%;" onClick="loadHelp(this)" readonly>
+                                        <input class="text_32 border_aaa bold required" type="text" id="image" name="iso-image" value="{$oneItem.image}" style="float: right;width: 85%;" onClick="loadHelp(this)" readonly>
                                         <a style="float:left" href="#" class="ajOpenDialog" isoman_for_id="image" isoman_name="image"><img src="{$URL_IMAGES}/general/folder-32.png" border="0" title="Open" alt="Open" /></a>
                                     </div>
                                     <div class="col-sm-12 col-md-6">
@@ -210,11 +223,14 @@
                             {/literal}
                         </div>
                         {/if}
-
                         <div class="btn_save_titile_table_code mt30">
+                            {if $obj eq 'why'}
+                            <a data-table_id="{$pvalTable}" data-panel="{$arrStep[$step].panel}" data-currentstep="{$currentstep}" data-next_step="{$nextstep}" class="js_save_continue_main_step">{$core->get_Lang('Save')}</a>
+                            {else}
                             <a data-table_id="{$pvalTable}" data-panel="{$arrStep[$step].panel}" data-currentstep="{$arrStep[$step].key}" data-prevstep="{$prevstep}" class="back_step js_save_back_main_step">{$core->get_Lang('Back')}</a>
 
                             <a data-table_id="{$pvalTable}" data-panel="{$arrStep[$step].panel}" data-currentstep="{$currentstep}" data-next_step="{$nextstep}" class="js_save_continue_main_step">{$core->get_Lang('Save &amp; Continue')}</a>
+                            {/if}
                         </div>
                     </div>
                 </div>
@@ -228,6 +244,11 @@
         </div>
     </div>
 </form>
+
+<script>
+    var obj = '{$obj}';
+</script>
+
 {literal}
 <script>
     if ($('.textarea_intro_editor').length > 0) {

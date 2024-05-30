@@ -5,7 +5,7 @@
 {assign var=imgBlog value=$clsBlog->getImage($blog_id,800,535,$blogItem)}
 {assign var=listTag value=$clsBlog->getArrayTag($blog_id,$blogItem)}
 {assign var=cateBlog value=$clsBlogCategory->getTitle($cat_id,$blogItem)}
-{assign var=cateBlogSlug value=$clsBlogCategory->getSlug($cat_id,$blogItem)}
+{assign var=cateBlogSlug value=$clsBlogCategory->getSlug($cat_id)}
 
 {assign var=regionBlog value=$clsCountryEx->getTitle($country_id)}
 
@@ -61,7 +61,7 @@
 </script>
 {/literal}
 
-{$core->getBlock('des_header_short')}
+
 
 <section name ="intro_detailblog">
 	<div class="detail_top_box">
@@ -73,7 +73,7 @@
 				<div class="blog_info">
 					<p class="country_cat">
 						<a href="/blog/{$regionBlog}" title="{$regionBlog}">{$regionBlog}</a>
-						| <a href="/blog/{$cateBlog}" title="{$cateBlog}">{$cateBlog}</a>
+						| <a href="/blog/{$cateBlogSlug}" title="{$cateBlog}">{$cateBlog}</a>
 					</p>
 					<h2 class="title text3line">{$title_blog}</h2>
 					<div class="intro text5line">{$clsBlog->getIntro($blog_id)|@html_entity_decode}
@@ -188,59 +188,23 @@
                         <div class="filter-articles">
                             <h3 class="list_fiter_articles">Filter Articles</h3>
                             <div class="filter-radio2">
+								{section name=i loop=$listCountry}
     <div class="form-check2">
         <label class="form-check-label custom-control-label">
-            Vietnam
+           {$listCountry[i].title}
         </label>
     </div>
+	{/section}
 
-    <div class="form-check2">
-        <label class="form-check-label custom-control-label">
-            Laos
-        </label>
-    </div>
-
-    <div class="form-check2">
-        <label class="form-check-label custom-control-label">
-            Cambodia
-        </label>
-    </div>
-
-    <div class="form-check2">
-        <label class="form-check-label custom-control-label">
-            Thailand
-        </label>
-    </div>
-
-    <div class="form-check2">
-        <label class="form-check-label custom-control-label">
-            Myanmar
-        </label>
-    </div>
 </div>
 
-
                             <div class="filter-checkbox2">
-                                <div class="form-check2">
-                                    <label class="form-check-label" for="city1"> Places to visit &amp; things to
-                                        do </label>
-                                </div>
+							{section name=i loop=$lstBlogCat}
 
                                 <div class="form-check2">
-                                    <label class="form-check-label" for="city2"> Explore Vietnam </label>
+                                    <label class="form-check-label" for="blogcat_id_{$lstBlogCat[i].blogcat_id}">{$lstBlogCat[i].title}</label>
                                 </div>
-
-                                <div class="form-check2">
-                                    <label class="form-check-label" for="city1"> Useful infos </label>
-                                </div>
-
-                                <div class="form-check2">
-                                    <label class="form-check-label" for="city1">Food &amp; Drink </label>
-                                </div>
-
-                                <div class="form-check2">
-                                    <label class="form-check-label" for="city1">Experience of customers </label>
-                                </div>
+								                                {/section}
 
                                 <a class="view-more2" id="viewMore">View more</a>
                                 <button id="hideCities" style="display:none;">Hide Cities</button>
@@ -274,17 +238,18 @@
 
                         <div class="related_tours">
                             <h2 class="txt_featureblog">RELATED TOURS</h2>
+							 {section name=i loop=$lstRelatedTour}
                             <div class="list_viewtour">
                                 <div class="img_toursrelated">
 									<div class="bloglastest">
-                                    <a href="#" alt="tour" title="tour">
-                                        <img src="{URL_IMAGES}/blog/img_relativeblog1.png" alt="Pic_relatedtour"
-                                             >
+                                    <a href="{$clsTour->getLink($lstRelatedTour[i].tour_id)}" alt="tour" title="tour">
+										<div class="img_relatedtour">
+                                        <img src="{$clsTour->getImage($lstRelatedTour[i].tour_id, 296, 200)}" alt="Pic_relatedtour">
+										</div>
                                 </div>
 									</div>
                                 <div class="txt_des_tour">
-                                    <h3 class="txth_relatedtour">Splendors of Vietnam with the center’s must-sees 19
-                                        days</h3>
+                                    <h3 class="txth_relatedtour">{$clsTour->getTitle($lstRelatedTour[i].tour_id)}</h3>
                                     </a>
                                     <div class="d-flex align-items-center score_reviewtour">
                                         <span class="border_score">9.9</span>
@@ -296,9 +261,8 @@
                                                 class="border_place">+2</span>
                                     </div>
 
-                                    <p>Les “MUST” + découverte des Ethnies du Nord “À NE PAS MANQUER” et la nuit étoilée
-                                        sur la jonque traditionnelle en baie […]</p>
-                                    <div class="d-flex justify-content-between align-items-center">
+                                    <p>{$clsTour->getIntro($lstRelatedTour[i].tour_id)}</p>
+                                    <div class="d-flex justify-content-between align-items-center" style="margin-bottom: 24px">
                                         <div class="from_price">
                                             <p class="from_txtp">From</p>
                                             <span class="txt_price">US
@@ -306,100 +270,29 @@
 												</span>
                                         </div>
 
-                                        <a href="#" alt="tour" title="tour">
+                                        <a href="{$clsTour->getLink($lstRelatedTour[i].tour_id)}" alt="tour" title="tour">
                                             <button class="btn btn_viewtour">View Tour <i
                                                         class="fa-regular fa-arrow-right" style="color: #ffffff;"></i>
                                             </button>
                                         </a>
                                     </div>
                                 </div>
+							{/section}
+
                             </div>
 
-                            <div class="list_viewtour">
-                                <div class="img_toursrelated">
-                                    <a href="#" alt="tour" title="tour">
-                                        <img src="{URL_IMAGES}/blog/img_relativeblog1.png" alt="Pic_relatedtour"
-                                            >
-                                </div>
-                                <div class="txt_des_tour">
-                                    <h3 class="txth_relatedtour">The “MUSTS” in 12 days</h3>
-                                    </a>
-
-                                    <div class="d-flex align-items-center score_reviewtour">
-                                        <span class="border_score">9.9</span>
-                                        <span class="txt_score">Excellent </span> <span class="txt_reviewstour">- 10 views</span>
-                                    </div>
-                                    <div class="d-flex align-items-center">
-                                        <i class="fa-light fa-location-dot" style="color: #43485c;"></i> <span
-                                                class="txt_placetours">Place: Hanoi – Halong – Hue – Hoian</span> <span
-                                                class="border_place">+2</span>
-                                    </div>
-
-                                    <p>Les “MUST” + découverte des Ethnies du Nord “À NE PAS MANQUER” et la nuit étoilée
-                                        sur la jonque traditionnelle en baie […]</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="from_price">
-                                            <p class="from_txtp">From</p>
-                                            <span class="txt_price">US
-												<h3 class="txt_numbprice"> $650</h3>
-												</span>
-                                        </div>
-                                        <a href="#" alt="tour" title="tour">
-                                            <button class="btn btn_viewtour">View Tour <i
-                                                        class="fa-regular fa-arrow-right" style="color: #ffffff;"></i>
-                                            </button>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="list_viewtour">
-                                <div class="img_toursrelated">
-                                    <a href="#" alt="tour" title="tour">
-                                        <img src="{URL_IMAGES}/blog/img_relativeblog1.png" alt="Pic_relatedtour"
-                                             >
-                                </div>
-                                <div class="txt_des_tour">
-                                    <h3 class="txth_relatedtour">The “MUSTS” in 12 days</h3>
-                                    </a>
-
-                                    <div class="d-flex align-items-center score_reviewtour">
-                                        <span class="border_score">9.9</span>
-                                        <span class="txt_score">Excellent </span> <span class="txt_reviewstour">- 10 views</span>
-                                    </div>
-                                    <div class="d-flex align-items-center">
-                                        <i class="fa-light fa-location-dot" style="color: #43485c;"></i> <span
-                                                class="txt_placetours">Place: Hanoi – Halong – Hue – Hoian</span> <span
-                                                class="border_place">+2</span>
-                                    </div>
-
-                                    <p>Les “MUST” + découverte des Ethnies du Nord “À NE PAS MANQUER” et la nuit étoilée
-                                        sur la jonque traditionnelle en baie […]</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="from_price">
-                                            <p class="from_txtp">From</p>
-                                            <span class="txt_price">US
-												<h3 class="txt_numbprice"> $650</h3>
-												</span>
-                                        </div>
-                                        <a href="#" alt="tour" title="tour">
-                                            <button class="btn btn_viewtour">View Tour <i
-                                                        class="fa-regular fa-arrow-right" style="color: #ffffff;"></i>
-                                            </button>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
 
                             <div class="border_exploremore">
                                 <img class="img_exploremore" src="{URL_IMAGES}/blog/pic_imglastest9.png">
                                 <div class="txt_exploremore">
                                     <p class="tour_exploretxt">Explore more Vietnam tours</p></div>
+								<div class="btn_exploremore">
                                 <a href="#" alt="tour" title="tour">
 
                                     <button class="btn btn_seealltour">See all tours <i
                                                 class="fa-regular fa-arrow-right" style="color: #ffffff;"></i></button>
                                 </a>
+									</div>
                             </div>
 
                         </div>
@@ -416,9 +309,11 @@
 			<div class="col-xl-12 col-lg-6">
 				<div class="related_top">
             <div class="blog_related_item">
-                <a href="#" alt="explore" title="explore">
+                <a href="#" alt="explore" title="explore" style="overflow: hidden; border-radius: 8px">
+					<div class="img_relatedtour">
                     <img class="pic_read" src="{$URL_IMAGES}/blog/img_readthenext1.png" alt="pic_txt1"
                          title="explore" width="752" height="487">
+					</div>
                 </a>
             <div class="body_txtreadblog">
                 <div class="txt_categoryblog">
@@ -437,9 +332,13 @@
 
         <div class="list_readblog row">
             <div class="col-md-4 item">
+				<div class="img_relatedtour">
                 <img src="{URL_IMAGES}/blog/img_readthenext2.png" alt="Mô tả ảnh 1" class="img-fluid">
+				</div>
                 <div class="text-content">
+					<a href="#">
                     <p class="txt_cateblog">TRAVEL TIPS</p>
+						</a>
 					<a href="#" title="tips">
                     <h3 class="txthigh_cateblog_">Top 05 Best Massages And Spas In Hanoi's Old Quarter, Vietnam
 					</a>
@@ -449,7 +348,9 @@
             <div class="col-md-4 item">
                 <img src="{URL_IMAGES}/blog/img_readthenext3.png" alt="Mô tả ảnh 2" class="img-fluid">
                 <div class="text-content">
+					<a href="#">
                     <p class="txt_cateblog">TRAVEL TIPS</p>
+					</a>
 					<a href="#" title="tips">
                     <h3 class="txthigh_cateblog_">Top Best Things To Do In Hanoi For 3 Days
 						</a>
@@ -459,7 +360,11 @@
             <div class="col-md-4 item">
                 <img src="{URL_IMAGES}/blog/img_readthenext4.png" alt="Mô tả ảnh 3" class="img-fluid">
                 <div class="text-content">
+					<div class="txt_linkcate">
+					<a href="#">
                     <p class="txt_cateblog">TRAVEL TIPS</p>
+					</a>
+						</div>
 					<a href="#" title="tips">
                     <h3 class="txthigh_cateblog_">Top Best Things To Do In Hanoi For 3 Days
 						</a>
@@ -505,35 +410,29 @@
     </div>
 </section>
     {/if}
+	
+	<style>
+
+	</style>
 
 {literal}
     <script>
-		window.addEventListener('scroll', function() {
-  const header = document.getElementById('header_fixed');
-  const dropdownMenus = document.querySelectorAll('.dropdown-menu'); // Lấy tất cả các dropdown menu
+document.addEventListener('DOMContentLoaded', function () {
+  const headerFixed = document.getElementById('header_fixed');
+  const headerBot = document.querySelector('.nah_bg_header_bot');
 
-  if (window.scrollY === 0) {
-    header.style.position = 'static'; // Đặt header về static khi ở đầu trang
+  window.onscroll = function () {
+    let currentScrollPos = window.pageYOffset;
 
-    // Đặt z-index của dropdown menu lớn hơn header
-    dropdownMenus.forEach(menu => {
-      menu.style.zIndex = '1001'; 
-    });
-  } else {
-    header.style.position = 'fixed'; // Đặt header về fixed khi cuộn xuống
-
-    // Đặt z-index của dropdown menu về giá trị mặc định hoặc nhỏ hơn header
-    dropdownMenus.forEach(menu => {
-      menu.style.zIndex = 'auto'; 
-    });
-  }
+    // Chỉ xử lý khi cuộn lên đầu trang
+    if (currentScrollPos === 0) {
+      // Đặt trực tiếp màu nền cho headerBot
+      headerBot.style.backgroundColor = ''; // Xóa màu nền đã đặt trước đó (nếu có)
+      headerBot.classList.add('bg-white'); 
+    } 
+  };
 });
 
-		
-        $('.tinymce_Content img').each(function (i) {
-            var self = $(this);
-            self.attr('data-action', 'zoom');
-        });
     </script>
 {/literal}
 <link rel="stylesheet" href="{$URL_JS}/zoom/zoom.css?v={$upd_version}"/>

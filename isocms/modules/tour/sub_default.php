@@ -1,16 +1,18 @@
 <?php
+
 function default_default()
 {
-	global $assign_list, $clsISO;
+    global $assign_list, $clsISO;
 
-	$clsCountry = new Country(); $assign_list["clsCountry"] = $clsCountry;
+    $clsCountry = new Country(); $assign_list["clsCountry"] = $clsCountry;
     $clsTourCat = new TourCategory(); $assign_list["clsTourCat"] = $clsTourCat;
     $clsTour = new Tour(); $assign_list["clsTour"] = $clsTour;
     $clsPagination = new Pagination();$assign_list["clsPagination"] = $clsPagination;
     $clsRegion = new Region(); $assign_list["clsRegion"] = $clsRegion;
     $clsTourDestination = new TourDestination(); $assign_list["clsTourDestination"] = $clsTourDestination;
+    $clsMonth = new Month(); $assign_list['clsMonth'] = $clsMonth;
 
-    $cond = "is_trash = 0 and is_online = 1";
+    $where = "is_trash = 0 and is_online = 1";
     $order_by = " order by order_no";
     $limit = " LIMIT 8";
     $lnk=$_SERVER['REQUEST_URI'];
@@ -20,15 +22,57 @@ function default_default()
     $countryId = isset($_POST['country_id']) ? $_POST['country_id'] : "";
 
     if ($slug_country) {
-        $cond_slug = $cond . " and slug = '$slug_country'";
+        $cond_slug = $where . " and slug = '$slug_country'";
     }
 
     $country_id = $clsCountry->getAll($cond_slug)[0]["country_id"];
+    $region = !empty($_POST['region']) ? $_POST['region'] : null;
+    $travel_style = !empty($_POST['travel_style']) ? $_POST['travel_style'] : null;
+    $departure_time = !empty($_POST['departure_time']) ? $_POST['departure_time'] : null;
+    $duration = !empty($_POST['duration']) ? $_POST['duration'] : null;
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST["filter"])) {
         $link = $clsCountry->getLink($countryId, 'tour');
 
+        if($region) $link .= '&region='.$clsISO->makeSlashListFromArrayComma($region);
+        if($travel_style) $link .= '&travel_style='.$clsISO->makeSlashListFromArrayComma($travel_style);
+        if($departure_time) $link .= '&departure_time='.$clsISO->makeSlashListFromArrayComma($departure_time);
+        if($duration) $link .= '&duration='.$clsISO->makeSlashListFromArrayComma($duration);
         header('location:'.trim($link));
+    }
+    $where_list_tour = " $where ";
+    $region = $_GET["region"];
+    $get_travel_style = $_GET["travel_style"];
+    $get_departure_time = $_GET["departure_time"];
+    $duration = $_GET["duration"];
+
+    if (!empty($region)) {
+        $assign_list["region"] = $region;
+    }
+
+    if (!empty($get_travel_style)) {
+        $travel_style_conditions = array();
+        foreach (explode(",", $get_travel_style) as $v) {
+            $travel_style_conditions[] = "list_cat_id LIKE '%$v%'";
+        }
+        if (!empty($travel_style_conditions)) {
+            $where_list_tour .= "and (" . implode(" OR ", $travel_style_conditions) . ")";
+        }
+        $assign_list["travel_style"] = $get_travel_style;
+    }
+    if (!empty($get_departure_time)) {
+        $departure_time_conditions = array();
+        foreach (explode(",", $get_departure_time) as $v) {
+            $departure_time_conditions[] = "list_month_id LIKE '%$v%'";
+        }
+        if (!empty($departure_time_conditions)) {
+            $where_list_tour .= "and (" . implode(" OR ", $departure_time_conditions) . ")";
+        }
+        $assign_list["departure_time"] = $get_departure_time;
+    }
+
+    if (!empty($duration)) {
+        $assign_list["duration"] = $duration;
     }
 
     if(isset($_GET['page'])){
@@ -41,7 +85,7 @@ function default_default()
         $link_page = $lnk;
     }
     if ($country_id) {
-        $cond_lstCountry = $cond . " and tour_id IN (select tour_id from default_tour_destination where country_id = $country_id)";
+        $cond_lstCountry =  "$where_list_tour and tour_id IN (select tour_id from default_tour_destination where country_id = $country_id)";
     }
     $recordPerPage = 8;
     $currentPage = isset($_GET['page'])?intval($_GET['page']):1;
@@ -59,18 +103,28 @@ function default_default()
 
     $clsPagination->initianize($config);
     $page_view = $clsPagination->create_links(false);
+    $offset = ($currentPage-1)*$recordPerPage;
+    $limit = " LIMIT $offset,$recordPerPage";
 
+    $lstCountry = $clsCountry->getAll($where.$order_by);
 
-    $lstCountry = $clsCountry->getAll($cond.$order_by);
+    if (isset($_COOKIE['recent_view_tour'])) {
+        $recent_view_tour = json_decode($_COOKIE['recent_view_tour'], true);
 
-    $assign_list["lstRegion"] = $clsRegion->getAll("$cond and country_id = $country_id", "title");
+        if (!empty($recent_view_tour)) {
+            $ids = implode(',', array_map('intval', $recent_view_tour));
+            $lstTourRecent = $clsTour->getAll("tour_id IN ($ids) LIMIT 3");
+            $assign_list["lstTourRecent"] = $lstTourRecent;
+        }
+    }
+
+    $assign_list["lstRegion"] = $clsRegion->getAll("$where and country_id = $country_id", "region_id, title");
     $assign_list["lstTour"] = $clsTour->getAll($cond_lstCountry.$order_by.$limit);
-
-    $assign_list["lstTourCat"] = $clsTourCat->getAll($cond.$order_by);
+    $assign_list["lstTourCat"] = $clsTourCat->getAll($where.$order_by);
+    $assign_list["lstMonth"] = $clsMonth->getAll($where);
     $assign_list["country_id"] = $country_id;
     $assign_list["lstCountry"] = $lstCountry;
     $assign_list['page_view']=$page_view;
-
 }
 function default_tag()
 {
@@ -1309,10 +1363,9 @@ function default_searchtour()
 }
 function default_cat()
 {
-	global $assign_list, $_CONFIG, $core, $dbconn, $mod, $act, $show, $_LANG_ID, $title_page, $description_page, $global_image_seo_page, $extLang, $cat_id, $country_id, $clsConfiguration, $clsISO, $deviceType;
+	global $assign_list, $smarty, $_CONFIG, $core, $dbconn, $mod, $act, $show, $_LANG_ID, $title_page, $description_page, $global_image_seo_page, $extLang, $cat_id, $country_id, $clsConfiguration, $clsISO, $deviceType;
 	global $min_duration_value, $max_duration_value, $min_price_value, $max_price_value, $min_duration_search, $max_duration_search;
 	#
-
 	$clsTour = new Tour();
 	$assign_list['clsTour'] = $clsTour;
 	$clsTourStore = new TourStore();
@@ -1332,6 +1385,9 @@ function default_cat()
 	$assign_list["clsReview"] = $clsReview;
 	$clsPromotion = new Promotion();
 	$assign_list['clsPromotion'] = $clsPromotion;
+	$clsWhyTravelstyle = new WhyTravelstyle();
+	$assign_list['clsWhyTravelstyle'] = $clsWhyTravelstyle;
+	#
 	$show = isset($_GET['show']) ? $_GET['show'] : '';
 	$assign_list['show'] = $show;
 	$action = isset($_GET['action']) ? $_GET['action'] : '';
@@ -1344,197 +1400,205 @@ function default_cat()
 	if ($cat_id == '') {
 		header('location:' . PCMS_URL);
 	}
-	$assign_list["cat_id"]	= 	$cat_id;
+	$smarty->assign('cat_id', $cat_id);
 	#
 	// Mảng dữ liệu của danh mục trvs từ quốc gia
 	$oneItem	= 	$clsTourCategory->getOne($cat_id, $clsTourCategory->pkey . ',slug,title,intro');
-	$assign_list["oneItem"]	= 	$oneItem;
+	$smarty->assign('oneItem', $oneItem);
 	#
 	if ($show == 'CatCountry') {
 		$slug_country 	= 	$_GET['slug_country'];
 		$country_id 	=	$clsCountry->getBySlug($slug_country);
-		$assign_list["country_id"]	= 	$country_id;
+		$smarty->assign('country_id', $country_id);
 	}
-	// $clsISO->dd($country_id);
+	#
+	$cond	=	'is_trash = 0 AND is_online = 1';
+	if (!empty($cat_id) && !empty($country_id)) {
+		$cond	.=	' AND country_id = ' . $country_id . ' AND travelstyle_id = ' . $cat_id;
+	}
+	$order_by 	= 	' ORDER BY order_no ASC';
+	$limit		=	' LIMIT 6';
+	$arr_why_trvs_country	= 	$clsWhyTravelstyle->getAll($cond . $order_by . $limit, 'why_trvs_id');
+	$smarty->assign('arr_why_trvs_country', $arr_why_trvs_country);
 
 	#
-	if ($deviceType == 'tablet') {
-		$recordPerPage	= 	6;
-	} else {
-		$recordPerPage 	= 	9;
-	}
-	$currentPage	= 	isset($_GET['page']) ? intval($_GET['page']) : 1;
-	$cond	= 	"is_trash = 0 AND is_online = 1";
-	$cond2 	= 	"is_trash = 0 AND is_online = 1";
-	#
-	if ($cat_id > 0) {
-		$listTourCategory	= 	$clsTourCategory->getAll("is_trash = 0 AND is_online = 1 AND parent_id = '$cat_id'", $clsTourCategory->pkey);
-		if ($listTourCategory != '') {
-			$parent_id = $cat_id;
-			$cond .= " and (cat_id='$cat_id' or list_cat_id like '%|" . $cat_id . "|%' or cat_id IN (SELECT tourcat_id FROM " . DB_PREFIX . "tour_category WHERE parent_id = '$parent_id'))";
-		} else {
-			$cond .= " and (cat_id='$cat_id' or list_cat_id like '%|$cat_id|%')";
-		}
-	}
-	if ($country_id > 0) {
-		$cond .= " and tour_id IN (SELECT tour_id FROM " . DB_PREFIX . "tour_destination WHERE is_trash=0 and country_id='$country_id')";
-	}
+	// if ($deviceType == 'tablet') {
+	// 	$recordPerPage	= 	6;
+	// } else {
+	// 	$recordPerPage 	= 	9;
+	// }
+	// $currentPage	= 	isset($_GET['page']) ? intval($_GET['page']) : 1;
+	// $cond	= 	"is_trash = 0 AND is_online = 1";
+	// $cond2 	= 	"is_trash = 0 AND is_online = 1";
+	// #
+	// if ($cat_id > 0) {
+	// 	$listTourCategory	= 	$clsTourCategory->getAll("is_trash = 0 AND is_online = 1 AND parent_id = '$cat_id'", $clsTourCategory->pkey);
+	// 	if ($listTourCategory != '') {
+	// 		$parent_id = $cat_id;
+	// 		$cond .= " and (cat_id='$cat_id' or list_cat_id like '%|" . $cat_id . "|%' or cat_id IN (SELECT tourcat_id FROM " . DB_PREFIX . "tour_category WHERE parent_id = '$parent_id'))";
+	// 	} else {
+	// 		$cond .= " and (cat_id='$cat_id' or list_cat_id like '%|$cat_id|%')";
+	// 	}
+	// }
+	// if ($country_id > 0) {
+	// 	$cond .= " and tour_id IN (SELECT tour_id FROM " . DB_PREFIX . "tour_destination WHERE is_trash=0 and country_id='$country_id')";
+	// }
 
-	$action = isset($_GET['action']) ? $_GET['action'] : '';
-	$city_filter_id = isset($_GET['city_filter_id']) ? $_GET['city_filter_id'] : 0;
-	$country_filter_id = isset($_GET['country_filter_id']) ? $_GET['country_filter_id'] : 0;
-	$departure_point_id = isset($_GET['departure_point_id']) ? $_GET['departure_point_id'] : 0;
-
-
-
-	$listTourMaxMin = $clsTour->getAll($cond, "max(number_day) as max,min(number_day) as min");
-	$min_duration_value = $listTourMaxMin[0]['min'];
-	$max_duration_value = $listTourMaxMin[0]['max'];
-
-
-	$listpriceMaxMin = $clsTour->getAll($cond, "max(min_price) as max,min(min_price) as min");
-	$min_price_value = $listpriceMaxMin[0]['min'];
-	$max_price_value = $listpriceMaxMin[0]['max'];
+	// $action = isset($_GET['action']) ? $_GET['action'] : '';
+	// $city_filter_id = isset($_GET['city_filter_id']) ? $_GET['city_filter_id'] : 0;
+	// $country_filter_id = isset($_GET['country_filter_id']) ? $_GET['country_filter_id'] : 0;
+	// $departure_point_id = isset($_GET['departure_point_id']) ? $_GET['departure_point_id'] : 0;
 
 
 
-	$orderBy = " order by order_no asc";
-	if ($deviceType == 'tablet') {
-		$recordPerPage = 14;
-	} else {
-		$recordPerPage = 15;
-	}
-	$currentPage = isset($_GET["page"]) ? $_GET["page"] : 1;
-
-	if (!empty($departure_point_id)) {
-		$departure_point_ID = explode(',', $departure_point_id);
-		$cond .= " and (";
-		for ($i = 0; $i < count($departure_point_ID); $i++) {
-			if ($i == 0 && count($departure_point_ID) == 1) {
-				$cond .= " (departure_point_id='" . $departure_point_ID[$i] . "' or list_departure_point_id like '%|" . $departure_point_ID[$i] . "|%')";
-			} elseif (count($departure_point_ID) > 1 && $i < (count($departure_point_ID) - 1)) {
-				$cond .= "(departure_point_id='" . $departure_point_ID[$i] . "' or list_departure_point_id like '%|" . $departure_point_ID[$i] . "|%') or ";
-			} else {
-				$cond .= "(departure_point_id='" . $departure_point_ID[$i] . "' or list_departure_point_id like '%|" . $departure_point_ID[$i] . "|%')";
-			}
-		}
-		$cond .= ")";
-		$assign_list["departure_point_id"] = $departure_point_id;
-	}
-
-	$min_duration_search = isset($_GET['min_duration']) ? $_GET['min_duration'] : $min_duration_value;
-	$max_duration_search = isset($_GET['max_duration']) ? $_GET['max_duration'] : $max_duration_value;
-
-	$min_duration_query = isset($_GET['min_duration']) ? $_GET['min_duration'] : '';
-	$max_duration_query = isset($_GET['max_duration']) ? $_GET['max_duration'] : '';
-
-	$assign_list['min_duration_value'] = $min_duration_value ? $min_duration_value : 0;
-	$assign_list['max_duration_value'] = $max_duration_value ? $max_duration_value : 0;
-
-	$assign_list["min_duration_search"] = $min_duration_search ? $min_duration_search : 0;
-	$assign_list["max_duration_search"] = $max_duration_search ? $max_duration_search : 0;
-
-	if ($min_duration_query > 0 && $max_duration_query > 0) {
-		$cond .= " and number_day >='$min_duration_query' and number_day <='$max_duration_query'";
-	} elseif ($min_duration_query == 0 && $max_duration_query > 0) {
-		$cond .= " and number_day <='$max_duration_query'";
-	} elseif ($min_duration_query > 0 && $max_duration_query == 0) {
-		$cond .= " and number_day >='$min_duration_query'";
-	}
+	// $listTourMaxMin = $clsTour->getAll($cond, "max(number_day) as max,min(number_day) as min");
+	// $min_duration_value = $listTourMaxMin[0]['min'];
+	// $max_duration_value = $listTourMaxMin[0]['max'];
 
 
-	$min_price_search = isset($_GET['min_price']) ? $_GET['min_price'] : $min_price_value;
-	$max_price_search = isset($_GET['max_price']) ? $_GET['max_price'] : $max_price_value;
-
-	$min_price_query = isset($_GET['min_price']) ? $_GET['min_price'] : '';
-	$max_price_query = isset($_GET['max_price']) ? $_GET['max_price'] : '';
-
-	$assign_list["min_price_value"] = $min_price_value ? $min_price_value : 0;
-	$assign_list["max_price_value"] = $max_price_value ? $max_price_value : 0;
-
-	$assign_list["min_price_search"] = $min_price_search ? $min_price_search : 0;
-	$assign_list["max_price_search"] = $max_price_search ? $max_price_search : 0;
+	// $listpriceMaxMin = $clsTour->getAll($cond, "max(min_price) as max,min(min_price) as min");
+	// $min_price_value = $listpriceMaxMin[0]['min'];
+	// $max_price_value = $listpriceMaxMin[0]['max'];
 
 
 
+	// $orderBy = " order by order_no asc";
+	// if ($deviceType == 'tablet') {
+	// 	$recordPerPage = 14;
+	// } else {
+	// 	$recordPerPage = 15;
+	// }
+	// $currentPage = isset($_GET["page"]) ? $_GET["page"] : 1;
 
-	if ($min_price_query > 0 && $max_price_query > 0) {
-		$cond .= " and min_price >='$min_price_query' and min_price <='max_price_query'";
-	} elseif ($min_price_query == 0 && $max_price_query > 0) {
-		$cond .= " and min_price <='$max_price_query'";
-	} elseif ($min_price_query > 0 && $max_price_query == 0) {
-		$cond .= " and min_price >='$min_price_query'";
-	}
+	// if (!empty($departure_point_id)) {
+	// 	$departure_point_ID = explode(',', $departure_point_id);
+	// 	$cond .= " and (";
+	// 	for ($i = 0; $i < count($departure_point_ID); $i++) {
+	// 		if ($i == 0 && count($departure_point_ID) == 1) {
+	// 			$cond .= " (departure_point_id='" . $departure_point_ID[$i] . "' or list_departure_point_id like '%|" . $departure_point_ID[$i] . "|%')";
+	// 		} elseif (count($departure_point_ID) > 1 && $i < (count($departure_point_ID) - 1)) {
+	// 			$cond .= "(departure_point_id='" . $departure_point_ID[$i] . "' or list_departure_point_id like '%|" . $departure_point_ID[$i] . "|%') or ";
+	// 		} else {
+	// 			$cond .= "(departure_point_id='" . $departure_point_ID[$i] . "' or list_departure_point_id like '%|" . $departure_point_ID[$i] . "|%')";
+	// 		}
+	// 	}
+	// 	$cond .= ")";
+	// 	$assign_list["departure_point_id"] = $departure_point_id;
+	// }
 
-	if (!empty($country_filter_id)) {
-		$cond .= " and tour_id IN (SELECT tour_id FROM " . DB_PREFIX . "tour_destination WHERE is_trash=0 and country_id IN ($country_filter_id))";
-		$assign_list["country_filter_id"] = $country_filter_id;
-	}
+	// $min_duration_search = isset($_GET['min_duration']) ? $_GET['min_duration'] : $min_duration_value;
+	// $max_duration_search = isset($_GET['max_duration']) ? $_GET['max_duration'] : $max_duration_value;
 
-	if (!empty($city_filter_id)) {
-		$cond .= " and tour_id IN (SELECT tour_id FROM " . DB_PREFIX . "tour_destination WHERE is_trash=0 and city_id IN ($city_filter_id))";
-		$assign_list["city_filter_id"] = $city_filter_id;
-	}
+	// $min_duration_query = isset($_GET['min_duration']) ? $_GET['min_duration'] : '';
+	// $max_duration_query = isset($_GET['max_duration']) ? $_GET['max_duration'] : '';
 
+	// $assign_list['min_duration_value'] = $min_duration_value ? $min_duration_value : 0;
+	// $assign_list['max_duration_value'] = $max_duration_value ? $max_duration_value : 0;
 
-	$order_by = " order by order_no ASC";
+	// $assign_list["min_duration_search"] = $min_duration_search ? $min_duration_search : 0;
+	// $assign_list["max_duration_search"] = $max_duration_search ? $max_duration_search : 0;
 
-	//	print_r($cond);die();
-	$totalRecord = $clsTour->getAll($cond, $clsTour->pkey);
-
-	if ($totalRecord) {
-		$totalRecord = count($totalRecord);
-		$totalTour = $totalRecord;
-	} else {
-		$totalRecord = 0;
-		$totalTour = 0;
-	}
-	if ($country_id) {
-		$link_page =  $clsTourCategory->getLinkCatCountry($cat_id, $country_id, $oneItem);
-	} else {
-		$link_page =  $clsTourCategory->getLink($cat_id, $oneItem);
-	}
-
-	$assign_list['linksort'] = $clsTourCategory->getLinkCatTour($cat_id, 0, true, $oneItem);
-	$config = array(
-		'total'	=> $totalRecord,
-		'number_per_page'	=> $recordPerPage,
-		'current_page'	=> $currentPage,
-		'link'	=> str_replace('.html', '/', $link_page),
-		'link_page_1'	=> $link_page
-	);
-	$clsPagination->initianize($config);
-	$page_view = $clsPagination->create_links(false);
-
-	$offset = ($currentPage - 1) * $recordPerPage;
-	$limit = " LIMIT $offset,$recordPerPage";
-	//print_r($cond.$order_by.$limit);die();
-	$listTour = $clsTour->getAll($cond . $order_by . $limit, $clsTour->pkey . ",departure_point_id,slug,title,image,duration_type,duration_custom,number_day,number_night");
-	if (!$listTour && $currentPage > 1) {
-		header("Location: " . $link_page);
-		exit();
-	}
+	// if ($min_duration_query > 0 && $max_duration_query > 0) {
+	// 	$cond .= " and number_day >='$min_duration_query' and number_day <='$max_duration_query'";
+	// } elseif ($min_duration_query == 0 && $max_duration_query > 0) {
+	// 	$cond .= " and number_day <='$max_duration_query'";
+	// } elseif ($min_duration_query > 0 && $max_duration_query == 0) {
+	// 	$cond .= " and number_day >='$min_duration_query'";
+	// }
 
 
+	// $min_price_search = isset($_GET['min_price']) ? $_GET['min_price'] : $min_price_value;
+	// $max_price_search = isset($_GET['max_price']) ? $_GET['max_price'] : $max_price_value;
 
-	$assign_list['totalTour'] = $totalTour;
-	$assign_list['listTour'] = $listTour;
-	unset($listTour);
-	$assign_list['page_view'] = $page_view;
-	unset($page_view);
-	$assign_list['totalPage'] = $clsPagination->getTotalPage();
-	$assign_list['totalRecord'] = $totalRecord;
+	// $min_price_query = isset($_GET['min_price']) ? $_GET['min_price'] : '';
+	// $max_price_query = isset($_GET['max_price']) ? $_GET['max_price'] : '';
+
+	// $assign_list["min_price_value"] = $min_price_value ? $min_price_value : 0;
+	// $assign_list["max_price_value"] = $max_price_value ? $max_price_value : 0;
+
+	// $assign_list["min_price_search"] = $min_price_search ? $min_price_search : 0;
+	// $assign_list["max_price_search"] = $max_price_search ? $max_price_search : 0;
 
 
-	$lstclsCategory_Country = $clsCategory_Country->getAll("is_trash=0 and is_online=1 and cat_id='$cat_id' and country_id = '$country_id' limit 0,1", $clsCategory_Country->pkey . ',content');
-	$assign_list['lstclsCategory_Country'] = $lstclsCategory_Country;
 
-	$category_country__id = $lstclsCategory_Country[0]['category_country_id'];
-	$assign_list['category_country__id'] = $category_country__id;
-	$assign_list['catCountryItem'] = $lstclsCategory_Country[0];
 
-	$title_cat = $oneItem['title'];
-	$assign_list['title_cat'] = $title_cat;
+	// if ($min_price_query > 0 && $max_price_query > 0) {
+	// 	$cond .= " and min_price >='$min_price_query' and min_price <='max_price_query'";
+	// } elseif ($min_price_query == 0 && $max_price_query > 0) {
+	// 	$cond .= " and min_price <='$max_price_query'";
+	// } elseif ($min_price_query > 0 && $max_price_query == 0) {
+	// 	$cond .= " and min_price >='$min_price_query'";
+	// }
+
+	// if (!empty($country_filter_id)) {
+	// 	$cond .= " and tour_id IN (SELECT tour_id FROM " . DB_PREFIX . "tour_destination WHERE is_trash=0 and country_id IN ($country_filter_id))";
+	// 	$assign_list["country_filter_id"] = $country_filter_id;
+	// }
+
+	// if (!empty($city_filter_id)) {
+	// 	$cond .= " and tour_id IN (SELECT tour_id FROM " . DB_PREFIX . "tour_destination WHERE is_trash=0 and city_id IN ($city_filter_id))";
+	// 	$assign_list["city_filter_id"] = $city_filter_id;
+	// }
+
+
+	// $order_by = " order by order_no ASC";
+
+	// //	print_r($cond);die();
+	// $totalRecord = $clsTour->getAll($cond, $clsTour->pkey);
+
+	// if ($totalRecord) {
+	// 	$totalRecord = count($totalRecord);
+	// 	$totalTour = $totalRecord;
+	// } else {
+	// 	$totalRecord = 0;
+	// 	$totalTour = 0;
+	// }
+	// if ($country_id) {
+	// 	$link_page =  $clsTourCategory->getLinkCatCountry($cat_id, $country_id, $oneItem);
+	// } else {
+	// 	$link_page =  $clsTourCategory->getLink($cat_id, $oneItem);
+	// }
+
+	// $assign_list['linksort'] = $clsTourCategory->getLinkCatTour($cat_id, 0, true, $oneItem);
+	// $config = array(
+	// 	'total'	=> $totalRecord,
+	// 	'number_per_page'	=> $recordPerPage,
+	// 	'current_page'	=> $currentPage,
+	// 	'link'	=> str_replace('.html', '/', $link_page),
+	// 	'link_page_1'	=> $link_page
+	// );
+	// $clsPagination->initianize($config);
+	// $page_view = $clsPagination->create_links(false);
+
+	// $offset = ($currentPage - 1) * $recordPerPage;
+	// $limit = " LIMIT $offset,$recordPerPage";
+	// //print_r($cond.$order_by.$limit);die();
+	// $listTour = $clsTour->getAll($cond . $order_by . $limit, $clsTour->pkey . ",departure_point_id,slug,title,image,duration_type,duration_custom,number_day,number_night");
+	// if (!$listTour && $currentPage > 1) {
+	// 	header("Location: " . $link_page);
+	// 	exit();
+	// }
+
+
+
+	// $assign_list['totalTour'] = $totalTour;
+	// $assign_list['listTour'] = $listTour;
+	// unset($listTour);
+	// $assign_list['page_view'] = $page_view;
+	// unset($page_view);
+	// $assign_list['totalPage'] = $clsPagination->getTotalPage();
+	// $assign_list['totalRecord'] = $totalRecord;
+
+
+	// $lstclsCategory_Country = $clsCategory_Country->getAll("is_trash=0 and is_online=1 and cat_id='$cat_id' and country_id = '$country_id' limit 0,1", $clsCategory_Country->pkey . ',content');
+	// $assign_list['lstclsCategory_Country'] = $lstclsCategory_Country;
+
+	// $category_country__id = $lstclsCategory_Country[0]['category_country_id'];
+	// $assign_list['category_country__id'] = $category_country__id;
+	// $assign_list['catCountryItem'] = $lstclsCategory_Country[0];
+
+	// $title_cat = $oneItem['title'];
+	// $assign_list['title_cat'] = $title_cat;
 
 	/* =============Title & Description Page================== */
 	$title_page = $title_cat . ' | ' . $core->get_Lang('travelstyles') . ' | ' . PAGE_NAME;
@@ -1695,6 +1759,19 @@ function default_detaildeparture()
 		unset($lstGuideRelated);
 	}
 
+	if (isset($_GET['tour_id']) && !empty($_GET['tour_id'])) {
+		$post_id = intval($_GET['tour_id']);
+		if (isset($_COOKIE['recent_view_tour'])) {
+			$recent_view_tour = json_decode($_COOKIE['recent_view_tour'], true);
+		} else {
+			$recent_view_tour = array();
+		}
+		if (!in_array($post_id, $recent_view_tour)) {
+			$recent_view_tour[] = $post_id;
+		}
+
+		setcookie('recent_view_tour', json_encode($recent_view_tour), time() + (86400), "/");
+	}
 
 	if (isset($_POST['Hid']) && $_POST['Hid']) {
 		$BOOK_VALUE = array();

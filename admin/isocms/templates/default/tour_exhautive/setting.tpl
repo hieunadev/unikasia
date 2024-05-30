@@ -21,10 +21,10 @@
 								<textarea id="textarea_intro_editor{$now}" class="textarea_intro_editor" name="iso-{$site_tour_intro}" style="width:100%">{$clsConfiguration->getValue($site_tour_intro)}</textarea>
 							</div>
 							<div class="tabbox" style="display:none">
-								<span>Width x Height: 1600 x 400</span>
+								<span>Width x Height: 1600 x 600</span>
 								<div class="cleafix mb10"></div>
-								<div class="photobox span100">
-									<img src="{$clsConfiguration->getValue('site_tour_banner')}" id="isoman_show_site_tour_banner" class="span100" height="156px" style="width:100%;" />
+								<div class="span100">
+									<img src="{$clsConfiguration->getValue('site_tour_banner')}" id="isoman_show_site_tour_banner" class="span100" height="600" style="width:100%;" />
 									<input type="hidden" id="isoman_hidden_site_tour_banner" name="isoman_url_site_tour_banner" value="{$clsConfiguration->getValue('site_tour_banner')}" />
 									<a href="javascript:void()" class="photobox_edit ajOpenDialog" isoman_for_id="site_tour_banner" isoman_val="{$clsConfiguration->getValue('site_tour_banner')}" isoman_name="site_tour_banner" title="{$core->get_Lang('edit')}"><i class="iso-edit"></i></a>
 								</div>

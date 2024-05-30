@@ -1,4 +1,5 @@
     <link rel="stylesheet" href="{$URL_CSS}/tailor_made_tour.css?v={$upd_version}" />
+
 {$core->getBlock('des_header_short')}
 
 <section class="listblogdetail_breadcrumb">
@@ -103,13 +104,13 @@
                                 <label for="duration" class="txtlabel">Duration</label>
                                 <p class="txt_smalltrip">in Days</p>
 
-                                <input type="duration" class="form-control select-input-inf" id="duration">
+                                <input type="duration" class="form-control select-input-inf" id="duration" placeholder="Example: 7 Days">
                               </div>
                               <div class="col-md-4">
                                 <label for="bugetperson" class="txtlabel">Budget per person</label>
                                 <p class="txt_smalltrip">excluding international flights</p>
 
-                                <input type="budget" class="form-control select-input-inf" id="bugetperson">
+                                <input type="budget" class="form-control select-input-inf" id="bugetperson" placeholder="Example: 2.000$">
                               </div>
                             </div>
 
@@ -167,7 +168,7 @@
                                 </div>
                                 <div class="col-md-6">
                                   <label for="suitabletime" class="txtlabel">The most suitable time to reach you</label>
-                                  <input type="suitable" class="form-control select-input-inf" id="suitabletime">
+                                  <input type="suitable" class="form-control select-input-inf" id="suitabletime" placeholder="In the morning, the afternoon,... or at a specific time">
                                 </div>
                               </div>
                               <hr style="background: #D3DCE1;">
@@ -178,33 +179,7 @@
                                 <div class="list_checkboxtravel">
                                     <div class="mt-3">
                                         <div class="accordion" id="accordionPanelsStayOpenExample">
-                                            <div class="accordion-item">
-                                                <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-                                                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="false" aria-controls="panelsStayOpen-collapseOne">
-                                                    <div class="form-check mt-1">
-                                              <input class="form-check-input chkAll" type="checkbox" value="" id="chkAccordion2All">
-                                            </div>
-                                                    Laos
-                                                  </button>
-                                                </h2>
-                                                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingOne">
-                                                  <div class="accordion-body ms-3">
-                                                    <div class="form-check">
-                                              <input class="form-check-input" type="checkbox" value="" id="chkAccordion1Child0">
-                                                      <label for="chkAccordion2Child0">Accordion 1 checkbox 1</label>
-                                            </div>
-                                                    <div class="form-check">
-                                              <input class="form-check-input" type="checkbox" value="" id="chkAccordion1Child1">
-                                                      <label for="chkAccordion2Child1">Accordion 1 checkbox 2</label>
-                                            </div>
-                                                    <div class="form-check">
-                                              <input class="form-check-input" type="checkbox" value="" id="chkAccordion1Child2">
-                                                      <label for="chkAccordion2Child2">Accordion 1 checkbox 3</label>
-                                            </div>
-                                            <input type="txt-input-other" class="form-control select-input-inf" id="input-other">
-                                                  </div>
-                                                </div>
-                                              </div>
+
 
                                       <div class="accordion-item">
                                         <div class="accordion-header" id="panelsStayOpen-headingTwo">
@@ -354,9 +329,9 @@
                                         </div>
 
                                         <div class="checkbox_type">
-                                            <p class="txt_roomtype"> Type of room you prefer</p>
+                                            <p class="txt_roomtype" style="margin: 26px 0 0 0">Type of room you prefer</p>
 											<div class="checkbox-room">
-												<div class="accordion-body ms-3 d-flex flex-wrap">
+												<div class="accordion-body d-flex flex-wrap">
 											<div class="form-check form-region me-3">
                                         <input class="form-check-room" type="checkbox" value="" id="chkAccordion5Room0">
                                                 <label for="chkAccordion1Room0">Single room</label>
@@ -405,6 +380,54 @@
                 </div>
 
             </section>
+				
+				
+				<section class="input_informationtrip">
+                <div class="travelinf">
+                    <div class="container">
+                    <div class="txt_inftravel">
+                        <h3 class="txt_infotravel">Your Special Requirements</h3>
+
+                        <div class="input_inf">
+                            <div class="row">
+                              <div class="col-12">
+                                <input type="text" class="form-control select-input-inf txt_require" id="txtRequirement" placeholder="Any must-see landmarks in your bucket list, desired accommodations, special food requirements, allergies…">
+                              </div>
+                            </div>
+                          </div>
+
+                    </div>
+                 
+                </div>
+            </section>
+					
+				<section class="input_informationtrip">
+                <div class="travelinf">
+                    <div class="container">
+                    <div class="txt_captcha_btn">
+                        <p class="txt_requirement2">
+							*One of our Tailor-Made consultants will be in touch within 24 business hours.
+						</p>
+						 <p class="txt_requirement2">
+							If you don't receive ourconfirmation email after 1 working day, please check your spam email. It may go to your spam mailbox.
+						</p>
+						
+							<div class="g-recaptcha" data-sitekey="{$clsISO->getVar('reCAPTCHA_KEY')}"></div>
+											{if $errMsg ne ''}
+											<div id="error_recaptcha" class="error text_left">{$errMsg}</div>
+											{else}
+											<div id="error_recaptcha" class="error text_left"></div>
+											{/if}
+                    </div>
+						
+						<div class="btn_rqfQ text-center">
+							<button class="btn btnrq">Request for Quotation</button>
+						</div>
+                 
+                </div>
+					</div>
+            </section>
+					
 				
 <script>
 // Tự động đóng các accordion khác khi một accordion được mở

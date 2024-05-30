@@ -29,19 +29,21 @@
 
 <main id="nah_list_tour">
     <section class="banner_tour">
-        <img src="https://isocms.com/files/thumb/1920/400/uploads/Destinations/Hanoi/Hanoi2-1652338755-3632-1652338809.jpg" alt="">
-        <h2 class="title_tour_h2">VIETNAM TOURS PACKAGES</h2>
+        <img src="{$clsConfiguration->getValue('site_tour_banner')}" alt="">
+        <h2 class="title_tour_h2 text-uppercase">{$clsCountry->getTitle($country_id)} TOURS PACKAGES</h2>
     </section>
-    <section class="breadcrumb container">
-        <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);"
-             aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Destinations</li>
-                <li class="breadcrumb-item active" aria-current="page">Vietname</li>
-                <li class="breadcrumb-item active" aria-current="page">Tours</li>
-            </ol>
-        </nav>
+    <section id="breadcrumb-tour">
+        <div class="container ps-0">
+            <div class="d-flex">
+                <span class="Vietnam txt_youarehere">You are here: </span>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item active" aria-current="page">Home</li>
+                    <li class="breadcrumb-item active" aria-current="page">Destination</li>
+                    <li class="breadcrumb-item active" aria-current="page">{$clsCountry->getTitle($country_id)}</li>
+                    <li class="breadcrumb-item" aria-current="page">Tours packages</li>
+                </ol>
+            </div>
+        </div>
     </section>
     <section class="tour-packages">
         <div class="container">
@@ -69,7 +71,8 @@
                             <div class="filter-check">
                                 {section name=i loop=$lstRegion}
                                 <div class="form-check show">
-                                    <input class="form-check-input" type="checkbox" id="region_{$lstRegion[i].title}">
+                                    <input class="form-check-input typeSearch" name="region[]" value="{$lstRegion[i].region_id}" type="checkbox" id="region_{$lstRegion[i].title}"
+                                           {if $clsISO->checkInArray($region,$lstRegion[i].region_id)}checked{/if}>
                                     <label class="form-check-label" for="region_{$lstRegion[i].title}">{$lstRegion[i].title}</label>
                                 </div>
                                 {/section}
@@ -79,13 +82,15 @@
                         <div class="duration">
                             <p class="txt_duration">Duration</p>
                             <div class="filter-check">
+                                {section name=i loop=4 start=1}
                                 <div class="form-check show">
-                                    <input class="form-check-input" type="checkbox" id="one-week">
-                                    <label class="form-check-label" for="one-week">One-week</label>
+                                    <input class="form-check-input typeSearch" name="duration[]" value="{$smarty.section.i.index}" type="checkbox" id="{$smarty.section.i.index}-weeks">
+                                    <label class="form-check-label" for="{$smarty.section.i.index}-weeks">{$smarty.section.i.index} {if $smarty.section.i.index lt 2}week{else}weeks{/if}</label>
                                 </div>
+                                {/section}
                                 <div class="form-check show">
-                                    <input class="form-check-input" type="checkbox" id="two-weeks">
-                                    <label class="form-check-label" for="two-weeks">Two-weeks</label>
+                                    <input class="form-check-input typeSearch" name="duration[]" value="4" type="checkbox" id="gt-three-week">
+                                    <label class="form-check-label" for="gt-three-week">> 3 weeks</label>
                                 </div>
                             </div>
                         </div>
@@ -94,7 +99,9 @@
                             <div class="filter-check">
                                 {section name=i loop=$lstTourCat}
                                 <div class="form-check show">
-                                    <input class="form-check-input" type="checkbox" id="travel_style_{$lstTourCat[i].tourcat_id}">
+                                    <input class="form-check-input typeSearch" name="travel_style[]" value="{$lstTourCat[i].tourcat_id}"
+                                           type="checkbox" id="travel_style_{$lstTourCat[i].tourcat_id}"
+                                           {if $clsISO->checkInArray($travel_style,$lstTourCat[i].tourcat_id)}checked{/if}>
                                     <label class="form-check-label" for="travel_style_{$lstTourCat[i].tourcat_id}">{$lstTourCat[i].title}</label>
                                 </div>
                                 {/section}
@@ -104,14 +111,13 @@
                         <div class="departure-time filter_view_more">
                             <p class="txt_departure_time">Departure time</p>
                             <div class="filter-check">
-                                <div class="form-check show">
-                                    <input class="form-check-input" type="checkbox" id="january">
-                                    <label class="form-check-label" for="january">January</label>
+                                {section name=i loop=$lstMonth}
+                                    <div class="form-check show">
+                                    <input class="form-check-input typeSearch" name="departure_time[]" value="{$lstMonth[i].month_id}" type="checkbox" id="month_{$lstMonth[i].month_id}"
+                                           {if $clsISO->checkInArray($departure_time,$lstMonth[i].month_id)}checked{/if}>
+                                    <label class="form-check-label" for="month_{$lstMonth[i].month_id}">{$lstMonth[i].title}</label>
                                 </div>
-                                <div class="form-check show">
-                                    <input class="form-check-input" type="checkbox" id="feb">
-                                    <label class="form-check-label" for="feb">February</label>
-                                </div>
+                                {/section}
                             </div>
                             <p class="view_more">View more</p>
                         </div>
@@ -122,9 +128,9 @@
                     <div class="content-top">
                         <div class="txt_content">{$clsConfiguration->getValue(site_tour_intro_|cat:$_LANG_ID)|html_entity_decode}</div>
                     </div>
-                    <h2 class="count-tour">{$totalRecord} Vietnam tour packages</h2>
+                    <h2 class="count-tour">{$totalRecord} {$clsCountry->getTitle($country_id)} tour packages</h2>
                     <div class="recommend">
-                        <span>70+ Tour packages with 20K+ bookings</span>
+                        <span>{$core->get_Lang('70+ Tour packages with 20K+ bookings')}</span>
                     </div>
                     <div class="list-tour">
                         {section name=i loop=$lstTour}
@@ -148,7 +154,10 @@
                                         <img class="me-2" src="{$URL_IMAGES}/tour/quot.svg" alt=""><div>{$clsISO->limit_textIso($lstTour[i].overview|html_entity_decode, 20)}</div>
                                     </div>
                                     <div class="txt_place">
-                                        <img class="me-2" src="{$URL_IMAGES}/tour/location.svg" alt="">Place: {$clsTourDestination->getByCountry($lstTour[i].tour_id)}
+                                        <img class="me-2" src="{$URL_IMAGES}/tour/location.svg" alt="">Place: {$clsTourDestination->getByCountry($lstTour[i].tour_id, 'city')}
+                                        {if $clsTourDestination->getByCountry($lstTour[i].tour_id)}
+                                        <a class="tooltips_tour" href="#" data-bs-toggle="tooltip" data-bs-placement="right" title="{$clsTourDestination->getByCountry($lstTour[i].tour_id, 'other_city')}">+{$clsTourDestination->getByCountry($lstTour[i].tour_id)}</a>
+                                        {/if}
                                     </div>
                                     <div class="txt_place">
                                         <img class="me-2" src="{$URL_IMAGES}/tour/fluent.svg" alt="">Start/finish: {$clsTourDestination->getByCountry($lstTour[i].tour_id, "startFinish")}
@@ -177,42 +186,49 @@
                             </ul>
                         </nav>
                     </div>
+                    {if $lstTourRecent}
                     <div class="recently-view">
                         <h2 class="recently-view-title">{$core->get_Lang('Recently viewed')}</h2>
-                        <div class="related_tours">
-                            <div class="list_viewtour">
-                                <div class="img_toursrelated">
-                                    <div class="bloglastest"><a href="#" alt="tour" title="tour"> <img
-                                                    src="https://unikasia.vietiso.com/isocms/templates/default/skin/images/blog/img_relativeblog1.png"
-                                                    alt="Pic_relatedtour" class="img-fluid"> </a></div>
-                                    <a href="#" alt="tour" title="tour"> </a></div>
-                                <a href="#" alt="tour" title="tour"> </a>
-                                <div class="txt_des_tour"><a href="#" alt="tour" title="tour"><h3
-                                                class="txth_relatedtour">Splendors of Vietnam with the center’s
-                                            must-sees 19
-                                            days</h3></a>
-                                    <div class="d-flex align-items-center score_reviewtour"><span class="border_score">9.9</span>
-                                        <span class="txt_score">Excellent </span> <span class="txt_reviewstour">- 10 views</span>
+                        <div class="related_tours row">
+                            {section name=i loop=$lstTourRecent}
+                                <div class="list_viewtour">
+                                    <div class="img_toursrelated">
+                                        <a href="{$clsTour->getLink($lstTourRecent[i].tour_id)}"><img
+                                                    src="{$lstTourRecent[i].image}"
+                                                    alt="{$lstTourRecent[i].title}" class="img-fluid"> </a>
                                     </div>
-                                    <div class="d-flex align-items-center"><i class="fa-light fa-location-dot"
-                                                                              style="color: #43485c;"
-                                                                              aria-hidden="true"></i> <span
-                                                class="txt_placetours">Place: Hanoi – Halong – Hue – Hoian</span> <span
-                                                class="border_place">+2</span></div>
-                                    <p>Les “MUST” + découverte des Ethnies du Nord “À NE PAS MANQUER” et la nuit étoilée
-                                        sur la jonque traditionnelle en baie […]</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="from_price"><p class="from_txtp">From</p> <span class="txt_price">US
+                                    <div class="txt_des_tour">
+                                        <h3>
+                                            <a class="txth_relatedtour txt-hover-home" href="{$clsTour->getLink($lstTourRecent[i].tour_id)}" alt="tour" title="tour">{$lstTourRecent[i].title}</a>
+                                        </h3>
+                                        <div class="d-flex align-items-center score_reviewtour"><span
+                                                    class="border_score">9.9</span>
+                                            <span class="txt_score">Excellent </span> <span class="txt_reviewstour">- 10 views</span>
+                                        </div>
+                                        <div class="d-flex align-items-center"><i class="fa-light fa-location-dot"
+                                                                                  style="color: #43485c;"
+                                                                                  aria-hidden="true"></i> <span
+                                                    class="txt_placetours">Place: Hanoi – Halong – Hue – Hoian</span>
+                                            <span
+                                                    class="border_place">+2</span></div>
+                                        <p>Les “MUST” + découverte des Ethnies du Nord “À NE PAS MANQUER” et la nuit
+                                            étoilée
+                                            sur la jonque traditionnelle en baie […]</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="from_price"><p class="from_txtp">From</p> <span
+                                                        class="txt_price">US
 												<h3 class="txt_numbprice"> $650</h3> </span></div>
-                                        <a href="#" alt="tour" title="tour">
-                                            <button class="btn btn_viewtour">View Tour <i
-                                                        class="fa-regular fa-arrow-right" style="color: #ffffff;"
-                                                        aria-hidden="true"></i></button>
-                                        </a></div>
+                                            <a href="#" alt="tour" title="tour">
+                                                <button class="btn btn_viewtour btn-hover-home">View Tour <i
+                                                            class="fa-regular fa-arrow-right" style="color: #ffffff;"
+                                                            aria-hidden="true"></i></button>
+                                            </a></div>
+                                    </div>
                                 </div>
-                            </div>
+                            {/section}
                         </div>
                     </div>
+                    {/if}
                 </div>
             </div>
         </div>
@@ -269,6 +285,10 @@
                 $_this.html('View more');
             }
         });
+        let tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        let tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
     });
 </script>
 {/literal}

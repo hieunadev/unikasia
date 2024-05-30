@@ -1,7 +1,8 @@
 <?php
-function default_default() {
+function default_default()
+{
     global $assign_list, $_CONFIG, $_SITE_ROOT, $mod, $_LANG_ID, $act, $menu_current, $current_page, $oneSetting, $clsConfiguration;
-    global $core, $clsModule, $clsButtonNav, $oneSetting, $extLang,$clsISO,$package_id;
+    global $core, $clsModule, $clsButtonNav, $oneSetting, $extLang, $clsISO, $package_id;
     $assign_list["clsModule"] = $clsModule;
     $clsUser = new User();
     $user_id = $core->_USER['user_id'];
@@ -37,7 +38,7 @@ function default_default() {
     $lstCountry = $clsCountry->getAll("is_trash=0 and is_online=1 and country_id IN (SELECT country_id FROM " . DB_PREFIX . "tour_destination) order by order_no asc", $clsCountry->pkey);
     $assign_list["lstCountry"] = $lstCountry;
 
-    $SiteHasGroup_Tours = $clsISO->getCheckActiveModulePackage($package_id,$mod,'group','default');;
+    $SiteHasGroup_Tours = $clsISO->getCheckActiveModulePackage($package_id, $mod, 'group', 'default');;
     $tour_group_id = 0;
     if ($SiteHasGroup_Tours) {
         $clsTourGroup = new TourGroup();
@@ -47,7 +48,7 @@ function default_default() {
     $assign_list["tour_group_id"] = $tour_group_id;
     #
     $cat_id = 0;
-    if ($clsISO->getCheckActiveModulePackage($package_id,$mod,'category','default')) {
+    if ($clsISO->getCheckActiveModulePackage($package_id, $mod, 'category', 'default')) {
         $clsTourCat = new TourCategory();
         $assign_list["clsTourCat"] = $clsTourCat;
         $cat_id = isset($_GET['cat_id']) ? intval($_GET['cat_id']) : 0;
@@ -55,7 +56,7 @@ function default_default() {
     $assign_list["cat_id"] = $cat_id;
     #
     $price_range_id = 0;
-    if ($clsISO->getCheckActiveModulePackage($package_id,$mod,'price_range','default')) {
+    if ($clsISO->getCheckActiveModulePackage($package_id, $mod, 'price_range', 'default')) {
         $clsPriceRange = new PriceRange();
         $assign_list["clsPriceRange"] = $clsPriceRange;
         $price_range_id = isset($_GET['price_range_id']) ? intval($_GET['price_range_id']) : 0;
@@ -80,7 +81,7 @@ function default_default() {
                 $link .= '&tour_group_id=' . intval($_POST['tour_group_id']);
             }
         }
-      
+
         if (isset($_POST['country_id']) && intval($_POST['country_id']) != 0) {
             $link .= '&country_id=' . intval($_POST['country_id']);
         }
@@ -108,7 +109,7 @@ function default_default() {
     $pUrl = '';
     $cond = "1=1";
 
-    
+
     if ($tour_group_id > 0) {
         $cond .= " and tour_group_id=" . $tour_group_id;
         $pUrl .= '&tour_group_id=' . $tour_group_id;
@@ -126,7 +127,7 @@ function default_default() {
         $cond .= " and (cat_id = '$cat_id' or list_cat_id like '%|$cat_id|%')";
         $pUrl .= '&cat_id=' . $cat_id;
     }
-	
+
     if (intval($departure_point_id) > 0) {
         $cond .= " and departure_point_id = '" . $departure_point_id . "'";
         $pUrl .= '&departure_point_id=' . $departure_point_id;
@@ -135,31 +136,31 @@ function default_default() {
         $cond .= " and number_day = '" . $number_day . "'";
         $pUrl .= '&number_day=' . $number_day;
     }
-    
+
     if (isset($_GET['keyword']) && $_GET['keyword'] != '') {
         $slug = $core->replaceSpace($_GET['keyword']);
         $cond .= " and ( trip_code like '%" . $_GET['keyword'] . "%' or slug like '%" . $slug . "%' or title like '%" . $_GET['keyword'] . "%')";
-		
+
         $assign_list["keyword"] = $_GET['keyword'];
     }
-	if (isset($_GET['tour_id']) && $_GET['tour_id'] != '') {
-		 $cond .= " and tour_id ='". $_GET['tour_id']."' "; 
-		$assign_list["tour_id"] = $_GET['tour_id'];
-	}
+    if (isset($_GET['tour_id']) && $_GET['tour_id'] != '') {
+        $cond .= " and tour_id ='" . $_GET['tour_id'] . "' ";
+        $assign_list["tour_id"] = $_GET['tour_id'];
+    }
     $cond2 = $cond;
     if ($user_group_id == 2) {
         $cond .= " and user_id='$user_id'";
     }
     $orderBy = " order_no asc";
     #-------Page Divide---------------------------------------------------------------
-	
+
     $recordPerPage = isset($_GET["recordperpage"]) ? $_GET["recordperpage"] : 20;
     $currentPage = isset($_GET["page"]) ? $_GET["page"] : 1;
     $start_limit = ($currentPage - 1) * $recordPerPage;
     $limit = " limit $start_limit,$recordPerPage";
 
-    $totalRecord = $clsClassTable->getAll($cond,$clsClassTable->pkey);
-    $totalRecord = $totalRecord?count($totalRecord):0;
+    $totalRecord = $clsClassTable->getAll($cond, $clsClassTable->pkey);
+    $totalRecord = $totalRecord ? count($totalRecord) : 0;
     $totalPage = ceil($totalRecord / $recordPerPage);
     $assign_list['totalRecord'] = $totalRecord;
     $assign_list['recordPerPage'] = $recordPerPage;
@@ -188,21 +189,21 @@ function default_default() {
     }
     $assign_list['link_page_current_2'] = $link_page_current_2;
     #-------End Page Divide-----------------------------------------------------------
-    $allItem = $clsClassTable->getAll($cond . " order by " . $orderBy.$limit,$clsClassTable->pkey.",is_trash,is_online");
-   //print_r($totalRecord);die();
+    $allItem = $clsClassTable->getAll($cond . " order by " . $orderBy . $limit, $clsClassTable->pkey . ",is_trash,is_online");
+    //print_r($totalRecord);die();
     $assign_list["allItem"] = $allItem;
     #
     #
-   // $allTrash = $clsClassTable->getAll("is_trash=1 and " . $cond2,$clsClassTable->pkey);
-   // $assign_list["number_trash"] = $allTrash[0][$pkeyTable] != '' ? count($allTrash) : 0;
+    // $allTrash = $clsClassTable->getAll("is_trash=1 and " . $cond2,$clsClassTable->pkey);
+    // $assign_list["number_trash"] = $allTrash[0][$pkeyTable] != '' ? count($allTrash) : 0;
     #
     //$allUnTrash = $clsClassTable->getAll("is_trash=0 and " . $cond2,$clsClassTable->pkey);
     //$assign_list["number_item"] = $allUnTrash[0][$pkeyTable] != '' ? count($allUnTrash) : 0;
     #
-    $allAll = $clsClassTable->getAll("is_trash=0",$clsClassTable->pkey);
+    $allAll = $clsClassTable->getAll("is_trash=0", $clsClassTable->pkey);
     $assign_list["number_all"] = $allAll[0][$pkeyTable] != '' ? count($allAll) : 0;
     $assign_list['pUrl'] = $pUrl;
-	
+
     #----
     if (isset($_POST['submit'])) {
         if ($_POST['submit'] == 'UpdateToursIntro') {
@@ -217,13 +218,14 @@ function default_default() {
     }
 }
 
-function default_list_promotion(){
+function default_list_promotion()
+{
     global $assign_list, $_CONFIG, $_SITE_ROOT, $mod, $_LANG_ID, $act, $menu_current, $current_page, $oneSetting, $clsConfiguration;
     global $core, $clsModule, $clsButtonNav, $oneSetting, $extLang;
     $assign_list["clsModule"] = $clsModule;
     $clsUser = new User();
     $user_id = $core->_USER['user_id'];
-  
+
     $type_list = isset($_GET['type_list']) ? $_GET['type_list'] : '';
     $assign_list["type_list"] = $type_list;
     #
@@ -233,17 +235,17 @@ function default_list_promotion(){
     $pkeyTable = $clsClassTable->pkey;
     $assign_list["clsClassTable"] = $clsClassTable;
 
-	$clsTour = new Tour();
+    $clsTour = new Tour();
     $assign_list["clsTour"] = $clsTour;
-	$clsTourCategory = new TourCategory();
+    $clsTourCategory = new TourCategory();
     $assign_list["clsTourCategory"] = $clsTourCategory;
-	
+
     $clsTourStore = new TourStore();
     $assign_list["clsTourStore"] = $clsTourStore;
     #
     $pUrl = '';
     $cond = "1=1";
-    
+
     $cond2 = $cond;
 
     $orderBy = " '$pkeyTable' asc";
@@ -253,7 +255,7 @@ function default_list_promotion(){
     $start_limit = ($currentPage - 1) * $recordPerPage;
     $limit = " limit $start_limit,$recordPerPage";
 
-    $totalRecord = $clsClassTable->getAll($cond)?count($clsClassTable->getAll($cond)):0;
+    $totalRecord = $clsClassTable->getAll($cond) ? count($clsClassTable->getAll($cond)) : 0;
     $totalPage = ceil($totalRecord / $recordPerPage);
     $assign_list['totalRecord'] = $totalRecord;
     $assign_list['recordPerPage'] = $recordPerPage;
@@ -315,23 +317,25 @@ function default_list_promotion(){
     }
 }
 
-function default_ajUpdPosSortTour(){
-	global $dbconn, $assign_list, $_CONFIG,  $_SITE_ROOT, $mod , $_LANG_ID, $act, $menu_current, $current_page, $core, $clsModule;
-	global $clsConfiguration;
-	#
-	$clsTour = new Tour();
-	$order = $_POST['order'];
-	$currentPage 	= $_POST['currentPage'];
-	$recordPerPage 	= $_POST['recordPerPage'];
-	//var_dump($currentPage.'xxxxxx'.$recordPerPage);die();
-	foreach($order as $key=>$val){
-		$key = (($currentPage-1)*$recordPerPage + $key+1);
-//		print_r($key);die();
-		$clsTour->updateOne($val,"order_no='".$key."'");	
-	}
+function default_ajUpdPosSortTour()
+{
+    global $dbconn, $assign_list, $_CONFIG,  $_SITE_ROOT, $mod, $_LANG_ID, $act, $menu_current, $current_page, $core, $clsModule;
+    global $clsConfiguration;
+    #
+    $clsTour = new Tour();
+    $order = $_POST['order'];
+    $currentPage     = $_POST['currentPage'];
+    $recordPerPage     = $_POST['recordPerPage'];
+    //var_dump($currentPage.'xxxxxx'.$recordPerPage);die();
+    foreach ($order as $key => $val) {
+        $key = (($currentPage - 1) * $recordPerPage + $key + 1);
+        //		print_r($key);die();
+        $clsTour->updateOne($val, "order_no='" . $key . "'");
+    }
 }
 
-function default_tourhotel() {
+function default_tourhotel()
+{
     global $assign_list, $_CONFIG, $_SITE_ROOT, $mod, $_LANG_ID, $act, $menu_current, $current_page, $oneSetting;
     global $core, $clsModule, $clsButtonNav, $dbconn;
     $assign_list["clsModule"] = $clsModule;
@@ -383,7 +387,7 @@ function default_tourhotel() {
     //Action
     $action = isset($_GET['action']) ? $_GET['action'] : '';
     if ($action == 'Delete') {
-        $hotel_id = isset($_GET['hotel_id']) ? ($_GET['hotel_id']) :0;
+        $hotel_id = isset($_GET['hotel_id']) ? ($_GET['hotel_id']) : 0;
         $string = isset($_GET['tour_id']) ? ($_GET['tour_id']) : '';
         $tour_id = intval($core->decryptID($string));
         if (empty($tour_id)) {
@@ -396,7 +400,8 @@ function default_tourhotel() {
     }
 }
 
-function default_ajMoveTourStore() {
+function default_ajMoveTourStore()
+{
     global $dbconn, $assign_list, $_CONFIG, $_SITE_ROOT, $mod, $_LANG_ID, $act, $menu_current, $current_page, $core, $clsModule;
     #
     $postData = $_POST;
@@ -435,9 +440,10 @@ function default_ajMoveTourStore() {
     echo (1);
     die();
 }
-function default_edit() {
-    global $assign_list, $_CONFIG, $_SITE_ROOT, $mod, $_LANG_ID, $act, $menu_current, $current_page, $oneSetting, $core, 
-	$clsModule, $clsButtonNav, $dbconn, $clsISO,$package_id, $clsConfiguration,$adult_type_id,$child_type_id,$infant_type_id,$pvalTable,$clsClassTable;
+function default_edit()
+{
+    global $assign_list, $_CONFIG, $_SITE_ROOT, $mod, $_LANG_ID, $act, $menu_current, $current_page, $oneSetting, $core,
+        $clsModule, $clsButtonNav, $dbconn, $clsISO, $package_id, $clsConfiguration, $adult_type_id, $child_type_id, $infant_type_id, $pvalTable, $clsClassTable;
     $assign_list["clsModule"] = $clsModule;
     $user_id = $core->_USER['user_id'];
     $assign_list["msg"] = isset($_GET['message']) ? $_GET['message'] : '';
@@ -452,20 +458,20 @@ function default_edit() {
     $assign_list["clsTourProperty"] = $clsTourProperty;
     $clsProperty = new Property();
     $assign_list["clsProperty"] = $clsProperty;
-    
-	$clsTourPriceGroup = new TourPriceGroup();
+
+    $clsTourPriceGroup = new TourPriceGroup();
     $assign_list["clsTourPriceGroup"] = $clsTourPriceGroup;
     $clsConfiguration = new Configuration();
     $assign_list["clsConfiguration"] = $clsConfiguration;
-	$clsTourOption = new TourOption();
+    $clsTourOption = new TourOption();
     $assign_list["clsTourOption"] = $clsTourOption;
-	$clsTourDestination = new TourDestination();
-	$assign_list["clsTourDestination"] = $clsTourDestination;
-	$clsTourImage = new TourImage();
-	$assign_list["clsTourImage"] = $clsTourImage;
-	$clsTourExtension = new TourExtension();
-	$assign_list["clsTourExtension"] = $clsTourExtension;
-	
+    $clsTourDestination = new TourDestination();
+    $assign_list["clsTourDestination"] = $clsTourDestination;
+    $clsTourImage = new TourImage();
+    $assign_list["clsTourImage"] = $clsTourImage;
+    $clsTourExtension = new TourExtension();
+    $assign_list["clsTourExtension"] = $clsTourExtension;
+
     $assign_list["PROMO_PERCENT"] = PROMO_PERCENT;
     $assign_list["PROMO_VALUE"] = PROMO_VALUE;
 
@@ -490,7 +496,7 @@ function default_edit() {
     $assign_list["lstCity"] = $lstCity;
     $clsProfile = new Profile();
     $assign_list["clsProfile"] = $clsProfile;
-   
+
     $tour_id = isset($_GET['tour_id']) ? ($_GET['tour_id']) : '';
     $tour_id = intval($core->decryptID($tour_id));
     $arrProfileID = array();
@@ -534,8 +540,8 @@ function default_edit() {
     }
     #
     $SiteHasCustomContentField_Tours = $clsConfiguration->getValue("SiteHasCustomContentField_Tours");
-    $SiteHasService_Tours = $clsISO->getCheckActiveModulePackage($package_id,'property','service','default');
-    $SiteHasGroup_Tours = $clsISO->getCheckActiveModulePackage($package_id,$mod,'group','default');;
+    $SiteHasService_Tours = $clsISO->getCheckActiveModulePackage($package_id, 'property', 'service', 'default');
+    $SiteHasGroup_Tours = $clsISO->getCheckActiveModulePackage($package_id, $mod, 'group', 'default');;
     $SiteHasType_Tours = $clsConfiguration->getValue('SiteHasType_Tours');
     # Tour Group
     $tour_group_id = 0;
@@ -545,7 +551,7 @@ function default_edit() {
         $tour_group_id = isset($_GET['tour_group_id']) ? intval($_GET['tour_group_id']) : 0;
     }
     # Tour Category
-    $SiteHasCat_Tours = $clsISO->getCheckActiveModulePackage($package_id,$mod,'category','default');;
+    $SiteHasCat_Tours = $clsISO->getCheckActiveModulePackage($package_id, $mod, 'category', 'default');;
     if ($SiteHasCat_Tours) {
         $clsTourCategory = new TourCategory();
         $assign_list["clsTourCategory"] = $clsTourCategory;
@@ -564,16 +570,16 @@ function default_edit() {
     }
     # Tour Services
     $clsAddOnService = new AddOnService();
-	$assign_list["clsAddOnService"] = $clsAddOnService;
-	$lstAddOnService = $clsAddOnService->getAll("is_trash=0 and is_online=1 order by order_no asc");
-	$assign_list["lstAddOnService"] = $lstAddOnService;
-	unset($lstAddOnService);
-	
-	$clsActivities = new Activities();
-	$assign_list["clsActivities"] = $clsActivities;
-	$lstActivities = $clsActivities->getAll("is_trash=0 and is_online=1 order by order_no asc");
-	$assign_list["lstActivities"] = $lstActivities;
-	unset($lstActivities);
+    $assign_list["clsAddOnService"] = $clsAddOnService;
+    $lstAddOnService = $clsAddOnService->getAll("is_trash=0 and is_online=1 order by order_no asc");
+    $assign_list["lstAddOnService"] = $lstAddOnService;
+    unset($lstAddOnService);
+
+    $clsActivities = new Activities();
+    $assign_list["clsActivities"] = $clsActivities;
+    $lstActivities = $clsActivities->getAll("is_trash=0 and is_online=1 order by order_no asc");
+    $assign_list["lstActivities"] = $lstActivities;
+    unset($lstActivities);
     #
     $clsContinent = new Continent();
     $assign_list["clsContinent"] = $clsContinent;
@@ -586,13 +592,13 @@ function default_edit() {
     $assign_list["clsCity"] = $clsCity;
     $clsTourItinerary = new TourItinerary();
     $assign_list["clsTourItinerary"] = $clsTourItinerary;
-	$clsProperty = new Property();
+    $clsProperty = new Property();
     $assign_list["clsProperty"] = $clsProperty;
     $clsTourProperty = new TourProperty();
     $assign_list["clsTourProperty"] = $clsTourProperty;
     $clsTourStore = new TourStore();
     $assign_list["clsTourStore"] = $clsTourStore;
-	$clsReviews = new Reviews();
+    $clsReviews = new Reviews();
     $assign_list["clsReviews"] = $clsReviews;
     #
     $string = isset($_GET[$pkeyTable]) ? ($_GET[$pkeyTable]) : '';
@@ -616,21 +622,21 @@ function default_edit() {
     # Tour Transport
     $list_transport_id = explode(',', $oneItem['list_transport_id']);
     $assign_list["list_transport_id"] = $list_transport_id;
-	
-	$list_cat_selected_id = $oneItem['list_cat_id'];
-	$list_cat_selected_id = str_replace('|0|','|',$list_cat_selected_id);
-	$list_cat_selected_id = rtrim($list_cat_selected_id,'|');
-	$list_cat_selected_id = ltrim($list_cat_selected_id,'|');
-	$list_cat_selected_id = str_replace('|',',',$list_cat_selected_id);
-	$assign_list["list_cat_selected_id"] = $list_cat_selected_id;
-	
-	
-	$list_departure_point_selected_id = $oneItem['list_departure_point_id'];
-	$list_departure_point_selected_id = rtrim($list_departure_point_selected_id,'|');
-	$list_departure_point_selected_id = ltrim($list_departure_point_selected_id,'|');
-	$list_departure_point_selected_id = str_replace('|',',',$list_departure_point_selected_id);
-	$assign_list["list_departure_point_selected_id"] = $list_departure_point_selected_id;
-	//print_r($list_cat_selected_id); die();
+
+    $list_cat_selected_id = $oneItem['list_cat_id'];
+    $list_cat_selected_id = str_replace('|0|', '|', $list_cat_selected_id);
+    $list_cat_selected_id = rtrim($list_cat_selected_id, '|');
+    $list_cat_selected_id = ltrim($list_cat_selected_id, '|');
+    $list_cat_selected_id = str_replace('|', ',', $list_cat_selected_id);
+    $assign_list["list_cat_selected_id"] = $list_cat_selected_id;
+
+
+    $list_departure_point_selected_id = $oneItem['list_departure_point_id'];
+    $list_departure_point_selected_id = rtrim($list_departure_point_selected_id, '|');
+    $list_departure_point_selected_id = ltrim($list_departure_point_selected_id, '|');
+    $list_departure_point_selected_id = str_replace('|', ',', $list_departure_point_selected_id);
+    $assign_list["list_departure_point_selected_id"] = $list_departure_point_selected_id;
+    //print_r($list_cat_selected_id); die();
 
 
     $clsTourTransport = new TourTransport();
@@ -651,65 +657,65 @@ function default_edit() {
     $lstVisitorType = $clsTourProperty->getAll("is_trash=0 and type='VISITORTYPE' order by order_no asc");
     $assign_list["lstVisitorType"] = $lstVisitorType;
     unset($lstVisitorType);
-	
-	if($clsTourStore->checkExist($pvalTable,'DEPARTURE')==0){
-		$lstTourOption = $clsClassTable->getOneField('tour_option',$pvalTable);
-		$lstOption = array();
-		if($lstTourOption != '' && $lstTourOption != '0'){ 
-			$TMP = explode(',',$lstTourOption);
-			for($i=0; $i<count($TMP); $i++){
-				if(!in_array($TMP[$i],$lstOption)){
-					$lstOption[] = $TMP[$i];
-				}
-			}
-		}
-		$assign_list['lstOption']=$lstOption;
 
-		$lstAdultSizeGroup = $clsClassTable->getOneField('adult_group_size',$pvalTable);
-		$lstAdultSize = array();
-		if($lstAdultSizeGroup != '' && $lstAdultSizeGroup != '0'){
-			$TMP = explode(',',$lstAdultSizeGroup);
-			for($i=0; $i<count($TMP); $i++){
-				if(!in_array($TMP[$i],$lstAdultSize)){
-					$lstAdultSize[] = $TMP[$i];
-				}
-			}
-		}
-		$assign_list['lstAdultSize']=$lstAdultSize;
-		
-		$lstChildSizeGroup = $clsClassTable->getOneField('child_group_size',$pvalTable);
-		$lstChildSize = array();
-		if($lstChildSizeGroup != '' && $lstChildSizeGroup != '0'){
-			$TMP = explode(',',$lstChildSizeGroup);
-			for($i=0; $i<count($TMP); $i++){
-				if(!in_array($TMP[$i],$lstChildSize)){
-					$lstChildSize[] = $TMP[$i];
-				}
-			}
-		}
-		$assign_list['lstChildSize']=$lstChildSize;
-		
-		$lstInfantSizeGroup = $clsClassTable->getOneField('infant_group_size',$pvalTable);
-		$lstInfantSize = array();
-		if($lstInfantSizeGroup != '' && $lstInfantSizeGroup != '0'){
-			$TMP = explode(',',$lstInfantSizeGroup);
-			for($i=0; $i<count($TMP); $i++){
-				if(!in_array($TMP[$i],$lstInfantSize)){
-					$lstInfantSize[] = $TMP[$i];
-				}
-			}
-		}
-		$assign_list['lstInfantSize']=$lstInfantSize;
-	}
-	
-	#- Custom Field
-	$clsTourCustomField = new TourCustomField();
-	$assign_list["clsTourCustomField"] = $clsTourCustomField;
-	$listCustomField = $clsTourCustomField->getAll("fieldtype='CUSTOM' and tour_id='$pvalTable' order by order_no ASC");
-	$assign_list["listCustomField"] = $listCustomField; 
-	
-	unset($listCustomField);
-	
+    if ($clsTourStore->checkExist($pvalTable, 'DEPARTURE') == 0) {
+        $lstTourOption = $clsClassTable->getOneField('tour_option', $pvalTable);
+        $lstOption = array();
+        if ($lstTourOption != '' && $lstTourOption != '0') {
+            $TMP = explode(',', $lstTourOption);
+            for ($i = 0; $i < count($TMP); $i++) {
+                if (!in_array($TMP[$i], $lstOption)) {
+                    $lstOption[] = $TMP[$i];
+                }
+            }
+        }
+        $assign_list['lstOption'] = $lstOption;
+
+        $lstAdultSizeGroup = $clsClassTable->getOneField('adult_group_size', $pvalTable);
+        $lstAdultSize = array();
+        if ($lstAdultSizeGroup != '' && $lstAdultSizeGroup != '0') {
+            $TMP = explode(',', $lstAdultSizeGroup);
+            for ($i = 0; $i < count($TMP); $i++) {
+                if (!in_array($TMP[$i], $lstAdultSize)) {
+                    $lstAdultSize[] = $TMP[$i];
+                }
+            }
+        }
+        $assign_list['lstAdultSize'] = $lstAdultSize;
+
+        $lstChildSizeGroup = $clsClassTable->getOneField('child_group_size', $pvalTable);
+        $lstChildSize = array();
+        if ($lstChildSizeGroup != '' && $lstChildSizeGroup != '0') {
+            $TMP = explode(',', $lstChildSizeGroup);
+            for ($i = 0; $i < count($TMP); $i++) {
+                if (!in_array($TMP[$i], $lstChildSize)) {
+                    $lstChildSize[] = $TMP[$i];
+                }
+            }
+        }
+        $assign_list['lstChildSize'] = $lstChildSize;
+
+        $lstInfantSizeGroup = $clsClassTable->getOneField('infant_group_size', $pvalTable);
+        $lstInfantSize = array();
+        if ($lstInfantSizeGroup != '' && $lstInfantSizeGroup != '0') {
+            $TMP = explode(',', $lstInfantSizeGroup);
+            for ($i = 0; $i < count($TMP); $i++) {
+                if (!in_array($TMP[$i], $lstInfantSize)) {
+                    $lstInfantSize[] = $TMP[$i];
+                }
+            }
+        }
+        $assign_list['lstInfantSize'] = $lstInfantSize;
+    }
+
+    #- Custom Field
+    $clsTourCustomField = new TourCustomField();
+    $assign_list["clsTourCustomField"] = $clsTourCustomField;
+    $listCustomField = $clsTourCustomField->getAll("fieldtype='CUSTOM' and tour_id='$pvalTable' order by order_no ASC");
+    $assign_list["listCustomField"] = $listCustomField;
+
+    unset($listCustomField);
+
     #-------------Update Config Meta
     $clsMeta = new Meta();
     $assign_list["clsMeta"] = $clsMeta;
@@ -733,7 +739,7 @@ function default_edit() {
     $clsForm->addInputTextArea("full", 'overview', "", 'overview', 255, 25, 2, 1, "style='width:100%; height:420px'");
     $clsForm->addInputTextArea("full", 'stay', "", 'stay', 255, 25, 2, 1, "style='width:100%; height:420px'");
     $clsForm->addInputTextArea("full", 'meal', "", 'meal', 255, 25, 2, 1, "style='width:100%; height:420px'");
-	$clsForm->addInputTextArea("full", 'advisory', "", 'advisory', 255, 25, 2, 1, "style='width:100%; height:420px'");
+    $clsForm->addInputTextArea("full", 'advisory', "", 'advisory', 255, 25, 2, 1, "style='width:100%; height:420px'");
     $clsForm->addInputTextArea("full", 'activity', "", 'activity', 255, 25, 2, 1, "style='width:100%; height:420px'");
     $clsForm->addInputTextArea("full", 'what_include', "", 'what_include', 255, 25, 2, 1, "style='width:100%; height:420px'");
     $clsForm->addInputTextArea("full", 'thing_to_carry', "", 'thing_to_carry', 255, 25, 2, 1, "style='width:100%; height:420px'");
@@ -745,15 +751,15 @@ function default_edit() {
         $value = "";
         $firstAdd = 0;
         foreach ($_POST as $key => $val) {
-			$tmp = explode('-', $key);
-			if ($tmp[0] == 'iso') {
-				if ($firstAdd == 0) {
-					$value .= $tmp[1] . "='" . addslashes($val) . "'";
-					$firstAdd = 1;
-				} else {
-					$value .= "," . $tmp[1] . "='" . addslashes($val) . "'";
-				}
-			}
+            $tmp = explode('-', $key);
+            if ($tmp[0] == 'iso') {
+                if ($firstAdd == 0) {
+                    $value .= $tmp[1] . "='" . addslashes($val) . "'";
+                    $firstAdd = 1;
+                } else {
+                    $value .= "," . $tmp[1] . "='" . addslashes($val) . "'";
+                }
+            }
         }
         #- Update Custom field Tour
         if ($SiteHasCustomContentField_Tours) {
@@ -761,7 +767,7 @@ function default_edit() {
             if (is_array($listCustomField) && count($listCustomField) > 0) {
                 for ($i = 0; $i < count($listCustomField); $i++) {
                     $set = "fieldvalue='" . addslashes($_POST['Site_Custom_Field_value_' . $listCustomField[$i][$clsTourCustomField->pkey]]) . "'";
-					
+
                     $clsTourCustomField->updateOne($listCustomField[$i][$clsTourCustomField->pkey], $set);
                 }
             }
@@ -771,7 +777,7 @@ function default_edit() {
 
         // Fix field type
         $catPost = $_POST['cat_id'];
-		
+
         if (is_array($catPost) && count($catPost) > 0) {
             $list_cat_id = '|0|';
             foreach ($catPost as $key => $valx) {
@@ -782,55 +788,55 @@ function default_edit() {
         }
         // Fix field tag
 
-        $tagPost = $_POST['tag_id']?$_POST['tag_id']:0;
+        $tagPost = $_POST['tag_id'] ? $_POST['tag_id'] : 0;
         if (is_array($tagPost) && count($tagPost) > 0) {
             $list_tag_id = '|0|';
             foreach ($tagPost as $key => $valx) {
                 $list_tag_id .= $valx . '|';
             }
             $value .= ",list_tag_id='" . addslashes($list_tag_id) . "'";
-        }else{
-			$value .= ",list_tag_id=''";
-		}
-		
-		$departurerPointPost = $_POST['departure_point_id']?$_POST['departure_point_id']:0;
+        } else {
+            $value .= ",list_tag_id=''";
+        }
+
+        $departurerPointPost = $_POST['departure_point_id'] ? $_POST['departure_point_id'] : 0;
         if ($departurerPointPost[0] > 0) {
             foreach ($departurerPointPost as $key => $valx) {
-				if($valx >0){
-					$list_departure_point_id .= $valx . '|';
-				}
+                if ($valx > 0) {
+                    $list_departure_point_id .= $valx . '|';
+                }
             }
-			if($list_departure_point_id!=''){
-				$departure_point_id=$departurerPointPost[0]?$departurerPointPost[0]:$departurerPointPost[1];
-				$value .= ",departure_point_id='" . $departure_point_id . "'";
-            	$value .= ",list_departure_point_id='|" . addslashes($list_departure_point_id) . "'";
-			}else{
-				$value .= ",departure_point_id='" . $departurerPointPost[0] . "'";
-            	$value .= ",list_departure_point_id='" . addslashes($list_departure_point_id) . "'";
-			}
-        }else{
-			$value .= ",departure_point_id='0'";
-			$value .= ",list_departure_point_id=''";
-		}
-		$number_day = isset($_POST['number_day']) ? $_POST['number_day'] : 0;
-		$number_night = isset($_POST['number_night']) ? $_POST['number_night'] : 0;
-		 
-		if($number_day==0){
-			$number_night=0;
-		}if($number_day > $number_night){
-			$number_night=$number_day-1;
-		}elseif($number_night > $number_day){
-			$number_night=$number_day+1;
-		}else{
-			
-		}
-		$title=addslashes($_POST['title']);
-		$value .= ",number_day='".$number_day."',number_night='".$number_night."'";
-        $value .= ",user_id_update='".addslashes($core->_SESS->user_id) . "'";
-        $value .= ",upd_date='" . time()."'";
-		$value .= ",title='" .$title."'";
+            if ($list_departure_point_id != '') {
+                $departure_point_id = $departurerPointPost[0] ? $departurerPointPost[0] : $departurerPointPost[1];
+                $value .= ",departure_point_id='" . $departure_point_id . "'";
+                $value .= ",list_departure_point_id='|" . addslashes($list_departure_point_id) . "'";
+            } else {
+                $value .= ",departure_point_id='" . $departurerPointPost[0] . "'";
+                $value .= ",list_departure_point_id='" . addslashes($list_departure_point_id) . "'";
+            }
+        } else {
+            $value .= ",departure_point_id='0'";
+            $value .= ",list_departure_point_id=''";
+        }
+        $number_day = isset($_POST['number_day']) ? $_POST['number_day'] : 0;
+        $number_night = isset($_POST['number_night']) ? $_POST['number_night'] : 0;
+
+        if ($number_day == 0) {
+            $number_night = 0;
+        }
+        if ($number_day > $number_night) {
+            $number_night = $number_day - 1;
+        } elseif ($number_night > $number_day) {
+            $number_night = $number_day + 1;
+        } else {
+        }
+        $title = addslashes($_POST['title']);
+        $value .= ",number_day='" . $number_day . "',number_night='" . $number_night . "'";
+        $value .= ",user_id_update='" . addslashes($core->_SESS->user_id) . "'";
+        $value .= ",upd_date='" . time() . "'";
+        $value .= ",title='" . $title . "'";
         $value .= ",slug='" . $clsISO->replaceSpace2($_POST['title']) . "'";
-		$value .= ",list_activities_id='" . $clsISO->makeSlashListFromArray($_POST['list_activities_id']) . "'";
+        $value .= ",list_activities_id='" . $clsISO->makeSlashListFromArray($_POST['list_activities_id']) . "'";
 
         #--Special Field: image
         $image = isset($_POST['image_src']) ? $_POST['image_src'] : '';
@@ -847,17 +853,17 @@ function default_edit() {
         if ($imageBig != '' && $imageBig != '0') {
             $value .= ",imageBig='" . addslashes($imageBig) . "'";
         }
-		$is_online= isset($_POST['is_online'])?$_POST['is_online']:0;
-			$value .= ",is_online='".$is_online."'";
-//		print_r($_POST);die();
+        $is_online = isset($_POST['is_online']) ? $_POST['is_online'] : 0;
+        $value .= ",is_online='" . $is_online . "'";
+        //		print_r($_POST);die();
         #- Check Valid TripCode
-        if ($clsClassTable->getAll("trip_code='" . $_POST['iso-trip_code'] . "' and $pkeyTable<>'$pvalTable'")!='') {
+        if ($clsClassTable->getAll("trip_code='" . $_POST['iso-trip_code'] . "' and $pkeyTable<>'$pvalTable'") != '') {
             header('location: ' . PCMS_URL . '/?mod=' . $mod . '&act=edit&tour_id=' . $core->encryptID($pvalTable) . '&message=DupTripCode');
             die();
         }
         #
-        
-//		print_r($pvalTable.'xxxx'.$value); die();
+
+        //		print_r($pvalTable.'xxxx'.$value); die();
         if ($clsClassTable->updateOne($pvalTable, $value)) {
             header('location: ' . PCMS_URL . '/?mod=' . $mod . '&act=edit&tour_id=' . $core->encryptID($pvalTable) . '&message=UpdateSuccess');
         } else {
@@ -868,15 +874,15 @@ function default_edit() {
         $value = "";
         $firstAdd = 0;
         foreach ($_POST as $key => $val) {
-			$tmp = explode('-', $key);
-			if ($tmp[0] == 'iso') {
-				if ($firstAdd == 0) {
-					$value .= $tmp[1] . "='" . addslashes($val) . "'";
-					$firstAdd = 1;
-				} else {
-					$value .= "," . $tmp[1] . "='" . addslashes($val) . "'";
-				}
-			}
+            $tmp = explode('-', $key);
+            if ($tmp[0] == 'iso') {
+                if ($firstAdd == 0) {
+                    $value .= $tmp[1] . "='" . addslashes($val) . "'";
+                    $firstAdd = 1;
+                } else {
+                    $value .= "," . $tmp[1] . "='" . addslashes($val) . "'";
+                }
+            }
         }
         #- Update Custom field Tour
         if ($SiteHasCustomContentField_Tours) {
@@ -901,80 +907,80 @@ function default_edit() {
         $value = "";
         $firstAdd = 0;
         foreach ($_POST as $key => $val) {
-			$tmp = explode('-', $key);
-			if ($tmp[0] == 'iso') {
-				if ($firstAdd == 0) {
-					$value .= $tmp[1] . "='" . addslashes($val) . "'";
-					$firstAdd = 1;
-				} else {
-					$value .= "," . $tmp[1] . "='" . addslashes($val) . "'";
-				}
-			}
-			if ($tmp[0] == 'date') {
-				if ($firstAdd == 0) {
-					$value .= $tmp[1] . "='" . strtotime($val) . "'";
-					$firstAdd = 1;
-				} else {
-					$value .= "," . $tmp[1] . "='" . strtotime($val) . "'";
-				}
-			}
-			if ($tmp[0] == 'price') {
-				if ($firstAdd == 0) {
-					$value .= $tmp[1] . "='" . $clsISO->processSmartNumber($val) . "'";
-					$firstAdd = 1;
-				} else {
-					$value .= "," . $tmp[1] . "='" . $clsISO->processSmartNumber($val) . "'";
-				}
-			}
+            $tmp = explode('-', $key);
+            if ($tmp[0] == 'iso') {
+                if ($firstAdd == 0) {
+                    $value .= $tmp[1] . "='" . addslashes($val) . "'";
+                    $firstAdd = 1;
+                } else {
+                    $value .= "," . $tmp[1] . "='" . addslashes($val) . "'";
+                }
+            }
+            if ($tmp[0] == 'date') {
+                if ($firstAdd == 0) {
+                    $value .= $tmp[1] . "='" . strtotime($val) . "'";
+                    $firstAdd = 1;
+                } else {
+                    $value .= "," . $tmp[1] . "='" . strtotime($val) . "'";
+                }
+            }
+            if ($tmp[0] == 'price') {
+                if ($firstAdd == 0) {
+                    $value .= $tmp[1] . "='" . $clsISO->processSmartNumber($val) . "'";
+                    $firstAdd = 1;
+                } else {
+                    $value .= "," . $tmp[1] . "='" . $clsISO->processSmartNumber($val) . "'";
+                }
+            }
         }
         $value .= ",trip_old_price='" . $clsISO->processSmartNumber($_POST['trip_old_price']) . "'";
         $value .= ",trip_price='" . $clsISO->processSmartNumber($_POST['trip_price']) . "'";
         $value .= ",intro_trip_price='" . $_POST['intro_trip_price'] . "'";
-		
-		
-		$min_price = $oneItem['min_price'];
-		if($_POST['trip_price'] < $min_price){
-			$value .= ",min_price='" .$_POST['trip_price']. "'";
-		}
-		
+
+
+        $min_price = $oneItem['min_price'];
+        if ($_POST['trip_price'] < $min_price) {
+            $value .= ",min_price='" . $_POST['trip_price'] . "'";
+        }
+
         if ($clsClassTable->updateOne($pvalTable, $value)) {
             header('location: ' . PCMS_URL . '/?mod=' . $mod . '&act=edit&tour_id=' . $core->encryptID($pvalTable) . '&message=UpdateSuccess#isotab3');
         } else {
             header('location: ' . PCMS_URL . '/?mod=' . $mod . '&act=edit&tour_id=' . $core->encryptID($pvalTable) . '&message=updateFailed#isotab3');
         }
     }
-	if (isset($_POST['UpdateStep5']) && $_POST['UpdateStep5'] == 'UpdateStep5') {
+    if (isset($_POST['UpdateStep5']) && $_POST['UpdateStep5'] == 'UpdateStep5') {
         $value = "";
         $firstAdd = 0;
         foreach ($_POST as $key => $val) {
-			$tmp = explode('-', $key);
-			if ($tmp[0] == 'iso') {
-				if ($firstAdd == 0) {
-					$value .= $tmp[1] . "='" . addslashes($val) . "'";
-					$firstAdd = 1;
-				} else {
-					$value .= "," . $tmp[1] . "='" . addslashes($val) . "'";
-				}
-			}
-			if ($tmp[0] == 'date') {
-				if ($firstAdd == 0) {
-					$value .= $tmp[1] . "='" . strtotime($val) . "'";
-					$firstAdd = 1;
-				} else {
-					$value .= "," . $tmp[1] . "='" . strtotime($val) . "'";
-				}
-			}
-			if ($tmp[0] == 'price') {
-				if ($firstAdd == 0) {
-					$value .= $tmp[1] . "='" . $clsISO->processSmartNumber($val) . "'";
-					$firstAdd = 1;
-				} else {
-					$value .= "," . $tmp[1] . "='" . $clsISO->processSmartNumber($val) . "'";
-				}
-			}
+            $tmp = explode('-', $key);
+            if ($tmp[0] == 'iso') {
+                if ($firstAdd == 0) {
+                    $value .= $tmp[1] . "='" . addslashes($val) . "'";
+                    $firstAdd = 1;
+                } else {
+                    $value .= "," . $tmp[1] . "='" . addslashes($val) . "'";
+                }
+            }
+            if ($tmp[0] == 'date') {
+                if ($firstAdd == 0) {
+                    $value .= $tmp[1] . "='" . strtotime($val) . "'";
+                    $firstAdd = 1;
+                } else {
+                    $value .= "," . $tmp[1] . "='" . strtotime($val) . "'";
+                }
+            }
+            if ($tmp[0] == 'price') {
+                if ($firstAdd == 0) {
+                    $value .= $tmp[1] . "='" . $clsISO->processSmartNumber($val) . "'";
+                    $firstAdd = 1;
+                } else {
+                    $value .= "," . $tmp[1] . "='" . $clsISO->processSmartNumber($val) . "'";
+                }
+            }
         }
-		$value .= "list_service_id='" . $clsISO->makeSlashListFromArray($_POST['list_service_id']) . "'";
-		//print_r($pvalTable.'xxxx'.$value); die();
+        $value .= "list_service_id='" . $clsISO->makeSlashListFromArray($_POST['list_service_id']) . "'";
+        //print_r($pvalTable.'xxxx'.$value); die();
         if ($clsClassTable->updateOne($pvalTable, $value)) {
             header('location: ' . PCMS_URL . '/?mod=' . $mod . '&act=edit&tour_id=' . $core->encryptID($pvalTable) . '&message=UpdateSuccess#isotab3');
         } else {
@@ -982,20 +988,20 @@ function default_edit() {
         }
     }
     if (isset($_POST['UpdateStep6']) && $_POST['UpdateStep6'] == 'UpdateStep6') {
-        $titleMeta=$_POST['config_value_title']?addslashes($_POST['config_value_title']):$clsClassTable->getOneField('title',$pvalTable);
-		$introMeta=strip_tags(html_entity_decode(addslashes($clsClassTable->getOneField('overview',$pvalTable))));
-		$descriptionMeta=$_POST['config_value_intro']?addslashes($_POST['config_value_intro']):substr($introMeta,0,160);
-		$image_seo     = isset($_POST['image_seo_src']) ? $_POST['image_seo_src'] : '';
-		if (_isoman_use) {
-			$image_seo     = $_POST['isoman_url_image_seo'];
-		}
-		$image_seo=$image_seo?$image_seo:$clsClassTable->getOneField('image',$pvalTable);
-		if($meta_id==''){
-			$clsMeta->insertOne("config_link,config_value_title,config_value_intro,image,reg_date,upd_date,meta_id,meta_index,meta_follow","'".$linkMeta."','".$titleMeta."','".$descriptionMeta."','".$image_seo."','".time()."','".time()."','".$clsMeta->getMaxId()."','".$_POST['meta_index']."','".$_POST['meta_follow']."'");
-			$allMeta = $clsMeta->getAll("config_link='".$linkMeta."'");
-		}else{
-			$clsMeta->updateOne($meta_id,"config_value_intro='".$descriptionMeta."',config_value_title='".$titleMeta."',image='".$image_seo."',upd_date='".time()."',meta_index='".addslashes($_POST['meta_index'])."',meta_follow='".addslashes($_POST['meta_follow'])."'");
-		}
+        $titleMeta = $_POST['config_value_title'] ? addslashes($_POST['config_value_title']) : $clsClassTable->getOneField('title', $pvalTable);
+        $introMeta = strip_tags(html_entity_decode(addslashes($clsClassTable->getOneField('overview', $pvalTable))));
+        $descriptionMeta = $_POST['config_value_intro'] ? addslashes($_POST['config_value_intro']) : substr($introMeta, 0, 160);
+        $image_seo     = isset($_POST['image_seo_src']) ? $_POST['image_seo_src'] : '';
+        if (_isoman_use) {
+            $image_seo     = $_POST['isoman_url_image_seo'];
+        }
+        $image_seo = $image_seo ? $image_seo : $clsClassTable->getOneField('image', $pvalTable);
+        if ($meta_id == '') {
+            $clsMeta->insertOne("config_link,config_value_title,config_value_intro,image,reg_date,upd_date,meta_id,meta_index,meta_follow", "'" . $linkMeta . "','" . $titleMeta . "','" . $descriptionMeta . "','" . $image_seo . "','" . time() . "','" . time() . "','" . $clsMeta->getMaxId() . "','" . $_POST['meta_index'] . "','" . $_POST['meta_follow'] . "'");
+            $allMeta = $clsMeta->getAll("config_link='" . $linkMeta . "'");
+        } else {
+            $clsMeta->updateOne($meta_id, "config_value_intro='" . $descriptionMeta . "',config_value_title='" . $titleMeta . "',image='" . $image_seo . "',upd_date='" . time() . "',meta_index='" . addslashes($_POST['meta_index']) . "',meta_follow='" . addslashes($_POST['meta_follow']) . "'");
+        }
         header('location: ' . PCMS_URL . '/?mod=' . $mod . '&act=edit&tour_id=' . $core->encryptID($pvalTable) . '&message=UpdateSuccess');
     }
     if (isset($_POST['UpdateStep7']) && $_POST['UpdateStep7'] == 'UpdateStep7') {
@@ -1009,38 +1015,38 @@ function default_edit() {
             header('location: ' . PCMS_URL . '/?mod=' . $mod . '&act=edit&tour_id=' . $pvalTable . '&message=updateFailed#isotab7');
         }
     }
-	if (isset($_POST['UpdateStep7']) && $_POST['UpdateStep7'] == 'UpdateStep7') {
+    if (isset($_POST['UpdateStep7']) && $_POST['UpdateStep7'] == 'UpdateStep7') {
         $value = "";
         $firstAdd = 0;
         foreach ($_POST as $key => $val) {
-			$tmp = explode('-', $key);
-			if ($tmp[0] == 'iso') {
-				if ($firstAdd == 0) {
-					$value .= $tmp[1] . "='" . addslashes($val) . "'";
-					$firstAdd = 1;
-				} else {
-					$value .= "," . $tmp[1] . "='" . addslashes($val) . "'";
-				}
-			}
-			if ($tmp[0] == 'date') {
-				if ($firstAdd == 0) {
-					$value .= $tmp[1] . "='" . strtotime($val) . "'";
-					$firstAdd = 1;
-				} else {
-					$value .= "," . $tmp[1] . "='" . strtotime($val) . "'";
-				}
-			}
-			if ($tmp[0] == 'price') {
-				if ($firstAdd == 0) {
-					$value .= $tmp[1] . "='" . $clsISO->processSmartNumber($val) . "'";
-					$firstAdd = 1;
-				} else {
-					$value .= "," . $tmp[1] . "='" . $clsISO->processSmartNumber($val) . "'";
-				}
-			}
+            $tmp = explode('-', $key);
+            if ($tmp[0] == 'iso') {
+                if ($firstAdd == 0) {
+                    $value .= $tmp[1] . "='" . addslashes($val) . "'";
+                    $firstAdd = 1;
+                } else {
+                    $value .= "," . $tmp[1] . "='" . addslashes($val) . "'";
+                }
+            }
+            if ($tmp[0] == 'date') {
+                if ($firstAdd == 0) {
+                    $value .= $tmp[1] . "='" . strtotime($val) . "'";
+                    $firstAdd = 1;
+                } else {
+                    $value .= "," . $tmp[1] . "='" . strtotime($val) . "'";
+                }
+            }
+            if ($tmp[0] == 'price') {
+                if ($firstAdd == 0) {
+                    $value .= $tmp[1] . "='" . $clsISO->processSmartNumber($val) . "'";
+                    $firstAdd = 1;
+                } else {
+                    $value .= "," . $tmp[1] . "='" . $clsISO->processSmartNumber($val) . "'";
+                }
+            }
         }
-		$value .= "list_activities_id='" . $clsISO->makeSlashListFromArray($_POST['list_activities_id']) . "'";
-		//print_r($pvalTable.'xxxx'.$value); die();
+        $value .= "list_activities_id='" . $clsISO->makeSlashListFromArray($_POST['list_activities_id']) . "'";
+        //print_r($pvalTable.'xxxx'.$value); die();
         if ($clsClassTable->updateOne($pvalTable, $value)) {
             header('location: ' . PCMS_URL . '/?mod=' . $mod . '&act=edit&tour_id=' . $core->encryptID($pvalTable) . '&message=UpdateSuccess#isotab3');
         } else {
@@ -1056,100 +1062,100 @@ function default_edit() {
             header('location: ' . PCMS_URL . '/?mod=' . $mod . '&act=edit&tour_id=' . $core->encryptID($pvalTable) . '&message=updateFailed#isotab4');
         }
     }
-	if (isset($_POST['UpdateStep10']) && $_POST['UpdateStep10'] == 'UpdateStep10') {
+    if (isset($_POST['UpdateStep10']) && $_POST['UpdateStep10'] == 'UpdateStep10') {
         $value = "";
         $firstAdd = 0;
         foreach ($_POST as $key => $val) {
-			$tmp = explode('-', $key);
-			if ($tmp[0] == 'iso') {
-				if ($firstAdd == 0) {
-					$value .= $tmp[1] . "='" . addslashes($val) . "'";
-					$firstAdd = 1;
-				} else {
-					$value .= "," . $tmp[1] . "='" . addslashes($val) . "'";
-				}
-			}
+            $tmp = explode('-', $key);
+            if ($tmp[0] == 'iso') {
+                if ($firstAdd == 0) {
+                    $value .= $tmp[1] . "='" . addslashes($val) . "'";
+                    $firstAdd = 1;
+                } else {
+                    $value .= "," . $tmp[1] . "='" . addslashes($val) . "'";
+                }
+            }
         }
-		if ($clsClassTable->updateOne($pvalTable, $value)) {
+        if ($clsClassTable->updateOne($pvalTable, $value)) {
             header('location: ' . PCMS_URL . '/?mod=' . $mod . '&act=edit&tour_id=' . $core->encryptID($pvalTable) . '&message=UpdateSuccess#isotab2');
         } else {
             header('location: ' . PCMS_URL . '/?mod=' . $mod . '&act=edit&tour_id=' . $core->encryptID($pvalTable) . '&message=updateFailed#isotab2');
         }
-	}
-	if (isset($_POST['UpdateStep11']) && $_POST['UpdateStep11'] == 'UpdateStep11') {
+    }
+    if (isset($_POST['UpdateStep11']) && $_POST['UpdateStep11'] == 'UpdateStep11') {
         $value = "";
         $firstAdd = 0;
         foreach ($_POST as $key => $val) {
-			$tmp = explode('-', $key);
-			if ($tmp[0] == 'iso') {
-				if ($firstAdd == 0) {
-					$value .= $tmp[1] . "='" . addslashes($val) . "'";
-					$firstAdd = 1;
-				} else {
-					$value .= "," . $tmp[1] . "='" . addslashes($val) . "'";
-				}
-			}
+            $tmp = explode('-', $key);
+            if ($tmp[0] == 'iso') {
+                if ($firstAdd == 0) {
+                    $value .= $tmp[1] . "='" . addslashes($val) . "'";
+                    $firstAdd = 1;
+                } else {
+                    $value .= "," . $tmp[1] . "='" . addslashes($val) . "'";
+                }
+            }
         }
-		$tour_optionPost = $clsISO->makeSlashListFromArrayComma($_POST['tour_option']);	
-        $value .= "tour_option='" .$tour_optionPost. "'";
-		
-		$adult_size_groupPost = $clsISO->makeSlashListFromArrayComma($_POST['adult_size_group']);
-        $value .= ",adult_group_size='" . $adult_size_groupPost. "'";
-        
-		if($adult_size_groupPost!=''){
-			$adult_size_group = explode(',',$adult_size_groupPost);
-			for($i=0;$i<count($adult_size_group);$i++){
+        $tour_optionPost = $clsISO->makeSlashListFromArrayComma($_POST['tour_option']);
+        $value .= "tour_option='" . $tour_optionPost . "'";
 
-				if($clsTourOption->getMin($adult_size_group[$i+1]) <= $clsTourOption->getMax($adult_size_group[$i]) && $clsTourOption->getMin($adult_size_group[$i+1])!='' && $clsTourOption->getMax($adult_size_group[$i])!=''){
-					header('location: ' . PCMS_URL . '/?mod=' . $mod . '&act=edit&tour_id=' . $core->encryptID($pvalTable) . '&message=updateTourOptionFailed#isotab4');
-					return false;
-				}
-			}
-		}
-		
-		$child_size_groupPost = $clsISO->makeSlashListFromArrayComma($_POST['child_size_group']);
-        $value .= ",child_group_size='" .$child_size_groupPost. "'";
-		
-		if($child_size_groupPost!=''){
-			$child_size_group = explode(',',$child_size_groupPost);
-			for($i=0;$i<count($child_size_group);$i++){
-				if($clsTourOption->getMin($child_size_group[$i+1]) <= $clsTourOption->getMax($child_size_group[$i]) && $clsTourOption->getMin($child_size_group[$i+1])!='' && $clsTourOption->getMax($child_size_group[$i])!=''){
-					header('location: ' . PCMS_URL . '/?mod=' . $mod . '&act=edit&tour_id=' . $core->encryptID($pvalTable) . '&message=updateTourOptionFailed#isotab4');
-					return false;
-				}
-			}
-		}
-        
-		$baby_size_groupPost = $clsISO->makeSlashListFromArrayComma($_POST['infant_size_group']);
-        $value .= ",infant_group_size='" .$baby_size_groupPost. "'";
-		 if($baby_size_groupPost!=''){
-			$baby_size_group = explode(',',$baby_size_groupPost);
-			for($i=0;$i<count($baby_size_group);$i++){
-				if($clsTourOption->getMin($baby_size_group[$i+1])<= $clsTourOption->getMax($baby_size_group[$i]) && $clsTourOption->getMin($baby_size_group[$i+1])!='' && $clsTourOption->getMax($baby_size_group[$i])!=''){
-					header('location: ' . PCMS_URL . '/?mod=' . $mod . '&act=edit&tour_id=' . $core->encryptID($pvalTable) . '&message=updateTourOptionFailed#isotab4');
-					return false;
-				}
-			}
+        $adult_size_groupPost = $clsISO->makeSlashListFromArrayComma($_POST['adult_size_group']);
+        $value .= ",adult_group_size='" . $adult_size_groupPost . "'";
 
-		}
-		
-		 $tour_number_group_id=$adult_size_groupPost;
-		 if($child_size_groupPost!=''){
-			  $tour_number_group_id.=','.$child_size_groupPost;
-		 }
-		 if($baby_size_groupPost!=''){
-			  $tour_number_group_id.=','.$baby_size_groupPost;
-		 }
-		if ($clsClassTable->updateOne($pvalTable, $value)) {
+        if ($adult_size_groupPost != '') {
+            $adult_size_group = explode(',', $adult_size_groupPost);
+            for ($i = 0; $i < count($adult_size_group); $i++) {
+
+                if ($clsTourOption->getMin($adult_size_group[$i + 1]) <= $clsTourOption->getMax($adult_size_group[$i]) && $clsTourOption->getMin($adult_size_group[$i + 1]) != '' && $clsTourOption->getMax($adult_size_group[$i]) != '') {
+                    header('location: ' . PCMS_URL . '/?mod=' . $mod . '&act=edit&tour_id=' . $core->encryptID($pvalTable) . '&message=updateTourOptionFailed#isotab4');
+                    return false;
+                }
+            }
+        }
+
+        $child_size_groupPost = $clsISO->makeSlashListFromArrayComma($_POST['child_size_group']);
+        $value .= ",child_group_size='" . $child_size_groupPost . "'";
+
+        if ($child_size_groupPost != '') {
+            $child_size_group = explode(',', $child_size_groupPost);
+            for ($i = 0; $i < count($child_size_group); $i++) {
+                if ($clsTourOption->getMin($child_size_group[$i + 1]) <= $clsTourOption->getMax($child_size_group[$i]) && $clsTourOption->getMin($child_size_group[$i + 1]) != '' && $clsTourOption->getMax($child_size_group[$i]) != '') {
+                    header('location: ' . PCMS_URL . '/?mod=' . $mod . '&act=edit&tour_id=' . $core->encryptID($pvalTable) . '&message=updateTourOptionFailed#isotab4');
+                    return false;
+                }
+            }
+        }
+
+        $baby_size_groupPost = $clsISO->makeSlashListFromArrayComma($_POST['infant_size_group']);
+        $value .= ",infant_group_size='" . $baby_size_groupPost . "'";
+        if ($baby_size_groupPost != '') {
+            $baby_size_group = explode(',', $baby_size_groupPost);
+            for ($i = 0; $i < count($baby_size_group); $i++) {
+                if ($clsTourOption->getMin($baby_size_group[$i + 1]) <= $clsTourOption->getMax($baby_size_group[$i]) && $clsTourOption->getMin($baby_size_group[$i + 1]) != '' && $clsTourOption->getMax($baby_size_group[$i]) != '') {
+                    header('location: ' . PCMS_URL . '/?mod=' . $mod . '&act=edit&tour_id=' . $core->encryptID($pvalTable) . '&message=updateTourOptionFailed#isotab4');
+                    return false;
+                }
+            }
+        }
+
+        $tour_number_group_id = $adult_size_groupPost;
+        if ($child_size_groupPost != '') {
+            $tour_number_group_id .= ',' . $child_size_groupPost;
+        }
+        if ($baby_size_groupPost != '') {
+            $tour_number_group_id .= ',' . $baby_size_groupPost;
+        }
+        if ($clsClassTable->updateOne($pvalTable, $value)) {
             header('location: ' . PCMS_URL . '/?mod=' . $mod . '&act=edit&tour_id=' . $core->encryptID($pvalTable) . '&message=UpdateSuccess#isotab4');
         } else {
             header('location: ' . PCMS_URL . '/?mod=' . $mod . '&act=edit&tour_id=' . $core->encryptID($pvalTable) . '&message=updateFailed#isotab4');
         }
-	}
-	$clsClassTable->updateMinPriceTour($pvalTable);
+    }
+    $clsClassTable->updateMinPriceTour($pvalTable);
 }
 
-function default_move() {
+function default_move()
+{
     global $assign_list, $_CONFIG, $_SITE_ROOT, $mod, $act;
     global $core, $clsModule, $clsButtonNav, $oneSetting;
     $user_id = $core->_USER['user_id'];
@@ -1237,7 +1243,8 @@ function default_move() {
     header('location: ' . PCMS_URL . '/?mod=' . $mod . $pUrl . '&message=PositionSuccess');
 }
 
-function default_move2() {
+function default_move2()
+{
     global $assign_list, $_CONFIG, $_SITE_ROOT, $mod, $act;
     global $core, $clsModule, $clsButtonNav, $oneSetting;
     $user_id = $core->_USER['user_id'];
@@ -1305,11 +1312,12 @@ function default_move2() {
     header('location: ' . PCMS_URL . '/?mod=' . $mod . $param_url . '&message=PositionSuccess');
 }
 
-function default_trash() {
+function default_trash()
+{
     global $assign_list, $_CONFIG, $_SITE_ROOT, $mod, $act;
     global $core, $clsModule, $clsButtonNav, $oneSetting;
     $user_id = $core->_USER['user_id'];
-	#
+    #
     $classTable = "Tour";
     $clsClassTable = new $classTable;
     $tableName = $clsClassTable->tbl;
@@ -1334,7 +1342,8 @@ function default_trash() {
     }
 }
 
-function default_trash2() {
+function default_trash2()
+{
     global $assign_list, $_CONFIG, $_SITE_ROOT, $mod, $act;
     global $core, $clsModule, $clsButtonNav, $oneSetting;
     $user_id = $core->_USER['user_id'];
@@ -1367,7 +1376,8 @@ function default_trash2() {
     }
 }
 
-function default_restore() {
+function default_restore()
+{
     global $assign_list, $_CONFIG, $_SITE_ROOT, $mod, $act;
     global $core, $clsModule, $clsButtonNav, $oneSetting;
     $user_id = $core->_USER['user_id'];
@@ -1395,7 +1405,8 @@ function default_restore() {
     }
 }
 
-function default_restore2() {
+function default_restore2()
+{
     global $assign_list, $_CONFIG, $_SITE_ROOT, $mod, $act;
     global $core, $clsModule, $clsButtonNav, $oneSetting;
     $user_id = $core->_USER['user_id'];
@@ -1427,12 +1438,13 @@ function default_restore2() {
     }
 }
 
-function default_delete() {
+function default_delete()
+{
     global $assign_list, $_CONFIG, $_SITE_ROOT, $mod, $act;
     global $core, $clsModule, $clsButtonNav, $oneSetting;
     $user_id = $core->_USER['user_id'];
     #
-	$clsTourDestination = new TourDestination();
+    $clsTourDestination = new TourDestination();
     $classTable = "Tour";
     $clsClassTable = new $classTable;
     $tableName = $clsClassTable->tbl;
@@ -1452,12 +1464,13 @@ function default_delete() {
         header('location: ' . PCMS_URL . '/index.php' . $pUrl . '&message=notPermission');
     }
     if ($clsClassTable->doDelete($pvalTable)) {
-		 $clsTourDestination->deleteByCond("tour_id='$pvalTable'");
+        $clsTourDestination->deleteByCond("tour_id='$pvalTable'");
         header('location: ' . PCMS_URL . '/index.php' . $pUrl . '&message=DeleteSuccess');
     }
 }
 
-function default_delete2() {
+function default_delete2()
+{
     global $assign_list, $_CONFIG, $_SITE_ROOT, $mod, $act;
     global $core, $clsModule, $clsButtonNav, $oneSetting;
     $user_id = $core->_USER['user_id'];
@@ -1488,65 +1501,73 @@ function default_delete2() {
     }
 }
 
-function default_ajSaveStoreForTour(){
-	global $assign_list, $_CONFIG,  $_SITE_ROOT, $mod, $act, $_LANG_ID;
-	global $core, $clsModule, $clsButtonNav,$oneSetting;
-	$user_id = $core->_USER['user_id'];
-	#
-	$clsTourStore = new TourStore();
-	$type = isset($_POST['type'])?$_POST['type']:'';
-	$list_tour_id = isset($_POST['list_tour_id'])?$_POST['list_tour_id']:'';
-	$list_tour_id = rtrim($list_tour_id,'|');
-	
-	if($list_tour_id !='' ){
-		$tmp = explode('|',$list_tour_id);
-		if(!empty($tmp)){
-			foreach($tmp as $i){
-				if(!$clsTourStore->checkExist($i,$type)){
-					#
-					$max_id = $clsTourStore->getMaxID();
-					$max_order = $clsTourStore->getMaxOrder($type);
-					$f = "$clsTourStore->pkey,tour_id,_type,order_no";
-					$v = "'$max_id','$i','$type','$max_order'";
-					$clsTourStore->insertOne($f,$v);
-				}
-			}
-			echo '_SUCCESS'; die();
-		}else{
-			echo '_ERROR'; die();
-		}
-	}else{
-		echo '_ERROR'; die();
-	}
+function default_ajSaveStoreForTour()
+{
+    global $assign_list, $_CONFIG,  $_SITE_ROOT, $mod, $act, $_LANG_ID;
+    global $core, $clsModule, $clsButtonNav, $oneSetting;
+    $user_id = $core->_USER['user_id'];
+    #
+    $clsTourStore = new TourStore();
+    $type = isset($_POST['type']) ? $_POST['type'] : '';
+    $list_tour_id = isset($_POST['list_tour_id']) ? $_POST['list_tour_id'] : '';
+    $list_tour_id = rtrim($list_tour_id, '|');
+
+    if ($list_tour_id != '') {
+        $tmp = explode('|', $list_tour_id);
+        if (!empty($tmp)) {
+            foreach ($tmp as $i) {
+                if (!$clsTourStore->checkExist($i, $type)) {
+                    #
+                    $max_id = $clsTourStore->getMaxID();
+                    $max_order = $clsTourStore->getMaxOrder($type);
+                    $f = "$clsTourStore->pkey,tour_id,_type,order_no";
+                    $v = "'$max_id','$i','$type','$max_order'";
+                    $clsTourStore->insertOne($f, $v);
+                }
+            }
+            echo '_SUCCESS';
+            die();
+        } else {
+            echo '_ERROR';
+            die();
+        }
+    } else {
+        echo '_ERROR';
+        die();
+    }
 }
-function default_ajDeleteTourStore(){
-	global $assign_list, $_CONFIG,  $_SITE_ROOT, $mod, $act;
-	global $core, $clsModule, $clsButtonNav,$oneSetting;
-	$user_id = $core->_USER['user_id'];
-	#
-	$clsClassTable = new TourStore();
-	$pvalTable = isset($_POST['tour_store_id'])?$_POST['tour_store_id']:0;
-	$clsClassTable->deleteOne($pvalTable);
-	echo(1); die();
+function default_ajDeleteTourStore()
+{
+    global $assign_list, $_CONFIG,  $_SITE_ROOT, $mod, $act;
+    global $core, $clsModule, $clsButtonNav, $oneSetting;
+    $user_id = $core->_USER['user_id'];
+    #
+    $clsClassTable = new TourStore();
+    $pvalTable = isset($_POST['tour_store_id']) ? $_POST['tour_store_id'] : 0;
+    $clsClassTable->deleteOne($pvalTable);
+    echo (1);
+    die();
 }
-function default_ajUpdPosSortTourStore(){
-	global $dbconn, $assign_list, $_CONFIG,  $_SITE_ROOT, $mod , $_LANG_ID, $act, $menu_current, $current_page, $core, $clsModule;
-	global $clsConfiguration;
-	#
-	$clsTourStore = new TourStore();
-	$type = $_POST['type'];
-	$order = $_POST['order'];
-	$currentPage 	= $_POST['currentPage'];
-	$recordPerPage 	= $_POST['recordPerPage'];
-	//var_dump($currentPage.'xxxxxx'.$recordPerPage);die();
-	foreach($order as $key=>$val){
-		$key = (($currentPage-1)*$recordPerPage + $key + 1);
-		$clsTourStore->updateByCond("tour_id='$val' and _type='$type'","order_no='".$key."'");
-	}
+function default_ajUpdPosSortTourStore()
+{
+    global $dbconn, $assign_list, $_CONFIG,  $_SITE_ROOT, $mod, $_LANG_ID, $act, $menu_current, $current_page, $core, $clsModule;
+    global $clsConfiguration;
+    #
+    $clsTourStore = new TourStore();
+    $type = $_POST['type'];
+    $order = $_POST['order'];
+    $currentPage     = $_POST['currentPage'];
+    $recordPerPage     = $_POST['recordPerPage'];
+    //var_dump($currentPage.'xxxxxx'.$recordPerPage);die();
+    foreach ($order as $key => $val) {
+        $key = (($currentPage - 1) * $recordPerPage + $key + 1);
+        $clsTourStore->updateByCond("tour_id='$val' and _type='$type'", "order_no='" . $key . "'");
+    }
 }
-function default_liststore() {
+function default_liststore()
+{
     global $assign_list, $_CONFIG, $_SITE_ROOT, $mod, $act, $clsConfiguration;
-    global $core, $clsModule, $clsButtonNav, $oneSetting,$clsISO,$package_id;
+    global $core, $clsModule, $clsButtonNav, $oneSetting, $clsISO, $package_id;
     $assign_list["clsModule"] = $clsModule;
     $user_id = $core->_USER['user_id'];
     $clsUser = new User();
@@ -1564,7 +1585,7 @@ function default_liststore() {
     $clsPriceRange = new PriceRange();
     $assign_list["clsPriceRange"] = $clsPriceRange;
     #
-    $SiteHasGroup_Tours = $clsISO->getCheckActiveModulePackage($package_id,$mod,'group','default');;
+    $SiteHasGroup_Tours = $clsISO->getCheckActiveModulePackage($package_id, $mod, 'group', 'default');;
     $tour_group_id = 0;
     if ($SiteHasGroup_Tours) {
         $clsTourGroup = new TourGroup();
@@ -1574,7 +1595,7 @@ function default_liststore() {
     $assign_list["tour_group_id"] = $tour_group_id;
     #
     $cat_id = 0;
-    if ($clsISO->getCheckActiveModulePackage($package_id,$mod,'category','default')) {
+    if ($clsISO->getCheckActiveModulePackage($package_id, $mod, 'category', 'default')) {
         $clsTourCat = new TourCategory();
         $assign_list["clsTourCat"] = $clsTourCat;
         $cat_id = isset($_GET['cat_id']) ? intval($_GET['cat_id']) : 0;
@@ -1582,7 +1603,7 @@ function default_liststore() {
     $assign_list["cat_id"] = $cat_id;
     #
     $price_range_id = 0;
-    if ($clsISO->getCheckActiveModulePackage($package_id,$mod,'price_range','default')) {
+    if ($clsISO->getCheckActiveModulePackage($package_id, $mod, 'price_range', 'default')) {
         $clsPriceRange = new PriceRange();
         $assign_list["clsPriceRange"] = $clsPriceRange;
         $price_range_id = isset($_GET['price_range_id']) ? intval($_GET['price_range_id']) : 0;
@@ -1759,37 +1780,39 @@ function default_liststore() {
     }
 }
 
-function default_ajUpdPosSortHotTour(){
-	global $dbconn, $assign_list, $_CONFIG,  $_SITE_ROOT, $mod , $_LANG_ID, $act, $menu_current, $current_page, $core, $clsModule;
-	global $clsConfiguration;
-	#
-	$clsTourStore = new TourStore();
-	$order = $_POST['order'];
-	$type = $_POST['type'];
-	$currentPage 	= $_POST['currentPage'];
-	$recordPerPage 	= $_POST['recordPerPage'];
-	//var_dump($currentPage.'xxxxxx'.$recordPerPage);die();
-	foreach($order as $key=>$val){
-		/*$key = (($currentPage-1)*$recordPerPage + $key + 1);*/
-		$key = $key + 1;
-		$clsTourStore->updateByCond("tour_id='$val' and _type='$type'","order_no='".$key."'");
-	}
+function default_ajUpdPosSortHotTour()
+{
+    global $dbconn, $assign_list, $_CONFIG,  $_SITE_ROOT, $mod, $_LANG_ID, $act, $menu_current, $current_page, $core, $clsModule;
+    global $clsConfiguration;
+    #
+    $clsTourStore = new TourStore();
+    $order = $_POST['order'];
+    $type = $_POST['type'];
+    $currentPage     = $_POST['currentPage'];
+    $recordPerPage     = $_POST['recordPerPage'];
+    //var_dump($currentPage.'xxxxxx'.$recordPerPage);die();
+    foreach ($order as $key => $val) {
+        /*$key = (($currentPage-1)*$recordPerPage + $key + 1);*/
+        $key = $key + 1;
+        $clsTourStore->updateByCond("tour_id='$val' and _type='$type'", "order_no='" . $key . "'");
+    }
 }
 
 /* ========= TOUR CATEGORY MOD MANAGE ============= */
 
-function default_category() {
+function default_category()
+{
     global $assign_list, $_CONFIG, $_SITE_ROOT, $mod, $act, $clsConfiguration;
-    global $core, $clsModule, $clsButtonNav, $oneSetting, $_LANG_ID, $clsISO,$package_id;
+    global $core, $clsModule, $clsButtonNav, $oneSetting, $_LANG_ID, $clsISO, $package_id;
     $user_id = $core->_USER['user_id'];
     $assign_list["msg"] = isset($_GET['message']) ? $_GET['message'] : '';
     #
-	if(!$clsISO->getCheckActiveModulePackage($package_id,$mod,$act,'default')){
-		header('Location:/admin/index.php?lang='.LANG_DEFAULT);
-		exit();
-	}
+    if (!$clsISO->getCheckActiveModulePackage($package_id, $mod, $act, 'default')) {
+        header('Location:/admin/index.php?lang=' . LANG_DEFAULT);
+        exit();
+    }
     #
-    $type_list =Input::get('type_list','');
+    $type_list = Input::get('type_list', '');
     $assign_list["type_list"] = $type_list;
     #
     $classTable = "TourCategory";
@@ -1801,7 +1824,7 @@ function default_category() {
     $assign_list["clsTour"] = new Tour();
     #
 
-    $SiteHasGroup_Tours = $clsISO->getCheckActiveModulePackage($package_id,$mod,'group','default');
+    $SiteHasGroup_Tours = $clsISO->getCheckActiveModulePackage($package_id, $mod, 'group', 'default');
     $SiteHasSubCat_Tours = $clsConfiguration->getValue("SiteHasSubCat_Tours");
     #
     if ($SiteHasGroup_Tours) {
@@ -1831,7 +1854,7 @@ function default_category() {
         $pUrl .= '&tour_group_id=' . $tour_group_id;
     }
     #Filter By Keyword
-	$keyword=Input::get('keyword','');
+    $keyword = Input::get('keyword', '');
     if (!empty($keyword)) {
         $cond .= " and slug like '%" . $core->replaceSpace($_GET['keyword']) . "%'";
         $assign_list["keyword"] = $_GET['keyword'];
@@ -1840,12 +1863,12 @@ function default_category() {
     $orderBy = " order by order_no asc";
 
     #-------Page Divide---------------------------------------------------------------
-	$recordPerPage=Input::get('recordperpage',20);
-	$currentPage=Input::get('page',1);
+    $recordPerPage = Input::get('recordperpage', 20);
+    $currentPage = Input::get('page', 1);
     $start_limit = ($currentPage - 1) * $recordPerPage;
     $limit = " limit $start_limit,$recordPerPage";
-    $totalRecord = $clsClassTable->getAll($cond,$clsClassTable->pkey);
-	$totalRecord =$totalRecord?count($totalRecord):0;
+    $totalRecord = $clsClassTable->getAll($cond, $clsClassTable->pkey);
+    $totalRecord = $totalRecord ? count($totalRecord) : 0;
     $totalPage = ceil($totalRecord / $recordPerPage);
     $assign_list['totalRecord'] = $totalRecord;
     $assign_list['recordPerPage'] = $recordPerPage;
@@ -1928,7 +1951,7 @@ function default_category() {
         }
     }
     if ($action == 'Restore') {
-        $string = isset($_GET['tourcat_id']) ? ($_GET['tourcat_id']) :'';
+        $string = isset($_GET['tourcat_id']) ? ($_GET['tourcat_id']) : '';
         $tourcat_id = intval($core->decryptID($string));
         $pUrl = '';
         if ($SiteHasGroup_Tours) {
@@ -1973,12 +1996,13 @@ function default_category() {
         header('location:' . PCMS_URL . '?mod=' . $mod . '&act=' . $act . '&message=updateSuccess' . $extUrl);
     }
 }
-function default_SiteTourCategory() {
+function default_SiteTourCategory()
+{
     global $dbconn, $assign_list, $_CONFIG, $_SITE_ROOT, $mod, $_LANG_ID, $act, $menu_current, $current_page, $core, $clsModule;
-    global $clsConfiguration,$clsISO,$package_id;
-	$user_id = $core->_USER['user_id'];
+    global $clsConfiguration, $clsISO, $package_id;
+    $user_id = $core->_USER['user_id'];
     #
-    if ($clsISO->getCheckActiveModulePackage($package_id,$mod,'group','default')) {
+    if ($clsISO->getCheckActiveModulePackage($package_id, $mod, 'group', 'default')) {
         $clsTourGroup = new TourGroup();
         $tour_group_id = isset($_POST['tour_group_id']) ? intval($_POST['tour_group_id']) : 0;
     }
@@ -2000,22 +2024,22 @@ function default_SiteTourCategory() {
 			<div class="wrap">
 				<div class="fl" style="width:100%">
 					<div class="row-span">
-						<div class="fieldlabel" style="text-align:right"><strong>'.$core->get_Lang('title').'</strong> <span class="color_r">*</span></div>
+						<div class="fieldlabel" style="text-align:right"><strong>' . $core->get_Lang('title') . '</strong> <span class="color_r">*</span></div>
 						<div class="fieldarea">
 							<input style="border:2px solid #ccc; padding:6px 10px;" autocomplete="off" class="text_32 full-width border_aaa bold required fontLarge title_capitalize" name="title" value="' . $clsTourCategory->getTitle($tourcat_id) . '" type="text" />
 						</div>
 					</div>
-					' . ($clsISO->getCheckActiveModulePackage($package_id,$mod,'sub_cat','customize') ? '
+					' . ($clsISO->getCheckActiveModulePackage($package_id, $mod, 'sub_cat', 'customize') ? '
 					<div class="row-span hidden">
-						<div class="fieldlabel" style="text-align:right"><strong>'.$core->get_Lang('selectcategory').'</strong> <span class="color_r">*</span></div>
+						<div class="fieldlabel" style="text-align:right"><strong>' . $core->get_Lang('selectcategory') . '</strong> <span class="color_r">*</span></div>
 						<div class="fieldarea">
 							<select class="slb" name="parent_id" id="slb_TourCategory">
-								' .$clsTourCategory->makeSelectboxOption0($tourcat_id,$clsTourCategory->getOneField('parent_id', $tourcat_id)). '
+								' . $clsTourCategory->makeSelectboxOption0($tourcat_id, $clsTourCategory->getOneField('parent_id', $tourcat_id)) . '
 							</select>
 						</div>
 					</div>
 					' : '') . '
-					' . (($clsISO->getCheckActiveModulePackage($package_id,$mod,'group','default') && $_LANG_ID=='vn') ? '
+					' . (($clsISO->getCheckActiveModulePackage($package_id, $mod, 'group', 'default') && $_LANG_ID == 'vn') ? '
 					<div class="row-span">
 						<div class="fieldlabel" style="text-align:right"><strong> ' . $core->get_Lang('selectgroup') . '</strong><span class="color_r">*</span></div>
 						<div class="fieldarea">
@@ -2031,37 +2055,37 @@ function default_SiteTourCategory() {
 							<textarea  id="textarea_tour_intro_editor_' . time() . '" class="textarea_tour_intro_editor" name="intro" style="width:100%">' . $clsTourCategory->getIntro($tourcat_id) . '</textarea>
 						</div>
 					</div>';
-					if($_LANG_ID!='vn'){
-					$html .= '<div class="row-span">
-						<div class="fieldlabel" style="text-align:right"><strong>' . $core->get_Lang('Image').'</strong></div>
+        if ($_LANG_ID != 'vn') {
+            $html .= '<div class="row-span">
+						<div class="fieldlabel" style="text-align:right"><strong>' . $core->get_Lang('Image') . '</strong></div>
 						<div class="fieldarea">
 							<img class="isoman_img_pop" id="isoman_show_image" src="' . $clsTourCategory->getOneField('image', $tourcat_id) . '" />
 							<input type="hidden" id="isoman_hidden_image" value="' . $clsTourCategory->getOneField('image', $tourcat_id) . '">
 							<input style="width:70% !important;float:left;margin-left:4px;" type="text" id="isoman_url_image" name="image" value="' . $clsTourCategory->getOneField('image', $tourcat_id) . '"><a style="float:left; margin-left:4px; margin-top:-4px;" href="#" class="ajOpenDialog" isoman_for_id="image" isoman_val="' . $clsTourCategory->getOneField('image', $tourcat_id) . '" isoman_name="image"><img src="' . URL_IMAGES . '/general/folder-32.png" border="0" title="Open" alt="Open"></a>
 						</div>
 					</div>';
-					}
-					if($clsConfiguration->getValue('Video_Teaser_TourCategory')){
-						$html .= '<div class="row-span">
-							<div class="fieldlabel" style="text-align:right"><strong>'.$core->get_Lang('Video Teaser').'</strong></div>
+        }
+        if ($clsConfiguration->getValue('Video_Teaser_TourCategory')) {
+            $html .= '<div class="row-span">
+							<div class="fieldlabel" style="text-align:right"><strong>' . $core->get_Lang('Video Teaser') . '</strong></div>
 							<div class="fieldarea">
 								<img class="isoman_img_pop" id="isoman_show_video_teaser" src="' . $clsTourCategory->getOneField('video_teaser', $tourcat_id) . '" />
 								<input type="hidden" id="isoman_hidden_video_teaser" value="' . $clsTourCategory->getOneField('video_teaser', $tourcat_id) . '">
 								<input style="width:70% !important;float:left;margin-left:4px;" type="text" id="isoman_url_video_teaser" name="video_teaser" value="' . $clsTourCategory->getOneField('video_teaser', $tourcat_id) . '"><a style="float:left; margin-left:4px; margin-top:-4px;" href="#" class="ajOpenDialog" isoman_for_id="video_teaser" isoman_val="' . $clsTourCategory->getOneField('video_teaser', $tourcat_id) . '" isoman_name="video_teaser"><img src="' . URL_IMAGES . '/general/folder-32.png" border="0" title="Open" alt="Open"></a>
 							</div>
 						</div>';
-					}
-					if($clsConfiguration->getValue('Banner_TourCategory')){
-					$html .= '<div class="row-span">
-						<div class="fieldlabel" style="text-align:right"><strong>'.$core->get_Lang('Banner').' <span class="small">(WxH=1600x460)</span></strong></div>
+        }
+        if ($clsConfiguration->getValue('Banner_TourCategory')) {
+            $html .= '<div class="row-span">
+						<div class="fieldlabel" style="text-align:right"><strong>' . $core->get_Lang('Banner') . ' <span class="small">(WxH=1600x460)</span></strong></div>
 						<div class="fieldarea">
 							<img class="isoman_img_pop" id="isoman_show_image_banner" src="' . $clsTourCategory->getOneField('image_banner', $tourcat_id) . '" />
 							<input type="hidden" id="isoman_hidden_image_banner" value="' . $clsTourCategory->getOneField('image_banner', $tourcat_id) . '">
 							<input style="width:70% !important;float:left;margin-left:4px;" type="text" id="isoman_url_image_banner" name="image_banner" value="' . $clsTourCategory->getOneField('image_banner', $tourcat_id) . '"><a style="float:left; margin-left:4px; margin-top:-4px;" href="#" class="ajOpenDialog" isoman_for_id="image_banner" isoman_val="' . $clsTourCategory->getOneField('image_banner', $tourcat_id) . '" isoman_name="image_banner"><img src="' . URL_IMAGES . '/general/folder-32.png" border="0" title="Open" alt="Open"></a>
 						</div>
 					</div>';
-					
-					$html .= '<div class="row-span">
+
+            $html .= '<div class="row-span">
 						<div class="fieldlabel" style="text-align:right"><strong>' . $core->get_Lang('Banner Link') . '</strong></div>
 						<div class="fieldarea">
 							<input class="text_32 full-width border_aaa fontLarge" name="iso-link_banner" value="' . $clsTourCategory->getLinkBanner($tourcat_id) . '" type="text" />
@@ -2073,8 +2097,8 @@ function default_SiteTourCategory() {
 							<textarea  id="textarea_tour_intro_banner_editor_' . time() . '" class="textarea_tour_intro_banner_editor" name="intro_banner" style="width:100%">' . $clsTourCategory->getIntroBanner($tourcat_id) . '</textarea>
 						</div>
 					</div>';
-					}
-				$html .= '</div>
+        }
+        $html .= '</div>
 			</div>
 		</form>
 		<div class="modal-footer">
@@ -2095,9 +2119,9 @@ function default_SiteTourCategory() {
         $introPost = trim($_POST['intro']);
         $imagePost = isset($_POST['image']) ? $_POST['image'] : '';
         $introBannerPost = trim($_POST['intro_banner']);
-		$linkBannerPost = $_POST['link_banner'];
+        $linkBannerPost = $_POST['link_banner'];
         $imageBannerPost = isset($_POST['image_banner']) ? $_POST['image_banner'] : '';
-		$videoTeaserPost = isset($_POST['video_teaser']) ? $_POST['video_teaser'] : '';
+        $videoTeaserPost = isset($_POST['video_teaser']) ? $_POST['video_teaser'] : '';
         #
         if ($tourcat_id == 0) {
             $all = $clsTourCategory->getAll("is_trash=0 and tour_group_id='$tour_group_id' and slug like '%" . $slugPost . "' limit 0,1");
@@ -2105,16 +2129,16 @@ function default_SiteTourCategory() {
                 echo '_EXIST';
                 die();
             } else {
-				$listTable=$clsTourCategory->getAll("1=1", $clsTourCategory->pkey.",order_no");
-				for ($i = 0; $i <= count($listTable); $i++) {
-					$order_no=$listTable[$i]['order_no'] + 1;
-					$clsTourCategory->updateOne($listTable[$i][$clsTourCategory->pkey],"order_no='".$order_no."'");
-				}
-				$max_id = $clsTourCategory->getMaxId();
-                $fx = $clsTourCategory->pkey.",user_id,user_id_update,parent_id,title,slug,intro,intro_banner,order_no,reg_date,upd_date,image,image_banner,link_banner,video_teaser";
+                $listTable = $clsTourCategory->getAll("1=1", $clsTourCategory->pkey . ",order_no");
+                for ($i = 0; $i <= count($listTable); $i++) {
+                    $order_no = $listTable[$i]['order_no'] + 1;
+                    $clsTourCategory->updateOne($listTable[$i][$clsTourCategory->pkey], "order_no='" . $order_no . "'");
+                }
+                $max_id = $clsTourCategory->getMaxId();
+                $fx = $clsTourCategory->pkey . ",user_id,user_id_update,parent_id,title,slug,intro,intro_banner,order_no,reg_date,upd_date,image,image_banner,link_banner,video_teaser";
                 $vx = "'$max_id','$user_id','$user_id','$parent_id','$titlePost','$slugPost','" . addslashes($introPost) . "','" . addslashes($introBannerPost) . "'";
                 $vx .= ",'1','" . time() . "','" . time() . "','" . addslashes($imagePost) . "','" . addslashes($imageBannerPost) . "','" . addslashes($linkBannerPost) . "','" . addslashes($videoTeaserPost) . "'";
-                if ($clsISO->getCheckActiveModulePackage($package_id,$mod,'group','default')) {
+                if ($clsISO->getCheckActiveModulePackage($package_id, $mod, 'group', 'default')) {
                     $tour_group_id = isset($_POST['tour_group_id']) ? intval($_POST['tour_group_id']) : 0;
                     $fx .= ",tour_group_id";
                     $vx .= ",'$tour_group_id'";
@@ -2131,14 +2155,14 @@ function default_SiteTourCategory() {
         } else {
             $v = "title='$titlePost',slug='$slugPost',intro='" . $introPost . "',intro_banner='" . $introBannerPost . "',parent_id='$parent_id'";
             $v .= ",upd_date='" . time() . "',user_id_update='$user_id'";
-            if ($clsISO->getCheckActiveModulePackage($package_id,$mod,'group','default')) {
+            if ($clsISO->getCheckActiveModulePackage($package_id, $mod, 'group', 'default')) {
                 $tour_group_id = isset($_POST['tour_group_id']) ? intval($_POST['tour_group_id']) : 0;
                 $v .= ",tour_group_id='$tour_group_id'";
             }
             $v .= ",image = '" . addslashes($imagePost) . "'";
             $v .= ",image_banner = '" . addslashes($imageBannerPost) . "'";
-			$v .= ",link_banner = '" . addslashes($linkBannerPost) . "'";
-			 $v .= ",video_teaser = '" . addslashes($videoTeaserPost) . "'";
+            $v .= ",link_banner = '" . addslashes($linkBannerPost) . "'";
+            $v .= ",video_teaser = '" . addslashes($videoTeaserPost) . "'";
             if ($clsTourCategory->updateOne($tourcat_id, $v)) {
                 echo '_SUCCESS';
                 die();
@@ -2150,13 +2174,14 @@ function default_SiteTourCategory() {
     }
 }
 
-function default_ajaxSiteTourCategory() {
-    global $assign_list, $_CONFIG, $_SITE_ROOT, $mod, $_LANG_ID, $act, $menu_current, $current_page, $oneSetting, $clsConfiguration,$clsISO,$package_id;
+function default_ajaxSiteTourCategory()
+{
+    global $assign_list, $_CONFIG, $_SITE_ROOT, $mod, $_LANG_ID, $act, $menu_current, $current_page, $oneSetting, $clsConfiguration, $clsISO, $package_id;
     global $core, $clsModule, $clsButtonNav, $oneSetting, $dbconn;
     $assign_list["clsModule"] = $clsModule;
     $user_id = $core->_USER['user_id'];
     #
-    if (!$clsISO->getCheckActiveModulePackage($package_id,$mod,'category','default')) {
+    if (!$clsISO->getCheckActiveModulePackage($package_id, $mod, 'category', 'default')) {
         header('location:' . PCMS_URL . '/index.php?admin&mod=' . $mod . '&message=NotPermission');
         exit();
     }
@@ -2173,31 +2198,33 @@ function default_ajaxSiteTourCategory() {
         die();
     }
 }
-function default_ajUpdPosSortTourCategory(){
-	global $dbconn, $assign_list, $_CONFIG,  $_SITE_ROOT, $mod , $_LANG_ID, $act, $menu_current, $current_page, $core, $clsModule;
-	global $clsConfiguration;
-	#
-	$clsTourCategory = new TourCategory();
-	$order = $_POST['order'];
-	$currentPage 	= $_POST['currentPage'];
-	$recordPerPage 	= $_POST['recordPerPage'];
-	//var_dump($currentPage.'xxxxxx'.$recordPerPage);die();
-	foreach($order as $key=>$val){
-		$key = (($currentPage-1)*$recordPerPage + $key+1);
-		$clsTourCategory->updateOne($val,"order_no='".$key."'");	
-	}
+function default_ajUpdPosSortTourCategory()
+{
+    global $dbconn, $assign_list, $_CONFIG,  $_SITE_ROOT, $mod, $_LANG_ID, $act, $menu_current, $current_page, $core, $clsModule;
+    global $clsConfiguration;
+    #
+    $clsTourCategory = new TourCategory();
+    $order = $_POST['order'];
+    $currentPage     = $_POST['currentPage'];
+    $recordPerPage     = $_POST['recordPerPage'];
+    //var_dump($currentPage.'xxxxxx'.$recordPerPage);die();
+    foreach ($order as $key => $val) {
+        $key = (($currentPage - 1) * $recordPerPage + $key + 1);
+        $clsTourCategory->updateOne($val, "order_no='" . $key . "'");
+    }
 }
-function default_category_country() {
+function default_category_country()
+{
     global $assign_list, $_CONFIG, $_SITE_ROOT, $mod, $_LANG_ID, $act, $menu_current, $current_page, $oneSetting, $clsConfiguration;
-    global $core, $clsModule, $clsButtonNav, $oneSetting,$clsISO,$package_id;
+    global $core, $clsModule, $clsButtonNav, $oneSetting, $clsISO, $package_id;
     $assign_list["clsModule"] = $clsModule;
     $user_id = $core->_USER['user_id'];
 
-	if(!$clsISO->getCheckActiveModulePackage($package_id,$mod,$act,'default')){
-		header('Location:/admin/index.php?lang='.LANG_DEFAULT);
-		exit();
-	}
-	
+    if (!$clsISO->getCheckActiveModulePackage($package_id, $mod, $act, 'default')) {
+        header('Location:/admin/index.php?lang=' . LANG_DEFAULT);
+        exit();
+    }
+
     $pUrl = '';
     #-- Get Type List
     $type_list = isset($_GET['type_list']) ? $_GET['type_list'] : '';
@@ -2333,9 +2360,10 @@ function default_category_country() {
     $assign_list["lstCityGuide"] = $tmp;
 }
 
-function default_edit_categorycountry() {
+function default_edit_categorycountry()
+{
     global $assign_list, $_CONFIG, $_SITE_ROOT, $mod, $_LANG_ID, $act, $menu_current, $current_page, $oneSetting, $clsConfiguration;
-    global $core, $clsModule, $clsButtonNav, $oneSetting,$package_id;
+    global $core, $clsModule, $clsButtonNav, $oneSetting, $package_id;
     $assign_list["clsModule"] = $clsModule;
     $user_id = $core->_USER['user_id'];
     #
@@ -2364,8 +2392,8 @@ function default_edit_categorycountry() {
     $assign_list["oneTable"] = $oneTable;
 
     $country_id = $oneTable['county_id'];
-	
-	$cat_id = $oneTable['cat_id'];
+
+    $cat_id = $oneTable['cat_id'];
     /*
       if($clsConfiguration->getValue('SiteModActive_country')) {
       if(isset($country_id) && intval($country_id)==0){
@@ -2403,7 +2431,7 @@ function default_edit_categorycountry() {
     $assign_list["clsForm"] = $clsForm;
     $clsForm->addInputTextArea("full", 'intro', "", 'intro', 255, 25, 5, 1, "style='width:100%'");
     $clsForm->addInputTextArea("full", 'content', "", 'content', 255, 25, 20, 1, "style='width:100%'");
-	$clsForm->addInputTextArea("simple150", 'intro_banner', "", 'intro_banner', 255, 25, 20, 1, "style='width:100%'");
+    $clsForm->addInputTextArea("simple150", 'intro_banner', "", 'intro_banner', 255, 25, 20, 1, "style='width:100%'");
 
     if ($string != '' && $pvalTable == 0) {
         header('location: ' . PCMS_URL . '/?mod=' . $mod . '&message=notPermission');
@@ -2486,11 +2514,11 @@ function default_edit_categorycountry() {
                 }
             }
             #
-			$listTable=$clsClassTable->getAll("1=1", $clsClassTable->pkey.",order_no");
-			for ($i = 0; $i <= count($listTable); $i++) {
-				$order_no=$listTable[$i]['order_no'] + 1;
-				$clsClassTable->updateOne($listTable[$i][$clsClassTable->pkey],"order_no='".$order_no."'");
-			}
+            $listTable = $clsClassTable->getAll("1=1", $clsClassTable->pkey . ",order_no");
+            for ($i = 0; $i <= count($listTable); $i++) {
+                $order_no = $listTable[$i]['order_no'] + 1;
+                $clsClassTable->updateOne($listTable[$i][$clsClassTable->pkey], "order_no='" . $order_no . "'");
+            }
             $max_id = $clsClassTable->getMaxID();
             $field .= ",user_id,user_id_update,reg_date,upd_date,slug,$clsClassTable->pkey,order_no";
             $value .= ",'" . addslashes($core->_SESS->user_id) . "','" . addslashes($core->_SESS->user_id) . "','" . time() . "','" . time() . "'";
@@ -2535,24 +2563,36 @@ function default_edit_categorycountry() {
         }
     }
 }
-function default_ajUpdPosSortTravelStylebyCountry(){
-	global $dbconn, $assign_list, $_CONFIG,  $_SITE_ROOT, $mod , $_LANG_ID, $act, $menu_current, $current_page, $core, $clsModule;
-	global $clsConfiguration;
-	#
-	$clsCategoryCountry = new Category_Country();
-	$order = $_POST['order'];
-	$currentPage 	= $_POST['currentPage'];
-	$recordPerPage 	= $_POST['recordPerPage'];
-	foreach($order as $key=>$val){
-		$key = (($currentPage-1)*$recordPerPage + $key+1);
-		$clsCategoryCountry->updateOne($val,"order_no='".$key."'");	
-	}
+function default_ajUpdPosSortTravelStylebyCountry()
+{
+    global $dbconn, $assign_list, $_CONFIG,  $_SITE_ROOT, $mod, $_LANG_ID, $act, $menu_current, $current_page, $core, $clsModule;
+    global $clsConfiguration;
+    #
+    $clsCategoryCountry = new Category_Country();
+    $order = $_POST['order'];
+    $currentPage     = $_POST['currentPage'];
+    $recordPerPage     = $_POST['recordPerPage'];
+    foreach ($order as $key => $val) {
+        $key = (($currentPage - 1) * $recordPerPage + $key + 1);
+        $clsCategoryCountry->updateOne($val, "order_no='" . $key . "'");
+    }
 }
-
-
-/* ========= SITE DEPARTURE POINT TOUR ============= */
-
-function default_ajaxSiteDeparturePoint() {
+function default_ajUpdPosSortWhyTravelStylebyCountry()
+{
+    global $dbconn, $assign_list, $_CONFIG,  $_SITE_ROOT, $mod, $_LANG_ID, $act, $menu_current, $current_page, $core, $clsModule;
+    global $clsConfiguration;
+    #
+    $clsWhyTravelstyle = new WhyTravelstyle();
+    $order = $_POST['order'];
+    $currentPage     = $_POST['currentPage'];
+    $recordPerPage     = $_POST['recordPerPage'];
+    foreach ($order as $key => $val) {
+        $key = (($currentPage - 1) * $recordPerPage + $key + 1);
+        $clsWhyTravelstyle->updateOne($val, "order_no='" . $key . "'");
+    }
+}
+function default_ajaxSiteDeparturePoint()
+{
     global $assign_list, $_CONFIG, $_SITE_ROOT, $mod, $_LANG_ID, $act, $menu_current, $current_page, $oneSetting, $clsConfiguration;
     global $core, $clsModule, $clsButtonNav, $oneSetting, $dbconn;
     $assign_list["clsModule"] = $clsModule;
@@ -2590,15 +2630,16 @@ function default_ajaxSiteDeparturePoint() {
 
 /* ========= TOUR GROUP MOD MANAGE ============ */
 
-function default_group() {
+function default_group()
+{
     global $assign_list, $_CONFIG, $_SITE_ROOT, $mod, $act;
-    global $core, $clsModule, $clsButtonNav, $oneSetting, $_LANG_ID, $clsISO, $clsConfiguration,$package_id;
+    global $core, $clsModule, $clsButtonNav, $oneSetting, $_LANG_ID, $clsISO, $clsConfiguration, $package_id;
     $user_id = $core->_USER['user_id'];
     #
-	if(!$clsISO->getCheckActiveModulePackage($package_id,$mod,$act,'default')){
-		header('Location:/admin/index.php?lang='.LANG_DEFAULT);
-		exit();
-	}
+    if (!$clsISO->getCheckActiveModulePackage($package_id, $mod, $act, 'default')) {
+        header('Location:/admin/index.php?lang=' . LANG_DEFAULT);
+        exit();
+    }
     #
     $type_list = isset($_GET['type_list']) ? $_GET['type_list'] : '';
     $assign_list["type_list"] = $type_list;
@@ -2637,7 +2678,7 @@ function default_group() {
     $currentPage = isset($_GET["page"]) ? $_GET["page"] : 1;
     $start_limit = ($currentPage - 1) * $recordPerPage;
     $limit = " limit $start_limit,$recordPerPage";
-    $totalRecord = $clsClassTable->getAll($cond)?count($clsClassTable->getAll($cond)):0;
+    $totalRecord = $clsClassTable->getAll($cond) ? count($clsClassTable->getAll($cond)) : 0;
     $totalPage = ceil($totalRecord / $recordPerPage);
     $assign_list['totalRecord'] = $totalRecord;
     $assign_list['recordPerPage'] = $recordPerPage;
@@ -2669,8 +2710,8 @@ function default_group() {
     $allItem = $clsClassTable->getAll($cond . $orderBy . $limit);
     $assign_list["allItem"] = $allItem;
     unset($allItem);
-    $assign_list["number_all"] = $clsClassTable->getAll($cond2)?count($clsClassTable->getAll($cond2)):0;
-    $assign_list["number_trash"] = $clsClassTable->getAll($cond2 . " and is_trash=1")?count($clsClassTable->getAll($cond2 . " and is_trash=1")):0;
+    $assign_list["number_all"] = $clsClassTable->getAll($cond2) ? count($clsClassTable->getAll($cond2)) : 0;
+    $assign_list["number_trash"] = $clsClassTable->getAll($cond2 . " and is_trash=1") ? count($clsClassTable->getAll($cond2 . " and is_trash=1")) : 0;
 
     //Action
     $action = isset($_GET['action']) ? $_GET['action'] : '';
@@ -2750,7 +2791,8 @@ function default_group() {
     }
 }
 
-function default_ajaxFrmTourGroup() {
+function default_ajaxFrmTourGroup()
+{
     global $assign_list, $_CONFIG, $_SITE_ROOT, $mod, $act;
     global $core, $clsModule, $clsButtonNav, $oneSetting;
     $user_id = $core->_USER['user_id'];
@@ -2788,7 +2830,7 @@ function default_ajaxFrmTourGroup() {
 					</div>
 				</div>
 				<div class="row-span">
-						<div class="fieldlabel" style="text-align:right"><strong>'.$core->get_Lang('Banner').' <span class="small">(WxH=1600x460)</span></strong></div>
+						<div class="fieldlabel" style="text-align:right"><strong>' . $core->get_Lang('Banner') . ' <span class="small">(WxH=1600x460)</span></strong></div>
 						<div class="fieldarea">
 							<img class="isoman_img_pop" id="isoman_show_image_banner" src="' . $clsTourGroup->getOneField('image_banner', $tour_group_id) . '" />
 							<input type="hidden" id="isoman_hidden_image_banner" value="' . $clsTourGroup->getOneField('image_banner', $tour_group_id) . '">
@@ -2812,7 +2854,8 @@ function default_ajaxFrmTourGroup() {
     die();
 }
 
-function default_ajSubmitTourGroup() {
+function default_ajSubmitTourGroup()
+{
     global $assign_list, $_CONFIG, $_LANG_ID, $_SITE_ROOT, $mod, $act;
     global $core, $clsModule, $clsButtonNav, $oneSetting;
     $user_id = $core->_USER['user_id'];
@@ -2830,7 +2873,7 @@ function default_ajSubmitTourGroup() {
     $parent_id = isset($_POST['parent_id']) ? $_POST['parent_id'] : 0;
     $introPost = trim($_POST['intro']);
     $imagePost = isset($_POST['image']) ? $_POST['image'] : '';
-	$bannerPost = isset($_POST['banner']) ? $_POST['banner'] : '';
+    $bannerPost = isset($_POST['banner']) ? $_POST['banner'] : '';
     #
     if ($tour_group_id == 0) {
         $all = $clsClassTable->getAll("is_trash=0 and slug='$slugPost' limit 0,1");
@@ -2863,7 +2906,8 @@ function default_ajSubmitTourGroup() {
     }
 }
 
-function default_setting() {
+function default_setting()
+{
     global $assign_list, $_CONFIG, $_LANG_ID, $_SITE_ROOT, $mod, $act;
     global $core, $clsModule, $clsConfiguration, $oneSetting;
     $user_id = $core->_USER['user_id'];
@@ -2872,17 +2916,17 @@ function default_setting() {
     $assign_list["clsTourProperty"] = $clsTourProperty;
     $clsTourStore = new TourStore();
     $assign_list["clsTourStore"] = $clsTourStore;
-	
-	
-	$lstTourType =$clsTourStore->getListType();
-	$array_key_first=array_key_first($lstTourType);
-	
-	
-	if(!empty($lstTourType)){
-		header('location:' . PCMS_URL . '?mod=tour&act=store&type='.$core->encryptID($array_key_first));
-		exit();
-	}
-	
+
+
+    $lstTourType = $clsTourStore->getListType();
+    $array_key_first = array_key_first($lstTourType);
+
+
+    if (!empty($lstTourType)) {
+        header('location:' . PCMS_URL . '?mod=tour&act=store&type=' . $core->encryptID($array_key_first));
+        exit();
+    }
+
     #
     if (isset($_POST['submit']) && $_POST['submit'] == 'UpdateConfiguration') {
         foreach ($_POST as $key => $val) {
@@ -2898,152 +2942,154 @@ function default_setting() {
         header('location:' . PCMS_URL . '?mod=' . $mod . '&act=setting&message=updateSuccess');
     }
 }
-function default_store(){
-	global $assign_list, $_CONFIG,  $_SITE_ROOT, $mod, $act;
-	global $core, $clsModule, $clsButtonNav,$oneSetting,$clsISO,$package_id;
-	$user_id = $core->_USER['user_id'];
-	$pUrl = '';
-	#
-	$clsTourStore = new TourStore();
-	$assign_list["clsTourStore"] = $clsTourStore;
-	#
-	$classTable = "Tour";
-	$clsClassTable = new $classTable;
-	$tableName = $clsClassTable->tbl;
-	$pkeyTable = $clsClassTable->pkey ;
-	$assign_list["clsClassTable"] = $clsClassTable;
-	
-	
-	
-	//$abc=$core->encryptID('DEPARTURE');
-	//die($abc);
-	#
-	$type = isset($_GET['type'])?$core->decryptID($_GET['type']):'';
-	$assign_list["type"] = $type;
-	
-	$keyword = isset($_GET['keyword'])?$_GET['keyword']:'';
-	$assign_list["keyword"] = $keyword;
-	
-	if(empty($type)){
-		header('location: '.PCMS_URL.'/?mod=tour&message=notPermission');
-	}
-	
-	if(!$clsISO->getCheckActiveModulePackage($package_id,$mod,$act,'default',$_GET['type'])){
-		header('Location:/admin/index.php?lang='.LANG_DEFAULT);
-		exit();
-	}
-	
-	if(isset($_POST['filter'])&&$_POST['filter']=='filter'){
-		$link = '&act='.$act;
-		$link .= '&type='.$core->encryptID($type);
+function default_store()
+{
+    global $assign_list, $_CONFIG,  $_SITE_ROOT, $mod, $act;
+    global $core, $clsModule, $clsButtonNav, $oneSetting, $clsISO, $package_id;
+    $user_id = $core->_USER['user_id'];
+    $pUrl = '';
+    #
+    $clsTourStore = new TourStore();
+    $assign_list["clsTourStore"] = $clsTourStore;
+    #
+    $classTable = "Tour";
+    $clsClassTable = new $classTable;
+    $tableName = $clsClassTable->tbl;
+    $pkeyTable = $clsClassTable->pkey;
+    $assign_list["clsClassTable"] = $clsClassTable;
 
-		if($_POST['keyword']!=''&&$_POST['keyword']!='Tìm kiếm...'){
-			$link .= '&keyword='.$_POST['keyword'];
-		}
-		header('location: '.PCMS_URL.'/?mod='.$mod.$link);
-	}
-	#
-	$cond = "is_trash=0 and is_online=1";
 
-	if(!empty($type)){
-		$cond.= " and tour_id NOT IN (SELECT tour_id FROM ".DB_PREFIX."tour_store WHERE is_trash=0 and _type='$type')";
-		$pUrl.='&type='.$core->encryptID($type);
-	}
-	if(!empty($keyword)){
-		$slug = $core->replaceSpace($keyword);
-		$cond .= " and slug like '%".$slug."%'";
-	}
-	$orderBy = " order_no asc";
-	
-	
-	#-------Page Divide---------------------------------------------------------------
-	$recordPerPage 	= 20;
-	$currentPage = isset($_GET["page"])? $_GET["page"] : 1;
-	$start_limit = ($currentPage-1)*$recordPerPage;
-	$limit = " limit $start_limit,$recordPerPage";
-	$lstAllItem = $clsClassTable->getAll($cond);
-	$totalRecord = (is_array($lstAllItem)&&count($lstAllItem)>0)?count($lstAllItem):0;
-	$totalPage = ceil($totalRecord / $recordPerPage);
-	$assign_list['totalRecord'] = $totalRecord;
-	$assign_list['recordPerPage'] = $recordPerPage;
-	$assign_list['totalPage'] = $totalPage;
-	$assign_list['currentPage'] = $currentPage;
-	$listPageNumber =  array();
-	for ($i=1; $i<=$totalPage; $i++){
-		$listPageNumber[] = $i;
-	}
-	$stt=($currentPage-1)*$recordPerPage;
-	$assign_list['stt'] = $stt;
-	
-	$assign_list['listPageNumber'] = $listPageNumber;
-	$query_string = $_SERVER['QUERY_STRING'];
-	$lst_query_string = explode('&',$query_string);
-	$link_page_current = '';
-	for($i=0;$i<count($lst_query_string);$i++){
-		$tmp = explode('=',$lst_query_string[$i]);
-		if($tmp[0]!='page')
-			$link_page_current .= ($i==0)?'?'.$lst_query_string[$i]:'&'.$lst_query_string[$i];
-	}
-	$assign_list['link_page_current'] = $link_page_current;
-	#
-	$link_page_current_2 = '';
-	for($i=0;$i<count($lst_query_string);$i++){
-		$tmp = explode('=',$lst_query_string[$i]);
-		if($tmp[0]!='page'&&$tmp[0]!='type_list')
-			$link_page_current_2 .= ($i==0)?'?'.$lst_query_string[$i]:'&'.$lst_query_string[$i];
-	}
-	$assign_list['link_page_current_2'] = $link_page_current_2;
-	#-------End Page Divide-----------------------------------------------------------
-//	print_r($cond." order by ".$orderBy.$limit);die();
-	$listItem = $clsClassTable->getAll($cond." order by ".$orderBy.$limit,$clsClassTable->pkey);
-	$assign_list["listItem"] = $listItem;
-	
-	
-	#
-	$listSelected =  $clsTourStore->getAll("is_trash=0 and _type = '$type' order by order_no asc");
-	$assign_list["listSelected"] = $listSelected;
-	
-	//Action
-	$action=Input::get('action','');
-	if($action=='Add'){
-		$pvalTable = isset($_GET[$pkeyTable])?$_GET[$pkeyTable]: 0;
-		
-		
-		if(empty($pvalTable)){
-			header('location:'.PCMS_URL.'/index.php?admin&mod='.$mod.'&act='.$act.'&message=NotPermission');
-			exit();
-		}
-		if(!$clsTourStore->checkExist($pvalTable,$type)) {
-			$listTable=$clsTourStore->getAll("1=1 and _type='$type'", $clsTourStore->pkey.",order_no");
-			for ($i = 0; $i <= count($listTable); $i++) {
-				$order_no=$listTable[$i]['order_no'] + 1;
-				$clsTourStore->updateOne($listTable[$i][$clsTourStore->pkey],"order_no='".$order_no."'");
-			}
-			$max_order_no = $clsTourStore->getMaxOrder($type);
-			$tour_store_id = $clsTourStore->getMaxId();
-			$f = "tour_store_id,tour_id,_type,order_no";
-			$v = "'$tour_store_id','$pvalTable','$type','1'";
-			//print_r($f.'</br>'.$v);die();
-			if($clsTourStore->insertOne($f,$v)) {
-				header('location: '.PCMS_URL.'/?mod='.$mod.'&act='.$act.$pUrl.'&message=insertSuccess');
-			}
-		}
-	}
-	//print_r(xxxx); die();
+
+    //$abc=$core->encryptID('DEPARTURE');
+    //die($abc);
+    #
+    $type = isset($_GET['type']) ? $core->decryptID($_GET['type']) : '';
+    $assign_list["type"] = $type;
+
+    $keyword = isset($_GET['keyword']) ? $_GET['keyword'] : '';
+    $assign_list["keyword"] = $keyword;
+
+    if (empty($type)) {
+        header('location: ' . PCMS_URL . '/?mod=tour&message=notPermission');
+    }
+
+    if (!$clsISO->getCheckActiveModulePackage($package_id, $mod, $act, 'default', $_GET['type'])) {
+        header('Location:/admin/index.php?lang=' . LANG_DEFAULT);
+        exit();
+    }
+
+    if (isset($_POST['filter']) && $_POST['filter'] == 'filter') {
+        $link = '&act=' . $act;
+        $link .= '&type=' . $core->encryptID($type);
+
+        if ($_POST['keyword'] != '' && $_POST['keyword'] != 'Tìm kiếm...') {
+            $link .= '&keyword=' . $_POST['keyword'];
+        }
+        header('location: ' . PCMS_URL . '/?mod=' . $mod . $link);
+    }
+    #
+    $cond = "is_trash=0 and is_online=1";
+
+    if (!empty($type)) {
+        $cond .= " and tour_id NOT IN (SELECT tour_id FROM " . DB_PREFIX . "tour_store WHERE is_trash=0 and _type='$type')";
+        $pUrl .= '&type=' . $core->encryptID($type);
+    }
+    if (!empty($keyword)) {
+        $slug = $core->replaceSpace($keyword);
+        $cond .= " and slug like '%" . $slug . "%'";
+    }
+    $orderBy = " order_no asc";
+
+
+    #-------Page Divide---------------------------------------------------------------
+    $recordPerPage     = 20;
+    $currentPage = isset($_GET["page"]) ? $_GET["page"] : 1;
+    $start_limit = ($currentPage - 1) * $recordPerPage;
+    $limit = " limit $start_limit,$recordPerPage";
+    $lstAllItem = $clsClassTable->getAll($cond);
+    $totalRecord = (is_array($lstAllItem) && count($lstAllItem) > 0) ? count($lstAllItem) : 0;
+    $totalPage = ceil($totalRecord / $recordPerPage);
+    $assign_list['totalRecord'] = $totalRecord;
+    $assign_list['recordPerPage'] = $recordPerPage;
+    $assign_list['totalPage'] = $totalPage;
+    $assign_list['currentPage'] = $currentPage;
+    $listPageNumber =  array();
+    for ($i = 1; $i <= $totalPage; $i++) {
+        $listPageNumber[] = $i;
+    }
+    $stt = ($currentPage - 1) * $recordPerPage;
+    $assign_list['stt'] = $stt;
+
+    $assign_list['listPageNumber'] = $listPageNumber;
+    $query_string = $_SERVER['QUERY_STRING'];
+    $lst_query_string = explode('&', $query_string);
+    $link_page_current = '';
+    for ($i = 0; $i < count($lst_query_string); $i++) {
+        $tmp = explode('=', $lst_query_string[$i]);
+        if ($tmp[0] != 'page')
+            $link_page_current .= ($i == 0) ? '?' . $lst_query_string[$i] : '&' . $lst_query_string[$i];
+    }
+    $assign_list['link_page_current'] = $link_page_current;
+    #
+    $link_page_current_2 = '';
+    for ($i = 0; $i < count($lst_query_string); $i++) {
+        $tmp = explode('=', $lst_query_string[$i]);
+        if ($tmp[0] != 'page' && $tmp[0] != 'type_list')
+            $link_page_current_2 .= ($i == 0) ? '?' . $lst_query_string[$i] : '&' . $lst_query_string[$i];
+    }
+    $assign_list['link_page_current_2'] = $link_page_current_2;
+    #-------End Page Divide-----------------------------------------------------------
+    //	print_r($cond." order by ".$orderBy.$limit);die();
+    $listItem = $clsClassTable->getAll($cond . " order by " . $orderBy . $limit, $clsClassTable->pkey);
+    $assign_list["listItem"] = $listItem;
+
+
+    #
+    $listSelected =  $clsTourStore->getAll("is_trash=0 and _type = '$type' order by order_no asc");
+    $assign_list["listSelected"] = $listSelected;
+
+    //Action
+    $action = Input::get('action', '');
+    if ($action == 'Add') {
+        $pvalTable = isset($_GET[$pkeyTable]) ? $_GET[$pkeyTable] : 0;
+
+
+        if (empty($pvalTable)) {
+            header('location:' . PCMS_URL . '/index.php?admin&mod=' . $mod . '&act=' . $act . '&message=NotPermission');
+            exit();
+        }
+        if (!$clsTourStore->checkExist($pvalTable, $type)) {
+            $listTable = $clsTourStore->getAll("1=1 and _type='$type'", $clsTourStore->pkey . ",order_no");
+            for ($i = 0; $i <= count($listTable); $i++) {
+                $order_no = $listTable[$i]['order_no'] + 1;
+                $clsTourStore->updateOne($listTable[$i][$clsTourStore->pkey], "order_no='" . $order_no . "'");
+            }
+            $max_order_no = $clsTourStore->getMaxOrder($type);
+            $tour_store_id = $clsTourStore->getMaxId();
+            $f = "tour_store_id,tour_id,_type,order_no";
+            $v = "'$tour_store_id','$pvalTable','$type','1'";
+            //print_r($f.'</br>'.$v);die();
+            if ($clsTourStore->insertOne($f, $v)) {
+                header('location: ' . PCMS_URL . '/?mod=' . $mod . '&act=' . $act . $pUrl . '&message=insertSuccess');
+            }
+        }
+    }
+    //print_r(xxxx); die();
 }
-function default_property() { 
+function default_property()
+{
     global $assign_list, $_CONFIG, $_LANG_ID, $_SITE_ROOT, $mod, $act;
-    global $core, $clsModule, $clsConfiguration, $oneSetting,$clsISO,$package_id;
+    global $core, $clsModule, $clsConfiguration, $oneSetting, $clsISO, $package_id;
     $user_id = $core->_USER['user_id'];
     #
     $type = isset($_GET['type']) ? $_GET['type'] : '';
 
     $assign_list["type"] = $type;
-	
-	if(!$clsISO->getCheckActiveModulePackage($package_id,$mod,$act,'default',$type)){
-		header('Location:/admin/index.php?lang='.LANG_DEFAULT);
-		exit();
-	}
+
+    if (!$clsISO->getCheckActiveModulePackage($package_id, $mod, $act, 'default', $type)) {
+        header('Location:/admin/index.php?lang=' . LANG_DEFAULT);
+        exit();
+    }
     #
     $classTable = "TourProperty";
     $clsClassTable = new $classTable;
@@ -3052,11 +3098,11 @@ function default_property() {
     $assign_list["clsClassTable"] = $clsClassTable;
     $assign_list["pkeyTable"] = $pkeyTable;
     #
-	
-	
-	$listVISITORTYPE = $clsClassTable->getAll("is_trash=0 and type='VISITORTYPE' and is_online=1 order by order_no asc");
+
+
+    $listVISITORTYPE = $clsClassTable->getAll("is_trash=0 and type='VISITORTYPE' and is_online=1 order by order_no asc");
     $assign_list["listVISITORTYPE"] = $listVISITORTYPE;
-	
+
     if (isset($_POST['filter']) && $_POST['filter'] == 'filter') {
         $link = '&act=' . $act;
         if ($type != '') {
@@ -3132,9 +3178,9 @@ function default_property() {
     $assign_list["allItem"] = $allItem;
     $assign_list["pUrl"] = $pUrl;
     #
-    $assign_list["number_trash"] = $clsClassTable->getAll("is_trash=1 and " . $cond2)?count($clsClassTable->getAll("is_trash=1 and " . $cond2)):0;
-    $assign_list["number_item"] = $clsClassTable->getAll("is_trash=0 and " . $cond2)?count($clsClassTable->getAll("is_trash=0 and " . $cond2)):0;
-    $assign_list["number_all"] = $clsClassTable->getAll($cond2)?count($clsClassTable->getAll($cond2)):0;
+    $assign_list["number_trash"] = $clsClassTable->getAll("is_trash=1 and " . $cond2) ? count($clsClassTable->getAll("is_trash=1 and " . $cond2)) : 0;
+    $assign_list["number_item"] = $clsClassTable->getAll("is_trash=0 and " . $cond2) ? count($clsClassTable->getAll("is_trash=0 and " . $cond2)) : 0;
+    $assign_list["number_all"] = $clsClassTable->getAll($cond2) ? count($clsClassTable->getAll($cond2)) : 0;
     // Action
     $action = isset($_GET['action']) ? $_GET['action'] : '';
     if ($action == 'Delete') {
@@ -3186,56 +3232,60 @@ function default_property() {
         }
         header('location: ' . PCMS_URL . '/?mod=' . $mod . '&act=' . $act . $pUrl . '&message=PositionSuccess');
     }
-	
-	$clsTourProperty=new TourProperty();
-	$clsTourOption=new TourOption();$assign_list["clsTourOption"] = $clsTourOption;
-	$clsSettingChildPolicy=new SettingChildPolicy();$assign_list["clsSettingChildPolicy"] = $clsSettingChildPolicy;
-	
-	$adult_type_id=$clsTourProperty->getAll("is_trash=0 and is_online=1 and type='VISITORTYPE' order by order_no ASC limit 0,1");
-	$adult_type_id=$adult_type_id[0]['tour_property_id'];
-	
-	$cond_setting= "is_trash=0 and tour_property_id='$adult_type_id' and type='SIZEGROUP'";
-	$cond_setting.=" ORDER BY number_to ASC";
-	$lstAdultGroupSize = $clsTourOption->getAll($cond_setting,$clsTourOption->pkey.",number_to,number_from");
-	$assign_list["lstAdultGroupSize"] = $lstAdultGroupSize;
-	
+
+    $clsTourProperty = new TourProperty();
+    $clsTourOption = new TourOption();
+    $assign_list["clsTourOption"] = $clsTourOption;
+    $clsSettingChildPolicy = new SettingChildPolicy();
+    $assign_list["clsSettingChildPolicy"] = $clsSettingChildPolicy;
+
+    $adult_type_id = $clsTourProperty->getAll("is_trash=0 and is_online=1 and type='VISITORTYPE' order by order_no ASC limit 0,1");
+    $adult_type_id = $adult_type_id[0]['tour_property_id'];
+
+    $cond_setting = "is_trash=0 and tour_property_id='$adult_type_id' and type='SIZEGROUP'";
+    $cond_setting .= " ORDER BY number_to ASC";
+    $lstAdultGroupSize = $clsTourOption->getAll($cond_setting, $clsTourOption->pkey . ",number_to,number_from");
+    $assign_list["lstAdultGroupSize"] = $lstAdultGroupSize;
 }
-function default_ajUpdPosSortTourProperty(){
-	global $dbconn, $assign_list, $_CONFIG,  $_SITE_ROOT, $mod , $_LANG_ID, $act, $menu_current, $current_page, $core, $clsModule;
-	global $clsConfiguration;
-	#
-	$clsTourProperty = new TourProperty();
-	$order = $_POST['order'];
-	$currentPage 	= $_POST['currentPage'];
-	$recordPerPage 	= $_POST['recordPerPage'];
-	//var_dump($currentPage.'xxxxxx'.$recordPerPage);die();
-	foreach($order as $key=>$val){
-		$key = (($currentPage-1)*$recordPerPage + $key+1);
-		$clsTourProperty->updateOne($val,"order_no='".$key."'");	
-	}
+function default_ajUpdPosSortTourProperty()
+{
+    global $dbconn, $assign_list, $_CONFIG,  $_SITE_ROOT, $mod, $_LANG_ID, $act, $menu_current, $current_page, $core, $clsModule;
+    global $clsConfiguration;
+    #
+    $clsTourProperty = new TourProperty();
+    $order = $_POST['order'];
+    $currentPage     = $_POST['currentPage'];
+    $recordPerPage     = $_POST['recordPerPage'];
+    //var_dump($currentPage.'xxxxxx'.$recordPerPage);die();
+    foreach ($order as $key => $val) {
+        $key = (($currentPage - 1) * $recordPerPage + $key + 1);
+        $clsTourProperty->updateOne($val, "order_no='" . $key . "'");
+    }
 }
-function default_ajUpdPosSortTourOption(){
-	global $dbconn, $assign_list, $_CONFIG,  $_SITE_ROOT, $mod , $_LANG_ID, $act, $menu_current, $current_page, $core, $clsModule;
-	global $clsConfiguration;
-	#
-	$clsTourOption = new TourOption();
-	$order = $_POST['order'];
-	$currentPage 	= $_POST['currentPage'];
-	$recordPerPage 	= $_POST['recordPerPage'];
-	//var_dump($currentPage.'xxxxxx'.$recordPerPage);die();
-	foreach($order as $key=>$val){
-		$key = (($currentPage-1)*$recordPerPage + $key+1);
-		$clsTourOption->updateOne($val,"order_no='".$key."'");	
-	}
+function default_ajUpdPosSortTourOption()
+{
+    global $dbconn, $assign_list, $_CONFIG,  $_SITE_ROOT, $mod, $_LANG_ID, $act, $menu_current, $current_page, $core, $clsModule;
+    global $clsConfiguration;
+    #
+    $clsTourOption = new TourOption();
+    $order = $_POST['order'];
+    $currentPage     = $_POST['currentPage'];
+    $recordPerPage     = $_POST['recordPerPage'];
+    //var_dump($currentPage.'xxxxxx'.$recordPerPage);die();
+    foreach ($order as $key => $val) {
+        $key = (($currentPage - 1) * $recordPerPage + $key + 1);
+        $clsTourOption->updateOne($val, "order_no='" . $key . "'");
+    }
 }
 /* ============== TOUR TRANSPORT MANAGEMENT ================ */
 
-function default_transporttours() {
+function default_transporttours()
+{
     global $assign_list, $_CONFIG, $core, $_SITE_ROOT, $mod, $act, $clsISO, $clsConfiguration;
-    global $core, $clsModule, $clsButtonNav, $oneSetting,$package_id;
+    global $core, $clsModule, $clsButtonNav, $oneSetting, $package_id;
     $user_id = $core->_USER['user_id'];
     #
-    if (!$clsISO->getCheckActiveModulePackage($package_id,'property','transport','default')) {
+    if (!$clsISO->getCheckActiveModulePackage($package_id, 'property', 'transport', 'default')) {
         header('location:' . PCMS_URL . '/index.php?admin&mod=' . $mod . '&message=NotPermission');
         exit();
     }
@@ -3393,7 +3443,8 @@ function default_transporttours() {
     }
 }
 
-function default_ajaxFrmTransportour() {
+function default_ajaxFrmTransportour()
+{
     global $assign_list, $_CONFIG, $core, $_SITE_ROOT, $mod, $act, $clsISO, $clsConfiguration;
     global $core, $clsModule, $clsButtonNav, $oneSetting;
     $user_id = $core->_USER['user_id'];
@@ -3444,7 +3495,8 @@ function default_ajaxFrmTransportour() {
     die();
 }
 
-function default_ajaxSaveTransportour() {
+function default_ajaxSaveTransportour()
+{
     global $assign_list, $_CONFIG, $_LANG_ID, $_SITE_ROOT, $mod, $act, $clsISO, $clsConfiguration;
     global $core, $clsModule, $clsButtonNav, $oneSetting;
     $user_id = $core->_USER['user_id'];
@@ -3502,7 +3554,8 @@ function default_ajaxSaveTransportour() {
 
 /* ------ Load Tour Gallery ------- */
 
-function default_ajInitTSysTourGallery() {
+function default_ajInitTSysTourGallery()
+{
     global $assign_list, $_CONFIG, $_SITE_ROOT, $mod, $_LANG_ID, $act, $menu_current, $current_page, $oneSetting;
     global $core, $clsModule, $clsButtonNav, $oneSetting;
     #
@@ -3679,7 +3732,8 @@ function default_ajInitTSysTourGallery() {
     die();
 }
 
-function default_ajOpenTourGallery() {
+function default_ajOpenTourGallery()
+{
     global $assign_list, $_CONFIG, $_SITE_ROOT, $mod, $_LANG_ID, $act, $menu_current, $current_page, $oneSetting;
     global $core, $clsModule, $clsButtonNav, $dbconn;
     #
@@ -3703,7 +3757,7 @@ function default_ajOpenTourGallery() {
             $cond .= " and (title like '%$keyword%' or slug like '%$slug%')";
         }
         #
-        $totalRecord = $clsTourImage->getAll($cond)?count($clsTourImage->getAll($cond)):0;
+        $totalRecord = $clsTourImage->getAll($cond) ? count($clsTourImage->getAll($cond)) : 0;
         $pageview = $clsPagination->pagination_ajax($totalRecord, $number_per_page, $page, '', '', false);
         #
         $offset = ($page - 1) * $number_per_page;
@@ -3715,12 +3769,12 @@ function default_ajOpenTourGallery() {
             for ($i = 0; $i < count($lstItem); $i++) {
                 $tour_image_id = $lstItem[$i][$clsTourImage->pkey];
                 #
-                $html .= '<tr style="cursor:move" id="order_'.$tour_image_id.'" class="' . ($i % 2 == 0 ? 'row1' : 'row2') . '">';
-                $html .= '<td class="index2">' . ($offset +$i + 1) . '</td>';
+                $html .= '<tr style="cursor:move" id="order_' . $tour_image_id . '" class="' . ($i % 2 == 0 ? 'row1' : 'row2') . '">';
+                $html .= '<td class="index2">' . ($offset + $i + 1) . '</td>';
                 $html .= '<td width="85px"><a href="javascript:void();" data="' . $tour_image_id . '" table_id="' . $table_id . '" title="' . $core->get_Lang('edit') . '" class="ajeditPhotosGallery"><img src="' . $ftp_abs_path_image . $lstItem[$i]['image'] . '" width="75" height="50" /></a></td>';
                 $html .= '<td>
 				
-				<input class="editTitleImage full-width" style="max-width:200px" data="' . $tour_image_id . '" table_id="' . $table_id . '" value="'.$clsTourImage->getTitle($tour_image_id).'" style="line-height:28px; font-size:12px; padding:0 10px" />
+				<input class="editTitleImage full-width" style="max-width:200px" data="' . $tour_image_id . '" table_id="' . $table_id . '" value="' . $clsTourImage->getTitle($tour_image_id) . '" style="line-height:28px; font-size:12px; padding:0 10px" />
 				<a style="display:none" href="javascript:void(0);" data="' . $tour_image_id . '" table_id="' . $table_id . '" title="' . $core->get_Lang('edit') . '" class="ajeditPhotosGallery"><strong>' . $clsTourImage->getTitle($tour_image_id) . '</strong></a>
 				
 				</td>';
@@ -3737,7 +3791,7 @@ function default_ajOpenTourGallery() {
 				</td>';
                 $html .= '</tr>';
             }
-			$html.='
+            $html .= '
 			<script type="text/javascript">
 				$("#preview").sortable({
 					opacity: 0.8,
@@ -3749,8 +3803,8 @@ function default_ajOpenTourGallery() {
 						vietiso_loading(0);
 					},
 					update: function(){
-						var page = "'.$page.'";
-						var order = $(this).sortable("serialize")+\'&update=update\'+\'&recordPerPage='.$number_per_page.'\'+\'&currentPage='.$page.'\';
+						var page = "' . $page . '";
+						var order = $(this).sortable("serialize")+\'&update=update\'+\'&recordPerPage=' . $number_per_page . '\'+\'&currentPage=' . $page . '\';
 						$.post(path_ajax_script+"/index.php?mod=tour&act=ajUpdPosTourGallery", order, function(html){
 							loadTableGallery(tour_id, \'\', page, 10);
 							vietiso_loading(0);
@@ -3826,10 +3880,10 @@ function default_ajOpenTourGallery() {
 						<a href="javascript:void(0);" title="' . $core->get_Lang('change') . '" class="photobox_edit ajOpenDialog" isoman_for_id="image_val" isoman_val="' . $clsTourImage->getOneField('image', $tour_image_id) . '" isoman_name="image">
 							<i class="iso-edit"></i>
 						</a>';
-						if($clsTourImage->getOneField('image', $tour_image_id)!=''){
-						  $HTML .= '<a pvalTable="'.$tour_image_id.'" clsTable="TourImage" href="javascript:void()" title="'.$core->get_Lang('delete').'" class="photobox_edit deleteItemImage" data-name_input="isoman_url_image" g="imgItem" style="margin-left:25px;line-height:27px;background:red;color:#fff;text-align:center; text-decoration:none">X</a> ';
-						}
-					 $HTML .= '</div>
+        if ($clsTourImage->getOneField('image', $tour_image_id) != '') {
+            $HTML .= '<a pvalTable="' . $tour_image_id . '" clsTable="TourImage" href="javascript:void()" title="' . $core->get_Lang('delete') . '" class="photobox_edit deleteItemImage" data-name_input="isoman_url_image" g="imgItem" style="margin-left:25px;line-height:27px;background:red;color:#fff;text-align:center; text-decoration:none">X</a> ';
+        }
+        $HTML .= '</div>
 				</td>
 			</tr>
 		</table>
@@ -3935,7 +3989,7 @@ function default_ajOpenTourGallery() {
         echo (1);
         die();
     } else if ($tp == 'TOTAL') {
-        echo $clsTourImage->getAll("is_trash=0 and table_id='$table_id'")?count($clsTourImage->getAll("is_trash=0 and table_id='$table_id'")):0;
+        echo $clsTourImage->getAll("is_trash=0 and table_id='$table_id'") ? count($clsTourImage->getAll("is_trash=0 and table_id='$table_id'")) : 0;
         die();
     } else if ($tp == 'SYS') {
         $LISTALL = $clsTourImage->getAll("is_trash=0 and table_id='$table_id' order by tour_image_id asc");
@@ -3953,7 +4007,8 @@ function default_ajOpenTourGallery() {
 }
 
 
-function default_ajOpenTourGalleryNew() {
+function default_ajOpenTourGalleryNew()
+{
     global $assign_list, $_CONFIG, $_SITE_ROOT, $mod, $_LANG_ID, $act, $menu_current, $current_page, $oneSetting;
     global $core, $clsModule, $clsButtonNav, $dbconn;
     #
@@ -3977,7 +4032,7 @@ function default_ajOpenTourGalleryNew() {
             $cond .= " and (title like '%$keyword%' or slug like '%$slug%')";
         }
         #
-        $totalRecord = $clsTourImage->getAll($cond)?count($clsTourImage->getAll($cond)):0;
+        $totalRecord = $clsTourImage->getAll($cond) ? count($clsTourImage->getAll($cond)) : 0;
         $pageview = $clsPagination->pagination_ajax($totalRecord, $number_per_page, $page, '', '', false);
         #
         $offset = ($page - 1) * $number_per_page;
@@ -3989,17 +4044,17 @@ function default_ajOpenTourGalleryNew() {
             for ($i = 0; $i < count($lstItem); $i++) {
                 $tour_image_id = $lstItem[$i][$clsTourImage->pkey];
                 #
-                $html .= '<tr style="cursor:move" id="order_'.$tour_image_id.'" class="' . ($i % 2 == 0 ? 'row1' : 'row2') . '">';
-                $html .= '<td class="index">' . ($offset+$i+1) . '</td>';
+                $html .= '<tr style="cursor:move" id="order_' . $tour_image_id . '" class="' . ($i % 2 == 0 ? 'row1' : 'row2') . '">';
+                $html .= '<td class="index">' . ($offset + $i + 1) . '</td>';
                 $html .= '<td width="60px"><img src="' . $ftp_abs_path_image . $lstItem[$i]['image'] . '" width="60" height="40" /></td>';
                 $html .= '<td><a href="javascript:void();" data="' . $tour_image_id . '" table_id="' . $table_id . '" title="' . $core->get_Lang('edit') . '" class="ajeditPhotosGallery"><strong>' . $clsTourImage->getTitle($tour_image_id) . '</strong></a></td>';
                 $html .= '<td style="text-align:right;color:#c00000">' . date('d-m-Y h:i', $lstItem[$i]['reg_date']) . '</td>';
-				if(1==2){
-                $html .= '<td style="text-align:center">' . ($i == 0 ? '' : '<a href="javascript:void();" data="' . $tour_image_id . '" class="ajmovePhotosGallery" direct="movetop" title="' . $core->get_Lang('movetop') . '" data="' . $tour_image_id . '" table_id="' . $table_id . '"><i class="icon-circle-arrow-up"></i></a>') . '</td>';
-                $html .= '<td style="text-align:center">' . ($i == count($lstItem) - 1 ? '' : '<a href="javascript:void();" data="' . $tour_image_id . '" class="ajmovePhotosGallery" direct="movebottom" title="' . $core->get_Lang('movebottom') . '" table_id="' . $table_id . '"><i class="icon-circle-arrow-down"></i></a>') . '</td>';
-                $html .= '<td style="text-align:center">' . ($i == 0 ? '' : '<a href="javascript:void();" data="' . $tour_image_id . '" class="ajmovePhotosGallery" direct="moveup" title="' . $core->get_Lang('moveup') . '" table_id="' . $table_id . '"><i class="icon-arrow-up"></i></a>') . '</td>';
-                $html .= '<td style="text-align:center">' . ($i == count($lstItem) - 1 ? '' : '<a href="javascript:void();" class="ajmovePhotosGallery" direct="movedown" title="' . $core->get_Lang('movedown') . '" data="' . $tour_image_id . '" table_id="' . $table_id . '"><i class="icon-arrow-down"></i></a>') . '</td>';
-				}
+                if (1 == 2) {
+                    $html .= '<td style="text-align:center">' . ($i == 0 ? '' : '<a href="javascript:void();" data="' . $tour_image_id . '" class="ajmovePhotosGallery" direct="movetop" title="' . $core->get_Lang('movetop') . '" data="' . $tour_image_id . '" table_id="' . $table_id . '"><i class="icon-circle-arrow-up"></i></a>') . '</td>';
+                    $html .= '<td style="text-align:center">' . ($i == count($lstItem) - 1 ? '' : '<a href="javascript:void();" data="' . $tour_image_id . '" class="ajmovePhotosGallery" direct="movebottom" title="' . $core->get_Lang('movebottom') . '" table_id="' . $table_id . '"><i class="icon-circle-arrow-down"></i></a>') . '</td>';
+                    $html .= '<td style="text-align:center">' . ($i == 0 ? '' : '<a href="javascript:void();" data="' . $tour_image_id . '" class="ajmovePhotosGallery" direct="moveup" title="' . $core->get_Lang('moveup') . '" table_id="' . $table_id . '"><i class="icon-arrow-up"></i></a>') . '</td>';
+                    $html .= '<td style="text-align:center">' . ($i == count($lstItem) - 1 ? '' : '<a href="javascript:void();" class="ajmovePhotosGallery" direct="movedown" title="' . $core->get_Lang('movedown') . '" data="' . $tour_image_id . '" table_id="' . $table_id . '"><i class="icon-arrow-down"></i></a>') . '</td>';
+                }
                 $html .= '
 				<td style="vertical-align:middle; width:6%;">
 					<div class="btn-group">
@@ -4012,7 +4067,7 @@ function default_ajOpenTourGalleryNew() {
 				</td>';
                 $html .= '</tr>';
             }
-			$html.='
+            $html .= '
 			<script type="text/javascript">
 				$("#preview").sortable({
 					opacity: 0.8,
@@ -4024,8 +4079,8 @@ function default_ajOpenTourGalleryNew() {
 						vietiso_loading(0);
 					},
 					update: function(){
-						var page = "'.$page.'";
-						var order = $(this).sortable("serialize")+\'&update=update\'+\'&recordPerPage='.$number_per_page.'\'+\'&currentPage='.$page.'\';
+						var page = "' . $page . '";
+						var order = $(this).sortable("serialize")+\'&update=update\'+\'&recordPerPage=' . $number_per_page . '\'+\'&currentPage=' . $page . '\';
 						$.post(path_ajax_script+"/index.php?mod=tour&act=ajUpdPosTourGallery", order, function(html){
 							loadTableGallery(tour_id, \'\', page, 10);
 							vietiso_loading(0);
@@ -4079,10 +4134,10 @@ function default_ajOpenTourGalleryNew() {
 						<a href="javascript:void(0);" title="' . $core->get_Lang('change') . '" class="photobox_edit ajOpenDialog" isoman_for_id="image_val" isoman_val="' . $clsTourImage->getOneField('image', $tour_image_id) . '" isoman_name="image">
 							<i class="iso-edit"></i>
 						</a>';
-						if($clsTourImage->getOneField('image', $tour_image_id)!=''){
-						  $HTML .= '<a pvalTable="'.$tour_image_id.'" clsTable="TourImage" href="javascript:void()" title="'.$core->get_Lang('delete').'" class="photobox_edit deleteItemImage" data-name_input="isoman_url_image" g="imgItem" style="margin-left:25px;line-height:27px;background:red;color:#fff;text-align:center; text-decoration:none">X</a> ';
-						}
-					 $HTML .= '</div>
+        if ($clsTourImage->getOneField('image', $tour_image_id) != '') {
+            $HTML .= '<a pvalTable="' . $tour_image_id . '" clsTable="TourImage" href="javascript:void()" title="' . $core->get_Lang('delete') . '" class="photobox_edit deleteItemImage" data-name_input="isoman_url_image" g="imgItem" style="margin-left:25px;line-height:27px;background:red;color:#fff;text-align:center; text-decoration:none">X</a> ';
+        }
+        $HTML .= '</div>
 				</td>
 			</tr>
 		</table>
@@ -4186,7 +4241,7 @@ function default_ajOpenTourGalleryNew() {
         echo (1);
         die();
     } else if ($tp == 'TOTAL') {
-        echo $clsTourImage->getAll("is_trash=0 and table_id='$table_id'")?count($clsTourImage->getAll("is_trash=0 and table_id='$table_id'")):0;
+        echo $clsTourImage->getAll("is_trash=0 and table_id='$table_id'") ? count($clsTourImage->getAll("is_trash=0 and table_id='$table_id'")) : 0;
         die();
     } else if ($tp == 'SYS') {
         $LISTALL = $clsTourImage->getAll("is_trash=0 and table_id='$table_id' order by tour_image_id asc");
@@ -4203,22 +4258,24 @@ function default_ajOpenTourGalleryNew() {
     die();
 }
 
-function default_ajUpdPosTourGallery(){
-	global $dbconn, $assign_list, $_CONFIG,  $_SITE_ROOT, $mod , $_LANG_ID, $act, $menu_current, $current_page, $core, $clsModule;
-	global $clsConfiguration;
-	#
-	$clsTourImage = new TourImage();
-	$order = $_POST['order'];
-	$currentPage 	= $_POST['currentPage'];
-	$recordPerPage 	= $_POST['recordPerPage'];
-	//var_dump($currentPage.'xxxxxx'.$recordPerPage);die();
-	foreach($order as $key=>$val){
-		$key = (($currentPage-1)*$recordPerPage + $key + 1);
-		$clsTourImage->updateOne($val,"order_no='".$key."'");	
-	}
+function default_ajUpdPosTourGallery()
+{
+    global $dbconn, $assign_list, $_CONFIG,  $_SITE_ROOT, $mod, $_LANG_ID, $act, $menu_current, $current_page, $core, $clsModule;
+    global $clsConfiguration;
+    #
+    $clsTourImage = new TourImage();
+    $order = $_POST['order'];
+    $currentPage     = $_POST['currentPage'];
+    $recordPerPage     = $_POST['recordPerPage'];
+    //var_dump($currentPage.'xxxxxx'.$recordPerPage);die();
+    foreach ($order as $key => $val) {
+        $key = (($currentPage - 1) * $recordPerPage + $key + 1);
+        $clsTourImage->updateOne($val, "order_no='" . $key . "'");
+    }
 }
 
-function default_ajOpenSotAvailable() {
+function default_ajOpenSotAvailable()
+{
     global $dbconn, $assign_list, $_CONFIG, $_SITE_ROOT, $mod, $_LANG_ID, $act, $menu_current, $current_page, $core, $clsModule;
     global $clsISO;
     $user_id = $core->_USER['user_id'];
@@ -4428,5 +4485,3 @@ function default_ajOpenSotAvailable() {
 // Extension mod Tours
 require_once(DIR_MODULES . '/tour/mod_default.php');
 require_once(DIR_MODULES . '/tour/sub_startdate.php');
-
-?>

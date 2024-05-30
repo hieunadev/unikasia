@@ -18,20 +18,35 @@ class TourDestination extends dbBasic{
 	}
 
     function getByCountry($tour_id, $act = "place") {
-        global $clsISO;
         $clsCity = new City();
-        $rec = $this->getAll("is_trash=0 and tour_id='$tour_id' order by order_no"  , "country_id, city_id");
-        $list_city_names = array();
-        foreach ($rec as $k => $v) {
-            $list_city_names[] = $clsCity->getTitle($v["city_id"]);
+        $rec = $this->getAll("is_trash=0 and tour_id='$tour_id' order by order_no", "country_id, city_id");
+        $cities = array();
+        $other_city = array();
+        $count_other_city = 0;
+        foreach ($rec as $v) {
+            if (count($cities) < 3) {
+                $cities[] = $clsCity->getTitle($v["city_id"]);
+            } else {
+                $other_city[] = $clsCity->getTitle($v["city_id"]);
+                $count_other_city++;
+            }
         }
-        if ($act == "startFinish") {
-            $first_city_name = $clsCity->getTitle($rec[0]["city_id"]);
-            $last_city_name = $clsCity->getTitle(end($rec)["city_id"]);
-            return ($first_city_name == $last_city_name) ? $first_city_name : "$first_city_name/$last_city_name";
+        switch ($act) {
+            case "startFinish":
+                $first_city_name = $clsCity->getTitle($rec[0]["city_id"]);
+                $last_city_name = $clsCity->getTitle(end($rec)["city_id"]);
+                $rec = ($first_city_name == $last_city_name) ? $first_city_name : "$first_city_name/$last_city_name";
+                break;
+            case "city":
+                $rec = implode(' - ', $cities);
+                break;
+            case "other_city":
+                $rec = implode(' - ', $other_city);
+                break;
+            default:
+                $rec = $count_other_city;
         }
-
-        return implode(' - ', $list_city_names);
+        return $rec;
     }
 }
 ?>

@@ -4,20 +4,20 @@
         <div class="txtexper">{$clsConfiguration->getValue('IntroExploreTrips_'|cat:$_LANG_ID)|html_entity_decode}</div>
         <div class="row justify-content-center">
             {section name=i loop=$listTourExplore}
-            <div class="col-xl-4 col-lg-5 col-md-6 col-sm-12">
+                <div class="col-xl-4 col-lg-5 col-md-6 col-sm-12">
                 <div class="card img_sizecard">
                     <div class="card-img-wrapper">
                         <img src="{$clsTour->getImage($listTourExplore[i].tour_id, '405','350')}" width="405" height="350" class="card-img-top" alt="{$clsTour->getTitle($listTourExplore[i].tour_id)}">
                         <div class="corner-badge">-30%</div>
                         <div class="card-img-top card-img-top-view-detail">
-                            <a href="#" title="splendors of vietnam">
+                            <a href="{$clsTour->getLink($listTourExplore[i].tour_id)}" title="splendors of vietnam">
                                 <div class="card-img-top-view-detail-block">View details</div>
                             </a>
                         </div>
                     </div>
                     <div class="card-body card_alltxt">
                         <div class="card_text">
-                            <h3><a class="title_card_explore_trip txt-hover-home" href="#" title="{$clsTour->getTitle($listTourExplore[i].tour_id)}">{$clsTour->getTitle($listTourExplore[i].tour_id)}</a>
+                            <h3><a class="title_card_explore_trip txt-hover-home" href="{$clsTour->getLink($listTourExplore[i].tour_id)}" title="{$clsTour->getTitle($listTourExplore[i].tour_id)}">{$clsTour->getTitle($listTourExplore[i].tour_id)}</a>
                             </h3>
                             <div class="rating">
                                 <i class="fa-sharp fa-solid fa-star"></i>
@@ -29,7 +29,7 @@
                             </div>
                             <div class="category-imgtxt">
                                 <i class="fa-light fa-location-dot me-1"></i>
-                                <span>Honduras, Guatemala, El Salvador</span>
+                                <span>{$clsTourDestination->getByCountry($listTourExplore[i].tour_id, "city")}</span>
                             </div>
                             <div class="description">
                                 <div>{$clsTour->getTripOverview($listTourExplore[i].tour_id)}</div>

@@ -7,6 +7,9 @@ $clsTour            =   new Tour();
 $smarty->assign('clsTour', $clsTour);
 $clsTourCategory    =   new TourCategory();
 $smarty->assign('clsTourCategory', $clsTourCategory);
+$clsTourDestination = new TourDestination();
+$smarty->assign('clsTourDestination', $clsTourDestination);
+
 #
 if ($mod === 'destination' || $mod === 'tour') {
     $limit  =   ' LIMIT 9';

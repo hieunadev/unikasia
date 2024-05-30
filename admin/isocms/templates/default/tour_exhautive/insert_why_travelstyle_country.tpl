@@ -2,12 +2,9 @@
 <div class="box_form_insert_tour_new">
     <div class="box_info_tour_top box_top_opt_set">
         <div class="info_tour">
-            <a href="{$PCMS}/admin/?mod=tour_exhautive&act=category_country" class="back_list" title="{$core->get_Lang('Travel Styles by Country')}"><i class="fa fa-angle-left"></i></a>
+            <a href="{$PCMS}/admin/?mod=tour_exhautive&act=why_travelstyle_country" class="back_list" title="{$core->get_Lang('Why Travel Styles by Country')}"><i class="fa fa-angle-left"></i></a>
             <div class="body_tour">
-                <h3 class="table-title" table_id="{$pvalTable}">{$core->get_Lang('Edit Travel Styles by Country')}</h3>
-                <p class="p_tripcode">
-                    <a class="go_overview" href="{$PCMS}/admin/tour/categorycountry/insert/{$pvalTable}/overview">{$core->get_Lang('Go to overview')}</a></span>
-                </p>
+                <h3 class="table-title" table_id="{$pvalTable}">{$core->get_Lang('Edit Why Travel Styles by Country')}</h3>
             </div>
         </div>
         <div class="info_button">
@@ -22,25 +19,17 @@
                 <a class="btn_preview_tour delete_tour_ex" {$pvalTable} type_btn="delete" href="{$PCMS_URL}/?mod={$mod}&act=delete2&category_country_id={$core->encryptID($pvalTable)}{$pUrl}&page={$currentPage}" title="{$core->get_Lang('Edit Travel Styles by Country')}">{$core->get_Lang('Delete')}</a>
             </div>
         </div>
-
     </div>
     <div class="container-fluid bg_fff" style="padding-top: 0;padding-bottom: 0;">
         <div class="box_content_page">
             <div class="row d-flex flex-wrap">
-
-
                 <div class="main_step_box" id="frmMainStep_{$pvalTable}">
 
                 </div>
-
-
             </div>
         </div>
     </div>
 </div>
-
-
-
 
 <script type="text/javascript">
     var table_id = '{$pvalTable}';
@@ -60,7 +49,6 @@
 {literal}
 <script>
     $(function() {
-
         $(window).scroll(function() {
             var sticky = $('.box_top_opt_set'),
                 scroll = $(window).scrollTop();
@@ -70,7 +58,8 @@
                 sticky.removeClass('fixed');
             }
         });
-        loadMainFormStep(table_id, currentstep, nextstep);
+        // console.log(currentstep);
+        loadMainFormStep(table_id, currentstep, 'why');
     });
 </script>
 {/literal}

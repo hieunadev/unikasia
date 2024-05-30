@@ -428,6 +428,7 @@
 
     .des_tailor_travel_style_image img {
         border-radius: 8px;
+        filter: brightness(0.7);
     }
 
     .des_tailor_travel_style_content {

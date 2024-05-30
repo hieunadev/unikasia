@@ -94,6 +94,15 @@
 						</div>
 					</div>
 					{/if}
+					<div class="form-group inpt_tour">
+						<label class="col-form-label">{$core->get_Lang('Departure time')} <span class="required_red">*</span></label>
+						<div id="departureTime" onClick="loadHelp(this)">
+							<select name="month_id[]" id="month_id" class="full-width chosen-select required" multiple="multiple">
+								{assign var = selected value = $oneItem.list_month_id}
+								{$clsMonth->getSelectMultiMonth($selected,0)}
+							</select>
+						</div>
+					</div>
 				</div>
 				<div class="btn_save_titile_trip_code">
 					<a tour_id="{$pvalTable}" cat_run="{$cat_run}" prev_step="{if $child_cat_menu_j_index_prev eq ''}{if $list_cat_menu_prev eq ''}{$child_cat_menu_j}{/if}{if $list_cat_menu_prev ne ''}{$list_cat_menu_prev}/{$child_cat_menu_prev[$count_child_cat_menu_prev]}{/if}{else}{$child_cat_menu_j_index_prev}{/if}" class="back_step">{$core->get_Lang('Back')}</a>

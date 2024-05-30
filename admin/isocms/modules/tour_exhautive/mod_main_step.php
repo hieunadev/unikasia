@@ -1,21 +1,25 @@
 <?php
-function getFrame($blog_id = null)
+function getFrame($blog_id = null, $obj = '')
 {
 	global $core, $dbconn, $_LANG_ID, $clsISO, $package_id, $act;
-	if ($act === 'insert_travelstyle_country') {
-		$frames = array(
-			'overview' => array(
-				'href_group'	=> 'overview',
-				'name'	=> $core->get_Lang('Overview'),
-				'icon'	=> 'home',
-				'steps' => array(
-					'Why' => array(
-						'name' => $core->get_Lang('Why')
+	// $clsISO->dump($act);
+
+	if ($obj === 'why') {
+		// $clsISO->dump(1);
+		$frames	=	array(
+			'overview'	=>	array(
+				'href_group'	=> 	'overview',
+				'name'			=> 	$core->get_Lang('Overview'),
+				'icon'			=> 	'home',
+				'steps' 		=> 	array(
+					'Why'	=>	array(
+						'name'	=>	$core->get_Lang('Why')
 					)
 				)
 			),
 		);
 	} else {
+		// $clsISO->dump(2);
 		$frames = array(
 			'overview' => array(
 				'href_group'	=> 'overview',
@@ -136,120 +140,105 @@ function default_insert_why_travelstyle_country()
 	//ini_set('display_startup_errors', '1');
 	//error_reporting(E_ALL);
 	global $assign_list, $_CONFIG, $_SITE_ROOT, $mod, $_LANG_ID, $act, $menu_current, $current_page, $oneSetting, $core, $pvalTable,
-		$clsModule, $clsButtonNav, $dbconn, $clsISO, $clsConfiguration, $adult_type_id, $child_type_id, $infant_type_id, $show, $nextstep;
-	$assign_list["clsModule"] = $clsModule;
-	$user_id = $core->_USER['user_id'];
-	$show = isset($_GET['show']) ? $_GET['show'] : '';
-	$assign_list["show"] = $show;
-	$assign_list["msg"] = isset($_GET['message']) ? $_GET['message'] : '';
-	// $clsISO->dd($_GET);
-
-	$pvalTable = Input::get('travelstyle_country_id', 0);
-	// $clsISO->dd($pvalTable);
-
-	$assign_list["pvalTable"] = $pvalTable;
-	$panel = Input::get('panel', '');
-	$assign_list["panel"] = $panel;
-
-	$currentstep = Input::get('step', 'why');
-	$assign_list["currentstep"] = $currentstep;
-
-
-
-	$currentstepx = 0;
-	$frames = getFrame($pvalTable);
-	//$clsISO->pre($oneTour);die;
-	$ii = 0;
-	$arrStep = array();
+		$clsModule, $clsButtonNav, $dbconn, $clsISO, $clsConfiguration, $adult_type_id, $child_type_id, $infant_type_id;
+	$assign_list["clsModule"]	= 	$clsModule;
+	$show 	= 	isset($_GET['show']) ? $_GET['show'] : '';
+	$assign_list["show"]	= 	$show;
+	$assign_list["msg"] 	= 	isset($_GET['message']) ? $_GET['message'] : '';
+	#
+	$pvalTable	= 	Input::get('travelstyle_country_id', 0);
+	$assign_list["pvalTable"]	= 	$pvalTable;
+	$panel 		= Input::get('panel', '');
+	$assign_list["panel"] 	= 	$panel;
+	$currentstep 	= 	Input::get('step', 'why');
+	$assign_list["currentstep"] = 	$currentstep;
+	#
+	$currentstepx 	= 	0;
+	$frames			= 	getFrame($pvalTable, 'why');
+	$ii 		= 	0;
+	$arrStep 	= 	array();
 	foreach ($frames as $okey => $frame) {
-		$steps = $frame['steps'];
+		$steps 	= 	$frame['steps'];
 		foreach ($steps as $key => $step) {
-			$status = 0;
+			$status	= 	0;
 			$arrStep[$ii] = array(
-				'key' => $key,
-				'name' => $step['name'],
-				'status' => $status,
-				'description' => $step['description']
+				'key' 			=>	$key,
+				'name' 			=>	$step['name'],
+				'status' 		=>	$status,
+				'description' 	=>	$step['description']
 			);
-			$frames[$okey]['steps'][$key]['status'] = $status;
+			$frames[$okey]['steps'][$key]['status']	= 	$status;
 			++$ii;
 		}
 	}
-	/*if($profile_id==18696){
-			die('ss');
-		}*/
-	$nextstep = $arrStep[$currentstepx + 1];
-	$assign_list["frames"] = $frames;
-	$assign_list["nextstep"] = $nextstep;
-
-
-	$classTable = "WhyTravelstyle";
-	$clsClassTable = new $classTable;
-	$oneItem = $clsClassTable->getOne($pvalTable);
-	$assign_list["oneItem"] = $oneItem;
-	$tableName = $clsClassTable->tbl;
-	$pkeyTable = $clsClassTable->pkey;
-
-	$assign_list["clsClassTable"] = $clsClassTable;
-	$assign_list["pkeyTable"] = $pkeyTable;
-
+	$nextstep	= 	$arrStep[$currentstepx + 1];
+	$assign_list["frames"] 		= 	$frames;
+	$assign_list["nextstep"] 	= 	$nextstep;
+	#
+	$classTable 	= 	"WhyTravelstyle";
+	$clsClassTable 	= 	new $classTable;
+	$oneItem	= 	$clsClassTable->getOne($pvalTable);
+	$assign_list["oneItem"]	= 	$oneItem;
+	$tableName 	= 	$clsClassTable->tbl;
+	$pkeyTable 	= 	$clsClassTable->pkey;
+	$assign_list["clsClassTable"] 	= 	$clsClassTable;
+	$assign_list["pkeyTable"] 		= 	$pkeyTable;
+	#
 	require_once DIR_COMMON . "/clsForm.php";
-	$clsForm = new Form();
+	$clsForm	= 	new Form();
 	$clsForm->setDbTable($tableName, $pkeyTable, $pvalTable);
-	$assign_list["clsForm"] = $clsForm;
-
+	$assign_list["clsForm"]	= 	$clsForm;
+	#
 	$clsForm->addInputTextArea("full", 'intro', "", 'intro', 255, 25, 5, 1,  "style='width:100%'");
 	$clsForm->addInputTextArea("full", 'easy_cancel', "", 'easy_cancel', 255, 25, 5, 1,  "style='width:100%'");
-
-	if ($currentstep == 'seo') {
-		$clsMeta = new Meta();
-		$assign_list["clsMeta"] = $clsMeta;
-		$linkMeta = $clsClassTable->getLink($pvalTable);
-		$allMeta = $clsMeta->getAll("config_link='$linkMeta'");
-		$meta_id = $allMeta[0]['meta_id'];
-
-		if (empty($meta_id)) {
-			$introMeta = strip_tags(html_entity_decode(addslashes($oneItem['overview'])));
-			$introMeta = explode('$trun$', wordwrap($introMeta, 280, '$trun$', false), 2);
-			$introMeta = $introMeta[0] . (isset($introMeta[1]) ? '...' : '');
-			$clsMeta->insertOne("config_link,config_value_title,config_value_intro,image,reg_date,upd_date,meta_id", "'" . $linkMeta . "','" . $oneItem['title'] . "','" . $introMeta . "','" . $oneItem['image'] . "','" . time() . "','" . time() . "','" . $clsMeta->getMaxId() . "'");
-		}
-	}
-	//	$clsClassTable->updateMinPrice($pvalTable);
-
 }
 function default_getMainFormStep()
 {
 	// ini_set('display_errors', '1');
 	// ini_set('display_startup_errors', '1');
 	// error_reporting(E_ALL);
-	global $smarty, $assign_list, $_frontIsLoggedin_user_id, $core, $clsISO, $clsProperty, $clsUser, $_company_iom_id, $dbconn, $nextstep, $clsConfiguration, $mod, $package_id, $pvalTable, $package_id;
-	$clsCategory_Country = new Category_Country();
-	$clsContinent                   = new Continent();
-	$assign_list["clsContinent"]    = $clsContinent;
-
+	global $smarty, $assign_list, $_frontIsLoggedin_user_id, $core, $clsISO, $clsProperty, $clsUser, $_company_iom_id, $dbconn, $nextstep, $clsConfiguration, $mod, $package_id, $pvalTable, $package_id, $act;
+	#
+	$clsCategory_Country = 	new Category_Country();
+	$assign_list["clsCategory_Country"]	= $clsCategory_Country;
+	$clsContinent 		= 	new Continent();
+	$assign_list["clsContinent"] 		= $clsContinent;
+	$clsWhyTravelstyle	= 	new WhyTravelstyle();
+	$assign_list["clsWhyTravelstyle"]	= $clsWhyTravelstyle;
 	#
 	$table_id = Input::post('table_id', 0);
-	$currentstep = Input::post('currentstep', '');
-	$oneItem = $clsCategory_Country->getOne($table_id);
-
-	$tableName = $clsCategory_Country->tbl;
-	$pkeyTable = $clsCategory_Country->pkey;
-	$classTable	= "Category_Country";
-	$assign_list["classTable"] = $classTable;
-	$assign_list["clsTable"] = $classTable;
-	$assign_list["clsClassTable"] = $clsCategory_Country;
-	$assign_list["pkeyTable"] = $pkeyTable;
 	$smarty->assign('pvalTable', $table_id);
+	// $clsISO->dd($table_id);
+	#
+	$currentstep = Input::post('currentstep', '');
+	#
+	$obj = Input::post('obj', ''); //why
+	$smarty->assign('obj', $obj);
+	#
+	if ($obj === 'why') {
+		$oneItem 	= 	$clsWhyTravelstyle->getOne($table_id);
+	} else {
+		$oneItem	= 	$clsCategory_Country->getOne($table_id);
+	}
 	$smarty->assign('oneItem', $oneItem);
-	$clsTourCategory = new TourCategory();
-	$assign_list['clsTourCategory'] = $clsTourCategory;
-	$clsCountry = new Country();
-	$assign_list['clsCountry'] = $clsCountry;
-	$clsCategory_Country = new Category_Country();
-	$assign_list['clsCategory_Country'] = $clsCategory_Country;
-
-	$frames = getFrame();
+	#
+	$tableName 	= 	$clsCategory_Country->tbl;
+	$pkeyTable	= 	$clsCategory_Country->pkey;
+	$classTable	= 	"Category_Country";
+	$assign_list["classTable"] 		= 	$classTable;
+	$assign_list["clsTable"] 		= 	$classTable;
+	$assign_list["clsClassTable"]	= 	$clsCategory_Country;
+	$assign_list["pkeyTable"] 		= 	$pkeyTable;
+	// $assign_list["pvalTable"] 		= 	$pvalTable;
+	#
+	$clsTourCategory		= 	new TourCategory();
+	$assign_list['clsTourCategory']	= 	$clsTourCategory;
+	$clsCountry 			= 	new Country();
+	$assign_list['clsCountry'] 		= 	$clsCountry;
+	$clsCategory_Country 	= 	new Category_Country();
+	$assign_list['clsCategory_Country']	=	$clsCategory_Country;
+	#
+	$frames	= 	getFrame($table_id, $obj);
 	#Step follow index
 	$ii = 0;
 	$arrStep = array();
@@ -291,7 +280,6 @@ function default_getMainFormStep()
 		}
 		$smarty->assign('hasImg', $hasImg);
 	}
-	//die('xx');
 	#Possition current step
 	$step = 0;
 	foreach ($arrStep as $k => $v) {
@@ -400,13 +388,18 @@ function default_ajSaveMainStep()
 		}
 		$clsClassTable->updateOne($table_id, $arr_update);
 	} else if ($currentstep == 'why') {
-		$clsISO->dd($_POST);
-
-		$intro_youtube	= 	Input::post('intro_youtube', 0);
+		$country_id		= 	Input::post('country_id', 0);
+		$travelstyle_id	= 	Input::post('travelstyle_id', 0);
+		$title			= 	Input::post('title', 0);
+		#
 		$arr_update		= 	[
-			'intro_youtube'		=>	$intro_youtube,
+			'country_id'		=>	$country_id,
+			'travelstyle_id'	=>	$travelstyle_id,
+			'title'				=>	$title,
 			'upd_date' 			=> 	time(),
-			'user_id_update'	=>	addslashes($core->_SESS->user_id)
+			'user_id_update'	=>	addslashes($core->_SESS->user_id),
+			'is_trash'			=>	0,
+			'is_online'			=>	1,
 		];
 		#
 		foreach ($_POST as $key => $val) {
@@ -524,4 +517,22 @@ function default_ajActionNewWhyTravelStyleCountry()
 	// Return
 	echo @json_encode($results);
 	die();
+}
+function default_ajActionGetTravelStyleByCountry()
+{
+	//	ini_set('display_errors', '1');
+	//	ini_set('display_startup_errors', '1');
+	//	error_reporting(E_ALL);
+	global $assign_list, $_CONFIG, $_SITE_ROOT, $mod, $_LANG_ID, $act, $menu_current, $current_page, $oneSetting, $core,
+		$clsModule, $clsButtonNav, $dbconn, $clsISO;
+	#
+	$clsCategory_Country	= 	new Category_Country();
+	$assign_list["clsCategory_Country"]	= 	$clsCategory_Country;
+	#
+	$country_id	=	isset($_POST['country_id']) ? $_POST['country_id'] : '';
+	if (!empty($country_id)) {
+		$html	=	$clsCategory_Country->makeSelectboxOption(0, $country_id);
+		echo $html;
+		die;
+	}
 }

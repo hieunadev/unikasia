@@ -187,8 +187,14 @@ $().ready(function () {
                             // console.log(2);
                             loadMainFormStep(table_id, nextstep);
                         } else if (nextstep == "_last") {
-                            // console.log(3);
-                            loadMainFormStep(table_id, "generalinformation");
+                            if (obj === "why") {
+                                loadMainFormStep(table_id, "why", "why");
+                            } else {
+                                loadMainFormStep(
+                                    table_id,
+                                    "generalinformation"
+                                );
+                            }
                         }
                     },
                 });
@@ -204,10 +210,10 @@ $().ready(function () {
     );
 });
 
-function loadMainFormStep(table_id, currentstep) {
-    // console.log(table_id, currentstep);
+function loadMainFormStep(table_id, currentstep, obj = "") {
+    // console.log(table_id, currentstep, obj);
     $Core.util.toggleIndicatior(1);
-    var $_adata = { table_id: table_id, currentstep: currentstep };
+    var $_adata = { table_id: table_id, currentstep: currentstep, obj: obj };
     $.post(
         path_ajax_script + "/index.php?mod=" + mod + "&act=getMainFormStep",
         $_adata,
