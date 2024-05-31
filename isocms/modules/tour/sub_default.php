@@ -2,129 +2,158 @@
 
 function default_default()
 {
-    global $assign_list, $clsISO;
+	global $assign_list, $clsISO;
 
-    $clsCountry = new Country(); $assign_list["clsCountry"] = $clsCountry;
-    $clsTourCat = new TourCategory(); $assign_list["clsTourCat"] = $clsTourCat;
-    $clsTour = new Tour(); $assign_list["clsTour"] = $clsTour;
-    $clsPagination = new Pagination();$assign_list["clsPagination"] = $clsPagination;
-    $clsRegion = new Region(); $assign_list["clsRegion"] = $clsRegion;
-    $clsTourDestination = new TourDestination(); $assign_list["clsTourDestination"] = $clsTourDestination;
-    $clsMonth = new Month(); $assign_list['clsMonth'] = $clsMonth;
+	$clsCountry = new Country();
+	$assign_list["clsCountry"] = $clsCountry;
+	$clsTourCat = new TourCategory();
+	$assign_list["clsTourCat"] = $clsTourCat;
+	$clsTour = new Tour();
+	$assign_list["clsTour"] = $clsTour;
+	$clsPagination = new Pagination();
+	$assign_list["clsPagination"] = $clsPagination;
+	$clsRegion = new Region();
+	$assign_list["clsRegion"] = $clsRegion;
+	$clsTourDestination = new TourDestination();
+	$assign_list["clsTourDestination"] = $clsTourDestination;
+	$clsMonth = new Month();
+	$assign_list['clsMonth'] = $clsMonth;
 
-    $where = "is_trash = 0 and is_online = 1";
-    $order_by = " order by order_no";
-    $limit = " LIMIT 8";
-    $lnk=$_SERVER['REQUEST_URI'];
-    $cond_slug = "";
-    $slug_country = !empty($_GET["slug_country"]) ? $_GET["slug_country"] : "";
-    // Filter
-    $countryId = isset($_POST['country_id']) ? $_POST['country_id'] : "";
+	$where = "is_trash = 0 and is_online = 1";
+	$order_by = " order by order_no";
+	$limit = " LIMIT 8";
+	$lnk = $_SERVER['REQUEST_URI'];
+	$slug_country = !empty($_GET["slug_country"]) ? $_GET["slug_country"] : "";
+	// Filter
+	$countryId = isset($_POST['country_id']) ? $_POST['country_id'] : "";
 
-    if ($slug_country) {
-        $cond_slug = $where . " and slug = '$slug_country'";
-    }
+	$cond_slug = "$where and slug = '$slug_country'";
+	$country_id = $clsCountry->getAll($cond_slug)[0]["country_id"];
 
-    $country_id = $clsCountry->getAll($cond_slug)[0]["country_id"];
-    $region = !empty($_POST['region']) ? $_POST['region'] : null;
-    $travel_style = !empty($_POST['travel_style']) ? $_POST['travel_style'] : null;
-    $departure_time = !empty($_POST['departure_time']) ? $_POST['departure_time'] : null;
-    $duration = !empty($_POST['duration']) ? $_POST['duration'] : null;
+	$region = !empty($_POST['region']) ? $_POST['region'] : null;
+	$travel_style = !empty($_POST['travel_style']) ? $_POST['travel_style'] : null;
+	$departure_time = !empty($_POST['departure_time']) ? $_POST['departure_time'] : null;
+	$duration = !empty($_POST['duration']) ? $_POST['duration'] : null;
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST["filter"])) {
-        $link = $clsCountry->getLink($countryId, 'tour');
+	if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST["filter"])) {
+		$link = $clsCountry->getLink($countryId, 'tour');
 
-        if($region) $link .= '&region='.$clsISO->makeSlashListFromArrayComma($region);
-        if($travel_style) $link .= '&travel_style='.$clsISO->makeSlashListFromArrayComma($travel_style);
-        if($departure_time) $link .= '&departure_time='.$clsISO->makeSlashListFromArrayComma($departure_time);
-        if($duration) $link .= '&duration='.$clsISO->makeSlashListFromArrayComma($duration);
-        header('location:'.trim($link));
-    }
-    $where_list_tour = " $where ";
-    $region = $_GET["region"];
-    $get_travel_style = $_GET["travel_style"];
-    $get_departure_time = $_GET["departure_time"];
-    $duration = $_GET["duration"];
+		if ($region) $link .= '&region=' . $clsISO->makeSlashListFromArrayComma($region);
+		if ($travel_style) $link .= '&travel_style=' . $clsISO->makeSlashListFromArrayComma($travel_style);
+		if ($departure_time) $link .= '&departure_time=' . $clsISO->makeSlashListFromArrayComma($departure_time);
+		if ($duration) $link .= '&duration=' . $clsISO->makeSlashListFromArrayComma($duration);
+		header('location:' . trim($link));
+	}
 
-    if (!empty($region)) {
-        $assign_list["region"] = $region;
-    }
+	$where_list_tour = $where;
+	$region = $_GET["region"];
+	$get_travel_style = $_GET["travel_style"];
+	$get_departure_time = $_GET["departure_time"];
+	$duration = $_GET["duration"];
 
-    if (!empty($get_travel_style)) {
-        $travel_style_conditions = array();
-        foreach (explode(",", $get_travel_style) as $v) {
-            $travel_style_conditions[] = "list_cat_id LIKE '%$v%'";
-        }
-        if (!empty($travel_style_conditions)) {
-            $where_list_tour .= "and (" . implode(" OR ", $travel_style_conditions) . ")";
-        }
-        $assign_list["travel_style"] = $get_travel_style;
-    }
-    if (!empty($get_departure_time)) {
-        $departure_time_conditions = array();
-        foreach (explode(",", $get_departure_time) as $v) {
-            $departure_time_conditions[] = "list_month_id LIKE '%$v%'";
-        }
-        if (!empty($departure_time_conditions)) {
-            $where_list_tour .= "and (" . implode(" OR ", $departure_time_conditions) . ")";
-        }
-        $assign_list["departure_time"] = $get_departure_time;
-    }
+	if (!empty($get_travel_style)) {
+		$travel_style_conditions = array();
+		foreach (explode(",", $get_travel_style) as $v) {
+			$travel_style_conditions[] = " list_cat_id LIKE '%|$v|%' ";
+		}
+		if (!empty($travel_style_conditions)) {
+			$where_list_tour .= " and (" . implode(" OR ", $travel_style_conditions) . ")";
+		}
+		$assign_list["travel_style"] = $get_travel_style;
+	}
+
+	if (!empty($get_departure_time)) {
+		$departure_time_conditions = array();
+		foreach (explode(",", $get_departure_time) as $v) {
+			$departure_time_conditions[] = " list_month_id LIKE '%|$v|%' ";
+		}
+		if (!empty($departure_time_conditions)) {
+			$where_list_tour .= " and (" . implode(" OR ", $departure_time_conditions) . ")";
+		}
+		$assign_list["departure_time"] = $get_departure_time;
+	}
 
     if (!empty($duration)) {
+        $where_list_tour .= " and (";
+        $conditions = array();
+
+        foreach (explode(",", $duration) as $v) {
+            if ($v == 1) {
+                $conditions[] = "((number_day >= '0' AND number_day <= '7') OR duration_custom != '')";
+            }
+            if ($v == 2) {
+                $conditions[] = "(number_day >= '8' AND number_day <= '14')";
+            }
+            if ($v == 3) {
+                $conditions[] = "(number_day >= '15' AND number_day <= '21')";
+            }
+            if ($v == 4) {
+                $conditions[] = "(number_day > '21')";
+            }
+        }
+        $where_list_tour .= implode(" OR ", $conditions);
+        $where_list_tour .= ")";
         $assign_list["duration"] = $duration;
     }
 
-    if(isset($_GET['page'])){
-        $tmp = explode('&',$lnk);
-        $n = count($tmp)-1;
-        $la_it = '&'.$tmp[$n];
-        $str_len = -strlen($la_it);
-        $link_page = substr($lnk, 0, $str_len);
-    }else{
-        $link_page = $lnk;
-    }
-    if ($country_id) {
-        $cond_lstCountry =  "$where_list_tour and tour_id IN (select tour_id from default_tour_destination where country_id = $country_id)";
-    }
-    $recordPerPage = 8;
-    $currentPage = isset($_GET['page'])?intval($_GET['page']):1;
-    $totalItem = $clsTour->getAll($cond_lstCountry,$clsTour->pkey);
-    $totalRecord = $totalItem?count($totalItem):0;
-    $assign_list['totalRecord']=$totalRecord;
+	if (isset($_GET['page'])) {
+		$tmp = explode('&', $lnk);
+		$n = count($tmp) - 1;
+		$la_it = '&' . $tmp[$n];
+		$str_len = -strlen($la_it);
+		$link_page = substr($lnk, 0, $str_len);
+	} else {
+		$link_page = $lnk;
+	}
+	if ($where_list_tour) {
+		$cond_lstCountry = "$where_list_tour";
+	}
+	if ($country_id) {
+		$cond_region = "";
+		if (!empty($region)) {
+			$cond_region = "and region_id IN ($region)";
+			$assign_list["region"] = $region;
+		}
 
-    $config = array(
-        'total'	=> $totalRecord,
-        'number_per_page'	=> $recordPerPage,
-        'current_page'	=> $currentPage,
-        'link'	=> str_replace('.html','/',$link_page),
-        'link_page'	=> $link_page
-    );
+		$cond_lstCountry =  " $where_list_tour and tour_id IN (select tour_id from default_tour_destination where country_id = $country_id $cond_region)";
+	}
+	$recordPerPage = 8;
+	$currentPage = isset($_GET['page']) ? intval($_GET['page']) : 1;
+	$totalItem = $clsTour->getAll($cond_lstCountry, $clsTour->pkey);
+	$totalRecord = $totalItem ? count($totalItem) : 0;
+	$assign_list['totalRecord'] = $totalRecord;
 
-    $clsPagination->initianize($config);
-    $page_view = $clsPagination->create_links(false);
-    $offset = ($currentPage-1)*$recordPerPage;
-    $limit = " LIMIT $offset,$recordPerPage";
+	$config = array(
+		'total'	=> $totalRecord,
+		'number_per_page'	=> $recordPerPage,
+		'current_page'	=> $currentPage,
+		'link'	=> str_replace('.html', '/', $link_page),
+		'link_page'	=> $link_page
+	);
 
-    $lstCountry = $clsCountry->getAll($where.$order_by);
+	$clsPagination->initianize($config);
+	$page_view = $clsPagination->create_links(false);
+	$offset = ($currentPage - 1) * $recordPerPage;
+	$limit = " LIMIT $offset,$recordPerPage";
 
-    if (isset($_COOKIE['recent_view_tour'])) {
-        $recent_view_tour = json_decode($_COOKIE['recent_view_tour'], true);
+	$lstCountry = $clsCountry->getAll($where . $order_by);
 
-        if (!empty($recent_view_tour)) {
-            $ids = implode(',', array_map('intval', $recent_view_tour));
-            $lstTourRecent = $clsTour->getAll("tour_id IN ($ids) LIMIT 3");
-            $assign_list["lstTourRecent"] = $lstTourRecent;
-        }
-    }
+	if (isset($_COOKIE['recent_view_tour'])) {
+		$recent_view_tour = json_decode($_COOKIE['recent_view_tour'], true);
+		if (!empty($recent_view_tour)) {
+			$ids = implode(',', array_map('intval', $recent_view_tour));
+			$lstTourRecent = $clsTour->getAll("tour_id IN ($ids) LIMIT 3");
+			$assign_list["lstTourRecent"] = $lstTourRecent;
+		}
+	}
 
-    $assign_list["lstRegion"] = $clsRegion->getAll("$where and country_id = $country_id", "region_id, title");
-    $assign_list["lstTour"] = $clsTour->getAll($cond_lstCountry.$order_by.$limit);
-    $assign_list["lstTourCat"] = $clsTourCat->getAll($where.$order_by);
-    $assign_list["lstMonth"] = $clsMonth->getAll($where);
-    $assign_list["country_id"] = $country_id;
-    $assign_list["lstCountry"] = $lstCountry;
-    $assign_list['page_view']=$page_view;
+	$assign_list["lstRegion"] = $clsRegion->getAll("$where and country_id = $country_id", "region_id, title");
+	$assign_list["lstTour"] = $clsTour->getAll($cond_lstCountry . $order_by . $limit);
+	$assign_list["lstTourCat"] = $clsTourCat->getAll($where . $order_by);
+	$assign_list["lstMonth"] = $clsMonth->getAll($where);
+	$assign_list["country_id"] = $country_id;
+	$assign_list["lstCountry"] = $lstCountry;
+	$assign_list['page_view'] = $page_view;
 }
 function default_tag()
 {
@@ -1387,11 +1416,17 @@ function default_cat()
 	$assign_list['clsPromotion'] = $clsPromotion;
 	$clsWhyTravelstyle = new WhyTravelstyle();
 	$assign_list['clsWhyTravelstyle'] = $clsWhyTravelstyle;
+	$clsBlog = new Blog();
+	$assign_list['clsBlog'] = $clsBlog;
+	$clsBlogCategory = new BlogCategory();
+	$assign_list['clsBlogCategory'] = $clsBlogCategory;
+	$clsFAQ = new FAQ();
+	$assign_list['clsFAQ'] = $clsFAQ;
 	#
 	$show = isset($_GET['show']) ? $_GET['show'] : '';
 	$assign_list['show'] = $show;
-	$action = isset($_GET['action']) ? $_GET['action'] : '';
-	$assign_list['action'] = $action;
+	// $action = isset($_GET['action']) ? $_GET['action'] : '';
+	// $assign_list['action'] = $action;
 	#
 	// Slug của danh mục trvs từ quốc gia
 	$slug	= 	isset($_GET['slug']) ? $_GET['slug'] : '';
@@ -1420,7 +1455,15 @@ function default_cat()
 	$limit		=	' LIMIT 6';
 	$arr_why_trvs_country	= 	$clsWhyTravelstyle->getAll($cond . $order_by . $limit, 'why_trvs_id');
 	$smarty->assign('arr_why_trvs_country', $arr_why_trvs_country);
-
+	$count_arr_why_trvs_country	=	count($arr_why_trvs_country);
+	$smarty->assign('count_arr_why_trvs_country', $count_arr_why_trvs_country);
+	#
+	$list_blog	= 	$clsBlog->getAll(" is_trash = 0 AND is_online = 1 AND country_id = $country_id ORDER BY order_no ASC LIMIT 3", 'blog_id, cat_id');
+	$smarty->assign('list_blog', $list_blog);
+	#
+	// List FAQ from country
+	$list_faq_country   =   $clsFAQ->getAll("is_trash = 0 AND is_online = 1 AND country_id = $country_id ORDER BY order_no ASC LIMIT 5");
+	$smarty->assign('list_faq_country', $list_faq_country);
 	#
 	// if ($deviceType == 'tablet') {
 	// 	$recordPerPage	= 	6;

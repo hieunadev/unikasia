@@ -30,16 +30,20 @@
 <main id="nah_list_tour">
     <section class="banner_tour">
         <img src="{$clsConfiguration->getValue('site_tour_banner')}" alt="">
-        <h2 class="title_tour_h2 text-uppercase">{$clsCountry->getTitle($country_id)} TOURS PACKAGES</h2>
+        <h2 class="title_tour_h2 text-uppercase">
+            {$clsCountry->getTitle($country_id)} TOURS PACKAGES
+        </h2>
     </section>
     <section id="breadcrumb-tour">
         <div class="container ps-0">
             <div class="d-flex">
                 <span class="Vietnam txt_youarehere">You are here: </span>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item active" aria-current="page">Home</li>
-                    <li class="breadcrumb-item active" aria-current="page">Destination</li>
-                    <li class="breadcrumb-item active" aria-current="page">{$clsCountry->getTitle($country_id)}</li>
+                    <li class="breadcrumb-item active" aria-current="page"><a href="/">Home</a></li>
+                    {if $country_id}
+                    <li class="breadcrumb-item active" aria-current="page"><a href="{$clsCountry->getLink($country_id)}">Destination</a></li>
+                    <li class="breadcrumb-item active" aria-current="page"><a href="/">{$clsCountry->getTitle($country_id)}</a></li>
+                    {/if}
                     <li class="breadcrumb-item" aria-current="page">Tours packages</li>
                 </ol>
             </div>
@@ -84,12 +88,14 @@
                             <div class="filter-check">
                                 {section name=i loop=4 start=1}
                                 <div class="form-check show">
-                                    <input class="form-check-input typeSearch" name="duration[]" value="{$smarty.section.i.index}" type="checkbox" id="{$smarty.section.i.index}-weeks">
+                                    <input class="form-check-input typeSearch" name="duration[]" value="{$smarty.section.i.index}" type="checkbox" id="{$smarty.section.i.index}-weeks"
+                                           {if $clsISO->checkInArray($duration,$smarty.section.i.index)}checked{/if}>
                                     <label class="form-check-label" for="{$smarty.section.i.index}-weeks">{$smarty.section.i.index} {if $smarty.section.i.index lt 2}week{else}weeks{/if}</label>
                                 </div>
                                 {/section}
                                 <div class="form-check show">
-                                    <input class="form-check-input typeSearch" name="duration[]" value="4" type="checkbox" id="gt-three-week">
+                                    <input class="form-check-input typeSearch" name="duration[]" value="4" type="checkbox" id="gt-three-week"
+                                           {if $clsISO->checkInArray($duration,4)}checked{/if}>
                                     <label class="form-check-label" for="gt-three-week">> 3 weeks</label>
                                 </div>
                             </div>
@@ -130,13 +136,13 @@
                     </div>
                     <h2 class="count-tour">{$totalRecord} {$clsCountry->getTitle($country_id)} tour packages</h2>
                     <div class="recommend">
-                        <span>{$core->get_Lang('70+ Tour packages with 20K+ bookings')}</span>
+                        <span><img class="me-2" src="/uploads//icon/route.png" alt="route"> {$core->get_Lang('70+ Tour packages with 20K+ bookings')}</span>
                     </div>
                     <div class="list-tour">
                         {section name=i loop=$lstTour}
                             <div class="list-tour-item">
                                 <div class="img_tour">
-                                    <a class="photo img-tour-parent" href="{$clsTour->getLink($lstTour[i].tour_id)}">
+                                    <a target="_blank" class="photo img-tour-parent" href="{$clsTour->getLink($lstTour[i].tour_id)}">
                                         <img class="img-tour"
                                              src="{$lstTour[i].image}"
                                              alt="{$lstTour[i].title}"
@@ -144,7 +150,7 @@
                                     </a>
                                 </div>
                                 <div class="item-center">
-                                    <h3><a class="txt_title_tour txt-hover-home" href="{$clsTour->getLink($lstTour[i].tour_id)}">{$lstTour[i].title}</a></h3>
+                                    <h3><a class="txt_title_tour txt-hover-home" href="{$clsTour->getLink($lstTour[i].tour_id)}" target="_blank">{$lstTour[i].title}</a></h3>
                                     <div class="reviews">
                                         <span class="rate_number">9.9</span>
                                         <span class="text_score">Excellent</span>
@@ -153,10 +159,12 @@
                                     <div class="txt_quot d-flex align-items-start">
                                         <img class="me-2" src="{$URL_IMAGES}/tour/quot.svg" alt=""><div>{$clsISO->limit_textIso($lstTour[i].overview|html_entity_decode, 20)}</div>
                                     </div>
-                                    <div class="txt_place">
+                                    <div class="txt_place" style="cursor: pointer">
                                         <img class="me-2" src="{$URL_IMAGES}/tour/location.svg" alt="">Place: {$clsTourDestination->getByCountry($lstTour[i].tour_id, 'city')}
                                         {if $clsTourDestination->getByCountry($lstTour[i].tour_id)}
-                                        <a class="tooltips_tour" href="#" data-bs-toggle="tooltip" data-bs-placement="right" title="{$clsTourDestination->getByCountry($lstTour[i].tour_id, 'other_city')}">+{$clsTourDestination->getByCountry($lstTour[i].tour_id)}</a>
+                                            <button class="tooltips_tour" type="button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="right" title="{$clsTourDestination->getByCountry($lstTour[i].tour_id, 'other_city')}">
+                                                +{$clsTourDestination->getByCountry($lstTour[i].tour_id)}
+                                            </button>
                                         {/if}
                                     </div>
                                     <div class="txt_place">
@@ -168,7 +176,13 @@
                                 </div>
                                 <div class="box-view-tour">
                                     <div class="prices text-right">
-                                        <p class="day">{$lstTour[i].number_day} {if $lstTour[i].number_day lt 2}DAY {else} DAYS {/if}</p>
+                                        <p class="day">
+                                            {if $lstTour[i].duration_custom}
+                                                {$lstTour[i].duration_custom}
+                                            {else}
+                                                {$lstTour[i].number_day} {if $lstTour[i].number_day lt 2}DAY {else} DAYS {/if}
+                                            {/if}
+                                        </p>
                                         <p class="from">From <span class="text-decoration-line-through">$2,049</span></p>
                                         <p class="us">US ${$lstTour[i].min_price}</p>
                                     </div>
@@ -201,23 +215,23 @@
                                         <h3>
                                             <a class="txth_relatedtour txt-hover-home" href="{$clsTour->getLink($lstTourRecent[i].tour_id)}" alt="tour" title="tour">{$lstTourRecent[i].title}</a>
                                         </h3>
-                                        <div class="d-flex align-items-center score_reviewtour"><span
-                                                    class="border_score">9.9</span>
+                                        <div class="d-flex align-items-center score_reviewtour"><span class="border_score">9.9</span>
                                             <span class="txt_score">Excellent </span> <span class="txt_reviewstour">- 10 views</span>
                                         </div>
-                                        <div class="d-flex align-items-center"><i class="fa-light fa-location-dot"
-                                                                                  style="color: #43485c;"
-                                                                                  aria-hidden="true"></i> <span
-                                                    class="txt_placetours">Place: Hanoi – Halong – Hue – Hoian</span>
-                                            <span
-                                                    class="border_place">+2</span></div>
-                                        <p>Les “MUST” + découverte des Ethnies du Nord “À NE PAS MANQUER” et la nuit
-                                            étoilée
-                                            sur la jonque traditionnelle en baie […]</p>
+                                        <div class="d-flex align-items-center">
+                                            <i class="fa-light fa-location-dot" style="color: #43485c;" aria-hidden="true"></i>
+                                            <span class="txt_placetours">Place: {$clsTourDestination->getByCountry($lstTourRecent[i].tour_id, 'city')}</span>
+                                            {if $clsTourDestination->getByCountry($lstTourRecent[i].tour_id)}
+                                                <button class="tooltips_tour" type="button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="right" title="{$clsTourDestination->getByCountry($lstTourRecent[i].tour_id, 'other_city')}">
+                                                    +{$clsTourDestination->getByCountry($lstTourRecent[i].tour_id)}
+                                                </button>
+                                            {/if}
+                                        </div>
+                                        <div class="intro_recent_view_tour">{$lstTourRecent[i].overview|html_entity_decode}</div>
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div class="from_price"><p class="from_txtp">From</p> <span
                                                         class="txt_price">US
-												<h3 class="txt_numbprice"> $650</h3> </span></div>
+												<h3 class="txt_numbprice"> ${$lstTour[i].min_price}</h3> </span></div>
                                             <a href="#" alt="tour" title="tour">
                                                 <button class="btn btn_viewtour btn-hover-home">View Tour <i
                                                             class="fa-regular fa-arrow-right" style="color: #ffffff;"
@@ -233,25 +247,14 @@
             </div>
         </div>
     </section>
-    <section class="tailor-made">
-        <div class="container tailorMadeCenter">
+    <section class="tailor-made mt-5" style="background-image: url({$clsConfiguration->getValue('BannerListTour')})">
+        <div class="container tailorMadeCenter px-0">
             <div class="row">
-                <div class="col-8 txt_tailor_left">
-                    <h2 class="tailor-made_title">Our travel experts will be happy to help you realize your project and
-                        find
-                        the trip that suits you.</h2>
-                    <p class="content">Our Vietnam Tours offer to a real change of scenery. We offer you many
-                        possibilities
-                        to experience an exceptional tour in Vietnam and come back with unforgettable memories. Check
-                        out
-                        our tours in Vietnam and discover the mythical and fascinating site of Ha Long Bay, the Mekong
-                        Delta
-                        with its sublime terraced rice fields, Hanoi, which has remained perfectly authentic, the
-                        archaeological site of My Son and its amazing ruins, or Hue and its sumptuous royal tombs.
-                        Discover
-                        the authenticity and beauty of Vietnam with us. </p>
+                <div class="col-9 txt_tailor_left">
+                    <h2 class="tailor-made_title">{$clsConfiguration->getValue('TitleListTour_'|cat:$_LANG_ID)}</h2>
+                    <div class="content">{$clsConfiguration->getValue('ShortTextListTour_'|cat:$_LANG_ID)|html_entity_decode}</div>
                 </div>
-                <div class="col-4 center-div"><a class="btn-tailor" href="#"><span>TAILOR MADE TOUR</span></a></div>
+                <div class="col-3 center-div"><a class="btn-tailor btn-hover-home" href="{$clsTour->getLink2('', 1)}" target="_blank"><span>TAILOR MADE TOUR</span><i class="ms-2 fa fa-arrow-right" aria-hidden="true"></i></a></div>
             </div>
         </div>
     </section>

@@ -1,133 +1,158 @@
 <?php
-class Blog extends dbBasic {
-    function __construct() {
+class Blog extends dbBasic
+{
+    function __construct()
+    {
         $this->pkey = "blog_id";
         $this->tbl = DB_PREFIX . "blog";
     }
-	function checkOnlineBySlug($blog_id,$slug){
-		$item=$this->getAll("is_trash=0 and is_online=1 and blog_id='$blog_id' and slug='$slug'",$this->pkey);
-		if(empty($item))
-			return 0;
-		return 1;
-	}
-    function getSlash($level) {
+    function checkOnlineBySlug($blog_id, $slug)
+    {
+        $item = $this->getAll("is_trash=0 and is_online=1 and blog_id='$blog_id' and slug='$slug'", $this->pkey);
+        if (empty($item))
+            return 0;
+        return 1;
+    }
+    function getSlash($level)
+    {
         return str_repeat("------", $level + 1);
     }
-    function countByCountry($country_id) {
+    function countByCountry($country_id)
+    {
         $sql = "is_trash=0 and is_online=1 and country_id='$country_id'";
-         return $this->getAll($sql)?count($this->getAll($sql)):0;
+        return $this->getAll($sql) ? count($this->getAll($sql)) : 0;
     }
 
-    function countByCity($city_id) {
+    function countByCity($city_id)
+    {
         $sql = "is_trash=0 and is_online=1 and city_id='$city_id'";
-        return $this->getAll($sql)?count($this->getAll($sql)):0;
+        return $this->getAll($sql) ? count($this->getAll($sql)) : 0;
     }
 
-    function getTitle($blog_id,$one=null) {
+    function getTitle($blog_id, $one = null)
+    {
         global $_LANG_ID;
-		if(!isset($one['title'])){
-			$one = $this->getOne($blog_id,'title');	
-		}        
+        if (!isset($one['title'])) {
+            $one = $this->getOne($blog_id, 'title');
+        }
         return $one['title'];
     }
 
-    function getAuthor($blog_id,$one=null) {
+    function getAuthor($blog_id, $one = null)
+    {
         global $_LANG_ID;
-		if(!isset($one['author'])){
-        	$one = $this->getOne($blog_id,'author');
-		}
+        if (!isset($one['author'])) {
+            $one = $this->getOne($blog_id, 'author');
+        }
         return $one['author'];
     }
 
-    function getSlug($blog_id) {
+    function getSlug($blog_id)
+    {
         global $_LANG_ID;
-        $one = $this->getOne($blog_id,'slug');
+        $one = $this->getOne($blog_id, 'slug');
         return $one['slug'];
     }
-    function checkSlug($slug) {
+    function checkSlug($slug)
+    {
         global $_LANG_ID;
         $one = $this->getAll("is_trash=0 and slug='$slug' limit 0,1");
-        return $one?'blog':'news';
+        return $one ? 'blog' : 'news';
     }
 
-    function getRegDate($blog_id) {
+    function getRegDate($blog_id)
+    {
         global $_LANG_ID;
-        $one = $this->getOne($blog_id,'reg_date');
+        $one = $this->getOne($blog_id, 'reg_date');
         return date('d F,  Y', $one['reg_date']);
     }
-
-    function getBySlug($slug) {
+    function getUpdDate($blog_id)
+    {
+        global $_LANG_ID;
+        $one = $this->getOne($blog_id, 'upd_date');
+        return date('d F,  Y', $one['upd_date']);
+    }
+    function getBySlug($slug)
+    {
         $all = $this->getAll("is_trash=0 and slug='$slug' limit 0,1");
         return $all[0][$this->pkey];
     }
 
-	function getLink($pvalTable,$oneTable=null){
-		global $extLang, $_LANG_ID;
-		if(!isset($oneTable['slug'])){
-			$oneTable = $this->getOne($pvalTable,'slug');
-		}
-		return $extLang.'/b'.$pvalTable.'-'.$oneTable['slug'].'.html';
-	}
+    function getLink($pvalTable, $oneTable = null)
+    {
+        global $extLang, $_LANG_ID;
+        if (!isset($oneTable['slug'])) {
+            $oneTable = $this->getOne($pvalTable, 'slug');
+        }
+        return $extLang . '/b' . $pvalTable . '-' . $oneTable['slug'] . '.html';
+    }
 
-    function getPermalink($blog_id) {
+    function getPermalink($blog_id)
+    {
         global $_LANG_ID;
-        $one = $this->getOne($blog_id,'permalink');
+        $one = $this->getOne($blog_id, 'permalink');
         return $one['permalink'];
     }
 
-   function getImage($pvalTable, $w, $h,$oneTable=null) {
+    function getImage($pvalTable, $w, $h, $oneTable = null)
+    {
         global $clsISO;
         #
-	    if(!isset($oneTable['image'])){
-			$oneTable = $this->getOne($pvalTable,'image');
-		}
-
-        if ($oneTable['image'] != '' && file_exists($_SERVER['DOCUMENT_ROOT'].$oneTable['image'])) {
-            $image = $oneTable['image'];
-			return $clsISO->tripslashImage($image,$w,$h);
+        if (!isset($oneTable['image'])) {
+            $oneTable = $this->getOne($pvalTable, 'image');
         }
-        $noimage = URL_IMAGES.'/none_image.png';
-		return '/files/thumb/'.$w.'/'.$h.'/'.$clsISO->parseImageURL($noimage);
+
+        if ($oneTable['image'] != '' && file_exists($_SERVER['DOCUMENT_ROOT'] . $oneTable['image'])) {
+            $image = $oneTable['image'];
+            return $clsISO->tripslashImage($image, $w, $h);
+        }
+        $noimage = URL_IMAGES . '/none_image.png';
+        return '/files/thumb/' . $w . '/' . $h . '/' . $clsISO->parseImageURL($noimage);
     }
-	function getImageHome($pvalTable, $w, $h) {
+    function getImageHome($pvalTable, $w, $h)
+    {
         global $clsISO;
         #
         $oneTable = $this->getOne($pvalTable, "imagehome");
         if ($oneTable['imagehome'] != '') {
             $image = $oneTable['imagehome'];
-			return $clsISO->tripslashImage($image,$w,$h);
-			$noimage = URL_IMAGES.'/noimage.png';
-			return '/files/thumb/'.$w.'/'.$h.'/'.$clsISO->parseImageURL($noimage);
+            return $clsISO->tripslashImage($image, $w, $h);
+            $noimage = URL_IMAGES . '/noimage.png';
+            return '/files/thumb/' . $w . '/' . $h . '/' . $clsISO->parseImageURL($noimage);
         }
-        $noimage = URL_IMAGES.'/noimage.png';
-		return '/files/thumb/'.$w.'/'.$h.'/'.$clsISO->parseImageURL($noimage);
+        $noimage = URL_IMAGES . '/noimage.png';
+        return '/files/thumb/' . $w . '/' . $h . '/' . $clsISO->parseImageURL($noimage);
     }
-	
-	function getMetaDescription($pvalTable,$one=null){
-		global $_LANG_ID;
-		if(!isset($one['intro'])){
-			$one=$this->getOne($pvalTable,'intro');	
-		}		
-		return html_entity_decode($one['intro']);
-	}
 
-    function getIntro($blog_id,$one=null) {
+    function getMetaDescription($pvalTable, $one = null)
+    {
         global $_LANG_ID;
-		if(!isset($one['intro'])){
-			$one = $this->getOne($blog_id,'intro');
-		}        	
+        if (!isset($one['intro'])) {
+            $one = $this->getOne($pvalTable, 'intro');
+        }
         return html_entity_decode($one['intro']);
     }
 
-    function getContent($blog_id,$one=null) {
+    function getIntro($blog_id, $one = null)
+    {
         global $_LANG_ID;
-		if(!isset($one['content'])){
-        	$one = $this->getOne($blog_id,'content');
-		}
+        if (!isset($one['intro'])) {
+            $one = $this->getOne($blog_id, 'intro');
+        }
+        return html_entity_decode($one['intro']);
+    }
+
+    function getContent($blog_id, $one = null)
+    {
+        global $_LANG_ID;
+        if (!isset($one['content'])) {
+            $one = $this->getOne($blog_id, 'content');
+        }
         return html_entity_decode($one['content']);
     }
 
-    function makeFolder($conn_id, $dirname) {
+    function makeFolder($conn_id, $dirname)
+    {
         $lst = explode('/', $dirname);
         $str = '/' . $lst[0];
         for ($i = 1; $i < count($lst); $i++) {
@@ -140,7 +165,8 @@ class Blog extends dbBasic {
         return 1;
     }
 
-    function getLCountryAround($blog_id, $type = '') {
+    function getLCountryAround($blog_id, $type = '')
+    {
         global $_LANG_ID, $dbconn;
         $clsCountry = new Country;
         $clsBlogDestination = new BlogDestination;
@@ -159,7 +185,8 @@ class Blog extends dbBasic {
         return $html;
     }
 
-    function countBlogGolobal($country_id = 0, $city_id = 0, $cat_id = 0) {
+    function countBlogGolobal($country_id = 0, $city_id = 0, $cat_id = 0)
+    {
         $where = "is_trash=0 and is_online=1";
         if (intval($country_id) > 0) {
             $where .= " and blog_id IN (SELECT blog_id FROM " . DB_PREFIX . "blog_destination WHERE country_id='$country_id')";
@@ -170,65 +197,68 @@ class Blog extends dbBasic {
         if (intval($cat_id) > 0) {
             $where .= " and (cat_id = '" . $cat_id . "' or list_cat_id like '%|" . $cat_id . "|%')";
         }
-		$res = $this->getAll($where,$this->pkey);
-		return $res?count($res):0;
+        $res = $this->getAll($where, $this->pkey);
+        return $res ? count($res) : 0;
     }
 
-    function getListTag($blog_id,$one=null) {
+    function getListTag($blog_id, $one = null)
+    {
         global $_LANG_ID;
         #
         $clsTag = new Tag;
         #
-		if(!isset($one['list_tag_id'])){
-			$list_tag_id = $this->getOneField('list_tag_id', $blog_id);
-		}else{
-			$list_tag_id = $one['list_tag_id'];
-		}
-        if($list_tag_id != ''){
-			$list_tag_id = ltrim($list_tag_id, '|');
-			$list_tag_id = rtrim($list_tag_id, '|');
-			$list_tag_id = explode('|', $list_tag_id);
-			#
-			$html = '';
-			if (count($list_tag_id) > 0) {
-				for ($i = 0; $i < count($list_tag_id); $i++) {
-					$itemTag = $clsTag->getOne($list_tag_id[$i],'title,slug');
-					if (!empty($list_tag_id[$i])) {
-						$html .= ($i == 1 ? '' : '  ') . '<li class="tag-link"><a target="_parent" href="' . $clsTag->getLinkTagBlog($list_tag_id[$i],$itemTag) . '" title="' . $clsTag->getTitle($list_tag_id[$i],$itemTag) . '">' . $clsTag->getTitle($list_tag_id[$i],$itemTag) . '</a></li>';
-					}
-				}
-				return $html;
-			}
-		}        
+        if (!isset($one['list_tag_id'])) {
+            $list_tag_id = $this->getOneField('list_tag_id', $blog_id);
+        } else {
+            $list_tag_id = $one['list_tag_id'];
+        }
+        if ($list_tag_id != '') {
+            $list_tag_id = ltrim($list_tag_id, '|');
+            $list_tag_id = rtrim($list_tag_id, '|');
+            $list_tag_id = explode('|', $list_tag_id);
+            #
+            $html = '';
+            if (count($list_tag_id) > 0) {
+                for ($i = 0; $i < count($list_tag_id); $i++) {
+                    $itemTag = $clsTag->getOne($list_tag_id[$i], 'title,slug');
+                    if (!empty($list_tag_id[$i])) {
+                        $html .= ($i == 1 ? '' : '  ') . '<li class="tag-link"><a target="_parent" href="' . $clsTag->getLinkTagBlog($list_tag_id[$i], $itemTag) . '" title="' . $clsTag->getTitle($list_tag_id[$i], $itemTag) . '">' . $clsTag->getTitle($list_tag_id[$i], $itemTag) . '</a></li>';
+                    }
+                }
+                return $html;
+            }
+        }
     }
-    function getArrayTag($blog_id,$one=null) {
+    function getArrayTag($blog_id, $one = null)
+    {
         global $_LANG_ID;
         #
         $clsTag = new Tag;
         #
-		if(!isset($one['list_tag_id'])){
-			$list_tag_id = $this->getOneField('list_tag_id', $blog_id);
-		}else{
-			$list_tag_id = $one['list_tag_id'];
-		}
-        if($list_tag_id != ''){
-			$list_tag_id = ltrim($list_tag_id, '|');
-			$list_tag_id = rtrim($list_tag_id, '|');
-			$list_tag_id = explode('|', $list_tag_id);
-			#
-			$array = [];
-			if (count($list_tag_id) > 0) {
-				for ($i = 0; $i < count($list_tag_id); $i++) {
-					if (!empty($list_tag_id[$i])) {
-						$array[] = $clsTag->getTitle($list_tag_id[$i]);
-					}
-				}
-				return $array;
-			}
-		}
+        if (!isset($one['list_tag_id'])) {
+            $list_tag_id = $this->getOneField('list_tag_id', $blog_id);
+        } else {
+            $list_tag_id = $one['list_tag_id'];
+        }
+        if ($list_tag_id != '') {
+            $list_tag_id = ltrim($list_tag_id, '|');
+            $list_tag_id = rtrim($list_tag_id, '|');
+            $list_tag_id = explode('|', $list_tag_id);
+            #
+            $array = [];
+            if (count($list_tag_id) > 0) {
+                for ($i = 0; $i < count($list_tag_id); $i++) {
+                    if (!empty($list_tag_id[$i])) {
+                        $array[] = $clsTag->getTitle($list_tag_id[$i]);
+                    }
+                }
+                return $array;
+            }
+        }
     }
 
-    function getImageFromUrl($file, $news_id) {
+    function getImageFromUrl($file, $news_id)
+    {
         #
         $slug = $this->getSlug($news_id);
         $oneNews = $this->getOne($news_id);
@@ -298,7 +328,8 @@ class Blog extends dbBasic {
         return $abs_path . $name;
     }
 
-    function checkContain($haystack, $needle) {
+    function checkContain($haystack, $needle)
+    {
         $pos = strpos($haystack, $needle);
         if ($pos === false) {
             return 0;
@@ -307,9 +338,10 @@ class Blog extends dbBasic {
         }
     }
 
-    function updateImage($blog_id) {
+    function updateImage($blog_id)
+    {
         global $_LANG_ID;
-        $one = $this->getOne($blog_id,'updateImage,content');
+        $one = $this->getOne($blog_id, 'updateImage,content');
         if ($one['updateImage'] == 1) {
             return 0;
         }
@@ -333,27 +365,28 @@ class Blog extends dbBasic {
         }
         $this->updateOne($blog_id, 'content' . "='" . addslashes($content) . "',updateImage='1'");
     }
-    function getTag($blog_id) {
+    function getTag($blog_id)
+    {
         $clsTagModule = new TagModule();
         return $clsTagModule->getTag($blog_id, 'BLOG');
     }
-    function getStripIntro($pvalTable) {
-        $one = $this->getOne($pvalTable,'intro,content');
+    function getStripIntro($pvalTable)
+    {
+        $one = $this->getOne($pvalTable, 'intro,content');
         if (!empty($one['intro']))
             return strip_tags(html_entity_decode($one['intro']));
         return strip_tags(html_entity_decode($one['content']));
     }
 
-    function doDelete($blog_id) {
-		
-		$clsBlogDestination = new BlogDestination();
-		$clsBlogDestination->deleteByCond("blog_id='$blog_id'");
-		
-		$clsBlogExtension = new BlogExtension();
-		$clsBlogExtension->deleteByCond("blog_id='$blog_id'");
+    function doDelete($blog_id)
+    {
+
+        $clsBlogDestination = new BlogDestination();
+        $clsBlogDestination->deleteByCond("blog_id='$blog_id'");
+
+        $clsBlogExtension = new BlogExtension();
+        $clsBlogExtension->deleteByCond("blog_id='$blog_id'");
         $this->deleteOne($blog_id);
         return 1;
     }
-
 }
-?>

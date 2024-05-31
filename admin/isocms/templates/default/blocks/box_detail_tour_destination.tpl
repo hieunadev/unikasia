@@ -98,11 +98,11 @@
 								</select> 
 							</div>
 							{/if}
-							<div id="slb_placetogoID_Container" class="form-group w-200px hidden mr-2">
+							{*<div id="slb_placetogoID_Container" class="form-group w-200px hidden mr-2">
 								<select id="slb_placetogoID" class="form-control slb_placetogo_Id iso-selectbox" name="placetogo_id" data-width="100%">
 									<option value="0">{$core->get_Lang('selectplacetogo')}</option>
 								</select>
-							</div>
+							</div>*}
 							<div class="form-group">
 								<button class="btn btn-50 btn-main ajQuickAddDestination" type="button">
 									{$core->get_Lang('adddestination')}

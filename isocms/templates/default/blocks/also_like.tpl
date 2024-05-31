@@ -1,7 +1,13 @@
 <section id="nah_also_like">
     <div class="alsoLike">
         <div class="alsoLike-title-parent">
-            <h2 class="alsoLike-title">{$core->get_Lang('also like')}</h2>
+            <h2 class="alsoLike-title">
+                {if $mod eq 'tour' && $act eq 'cat'}
+                {$clsConfiguration->getValue('TrvsCountryTitle')|html_entity_decode}
+                {else}
+                {$core->get_Lang('also like')}
+                {/if}
+            </h2>
         </div>
         <div class="alsoLike-slide owl-carousel" id="tour_alsoLike_owl">
             {section name=i loop=$lstCountry}

@@ -72,12 +72,15 @@ class TourCategory extends dbBasic{
 		$one=$this->getOne($pvalTable,'link_banner');
 		return html_entity_decode($one['link_banner']);
 	}
-	function getLink($pvalTable,$oneTable=null){
+	function getLink($pvalTable,$oneTable=null, $act="default"){
 		global $extLang,$_LANG_ID;
         if(!isset($oneTable['slug'])){
             $oneTable=$this->getOne($pvalTable,'slug');
         }
         $slug=$oneTable['slug'];
+        if ($act == "home"){
+            return PCMS_URL.'tour/&travel_style='.$pvalTable;
+        }
 		if($_LANG_ID=='vn')
 			return $extLang.'/loai-hinh-du-lich/'.$slug.'-c'.$pvalTable;
 		return $extLang.'/tours/'.$slug.'-c'.$pvalTable;

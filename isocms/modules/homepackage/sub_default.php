@@ -28,17 +28,18 @@ function default_default(){
     }, $lstCountryMap);
     $assign_list["countries"] = $countries;
     # Tour Cateogry
-    $clsTourCategory = new TourCategory();
+    $clsTourCat = new TourCategory(); $assign_list["clsTourCat"] = $clsTourCat;
     $cond = "1=1 and parent_id=0 and is_online=1";
     $orderBy = " order by order_no asc";
-    $LISTALL = $clsTourCategory->getAll($cond . $orderBy);
+    $LISTALL = $clsTourCat->getAll($cond . $orderBy);
     if (is_array($LISTALL) && count($LISTALL) > 0) {
         for ($i = 0; $i < count($LISTALL); $i++) {
             $lstTourCate[] = array(
                 'idx' => ($i + 1),
-                'title' => $clsTourCategory->getTitle($LISTALL[$i][$clsTourCategory->pkey]),
+                'title' => $clsTourCat->getTitle($LISTALL[$i][$clsTourCat->pkey]),
                 'intro' => $LISTALL[$i]['intro'],
-                'image' => $LISTALL[$i]['image']
+                'image' => $LISTALL[$i]['image'],
+                'tourcat_id' => $LISTALL[$i]['tourcat_id']
             );
         }
         unset($LISTALL);

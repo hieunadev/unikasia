@@ -38,7 +38,7 @@
                         <div class="owl-carousel owl-theme" id="explore_travel_styles_carousel">
                             {section name=i loop=$lstTourCate}
                                 <div class="item">
-                                    <a href="#">
+                                    <a href="{$clsTourCat->getLink($lstTourCate[i].tourcat_id,'','home')}">
                                         <div class="nah_explore_img"><img class="travel-style_img" src="{$lstTourCate[i].image}" alt=""></div>
                                         <div class="travel-style_content">
                                             <h3 class="txt-hover-home">{$lstTourCate[i].title}</h3>

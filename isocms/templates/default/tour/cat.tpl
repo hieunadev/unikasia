@@ -8,15 +8,21 @@
             <div class="trvs_goood_reason_intro">
                 <div class="header_home_box">
                     <div class="stt">
-                        <div class="square">06</div>
+                        <div class="square">0{$count_arr_why_trvs_country}</div>
                     </div>
                     <div class="intro">
-                        <h2 class="title_home_box"> good reasons to <br> TRAVELING TO VIETNAM </h2>
+                        <h2 class="title_home_box">
+                            {$clsConfiguration->getValue('TrvsWhyTitle')|html_entity_decode}
+                            <div class="title_home_box_data">
+                                {$clsTourCategory->getTitle($cat_id)} IN
+                                {$clsCountry->getTitle($country_id)}
+                            </div>
+                        </h2>
                     </div>
                 </div>
                 <div class="content_home_box">
                     <div class="description">
-                        Why take a Vietnam trip? Each of our customers asks themselves this question and asks it to <br> us. A trip to Vietnam as we discover it, from Tonkin to the Mekong Delta, is a mosaic of <br> enchanting images. <br> Vietnam is the country of many trips, and above all the country of favorites!
+                        {$clsConfiguration->getValue('TrvsWhyDescription')|html_entity_decode}
                     </div>
                 </div>
             </div>
@@ -55,12 +61,12 @@
         <div class="container">
             <div class="header_home_box">
                 <h2 class="title_home_box">
-                    <span>WHEN TO GO TO VIETNAM</span>
+                    {$clsConfiguration->getValue('TrvsWhenToGoTitle')|html_entity_decode}
+                    {$clsCountry->getTitle($country_id)}
                 </h2>
-                <p class="description text-center">
-                    Let yourself be guided by our Vietnam thematic
-                    offers.
-                </p>
+                <div class="description text-center">
+                    {$clsConfiguration->getValue('TrvsWhenToGoDescription_1')|html_entity_decode}
+                </div>
             </div>
             <div class="content_home_box">
                 <div class="tab_month">
@@ -104,15 +110,7 @@
                     </div>
                 </div>
                 <div class="tab_content">
-                    <p>
-                        Come visit Vietnam all year round, it’s good all
-                        year round. <br />
-                        From October to April: Overall, for a complete
-                        discovery of Vietnam, that is to say from north
-                        to south, this period is very <br />
-                        favorable. It combines bearable temperatures
-                        whatever the region, and very little rain.
-                    </p>
+                    {$clsConfiguration->getValue('TrvsWhenToGoDescription_2')|html_entity_decode}
                     <a href="#" title="LEARN MORE" class="view_more">View more
                         <i class="fa-solid fa-arrow-right-long"></i></a>
                 </div>
@@ -121,9 +119,11 @@
                         <div class="owl-carousel owl-theme owl_when_vn">
                             <div class="item">
                                 <div class="des_item">
-                                    <a href="#" title="Da Nang">
-                                        <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=1948&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Da Nang" width="424" height="315" loading="lazy" />
-                                    </a>
+                                    <div class="des_item_image">
+                                        <a href="#" title="Da Nang">
+                                            <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=1948&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Da Nang" width="424" height="315" loading="lazy" />
+                                        </a>
+                                    </div>
                                     <div class="info">
                                         <h3><a href="#" title="Da Nang">Da Nang</a></h3>
                                         <p class="map">
@@ -144,9 +144,11 @@
 
                             <div class="item">
                                 <div class="des_item">
-                                    <a href="#" title="Da Nang">
-                                        <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=1948&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Da Nang" width="424" height="315" loading="lazy" />
-                                    </a>
+                                    <div class="des_item_image">
+                                        <a href="#" title="Da Nang">
+                                            <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=1948&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Da Nang" width="424" height="315" loading="lazy" />
+                                        </a>
+                                    </div>
                                     <div class="info">
                                         <h3><a href="#" title="Da Nang">Da Nang</a></h3>
                                         <p class="map">
@@ -166,9 +168,11 @@
                             </div>
                             <div class="item">
                                 <div class="des_item">
-                                    <a href="#" title="Da Nang">
-                                        <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=1948&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Da Nang" width="424" height="315" loading="lazy" />
-                                    </a>
+                                    <div class="des_item_image">
+                                        <a href="#" title="Da Nang">
+                                            <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=1948&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Da Nang" width="424" height="315" loading="lazy" />
+                                        </a>
+                                    </div>
                                     <div class="info">
                                         <h3><a href="#" title="Da Nang">Da Nang</a></h3>
                                         <p class="map">
@@ -198,84 +202,110 @@
     <div class="trvs_list_blog">
         <div class="container">
             <div class="trvs_list_blog_title">
-                <h2>VIETNAM TRAVEL BLOG</h2>
+                <h2>
+                    {$clsConfiguration->getValue('TrvsBlogTitle')|html_entity_decode}
+                    {$clsCountry->getTitle($country_id)}
+                </h2>
             </div>
             <div class="trvs_list_blog_content">
                 <div class="row">
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                        {if $list_blog}
+                        {foreach from=$list_blog key=key item=item}
+                        {assign var="blog_id" value=$item.blog_id}
+                        {assign var="cat_id" value=$item.cat_id}
+
+                        {if $key eq 0}
                         <div class="box_left">
                             <div class="trvs_item_blog">
-                                <a href="#" title="Why should you come to Vietnam">
-                                    <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bmF0dXJlfGVufDB8fDB8fHww" alt="Why should you come to Vietnam" width="373" height="270">
-                                </a>
+                                <div class="trvs_item_blog_image">
+                                    <a href="{$clsBlog->getLink($blog_id)}" title="{$clsBlog->getTitle($blog_id)}">
+                                        <img src="{$clsBlog->getImage($blog_id, 373, 270)}" alt="{$clsBlog->getTitle($blog_id)}" width="373" height="270">
+                                    </a>
+                                </div>
                                 <div class="trvs_item_blog_intro">
                                     <div class="trvs_item_blog_title">
-                                        <h3>Why should you come to Vietnam</h3>
+                                        <h3><a href="{$clsBlog->getLink($blog_id)}" title="{$clsBlog->getTitle($blog_id)}">{$clsBlog->getTitle($blog_id)}</a></h3>
                                     </div>
                                     <div class="trvs_item_blog_description">
-                                        Have confidence when discovering the street food of Hanoi’s Old Quarter by traveling with a guide...
+                                        {$clsBlog->getIntro($blog_id)}
                                     </div>
                                     <div class="trvs_item_blog_info">
                                         <i class="fa-sharp fa-regular fa-clock"></i>
-                                        10 Feb, 2024
-                                        | Travel Blog
+                                        {$clsBlog->getUpdDate($blog_id)}
+                                        | {$clsBlogCategory->getTitle($cat_id)}
                                     </div>
-                                    <a href="#" class="trvs_item_blog_link" title="Why should you come to Vietnam">
+                                    <a href="{$clsBlog->getLink($blog_id)}" class="trvs_item_blog_link" title="{$clsBlog->getTitle($blog_id)}">
                                         LEARN MORE <i class="fa-sharp fa-regular fa-arrow-right"></i>
                                     </a>
                                 </div>
                             </div>
                         </div>
+                        {/if}
+                        {/foreach}
+                        {/if}
                     </div>
                     <div class="col-12 col-sm-12 col-md-8 col-lg-8">
+                        {if $list_blog}
+                        {foreach from=$list_blog key=key item=item}
+                        {assign var="blog_id" value=$item.blog_id}
+                        {assign var="cat_id" value=$item.cat_id}
+
+                        {if $key eq 1}
                         <div class="box_right box_right_top">
                             <div class="trvs_item_blog">
                                 <div class="trvs_item_blog_intro order-2 order-md-1">
                                     <div class="trvs_item_blog_title">
-                                        <a href="#" title="Why should you come to Vietnam">
-                                            <h3>Why should you come to Vietnam</h3>
-                                        </a>
+                                        <h3><a href="{$clsBlog->getLink($blog_id)}" title="{$clsBlog->getTitle($blog_id)}">{$clsBlog->getTitle($blog_id)}</a></h3>
                                     </div>
                                     <div class="trvs_item_blog_description">
-                                        Have confidence when discovering the street food of Hanoi’s Old Quarter by traveling with a guide...
+                                        {$clsBlog->getIntro($blog_id)}
                                     </div>
                                     <div class="trvs_item_blog_info">
                                         <i class="fa-sharp fa-regular fa-clock"></i>
-                                        10 Feb, 2024
-                                        | Travel Blog
+                                        {$clsBlog->getUpdDate($blog_id)}
+                                        | {$clsBlogCategory->getTitle($cat_id)}
                                     </div>
-                                    <a href="#" class="trvs_item_blog_link" title="Why should you come to Vietnam">
+                                    <a href="{$clsBlog->getLink($blog_id)}" class="trvs_item_blog_link" title="{$clsBlog->getTitle($blog_id)}">
                                         LEARN MORE <i class="fa-sharp fa-regular fa-arrow-right"></i>
                                     </a>
                                 </div>
-                                <a href="#" title="Why should you come to Vietnam" class="order-1 order-md-2">
-                                    <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bmF0dXJlfGVufDB8fDB8fHww" alt="Why should you come to Vietnam" width="373" height="270">
-                                </a>
+                                <div class="trvs_item_blog_image order-1 order-md-2">
+                                    <a href="{$clsBlog->getLink($blog_id)}" title="{$clsBlog->getTitle($blog_id)}">
+                                        <img src="{$clsBlog->getImage($blog_id, 373, 270)}" alt="{$clsBlog->getTitle($blog_id)}" width="373" height="270">
+                                    </a>
+                                </div>
                             </div>
                         </div>
+                        {elseif $key eq 2}
                         <div class="box_right box_right_bot">
                             <div class="trvs_item_blog">
-                                <a href="#" title="Why should you come to Vietnam">
-                                    <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bmF0dXJlfGVufDB8fDB8fHww" alt="Why should you come to Vietnam" width="373" height="270">
-                                </a>
+                                <div class="trvs_item_blog_image">
+                                    <a href="{$clsBlog->getLink($blog_id)}" title="{$clsBlog->getTitle($blog_id)}">
+                                        <img src="{$clsBlog->getImage($blog_id, 373, 270)}" alt="{$clsBlog->getLink($blog_id)}" width="373" height="270">
+                                    </a>
+                                </div>
                                 <div class="trvs_item_blog_intro">
                                     <div class="trvs_item_blog_title">
-                                        <h3>Why should you come to Vietnam</h3>
+                                        <h3><a href="{$clsBlog->getLink($blog_id)}" title="{$clsBlog->getTitle($blog_id)}">{$clsBlog->getTitle($blog_id)}</a></h3>
                                     </div>
                                     <div class="trvs_item_blog_description">
-                                        Have confidence when discovering the street food of Hanoi’s Old Quarter by traveling with a guide...
+                                        {$clsBlog->getIntro($blog_id)}
                                     </div>
                                     <div class="trvs_item_blog_info">
                                         <i class="fa-sharp fa-regular fa-clock"></i>
-                                        10 Feb, 2024
-                                        | Travel Blog
+                                        {$clsBlog->getUpdDate($blog_id)}
+                                        | {$clsBlogCategory->getTitle($cat_id)}
                                     </div>
-                                    <a href="#" class="trvs_item_blog_link" title="Why should you come to Vietnam">
+                                    <a href="{$clsBlog->getLink($blog_id)}" class="trvs_item_blog_link" title="{$clsBlog->getTitle($blog_id)}">
                                         LEARN MORE <i class="fa-sharp fa-regular fa-arrow-right"></i>
                                     </a>
                                 </div>
                             </div>
                         </div>
+                        {/if}
+                        {/foreach}
+                        {/if}
                     </div>
                 </div>
             </div>
@@ -284,15 +314,65 @@
     <div class="trvs_travel_file">
         <div class="container">
             <div class="trvs_travel_file_title">
-                <h2>TRAVEL FILE ABOUT VIETNAM</h2>
+                <h2>
+                    {$clsConfiguration->getValue('TrvsTravelGuideTitle')|html_entity_decode}
+                    <span>{$clsCountry->getTitle($country_id)}</span>
+                </h2>
             </div>
             <div class="trvs_travel_file_content">
                 <div class="owl-carousel owl-theme trvs_travel_file_carousel">
                     <div class="item">
                         <div class="trvs_travel_file_item">
-                            <a href="#" title="TRAVEL FILE">
-                                <img src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="TRAVEL FILE" width="405" height="352" loading="lazy" />
-                            </a>
+                            <div class="trvs_travel_file_image">
+                                <a href="#" title="TRAVEL FILE">
+                                    <img src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="TRAVEL FILE" width="405" height="352" loading="lazy" />
+                                </a>
+                            </div>
+                            <div class="trvs_travel_file_intro">
+                                <h3><a href="#" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit. ">Lorem ipsum dolor sit amet, consectetur adipiscing elit. </a></h3>
+                                <div class="description">
+                                    Pulvinar ut molestie imperdiet sed hendrerit maecenas. Amet consectetur pellentesque morbi
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="trvs_travel_file_item">
+                            <div class="trvs_travel_file_image">
+                                <a href="#" title="TRAVEL FILE">
+                                    <img src="https://images.unsplash.com/photo-1715348019723-66f8d6fb4c26?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzOXx8fGVufDB8fHx8fA%3D%3D" alt="TRAVEL FILE" width="405" height="352" loading="lazy" />
+                                </a>
+                            </div>
+                            <div class="trvs_travel_file_intro">
+                                <h3><a href="#" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit. ">Lorem ipsum dolor sit amet, consectetur adipiscing elit. </a></h3>
+                                <div class="description">
+                                    Pulvinar ut molestie imperdiet sed hendrerit maecenas. Amet consectetur pellentesque morbi
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="trvs_travel_file_item">
+                            <div class="trvs_travel_file_image">
+                                <a href="#" title="TRAVEL FILE">
+                                    <img src="https://images.unsplash.com/photo-1716847214815-973025e97173?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0fHx8ZW58MHx8fHx8" alt="TRAVEL FILE" width="405" height="352" loading="lazy" />
+                                </a>
+                            </div>
+                            <div class="trvs_travel_file_intro">
+                                <h3><a href="#" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit. ">Lorem ipsum dolor sit amet, consectetur adipiscing elit. </a></h3>
+                                <div class="description">
+                                    Pulvinar ut molestie imperdiet sed hendrerit maecenas. Amet consectetur pellentesque morbi
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="trvs_travel_file_item">
+                            <div class="trvs_travel_file_image">
+                                <a href="#" title="TRAVEL FILE">
+                                    <img src="https://images.unsplash.com/photo-1716843140994-77c602d00186?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0NHx8fGVufDB8fHx8fA%3D%3D" alt="TRAVEL FILE" width="405" height="352" loading="lazy" />
+                                </a>
+                            </div>
                             <div class="trvs_travel_file_intro">
                                 <h3><a href="#" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit. ">Lorem ipsum dolor sit amet, consectetur adipiscing elit. </a></h3>
                                 <div class="description">
@@ -315,136 +395,30 @@
                         <div class="trvs_faq_list">
                             <div class="header_trvs_faq">
                                 <h2 class="title_trvs_faq">
-                                    <span>PREPARE FOR YOUR TRIP TO VIETNAM</span>
+                                    {$clsConfiguration->getValue('TrvsFAQTitle')|html_entity_decode}
+                                    to <span>{$clsCountry->getTitle($country_id)}</span>
                                 </h2>
                             </div>
+
                             <div class="list_faq">
                                 <div class="accordion accordion-flush" id="accordionFlushExample">
+                                    {if $list_faq_country}
+                                    {foreach from=$list_faq_country key=key item=item}
+                                    {assign var="faq_id" value=$item.faq_id}
                                     <div class="accordion-item">
                                         <h2 class="accordion-header">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                                                What to see and do while
-                                                traveling in Vietnam?
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse{$key}" aria-expanded="false" aria-controls="flush-collapse{$key}">
+                                                {$clsFAQ->getTitle($faq_id)}
                                             </button>
                                         </h2>
-                                        <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                                        <div id="flush-collapse{$key}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
                                             <div class="accordion-body">
-                                                Placeholder content for
-                                                this accordion, which is
-                                                intended to demonstrate
-                                                the
-                                                <code>.accordion-flush</code>
-                                                class. This is the first
-                                                item's accordion body.
+                                                {$clsFAQ->getContent($faq_id)}
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                                                Getting around Vietnam
-                                            </button>
-                                        </h2>
-                                        <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                                            <div class="accordion-body">
-                                                Placeholder content for
-                                                this accordion, which is
-                                                intended to demonstrate
-                                                the
-                                                <code>.accordion-flush</code>
-                                                class. This is the
-                                                second item's accordion
-                                                body. Let's imagine this
-                                                being filled with some
-                                                actual content.
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
-                                                Accommodations on a trip
-                                                to Vietnam
-                                            </button>
-                                        </h2>
-                                        <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                                            <div class="accordion-body">
-                                                Placeholder content for
-                                                this accordion, which is
-                                                intended to demonstrate
-                                                the
-                                                <code>.accordion-flush</code>
-                                                class. This is the third
-                                                item's accordion body.
-                                                Nothing more exciting
-                                                happening here in terms
-                                                of content, but just
-                                                filling up the space to
-                                                make it look, at least
-                                                at first glance, a bit
-                                                more representative of
-                                                how this would look in a
-                                                real-world application.
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThreee" aria-expanded="false" aria-controls="flush-collapseThreee">
-                                                Experience “ECOTOURISM”,
-                                                the popular formula with
-                                                original experiences
-                                            </button>
-                                        </h2>
-                                        <div id="flush-collapseThreee" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                                            <div class="accordion-body">
-                                                Placeholder content for
-                                                this accordion, which is
-                                                intended to demonstrate
-                                                the
-                                                <code>.accordion-flush</code>
-                                                class. This is the third
-                                                item's accordion body.
-                                                Nothing more exciting
-                                                happening here in terms
-                                                of content, but just
-                                                filling up the space to
-                                                make it look, at least
-                                                at first glance, a bit
-                                                more representative of
-                                                how this would look in a
-                                                real-world application.
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThreer" aria-expanded="false" aria-controls="flush-collapseThreer">
-                                                Travel diary for a trip
-                                                to Vietnam
-                                            </button>
-                                        </h2>
-                                        <div id="flush-collapseThreer" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                                            <div class="accordion-body">
-                                                Placeholder content for
-                                                this accordion, which is
-                                                intended to demonstrate
-                                                the
-                                                <code>.accordion-flush</code>
-                                                class. This is the third
-                                                item's accordion body.
-                                                Nothing more exciting
-                                                happening here in terms
-                                                of content, but just
-                                                filling up the space to
-                                                make it look, at least
-                                                at first glance, a bit
-                                                more representative of
-                                                how this would look in a
-                                                real-world application.
-                                            </div>
-                                        </div>
-                                    </div>
+                                    {/foreach}
+                                    {/if}
                                 </div>
                             </div>
                         </div>
@@ -468,7 +442,7 @@
         var $owl = $('.owl_when_vn');
         $owl.owlCarousel({
             lazyLoad: true,
-            loop: true,
+            loop: false,
             margin: 23,
             nav: true,
             navText: ["<i class='fa-solid fa-angle-left'></i>", "<i class='fa-solid fa-angle-right'></i>"],
@@ -497,7 +471,7 @@
         var $owl = $('.trvs_travel_file_carousel');
         $owl.owlCarousel({
             lazyLoad: true,
-            loop: true,
+            loop: false,
             margin: 32,
             nav: false,
             navText: ["<i class='fa-solid fa-angle-left'></i>", "<i class='fa-solid fa-angle-right'></i>"],
@@ -521,5 +495,19 @@
             }
         });
     }
+</script>
+{/literal}
+
+{literal}
+<script>
+    const today = new Date();
+    const monthIndex = today.getMonth(); // Lấy chỉ số tháng (0 - 11)
+    const months = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
+    const currentMonth = months[monthIndex]; // Lấy tên tháng dựa vào chỉ số
+
+    console.log(currentMonth); // Ví dụ: 'May'
 </script>
 {/literal}

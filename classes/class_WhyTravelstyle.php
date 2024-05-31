@@ -26,16 +26,19 @@ class WhyTravelstyle extends dbBasic
         $url_image = $one['image'];
         return $clsISO->tripslashUrl($url_image);
     }
-    function getImage($why_trvs_id, $oneTable = null)
+    function getImage($pvalTable, $w, $h, $oneTable = null)
     {
         global $clsISO;
-
+        #
         if (!isset($oneTable['image'])) {
-            $oneTable = $this->getOne($why_trvs_id, 'image');
+            $oneTable   =   $this->getOne($pvalTable, 'image');
         }
-        $url_image = $oneTable['image'];
-        return $clsISO->tripslashUrl($url_image);
-        //return $clsISO->tripslashUrlWebp($url_image);
+        if ($oneTable['image'] != '') {
+            $image  =   $oneTable['image'];
+            return $clsISO->tripslashImage($image, $w, $h);
+        }
+        $noimage    =   URL_IMAGES . '/noimage.png';
+        return '/files/thumb/' . $w . '/' . $h . '/' . $clsISO->parseImageURL($noimage);
     }
     function getMetaDescription($pvalTable)
     {

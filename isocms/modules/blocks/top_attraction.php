@@ -10,7 +10,9 @@ $smarty->assign("clsCityStore", $clsCityStore);
 $classTable = "City";
 $clsClassTable = new $classTable;
 $smarty->assign("clsClassTable", $clsClassTable);
-
+if (!empty($_GET['slug_country'])) {
+    $country_id =  $clsCountry->getBySlug($_GET['slug_country']);
+}
 $sql_select = "is_trash = 0 and type = 'TOP' and country_id = $country_id"; // fix cứng tạm
 $orderBy_selected = " order by order_no ASC  limit 6";
 $listSelected =  $clsCityStore->getAll( $sql_select.$orderBy_selected);

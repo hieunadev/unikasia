@@ -83,6 +83,52 @@
 								{/literal}
 							</div>
 							{/if}
+						
+                            <div class="form-group inpt_tour">
+
+                                <label class="col-form-label">{$core->get_Lang('Tag')} <span class="required_red">*</span>
+
+                                    {assign var= tag_tour value='tag_tour'}
+
+                                    {if $CHECKHELP eq 1}
+
+                                    <button data-key="{$tag_tour}" data-label="{$core->get_Lang('Tag')}" type="button" title="Thêm mô tả" onclick="open_texthelp(this, event)" class="btn btn-xs btn-default"><i class="fa fa-plus-circle"></i></button>
+
+                                    {/if}
+
+                                </label>
+
+                                <p class="help-block"></p>
+
+                                <div class="admin-toolbar-action">
+
+                                    <a href="javascript:void(0)" class="btn btn-default mr-2 addTag" tour_id="{$pvalTable}" title="Thêm">{$clsISO->makeIcon('plus', $core->get_Lang('Add'))}</a>
+
+                                </div>
+
+                                <div id="slb_ContainerTourtag">
+
+                                    <div id="slb_ContainerTourTag" onClick="loadHelp(this)">
+
+                                        <select name="list_tag_id[]" id="tag_id" class="full-width chosen-select required" multiple="multiple">
+
+                                            {assign var = selected value = $oneItem.list_tag_id}
+
+                                            {$clsTag->makeSelectboxOption($selected)}
+
+                                            {$selected}
+
+                                        </select>
+
+                                        <div class="text_help" hidden="">{$clsConfiguration->getValue($tag_tour)|html_entity_decode}</div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+						
+						
 							{if $clsConfiguration->getValue('SiteHasAuthor_Blogs')}
                             <div class="inpt_tour">
                                 <label for="title">{$core->get_Lang('Author')}

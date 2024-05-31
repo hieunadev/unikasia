@@ -340,12 +340,11 @@ if (isset($_POST['submit']) && $_POST['submit'] == 'Update') {
 			$set .= ",imagehome='" . addslashes($imagehome) . "'";
 		}
 		$pUrl = '';
-		if ($clsConfiguration->getValue('SiteHasCat_Blogs')) {
 			$cat_id      = $_POST['iso-cat_id'];
 			$list_cat_id = $clsBlogCategory->getListParent($cat_id);
 			$set .= ",list_cat_id='" . addslashes($list_cat_id) . "'";
 			$pUrl .= '&blogcat_id=' . $cat_id;
-		}
+		var_dump($_POST);die();
 
 		$tagPost = $_POST['list_tag_id'];
 			if (!empty($tagPost) && $tagPost != '0') {

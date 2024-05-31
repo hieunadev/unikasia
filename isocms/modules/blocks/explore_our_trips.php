@@ -7,8 +7,26 @@ $clsTour            =   new Tour();
 $smarty->assign('clsTour', $clsTour);
 $clsTourCategory    =   new TourCategory();
 $smarty->assign('clsTourCategory', $clsTourCategory);
-$clsTourDestination = new TourDestination();
+$clsTourDestination =   new TourDestination();
 $smarty->assign('clsTourDestination', $clsTourDestination);
+$clsConfiguration   =   new Configuration();
+$smarty->assign('clsConfiguration', $clsConfiguration);
+$clsCountry         =   new Country();
+$smarty->assign('clsCountry', $clsCountry);
+#
+$show   =   isset($_GET['show']) ? $_GET['show'] : '';
+$assign_list['show'] = $show;
+#
+// Slug của danh mục trvs từ quốc gia
+$slug   =   isset($_GET['slug']) ? $_GET['slug'] : '';
+// ID của danh mục trvs từ quốc gia
+$cat_id =   isset($_GET['cat_id']) ? $_GET['cat_id'] : '';
+$smarty->assign('cat_id', $cat_id);
+#
+    $slug_country   =    $_GET['slug_country'];
+    $smarty->assign('slug_country', $slug_country);
+    $country_id     =    $clsCountry->getBySlug($slug_country);
+    $smarty->assign('country_id', $country_id);
 
 #
 if ($mod === 'destination' || $mod === 'tour') {
@@ -39,7 +57,11 @@ if ($mod === 'tour') {
     $listTourExplore    =   $clsTour->getAll($cond . $order_by . $limit, $clsTour->pkey . ", tour_id");
     $smarty->assign('listTourExplore', $listTourExplore);
     /** --- End of Code show danh sách tour theo trvs by country --- **/
-} else {
-    $listTourExplore    =   $clsTourStore->getAll("is_trash=0 and _type = 'TOPTOUR' order by order_no asc $limit");
+} elseif($mod === 'destination') {
+    $listTourExplore    =   $clsTour->getAll("is_trash=0 and is_online=1 and tour_id IN (select tour_id from default_tour_destination where country_id = $country_id)");
+    $smarty->assign('listTourExplore', $listTourExplore);
+}
+else {
+    $listTourExplore    =   $clsTourStore->getAll("is_trash=0 and _type = 'TOPTOUR'  order by order_no asc $limit");
     $smarty->assign('listTourExplore', $listTourExplore);
 }

@@ -29,9 +29,14 @@ body {
     display: flex;
 }
 .trvs_goood_reason .trvs_goood_reason_intro .title_home_box {
-    display: flex;
     margin-bottom: 20px;
     font-weight: 600;
+}
+.trvs_goood_reason
+    .trvs_goood_reason_intro
+    .title_home_box
+    .title_home_box_data {
+    text-transform: uppercase;
 }
 .trvs_goood_reason .trvs_goood_reason_intro .stt {
     width: 106px;
@@ -60,9 +65,11 @@ body {
     padding-left: 198px;
 }
 .trvs_goood_reason .trvs_goood_reason_intro .content_home_box .description {
-    display: flex;
     gap: 8px;
     margin-bottom: 32px;
+}
+.trvs_goood_reason .trvs_goood_reason_intro .content_home_box .description p {
+    margin-bottom: unset;
 }
 .modal_xl {
     width: 100%;
@@ -85,6 +92,7 @@ body {
 }
 .trvs_goood_reason_item img {
     border-radius: 8px;
+    object-fit: cover;
 }
 .trvs_goood_reason_item_intro {
     position: absolute;
@@ -135,7 +143,7 @@ body {
     position: relative;
     z-index: 0;
 }
-.trvs_when_vn .title_home_box span {
+/* .trvs_when_vn .title_home_box span {
     display: inline-block;
     position: relative;
 }
@@ -149,7 +157,7 @@ body {
     bottom: 15px;
     left: 0;
     z-index: -1;
-}
+} */
 .trvs_when_vn .header_home_box {
     margin-bottom: 24px;
     margin-top: 0;
@@ -163,6 +171,30 @@ body {
     font-style: normal;
     font-weight: 600;
     line-height: 52px;
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    text-transform: uppercase;
+}
+.trvs_when_vn .title_home_box p,
+.trvs_when_vn .header_home_box .description p,
+.trvs_when_vn .tab_content p {
+    margin-bottom: unset !important;
+}
+.trvs_when_vn .title_home_box p span {
+    text-decoration: none !important;
+    position: relative;
+    z-index: 0;
+}
+.trvs_when_vn .title_home_box p span::after {
+    content: "";
+    position: absolute;
+    background-color: #ffa718;
+    z-index: -1;
+    height: 8px;
+    width: 100%;
+    left: 0;
+    bottom: 8px;
 }
 .trvs_when_vn .header_home_box .description {
     color: var(--Neutral-3, #959aa4);
@@ -208,7 +240,7 @@ body {
     text-align: center;
 }
 .trvs_when_vn .tab_content p {
-    color: var(--grey_color);
+    color: #434b5c;
     text-align: center;
 
     font-family: "SF Pro Display";
@@ -217,7 +249,7 @@ body {
     font-weight: 500;
     line-height: 28px;
 
-    margin-bottom: 24px !important;
+    /* margin-bottom: 24px !important; */
 }
 .trvs_when_vn .tab_content .view_more {
     color: var(--Primary, #ffa718);
@@ -232,6 +264,7 @@ body {
     text-align: center;
     align-items: center;
     justify-content: center;
+    margin-top: 24px;
 }
 .trvs_when_vn .tab_content .view_more .fa-arrow-right-long {
     margin-left: 5px;
@@ -255,12 +288,21 @@ body {
     border: 1px solid var(--Neutral-5, #f0f0f0);
     background: var(--Neutral-6, #fff);
     margin: 0 15px 15px;
+    transition: all 0.3s ease-in-out;
 }
 .trvs_when_vn .tab_destination .des_item:hover {
     box-shadow: 0px 12px 24px 0px rgba(255, 167, 24, 0.36);
 }
+.trvs_when_vn .tab_destination .des_item .des_item_image {
+    border-radius: 8px;
+    overflow: hidden;
+}
+.trvs_when_vn .tab_destination .des_item .des_item_image:hover img {
+    scale: 1.2;
+}
 .trvs_when_vn .tab_destination .des_item img {
     border-radius: 8px;
+    transition: all 0.3s ease-in-out;
 }
 .trvs_when_vn .tab_destination .des_item h3 a {
     color: var(--Neutral-1, #111d37);
@@ -269,6 +311,10 @@ body {
     font-style: normal;
     font-weight: 600;
     line-height: 36px;
+    transition: all 0.3s ease-in-out;
+}
+.trvs_when_vn .tab_destination .des_item h3 a:hover {
+    color: #ffa718;
 }
 .trvs_when_vn .tab_destination .des_item .map {
     color: var(--Neutral-2, #434b5c);
@@ -353,13 +399,22 @@ body {
     border: 2px solid rgba(211, 220, 225, 0.3);
     background: #fff9f1;
 }
+.trvs_item_blog_image {
+    border-radius: 8px;
+    overflow: hidden;
+}
+.trvs_item_blog_image:hover img {
+    scale: 1.2;
+}
 .trvs_item_blog img {
     border-radius: 8px;
+    transition: all 0.3s ease-in-out;
 }
 .trvs_list_blog {
     padding-top: 80px;
 }
-.trvs_list_blog_title h2 {
+.trvs_list_blog_title h2,
+.trvs_travel_file_title h2 {
     color: var(--Neutral-1, #111d37);
     font-family: "SF Pro Display";
     font-size: 32px;
@@ -368,6 +423,40 @@ body {
     line-height: 52px;
     margin-bottom: 60px;
     text-align: center;
+    display: flex;
+    gap: 5px;
+    text-transform: uppercase;
+    justify-content: center;
+}
+.trvs_list_blog_title h2 p,
+.trvs_travel_file_title h2 p {
+    margin-bottom: unset;
+}
+.trvs_list_blog_title h2 p span,
+.trvs_travel_file_title h2 span {
+    text-decoration: none !important;
+    position: relative;
+    z-index: 0;
+}
+.trvs_list_blog_title h2 p span::after {
+    content: "";
+    position: absolute;
+    background-color: #ffa718;
+    z-index: -1;
+    height: 8px;
+    width: 100%;
+    left: 0;
+    bottom: 8px;
+}
+.trvs_travel_file_title h2 span::after {
+    content: "";
+    position: absolute;
+    background-color: #ffa718;
+    z-index: -1;
+    height: 8px;
+    width: 100%;
+    left: 0;
+    bottom: 14px;
 }
 .trvs_list_blog_content {
     padding-bottom: 80px;
@@ -377,13 +466,23 @@ body {
     margin-top: 24px;
 }
 .trvs_list_blog .trvs_item_blog_title h3 {
-    color: var(--Neutral-1, #111d37);
     font-family: "SF Pro Display";
     font-size: 24px;
     font-style: normal;
     font-weight: 600;
     line-height: 36px;
-    max-width: 333px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    height: 72px;
+}
+.trvs_list_blog .trvs_item_blog_title h3:hover a {
+    color: #ffa718;
+}
+.trvs_list_blog .trvs_item_blog_title h3 a {
+    color: var(--Neutral-1, #111d37);
+    transition: all 0.3s ease-in-out;
 }
 .trvs_list_blog .trvs_item_blog_description {
     color: var(--Neutral-2, #434b5c);
@@ -394,6 +493,10 @@ body {
     line-height: 24px;
     margin-top: 16px;
     margin-bottom: 24px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 .trvs_list_blog .trvs_item_blog_info {
     display: flex;
@@ -436,14 +539,14 @@ body {
 .trvs_list_blog .box_right .trvs_item_blog_description {
     margin-bottom: 16px;
 }
-.trvs_list_blog .box_right_top a {
+.trvs_list_blog .box_right_top .trvs_item_blog_image {
     margin-left: auto;
 }
 .trvs_list_blog .box_right_bot .trvs_item_blog_intro {
     margin-left: 24px;
 }
 .trvs_list_blog .box_right_bot {
-    margin-top: 32px;
+    margin-top: 38px;
 }
 .trvs_travel_file {
     padding: 80px;
@@ -462,8 +565,16 @@ body {
     position: relative;
     padding-bottom: 64px;
 }
+.trvs_travel_file_image:hover img {
+    scale: 1.2;
+}
+.trvs_travel_file_image {
+    border-radius: 8px;
+    overflow: hidden;
+}
 .trvs_travel_file_item img {
     border-radius: 8px;
+    transition: all 0.3s ease-in-out;
 }
 .trvs_travel_file_intro {
     position: absolute;
@@ -484,9 +595,18 @@ body {
     font-style: normal;
     font-weight: 600;
     line-height: 24px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    height: 48px;
 }
 .trvs_travel_file_intro h3 a {
     color: var(--Neutral-1, #111d37);
+    transition: all 0.3s ease-in-out;
+}
+.trvs_travel_file_intro h3 a:hover {
+    color: #ffa718;
 }
 .trvs_travel_file_intro .description {
     color: var(--Neutral-2, #434b5c);
@@ -495,11 +615,15 @@ body {
     font-style: normal;
     font-weight: 400;
     line-height: 20px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 .trvs_faq {
     padding-bottom: 80px;
 }
-.trvs_faq .title_trvs_faq span {
+.trvs_faq .title_trvs_faq {
     display: inline-block;
     position: relative;
     color: var(--Neutral-1, #111d37);
@@ -508,17 +632,24 @@ body {
     font-style: normal;
     font-weight: 600;
     line-height: 52px;
+    text-transform: uppercase;
+}
+.trvs_faq .title_trvs_faq p {
+    margin-bottom: unset;
+}
+.trvs_faq .title_trvs_faq span {
+    position: relative;
+    z-index: 0;
 }
 .trvs_faq .title_trvs_faq span::after {
     content: "";
-    display: block;
-    width: 145px;
-    height: 6px;
-    background-color: var(--orange_color);
     position: absolute;
-    bottom: 15px;
-    right: 203px;
+    background-color: #ffa718;
     z-index: -1;
+    height: 8px;
+    width: 100%;
+    left: 0;
+    bottom: 8px;
 }
 .trvs_faq .content_trvs_faq {
     border-bottom: 1px solid #eaeaea;
@@ -555,7 +686,7 @@ body {
     float: right;
 }
 .trvs_faq_img img {
-    border-radius: 40px 40px 8px 8px;
+    border-radius: 8px;
 }
 .content_trvs_faq {
     padding-bottom: 80px;
@@ -591,6 +722,55 @@ body {
 .trvs_travel_file_content .owl-stage {
     display: flex;
     justify-content: center;
+}
+#nah_also_like .alsoLike-title p {
+    margin-bottom: unset;
+}
+.tour_cat_body #nah_also_like .alsoLike-title:nth-last-child(-n + 2)::after {
+    position: unset;
+}
+.tour_cat_body .alsoLike-title span {
+    text-decoration: none !important;
+    position: relative;
+    z-index: 0;
+}
+.tour_cat_body .alsoLike-title span::after {
+    content: "";
+    position: absolute;
+    background-color: #ffa718;
+    z-index: -1;
+    height: 8px;
+    width: 100%;
+    left: 0;
+    bottom: 8px;
+}
+.tour_cat_body .exploretrip {
+    padding-top: 0;
+}
+
+.tour_cat_body .exploretrip h2.txtourtrip {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+}
+
+.tour_cat_body .exploretrip h2.txtourtrip p {
+    margin-bottom: unset;
+}
+
+.tour_cat_body .exploretrip .txtexper p {
+    margin-bottom: unset;
+}
+.white-box h3 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.trvs_why_description {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 @media screen and (max-width: 1170px) {
 }

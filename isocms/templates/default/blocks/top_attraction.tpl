@@ -18,7 +18,7 @@
                                 <div class="col-12 col-sm-12 col-md-7 col-lg-7">
                                     <div class="content_holiday">
                                         <h3 class="title_hodiday pb-0">
-                                            <a href="{$clsClassTable->getLink($listSelected[i].city_id)}" title="{$clsClassTable->getTitle($listSelected[i].city_id)}">
+                                            <a class="txt-hover-home" href="{$clsClassTable->getLink($listSelected[i].city_id)}" title="{$clsClassTable->getTitle($listSelected[i].city_id)}">
                                                 {$clsClassTable->getTitle($listSelected[i].city_id)} Holidays
                                             </a>
                                         </h3>

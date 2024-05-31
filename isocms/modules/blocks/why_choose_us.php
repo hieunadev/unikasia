@@ -7,6 +7,7 @@ $clsPartner = new Partner();
 
 switch ($mod) {
     case "homepackage":
+    case "tour":
         $type = "HOME";
         break;
     case "destination":
@@ -18,7 +19,6 @@ switch ($mod) {
 
 $listWhy = $clsWhy->getAll("is_trash = 0 and is_online = 1 and type = '$type' order by order_no ASC");
 $smarty->assign('listWhy', $listWhy);
-//$smarty->assign('listPartner', $listPartner);
 
 if($clsISO->getCheckActiveModulePackage($package_id,'partner','default','default')){
     $clsPartner = new Partner();$smarty->assign('clsPartner',$clsPartner);

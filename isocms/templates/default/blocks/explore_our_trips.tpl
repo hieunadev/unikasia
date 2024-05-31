@@ -1,10 +1,23 @@
 <section class="exploretrip">
     <div class="container">
-        <h2 class="txtourtrip txt_underline">{$clsConfiguration->getValue('TitleExploreTrips_'|cat:$_LANG_ID)|html_entity_decode}</h2>
-        <div class="txtexper">{$clsConfiguration->getValue('IntroExploreTrips_'|cat:$_LANG_ID)|html_entity_decode}</div>
+        <h2 class="txtourtrip txt_underline">
+            {if $mod eq 'tour' && $act eq 'cat'}
+            {$clsConfiguration->getValue('TrvsTourTitle')|html_entity_decode}
+            {$clsCountry->getTitle($country_id)}
+            {else}
+            {$clsConfiguration->getValue('TitleExploreTrips_'|cat:$_LANG_ID)|html_entity_decode}
+            {/if}
+        </h2>
+        <div class="txtexper">
+            {if $mod eq 'tour' && $act eq 'cat'}
+            {$clsConfiguration->getValue('TrvsTourDescription')|html_entity_decode}
+            {else}
+            {$clsConfiguration->getValue('IntroExploreTrips_'|cat:$_LANG_ID)|html_entity_decode}
+            {/if}
+        </div>
         <div class="row justify-content-center">
             {section name=i loop=$listTourExplore}
-                <div class="col-xl-4 col-lg-5 col-md-6 col-sm-12">
+            <div class="col-xl-4 col-lg-5 col-md-6 col-sm-12">
                 <div class="card img_sizecard">
                     <div class="card-img-wrapper">
                         <img src="{$clsTour->getImage($listTourExplore[i].tour_id, '405','350')}" width="405" height="350" class="card-img-top" alt="{$clsTour->getTitle($listTourExplore[i].tour_id)}">
@@ -45,7 +58,7 @@
                                     <span class="txt_unit">US</span>
                                     <span class="numbprice">${$clsTour->getTripPriceNewPro2020($listTourExplore[i].tour_id,$smarty.now,0,'value')}</span>
                                     {else}
-                                        <span class="numbprice">Contact</span>
+                                    <span class="numbprice">Contact</span>
                                     {/if}
                                 </div>
                             </div>
@@ -54,9 +67,9 @@
                 </div>
             </div>
             {/section}
-
             <div class="btnviewmore text-center">
-                <a href="/list-tour" class="btn btn-exploremore btn-hover-home">Explore More <i class="fa-solid fa-right-long" style="color: #ffffff; margin-left: 8px;"></i>
+                <a href="{$clsTour->getLink2($slug_country)}" class="btn btn-exploremore btn-hover-home" title="Explore More">
+                    Explore More <i class="fa-solid fa-right-long" style="color: #ffffff; margin-left: 8px;"></i>
                 </a>
             </div>
         </div>

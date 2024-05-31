@@ -19,7 +19,7 @@
                                 {/if}
                             </label>
                             <div class="fieldarea">
-                                <select class="slb full glSlBox" name="iso-country_id" id="slb_Country">
+                                <select class="slb full glSlBox required" name="iso-country_id" id="slb_Country">
                                     {$clsCountry->makeSelectboxOption($oneItem.country_id)}
                                 </select>
                                 <div class="text_help" hidden="">{$clsConfiguration->getValue($destination_category_country)|html_entity_decode}</div>
@@ -84,12 +84,12 @@
                             </label>
                             <textarea style="width:100%" table_id="{$pvalTable}" name="iso-banner_description" class="textarea_intro_editor" data-column="iso-banner_description" id="textarea_intro_editor_banner_description{$now}" cols="255" rows="2">{$oneItem.banner_description}</textarea>
                         </div>
-                        <div class="inpt_tour">
+                        <!-- <div class="inpt_tour">
                             <label for="banner_link">
                                 {$core->get_Lang('Banner link')}
                             </label>
                             <input class="input_text_form" data-table_id="{$pvalTable}" name="banner_link" value="{$oneItem.banner_link}" maxlength="255" type="text" />
-                        </div>
+                        </div> -->
                         <div class="inpt_tour">
                             <label class="col-form-label" for="banner_image">
                                 {$core->get_Lang('Banner Image')} ({$core->get_Lang('Standard image size')}: 1924x792)

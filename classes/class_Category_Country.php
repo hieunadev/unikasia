@@ -215,6 +215,26 @@ class Category_Country extends dbBasic
 			}
 		}
 	}
+	function getLink2($pvalTable)
+	{
+		global $_LANG_ID, $clsISO;
+		#
+		$clsCountry			= 	new Country();
+		$clsTourCategory 	= 	new TourCategory();
+		#
+		$oneTable 		= 	$this->getOne($pvalTable, 'country_id,cat_id');
+		#
+		$country_id 	= 	$oneTable['country_id'];
+		$country_slug	=	$clsCountry->getSlug($country_id);
+		#
+		$cat_id 		= 	$oneTable['cat_id'];
+		$cat_slug		=	$clsTourCategory->getSlug($cat_id);
+		#
+		if (!empty($country_slug) && !empty($cat_slug)) {
+			return PCMS_URL . $_LANG_ID . '/tours/' . $cat_slug . '-c' . $cat_id . '/' . $country_slug;
+		}
+		return PCMS_URL;
+	}
 	function getNAV($category_country_id = 0)
 	{
 		return '';

@@ -1,9 +1,20 @@
 <div class="des_list_travel_style">
     <div class="container">
         <div class="des_travel_style_title">
-            <h2>{$clsConfiguration->getOutTeam('TravelStyleTitle')}</h2>
+            <h2>
+                {if $mod eq 'tour' && $act eq 'cat'}
+                {$clsCountry->getTitle($country_id)}
+                {$clsConfiguration->getValue('TrvsTravelCountryTitle')|html_entity_decode}
+                {else}
+                {$clsConfiguration->getOutTeam('TravelStyleTitle')}
+                {/if}
+            </h2>
             <div class="des_travel_style_description">
+                {if $mod eq 'tour' && $act eq 'cat'}
+                {$clsConfiguration->getValue('TrvsTravelCountryDescription')|html_entity_decode}
+                {else}
                 {$clsConfiguration->getOutTeam('TravelStyleDescription')}
+                {/if}
             </div>
         </div>
         <div class="des_travel_style_content">

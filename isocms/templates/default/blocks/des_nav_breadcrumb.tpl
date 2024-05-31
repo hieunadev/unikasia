@@ -6,7 +6,7 @@
                 <a href="/" title="{$core->get_Lang('Home')}">{$core->get_Lang('Home')}</a>
             </li>
             <li class="breadcrumb-item des_breadcrumb_link">
-                <a href="javascript:void(0);">{$core->get_Lang('Destinations')}</a>
+                <a href="javascript:void(0);" class="cancel_link">{$core->get_Lang('Destinations')}</a>
             </li>
             {if $mod eq 'destination' && $act eq 'place'}
             <li class="breadcrumb-item active des_breadcrumb_active" aria-current="page">
@@ -17,7 +17,7 @@
                 <a href="{$clsCountry->getLink($country_id)}" title="{$core->get_Lang($clsCountry->getTitle($country_id))}">{$core->get_Lang($clsCountry->getTitle($country_id))}</a>
             </li>
             <li class="breadcrumb-item des_breadcrumb_link">
-                <a href="{$clsCountry->getLink($country_id)}" title="{$core->get_Lang($clsCountry->getTitle($country_id))}">{$core->get_Lang($clsCountry->getTitle($country_id))} tour</a>
+                <a href="javascript:void(0);" class="cancel_link">{$core->get_Lang($clsCountry->getTitle($country_id))} tour</a>
             </li>
             <li class="breadcrumb-item active des_breadcrumb_active" aria-current="page">
                 {$core->get_Lang($clsTourCategory->getTitle($cat_id))} in {$core->get_Lang($clsCountry->getTitle($country_id))}

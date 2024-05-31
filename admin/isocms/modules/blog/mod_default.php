@@ -330,6 +330,7 @@ function default_ajSaveMainStep(){
 	$currentstep = Input::post('currentstep');
 
 	if($currentstep=='generalinformation'){
+		var_dump($_POST);die;
 		$title = Input::post('title');	
 		$tagPost = Input::post('list_tag_id');	
 		if ($tagPost != '') {

@@ -186,6 +186,8 @@
 
                 <div class="list_search_filter">
                     <form action="" method="POST" id="countryForm">
+						 <input type="hidden" name="action" value="search">
+
                         <div class="search-item d-none d-sm-flex mb-3">
                             <button class="search-item-icon" type="submit">
                                 <i class="fa-regular fa-magnifying-glass"></i>
@@ -315,7 +317,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Hàm cập nhật trạng thái của nút và checkbox
     function updateViewMore() {
         const visibleCheckboxes = Array.from(cityCheckboxes).filter(checkbox => !checkbox.classList.contains('disabled-checkbox')); // Chỉ đếm những checkbox active
 
@@ -329,7 +330,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Xử lý sự kiện click cho nút "View more/less"
     viewMoreLink.addEventListener("click", () => {
         isExpanded = !isExpanded;
         cityCheckboxes.forEach((checkbox, index) => {
@@ -353,7 +353,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 addSelectedFilter(checkbox.parentElement.textContent.trim(), 'city');
             }
         });
-        updateViewMore(); // Cập nhật lại giao diện sau khi thay đổi checkbox
+        updateViewMore();
     }
 
 
@@ -377,20 +377,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
         function removeFilter(filterItem) {
             const type = filterItem.dataset.type;
-            const text = filterItem.textContent.slice(0, -1).trim(); // Loại bỏ dấu X
+            const text = filterItem.textContent.slice(0, -1).trim();
 
             if (type === 'country') {
                 countryRadios.forEach(radio => {
                     if (radio.parentElement.textContent.trim() === text) {
                         radio.checked = false;
-                        radio.dispatchEvent(new Event('change')); // Kích hoạt sự kiện change
+                        radio.dispatchEvent(new Event('change'));
                     }
                 });
             } else if (type === 'city') {
                 cityCheckboxes.forEach(checkbox => {
                     if (checkbox.parentElement.textContent.trim() === text) {
                         checkbox.checked = false;
-                        checkbox.dispatchEvent(new Event('change')); // Kích hoạt sự kiện change
+                        checkbox.dispatchEvent(new Event('change')); 
                     }
                 });
             }

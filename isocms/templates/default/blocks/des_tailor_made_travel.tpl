@@ -13,7 +13,7 @@
                         <div class="collapse navbar-collapse" id="navbarNavDropdown">
                             <ul class="navbar-nav des_tailor_menu">
                                 <li class="nav-item">
-                                    <a class="nav-link" data-link="des_tailor_detail_destination_place" href="#" title="OVERVIEW">OVERVIEW</a>
+                                    <a class="nav-link" data-link="des_tailor_detail_destination_place" href="{$clsCountry->getLink($country_id)}" title="OVERVIEW">OVERVIEW</a>
                                 </li>
                                 <li class="nav-item dropdown des_tailor_dropdown">
                                     <a class="nav-link dropdown-toggle" data-link="des_tailor_detail_tour_cat" href="#" id="navbarDropdownMenuLink1" role="button" data-bs-toggle="dropdown" aria-expanded="false" title="{$clsCountry->getTitle($country_id)} TOURS">
@@ -22,7 +22,7 @@
                                     <ul class="dropdown-menu des_tailor_dropdown_menu" aria-labelledby="navbarDropdownMenuLink1">
                                         {if $arr_trvs_country}
                                         {foreach from=$arr_trvs_country key=key item=item}
-                                        <li><a class="dropdown-item" href="{$clsTourCategory->getLink($item.cat_id)}" title="{$clsTourCategory->getTitle($tourcat_id)}">{$clsTourCategory->getTitle($item.cat_id)}</a></li>
+                                        <li><a class="dropdown-item" href="{$clsCategory_Country->getLink2($item.category_country_id)}" title="{$clsTourCategory->getTitle($item.cat_id)}">{$clsTourCategory->getTitle($item.cat_id)}</a></li>
                                         {/foreach}
                                         {/if}
                                     </ul>
@@ -796,17 +796,17 @@
         // Show data .nav-link tương ứng khi load trang
         $('.hnv_hide').hide();
         $('.des_tailor_detail_' + mod + '_' + act).show();
-        // Xử lý sự kiện click .nav-link
-        $('.nav-link').click(function(e) {
-            e.preventDefault();
-            // Act .nav-link
-            $('.nav-link').removeClass('hnv_active');
-            $(this).addClass('hnv_active');
-            // Show data của .nav-link
-            var dataLink = $(this).data('link');
-            $('.hnv_hide').hide();
-            $('.' + dataLink).show();
-        });
+        // // Xử lý sự kiện click .nav-link
+        // $('.nav-link').click(function(e) {
+        //     e.preventDefault();
+        //     // Act .nav-link
+        //     $('.nav-link').removeClass('hnv_active');
+        //     $(this).addClass('hnv_active');
+        //     // Show data của .nav-link
+        //     var dataLink = $(this).data('link');
+        //     $('.hnv_hide').hide();
+        //     $('.' + dataLink).show();
+        // });
     });
 
     $(window).scroll(function() {

@@ -7,6 +7,8 @@ $clsCountry         =   new Country();
 $smarty->assign('clsCountry', $clsCountry);
 $clsCategory_Country    =   new Category_Country();
 $smarty->assign('clsCategory_Country', $clsCategory_Country);
+$clsTour    =   new Tour();
+$smarty->assign('clsTour', $clsTour);
 #
 $show   =   isset($_GET['show']) ? $_GET['show'] : '';
 $assign_list['show']    =   $show;

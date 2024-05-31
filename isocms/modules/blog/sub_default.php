@@ -21,7 +21,7 @@ function default_default(){
     #
 	$lstBlogCat = $clsBlogCategory->getAll("is_trash=0 and is_online=1 order by order_no ASC",$clsBlogCategory->pkey.',slug,title');
 	$assign_list['lstBlogCat'] = $lstBlogCat;
-
+	
 	#
 	$show = isset($_GET['show']) ? $_GET['show'] : '';
 	$assign_list['show'] = $show;
@@ -29,6 +29,7 @@ function default_default(){
 	$assign_list['type'] = $type;
 	$listCountry = $clsCountryEx->getAll("is_trash=0 order by order_no",$clsCountryEx->pkey.',slug,title');
 	$assign_list['listCountry'] = $listCountry;
+	
 	if ($show=='Default'){
 		if (isset($_POST["filter"]) && $_POST["filter"] == "filter"){
 			header('Location:'. $clsISO->getLink("blog") . "/".$_POST["slug_country"]);
@@ -389,7 +390,6 @@ function default_detail(){
 	
 	$listCountry = $clsCountryEx->getAll("is_trash=0 order by order_no",$clsCountryEx->pkey.',slug,title');
 	$assign_list['listCountry'] = $listCountry;
-	
 
 	#
 	$blog_id = isset($_GET['blog_id'])?$_GET['blog_id']:0;
@@ -430,7 +430,7 @@ function default_detail(){
 		$cond.=" and cat_id='$cat_id'";
 	}
 	#
-	$lstRelated = $clsBlog->getAll($cond." order by order_no desc limit 0,5",$clsBlog->pkey.',title,slug');
+	$lstRelated = $clsBlog->getAll($cond." order by order_no ASC limit 0,4",$clsBlog->pkey.',title,slug,intro,country_id,cat_id');
 	$assign_list['lstRelated']=$lstRelated; unset($lstRelated);
 	$assign_list["lstFeatureBlog"] = $clsBlog->getAll($cond." order by num_view DESC LIMIT 5");
 	

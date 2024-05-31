@@ -2049,7 +2049,7 @@ function default_ajSaveDataasdsad()
                 $value .= ",visitorheight_child='" . $visitorheight_child . "'";
                 $value .= ",visitorheight_infant='" . $visitorheight_infant . "'";
             }
-            //			echo $value;die;
+//            			echo $value;die;
         } else if ($type_post == 'duration-tour') {
             $duration_type = Input::post('duration_type');
             $duration_custom = Input::post('duration_custom');

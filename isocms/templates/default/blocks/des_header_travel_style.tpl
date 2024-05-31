@@ -3,7 +3,7 @@
     <div class="trvs_header_description">
         {$clsCategory_Country->getBannerDescription($trvs_id)}
     </div>
-    <a href="{$clsCategory_Country->getBannerLink2($trvs_id)}" title="Create your trip" class="trvs_header_link">
+    <a href="{$clsTour->getLink2(0, 1)}" title="Create your trip" class="trvs_header_link">
         Create your trip <i class="fa-sharp fa-regular fa-arrow-right" aria-hidden="true"></i>
     </a>
 </div>

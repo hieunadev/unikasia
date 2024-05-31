@@ -12,7 +12,7 @@ body {
 .des_breadcrumb {
     margin: unset;
 }
-.des_breadcrumb li:nth-child(2) a {
+.cancel_link {
     cursor: auto;
 }
 .des_breadcrumb_title {
@@ -234,6 +234,10 @@ body {
     font-weight: 600;
     line-height: 52px;
     margin-bottom: 6px;
+    display: flex;
+    gap: 5px;
+    text-transform: uppercase;
+    justify-content: center;
 }
 .des_travel_style_description {
     margin-bottom: 32px;
@@ -244,6 +248,10 @@ body {
     font-style: italic;
     font-weight: 400;
     line-height: 24px;
+}
+.des_travel_style_title h2 p,
+.des_travel_style_description p {
+    margin-bottom: unset;
 }
 .des_travel_style_item {
     position: relative;
@@ -292,6 +300,10 @@ body {
     font-style: normal;
     font-weight: 600;
     line-height: 36px;
+    transition: all 0.3s ease-in-out;
+}
+.des_travel_style_item_title a:hover {
+    color: #ffa718;
 }
 .des_travel_style_item_description {
     color: var(--Neutral-2, #434b5c);
