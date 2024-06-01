@@ -9,10 +9,10 @@
             </div>
         </div>
         <div class="box_search_home container">
-            <form action="" method="post" class="find__trip--form">
+            <form action="/tour" method="post" class="find__trip--form">
                 <div class="input_key_word">
                     <p>{$core->get_Lang('WHERE DO YOU WANT TO GO?')}</p>
-                    <i class="fa-sharp fa-light fa-magnifying-glass img-search"></i>
+                    <i class="fa-sharp fa-light fa-magnifying-glass img-search typeSearch"></i>
                     <div class="form-search">
                         <div class="inputSelectOption">
                             <select theme="google" class="form-control" name="destination" id="destination_key" placeholder="{$core->get_Lang('Find a destination')}"  data-search="true">
@@ -21,6 +21,7 @@
                         </div>
                     </div>
                 </div>
+                <input type="hidden" name="filter" value="filter">
             </form>
         </div>
     </section>
@@ -371,6 +372,9 @@
             if (!country) return
             showDestination(country);
         })
+        $('.typeSearch').click(function(){
+            $(this).closest('form').submit();
+        });
     });
     $(function() {
         $('#destination_key').selectstyle({

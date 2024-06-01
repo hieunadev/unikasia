@@ -114,7 +114,7 @@ $().ready(function () {
                 }
             );
         }
-        // console.log(options);
+        console.log(options);
         var _validated = 0;
         if (
             $("input.required,select.required,textarea.required", $_form).length

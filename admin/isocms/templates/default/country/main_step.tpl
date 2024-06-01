@@ -341,6 +341,40 @@
 							</div>
 						</div>
 
+						{elseif $currentstep=='month_country'}
+						{if $list_month}
+						{foreach from=$list_month key=key item=item}
+						<div class="inpt_tour">
+							<label for="month_country_{$key}">
+								{$core->get_Lang($item)}
+							</label>
+							<textarea style="width:100%" table_id="{$pvalTable}" name="intro[]" id="month_country_{$key}_{time()}" data-column="iso-month_country_{$key}" class="textarea_intro_editor_simple" cols="255" rows="2">
+								{* {$oneItem.header_description} *}
+							</textarea>
+							<input type="hidden" name="month[]" value="{$key}">
+						</div>
+						{/foreach}
+						{/if}
+						<!-- <div class="inpt_tour">
+							<label for="month_country_1">
+								{$core->get_Lang('January')}
+							</label>
+							<textarea style="width:100%" table_id="{$pvalTable}" name="intro[]" id="month_country_1_{time()}" data-column="iso-month_country_1" class="textarea_intro_editor_simple" cols="255" rows="2">
+								{* {$oneItem.header_description} *}
+							</textarea>
+							<input type="hidden" name="month[]" value="1">
+						</div>
+						<div class="inpt_tour">
+							<label for="month_country_2">
+								{$core->get_Lang('February')}
+							</label>
+							<textarea style="width:100%" table_id="{$pvalTable}" name="intro[]" id="month_country_2_{time()}" data-column="iso-month_country_2" class="textarea_intro_editor_simple" cols="255" rows="2">
+								{* {$oneItem.header_description} *}
+							</textarea>
+							<input type="hidden" name="month[]" value="2">
+						</div> -->
+
+
 						{if $lstContinent}
 						<div class="inpt_tour">
 							<label for="title">{$core->get_Lang('Continent')} <span class="required_red">*</span>

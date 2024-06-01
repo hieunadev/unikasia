@@ -66,7 +66,11 @@ function getFrame($country_id = null)
                     'name' => $core->get_Lang('Header Stay')
 
                 ),
+                'month_country' => array(
 
+                    'name' => $core->get_Lang('Intro by month')
+
+                ),
                 // 'longText' => array(
 
                 // 	'name' => $core->get_Lang('Long text')
@@ -556,15 +560,19 @@ function default_getMainFormStep()
 
 
     #
-
-
-
+    $clsMonth = new Month();
+    $smarty->assign('clsMonth', $clsMonth);
+    #
+    $arr_month  =   $clsMonth->getAll("is_trash = 0 AND is_online = 1");
+    $list_month =   [];
+    foreach ($arr_month as $row) {
+        $list_month[$row['month_id']]   =   $row['title'];
+    }
+    $smarty->assign('list_month', $list_month);
+    #
     // Output
-
     $html = $core->build('main_step.tpl');
-
     echo $html;
-
     die();
 }
 
@@ -776,6 +784,45 @@ function default_ajSaveMainStep()
             }
         }
         $clsClassTable->updateOne($table_id, $arr_update);
+    } elseif ($currentstep == 'month_country') {
+        $clsMonthCountry = new MonthCountry();
+
+        // $clsISO->dump($_POST);
+        #
+        foreach ($_POST as $key => $val) {
+            $tmp = explode('-', $key);
+            if ($tmp[0] == 'iso') {
+                $arr_update[$tmp[1]] = addslashes($val);
+            }
+        }
+        // $clsISO->dump($arr_update);
+        $arr_month  =   [];
+        for ($i = 1; $i <= 12; $i++) {
+            $key = 'month_country_' . $i;
+            if (isset($arr_update[$key])) {
+                $arr_month[$i] = $arr_update[$key];
+            }
+        }
+        $country_id = $table_id;
+        foreach ($arr_month as $val) {
+            $month_country_id   =   $clsMonthCountry->getMaxId();
+            // if ($month_country_id == 1) {
+            $dbconn->Execute("INSERT INTO default_month_country (month_country_id, country_id, month_id, intro, is_trash, is_online)
+                VALUES ($month_country_id, $country_id, $key, '$val', 0, 1)");
+            // }
+            // else {
+            //     $dbconn->Execute("UPDATE default_month_country 
+            //                         SET month_country_id = $month_country_id, 
+            //                             country_id = $country_id,
+            //                             month_id = $key,
+            //                             intro = $val,
+            //                             is_trash = 0,
+            //                             is_online = 1
+            //                         W");
+            // }
+        }
+        // $dbconn->Execute($sql);
+        // $clsClassTable->updateOne($table_id, $arr_update);
     } else if ($currentstep == 'seo') {
 
         $clsClassTable = new Meta();

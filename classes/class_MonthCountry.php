@@ -1,15 +1,18 @@
 <?php
-class Month extends dbBasic
+class MonthCountry extends dbBasic
 {
     function __construct()
     {
         $this->pkey = "month_id";
-        $this->tbl = DB_PREFIX . "month";
+        $this->tbl = DB_PREFIX . "month_country";
     }
-    function getTitle($month_id)
+    function getIntro($month_country_id, $one = null)
     {
-        $one = $this->getOne($month_id, 'title');
-        return (!empty($one['title'])) ? $one['title'] : "";
+        global $_LANG_ID;
+        if (!isset($one['intro'])) {
+            $one = $this->getOne($month_country_id, 'intro');
+        }
+        return html_entity_decode($one['intro']);
     }
     function getSelectMultiMonth($selected = '', $is_prefix = true)
     {

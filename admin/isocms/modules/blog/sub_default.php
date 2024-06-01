@@ -344,7 +344,7 @@ if (isset($_POST['submit']) && $_POST['submit'] == 'Update') {
 			$list_cat_id = $clsBlogCategory->getListParent($cat_id);
 			$set .= ",list_cat_id='" . addslashes($list_cat_id) . "'";
 			$pUrl .= '&blogcat_id=' . $cat_id;
-		var_dump($_POST);die();
+//		var_dump($_POST);die();
 
 		$tagPost = $_POST['list_tag_id'];
 			if (!empty($tagPost) && $tagPost != '0') {

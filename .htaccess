@@ -100,7 +100,7 @@ RewriteRule ^b([0-9]*)-(.*).html$						index.php?mod=blog&act=detail&blog_id=$1&
 RewriteRule ^blog/tag/(.*)/&page=([0-9]*)$ 				index.php?mod=blog&act=tag&slug=$1&page=$2&show=tag&lang=en [L]
 RewriteRule ^blog/tag/(.*)$ 							index.php?mod=blog&act=tag&slug=$1&show=tag&lang=en [L]
 RewriteRule ^blog/&page=([0-9]*)$ 						index.php?mod=blog&page=$1&show=Default&lang=en [L]
-#RewriteRule ^blog$ 										index.php?mod=blog&show=Default&lang=en [L]
+RewriteRule ^blog$ 										index.php?mod=blog&show=Default&lang=en [L]
 
 RewriteRule ^blog/(.*).html&page=([0-9]*)$				index.php?mod=blog&act=cat&slug_cat=$1&page=$2&show=Cat&lang=vn [L]
 RewriteRule ^blog/(.*).html$ 							index.php?mod=blog&act=cat&slug_cat=$1&show=Cat&lang=vn [L]
@@ -241,6 +241,7 @@ RewriteRule ^payment/paypal/([0-9]*)/cancel.html$			index.php?mod=paycredit&act=
 RewriteRule ^hh([0-9]*)-(.*).html$					index.php?mod=hotel&act=detail&hotel_id=$1&slug=$2&lang=vn&noindex=noindex [L]
 
 RewriteRule ^h([0-9]*)-(.*).html$					index.php?mod=hotel&act=detail&hotel_id=$1&slug=$2&lang=en [L]
+RewriteRule ^th([0-9]*)-(.*).html$					index.php?mod=hotel&act=detail3&hotel_id=$1&slug=$2&lang=en [L]
 
 
 RewriteRule ^khach-san$					            index.php?mod=hotel&lang=en [L]
@@ -267,6 +268,8 @@ RewriteRule ^du-thuyen/(.*)-c([0-9]*)/bookingcabin.html$		index.php?mod=cruise&a
 
 #RewriteRule ^du-thuyen/$									index.php?mod=cruise&lang=vn [L]
 RewriteRule ^du-thuyen/(.*)/$								index.php?mod=cruise&act=cat&slug=$1&lang=vn [QSA,L]
+RewriteRule ^du-thuyens/(.*)/$								index.php?mod=cruise&act=cat2&slug=$1&lang=en [QSA,L]
+RewriteRule ^du-thuyens-detail/(.*)/$ 						index.php?mod=cruise&act=cat2Detail&slug=$1&lang=vn [QSA,L]
 RewriteRule ^du-thuyen/tag/(.*)$							index.php?mod=cruise&act=tag&slug=$1&lang=vn [L]
 RewriteRule ^du-thuyen/(.*)/dich-vu-them.html$				index.php?mod=cruise&act=bookservices&slug_key=$1&lang=vn [L]
 RewriteRule ^du-thuyen/(.*)/([0-9]*)-day.html$				index.php?mod=cruise&act=detail&slug=$1&day=$2&show=Itinerary&lang=vn [L]
@@ -351,14 +354,19 @@ RewriteRule ^([a-z]{2})/v([0-9]*)-(.*).html$						index.php?mod=voucher&act=deta
 
 
 #-- Mod Destinations.
-#RewriteRule ^([a-z]{2})/destinations$					            index.php?mod=destination&act=place&lang=$1 [QSA,L]
-RewriteRule ^([a-z]{2})/destinations/(.*)$ 			                index.php?mod=destination&act=place&slug_country=$2&show=Country&lang=$1 [QSA,L]
-
-RewriteRule ^([a-z]{2})/destinations/travel-style$					index.php?mod=destination&act=travel_style&lang=$1 [QSA,L]
 RewriteRule ^([a-z]{2})/destinations/travel-guide$					index.php?mod=destination&act=travel_guide&lang=$1 [QSA,L]
 RewriteRule ^([a-z]{2})/destinations/travel-guide-detail$			index.php?mod=destination&act=travel_guide_detail&lang=$1 [QSA,L]
 RewriteRule ^([a-z]{2})/destinations/attraction$			        index.php?mod=destination&act=attraction&lang=$1 [QSA,L]
 
+# Trang destination theo quốc gia
+#RewriteRule ^([a-z]{2})/destinations$					            index.php?mod=destination&act=place&lang=$1 [QSA,L]
+RewriteRule ^([a-z]{2})/destinations/(.*)$ 			                index.php?mod=destination&act=place&slug_country=$2&show=Country&lang=$1 [QSA,L]
+
+# Trang travel style theo quốc gia
+#RewriteRule ^([a-z]{2})/destinations/travel-style$					index.php?mod=destination&act=travel_style&lang=$1 [QSA,L]  
+RewriteRule ^([a-z]{2})/tours/(.*)-c([0-9]*)/(.*)$					index.php?mod=tour&act=cat&slug=$2&cat_id=$3&slug_country=$4&show=CatCountry&lang=$1 [QSA,L]
+
+#
 RewriteRule ^([a-z]{2})/destinations/(.*)/(.*)$					            index.php?mod=destination&act=place&slug_country=$2&slug_city=$3&show=City&lang=$1 [QSA,L]
 
 RewriteRule ^([a-z]{2})/destinations/(.*)/(.*)&page=([0-9]*)$ 	index.php?mod=destination&act=place&slug_country=$2&slug_city=$3$page=$4&show=Country&lang=$1 [QSA,L]
@@ -389,9 +397,11 @@ RewriteRule ^([a-z]{2})/blog/(.*)$ 								index.php?mod=blog&slug_country=$2&sh
 
 #Mod Tour
 RewriteRule ^tour$					index.php?mod=tour&lang=en [QSA,L]
+RewriteRule ^tour&page=([0-9]*)$					index.php?mod=tour&page=$1&lang=en [QSA,L]
 RewriteRule ^t([0-9]*)-(.*).html$					index.php?mod=tour&act=detaildeparture&tour_id=$1&slug=$2&lang=en [L]
-
-RewriteRule ^([a-z]{2})/tours/(.*)-c([0-9]*)/(.*)$					index.php?mod=tour&act=cat&slug=$2&cat_id=$3&slug_country=$4&show=CatCountry&lang=$1 [QSA,L]
+RewriteRule ^tour/(.*)$ 								index.php?mod=tour&slug_country=$1&lang=en [QSA,L]
+# Cmt vì trùng
+#RewriteRule ^([a-z]{2})/tours/(.*)-c([0-9]*)/(.*)$					index.php?mod=tour&act=cat&slug=$2&cat_id=$3&slug_country=$4&show=CatCountry&lang=$1 [QSA,L]
 RewriteRule ^([a-z]{2})/tours/(.*)-c([0-9]*)$						index.php?mod=tour&act=cat&slug=$2&cat_id=$3&show=Category&lang=$1 [QSA,L]
 
 RewriteRule ^([a-z]{2})/t([0-9]*)-(.*).html$					index.php?mod=tour_new&act=detaildeparture&tour_id=$2&slug=$3&lang=$1 [L]

@@ -44,6 +44,16 @@
         line-height: 52px;
     }
 
+    .trvs_header_title {
+        color: var(--Neutral-6, #FFF);
+        text-align: center;
+        font-family: Reey;
+        font-size: 32px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 52px;
+    }
+
     .trvs_header_description {
         color: var(--Neutral-5, #F0F0F0);
         text-align: center;

@@ -3,7 +3,7 @@
 {assign var=upd_date value=$blogItem.upd_date|date_format:"%d %b, %Y"}
 {assign var=author value=$blogItem.author}
 {assign var=imgBlog value=$clsBlog->getImage($blog_id,1034,861,$blogItem)}
-{assign var=listTag value=$clsBlog->getArrayTag($blog_id,$blogItem)}
+{assign var=listTag value=$clsBlog->getListTag($blog_id,$blogItem)}
 {assign var=cateBlog value=$clsBlogCategory->getTitle($cat_id,$blogItem)}
 
 {assign var=cateBlogSlug value=$clsBlogCategory->getSlug($cat_id)}
@@ -65,34 +65,51 @@
 
 
 <section name ="intro_detailblog">
-	<div class="detail_top_box">
-		<div class="d-flex">
-			<div class="col-photo">
-				<img src="{$imgBlog}" width="1034" height="861" alt="{$title_blog}">
-			</div>
-			<div class="col-text">
-				<div class="blog_info">
-					<p class="country_cat">
-						<a href="/blog/{$regionBlog}" title="{$regionBlog}">{$regionBlog}</a>
-						| <a href="/blog/{$cateBlogSlug}" title="{$cateBlog}">{$cateBlog}</a>
-					</p>
-					<h2 class="title text3line">{$title_blog}</h2>
-					<div class="intro text5line">{$clsBlog->getIntro($blog_id)|@html_entity_decode}
-					</div>
-					<div lang="publish_author submitted">
-						<span class="publish_date mgr10">
-							<i class="fa-regular fa-clock-three" style="color: #ffffff;"></i>{$upd_date}
+	    <div class="detail_top_box">
+
+        <div class="d-flex">
+
+            <div class="col-photo">
+
+                <img src="{$imgBlog}" width="1034" height="861" alt="{$title_blog}" />
+
+            </div>
+
+            <div class="col-text">
+
+                <div class="blog_info">
+
+                    <p class="country_cat"><a href="/blog/{$regionBlog}" title="{$regionBlog}">{$regionBlog}</a> | <a href="/blog/{$cateBlogSlug}" title="{$cateBlog}">{$cateBlog}</a></p>
+
+                    <h1 class="title text3line">{$title_blog}</h1>
+
+                    <div class="intro text5line">
+
+                    {$clsBlog->getIntro($blog_id)|@html_entity_decode}
+
+                    </div>
+
+                    <div lang="publish_author submitted">
+
+                        <span class="publish_date mgr10">
+							<i class="fa-regular fa-clock-three" style="color: #ffffff;"></i>{$publish_date}
 						</span>
-						<span class="author">
+						
+                        <span class="author">
 							<i class="fa-solid fa-user" style="color: #ffffff;"></i>{$author}
 						</span>
-					</div>
-					
-				</div>
-				
-			</div>
-		</div>
-	</div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
 </section>
 
 <section class="listblogdetail_breadcrumb">
@@ -154,12 +171,7 @@
                     <div class="tag_blog">
                         <p class="txt_tags">Tags:</p>
                         <div class="tags_">
-							 <p class="txt_tag_">{$listTag}</p>
-<!--
-                            <p class="txt_tag_">#tour</p>
-                            <p class="txt_tag_">#food</p>
-                            <p class="txt_tag_">#vietasia</p>
--->
+							{$listTag}
                         </div>
                     </div>
 
@@ -191,7 +203,7 @@
                             <div class="filter-radio2">
 								{section name=i loop=$listCountry}
 								<div class="form-check2">
-									<a href="/blog/{$listCountry[i].title}" title="{$listCountry[i].title}">
+									<a href="/blog/{$listCountry[i].slug}" title="{$listCountry[i].title}">
                     <label class="form-check-label custom-control-label {if $country_id eq $listCountry[i].country_id}active{/if}"  for="country_id_{$listCountry[i].country_id}">
 									   {$listCountry[i].title}
 									</label>
@@ -296,7 +308,7 @@
                                 <div class="txt_exploremore">
                                     <p class="tour_exploretxt">Explore more Vietnam tours</p></div>
 								<div class="btn_exploremore">
-                                <a href="/tour" alt="tour" title="tour">
+                                <a href="/tour/{$regionBlog}" alt="tour" title="tour">
 
                                     <button class="btn btn_seealltour">See all tours <i
                                                 class="fa-regular fa-arrow-right" style="color: #ffffff;"></i></button>
@@ -313,9 +325,10 @@
 
 <section class="read_blognext">
     <div class="container">
-        <h2 class="txt_readblog">Read the next</h2>
-        <div class="pic_textread row">
-			<div class="col-xl-12 col-lg-6">
+        <h2 class="txt_readblog">{$core->get_Lang('Read the next')}</h2>
+        <div class="pic_textread">
+			<div class="row">
+			<div class="col-lg-12 col-md-12">
 				
 				            {assign var=title_blog_relate value=$clsBlog->getTitle($lstRelated[0].blog_id,$lstRelated[0])}
 
@@ -335,7 +348,7 @@
                 </a>
             <div class="body_txtreadblog">
                 <div class="txt_categoryblog">
-                    <p class="txt_cateblog"><a href="/blog/{$cateBlogSlug}" title="{$cateBlog}">{$cateBlog}</a></p>
+                    <p class="txt_cateblog"><a href="/blog/{$cateBlogSlug}" title="{$cateBlog}">{$title_cat_0}</a></p>
                     <a href="{$link_blog_relate}" alt="explore" title="{$title_blog_relate}">
                         <h3 class="txthigh_cateblog">{$title_blog_relate}</a>
 						</h3>
@@ -345,9 +358,7 @@
             </div>
 					</div>
         </div>
-			
-
-        <div class="list_readblog row">
+			</div>
 			
 			{section name=i loop=$lstRelated start=1}
 
@@ -359,25 +370,25 @@
 
                         {assign var=title_cat_relate value=$clsBlogCategory->getTitle($lstRelated[i].cat_id)}
 			
-            <div class="col-md-4 item">
+            <div class="col-lg-4 col-md-4">
+				<div class="list_readthenextitem">
 				<div class="img_relatedtour overflow-hidden" style="border-radius: 8px">
 					<a class="photo" href="{$link_blog_relate}" title="{$title_blog_relate}">
-					<div class="featuredblog-img overflow-hidden">
-                <img src="{$clsBlog->getImage($lstRelated[i].blog_id,144,145,$lstRelated[i])}" alt="" style="width: 144px; height: 145px">
-						</a>
-						</div>
-				</div>
+					<div class="img_relatedtour">
+                <img src="{$clsBlog->getImage($lstRelated[i].blog_id,144,145,$lstRelated[i])}" style="width: 144px; height: 145px">
+					</a>
+					</div>
+					</div>
+					
                 <div class="text-content">
-					<a href="#">
-                    <p class="txt_cateblog"><a href="/blog/{$cateBlogSlug}" title="{$cateBlog}">{$cateBlog}</a></p>
-				
+                    <p class="txt_cateblog"><a href="/blog/{$cateBlogSlug}" title="{$cateBlog}">{$cateBlog}</p></a>
                     <h3 class="txthigh_cateblog_"><a class="text2line" href="{$link_blog_relate}" title="{$title_blog_relate}">{$title_blog_relate}</a>
 					</h3>
                 </div>
             </div>
+			</div>
 			{/section}
-			
-        </div>
+			</div>
     </div>
 
 
@@ -423,6 +434,7 @@
 
 {literal}
     <script>
+		
 		document.addEventListener('DOMContentLoaded', () => {
 	  const viewMoreLink = document.getElementById('viewMore');
 	  const cityCheckboxes = document.querySelectorAll('.filter-checkbox2 > .form-check2');
@@ -472,6 +484,13 @@
 
 	  updateViewMore(); // Gọi hàm khi trang tải xong để cập nhật trạng thái ban đầu
 	});
+		
+		document.addEventListener('DOMContentLoaded', (event) => {
+    const beachbreakLink = document.getElementById('beachbreak-link');
+    beachbreakLink.textContent = '#' + beachbreakLink.textContent;
+});
+		
+
 
     </script>
 {/literal}

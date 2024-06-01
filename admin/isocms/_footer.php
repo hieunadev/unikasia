@@ -10,5 +10,5 @@
 	|| # http://www.vietiso.com | http://www.vietiso.com/license.html     # ||
 	|| #################################################################### ||
 	\*======================================================================*/
-	global $assign_list, $core, $dbconn, $mod, $act, $_LANG_ID,$title_page,$description_page,$keyword_page,$global_title_page,$global_description_page,$global_keyword_page, $clsISO;
+	global $assign_list, $core, $dbconn, $mod, $act, $_LANG_ID,$title_page,$description_page,$keyword_page,$global_title_page,$global_description_page,$global_keyword_page, $clsISO,$country_id;
 ?>

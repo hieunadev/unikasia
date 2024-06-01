@@ -330,11 +330,15 @@ function default_ajSaveMainStep(){
 	$currentstep = Input::post('currentstep');
 
 	if($currentstep=='generalinformation'){
-		var_dump($_POST);die;
+		
+		
+//		$clsISO->pre($Tag_id_String);die();
 		$title = Input::post('title');	
-		$tagPost = Input::post('list_tag_id');	
-		if ($tagPost != '') {
+//		$tagPost = Input::post('list_tag_id');	
+		
+//		if ($tagPost != '') {
 			$tags_array = explode(',', $tagPost);
+			
 			foreach ($tags_array as $tag) {
 				$lstcheck = $clsTag->getAll("slug='".$core->replaceSpace($tag)."' limit 0,1");
 				if(!empty($lstcheck)){
@@ -347,23 +351,25 @@ function default_ajSaveMainStep(){
 					$tags_list[] = $id;
 				}
 			}
-			$list_tag_id = $clsISO->makeSlashListFromArray2($tags_list);
-		}else{
-			$list_tag_id = '';
-		}
+//			$list_tag_id = $clsISO->makeSlashListFromArray2($tags_list);
 		
+			$list_tag_id = '|' . implode('|', $_POST['list_tag_id']) . '|';
+//		}else{
+//			$list_tag_id = '';
+//		}
+		
+//		$clsISO->pre($list_tag_id);die();
 		$arr_update = [
 			'title' 			=> ucwords($title),
 			'slug'				=> $clsISO->replaceSpace2($title),
-			'list_tag_id' 		=> $list_tag_id,
 			'upd_date' 			=> time(),
-			'user_id_update'	=>	addslashes($core->_SESS->user_id)
+			'user_id_update'	=>	addslashes($core->_SESS->user_id),
+			'list_tag_id'		=>	$list_tag_id,
 		];
-		
 		if ($clsConfiguration->getValue('SiteHasCat_Blogs')) {
 			$cat_id      = Input::post('iso-cat_id');
-			$list_cat_id = $clsBlogCategory->getListParent($cat_id);
-			$arr_update['list_cat_id'] = addslashes($list_cat_id);
+//			$list_cat_id = $clsBlogCategory->getListParent($cat_id);
+//			$arr_update['list_cat_id'] = addslashes($list_cat_id);
 		}
 		
 		$publish_date = Input::post('publish_date',0);
@@ -378,6 +384,7 @@ function default_ajSaveMainStep(){
 				$arr_update[$tmp[1]] = addslashes($val);
 			}
 		}
+//		$clsISO->pre($arr_update);die();
 		$clsClassTable->updateOne($table_id, $arr_update);	
 		
 	} else if($currentstep=='image'){

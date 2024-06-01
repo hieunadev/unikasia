@@ -430,7 +430,7 @@ function default_detail(){
 		$cond.=" and cat_id='$cat_id'";
 	}
 	#
-	$lstRelated = $clsBlog->getAll($cond." order by order_no ASC limit 0,4",$clsBlog->pkey.',title,slug,intro,country_id,cat_id');
+	$lstRelated = $clsBlog->getAll($cond." and country_id='$country_id' order by order_no ASC limit 0,4",$clsBlog->pkey.',title,slug,intro,country_id,cat_id');
 	$assign_list['lstRelated']=$lstRelated; unset($lstRelated);
 	$assign_list["lstFeatureBlog"] = $clsBlog->getAll($cond." order by num_view DESC LIMIT 5");
 	

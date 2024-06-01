@@ -107,7 +107,7 @@
                     <div class="des_group_dream">
                         <div class="des_dream_rec">
                             <p>{$core->get_Lang('Are you already dreaming? so entrust us with your dream!')}</p>
-                            <a href="#" title="Ask">ASK FOR A QUOTE <i class="fa-solid fa-arrow-right-long"></i></a>
+                            <a href="{$clsTour->getLink2(0, 1)}" title="Ask">ASK FOR A QUOTE <i class="fa-solid fa-arrow-right-long"></i></a>
                         </div>
                     </div>
                 </div>

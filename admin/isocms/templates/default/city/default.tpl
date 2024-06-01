@@ -1,6 +1,6 @@
 <div class="page_container">
 	<div class="page-title d-flex">
-        <div class="title">
+		<div class="title">
 			<h2>{$core->get_Lang('City List')} <div class="info_module" data-toggle="tooltip" data-placement="right" title="Chức năng quản lý danh sách các {$core->get_Lang('City List')} trong hệ thống isoCMS">i</div>
 			</h2>
 			<p>{$number_all} {$core->get_Lang('City List')}</p>
@@ -9,7 +9,7 @@
 			<a class="btn btn-main btn-addnew add_new_city" title="{$core->get_Lang('Add city')}">{$core->get_Lang('Add city')}</a>
 			{*<a href="{$PCMS_URL}/?mod={$mod}&act=edit" class="btn btn-main btn-addnew" title="{$core->get_Lang('Add city')}">{$core->get_Lang('Add city')}</a>*}
 		</div>
-    </div>
+	</div>
 	<div class="container-fluid">
 		<div class="wrap">
 			<div class="filter_box">
@@ -18,34 +18,34 @@
 						<input class="form-control" type="text" name="keyword" value="{$keyword}" placeholder="{$core->get_Lang('search')}..." />
 					</div>
 					{if $lstContinent && $clsISO->getCheckActiveModulePackage($package_id,'continent','default','default') and $core->checkAccess('continent')}
-						<div class="form-group form-country">
-							<select name="continent_id" class="form-control iso-selectbox slb_Chauluc_Id" data-width="100%" id="slb_country">
-								<option value="">-- {$core->get_Lang('Select Continent')} --</option>
-								{section name=i loop=$lstContinent}
-									<option {if $continent_id eq $lstContinent[i].continent_id}selected="selected"{/if} value="{$lstContinent[i].continent_id}">{$clsContinent->getTitle($lstContinent[i].continent_id)}</option>
-								{/section}
-							</select>
-						</div>
+					<div class="form-group form-country">
+						<select name="continent_id" class="form-control iso-selectbox slb_Chauluc_Id" data-width="100%" id="slb_country">
+							<option value="">-- {$core->get_Lang('Select Continent')} --</option>
+							{section name=i loop=$lstContinent}
+							<option {if $continent_id eq $lstContinent[i].continent_id}selected="selected" {/if} value="{$lstContinent[i].continent_id}">{$clsContinent->getTitle($lstContinent[i].continent_id)}</option>
+							{/section}
+						</select>
+					</div>
 					{/if}
 					{if $lstCountryEx && $clsISO->getCheckActiveModulePackage($package_id,'country','default','default') and $core->checkAccess('country')}
-						<div class="form-group form-country">
-							<select name="country_id" class="form-control iso-selectbox slb_Country_Id" data-width="100%" id="slb_country">
-								<option value="">-- {$core->get_Lang('Select Country')} --</option>
-								{section name=i loop=$lstCountryEx}
-									<option {if $country_id eq $lstCountryEx[i].country_id}selected="selected"{/if} value="{$lstCountryEx[i].country_id}">{$clsCountryEx->getTitle($lstCountryEx[i].country_id)}</option>
-								{/section}
-							</select>
-						</div>
+					<div class="form-group form-country">
+						<select name="country_id" class="form-control iso-selectbox slb_Country_Id" data-width="100%" id="slb_country">
+							<option value="">-- {$core->get_Lang('Select Country')} --</option>
+							{section name=i loop=$lstCountryEx}
+							<option {if $country_id eq $lstCountryEx[i].country_id}selected="selected" {/if} value="{$lstCountryEx[i].country_id}">{$clsCountryEx->getTitle($lstCountryEx[i].country_id)}</option>
+							{/section}
+						</select>
+					</div>
 					{/if}
 					{if $lstRegion && $clsISO->getCheckActiveModulePackage($package_id,'region','default','default') and $core->checkAccess('region')}
-						<div class="form-group form-country">
-							<select name="region_id" class="form-control iso-selectbox" data-width="100%" id="slb_RegionID">
-								<option value="">-- {$core->get_Lang('Select Region')} --</option>
-								{section name=i loop=$lstRegion}
-									<option {if $region_id eq $lstRegion[i].region_id}selected="selected"{/if} value="{$lstRegion[i].region_id}">{$clsRegion->getTitle($lstRegion[i].region_id)}</option>
-								{/section}
-							</select>
-						</div>
+					<div class="form-group form-country">
+						<select name="region_id" class="form-control iso-selectbox" data-width="100%" id="slb_RegionID">
+							<option value="">-- {$core->get_Lang('Select Region')} --</option>
+							{section name=i loop=$lstRegion}
+							<option {if $region_id eq $lstRegion[i].region_id}selected="selected" {/if} value="{$lstRegion[i].region_id}">{$clsRegion->getTitle($lstRegion[i].region_id)}</option>
+							{/section}
+						</select>
+					</div>
 					{/if}
 					<div class="form-group form-button">
 						<button type="submit" class="btn btn-main" id="findtBtn">Tìm kiếm</button>
@@ -57,11 +57,11 @@
 						</a>
 					</div>
 					<div class="fr group_buttons full_width_767 text_right mt10_767">
-                        <a href="{$PCMS_URL}/?mod={$mod}{$pUrl}" class="btn btn-warning btnNew"> <i class="icon-folder-open icon-white"></i> <span>{$core->get_Lang('all')} ({$number_all})</span> </a>
-                        <a href="{$PCMS_URL}/?mod={$mod}{$pUrl}&type_list=Trash" class="btn btn-danger btnNew"> <i class="icon-warning-sign icon-white"></i> <span>{$core->get_Lang('trash')} ({$number_trash})</span> </a>
-                    </div>
-				</form>	
-			</div>			
+						<a href="{$PCMS_URL}/?mod={$mod}{$pUrl}" class="btn btn-warning btnNew"> <i class="icon-folder-open icon-white"></i> <span>{$core->get_Lang('all')} ({$number_all})</span> </a>
+						<a href="{$PCMS_URL}/?mod={$mod}{$pUrl}&type_list=Trash" class="btn btn-danger btnNew"> <i class="icon-warning-sign icon-white"></i> <span>{$core->get_Lang('trash')} ({$number_trash})</span> </a>
+					</div>
+				</form>
+			</div>
 			<div class="statistical mb5">
 				<table width="100%" border="0" cellpadding="3" cellspacing="0">
 					<tr>
@@ -79,9 +79,10 @@
 					<table cellspacing="0" class="tbl-grid table-striped table_responsive" width="100%">
 						<thead>
 							<tr>
-								<th class="gridheader" style="width:40px"><input id="check_all" type="checkbox"  class="el-checkbox" /></th>
+								<th class="gridheader" style="width:40px"><input id="check_all" type="checkbox" class="el-checkbox" /></th>
 								<th class="gridheader hiden767">{$core->get_Lang('ID')}</th>
 								<th class="gridheader name_responsive" style="text-align:left;">{$core->get_Lang('City name')}</th>
+								<th class="gridheader name_responsive" style="text-align:left;">{$core->get_Lang('Country')}</th>
 								{if $clsISO->getCheckActiveModulePackage($package_id,'region','default','default')}
 								<th class="gridheader hiden_responsive" style="text-align:left;">{$core->get_Lang('Region')}</th>
 								{/if}
@@ -93,19 +94,20 @@
 						<tbody id="SortAble">
 							{section name=i loop=$allItem}
 							{assign var = city_id value = $allItem[i].city_id}
-							<tr style="cursor:move" id="order_{$city_id}" class="{cycle values="row1,row2"}" >
+							<tr style="cursor:move" id="order_{$city_id}" class="{cycle values=" row1,row2"}">
 								<td class="check_40 has-checkbox text-center"><input name="p_key[]" class="chkitem el-checkbox" type="checkbox" value="{$city_id}" /></td>
 								<td class="index hiden767">{$city_id} </td>
 								<td class="name_service">
 									<span class="title mr10">{if $clsClassTable->getOneField('is_online',$city_id) eq 0}<span style="color:#F90">[PRIVATE]</span>{/if} <span style="font-size:16px">{$clsClassTable->getTitle($city_id)}</span></span>
 									{if $clsConfiguration->getValue('SiteHasChild_slide')}
 									<a href="{$PCMS_URL}/index.php?mod=slide&mod_page={$mod}&act_page={$act}&target_id={$allItem[i].$pkeyTable}" title="{$core->get_Lang('listslide')}">
-										<i class="fa fa-folder-open"></i>  {$core->get_Lang('listslide')} <strong style="color:#c00000;">({$clsISO->countTotalSlide($mod,$act,$allItem[i].$pkeyTable)})</strong>
+										<i class="fa fa-folder-open"></i> {$core->get_Lang('listslide')} <strong style="color:#c00000;">({$clsISO->countTotalSlide($mod,$act,$allItem[i].$pkeyTable)})</strong>
 									</a>
 									{/if}
 									{if $allItem[i].is_trash eq '1'}<span class="fr" style="color:#CCC">{$core->get_Lang('intrash')}</span>{/if}
 									<button type="button" class="toggle-row inline_block767" style="display:none"><i class="fa fa-caret fa-caret-down"></i></button>
 								</td>
+								<td data-title="{$core->get_Lang('Country')}" class="block_responsive">{$clsCountryEx->getTitle($allItem[i].country_id)} </td>
 								{if $clsISO->getCheckActiveModulePackage($package_id,'region','default','default')}
 								<td data-title="{$core->get_Lang('Region')}" class="block_responsive">{$clsRegion->getTitle($allItem[i].region_id)} </td>
 								{/if}
@@ -130,7 +132,7 @@
 											<li><a title="{$core->get_Lang('trash')}" href="{$PCMS_URL}/?mod={$mod}&act=trash&city_id={$core->encryptID($city_id)}{$pUrl}&page={$currentPage}"><i class="icon-trash"></i> <span>{$core->get_Lang('trash')}</span></a></li>
 											{else}
 											<li><a title="{$core->get_Lang('restore')}" href="{$PCMS_URL}/?mod={$mod}&act=restore&city_id={$core->encryptID($city_id)}{$pUrl}&page={$currentPage}"><i class="icon-refresh"></i> <span>{$core->get_Lang('restore')}</span></a></li>
-											<li><a title="{$core->get_Lang('delete')}" class="confirm_delete" href="{$PCMS_URL}/?mod={$mod}&act=delete&city_id={$core->encryptID($city_id)}{$pUrl}&page={$currentPage}"><i class="icon-remove"></i> <span>{$core->get_Lang('Delete')}</span></a></li>  
+											<li><a title="{$core->get_Lang('delete')}" class="confirm_delete" href="{$PCMS_URL}/?mod={$mod}&act=delete&city_id={$core->encryptID($city_id)}{$pUrl}&page={$currentPage}"><i class="icon-remove"></i> <span>{$core->get_Lang('Delete')}</span></a></li>
 											{/if}
 										</ul>
 									</div>
@@ -138,7 +140,9 @@
 							</tr>
 							{/section}
 						</tbody>
-						{else}<tr><td colspan="15">{$core->get_Lang('nodata')}!</td></tr>{/if}
+						{else}<tr>
+							<td colspan="15">{$core->get_Lang('nodata')}!</td>
+						</tr>{/if}
 					</table>
 				</div>
 			</div>
@@ -150,11 +154,11 @@
 <script type="text/javascript">
 	var $boxID = "";
 	var $cat_id = '{$cat_id}';
-	var $city_id= '{$city_id}';
-	var $country_id= '{$country_id}';
-	var $region_id= '{$region_id}';
-	var $departure_point_id= '{$departure_point_id}';
-	var $is_set= '{$is_set}';
+	var $city_id = '{$city_id}';
+	var $country_id = '{$country_id}';
+	var $region_id = '{$region_id}';
+	var $departure_point_id = '{$departure_point_id}';
+	var $is_set = '{$is_set}';
 
 	var $recordPerPage = '{$recordPerPage}';
 
@@ -167,22 +171,22 @@
 	$("#SortAble").sortable({
 		opacity: 0.8,
 		cursor: 'move',
-		start: function(){
+		start: function() {
 			vietiso_loading(1);
 		},
-		stop: function(){
+		stop: function() {
 			vietiso_loading(0);
 		},
-		update: function(){
+		update: function() {
 			var recordPerPage = $recordPerPage;
 			var currentPage = $currentPage;
-			var order = $(this).sortable("serialize")+'&update=update'+'&recordPerPage='+recordPerPage+'&currentPage='+currentPage;
-			$.post(path_ajax_script+"/index.php?mod=city&act=ajUpdPosSortCity", order,
+			var order = $(this).sortable("serialize") + '&update=update' + '&recordPerPage=' + recordPerPage + '&currentPage=' + currentPage;
+			$.post(path_ajax_script + "/index.php?mod=city&act=ajUpdPosSortCity", order,
 
-			function(html){
-				vietiso_loading(0);
-				location.href = REQUEST_URI;
-			});
+				function(html) {
+					vietiso_loading(0);
+					location.href = REQUEST_URI;
+				});
 		}
 	});
 </script>

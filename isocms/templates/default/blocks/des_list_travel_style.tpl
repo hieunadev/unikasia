@@ -83,7 +83,10 @@
                     1000: {
                         items: 4
                     }
-                }
+                },
+                autoplayHoverPause: true,
+                animateOut: 'slideOutUp',
+                animateIn: 'slideInUp'
             });
         }
 

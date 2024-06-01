@@ -1,5 +1,5 @@
 <?php
-	global $clsISO, $assign_list, $core, $dbconn, $mod, $act,$_LANG_ID, $_loged_id, $clsConfiguration,$adult_type_id,$child_type_id,$infant_type_id,$age_type_id,$height_type_id,$about_us_id,$country_vn_id, $hasAPI,$package_id,$now_day,$clsProperty;
+	global $clsISO, $assign_list, $core, $dbconn, $mod, $act,$_LANG_ID, $_loged_id, $clsConfiguration,$adult_type_id,$child_type_id,$infant_type_id,$age_type_id,$height_type_id,$about_us_id,$country_vn_id, $hasAPI,$package_id,$now_day,$clsProperty,$country_id;
 
 	global $email_template_book_tour_id,$email_template_book_cruise_id,$email_template_book_hotel_id,$email_template_contact_id,$email_template_book_service_id,$email_template_tailor_id,$email_template_reg_advisory,$email_template_subscribe_id,$email_template_payment_onepay_id,$email_template_payment_paypal_id,$email_template_signup_id,$email_template_change_pass_id,$email_template_reset_pass_id;
 

@@ -48,5 +48,26 @@ class TourDestination extends dbBasic{
         }
         return $rec;
     }
+
+    function countTourByCity($city_id) {
+        return $this->countItem(" city_id='$city_id'");
+    }
+
+    function getMinPriceByCity($city_id) {
+        $where = " tour_id IN (SELECT tour_id FROM ".$this->tbl." WHERE city_id='$city_id')";
+        return $this->minItem("min_price", $where);
+    }
+
+    function minItem($field, $cond=""){
+        global $dbconn;
+        $sql = "SELECT MIN($field) AS total FROM default_tour";
+        if ($cond!=""){
+            $sql.= " WHERE $cond";
+        }
+        $res = $dbconn->GetRow($sql);
+        if ($res['total']=="" || $res['total']==null)
+            return 0;
+        return ($res['total']);
+    }
 }
 ?>

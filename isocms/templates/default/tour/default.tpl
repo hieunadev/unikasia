@@ -41,8 +41,7 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item active" aria-current="page"><a href="/">Home</a></li>
                     {if $country_id}
-                    <li class="breadcrumb-item active" aria-current="page"><a href="{$clsCountry->getLink($country_id)}">Destination</a></li>
-                    <li class="breadcrumb-item active" aria-current="page"><a href="/">{$clsCountry->getTitle($country_id)}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page"><a href="{$clsCountry->getLink($country_id)}">{$clsCountry->getTitle($country_id)}</a></li>
                     {/if}
                     <li class="breadcrumb-item" aria-current="page">Tours packages</li>
                 </ol>
@@ -232,11 +231,12 @@
                                             <div class="from_price"><p class="from_txtp">From</p> <span
                                                         class="txt_price">US
 												<h3 class="txt_numbprice"> ${$lstTour[i].min_price}</h3> </span></div>
-                                            <a href="#" alt="tour" title="tour">
+                                            <a href="{$clsTour->getLink($lstTourRecent[i].tour_id)}" alt="tour" title="tour">
                                                 <button class="btn btn_viewtour btn-hover-home">View Tour <i
                                                             class="fa-regular fa-arrow-right" style="color: #ffffff;"
                                                             aria-hidden="true"></i></button>
-                                            </a></div>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             {/section}

@@ -1,26 +1,18 @@
 {assign var=title_tag_blog value=$clsTag->getTitle($tag_id)}
-<div class="page_container">
-	<nav class="breadcrumb-main breadcrumb-{$mod} bg_fff">
-        <div class="container">
-            <ol class="breadcrumb hidden-xs mt0 bg_fff" itemscope itemtype="http://schema.org/BreadcrumbList">
-				<li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-					<a itemprop="item" href="{$PCMS_URL}" title="{$core->get_Lang('Home')}">
-						<span itemprop="name" class="reb">{$core->get_Lang('Home')}</span></a>
-					<meta itemprop="position" content="1" />
-				</li>
-				<li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-					<a itemprop="item" title="{$core->get_Lang('Blog Tag')}">
-						<span itemprop="name" class="reb">{$core->get_Lang('Blog Tag')}</span></a>
-					<meta itemprop="position" content="2" />
-				</li>  				
-				<li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"> 
-					<a itemprop="item" href="{$curl}" title="{$title_tag_blog}">
-						<span itemprop="name" class="reb">{$title_tag_blog}</span></a>
-					<meta itemprop="position" content="3" />
-				</li>
-            </ol>
-        </div>
-    </nav>
+<div class="page_container">	
+	    <div class="container bread_crumb">
+	<span class="breadcrumb-item txt_youarehere">You are here:</span>
+
+  <ol class="breadcrumb">
+		<li class="breadcrumb-item"><a href="{PCMS_URL}" title="{$core->get_Lang('Home')}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{PCMS_URL}blog" title="{$core->get_Lang('Blog')}">Blog</a></li>
+					{if $tag_id}
+	 				 <li class="breadcrumb-item active" aria-current="page">{$title_tag_blog}</li>
+					{/if}
+
+  </ol>
+	</div>
+		
     <section id="contentPage" class="blogPage pageBlogTag bg_f1f1f1">
 		<div class="container">
 			<h1 class="title32 color_333 mb20">{$core->get_Lang('Blog listing by tag')} {$title_tag_blog} </h1>

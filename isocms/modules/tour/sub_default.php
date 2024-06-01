@@ -24,6 +24,7 @@ function default_default()
 	$limit = " LIMIT 8";
 	$lnk = $_SERVER['REQUEST_URI'];
 	$slug_country = !empty($_GET["slug_country"]) ? $_GET["slug_country"] : "";
+
 	// Filter
 	$countryId = isset($_POST['country_id']) ? $_POST['country_id'] : "";
 
@@ -34,22 +35,40 @@ function default_default()
 	$travel_style = !empty($_POST['travel_style']) ? $_POST['travel_style'] : null;
 	$departure_time = !empty($_POST['departure_time']) ? $_POST['departure_time'] : null;
 	$duration = !empty($_POST['duration']) ? $_POST['duration'] : null;
+    $destination = $_POST['destination'];
+    $city_id = $_GET["city_id"];
 
-	if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST["filter"])) {
-		$link = $clsCountry->getLink($countryId, 'tour');
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST["filter"])) {
+        $link = isset($destination) ? $clsCountry->getLink($destination ?? 1, 'tour') : $clsCountry->getLink($countryId, 'tour');
 
-		if ($region) $link .= '&region=' . $clsISO->makeSlashListFromArrayComma($region);
-		if ($travel_style) $link .= '&travel_style=' . $clsISO->makeSlashListFromArrayComma($travel_style);
-		if ($departure_time) $link .= '&departure_time=' . $clsISO->makeSlashListFromArrayComma($departure_time);
-		if ($duration) $link .= '&duration=' . $clsISO->makeSlashListFromArrayComma($duration);
-		header('location:' . trim($link));
-	}
+        if($destination) {
+            $arr_des = explode('-', $destination);
+            if (isset($arr_des[3])) {
+                $link = $clsCountry->getLink($arr_des[1], 'tour') . "&city_id=$arr_des[3]";
+            }
+        }
+
+        $params = [
+            'region' => $region,
+            'travel_style' => $travel_style,
+            'departure_time' => $departure_time,
+            'duration' => $duration,
+        ];
+        foreach ($params as $key => $value) {
+            if ($value) {
+                $link .= '&' . $key . '=' . $clsISO->makeSlashListFromArrayComma($value);
+            }
+        }
+        if ($city_id) $link .= '&city_id=' . $city_id;
+        header('Location: ' . trim($link));
+    }
 
 	$where_list_tour = $where;
 	$region = $_GET["region"];
 	$get_travel_style = $_GET["travel_style"];
 	$get_departure_time = $_GET["departure_time"];
 	$duration = $_GET["duration"];
+
 
 	if (!empty($get_travel_style)) {
 		$travel_style_conditions = array();
@@ -108,14 +127,19 @@ function default_default()
 	if ($where_list_tour) {
 		$cond_lstCountry = "$where_list_tour";
 	}
+
 	if ($country_id) {
 		$cond_region = "";
+        $cond_city = "";
 		if (!empty($region)) {
 			$cond_region = "and region_id IN ($region)";
 			$assign_list["region"] = $region;
 		}
+        if (!empty($city_id)) {
+            $cond_city = "and city_id IN ($city_id)";
+        }
 
-		$cond_lstCountry =  " $where_list_tour and tour_id IN (select tour_id from default_tour_destination where country_id = $country_id $cond_region)";
+		$cond_lstCountry =  " $where_list_tour and tour_id IN (select tour_id from default_tour_destination where country_id = $country_id $cond_region $cond_city)";
 	}
 	$recordPerPage = 8;
 	$currentPage = isset($_GET['page']) ? intval($_GET['page']) : 1;

@@ -1,6 +1,7 @@
 <section class="top-attractions">
     <div class="container">
-        <h2 class="txt_title_attractions d-flex justify-content-center">{$clsConfiguration->getOutTeam('TopDestinationTitle')} <p>&#160;{$clsCountry->getTitle($country_id)}</p></h2>
+        <h2 class="txt_title_attractions d-flex justify-content-center">{$clsConfiguration->getOutTeam('TopDestinationTitle')} <p>&#160;{$clsCountry->getTitle($country_id)}</p>
+        </h2>
         <div class="row">
             <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                 <div class="list-holidays">
@@ -9,21 +10,21 @@
                         <div class="hnv_item_holiday">
                             <div class="row">
                                 <div class="col-12 col-sm-12 col-md-5 col-lg-5">
-                                    <a href="{$clsClassTable->getLink($listSelected[i].city_id)}" title="{$clsClassTable->getTitle($listSelected[i].city_id)}">
+                                    <a href="{$clsCity->getLink($listSelected[i].city_id)}" title="{$clsCity->getTitle($listSelected[i].city_id)}">
                                         <div class="hnv_item_image_holiday">
-                                            <img class="img_holiday" src="{$clsClassTable->getImage($listSelected[i].city_id, 257, 158)}" onerror="this.src='{$URL_IMAGES}/none_image.png'" width="257" height="158">
+                                            <img class="img_holiday" src="{$clsCity->getImage($listSelected[i].city_id, 257, 158)}" onerror="this.src='{$URL_IMAGES}/none_image.png'" width="257" height="158">
                                         </div>
                                     </a>
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-7 col-lg-7">
                                     <div class="content_holiday">
                                         <h3 class="title_hodiday pb-0">
-                                            <a class="txt-hover-home" href="{$clsClassTable->getLink($listSelected[i].city_id)}" title="{$clsClassTable->getTitle($listSelected[i].city_id)}">
-                                                {$clsClassTable->getTitle($listSelected[i].city_id)} Holidays
+                                            <a class="txt-hover-home" href="{$clsCity->getLink($listSelected[i].city_id)}" title="{$clsCity->getTitle($listSelected[i].city_id)}">
+                                                {$clsCity->getTitle($listSelected[i].city_id)} Holidays
                                             </a>
                                         </h3>
-                                        <p class="txt_holiday pb-0">{$clsISO->limit_textIso($clsClassTable->getIntro($listSelected[i].city_id)|html_entity_decode, 15)}</p>
-                                        <p class="txt_detail_holiday pb-0">12 tours from USD $124</p>
+                                        <p class="txt_holiday pb-0">{$clsISO->limit_textIso($clsCity->getIntro($listSelected[i].city_id)|html_entity_decode, 15)}</p>
+                                        <p class="txt_detail_holiday pb-0">{$clsTourDestination->countTourByCity($listSelected[i].city_id)} tours from USD ${$clsTourDestination->getMinPriceByCity($listSelected[i].city_id)}</p>
                                     </div>
                                 </div>
                             </div>
@@ -37,34 +38,33 @@
             </div>
         </div>
         <div class="btn-attraction text-center mt-5">
-			<button class="btn txt_btn">Explore all attractions 
-				<img class="ms-2" src="{$URL_IMAGES}/arrow_right.png" alt="">
-			</button>
+            <button class="btn txt_btn">Explore all attractions
+                <img class="ms-2" src="{$URL_IMAGES}/arrow_right.png" alt="">
+            </button>
         </div>
     </div>
 </section>
-
 <style>
-	.top-attractions .btn-attraction .txt_btn {
-		border:none;
-	}
-	
-	
-	.content_holiday .title_hodiday a:hover {
-		color: #FFA718;
-	}
-	
-.top-attractions .holiday:hover {
+    .top-attractions .btn-attraction .txt_btn {
+        border: none;
+    }
 
-    box-shadow: 0px 12px 24px 0px rgba(255, 167, 24, 0.36);
 
-}
-	.btn-attraction .txt_btn {
-    transition: ease-in-out all 0.3s;
-}
-.btn-attraction .txt_btn:hover {
-    background: #e88f00 !important;
-}
-	
+    .content_holiday .title_hodiday a:hover {
+        color: #FFA718;
+    }
 
+    .top-attractions .holiday:hover {
+
+        box-shadow: 0px 12px 24px 0px rgba(255, 167, 24, 0.36);
+
+    }
+
+    .btn-attraction .txt_btn {
+        transition: ease-in-out all 0.3s;
+    }
+
+    .btn-attraction .txt_btn:hover {
+        background: #e88f00 !important;
+    }
 </style>

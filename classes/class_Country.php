@@ -1241,7 +1241,7 @@ class Country extends dbBasic
 
 
 
-		$html = '<option value="" data-label="null"></option>';
+		$html = '';
 
 
 
@@ -1259,7 +1259,7 @@ class Country extends dbBasic
 
 					$selected_index = ($selected == $v[$this->pkey]) ? 'selected="selected"' : '';
 
-					$html .= '<option data-label="Country" data-number_tour="' . $total_tour_country . '" data-slug="' . strtolower($v['slug']) . '" data-strtolower_title="' . strtolower($v['title']) . '" value="Country' . $v[$this->pkey] . '">' . $v['title'] . '</option>';
+					$html .= '<option data-label="Country" data-number_tour="' . $total_tour_country . '" data-slug="' . strtolower($v['slug']) . '" data-strtolower_title="' . strtolower($v['title']) . '" value="' . $v[$this->pkey] . '">' . $v['title'] . '</option>';
 				}
 
 				++$i;
@@ -1282,7 +1282,7 @@ class Country extends dbBasic
 
 					$selected_index = ($selected == $v[$clsCity->pkey]) ? 'selected="selected"' : '';
 
-					$html .= '<option data-label="City" data-number_tour="' . $total_tour_city . '" data-slug="' . strtolower($v['slug']) . '" data-strtolower_title="' . strtolower($v['title']) . '" value="City' . $v[$clsCity->pkey] . '" data-country="' . $this->getTitle($v['country_id']) . '" >' . $v['title'] . '</option>';
+					$html .= '<option data-label="City" data-number_tour="' . $total_tour_city . '" data-slug="' . strtolower($v['slug']) . '" data-strtolower_title="' . strtolower($v['title']) . '" value="country-'. $v['country_id'] .'-city-' . $v[$clsCity->pkey] . '" data-country="' . $this->getTitle($v['country_id']) . '" >' . $v['title'] . '</option>';
 				}
 
 				++$j;
