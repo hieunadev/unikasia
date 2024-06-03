@@ -8,7 +8,11 @@
             <div class="trvs_goood_reason_intro">
                 <div class="header_home_box">
                     <div class="stt">
+                        {if $arr_why_trvs_country}
                         <div class="square">0{$count_arr_why_trvs_country}</div>
+                        {else}
+                        <div class="square">00</div>
+                        {/if}
                     </div>
                     <div class="intro">
                         <h2 class="title_home_box">
@@ -22,7 +26,8 @@
                 </div>
                 <div class="content_home_box">
                     <div class="description">
-                        {$clsConfiguration->getValue('TrvsWhyDescription')|html_entity_decode}
+                        {* {$clsConfiguration->getValue('TrvsWhyDescription')|html_entity_decode} *}
+                        {$trvs_why_description|html_entity_decode}
                     </div>
                 </div>
             </div>
@@ -71,125 +76,64 @@
             <div class="content_home_box">
                 <div class="tab_month">
                     <div class="row">
-                        <div class="col-4 col-md-4 col-lg-2 month">
-                            Janv <img src="{$URL_IMAGES}/destination/when_full.png" alt="Month" width="32" height="6" loading="lazy" />
+                        {if $arr_month_country}
+                        {foreach from=$arr_month_country key=key item=item}
+                        {assign var="month_country_id" value=$item.month_country_id}
+                        {assign var="month_id" value=$item.month_id}
+
+                        <div class="col-4 col-md-4 col-lg-2 month" data-monthid="{$month_id}">
+                            <a href="javascript:void(0);" title="{$item.title}">
+                                {$item.alias} <img src="{$URL_IMAGES}/destination/when_full.png" alt="{$item.title}" width="32" height="6" loading="lazy" />
+                            </a>
                         </div>
-                        <div class="col-4 col-md-4 col-lg-2 month">
-                            Fév <img src="{$URL_IMAGES}/destination/when_full.png" alt="Month" width="32" height="6" loading="lazy" />
-                        </div>
-                        <div class="col-4 col-md-4 col-lg-2 month">
-                            Mars <img src="{$URL_IMAGES}/destination/when_full.png" alt="Month" width="32" height="6" loading="lazy" />
-                        </div>
-                        <div class="col-4 col-md-4 col-lg-2 month month_act">
-                            Avr <img src="{$URL_IMAGES}/destination/when_act.png" alt="Month" width="32" height="6" loading="lazy" />
-                        </div>
-                        <div class="col-4 col-md-4 col-lg-2 month">
-                            Mai <img src="{$URL_IMAGES}/destination/when_hafl.png" alt="Month" width="32" height="6" loading="lazy" />
-                        </div>
-                        <div class="col-4 col-md-4 col-lg-2 month">
-                            Juin <img src="{$URL_IMAGES}/destination/when_hafl.png" alt="Month" width="32" height="6" loading="lazy" />
-                        </div>
-                        <div class="col-4 col-md-4 col-lg-2 month">
-                            Juil <img src="{$URL_IMAGES}/destination/when_hafl.png" alt="Month" width="32" height="6" loading="lazy" />
-                        </div>
-                        <div class="col-4 col-md-4 col-lg-2 month">
-                            Août <img src="{$URL_IMAGES}/destination/when_hafl.png" alt="Month" width="32" height="6" loading="lazy" />
-                        </div>
-                        <div class="col-4 col-md-4 col-lg-2 month">
-                            Sept <img src="{$URL_IMAGES}/destination/when_hafl.png" alt="Month" width="32" height="6" loading="lazy" />
-                        </div>
-                        <div class="col-4 col-md-4 col-lg-2 month">
-                            Oct <img src="{$URL_IMAGES}/destination/when_full.png" alt="Month" width="32" height="6" loading="lazy" />
-                        </div>
-                        <div class="col-4 col-md-4 col-lg-2 month">
-                            Nov <img src="{$URL_IMAGES}/destination/when_full.png" alt="Month" width="32" height="6" loading="lazy" />
-                        </div>
-                        <div class="col-4 col-md-4 col-lg-2 month">
-                            Déc <img src="{$URL_IMAGES}/destination/when_hafl.png" alt="Month" width="32" height="6" loading="lazy" />
-                        </div>
+                        {/foreach}
+                        {/if}
                     </div>
                 </div>
                 <div class="tab_content">
-                    {$clsConfiguration->getValue('TrvsWhenToGoDescription_2')|html_entity_decode}
-                    <a href="#" title="LEARN MORE" class="view_more">View more
-                        <i class="fa-solid fa-arrow-right-long"></i></a>
+                    {if $arr_month_country}
+                    {foreach from=$arr_month_country key=key item=item}
+                    {assign var="month_country_id" value=$item.month_country_id}
+                    {assign var="month_id" value=$item.month_id}
+                    <div class="tab_content_month hnv_hide" data-monthid="{$month_id}">{$clsMonthCountry->getIntro($month_country_id)}</div>
+                    {/foreach}
+                    {/if}
+                    <a href="#" title="LEARN MORE" class="view_more">
+                        View more <i class="fa-solid fa-arrow-right-long"></i>
+                    </a>
                 </div>
                 <div class="tab_destination">
                     <div class="container">
                         <div class="owl-carousel owl-theme owl_when_vn">
+                            {if $arr_month_city}
+                            {foreach from=$arr_month_city key=key item=item}
+                            {assign var="city_id" value=$item.city_id}
                             <div class="item">
                                 <div class="des_item">
                                     <div class="des_item_image">
-                                        <a href="#" title="Da Nang">
-                                            <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=1948&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Da Nang" width="424" height="315" loading="lazy" />
+                                        <a href="{$clsCity->getLink($city_id)}" title="{$clsCity->getTitle($city_id)}">
+                                            <img src="{$clsCity->getImage($city_id, 424, 315)}" alt="{$clsCity->getTitle($city_id)}" width="424" height="315" loading="lazy" />
                                         </a>
                                     </div>
                                     <div class="info">
-                                        <h3><a href="#" title="Da Nang">Da Nang</a></h3>
+                                        <h3><a href="{$clsCity->getLink($city_id)}" title="{$clsCity->getTitle($city_id)}">{$clsCity->getTitle($city_id)}</a></h3>
                                         <p class="map">
-                                            <i class="fas fa-map-marker-alt"></i>Da Nang, Vietnam
+                                            <i class="fas fa-map-marker-alt"></i>{$clsCity->getTitle($city_id)}, Vietnam
                                         </p>
                                         <div class="description">
-                                            Explore several breathtaking landscapes - Discover local daily lifestyles - Get closer to the...
+                                            {$clsCity->getIntro($city_id)}
                                         </div>
                                     </div>
                                     <div class="btn_link_act">
-                                        <a href="#" title="Da Nang">
+                                        <a href="{$clsCity->getLink($city_id)}" title="{$clsCity->getTitle($city_id)}">
                                             <span class="btn_mobile">SEE DETAILS</span>
                                             <i class="fa-solid fa-arrow-right-long"></i>
                                         </a>
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="item">
-                                <div class="des_item">
-                                    <div class="des_item_image">
-                                        <a href="#" title="Da Nang">
-                                            <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=1948&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Da Nang" width="424" height="315" loading="lazy" />
-                                        </a>
-                                    </div>
-                                    <div class="info">
-                                        <h3><a href="#" title="Da Nang">Da Nang</a></h3>
-                                        <p class="map">
-                                            <i class="fas fa-map-marker-alt"></i>Da Nang, Vietnam
-                                        </p>
-                                        <div class="description">
-                                            Explore several breathtaking landscapes - Discover local daily lifestyles - Get closer to the...
-                                        </div>
-                                    </div>
-                                    <div class="btn_link_act">
-                                        <a href="#" title="Da Nang">
-                                            <span class="btn_mobile">SEE DETAILS</span>
-                                            <i class="fa-solid fa-arrow-right-long"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="des_item">
-                                    <div class="des_item_image">
-                                        <a href="#" title="Da Nang">
-                                            <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=1948&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Da Nang" width="424" height="315" loading="lazy" />
-                                        </a>
-                                    </div>
-                                    <div class="info">
-                                        <h3><a href="#" title="Da Nang">Da Nang</a></h3>
-                                        <p class="map">
-                                            <i class="fas fa-map-marker-alt"></i>Da Nang, Vietnam
-                                        </p>
-                                        <div class="description">
-                                            Explore several breathtaking landscapes - Discover local daily lifestyles - Get closer to the...
-                                        </div>
-                                    </div>
-                                    <div class="btn_link_act">
-                                        <a href="#" title="Da Nang">
-                                            <span class="btn_mobile">SEE DETAILS</span>
-                                            <i class="fa-solid fa-arrow-right-long"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
+                            {/foreach}
+                            {/if}
                         </div>
                     </div>
                 </div>
@@ -399,7 +343,6 @@
                                     to <span>{$clsCountry->getTitle($country_id)}</span>
                                 </h2>
                             </div>
-
                             <div class="list_faq">
                                 <div class="accordion accordion-flush" id="accordionFlushExample">
                                     {if $list_faq_country}
@@ -425,7 +368,7 @@
                     </div>
                     <div class="col-12 col-md-6">
                         <div class="trvs_faq_img">
-                            <img src="https://images.unsplash.com/photo-1475924156734-496f6cac6ec1?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="FAQ Image" width="456" height="447" loading="lazy" />
+                            <img src="{$clsCountry->getImageWhy($country_id, 456, 447)}" alt="FAQ Image" width="456" height="447" loading="lazy" />
                         </div>
                     </div>
                 </div>
@@ -436,6 +379,9 @@
     {/if}
 </section>
 
+<script>
+    var country_id={$country_id};
+</script>
 {literal}
 <script>
     if ($('.owl_when_vn').length > 0) {
@@ -500,14 +446,100 @@
 
 {literal}
 <script>
-    const today = new Date();
-    const monthIndex = today.getMonth(); // Lấy chỉ số tháng (0 - 11)
-    const months = [
-        "January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"
-    ];
-    const currentMonth = months[monthIndex]; // Lấy tên tháng dựa vào chỉ số
+    $(document).ready(function() {
+        const today = new Date();
+        const monthIndex = today.getMonth(); // Lấy chỉ số tháng (0 - 11)
+        const months = [
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+        const currentMonth = months[monthIndex]; // Lấy tên tháng hiện tại
+        const currentMonthIndex = monthIndex + 1; // Lấy index tháng hiện tại
 
-    console.log(currentMonth); // Ví dụ: 'May'
+        // Lấy danh sách các tháng trong .tab_month
+        const tabMonths = $('.tab_month .month');
+        // So sánh currentMonthIndex với data-monthid và thêm class nếu bằng nhau
+        tabMonths.each(function() {
+            const monthId = parseInt($(this).attr('data-monthid'), 10);
+            if (monthId === currentMonthIndex) {
+                $(this).addClass('month_act');
+            }
+        });
+
+        // Lấy danh sách các tháng trong .tab_content
+        const tabContentMonths = $('.tab_content .tab_content_month');
+        // So sánh currentMonthIndex với data-monthid và thêm class nếu bằng nhau
+        tabContentMonths.each(function() {
+            const monthId = parseInt($(this).attr('data-monthid'), 10);
+            if (monthId === currentMonthIndex) {
+                $(this).removeClass('hnv_hide').addClass('hnv_show');
+            }
+        });
+
+        // Thêm sự kiện click vào .tab_month
+        tabMonths.click(function() {
+            const clickedMonthId = parseInt($(this).attr('data-monthid'), 10);
+            // Xóa tất cả .month_act và thêm lại cho phần tử đc click
+            tabMonths.each(function() {
+                const monthId = parseInt($(this).attr('data-monthid'), 10);
+                $(this).removeClass('month_act');
+            });
+            $(this).addClass('month_act');
+            // Hiển thị intro phần tử tương ứng
+            tabContentMonths.each(function() {
+                const monthId = parseInt($(this).attr('data-monthid'), 10);
+                if (monthId === clickedMonthId) {
+                    $(this).removeClass('hnv_hide').addClass('hnv_show');
+                } else {
+                    $(this).addClass('hnv_hide').removeClass('hnv_show');
+                }
+            });
+
+            $.ajax({
+                type: "POST",
+                url: path_ajax_script+"/index.php?mod=tour&act=ajWhenToGo",
+                data: {
+                    country_id: country_id, // Giá trị của country_id
+                    month_id: clickedMonthId // Giá trị của clickedMonthId
+                },
+                // dataType: "dataType",
+                success: function (response) {
+                    $(".owl_when_vn").hide();
+                    $(".tab_destination .container").html(response);
+
+                    if ($('.aj_owl_when_vn').length > 0) {
+                        var $owl = $('.aj_owl_when_vn');
+                        $owl.owlCarousel({
+                            lazyLoad: true,
+                            loop: false,
+                            margin: 23,
+                            nav: true,
+                            navText: ["<i class='fa-solid fa-angle-left'></i>", "<i class='fa-solid fa-angle-right'></i>"],
+                            dots: false,
+                            // autoplay: false,
+                            // autoplayTimeout:3000,	
+                            // animateOut: 'fadeOut',
+                            // animateIn: 'fadeIn',
+                            autoHeight: true,
+                            responsiveClass: true,
+                            responsive: {
+                                0: {
+                                    items: 1
+                                },
+                                600: {
+                                    items: 1
+                                },
+                                1000: {
+                                    items: 2
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+            console.log(country_id);
+            console.log(clickedMonthId);
+        });
+    });
 </script>
 {/literal}

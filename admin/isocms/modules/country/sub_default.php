@@ -796,19 +796,50 @@ function default_ajActionNewCountry()
 	#
 	$clsCountry = new Country();
 	$assign_list["clsCountry"] = $clsCountry;
+	$clsMonth = new Month();
+	$assign_list["clsMonth"] = $clsMonth;
+	$clsMonthCountry = new MonthCountry();
+	$assign_list["clsMonthCountry"] = $clsMonthCountry;
+	#
 	$tp = Input::post('tp');
 	$is_day_trip = Input::post('is_day_trip', 0);
-
+	#
 	$country_id = $clsCountry->getMaxId();
 	$title_voucher_new = $core->get_Lang('New Country') . ' ' . $country_id;
 	$results = array('result' => 'error');
 	if ($tp = 'S') {
+		// Thêm mới bản ghi vào bảng default_country
 		$clsISO->UpdateOrderNo('Country');
-
 		$field = $clsCountry->pkey . ",user_id,user_id_update,title,slug,order_no,reg_date,upd_date";
 		$value = "'" . $country_id . "','" . $user_id . "','" . $user_id . "','" . $title_voucher_new . "','" . $core->replaceSpace($title_voucher_new) . "',1,'" . time() . "','" . time() . "'";
 		$clsCountry->insertOne($field, $value);
-		$results = array('result' => 'success', 'link' => 'country/insert/' . $country_id . '/overview');
+		#
+		// Thêm mới bản ghi vào bảng default_month_country
+		if (!empty($country_id)) {
+			$arr_month  =   $clsMonth->getAll("is_trash = 0 AND is_online = 1");
+			$list_month =   [];
+			foreach ($arr_month as $row) {
+				$list_month[$row['month_id']]   =   $row['title'];
+			}
+			$clsISO->UpdateOrderNo('MonthCountry');
+			foreach ($list_month as $k => $v) {
+				$max_id	=	$clsMonthCountry->getMaxId();
+				$field 	= 	"month_country_id, country_id, month_id, user_id, user_id_update, order_no, reg_date, upd_date, is_trash, is_online";
+				$value 	= 	"'" . $max_id . "',
+							'" . $country_id . "',
+							'" . $k . "',
+							'" . $user_id . "',
+							'" . $user_id . "',
+							'" . $k . "',
+							'" . time() . "',
+							'" . time() . "',
+							0,
+							1";
+				$clsMonthCountry->insertOne($field, $value);
+			}
+		}
+		#
+		$results	= 	array('result' => 'success', 'link' => 'country/insert/' . $country_id . '/overview');
 	}
 	// Return
 	echo @json_encode($results);

@@ -556,19 +556,27 @@ function default_getMainFormStep()
     $clsForm->addInputTextArea("full", "cancellation_policy", "", "cancellation_policy", 255, 25, 2, 1, "style='width:100%'");
 
     $clsForm->addInputTextArea("full", "other_policy", "", "other_policy", 255, 25, 8, 1, "style='width:100%'");
-
-
-
     #
     $clsMonth = new Month();
     $smarty->assign('clsMonth', $clsMonth);
-    #
     $arr_month  =   $clsMonth->getAll("is_trash = 0 AND is_online = 1");
     $list_month =   [];
     foreach ($arr_month as $row) {
         $list_month[$row['month_id']]   =   $row['title'];
     }
     $smarty->assign('list_month', $list_month);
+    #
+    $clsMonthCountry = new MonthCountry();
+    $smarty->assign('clsMonthCountry', $clsMonthCountry);
+    $sql    =   "SELECT default_month_country.*, default_month.title
+                FROM default_month_country
+                INNER JOIN default_month ON default_month_country.month_id = default_month.month_id
+                WHERE default_month_country.lang_id = '' 
+                    AND default_month_country.is_trash = 0 
+                    AND default_month_country.is_online = 1 
+                    AND default_month_country.country_id = $table_id";
+    $arr_month_country  =   $dbconn->getAll($sql);
+    $smarty->assign('arr_month_country', $arr_month_country);
     #
     // Output
     $html = $core->build('main_step.tpl');
@@ -577,41 +585,22 @@ function default_getMainFormStep()
 }
 
 function default_ajSaveMainStep()
-
 {
-
     /*ini_set('display_errors', '1');
-
 	ini_set('display_startup_errors', '1');
-
 	error_reporting(E_ALL);*/
-
     global $_frontIsLoggedin_user_id, $core, $clsISO, $clsProperty, $clsUser, $_company_iom_id, $dbconn;
-
     #
-
     $msg = '_error';
-
     $clsClassTable = new Country();
-
     $table_id = Input::post('table_id', 0);
-
     $continent_id = Input::post('iso-continent_id', 0);
-
     $currentstep = Input::post('currentstep');
-
     $arr_update = [
-
         'user_id_update' => addslashes($core->_SESS->user_id),
-
         'upd_date' => time()
-
     ];
-
-    // $clsISO->dd($_POST);
-
-
-
+    #
     if ($currentstep == 'basic') {
 
         $title = Input::post('title');
@@ -694,31 +683,17 @@ function default_ajSaveMainStep()
 
         $clsClassTable->updateOne($table_id, $arr_update);
     } elseif ($currentstep == 'des_tour') {
-
-
-
         $tour_video =   Input::post('tour_video');
-
         $tour_video =   html_entity_decode($tour_video);
-
         $arr_update['tour_video']   =   $tour_video;
-
         #
-
         foreach ($_POST as $key => $val) {
-
             $tmp    =   explode('-', $key);
-
             if ($tmp[0] == 'iso') {
-
                 $arr_update[$tmp[1]]    =   addslashes($val);
             }
         }
-
-        // $clsISO->dd($arr_update);
-
         #
-
         $clsClassTable->updateOne($table_id, $arr_update);
     } else if ($currentstep == 'image') {
         // // Ảnh chính (ảnh ngang)
@@ -785,44 +760,32 @@ function default_ajSaveMainStep()
         }
         $clsClassTable->updateOne($table_id, $arr_update);
     } elseif ($currentstep == 'month_country') {
-        $clsMonthCountry = new MonthCountry();
-
-        // $clsISO->dump($_POST);
         #
         foreach ($_POST as $key => $val) {
-            $tmp = explode('-', $key);
+            $tmp    =   explode('-', $key);
             if ($tmp[0] == 'iso') {
-                $arr_update[$tmp[1]] = addslashes($val);
+                $arr_update[$tmp[1]]    =   addslashes($val);
             }
         }
-        // $clsISO->dump($arr_update);
         $arr_month  =   [];
-        for ($i = 1; $i <= 12; $i++) {
-            $key = 'month_country_' . $i;
+        for ($i = 0; $i < 12; $i++) {
+            $key    =   'month_country_' . $i;
             if (isset($arr_update[$key])) {
                 $arr_month[$i] = $arr_update[$key];
             }
         }
-        $country_id = $table_id;
-        foreach ($arr_month as $val) {
-            $month_country_id   =   $clsMonthCountry->getMaxId();
-            // if ($month_country_id == 1) {
-            $dbconn->Execute("INSERT INTO default_month_country (month_country_id, country_id, month_id, intro, is_trash, is_online)
-                VALUES ($month_country_id, $country_id, $key, '$val', 0, 1)");
-            // }
-            // else {
-            //     $dbconn->Execute("UPDATE default_month_country 
-            //                         SET month_country_id = $month_country_id, 
-            //                             country_id = $country_id,
-            //                             month_id = $key,
-            //                             intro = $val,
-            //                             is_trash = 0,
-            //                             is_online = 1
-            //                         W");
-            // }
+        $country_id =   $table_id;
+        foreach ($arr_month as $key => $value) {
+            $sql    =   "UPDATE default_month_country
+                        SET intro = '" . $value . "',
+                            order_no = '" . ($key + 1) . "',
+                            user_id_update = '" . addslashes($core->_SESS->user_id) . "',
+                            upd_date = '" . time() . "'
+                        WHERE country_id = '" . $country_id . "'
+                            AND month_id = '" . ($key + 1) . "'
+                        LIMIT 1";
+            $dbconn->Execute($sql);
         }
-        // $dbconn->Execute($sql);
-        // $clsClassTable->updateOne($table_id, $arr_update);
     } else if ($currentstep == 'seo') {
 
         $clsClassTable = new Meta();
@@ -880,13 +843,11 @@ function default_ajSaveMainStep()
 
         $clsClassTable->updateOne($table_id, $arr_update);
     }
-
-    $msg = '_success';
-
+    #
+    $msg    =   '_success';
+    #
     // Output
-
     echo $msg;
-
     die();
 }
 

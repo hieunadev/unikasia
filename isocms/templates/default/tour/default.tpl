@@ -161,9 +161,7 @@
                                     <div class="txt_place" style="cursor: pointer">
                                         <img class="me-2" src="{$URL_IMAGES}/tour/location.svg" alt="">Place: {$clsTourDestination->getByCountry($lstTour[i].tour_id, 'city')}
                                         {if $clsTourDestination->getByCountry($lstTour[i].tour_id)}
-                                            <button class="tooltips_tour" type="button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="right" title="{$clsTourDestination->getByCountry($lstTour[i].tour_id, 'other_city')}">
-                                                +{$clsTourDestination->getByCountry($lstTour[i].tour_id)}
-                                            </button>
+                                            <button type="button" class="tooltips_tour" data-bs-toggle="tooltip" title="{$clsTourDestination->getByCountry($lstTour[i].tour_id, 'other_city')}">+{$clsTourDestination->getByCountry($lstTour[i].tour_id)}</button>
                                         {/if}
                                     </div>
                                     <div class="txt_place">
@@ -221,7 +219,7 @@
                                             <i class="fa-light fa-location-dot" style="color: #43485c;" aria-hidden="true"></i>
                                             <span class="txt_placetours">Place: {$clsTourDestination->getByCountry($lstTourRecent[i].tour_id, 'city')}</span>
                                             {if $clsTourDestination->getByCountry($lstTourRecent[i].tour_id)}
-                                                <button class="tooltips_tour" type="button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="right" title="{$clsTourDestination->getByCountry($lstTourRecent[i].tour_id, 'other_city')}">
+                                                <button type="button" class="tooltips_tour" data-bs-toggle="tooltip" title="{$clsTourDestination->getByCountry($lstTourRecent[i].tour_id, 'other_city')}">
                                                     +{$clsTourDestination->getByCountry($lstTourRecent[i].tour_id)}
                                                 </button>
                                             {/if}
@@ -257,6 +255,7 @@
                 <div class="col-3 center-div"><a class="btn-tailor btn-hover-home" href="{$clsTour->getLink2('', 1)}" target="_blank"><span>TAILOR MADE TOUR</span><i class="ms-2 fa fa-arrow-right" aria-hidden="true"></i></a></div>
             </div>
         </div>
+        <div class="overlay"></div>
     </section>
     {$core->getBlock("customer_review")}
     {$core->getBlock("top_attraction")}

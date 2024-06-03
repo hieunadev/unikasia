@@ -791,6 +791,17 @@ class Hotel extends dbBasic
 		}
 		return '';
 	}
+	function getListFacilityTooltip($hotel_id)
+	{
+		$one = $this->getOne($hotel_id, 'list_HotelFacilities');
+		$list_HotelFacilities = $one['list_HotelFacilities'];
+		if ($list_HotelFacilities != '') {
+			$list_HotelFacilities = ltrim($list_HotelFacilities, '|');
+			$_array = explode('|', $list_HotelFacilities);
+			return $_array;
+		}
+		return '';
+	}
 	function getLocation($hotel_id)
 	{
 		$clsCountry =  new Country();

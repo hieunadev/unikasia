@@ -86,7 +86,7 @@
 						
                             <div class="form-group inpt_tour">
 
-                                <label class="col-form-label">{$core->get_Lang('Tag')} <span class="required_red">*</span>
+                                <label class="col-form-label">{$core->get_Lang('Tag')}
 
                                     {assign var= tag_tour value='tag_tour'}
 
@@ -98,13 +98,7 @@
 
                                 </label>
 
-                                <p class="help-block"></p>
-
-                                <div class="admin-toolbar-action">
-
-                                    <a href="javascript:void(0)" class="btn btn-default mr-2 addTag" tour_id="{$pvalTable}" title="Thêm">{$clsISO->makeIcon('plus', $core->get_Lang('Add'))}</a>
-
-                                </div>
+                               
 
                                 <div id="slb_ContainerTourtag">
 

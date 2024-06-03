@@ -3,7 +3,7 @@ class MonthCountry extends dbBasic
 {
     function __construct()
     {
-        $this->pkey = "month_id";
+        $this->pkey = "month_country_id";
         $this->tbl = DB_PREFIX . "month_country";
     }
     function getIntro($month_country_id, $one = null)

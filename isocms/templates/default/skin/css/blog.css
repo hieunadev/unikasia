@@ -500,6 +500,10 @@ a .btn_seealltour:hover,
 	text-decoration: none;
 }
 
+.selected-filters .remove-filter-button {
+	cursor: pointer;
+}
+
 .search-item {
   background-color: #f0f0f0;
   display: flex;
@@ -602,6 +606,10 @@ input[type="checkbox"] {
 
 .btn_removefilter i {
 	margin-right: 10px;
+}
+
+.btn_removefilter:hover {
+	color: #FFA718;
 }
 
 .list_fiter_articles {

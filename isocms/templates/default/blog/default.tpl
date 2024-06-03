@@ -1,16 +1,3 @@
-{*{assign var=title_blog value=$clsBlog->getTitle($lstBlogs[i].blog_id,$lstBlogs[i])}*}
-{*{assign var=link_blog value=$clsBlog->getLink($lstBlogs[i].blog_id,$lstBlogs[i])}*}
-{*{assign var=intro_blog value=$clsBlog->getIntro($lstBlogs[i].blog_id, $lstBlogs[i])}*}
-
-{*{assign var=content_blog value=$clsBlog->getContent($lstBlogs[i].blog_id, $lstBlogs[i])}*}
-
-{*{assign var=img_blog value=$clsBlog->getImage($lstBlogs[i].blog_id,296,193,$lstBlog[i])}*}
-{*{assign var=img_blog2 value=$clsBlog->getImage($lstBlogs[i].blog_id,624,408,$lstBlog[i])}*}
-
-{*{assign var=slug_blog value=$clsBlog->getSlug($lstBlogs[i].blog_id,$lstBlogs[i])}*}
-{*{assign var=date_blog value=$clsBlog->getRegDate($lstBlogs[i].blog_id, $lstBlogs[i])}*}
-
-{*{assign var=cat_blog value=$clsBlogCategory->getTitle($lstBlogCat[i].cat_id, $lstBlogCat[i])}*}
 
 <section class="page_container blog_des_destination">
 	    <div class="container bread_crumb">
@@ -185,17 +172,18 @@
                 </div>
 
                 <div class="list_search_filter">
-                    <form action="" method="POST" id="countryForm">
+			<form class="form_search form_box_search" id="countryForm" method="POST" action="">
 						 <input type="hidden" name="action" value="search">
-
                         <div class="search-item d-none d-sm-flex mb-3">
                             <button class="search-item-icon" type="submit">
                                 <i class="fa-regular fa-magnifying-glass"></i>
                             </button>
                             <div class="search-item-txt">
-                                <input class="border-0 input-search text-dark" type="text"
-                                       value="{$data.search|escape:'html'}"
-                                       name="search" placeholder="Search"/>
+								<input type="hidden" name="action" value="search">
+                                <input type="text" name="keyword" 
+                                       value="{$keyword}" autocomplete="off" class="border-0 input-search text-dark"  maxlength="255" placeholder="{$core->get_Lang('Search')}">
+								<input type="hidden" name="search_blog" value="search_blog">
+
                             </div>
                         </div>
 

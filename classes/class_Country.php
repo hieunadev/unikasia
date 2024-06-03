@@ -243,6 +243,22 @@ class Country extends dbBasic
 
 		return '/files/thumb/' . $w . '/' . $h . '/' . $clsISO->parseImageURL($noimage);
 	}
+	function getImageWhy($pvalTable, $w, $h)
+	{
+		global $clsISO;
+		$oneTable = $this->getOne($pvalTable, 'why_image');
+		if ($oneTable['why_image'] != '') {
+			$image = $oneTable['why_image'];
+			return $clsISO->tripslashImage($image, $w, $h);
+			$noimage = URL_IMAGES . '/noimage.png';
+
+			return '/files/thumb/' . $w . '/' . $h . '/' . $clsISO->parseImageURL($noimage);
+		}
+
+		$noimage = URL_IMAGES . '/noimage.png';
+
+		return '/files/thumb/' . $w . '/' . $h . '/' . $clsISO->parseImageURL($noimage);
+	}
 
 	function getHeaderDescription($country_id, $one = null)
 
@@ -1282,7 +1298,7 @@ class Country extends dbBasic
 
 					$selected_index = ($selected == $v[$clsCity->pkey]) ? 'selected="selected"' : '';
 
-					$html .= '<option data-label="City" data-number_tour="' . $total_tour_city . '" data-slug="' . strtolower($v['slug']) . '" data-strtolower_title="' . strtolower($v['title']) . '" value="country-'. $v['country_id'] .'-city-' . $v[$clsCity->pkey] . '" data-country="' . $this->getTitle($v['country_id']) . '" >' . $v['title'] . '</option>';
+					$html .= '<option data-label="City" data-number_tour="' . $total_tour_city . '" data-slug="' . strtolower($v['slug']) . '" data-strtolower_title="' . strtolower($v['title']) . '" value="country-' . $v['country_id'] . '-city-' . $v[$clsCity->pkey] . '" data-country="' . $this->getTitle($v['country_id']) . '" >' . $v['title'] . '</option>';
 				}
 
 				++$j;

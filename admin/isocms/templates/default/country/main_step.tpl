@@ -40,6 +40,22 @@
 								</div>
 							</div>
 						</div>
+						<div class="inpt_tour">
+							<label class="col-form-label" for="why_image">
+								{$core->get_Lang('Why Image')} ({$core->get_Lang('Standard image size')}: 456x447)
+							</label>
+							<div class="fieldarea">
+								<div class="row">
+									<div class="col-md-6 col-sm-12">
+										<input class="text_32 border_aaa bold" type="text" id="why_image" name="iso-why_image" value="{$oneItem.why_image}" style="float: right;width: 85%;" onClick="loadHelp(this)" readonly>
+										<a style="float:left" href="#" class="ajOpenDialog" isoman_for_id="why_image" isoman_name="why_image"><img src="{$URL_IMAGES}/general/folder-32.png" border="0" title="Open" alt="Open" /></a>
+									</div>
+									<div class="col-sm-12 col-md-6">
+										<img id="isoman_show_why_image" class="float-left mr-3" src="{$oneItem.why_image}" width="480" height="360" />
+									</div>
+								</div>
+							</div>
+						</div>
 						{elseif $currentstep=='basic'}
 						<div class="inpt_tour">
 							<h3 class="title_box">{$core->get_Lang('Basic')}</h3>
@@ -312,7 +328,6 @@
 								</div>
 							</div>
 						</div>
-
 						<div class="inpt_tour">
 							<label class="col-form-label" for="title">
 								{$core->get_Lang('Stay image vertical')} ({$core->get_Lang('Size')}: 166x261)
@@ -340,20 +355,25 @@
 								</div>
 							</div>
 						</div>
-
 						{elseif $currentstep=='month_country'}
-						{if $list_month}
-						{foreach from=$list_month key=key item=item}
+						{if $arr_month_country}
+
+
+						{foreach from=$arr_month_country key=key item=item}
+						{assign var="month_country_id" value=$item.month_country_id}
+						{assign var="title" value=$item.title}
+
 						<div class="inpt_tour">
 							<label for="month_country_{$key}">
-								{$core->get_Lang($item)}
+								{$core->get_Lang($title)}
 							</label>
 							<textarea style="width:100%" table_id="{$pvalTable}" name="intro[]" id="month_country_{$key}_{time()}" data-column="iso-month_country_{$key}" class="textarea_intro_editor_simple" cols="255" rows="2">
-								{* {$oneItem.header_description} *}
+								{$clsMonthCountry->getIntro($month_country_id)} 
 							</textarea>
-							<input type="hidden" name="month[]" value="{$key}">
 						</div>
 						{/foreach}
+
+
 						{/if}
 						<!-- <div class="inpt_tour">
 							<label for="month_country_1">

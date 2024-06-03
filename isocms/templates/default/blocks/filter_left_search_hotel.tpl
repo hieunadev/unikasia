@@ -89,8 +89,7 @@
             </div>
             <div class="box_filter_body">
                 <div class="filter_list_item nsdt_filter-price-hotel">
-                    <div class="nsdt_checkPriceHotel">
-
+                    {*<div class="nsdt_checkPriceHotel">
                         {section name=i loop=$lstPriceRange}
                             {assign var=check value=$clsISO->checkInArray($price_range,$lstPriceRange[i].hotel_price_range_id)}
                             {assign var=checkPriceRange value={$queryString}}
@@ -117,15 +116,15 @@
                         <div class="nsdt_getPriceHotelTitle" data-id="{$lstPriceRange[i].hotel_price_range_id}">
                             {$PriceRange_title[i]}
                         </div>
-                    {/section}
-
+                    {/section}*}
                     <div class="price-hotel-items">
-                        <div id="price_0" class="price-hotel-itemMin"></div>
-                        <div id="price_1" class="price-hotel-itemMax"></div>
+                       <input type="text" id="price_0" class="price-hotel-itemMin" name="min_price" value="${$min_price}">
+                        <input type="text" id="price_1" class="price-hotel-itemMax" name="max_price" value="${$max_price}">
+{*                        <div id="price_0" class="price-hotel-itemMin">$0</div>*}
+{*                        <div id="price_1" class="price-hotel-itemMax">$500</div>*}
                     </div>
-
-                    <div id="slider-price2" class="mb10"></div>
-
+{*                    <div id="slider-price2" class="mb10"></div>*}
+                    <div id = "slider-3"></div>
                 </div>
             </div>
         </div>
@@ -185,13 +184,16 @@
 </div>
 <script>
     var max_price_value = '{$price_range_max}';
-    var min_price_value = '{$price_range_min}';
-    var min_price_search = '{$min_price_search}';
+    /* var min_price_value = '{$price_range_min}';
+      var min_price_search = '{$min_price_search}';
     var max_price_search = '{$max_price_search}';
     var price_range_title_min = '{$lstPriceRange[0].title}';
-    var price_range_title_max = '{$lstPriceRange[count($lstPriceRange)-1].title}';
+    var price_range_title_max = '{$lstPriceRange[count($lstPriceRange)-1].title}';*/
     var price_range = [];
     var PriceRange_title = {};
+
+    var min_price = '{$min_price}'
+    var max_price = '{$max_price}'
     $('.nsdt_getPriceHotel').each(function(index, element) {
         price_range.push(parseFloat($(element).text().trim()));
     });
@@ -209,6 +211,24 @@
 
 {literal}
     <script>
+        $(function() {
+            if (min_price === '') min_price = 0
+            $( "#slider-3" ).slider({
+                range:true,
+                min: 0,
+                max: parseInt(max_price_value),
+                values: [parseInt(min_price), parseInt(max_price)],
+                slide: function( event, ui ) {
+                    $("#price_0").val("$" + ui.values[ 0 ]);
+                    $("#price_1").val("$" + ui.values[ 1 ]);
+                },
+                stop: function(event, ui) {
+                    $("#price_0").val("$" + $( "#slider-3" ).slider( "values", 0 ));
+                    $("#price_1").val("$" + $( "#slider-3" ).slider( "values", 1 ) );
+                    $('#search_hotel_left').submit();
+                }
+            });
+        });
 
         $(".filter_cities").find(".checkSizeFilter:gt(4)").hide();
         $(".filter_property").find(".checkSizeFilter:gt(4)").hide();
@@ -235,7 +255,7 @@
         $('input[name="country[]"]').on('click', function() {
             window.location.href = $(this).siblings('label').find('a.filter_link').attr('href');
         });
-        $(function() {
+/*        $(function() {
             var minPrice = Math.min.apply(null, price_range);
             var maxPrice = Math.max.apply(null, price_range);
 
@@ -281,6 +301,7 @@
                     $('#search_hotel_left').submit();
                 }
             });
+
             function updatePriceElements() {
                 let minPrice = (min_price_search.length !== 0) ? min_price_search : Math.min.apply(null, price_range);
                 let maxPrice = (max_price_search.length !== 0) ? max_price_search : Math.max.apply(null, price_range);
@@ -294,7 +315,7 @@
             updatePriceElements();
         });
         $("#price_0").text($("#slider-price2").slider("values", 0));
-        $("#price_1").text($("#price-range2").slider("values", 1));
+        $("#price_1").text($("#price-range2").slider("values", 1));*/
 
 
         $(function() {

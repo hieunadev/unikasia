@@ -24,13 +24,13 @@
                     {foreach from=$list_travel_style key=key item=item}
                     {assign var=category_country_id value=$item.category_country_id}
                     <div class="des_travel_style_item item">
-                        <a href="{$clsTourCategory->getLink($item.cat_id)}" title="{$clsCategory_Country->getTitle($item.category_country_id)}">
+                        <a href="{$clsCategory_Country->getLink2($category_country_id)}" title="{$clsCategory_Country->getTitle($item.category_country_id)}">
                             <div class="des_travel_style_item_image">
                                 <img src="{$clsCategory_Country->getImageVertical($category_country_id, 294, 462)}" width="294" height="462" alt="{$clsCategory_Country->getTitle($item.category_country_id)}">
                             </div>
                             <div class="des_travel_style_item_intro">
                                 <div class="des_travel_style_item_title">
-                                    <h3><a href="{$clsTourCategory->getLink($item.cat_id)}" title="{$clsCategory_Country->getTitle($item.category_country_id)}">{$clsTourCategory->getTitle($item.cat_id)}</a></h3>
+                                    <h3><a href="{$clsCategory_Country->getLink2($category_country_id)}" title="{$clsCategory_Country->getTitle($item.category_country_id)}">{$clsTourCategory->getTitle($item.cat_id)}</a></h3>
                                 </div>
                                 <div class="des_travel_style_item_description">
                                     {$clsCategory_Country->getContent($category_country_id)}

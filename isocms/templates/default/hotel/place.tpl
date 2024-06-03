@@ -12,6 +12,7 @@
                     alt="{$core->get_Lang('Hotels in')} {$TD}" />
             {/if}
         {/if}
+            <div class="overlay_banner_hotel"></div>
         </div>
         {$core->getBlock('box_form_search_hotel')}
     </div>
@@ -112,7 +113,6 @@
 
 </div>
 
-
 {$core->getBlock('customer_review')}
 {$core->getBlock('top_attraction')}
 {$core->getBlock('also_like')}
@@ -147,19 +147,29 @@
         	return false;
         }
         $(function(){
-        	if($('.short_content').length){
-        		$('.short_content').each((_i, _elem) => {
-        			var _max_height = $(_elem).data('height'),
-        					_origin_height = $(_elem).outerHeight(false);
-        			if(parseInt(_max_height) < _origin_height){
-        				$(_elem)
-        						.height(_max_height)
-        						.addClass('shorted')
-        						.append('<a class="more" max_height="'+_max_height+'" onClick="toggleShorted(this,event)">'+$_View_more+'</a>');
-        			}
-        		});
-        	}
+            if($('.short_content').length){
+                $('.short_content').each((_i, _elem) => {
+                    var _max_height = $(_elem).data('height'),
+                        _origin_height = $(_elem).outerHeight(false);
+                    if(parseInt(_max_height) < _origin_height){
+                        $(_elem)
+                            .height(_max_height)
+                            .addClass('shorted')
+                            .append('<a class="more" max_height="'+_max_height+'" onClick="toggleShorted(this,event)">'+$_View_more+'</a>');
+                    }
+                });
+            }
         });
+
+        const textContainer = document.querySelector('.intro_top');
+        const toggleBtn = document.querySelector('.toggle-btn');
+
+        if (textContainer.scrollHeight > textContainer.offsetHeight) {
+            toggleBtn.style.display = 'block';
+            toggleBtn.addEventListener('click', () => {
+                textContainer.classList.toggle('show-all');
+                toggleBtn.innerHTML = textContainer.classList.contains('show-all') ? 'View Less <i class="fa-solid fa-angle-up"></i>' : 'View More <i class="fa-solid fa-angle-down"></i>';            });
+        }
     </script>
 {/literal}
 <script src="{$URL_JS}/jquery.countdown.min.js?v={$upd_version}"></script>

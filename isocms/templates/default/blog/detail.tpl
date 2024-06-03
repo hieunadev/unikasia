@@ -79,7 +79,7 @@
 
                 <div class="blog_info">
 
-                    <p class="country_cat"><a href="/blog/{$regionBlog}" title="{$regionBlog}">{$regionBlog}</a> | <a href="/blog/{$cateBlogSlug}" title="{$cateBlog}">{$cateBlog}</a></p>
+                    <p class="country_cat"><a href="/blog/{$regionBlog}" title="{$regionBlog}">{$regionBlog}</a> | <a href="/blog?blogcat_id={$lstBlogCat[i].blogcat_id}" title="{$lstBlogCat[i].title}">{$cateBlog}</a></p>
 
                     <h1 class="title text3line">{$title_blog}</h1>
 
@@ -186,15 +186,18 @@
 
             <div class="col-sm-3">
                 <div class="list_search_filter">
-                    <form action="/blog" method="GET">
+			<form class="form_search form_box_search" id="countryForm" method="POST" action="">
+						 <input type="hidden" name="action" value="search">
                         <div class="search-item d-none d-sm-flex mb-3">
                             <button class="search-item-icon" type="submit">
                                 <i class="fa-regular fa-magnifying-glass"></i>
                             </button>
                             <div class="search-item-txt">
-                                <input class="border-0 input-search text-dark" type="text"
-                                       value="{$data.search|escape:'html'}"
-                                       name="search" placeholder="Search"/>
+								<input type="hidden" name="action" value="search">
+                                <input type="text" name="keyword" 
+                                       value="{$keyword}" autocomplete="off" class="border-0 input-search text-dark"  maxlength="255" placeholder="{$core->get_Lang('Search')}">
+								<input type="hidden" name="search_blog" value="search_blog">
+
                             </div>
                         </div>
 
@@ -217,7 +220,7 @@
 							{section name=i loop=$lstBlogCat}
 
                                 <div class="form-check2">
-									<a href="/blog/{$lstBlogCat[i].slug}" title="{$lstBlogCat[i].title}">
+									<a href="/blog?blogcat_id={$lstBlogCat[i].blogcat_id}" title="{$lstBlogCat[i].title}">
                   			 <label class="form-check-label custom-control-label {if $cat_id eq $lstBlogCat[i].blogcat_id }active{/if}" for="blogcat_id_{$lstBlogCat[i].blogcat_id}">{$lstBlogCat[i].title}</label>
 									</a>
                                 </div>

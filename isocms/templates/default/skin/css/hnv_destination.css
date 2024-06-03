@@ -649,10 +649,10 @@ body {
     margin-bottom: 120px;
 }
 .hnv_hide {
-    display: none;
+    display: none !important;
 }
 .hnv_show {
-    display: block;
+    display: block !important;
 }
 .hnv_active {
     border-bottom: 3px solid #ffa718 !important;

@@ -795,7 +795,7 @@
         });
         // Show data .nav-link tương ứng khi load trang
         $('.hnv_hide').hide();
-        $('.des_tailor_detail_' + mod + '_' + act).show();
+        $('.des_tailor_detail_' + mod + '_' + act).removeClass('hnv_hide').addClass('hnv_show');
         // // Xử lý sự kiện click .nav-link
         // $('.nav-link').click(function(e) {
         //     e.preventDefault();

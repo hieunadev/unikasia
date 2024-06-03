@@ -137,6 +137,11 @@
                                 </div>
                             </div>
                         </div>
+                        {elseif $currentstep=='config'}
+                        <div class="inpt_tour">
+                            <label for="trvs_why_description">{$core->get_Lang('Travel style why description')}</label>
+                            <textarea style="width:100%" table_id="{$pvalTable}" name="iso-trvs_why_description" class="textarea_intro_editor" data-column="iso-trvs_why_description" id="textarea_trvs_why_description{$now}" cols="255" rows="2">{$oneItem.trvs_why_description}</textarea>
+                        </div>
                         {elseif $currentstep=='why'}
                         <div class="inpt_tour">
                             <label for="intro_title">{$core->get_Lang('Country')} <span class="required_red">*</span></label>
@@ -179,10 +184,10 @@
                             </label>
                             <input class="input_text_form required" data-table_id="{$pvalTable}" name="title" value="{$oneItem.title}" maxlength="255" type="text" />
                         </div>
-                        <div class="inpt_tour">
+                        <!-- <div class="inpt_tour">
                             <label for="intro">{$core->get_Lang('Intro')}</label>
                             <textarea style="width:100%" table_id="{$pvalTable}" name="iso-intro" class="textarea_intro_editor" data-column="iso-intro" id="textarea_intro{$now}" cols="255" rows="2">{$oneItem.intro}</textarea>
-                        </div>
+                        </div> -->
                         <div class="inpt_tour">
                             <label for="content">{$core->get_Lang('Content')} <span class="required_red">*</span></label>
                             <textarea style="width:100%" table_id="{$pvalTable}" name="iso-content" class="textarea_intro_editor required" data-column="iso-content" id="textarea_content{$now}" cols="255" rows="2">{$oneItem.content}</textarea>

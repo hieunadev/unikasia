@@ -2,16 +2,32 @@
 	<div class="sidebar">
 		{if $show ne 'Region' && $clsISO->getCheckActiveModulePackage($package_id,'blog','category','default') && $lstCategory}
 		<div class="linkDestination">
+		 <div class="filter-articles">
 			<h2 class="title_box">{$core->get_Lang('Categories')}</h2>
+							{section name=i loop=$lstBlogCat}
+                                <div class="form-check2">
+									<a href="/blog?blogcat_id={$lstBlogCat[i].blogcat_id}" title="{$lstBlogCat[i].title}">
+                  			 <label class="form-check-label custom-control-label {if $cat_id eq $lstBlogCat[i].blogcat_id }active{/if}" for="blogcat_id_{$lstBlogCat[i].blogcat_id}">{$lstBlogCat[i].title}</label>
+									</a>
+                                </div>
+								{/section}
+
+                                <a class="view-more2" id="viewMore">View more</a>
+                                <button id="hideCities" style="display:none;">Hide Cities</button>
+
+                            </div>
+<!--
 			<ul>
 				{section name=i loop=$lstCategory}
 				{assign var = title value = $lstCategory[i].title}
 				<li class="category-link {if $cat_id eq $lstCategory[i].blogcat_id}active{/if}"><a data-abc="{$country_id},{$city_id},{$lstCategory[i].blogcat_id}" href="{$clsBlogCategory->getLink($lstCategory[i].blogcat_id,$lstCategory[i])}" title="{$title}">{$title}</a></li>
 				{/section}
 			</ul>
+-->
 		</div>
 		<div class="mb30"></div>
 		{/if}
+		
 		{if $lstTourExtension && $clsISO->getCheckActiveModulePackage($package_id,'blog','blog_tour_related','customize')}
 		<div class="tour_extension_box">
 			<h2 class="title_box">{$core->get_Lang('Tour Related')}</h2>
@@ -56,18 +72,37 @@
 		</div>
 		<div class="mb30"></div>
 		{/if}
+			
 		{if $lstPopularBlog}
 		<div class="blogPopular">
-			<h2 class="title_box">{$core->get_Lang('Popular Blogs')}</h2>
-			<ul class="listBlog">
-				{section name=i loop=$lstPopularBlog}
+			<h2 class="title_box2">{$core->get_Lang('Popular Blogs')}</h2>
+			{section name=i loop=$lstPopularBlog}
 				{assign var=titleBlog value=$clsBlog->getTitle($lstPopularBlog[i].blog_id,$lstPopularBlog[i])}
+			<div class="row featured-blog">
+ 				<div class="col-lg-5 overflow-hidden">
+					<div class="bloglastest">
+ 						<a href="{$clsBlog->getLink($lstPopularBlog[i].blog_id)}">
+									<div class="featuredblog-img overflow-hidden">
+									<img class="img_featureblog" src="{$clsBlog->getImage($lstPopularBlog[i].blog_id, 83, 83)}"
+                                                 alt="featured-blog"/></a>
+									</div>
+                            </div>
+							</div>
+                            <h3 class="col-lg-7 mt-log-0 txt_featuredblogs">
+                                <a href="{$clsBlog->getLink($lstPopularBlog[i].blog_id)}">{$lstPopularBlog[i].title}</a></h3>
+
+                        </div>
+			{/section}
+			
+<!--
+			<ul class="listBlog">
 				<li><a href="{$clsBlog->getLink($lstPopularBlog[i].blog_id,$lstPopularBlog[i])}" title="{$titleBlog}">{$titleBlog}</a></li>
-				{/section}
 			</ul>
+-->
 		</div>
 		<div class="mb30"></div>
 		{/if}
+			
 		{if $mod eq 'blog' and $act eq 'detail' and $clsISO->getCheckActiveModulePackage($package_id,'blog','tag','customize')}
 		{assign var=listTagBlog value=$clsBlog->getListTag($blog_id,$blogItem)}
 		{if $listTagBlog ne ''}
@@ -142,16 +177,60 @@
 	</div>
 </div>
 {literal}
-<script>
-$(function () {
-	$(document).on("click",".view-more-tour-relate",function(){
-		$(".box_blog_tour_relate:hidden").show();
-		$(this).hide();	
+    <script>
+		
+		document.addEventListener('DOMContentLoaded', () => {
+	  const viewMoreLink = document.getElementById('viewMore');
+	  const cityCheckboxes = document.querySelectorAll('.filter-checkbox2 > .form-check2');
+
+	  const maxVisibleCheckboxes = 5;
+	  let isExpanded = false;
+
+  function updateViewMore() {
+    const visibleCheckboxes = cityCheckboxes.length;
+
+    if (visibleCheckboxes > maxVisibleCheckboxes) { // Kiểm tra xem có nhiều hơn 5 checkbox
+      viewMoreLink.style.display = 'block';         // Hiển thị nút nếu có nhiều hơn 5
+      viewMoreLink.textContent = isExpanded ? "View less" : "View more";
+      viewMoreLink.classList.remove('disabled');
+    } else {
+      viewMoreLink.style.display = 'none';          // Ẩn nút nếu có 5 hoặc ít hơn
+      isExpanded = false;                           // Đặt lại trạng thái isExpanded 
+      cityCheckboxes.forEach(checkbox => {         // Đảm bảo tất cả checkbox được hiển thị
+        checkbox.style.display = 'block';
+      });
+    }
+  }
+			cityCheckboxes.forEach((checkbox, index) => {
+      if (index >= maxVisibleCheckboxes) {
+        checkbox.style.display = isExpanded ? 'block' : 'none';
+      } else {
+        checkbox.style.display = 'block'; // Hiển thị 5 checkbox đầu tiên
+      }
+    });
+  
+
+	  viewMoreLink.addEventListener("click", () => {
+		isExpanded = !isExpanded;
+		cityCheckboxes.forEach((checkbox, index) => {
+		  if (index >= maxVisibleCheckboxes) {
+			checkbox.style.display = isExpanded ? 'block' : 'none';
+		  }
+		});
+		updateViewMore();
+	  });
+			
+			cityCheckboxes.forEach((checkbox, index) => {
+    if (index >= maxVisibleCheckboxes) {
+      checkbox.style.display = 'none'; // Ẩn các checkbox vượt quá giới hạn ban đầu
+    }
+  });
+
+	  updateViewMore(); // Gọi hàm khi trang tải xong để cập nhật trạng thái ban đầu
 	});
-	$(document).on("click",".view-more-cruise-relate",function(){
-		$(".cruise-relate:hidden").show();
-		$(this).hide();	
-	}); 
-});
-</script>
+		
+		
+
+
+    </script>
 {/literal}

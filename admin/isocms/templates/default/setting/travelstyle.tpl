@@ -40,13 +40,13 @@
                         <textarea style="width:100%" class="textarea_intro_editor_simple" name="iso-{$TrvsWhyTitle}" id="TrvsWhyTitle" cols="255" rows="2">{$clsConfiguration->getValue($TrvsWhyTitle)}</textarea>
                     </div>
                 </div>
-                <div class="row-span">
+                <!-- <div class="row-span">
                     <div class="fieldlabel">{$core->get_Lang('Description')}</div>
                     {assign var=TrvsWhyDescription value=TrvsWhyDescription}
                     <div class="fieldarea">
                         <textarea style="width:100%" class="textarea_intro_editor_simple" name="iso-{$TrvsWhyDescription}" id="TrvsWhyDescription" cols="255" rows="2">{$clsConfiguration->getValue($TrvsWhyDescription)}</textarea>
                     </div>
-                </div>
+                </div> -->
             </fieldset>
             <fieldset>
                 <legend>{$core->get_Lang("Travel style by country")}</legend>

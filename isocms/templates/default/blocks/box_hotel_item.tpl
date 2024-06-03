@@ -57,19 +57,18 @@
             <div class="box_body-service">
                 {if isset($hotelFacility) && $hotelFacility}
                     {section name=i loop=$hotelFacility}
-                        {if $clsProperty->getImage($hotelFacility[i]) && $smarty.section.i.index lt 5}
-                            <img data-bs-title="{$clsProperty->getTitle($hotelFacility[i])}" data-bs-custom-class="custom-tooltip"
-                                data-bs-toggle="tooltip" data-bs-placement="top" src="{$clsProperty->getImage($hotelFacility[i])}"
-                                alt="{$clsProperty->getTitle($hotelFacility[i])}" />
+                        {if $smarty.section.i.index lt 5}
+                            <img src="{$clsProperty->getImage($hotelFacility[i])}"
+                                alt="{$clsProperty->getTitle($hotelFacility[i])}" onerror="this.src='{$URL_IMAGES}/none_image.png'"/>
                         {/if}
                     {/section}
                     {if $hotelFacility|@count > 5}
-                        <div data-bs-title="{$core->get_Lang('More')}" data-bs-custom-class="custom-tooltip"
-                            data-bs-toggle="tooltip" data-bs-placement="top" class="box_body-service-item">
-                            +{$hotelFacility|@count-5}</div>
+                        <div title="Show more" data-bs-custom-class="custom-tooltip"
+                         data-bs-toggle="tooltip" data-bs-placement="top" class="box_body-service-item">
+                        +{$hotelFacility|@count-5}</div>
+{*                    <div class="content_{$hotel_id}"></div>*}
                     {/if}
                 {/if}
-
             </div>
         </div>
         <div class="btn_view_detail phone"><a class="bg_main" href="{$link}"
@@ -112,8 +111,6 @@
 
         </div>
     </div>
-
-
     <div class="modal fade mapModal" id="mapModal{$hotel_id}" tabindex="-1" aria-labelledby="mapModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">

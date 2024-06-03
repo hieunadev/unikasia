@@ -49,6 +49,11 @@
 							 {$clsISO->makeSelectNumber2(30,$number_day,"$day,$days")}
 						</select>
 					</div>
+					<div class="form-group">
+						<select name="country_id" class="form-control iso-selectbox" data-width="100%">
+							 {$clsCountry->makeSelectboxOption($country_id)}
+						</select>
+					</div>
 					<div class="form-group form-button">
 						<button type="submit" class="btn btn-main" id="findtBtn">Tìm kiếm</button>
 						<input type="hidden" name="filter" value="filter" />

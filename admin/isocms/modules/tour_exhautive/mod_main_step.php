@@ -38,6 +38,9 @@ function getFrame($blog_id = null, $obj = '')
 					'intro' => array(
 						'name' => $core->get_Lang('Intro')
 					),
+					'config' => array(
+						'name' => $core->get_Lang('Config')
+					),
 					// 'longText' => array(
 					// 	'name' => $core->get_Lang('Long text')
 					// ),
@@ -410,6 +413,19 @@ function default_ajSaveMainStep()
 		}
 		$clsWhyTravelstyle	= 	new WhyTravelstyle();
 		$clsWhyTravelstyle->updateOne($table_id, $arr_update);
+	} else if ($currentstep == 'config') {
+		$arr_update		= 	[
+			'upd_date' 			=> 	time(),
+			'user_id_update'	=>	addslashes($core->_SESS->user_id)
+		];
+		#
+		foreach ($_POST as $key => $val) {
+			$tmp	= 	explode('-', $key);
+			if ($tmp[0]	== 	'iso') {
+				$arr_update[$tmp[1]]	= 	addslashes($val);
+			}
+		}
+		$clsClassTable->updateOne($table_id, $arr_update);
 	} else if ($currentstep == 'shortText') {
 		$intro = Input::post('iso-intro', '');
 		$arr_update['intro'] = addslashes($intro);

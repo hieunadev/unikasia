@@ -1,6 +1,6 @@
 <?php
 function default_default(){
-	global $assign_list, $_CONFIG, $core, $dbconn, $mod, $act, $_LANG_ID,$title_page,$description_page,$keyword_page,$domain,$country_id,$city_id,$cat_id,$extLang,$clsISO,$package_id;
+	global $assign_list, $_CONFIG, $core, $dbconn, $mod, $act, $_LANG_ID,$title_page,$description_page,$keyword_page,$domain,$country_id,$city_id,$cat_id,$extLang,$clsISO,$package_id, $blogcat_search_id;
 	#Blog;
 	$clsBlog = new Blog(); $assign_list['clsBlog']=$clsBlog;
 	$clsCountryEx = new Country(); $assign_list['clsCountryEx']=$clsCountryEx;
@@ -29,21 +29,17 @@ function default_default(){
 	$assign_list['type'] = $type;
 	$listCountry = $clsCountryEx->getAll("is_trash=0 order by order_no",$clsCountryEx->pkey.',slug,title');
 	$assign_list['listCountry'] = $listCountry;
-	
+
+	if (isset($_POST["filter"]) && $_POST["filter"] == "filter"){
+		$link = $clsISO->getLink("blog") . "";
+		$link .= !empty($_POST["slug_country"]) ? "/". $_POST["slug_country"] : "";
+		$link .= !empty($_POST['blogcat_id'])?'?blogcat_id='.$clsISO->makeSlashListFromArrayComma($_POST['blogcat_id']):'';
+		header('Location:'. trim($link));
+	}
+
 	if ($show=='Default'){
-		if (isset($_POST["filter"]) && $_POST["filter"] == "filter"){
-			header('Location:'. $clsISO->getLink("blog") . "/".$_POST["slug_country"]);
-			exit();
-		}
 
 	}else{
-		if (isset($_POST["filter"]) && $_POST["filter"] == "filter"){
-			$link = $clsISO->getLink("blog") . "/";
-			$link .= !empty($_POST["slug_country"]) ? $_POST["slug_country"] : "";
-			$link .= (!empty($_POST['blogcat_id']))?'&blogcat_id='.$clsISO->makeSlashListFromArrayComma($_POST['blogcat_id']):'';
-			header('Location:'. trim($link));
-			exit();
-		}
 		$slug_country = isset($_GET['slug_country'])?$_GET['slug_country']:'';
 		$assign_list["slug_country"] = $slug_country;
 		$res = $clsCountryEx->getAll("is_trash=0 and is_online=1 and slug='$slug_country' LIMIT 0,1",$clsCountryEx->pkey.',slug,title');
@@ -61,6 +57,14 @@ function default_default(){
 	$country_id = $res[0][$clsCountryEx->pkey];
 	$country_id_1 = !empty($country_id) ? " and country_id = $country_id" : '';
 	$cond = "is_trash=0 and is_online=1 $country_id_1";
+	
+	$slug_category = isset($_GET['slug_category'])?$_GET['slug_category']:'';
+	$res_1 = $clsBlogCategory->getAll("is_trash=0 and is_online=1 and slug='$slug_category' LIMIT 0,1",$clsBlogCategory->pkey.',slug,title');
+	$blogcat_id = $res_1[0][$clsBlogCategory->pkey];
+	$blogcat_id_1 = !empty($blogcat_id) ? "and blogcat_id = $blogcat_id" : '';
+	$cond_1 = "is_trash=0 and is_online=1 $blogcat_id_1";
+	
+
 
 	$order_by = " order by order_no ASC";
 	$limit_left = " limit 2";
@@ -114,7 +118,97 @@ function default_default(){
 		}else{
 			$link_page = $extLang.'/blog/'.$clsCountryEx->getSlug($country_id,$oneItemCountry).'/'.$clsRegion->getSlug($region_id,$oneItemRegion).'-rg'.$region_id;
 		}
+
 	}
+			if(isset($_POST['search_blog']) &&  $_POST['search_blog']=='search_blog'){
+        if($show=='Default'){
+             $link= $clsISO->getLink('blog');
+        }
+        
+        $link.='?action=search';
+        $link.=(!empty($_POST['keyword']))?'&keyword='.addslashes($_POST['keyword']):'';
+        
+        if($_POST['country_id']>0){
+             header('location:'.$clsCountryEx->getLinkGuide($_POST['country_id']));
+             exit();
+        }
+        if($_POST['cat_id']>0){
+             header('location:'.$clsBlogCategory->getLinkGuide($_POST['cat_id']));
+             exit();
+        }
+        
+        
+        //print_r($link); die();
+        header('location:'.$link);
+        exit();
+    }
+	
+//	if(empty($blogcat_search_id)){
+//        $blogcat_search_id =$cat_id;
+//    }
+//    $smarty->assign('blogcat_search_id',$blogcat_search_id);
+//
+//
+//    if(empty($tag_search_id)){
+//        $tag_search_id =$tag_id;
+//    }
+//    $smarty->assign('tag_search_id',$tag_search_id);
+
+
+	$keyword = isset($_GET['keyword']) ? $_GET['keyword'] : '';$assign_list['keyword'] = $keyword;
+    $blogcat_search_id = isset($_GET['cat_id']) ? $_GET['cat_id'] : 0;
+    if(empty($blogcat_search_id)){
+        $blogcat_search_id =$cat_id;
+    }
+    
+    $assign_list['blogcat_search_id'] = $blogcat_search_id;
+    $tag_search_id = isset($_GET['tag_id']) ? $_GET['tag_id'] : 0; $assign_list['tag_search_id'] = $tag_search_id;
+    
+    
+    if(!empty($cat_id)){
+         $cond.= " and cat_id ='$cat_id'";
+    }
+    
+    if(!empty($keyword)){
+		$cond.=" and (title like '$keyword' or slug like '%".$core->replaceSpace($keyword)."%')";
+	}
+    if(!empty($blogcat_search_id)){
+         $cond.= " and cat_id IN ($blogcat_search_id)";
+    }
+    
+    if(!empty($tag_search_id)){
+		$tag_ID = explode(',',$tag_search_id);
+		$cond.=" and (";
+		for($i=0;$i<count($tag_ID);$i++) {
+			if($i==0 && count($tag_ID)==1){
+				$cond.=" list_tag_id like '%".$tag_ID[$i]."%'";
+			}elseif(count($tag_ID)>1 && $i< (count($tag_ID)-1)){
+					$cond.=" list_tag_id like '%|".$tag_ID[$i]."|%' or ";
+			}else{
+				$cond.=" list_tag_id like '%|".$tag_ID[$i]."|%'";
+			}
+		}
+		$cond.=")";
+	}
+	
+	//print_r($cond);die();
+	$order_by = " order by order_no ASC"; 
+	$allItem = $clsBlog->getAll($cond,$clsBlog->pkey);
+	$totalRecord =$allItem?count($allItem):'0';
+	//echo $totalRecord; die;
+
+    
+    $lnk=$_SERVER['REQUEST_URI'];
+	if(isset($_GET['page'])){
+		$tmp = explode('&',$lnk);
+		$n = count($tmp)-1;
+		$la_it = '&'.$tmp[$n];
+		$str_len = -strlen($la_it);
+		$link_page = substr($lnk, 0, $str_len);
+	}else{
+		$link_page = $lnk;
+	}
+	
 	$config = array(
 		'total'	=> $totalRecord,
 		'number_per_page'	=> $recordPerPage,
@@ -171,6 +265,10 @@ function default_default(){
 			$assign_list["lstBlogRecent"] = $lstBlogRecent;
 		}
 	}
+	
+	
+	
+
 	
     /*=============Title & Description Page==================*/
 	if($show=='Default'){
@@ -311,7 +409,7 @@ function default_cat(){
 
 function default_tag(){
 	global $assign_list, $_CONFIG, $core, $dbconn, $mod, $act, $_LANG_ID,$title_page,$description_page,$keyword_page,$extLang;
-	global $clsISO,$package_id;
+	global $clsISO,$package_id, $blogItem;
 	#
 	$show = isset($_GET['show']) ? $_GET['show'] : '';
 	$assign_list['show']=$show;
@@ -369,6 +467,16 @@ function default_tag(){
 	$assign_list['lstBlogs']=$lstBlogs;unset($lstBlogs);
 	$assign_list['page_view']=$page_view; unset($page_view);
 	$assign_list['totalPage'] = $clsPagination->getTotalPage();
+	
+	$blogItem = $clsBlog->getOne($blog_id,'cat_id,title,publish_date,upd_date,author,image,list_tag_id,author,intro,content,slug,intro, country_id');
+	$assign_list['blogItem']=$blogItem;
+	$cat_id=$blogItem['cat_id'];
+    $assign_list['cat_id']=$cat_id;
+	$country_id=$blogItem['country_id'];
+	$assign_list['country_id']=$country_id;
+	
+	$lstBlogCat = $clsBlogCategory->getAll("is_trash=0 and is_online=1 order by order_no ASC",$clsBlogCategory->pkey.',slug,title');
+	$assign_list['lstBlogCat'] = $lstBlogCat;
 	
     /*=============Title & Description Page==================*/
 	$title_page = $title_page.' | '.$core->get_Lang('blogs').' | '.PAGE_NAME;
@@ -449,6 +557,83 @@ function default_detail(){
 	
 	$clsTour = new Tour(); $assign_list['clsTour'] = $clsTour;
 	$assign_list['lstRelatedTour'] = $clsTour->getAll(" is_trash=0 and is_online=1 order by order_no DESC LIMIT 3");
+	
+	$keyword = isset($_GET['keyword']) ? $_GET['keyword'] : '';$assign_list['keyword'] = $keyword;
+    $blogcat_search_id = isset($_GET['cat_id']) ? $_GET['cat_id'] : 0;
+    if(empty($blogcat_search_id)){
+        $blogcat_search_id =$cat_id;
+    }
+    
+    $assign_list['blogcat_search_id'] = $blogcat_search_id;
+    $tag_search_id = isset($_GET['tag_id']) ? $_GET['tag_id'] : 0; $assign_list['tag_search_id'] = $tag_search_id;
+    
+    
+    if(!empty($cat_id)){
+         $cond.= " and cat_id ='$cat_id'";
+    }
+    
+    if(!empty($keyword)){
+		$cond.=" and (title like '$keyword' or slug like '%".$core->replaceSpace($keyword)."%')";
+	}
+    if(!empty($blogcat_search_id)){
+         $cond.= " and cat_id IN ($blogcat_search_id)";
+    }
+    
+    if(!empty($tag_search_id)){
+		$tag_ID = explode(',',$tag_search_id);
+		$cond.=" and (";
+		for($i=0;$i<count($tag_ID);$i++) {
+			if($i==0 && count($tag_ID)==1){
+				$cond.=" list_tag_id like '%".$tag_ID[$i]."%'";
+			}elseif(count($tag_ID)>1 && $i< (count($tag_ID)-1)){
+					$cond.=" list_tag_id like '%|".$tag_ID[$i]."|%' or ";
+			}else{
+				$cond.=" list_tag_id like '%|".$tag_ID[$i]."|%'";
+			}
+		}
+		$cond.=")";
+	}
+	
+	//print_r($cond);die();
+	$order_by = " order by order_no ASC"; 
+	$allItem = $clsBlog->getAll($cond,$clsBlog->pkey);
+	$totalRecord =$allItem?count($allItem):'0';
+	//echo $totalRecord; die;
+
+    
+    $lnk=$_SERVER['REQUEST_URI'];
+	if(isset($_GET['page'])){
+		$tmp = explode('&',$lnk);
+		$n = count($tmp)-1;
+		$la_it = '&'.$tmp[$n];
+		$str_len = -strlen($la_it);
+		$link_page = substr($lnk, 0, $str_len);
+	}else{
+		$link_page = $lnk;
+	}
+	
+	if(isset($_POST['search_blog']) &&  $_POST['search_blog']=='search_blog'){
+        $link= $clsISO->getLink('blog');
+        $link.='?action=search';
+        $link.=(!empty($_POST['keyword']))?'&keyword='.addslashes($_POST['keyword']):'';
+        
+        if($_POST['country_id']>0){
+             header('location:'.$clsCountryEx->getLinkGuide($_POST['country_id']));
+             exit();
+        }
+        if($_POST['cat_id']>0){
+             header('location:'.$clsBlogCategory->getLinkGuide($_POST['cat_id']));
+             exit();
+        }
+        
+        
+        //print_r($link); die();
+        header('location:'.$link);
+        exit();
+    }
+	
+	
+	
 
 	
 	/*=============Title & Description Page==================*/

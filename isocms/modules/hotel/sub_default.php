@@ -25,6 +25,9 @@ function default_default() {
 
 	$star_id = isset($_GET['star_id']) ? $_GET['star_id'] : '';
 	$type_hotel = isset($_GET['type_hotel']) ? $_GET['type_hotel'] : '';
+    $min_price = isset($_GET['min_price']) ? $_GET['min_price'] : "";
+
+    $max_price = isset($_GET['max_price']) ? $_GET['max_price'] : "";
 	$price_range = isset($_GET['price_range']) ? $_GET['price_range'] : ''; $assign_list["price_range"] = $price_range;
 	$priceRange = ($price_range != '')?explode(",",$price_range):array();
 	if(count($priceRange) > 0){
@@ -64,6 +67,23 @@ function default_default() {
 			WHERE is_trash=0 and property_id IN ({$type_hotel})
 		)";
 	}
+
+    if (!empty($min_price)) {
+        $cond .= " and price_avg >= $min_price";
+        $assign_list["min_price"] = $min_price;
+    } elseif (empty($min_price)) {
+        $assign_list["min_price"] = 0;
+    }
+
+    $max_price_value = $clsHotel->maxItem("price_avg", "lang_id='' and is_trash=0 and is_online=1");
+    $assign_list["price_range_max"] = $max_price_value - 1;
+    if (!empty($max_price)) {
+        $cond .= " and price_avg <= $max_price";
+        $assign_list["max_price"] = $max_price;
+    } else {
+        $assign_list["max_price"] = $max_price_value - 1;
+    }
+    
 	$keyword=(isset($_GET['key']) && !empty($_GET['key']))?$_GET['key']:'';
 	if($keyword!=''){
 		$cond.=" and (title like '$keyword' or slug like '%".$core->replaceSpace($keyword)."%')";
@@ -334,8 +354,6 @@ function default_place() {
 		$assign_list['lstCityRegionOther'] = $lstCityRegionOther;  unset($lstCityRegionOther);
 	}
 
-
-	
 	$recordPerPage = 8;
 	$currentPage = isset($_GET['page'])?intval($_GET['page']):1;
 
@@ -353,6 +371,8 @@ function default_place() {
 	$star_id = isset($_GET['star_id']) ? $_GET['star_id'] : array();
 	$type_hotel = isset($_GET['type_hotel']) ? $_GET['type_hotel'] : array();
 	$city = isset($_GET['city']) ? $_GET['city'] : "";
+	$min_price = isset($_GET['min_price']) ? $_GET['min_price'] : "";
+    $max_price = isset($_GET['max_price']) ? $_GET['max_price'] : "";
 
 	$price_range = isset($_GET['price_range']) ? $_GET['price_range'] : ''; $assign_list["price_range"] = $price_range;
 	$priceRange = ($price_range != '')?explode(",",$price_range):array();
@@ -382,7 +402,7 @@ function default_place() {
 		}
 		$cond .= " AND (hotel_id IN (SELECT hotel_id FROM default_hotel_room WHERE 1=1 ".$condPrice.") ".$cond_price_contact.") ";
 	}
-	
+
 	if(!empty($star_id)){
 		$cond .= " and star_id IN ({$star_id})";
 	}
@@ -392,6 +412,22 @@ function default_place() {
 			WHERE is_trash=0 and property_id IN ({$type_hotel})
 		)";
 	}
+
+    if (!empty($min_price)) {
+        $cond .= " and price_avg >= $min_price";
+        $assign_list["min_price"] = $min_price;
+    } elseif (empty($min_price)) {
+        $assign_list["min_price"] = 0;
+    }
+
+    $max_price_value = $clsHotel->maxItem("price_avg", "lang_id='' and is_trash=0 and is_online=1");
+    $assign_list["price_range_max"] = $max_price_value - 1;
+    if (!empty($max_price)) {
+        $cond .= " and price_avg <= $max_price";
+        $assign_list["max_price"] = $max_price;
+    } else {
+        $assign_list["max_price"] = $max_price_value - 1;
+    }
 
 	if(!empty($city)){
 		$cond .= " and city_id IN (".$city.")";
@@ -582,8 +618,6 @@ function default_place() {
 	$limit = " LIMIT $offset,$recordPerPage";
 
     $conditionArray = [];
-    $lstPriceRange=$clsHotelPriceRange->getAll("1=1 order by order_no asc",$clsHotelPriceRange->pkey.',title, max_rate');
-    $priceRangeIds = [];
 
     foreach ($queryParams as $key => $value) {
         if (strpos($value, ',') !== false) {
