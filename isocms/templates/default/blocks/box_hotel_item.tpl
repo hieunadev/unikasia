@@ -111,6 +111,7 @@
 
         </div>
     </div>
+<!--
     <div class="modal fade mapModal" id="mapModal{$hotel_id}" tabindex="-1" aria-labelledby="mapModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
@@ -127,5 +128,6 @@
             </div>
         </div>
     </div>
+-->
 
 </div>

@@ -4,8 +4,8 @@
 	<span class="breadcrumb-item txt_youarehere">You are here:</span>
 
   <ol class="breadcrumb">
-		<li class="breadcrumb-item"><a href="{PCMS_URL}" title="{$core->get_Lang('Home')}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{PCMS_URL}blog" title="{$core->get_Lang('Blog')}">Blog</a></li>
+		<li class="breadcrumb-item"><a href="{PCMS_URL}" title="{$core->get_Lang('Home')}">{$core->get_Lang(Home)}</a></li>
+                    <li class="breadcrumb-item"><a href="{PCMS_URL}blog" title="{$core->get_Lang('Blog')}">{$core->get_Lang(Blog)}</a></li>
                     {if $country_id}
                     <li class="breadcrumb-item active" aria-current="page">{$clsCountryEx->getTitle($country_id)}</li>{/if}
 
@@ -117,7 +117,7 @@
     <div class="container">
         <div class="row">
             <div class="last-blog-item col-sm-9">
-                <h2 class="title-lastest-blog">LASTEST BLOG</h2>
+                <h2 class="title-lastest-blog">{$core->get_Lang('LASTEST BLOG')}</h2>
                 {section name=i loop=$lstBlogs}
                     <div class="lastblog">
                         <div class="row">
@@ -130,7 +130,7 @@
 									</div>
                                 </a>
                             </div>
-														</div>
+							</div>
 
                             <div class="col-md-6">
                                 <h3 class="txt_titlebloglastest">
@@ -163,10 +163,10 @@
 
             <div class="col-sm-3">
                 <div class="list_filter">
-                    <h3 class="txt_filter">Filter</h3>
+                    <h3 class="txt_filter">{$core->get_Lang('Filter')}</h3>
                     <div id="selectedFilters" class="selected-filters"></div>
                     <button id="removeAllFilters" class="btn btn_removefilter">
-                        <i class="fa-light fa-trash" style="color: #434b5c;"></i>Remove all filters
+                        <i class="fa-light fa-trash" style="color: #434b5c;"></i>{$core->get_Lang('Remove all filters')}
                     </button>
 
                 </div>
@@ -188,7 +188,7 @@
                         </div>
 
                         <div class="filter-articles">
-                            <h3 class="list_fiter_articles">Filter Articles</h3>
+                            <h3 class="list_fiter_articles">{$core->get_Lang('Filter Articles')}</h3>
                             <div class="filter-radio">
                                 {section name=i loop=$listCountry}
                                     <div class="form-check">
@@ -214,13 +214,13 @@
                                                for="blogcat_id_{$lstBlogCat[i].blogcat_id}">{$lstBlogCat[i].title}</label>
                                     </div>
                                 {/section}
-                                <a class="view-more" id="viewMore">View more</a>
+                                <a class="view-more" id="viewMore">{$core->get_Lang('View more')}</a>
                             </div>
                         </div>
                         <input type="hidden" name="filter" value="filter">
                     </form>
                     <div class="featured-blogs">
-                        <h2 class="txt_featureblog">FEATURED BLOG</h2>
+                        <h2 class="txt_featureblog">{$core->get_Lang('FEATURED BLOG')}</h2>
                         {section name=i loop=$lstFeatureBlog}
                         <div class="row featured-blog">
                             <div class="col-lg-5 overflow-hidden">
@@ -247,7 +247,7 @@
 {if $lstBlogRecent}
 <section class="recentlyview">
     <div class="container">
-        <h2 class="title-recently-view">Recently viewed</h2>
+        <h2 class="title-recently-view">{$core->get_Lang('Recently viewed')}</h2>
         <div class="row blog-recently-view">
             {section name=i loop=$lstBlogRecent}
             <div class="col-sm-3">
@@ -274,6 +274,7 @@
         </div>
     </div>
 </section>
+	
     {/if}
 
 {$core->getBlock('customer_review')}

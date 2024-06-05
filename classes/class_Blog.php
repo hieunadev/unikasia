@@ -37,6 +37,42 @@ class Blog extends dbBasic
         }
         return $one['title'];
     }
+	
+	function getStarRating($blog_id,$one=null){
+        global $_LANG_ID,$core;
+        
+        if(!isset($one['rate_avg'])){
+			$one = $this->getOne($blog_id,'rate_avg,rate');	
+		}  
+        $total_rate = $one['rate'];	
+        $rateAVG = $one['rate_avg'];	
+        $percentRateAVG = ($rateAVG / 5)*100;
+        
+        $html='
+        <div class="star_flex star_blog">
+        <div class="star_icon">
+		<span class="rating"> 
+			<i class="fa fa-star-o star_no_yellow" aria-hidden="true"></i>
+			<i class="fa fa-star-o star_no_yellow" aria-hidden="true"></i>
+			<i class="fa fa-star-o star_no_yellow" aria-hidden="true"></i>
+			<i class="fa fa-star-o star_no_yellow" aria-hidden="true"></i>
+			<i class="fa fa-star-o star_no_yellow" aria-hidden="true"></i>
+		</span>
+		<span class="rating rating_yellow" style="width:'.$percentRateAVG.'%"> 
+			<i class="fa fa-star star_yellow" aria-hidden="true"></i>
+			<i class="fa fa-star star_yellow" aria-hidden="true"></i>
+			<i class="fa fa-star star_yellow" aria-hidden="true"></i>
+			<i class="fa fa-star star_yellow" aria-hidden="true"></i>
+			<i class="fa fa-star star_yellow" aria-hidden="true"></i>
+		</span>
+	</div>';
+    if($total_rate>0){
+       $html.='<div class="star_text">| '.$total_rate.' '.$core->get_Lang('voted').'</div>';
+    
+    }
+    $html.='</div>';
+    return $html;
+    }
 
     function getAuthor($blog_id, $one = null)
     {

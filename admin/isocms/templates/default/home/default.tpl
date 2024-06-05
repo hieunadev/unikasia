@@ -45,6 +45,7 @@
 			</div>
 		</div>
 	</div>
+	hello
 {*
 	{if $clsISO->getCheckActiveModulePackage($package_id,'booking','booking_tour','default')}
 	<div class="home_box performance_box">
@@ -156,7 +157,7 @@
 					</td>
 					<td class="customer_booking">
 						<p class="text1">{$clsBooking->getContactName($lstBooking[i].booking_id)}</p>
-						<p class="text2">{$clsBooking->getHTMLService($lstBooking[i].booking_id)}</p>
+{*						<p class="text2">{$clsBooking->getHTMLService($lstBooking[i].booking_id)}</p>*}
 						<span class="booking_code">{$lstBooking[i].booking_code}</span>
 					</td>
 					<td class="pay_booking">
@@ -168,7 +169,6 @@
 			</tbody>
 		</table>
 	</div>
-	
 </div>
 {literal}
 <script type="text/javascript">

@@ -113,7 +113,7 @@
         {if $mod eq 'destination' && $act eq 'travel_style' || $mod eq 'tour' && $act eq 'cat'}
         {$core->getBlock('des_header_travel_style')}
         {/if}
-        {if $mod eq 'destination' && $act eq 'travel_guide'}
+        {if ($mod eq 'destination' && $act eq 'travel_guide') || ($mod eq 'guide' && $act eq 'cat')}
         {$core->getBlock('des_header_travel_guide')}
         {/if}
         {if ($mod eq 'destination' && $act eq 'travel_guide_detail') || ($mod eq 'destination' && $act eq 'attraction')}
@@ -125,10 +125,10 @@
         {if $mod eq 'blog' && $act eq 'default'}
         {$core->getBlock('des_header_blog')}
         {/if}
-		{if $mod eq 'hotel' && $act eq 'default'}
+        {if $mod eq 'hotel' && $act eq 'default'}
         {$core->getBlock('des_header_stay')}
         {/if}
-		{if $mod eq 'cruise' && $act eq 'cat2'}
+        {if $mod eq 'cruise' && $act eq 'cat2'}
         {$core->getBlock('des_header_cruise')}
         {/if}
     </div>

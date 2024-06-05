@@ -4,688 +4,681 @@ class Country extends dbBasic
 
 {
 
-	function __construct()
+    function __construct()
 
-	{
+    {
 
-		$this->pkey = "country_id";
+        $this->pkey = "country_id";
 
-		$this->tbl = DB_PREFIX . "country";
-	}
+        $this->tbl = DB_PREFIX . "country";
+    }
 
-	function getMaxOrder()
+    function getMaxOrder()
 
-	{
+    {
 
-		$res = $this->getAll("1=1 order by order_no desc", $this->pkey . ",order_no");
+        $res = $this->getAll("1=1 order by order_no desc", $this->pkey . ",order_no");
 
-		return intval($res[0]['order_no']) + 1;
-	}
+        return intval($res[0]['order_no']) + 1;
+    }
 
-	function getId($country_id)
+    function getId($country_id)
 
-	{
+    {
 
-		$one = $this->getOne($country_id, 'country_id');
+        $one = $this->getOne($country_id, 'country_id');
 
-		return $one['country_id'];
-	}
+        return $one['country_id'];
+    }
 
-	function getTitle($country_id, $oDataTable = null)
+    function getTitle($country_id, $oDataTable = null)
 
-	{
+    {
 
-		if (!isset($oDataTable['title'])) {
+        if (!isset($oDataTable['title'])) {
 
-			$oDataTable = $this->getOne($country_id, 'title');
-		}
+            $oDataTable = $this->getOne($country_id, 'title');
+        }
 
-		return $oDataTable['title'];
-	}
+        return $oDataTable['title'];
+    }
 
-	function getSlug($country_id, $one = null)
+    function getSlug($country_id, $one = null)
 
-	{
+    {
 
-		if (!isset($one['slug'])) {
+        if (!isset($one['slug'])) {
 
-			$one = $this->getOne($country_id, 'slug');
-		}
+            $one = $this->getOne($country_id, 'slug');
+        }
 
-		return $one['slug'];
-	}
+        return $one['slug'];
+    }
 
-	function getBySlug($slug)
+    function getBySlug($slug)
 
-	{
+    {
 
-		$res = $this->getAll("is_trash=0 and slug = '" . $slug . "'", $this->pkey);
+        $res = $this->getAll("is_trash=0 and slug = '" . $slug . "'", $this->pkey);
 
-		return $res[0]['country_id'];
-	}
+        return $res[0]['country_id'];
+    }
 
-	function checkSlug($slug)
+    function checkSlug($slug)
 
-	{
+    {
 
-		$res = $this->getAll("slug = '%" . $slug . "%'", $this->pkey);
+        $res = $this->getAll("slug = '%" . $slug . "%'", $this->pkey);
 
-		if (is_array($res) && count($res) > 0)
+        if (is_array($res) && count($res) > 0)
 
-			return 0;
+            return 0;
 
-		return 1;
-	}
+        return 1;
+    }
 
-	function checkExitsId($country_id)
+    function checkExitsId($country_id)
 
-	{
+    {
 
-		$res = $this->getAll("country_id = '$country_id' LIMIT 0,1");
+        $res = $this->getAll("country_id = '$country_id' LIMIT 0,1");
 
-		return !empty($res) ? 1 : 0;
-	}
+        return !empty($res) ? 1 : 0;
+    }
 
-	function getListCity($country_id)
+    function getListCity($country_id)
 
-	{
+    {
 
-		global $_LANG_ID;
+        global $_LANG_ID;
 
-		$clsCity = new City();
+        $clsCity = new City();
 
-		$res = $clsCity->getAll("is_trash=0 and country_id = '$country_id' order by order_no desc limit 0,6", $clsCity->pkey);
+        $res = $clsCity->getAll("is_trash=0 and country_id = '$country_id' order by order_no desc limit 0,6", $clsCity->pkey);
 
-		return $res;
-	}
+        return $res;
+    }
 
-	function getMetaDescription($pvalTable, $one = null)
+    function getMetaDescription($pvalTable, $one = null)
 
-	{
+    {
 
-		global $_LANG_ID;
+        global $_LANG_ID;
 
-		if (!isset($one['intro'])) {
+        if (!isset($one['intro'])) {
 
-			$one = $this->getOne($pvalTable, 'intro');
-		}
+            $one = $this->getOne($pvalTable, 'intro');
+        }
 
-		return html_entity_decode($one['intro']);
-	}
+        return html_entity_decode($one['intro']);
+    }
 
-	function getIntro($country_id, $type = '', $is_sort = false, $one = null)
+    function getIntro($country_id, $type = '', $is_sort = false, $one = null)
 
-	{
+    {
 
-		global $extLang, $_LANG_ID;
+        global $extLang, $_LANG_ID;
 
 
+        switch ($type) {
 
-		switch ($type) {
+            case 'Hotel':
 
-			case 'Hotel':
+                if (!isset($one['intro_hotel'])) {
 
-				if (!isset($one['intro_hotel'])) {
+                    $one = $this->getOne($country_id, 'intro_hotel');
+                }
 
-					$one = $this->getOne($country_id, 'intro_hotel');
-				}
+                return html_entity_decode($one['intro_hotel']);
 
-				return html_entity_decode($one['intro_hotel']);
+                break;
 
-				break;
+            case 'Guide':
 
-			case 'Guide':
+                if (!isset($one['intro_guide'])) {
 
-				if (!isset($one['intro_guide'])) {
+                    $one = $this->getOne($country_id, 'intro_guide');
+                }
 
-					$one = $this->getOne($country_id, 'intro_guide');
-				}
+                return html_entity_decode($one['intro_guide']);
 
-				return html_entity_decode($one['intro_guide']);
+                break;
 
-				break;
+            case 'Banner':
 
-			case 'Banner':
+                if (!isset($one['intro_banner'])) {
 
-				if (!isset($one['intro_banner'])) {
+                    $one = $this->getOne($country_id, 'intro_banner');
+                }
 
-					$one = $this->getOne($country_id, 'intro_banner');
-				}
+                return html_entity_decode($one['intro_banner']);
 
-				return html_entity_decode($one['intro_banner']);
+                break;
 
-				break;
+            default:
 
-			default:
+                if (!isset($one['intro'])) {
 
-				if (!isset($one['intro'])) {
+                    $one = $this->getOne($country_id, 'intro');
+                }
 
-					$one = $this->getOne($country_id, 'intro');
-				}
+                return html_entity_decode($one['intro']);
+        }
+    }
 
-				return html_entity_decode($one['intro']);
-		}
-	}
+    function getContent($country_id, $one = null)
 
-	function getContent($country_id, $one = null)
+    {
 
-	{
+        if (!isset($one['content'])) {
 
-		if (!isset($one['content'])) {
+            $one = $this->getOne($country_id, 'content');
+        }
 
-			$one = $this->getOne($country_id, 'content');
-		}
+        return html_entity_decode($one['content']);
+    }
 
-		return html_entity_decode($one['content']);
-	}
+    function getOverviewTitle($country_id, $one = null)
 
-	function getOverviewTitle($country_id, $one = null)
+    {
 
-	{
+        if (!isset($one['overview_title'])) {
 
-		if (!isset($one['overview_title'])) {
+            $one = $this->getOne($country_id, 'overview_title');
+        }
 
-			$one = $this->getOne($country_id, 'overview_title');
-		}
+        return html_entity_decode($one['overview_title']);
+    }
 
-		return html_entity_decode($one['overview_title']);
-	}
+    function getOverviewDescription($country_id, $one = null)
 
-	function getOverviewDescription($country_id, $one = null)
+    {
 
-	{
+        if (!isset($one['overview_description'])) {
 
-		if (!isset($one['overview_description'])) {
+            $one = $this->getOne($country_id, 'overview_description');
+        }
 
-			$one = $this->getOne($country_id, 'overview_description');
-		}
+        return html_entity_decode($one['overview_description']);
+    }
 
-		return html_entity_decode($one['overview_description']);
-	}
+    function getTourTitle($country_id, $one = null)
 
-	function getTourTitle($country_id, $one = null)
+    {
 
-	{
+        if (!isset($one['tour_title'])) {
 
-		if (!isset($one['tour_title'])) {
+            $one = $this->getOne($country_id, 'tour_title');
+        }
 
-			$one = $this->getOne($country_id, 'tour_title');
-		}
+        return html_entity_decode($one['tour_title']);
+    }
 
-		return html_entity_decode($one['tour_title']);
-	}
+    function getTourDescription($country_id, $one = null)
 
-	function getTourDescription($country_id, $one = null)
+    {
 
-	{
+        if (!isset($one['tour_description'])) {
 
-		if (!isset($one['tour_description'])) {
+            $one = $this->getOne($country_id, 'tour_description');
+        }
 
-			$one = $this->getOne($country_id, 'tour_description');
-		}
+        return html_entity_decode($one['tour_description']);
+    }
 
-		return html_entity_decode($one['tour_description']);
-	}
+    function getImageTour($pvalTable, $w, $h)
+    {
+        global $clsISO;
+        $oneTable = $this->getOne($pvalTable, 'tour_image');
+        if ($oneTable['tour_image'] != '') {
+            $image = $oneTable['tour_image'];
+            return $clsISO->tripslashImage($image, $w, $h);
+            $noimage = URL_IMAGES . '/noimage.png';
 
-	function getImageTour($pvalTable, $w, $h)
-	{
-		global $clsISO;
-		$oneTable = $this->getOne($pvalTable, 'tour_image');
-		if ($oneTable['tour_image'] != '') {
-			$image = $oneTable['tour_image'];
-			return $clsISO->tripslashImage($image, $w, $h);
-			$noimage = URL_IMAGES . '/noimage.png';
+            return '/files/thumb/' . $w . '/' . $h . '/' . $clsISO->parseImageURL($noimage);
+        }
 
-			return '/files/thumb/' . $w . '/' . $h . '/' . $clsISO->parseImageURL($noimage);
-		}
+        $noimage = URL_IMAGES . '/noimage.png';
 
-		$noimage = URL_IMAGES . '/noimage.png';
+        return '/files/thumb/' . $w . '/' . $h . '/' . $clsISO->parseImageURL($noimage);
+    }
 
-		return '/files/thumb/' . $w . '/' . $h . '/' . $clsISO->parseImageURL($noimage);
-	}
-	function getImageWhy($pvalTable, $w, $h)
-	{
-		global $clsISO;
-		$oneTable = $this->getOne($pvalTable, 'why_image');
-		if ($oneTable['why_image'] != '') {
-			$image = $oneTable['why_image'];
-			return $clsISO->tripslashImage($image, $w, $h);
-			$noimage = URL_IMAGES . '/noimage.png';
+    function getImageWhy($pvalTable, $w, $h)
+    {
+        global $clsISO;
+        $oneTable = $this->getOne($pvalTable, 'why_image');
+        if ($oneTable['why_image'] != '') {
+            $image = $oneTable['why_image'];
+            return $clsISO->tripslashImage($image, $w, $h);
+            $noimage = URL_IMAGES . '/noimage.png';
 
-			return '/files/thumb/' . $w . '/' . $h . '/' . $clsISO->parseImageURL($noimage);
-		}
+            return '/files/thumb/' . $w . '/' . $h . '/' . $clsISO->parseImageURL($noimage);
+        }
 
-		$noimage = URL_IMAGES . '/noimage.png';
+        $noimage = URL_IMAGES . '/noimage.png';
 
-		return '/files/thumb/' . $w . '/' . $h . '/' . $clsISO->parseImageURL($noimage);
-	}
+        return '/files/thumb/' . $w . '/' . $h . '/' . $clsISO->parseImageURL($noimage);
+    }
 
-	function getHeaderDescription($country_id, $one = null)
+    function getHeaderDescription($country_id, $one = null)
 
-	{
+    {
 
-		if (!isset($one['header_description'])) {
+        if (!isset($one['header_description'])) {
 
-			$one = $this->getOne($country_id, 'header_description');
-		}
+            $one = $this->getOne($country_id, 'header_description');
+        }
 
-		return html_entity_decode($one['header_description']);
-	}
+        return html_entity_decode($one['header_description']);
+    }
 
-	function getStripIntro($country_id, $one = null)
+    function getStripIntro($country_id, $one = null)
 
-	{
+    {
 
-		if (!isset($one['intro']) && !isset($one['content'])) {
+        if (!isset($one['intro']) && !isset($one['content'])) {
 
-			$one = $this->getOne($country_id, 'intro,content');
-		}
+            $one = $this->getOne($country_id, 'intro,content');
+        }
 
-		if (!empty($one['intro']))
+        if (!empty($one['intro']))
 
-			return strip_tags(html_entity_decode($one['intro']));
+            return strip_tags(html_entity_decode($one['intro']));
 
-		return strip_tags(html_entity_decode($one['content']));
-	}
+        return strip_tags(html_entity_decode($one['content']));
+    }
 
-	function getBlogTitle($country_id, $oDataTable = null)
+    function getBlogTitle($country_id, $oDataTable = null)
 
-	{
+    {
 
-		if (!isset($oDataTable['blog_title'])) {
+        if (!isset($oDataTable['blog_title'])) {
 
-			$oDataTable = $this->getOne($country_id, 'blog_title');
-		}
+            $oDataTable = $this->getOne($country_id, 'blog_title');
+        }
 
-		return $oDataTable['blog_title'];
-	}
+        return $oDataTable['blog_title'];
+    }
 
 
-	function getBlogDescription($country_id, $oDataTable = null)
+    function getBlogDescription($country_id, $oDataTable = null)
 
-	{
+    {
 
-		if (!isset($oDataTable['blog_description'])) {
+        if (!isset($oDataTable['blog_description'])) {
 
-			$oDataTable = $this->getOne($country_id, 'blog_description');
-		}
+            $oDataTable = $this->getOne($country_id, 'blog_description');
+        }
 
-		return $oDataTable['blog_description'];
-	}
+        return $oDataTable['blog_description'];
+    }
 
-	function getBlogImage($pvalTable, $w, $h)
+    function getBlogImage($pvalTable, $w, $h)
 
-	{
+    {
 
-		global $clsISO;
+        global $clsISO;
 
 
+        $oneTable = $this->getOne($pvalTable, "blog_image");
 
-		$oneTable = $this->getOne($pvalTable, "blog_image");
+        if ($oneTable['blog_image'] != '') {
 
-		if ($oneTable['blog_image'] != '') {
+            $image = $oneTable['blog_image'];
 
-			$image = $oneTable['blog_image'];
+            return $clsISO->tripslashImage($image, $w, $h);
 
-			return $clsISO->tripslashImage($image, $w, $h);
+            $noimage = URL_IMAGES . '/noimage.png';
 
-			$noimage = URL_IMAGES . '/noimage.png';
+            return '/files/thumb/' . $w . '/' . $h . '/' . $clsISO->parseImageURL($noimage);
+        }
 
-			return '/files/thumb/' . $w . '/' . $h . '/' . $clsISO->parseImageURL($noimage);
-		}
+        $noimage = URL_IMAGES . '/noimage.png';
 
-		$noimage = URL_IMAGES . '/noimage.png';
+        return '/files/thumb/' . $w . '/' . $h . '/' . $clsISO->parseImageURL($noimage);
+    }
 
-		return '/files/thumb/' . $w . '/' . $h . '/' . $clsISO->parseImageURL($noimage);
-	}
 
+    function getImage($pvalTable, $w, $h)
+    {
+        global $clsISO;
+        $oneTable = $this->getOne($pvalTable, "image");
+        if ($oneTable['image'] != '') {
+            $image = $oneTable['image'];
+            return $clsISO->tripslashImage($image, $w, $h);
+            $noimage = URL_IMAGES . '/noimage.png';
+            return '/files/thumb/' . $w . '/' . $h . '/' . $clsISO->parseImageURL($noimage);
+        }
+        $noimage = URL_IMAGES . '/noimage.png';
+        return '/files/thumb/' . $w . '/' . $h . '/' . $clsISO->parseImageURL($noimage);
+    }
 
+    function getImageSub($pvalTable, $w, $h)
+    {
+        global $clsISO;
+        $oneTable = $this->getOne($pvalTable, 'image_sub');
+        if ($oneTable['image_sub'] != '') {
+            $image = $oneTable['image_sub'];
+            return $clsISO->tripslashImage($image, $w, $h);
+            $noimage = URL_IMAGES . '/noimage.png';
+            return '/files/thumb/' . $w . '/' . $h . '/' . $clsISO->parseImageURL($noimage);
+        }
+        $noimage = URL_IMAGES . '/noimage.png';
+        return '/files/thumb/' . $w . '/' . $h . '/' . $clsISO->parseImageURL($noimage);
+    }
 
+    function getUrlImage($pvalTable)
 
+    {
 
-	function getImage($pvalTable, $w, $h)
-	{
-		global $clsISO;
-		$oneTable = $this->getOne($pvalTable, "image");
-		if ($oneTable['image'] != '') {
-			$image = $oneTable['image'];
-			return $clsISO->tripslashImage($image, $w, $h);
-			$noimage = URL_IMAGES . '/noimage.png';
-			return '/files/thumb/' . $w . '/' . $h . '/' . $clsISO->parseImageURL($noimage);
-		}
-		$noimage = URL_IMAGES . '/noimage.png';
-		return '/files/thumb/' . $w . '/' . $h . '/' . $clsISO->parseImageURL($noimage);
-	}
-	function getImageSub($pvalTable, $w, $h)
-	{
-		global $clsISO;
-		$oneTable = $this->getOne($pvalTable, 'image_sub');
-		if ($oneTable['image_sub'] != '') {
-			$image = $oneTable['image_sub'];
-			return $clsISO->tripslashImage($image, $w, $h);
-			$noimage = URL_IMAGES . '/noimage.png';
-			return '/files/thumb/' . $w . '/' . $h . '/' . $clsISO->parseImageURL($noimage);
-		}
-		$noimage = URL_IMAGES . '/noimage.png';
-		return '/files/thumb/' . $w . '/' . $h . '/' . $clsISO->parseImageURL($noimage);
-	}
+        global $clsISO;
 
-	function getUrlImage($pvalTable)
+        $oneTable = $this->getOne($pvalTable, "image");
 
-	{
+        $url_image = $oneTable['image'];
 
-		global $clsISO;
+        return $clsISO->tripslashUrl($url_image);
+    }
 
-		$oneTable = $this->getOne($pvalTable, "image");
+    function getImageBannerHotel($pvalTable, $w, $h, $oneTable = null)
 
-		$url_image = $oneTable['image'];
+    {
 
-		return $clsISO->tripslashUrl($url_image);
-	}
+        global $clsISO;
 
-	function getImageBannerHotel($pvalTable, $w, $h, $oneTable = null)
+        #
 
-	{
+        if (!isset($oneTable['image_hotel'])) {
 
-		global $clsISO;
+            $oneTable = $this->getOne($pvalTable, 'image_hotel');
+        }
 
-		#
+        if ($oneTable['image_hotel'] != '') {
 
-		if (!isset($oneTable['image_hotel'])) {
+            $image = $oneTable['image_hotel'];
 
-			$oneTable = $this->getOne($pvalTable, 'image_hotel');
-		}
+            return $clsISO->tripslashImage($image, $w, $h);
+        }
 
-		if ($oneTable['image_hotel'] != '') {
+        $noimage = URL_IMAGES . '/noimage.png';
 
-			$image = $oneTable['image_hotel'];
+        return '/files/thumb/' . $w . '/' . $h . '/' . $clsISO->parseImageURL($noimage);
+    }
 
-			return $clsISO->tripslashImage($image, $w, $h);
-		}
+    function getBannerDescription($pvalTable, $w, $h)
 
-		$noimage = URL_IMAGES . '/noimage.png';
+    {
 
-		return '/files/thumb/' . $w . '/' . $h . '/' . $clsISO->parseImageURL($noimage);
-	}
+        global $clsISO;
 
-	function getBannerDescription($pvalTable, $w, $h)
+        $oneTable = $this->getOne($pvalTable, 'header_background');
 
-	{
+        if ($oneTable['header_background'] != '') {
 
-		global $clsISO;
+            $image = $oneTable['header_background'];
 
-		$oneTable = $this->getOne($pvalTable, 'header_background');
+            return $clsISO->tripslashImage($image, $w, $h);
+        }
 
-		if ($oneTable['header_background'] != '') {
+        $noimage = URL_IMAGES . '/noimage.png';
 
-			$image = $oneTable['header_background'];
+        return '/files/thumb/' . $w . '/' . $h . '/' . $clsISO->parseImageURL($noimage);
+    }
 
-			return $clsISO->tripslashImage($image, $w, $h);
-		}
+    function getImageHome($pvalTable, $w, $h)
 
-		$noimage = URL_IMAGES . '/noimage.png';
+    {
 
-		return '/files/thumb/' . $w . '/' . $h . '/' . $clsISO->parseImageURL($noimage);
-	}
+        global $clsISO;
 
-	function getImageHome($pvalTable, $w, $h)
+        $oneTable = $this->getOne($pvalTable, 'imagehome');
 
-	{
+        if ($oneTable['imagehome'] != '') {
 
-		global $clsISO;
+            $image = $oneTable['imagehome'];
 
-		$oneTable = $this->getOne($pvalTable, 'imagehome');
+            return $clsISO->tripslashImage($image, $w, $h);
+        }
 
-		if ($oneTable['imagehome'] != '') {
+        $noimage = URL_IMAGES . '/noimage.png';
 
-			$image = $oneTable['imagehome'];
+        return '/files/thumb/' . $w . '/' . $h . '/' . $clsISO->parseImageURL($noimage);
+    }
 
-			return $clsISO->tripslashImage($image, $w, $h);
-		}
+    function getImageUrl($pval)
 
-		$noimage = URL_IMAGES . '/noimage.png';
+    {
 
-		return '/files/thumb/' . $w . '/' . $h . '/' . $clsISO->parseImageURL($noimage);
-	}
+        global $clsISO;
 
-	function getImageUrl($pval)
+        $oneTable = $this->getOne($pval, 'image');
 
-	{
+        $url_image = $oneTable['image'];
 
-		global $clsISO;
+        return $clsISO->tripslashUrl($url_image);
+    }
 
-		$oneTable = $this->getOne($pval, 'image');
+    function getBannerUrl($pval)
 
-		$url_image = $oneTable['image'];
+    {
 
-		return $clsISO->tripslashUrl($url_image);
-	}
+        global $clsISO;
 
-	function getBannerUrl($pval)
+        $oneTable = $this->getOne($pval, 'link_banner');
 
-	{
+        $url_image = $oneTable['link_banner'];
 
-		global $clsISO;
+        return $clsISO->tripslashUrl($url_image);
+    }
 
-		$oneTable = $this->getOne($pval, 'link_banner');
+    function getBanner($pvalTable, $w, $h, $oneTable = null)
 
-		$url_image = $oneTable['link_banner'];
+    {
 
-		return $clsISO->tripslashUrl($url_image);
-	}
+        global $clsISO;
 
-	function getBanner($pvalTable, $w, $h, $oneTable = null)
+        if (!isset($oneTable['banner'])) {
 
-	{
+            $oneTable = $this->getOne($pvalTable, 'banner');
+        }
 
-		global $clsISO;
+        if ($oneTable['banner'] != '') {
 
-		if (!isset($oneTable['banner'])) {
+            $image = $oneTable['banner'];
 
-			$oneTable = $this->getOne($pvalTable, 'banner');
-		}
+            return $clsISO->tripslashImage($image, $w, $h);
+        }
 
-		if ($oneTable['banner'] != '') {
+        $noimage = URL_IMAGES . '/noimage.png';
 
-			$image = $oneTable['banner'];
+        return '/files/thumb/' . $w . '/' . $h . '/' . $clsISO->parseImageURL($noimage);
+    }
 
-			return $clsISO->tripslashImage($image, $w, $h);
-		}
+    function getBannerImage($pvalTable, $w, $h)
 
-		$noimage = URL_IMAGES . '/noimage.png';
+    {
 
-		return '/files/thumb/' . $w . '/' . $h . '/' . $clsISO->parseImageURL($noimage);
-	}
+        global $clsISO;
 
-	function getBannerImage($pvalTable, $w, $h)
+        $oneTable = $this->getOne($pvalTable, 'banner');
 
-	{
+        if ($oneTable['banner'] != '') {
 
-		global $clsISO;
+            $banner = $oneTable['banner'];
 
-		$oneTable = $this->getOne($pvalTable, 'banner');
+            return $clsISO->tripslashImage($image, $w, $h);
+        }
 
-		if ($oneTable['banner'] != '') {
+        $noimage = URL_IMAGES . '/noimage.png';
 
-			$banner = $oneTable['banner'];
+        return '/files/thumb/' . $w . '/' . $h . '/' . $clsISO->parseImageURL($noimage);
+    }
 
-			return $clsISO->tripslashImage($image, $w, $h);
-		}
+    function getLinkVideoTeaser($pval)
 
-		$noimage = URL_IMAGES . '/noimage.png';
+    {
 
-		return '/files/thumb/' . $w . '/' . $h . '/' . $clsISO->parseImageURL($noimage);
-	}
+        $oneTable = $this->getOne($pval, 'video_teaser');
 
-	function getLinkVideoTeaser($pval)
+        return $oneTable['video_teaser'];
+    }
 
-	{
 
-		$oneTable = $this->getOne($pval, 'video_teaser');
+    // Get Link Site
 
-		return $oneTable['video_teaser'];
-	}
+    function getLink($country_id, $type = '', $oneTable = null)
 
+    {
 
+        global $extLang, $_LANG_ID, $clsISO;
 
-	// Get Link Site
 
-	function getLink($country_id, $type = '', $oneTable = null)
+        if (!isset($oneTable['slug'])) {
 
-	{
+            $oneTable = $this->getOne($country_id, 'slug');
+        }
 
-		global $extLang, $_LANG_ID, $clsISO;
+        $slug = $oneTable['slug'];
 
+        switch ($type) {
 
+            case 'Attraction':
 
+                return $extLang . '/' . $slug . '-attractions';
 
+                break;
 
-		if (!isset($oneTable['slug'])) {
+            case 'Travel':
 
-			$oneTable = $this->getOne($country_id, 'slug');
-		}
+                return $extLang . '/' . $slug . '-travel-tips';
 
-		$slug = $oneTable['slug'];
+                break;
 
-		switch ($type) {
+            case 'Hotel':
 
-			case 'Attraction':
+                if ($_LANG_ID == 'vn')
 
-				return $extLang . '/' . $slug . '-attractions';
+                    return $extLang . '/khach-san/' . $slug;
 
-				break;
+                return $extLang . '/stay/' . $slug;
 
-			case 'Travel':
+                break;
 
-				return $extLang . '/' . $slug . '-travel-tips';
+            case 'Blog':
 
-				break;
+                return $extLang . '/blog/' . $slug;
 
-			case 'Hotel':
+                break;
 
-				if ($_LANG_ID == 'vn')
+            case 'Map':
 
-					return $extLang . '/khach-san/' . $slug;
+                return $extLang . '/' . $slug . '-maps';
 
-				return $extLang . '/stay/' . $slug;
+                break;
 
-				break;
+            case 'tour':
 
-			case 'Blog':
+                return $extLang . '/tour/' . $slug;
 
-				return $extLang . '/blog/' . $slug;
+                break;
 
-				break;
+            case 'City':
 
-			case 'Map':
+                return $extLang . '/' . $slug . '-destinations/cities';
 
-				return $extLang . '/' . $slug . '-maps';
+                break;
 
-				break;
+            case 'Guide':
 
-			case 'tour':
+                return $extLang . '/' . $slug . '-travel-guide';
 
-				return $extLang . '/tour/' . $slug;
+                break;
 
-				break;
+            default:
 
-			case 'City':
+                if ($_LANG_ID == 'vn')
 
-				return $extLang . '/' . $slug . '-destinations/cities';
+                    return $this->getLinkOutbound($country_id, $oneTable);
 
-				break;
+                return PCMS_URL . $_LANG_ID . '/destinations/' . $slug;
+        }
+    }
 
-			case 'Guide':
+    function getLinkOutbound($pvalTable, $oneTable = null)
 
-				return $extLang . '/' . $slug . '-travel-guide';
+    {
 
-				break;
+        global $core, $_LANG_ID, $extLang;
 
-			default:
+        if (!isset($oneTable['slug'])) {
 
-				if ($_LANG_ID == 'vn')
+            $oneTable = $this->getOne($pvalTable, 'slug');
+        }
 
-					return $this->getLinkOutbound($country_id, $oneTable);
+        $slug = $oneTable['slug'];
 
-				return PCMS_URL . $_LANG_ID . '/destinations/' . $slug;
-		}
-	}
+        if ($pvalTable != 4) {
 
-	function getLinkOutbound($pvalTable, $oneTable = null)
+            if ($_LANG_ID == 'vn')
 
-	{
+                return $extLang . '/du-lich-nuoc-ngoai/du-lich-' . $slug;
 
-		global $core, $_LANG_ID, $extLang;
+            return $extLang . '/destinations/' . $slug;
+        }
+    }
 
-		if (!isset($oneTable['slug'])) {
+    function countNumberCity($country_id)
 
-			$oneTable = $this->getOne($pvalTable, 'slug');
-		}
+    {
 
-		$slug = $oneTable['slug'];
+        $clsCity = new City();
 
-		if ($pvalTable != 4) {
+        $res = $clsCity->getAll("is_trash='0' and country_id='$country_id'", $clsCity->pkey);
 
-			if ($_LANG_ID == 'vn')
+        return $res ? count($res) : 0;
+    }
 
-				return $extLang . '/du-lich-nuoc-ngoai/du-lich-' . $slug;
+    function countNumberRegion($country_id)
 
-			return $extLang . '/destinations/' . $slug;
-		}
-	}
+    {
 
-	function countNumberCity($country_id)
+        $clsRegion = new Region();
 
-	{
+        $res = $clsRegion->getAll("is_trash='0' and is_online=1 and country_id='$country_id'", $clsRegion->pkey);
 
-		$clsCity = new City();
+        return $res ? count($res) : 0;
+    }
 
-		$res = $clsCity->getAll("is_trash='0' and country_id='$country_id'", $clsCity->pkey);
+    function countNumberTour($country_id)
 
-		return $res ? count($res) : 0;
-	}
+    {
 
-	function countNumberRegion($country_id)
+        $clsTour = new Tour();
 
-	{
+        $lstItem = $clsTour->getAll("is_trash=0 and is_online=1 and tour_id IN (SELECT tour_id FROM default_tour_destination WHERE country_id = '" . $country_id . "')", $clsTour->pkey);
 
-		$clsRegion = new Region();
+        return $lstItem ? count($lstItem) : 0;
+    }
 
-		$res = $clsRegion->getAll("is_trash='0' and is_online=1 and country_id='$country_id'", $clsRegion->pkey);
+    function getCountryHaveTour($arrCountryId, $isCountry = false)
 
-		return $res ? count($res) : 0;
-	}
+    {
 
-	function countNumberTour($country_id)
+        global $dbconn, $_LANG_ID;
 
-	{
+        $clsTour = new Tour();
 
-		$clsTour = new Tour();
+        $strCountryId = implode(',', $arrCountryId);
 
-		$lstItem = $clsTour->getAll("is_trash=0 and is_online=1 and tour_id IN (SELECT tour_id FROM default_tour_destination WHERE country_id = '" . $country_id . "')", $clsTour->pkey);
+        if (!$isCountry) {
 
-		return $lstItem ? count($lstItem) : 0;
-	}
+            $cond = " NOT IN (" . $strCountryId . ")";
+        } else {
 
-	function getCountryHaveTour($arrCountryId, $isCountry = false)
+            $cond = " IN (" . $strCountryId . ")";
+        }
 
-	{
-
-		global $dbconn, $_LANG_ID;
-
-		$clsTour = new Tour();
-
-		$strCountryId = implode(',', $arrCountryId);
-
-		if (!$isCountry) {
-
-			$cond = " NOT IN (" . $strCountryId . ")";
-		} else {
-
-			$cond = " IN (" . $strCountryId . ")";
-		}
-
-		$sql = "SELECT tbl_country.country_id,tbl_country.title,tbl_country.slug 
+        $sql = "SELECT tbl_country.country_id,tbl_country.title,tbl_country.slug 
 
 			FROM " . DB_PREFIX . "tour as tbl_tour 
 
@@ -699,627 +692,610 @@ class Country extends dbBasic
 
 			ORDER BY tbl_country.order_no ASC";
 
-		$lstItem = $dbconn->getAll($sql);
+        $lstItem = $dbconn->getAll($sql);
 
-		return $lstItem;
-	}
+        return $lstItem;
+    }
 
-	function countNumberHotel($country_id)
+    function countNumberHotel($country_id)
 
-	{
+    {
 
-		global $clsISO, $package_id;
+        global $clsISO, $package_id;
 
 
+        if ($clsISO->getCheckActiveModulePackage($package_id, 'hotel', 'default', 'default')) {
 
-		if ($clsISO->getCheckActiveModulePackage($package_id, 'hotel', 'default', 'default')) {
+            $clsHotel = new Hotel();
 
-			$clsHotel = new Hotel();
+            $lstItem = $clsHotel->getAll("is_trash=0 and is_online=1 and country_id = '" . $country_id . "'", $clsHotel->pkey);
 
-			$lstItem = $clsHotel->getAll("is_trash=0 and is_online=1 and country_id = '" . $country_id . "'", $clsHotel->pkey);
+            return $lstItem ? count($lstItem) : 0;
+        }
 
-			return $lstItem ? count($lstItem) : 0;
-		}
+        return 0;
+    }
 
-		return 0;
-	}
+    function countNumberPlaceToGo($country_id)
 
-	function countNumberPlaceToGo($country_id)
+    {
 
-	{
+        global $_LANG_ID;
 
-		global $_LANG_ID;
 
+        if ($_LANG_ID == 'en') {
 
+            $place_to_go_id = 15;
+        } elseif ($_LANG_ID == 'fr') {
 
-		if ($_LANG_ID == 'en') {
+            $place_to_go_id = 5;
+        } elseif ($_LANG_ID == 'es') {
 
-			$place_to_go_id = 15;
-		} elseif ($_LANG_ID == 'fr') {
+            $place_to_go_id = 20;
+        } else {
 
-			$place_to_go_id = 5;
-		} elseif ($_LANG_ID == 'es') {
+            $place_to_go_id = 3;
+        }
 
-			$place_to_go_id = 20;
-		} else {
 
-			$place_to_go_id = 3;
-		}
+        $clsGuide = new Guide();
 
 
+        $lstItem = $clsGuide->getAll("is_trash=0 and is_online=1 and country_id='$country_id' and cat_id='$place_to_go_id'", $clsGuide->pkey);
 
-		$clsGuide = new Guide();
+        return $lstItem ? count($lstItem) : 0;
+    }
 
+    function countNumberArea($country_id)
 
+    {
 
-		$lstItem = $clsGuide->getAll("is_trash=0 and is_online=1 and country_id='$country_id' and cat_id='$place_to_go_id'", $clsGuide->pkey);
+        $clsGuideArea2 = new GuideArea2();
 
-		return $lstItem ? count($lstItem) : 0;
-	}
+        $lstGuideArea2 = $clsGuideArea2->getAll("country_id = '$country_id' order by order_no desc", $clsGuideArea2->pkey . ',area_id');
 
-	function countNumberArea($country_id)
+        $tmp = array();
 
-	{
+        foreach ($lstGuideArea2 as $key => $value) {
 
-		$clsGuideArea2 = new GuideArea2();
+            if ($value['area_id'])
 
-		$lstGuideArea2 = $clsGuideArea2->getAll("country_id = '$country_id' order by order_no desc", $clsGuideArea2->pkey . ',area_id');
+                $tmp[] = $value['area_id'];
+        }
 
-		$tmp = array();
+        return count(array_unique($tmp));
+    }
 
-		foreach ($lstGuideArea2 as $key => $value) {
+    function countNumberDraftTour($country_id)
 
-			if ($value['area_id'])
+    {
 
-				$tmp[] = $value['area_id'];
-		}
+        $clsDraftTour = new DraftTour();
 
-		return count(array_unique($tmp));
-	}
+        $lstItem = $clsDraftTour->getAll("list_country_id like '%|" . $country_id . "|%'", $clsDraftTour->pkey);
 
-	function countNumberDraftTour($country_id)
+        return $lstItem ? count($lstItem) : 0;
+    }
 
-	{
+    function countNumberTour2($cat_id, $country_id)
 
-		$clsDraftTour = new DraftTour();
+    {
 
-		$lstItem = $clsDraftTour->getAll("list_country_id like '%|" . $country_id . "|%'", $clsDraftTour->pkey);
+        $clsTour = new Tour();
 
-		return $lstItem ? count($lstItem) : 0;
-	}
+        $lstItem = $clsTour->getAll("is_trash=0 and list_cat_id like '%" . $cat_id . "%' and tour_id in (SELECT tour_id from default_tour_destination where country_id = '" . $country_id . "')", $clsTour->pkey);
 
-	function countNumberTour2($cat_id, $country_id)
+        return $lstItem ? count($lstItem) : 0;
+    }
 
-	{
+    function countTopByTour($country_id)
 
-		$clsTour = new Tour();
+    {
 
-		$lstItem = $clsTour->getAll("is_trash=0 and list_cat_id like '%" . $cat_id . "%' and tour_id in (SELECT tour_id from default_tour_destination where country_id = '" . $country_id . "')", $clsTour->pkey);
+        $clsCity = new City();
 
-		return $lstItem ? count($lstItem) : 0;
-	}
+        $all = $clsCity->getAll("is_trash=0 and country_id = '$country_id' and is_top=1", $clsCity->pkey);
 
-	function countTopByTour($country_id)
+        return $all ? count($all) : 0;
+    }
 
-	{
+    function getCity($country_id)
 
-		$clsCity = new City();
+    {
 
-		$all = $clsCity->getAll("is_trash=0 and country_id = '$country_id' and is_top=1", $clsCity->pkey);
+        $clsCity = new City();
 
-		return $all ? count($all) : 0;
-	}
+        $res = $clsCity->getAll("is_trash=0 and country_id='$country_id'", $clsCity->pkey);
 
-	function getCity($country_id)
+        return $res;
+    }
 
-	{
+    function makeSelectboxOption($country_id = 0, $continent_id = 0)
 
-		$clsCity = new City();
+    {
+        global $core, $dbconn, $clsISO;
 
-		$res = $clsCity->getAll("is_trash=0 and country_id='$country_id'", $clsCity->pkey);
+        #
 
-		return $res;
-	}
+        $cond = "is_trash=0 and is_online=1";
 
-	function makeSelectboxOption($country_id = 0, $continent_id = 0)
+        if (intval($continent_id) != 0) {
 
-	{
-		global $core, $dbconn, $clsISO;
+            $cond .= " AND continent_id=" . $continent_id;
+        }
 
-		#
+        $cond .= " ORDER BY order_no ASC";
 
-		$cond = "is_trash=0 and is_online=1";
+        #
 
-		if (intval($continent_id) != 0) {
+        $res = $this->getAll($cond, "{$this->pkey},title");
 
-			$cond .= " AND continent_id=" . $continent_id;
-		}
+        $html = '<option value="0">-- ' . $core->get_Lang('Country') . ' --</option>';
 
-		$cond .= " ORDER BY order_no ASC";
+        if (!empty($res)) {
 
-		#
+            foreach ($res as $item) {
 
-		$res = $this->getAll($cond, "{$this->pkey},title");
+                $title = $this->getTitle($item[$this->pkey], $item);
 
-		$html = '<option value="0">-- ' . $core->get_Lang('Country') . ' --</option>';
+                $selected = ($country_id == $item[$this->pkey]) ? ' selected="selected"' : '';
 
-		if (!empty($res)) {
+                $html .= '<option title="' . $title . '" value="' . $item[$this->pkey] . '"' . $selected . '>' . $title . '</option>';
+            }
+        }
 
-			foreach ($res as $item) {
+        return $html;
+    }
 
-				$title = $this->getTitle($item[$this->pkey], $item);
+    function makeSelectHotelOption($country_id = 0, $continent_id = 0)
 
-				$selected = ($country_id == $item[$this->pkey]) ? ' selected="selected"' : '';
+    {
 
-				$html .= '<option title="' . $title . '" value="' . $item[$this->pkey] . '"' . $selected . '>' . $title . '</option>';
-			}
-		}
+        global $core, $dbconn;
 
-		return $html;
-	}
+        $clsHotel = new Hotel();
 
-	function makeSelectHotelOption($country_id = 0, $continent_id = 0)
+        $cond = "{$this->tbl}.is_trash=0 and {$this->tbl}.is_online=1 and {$clsHotel->tbl}.is_trash=0 and {$clsHotel->tbl}.is_online=1";
 
-	{
+        if ((int)$continent_id > 0) {
 
-		global $core, $dbconn;
+            $cond .= " AND {$this->tbl}.continent_id='{$continent_id}'";
+        }
 
-		$clsHotel = new Hotel();
+        $res = $this->getAllOptimize("{$cond} order by {$this->tbl}.order_no ASC", "{$clsHotel->tbl} ON {$clsHotel->tbl}.country_id={$this->tbl}.country_id", "DISTINCT({$this->tbl}.country_id),{$this->tbl}.title");
 
-		$cond = "{$this->tbl}.is_trash=0 and {$this->tbl}.is_online=1 and {$clsHotel->tbl}.is_trash=0 and {$clsHotel->tbl}.is_online=1";
+        $html = '<option value="0">-- ' . $core->get_Lang('Country') . ' --</option>';
 
-		if ((int) $continent_id > 0) {
+        if (!empty($res)) {
 
-			$cond .= " AND {$this->tbl}.continent_id='{$continent_id}'";
-		}
+            foreach ($res as $item) {
 
-		$res = $this->getAllOptimize("{$cond} order by {$this->tbl}.order_no ASC", "{$clsHotel->tbl} ON {$clsHotel->tbl}.country_id={$this->tbl}.country_id", "DISTINCT({$this->tbl}.country_id),{$this->tbl}.title");
+                $title = $this->getTitle($item[$this->pkey], $item);
 
-		$html = '<option value="0">-- ' . $core->get_Lang('Country') . ' --</option>';
+                $selected = ($country_id == $item[$this->pkey]) ? ' selected="selected"' : '';
 
-		if (!empty($res)) {
+                $html .= '<option title="' . $title . '" value="' . $item[$this->pkey] . '"' . $selected . '>' . $title . '</option>';
+            }
+        }
 
-			foreach ($res as $item) {
+        return $html;
+    }
 
-				$title = $this->getTitle($item[$this->pkey], $item);
+    function getSelectByCountry($selected = '', $is_prefix = true)
 
-				$selected = ($country_id == $item[$this->pkey]) ? ' selected="selected"' : '';
+    {
 
-				$html .= '<option title="' . $title . '" value="' . $item[$this->pkey] . '"' . $selected . '>' . $title . '</option>';
-			}
-		}
+        global $core;
 
-		return $html;
-	}
+        #
 
-	function getSelectByCountry($selected = '', $is_prefix = true)
+        $res = $this->getAll("is_trash=0 and is_online=1 order by order_no asc", $this->pkey . ',title');
 
-	{
+        $html = !$is_prefix ? '' : '<option value="">-- ' . $core->get_Lang('Select destination') . ' --</option>';
 
-		global $core;
+        if (is_array($res) && count($res) > 0) {
 
-		#
+            foreach ($res as $k => $v) {
 
-		$res = $this->getAll("is_trash=0 and is_online=1 order by order_no asc", $this->pkey . ',title');
+                $selected_index = ($selected == $v[$this->pkey]) ? 'selected="selected"' : '';
 
-		$html = !$is_prefix ? '' : '<option value="">-- ' . $core->get_Lang('Select destination') . ' --</option>';
+                $html .= '<option value="' . $v[$this->pkey] . '" ' . $selected_index . '>' . $this->getTitle($v[$this->pkey], $v) . '</option>';
+            }
+        }
 
-		if (is_array($res) && count($res) > 0) {
+        unset($res);
 
-			foreach ($res as $k => $v) {
+        return $html;
+    }
 
-				$selected_index = ($selected == $v[$this->pkey]) ? 'selected="selected"' : '';
+    function getLinkDetail($country_id, $type = '', $oneTable = null)
 
-				$html .= '<option value="' . $v[$this->pkey] . '" ' . $selected_index . '>' . $this->getTitle($v[$this->pkey], $v) . '</option>';
-			}
-		}
+    {
 
-		unset($res);
+        global $extLang, $_LANG_ID, $clsISO;
 
-		return $html;
-	}
 
-	function getLinkDetail($country_id, $type = '', $oneTable = null)
+        if (!isset($oneTable['slug'])) {
 
-	{
+            $oneTable = $this->getOne($country_id, 'slug');
+        }
 
-		global $extLang, $_LANG_ID, $clsISO;
+        $slug = $oneTable['slug'];
 
+        switch ($type) {
 
+            case 'hotel':
 
-		if (!isset($oneTable['slug'])) {
+                return $extLang . '/stay/' . $slug;
 
-			$oneTable = $this->getOne($country_id, 'slug');
-		}
+                break;
 
-		$slug = $oneTable['slug'];
+            case 'khach-san':
 
-		switch ($type) {
+                return $extLang . '/khach-san/' . $slug;
 
-			case 'hotel':
+                break;
 
-				return $extLang . '/stay/' . $slug;
+            case 'city':
 
-				break;
+                return $extLang . '/' . $slug . '/cities';
 
-			case 'khach-san':
+                break;
 
-				return $extLang . '/khach-san/' . $slug;
+            case 'guide':
 
-				break;
+                return $extLang . '/' . $slug . '/guides';
 
-			case 'city':
+                break;
 
-				return $extLang . '/' . $slug . '/cities';
+            case 'faq':
 
-				break;
+                return $extLang . '/' . $slug . '/faqs';
 
-			case 'guide':
+                break;
 
-				return $extLang . '/' . $slug . '/guides';
+            default:
 
-				break;
+                return $extLang . '/' . $slug . '/overview';
+        }
+    }
 
-			case 'faq':
+    function getMapHTML2($country_id)
 
-				return $extLang . '/' . $slug . '/faqs';
+    {
 
-				break;
+        $clsISO = new ISO();
 
-			default:
+        $one = $this->getOne($country_id);
 
-				return $extLang . '/' . $slug . '/overview';
-		}
-	}
+        $html .= '<div class="infomap">';
 
-	function getMapHTML2($country_id)
-
-	{
-
-		$clsISO = new ISO();
-
-		$one = $this->getOne($country_id);
-
-		$html .= '<div class="infomap">';
-
-		$html .= '<h2 class="title_map">
+        $html .= '<h2 class="title_map">
 
 					<a href=' . $this->getLinkDestination($country_id) . ' title=' . $this->getTitle($country_id) . '>' . $this->getTitle($country_id) . '</a>
 
 				</h2>';
 
-		$html .= '</div>';
+        $html .= '</div>';
 
-		return $html;
-	}
+        return $html;
+    }
 
-	function getMapLa($country_id)
+    function getMapLa($country_id)
 
-	{
+    {
 
-		global $_LANG_ID;
+        global $_LANG_ID;
 
-		$one = $this->getOne($country_id, 'map_la');
+        $one = $this->getOne($country_id, 'map_la');
 
-		return $one['map_la'];
-	}
+        return $one['map_la'];
+    }
 
 
+    function getMapLo($country_id)
 
-	function getMapLo($country_id)
+    {
 
-	{
+        global $_LANG_ID;
 
-		global $_LANG_ID;
+        $one = $this->getOne($country_id, 'map_lo');
 
-		$one = $this->getOne($country_id, 'map_lo');
+        return $one['map_lo'];
+    }
 
-		return $one['map_lo'];
-	}
+    function getLocationMap($country_id)
 
-	function getLocationMap($country_id)
+    {
 
-	{
+        $clsCountry = new Country();
 
-		$clsCountry = new Country();
+        $clsCity = new City();
 
-		$clsCity = new City();
+        #
 
-		#
+        $listCity = $clsCity->getAll("is_trash=0 and map_lo<>'' and map_la<>'' and country_id='$country_id' order by order_no ASC");
 
-		$listCity = $clsCity->getAll("is_trash=0 and map_lo<>'' and map_la<>'' and country_id='$country_id' order by order_no ASC");
+        $location = '';
 
-		$location = '';
+        if (!empty($listCity)) {
 
-		if (!empty($listCity)) {
+            for ($i = 0; $i < count($listCity); $i++) {
 
-			for ($i = 0; $i < count($listCity); $i++) {
+                $location .= '["' . $clsCity->getMapHTML($listCity[$i][$clsCity->pkey]) . '",' . $listCity[$i]['map_la'] . ',' . $listCity[$i]['map_lo'] . ',' . $listCity[$i][$clsCity->pkey] . ']';
 
-				$location .= '["' . $clsCity->getMapHTML($listCity[$i][$clsCity->pkey]) . '",' . $listCity[$i]['map_la'] . ',' . $listCity[$i]['map_lo'] . ',' . $listCity[$i][$clsCity->pkey] . ']';
+                $location .= ($i == count($listCity) - 1) ? '' : ',';
+            }
+        }
 
-				$location .= ($i == count($listCity) - 1) ? '' : ',';
-			}
-		}
-
-		$script_js = '<script type="text/javascript">
+        $script_js = '<script type="text/javascript">
 
 			var locations=[' . $location . '];
 
 		</script>';
 
-		return $script_js;
-	}
+        return $script_js;
+    }
 
-	function getCountryFlag($country_id)
+    function getCountryFlag($country_id)
 
-	{
+    {
 
-		return '';
-	}
+        return '';
+    }
 
-	function getListDestCatTours($country_id)
+    function getListDestCatTours($country_id)
 
-	{
+    {
 
-		$clsCategory = new Category();
+        $clsCategory = new Category();
 
-		$res = $clsCategory->getAll("is_trash=0 and _type = 'TOUR' and cat_id in (select cat_id from default_tour WHERE (tour_id in (SELECT tour_id from default_tour_destination where country_id='" . $country_id . "' )))", $clsCategory->pkey);
+        $res = $clsCategory->getAll("is_trash=0 and _type = 'TOUR' and cat_id in (select cat_id from default_tour WHERE (tour_id in (SELECT tour_id from default_tour_destination where country_id='" . $country_id . "' )))", $clsCategory->pkey);
 
-		return !empty($res) ? $res : '';
-	}
+        return !empty($res) ? $res : '';
+    }
 
-	function getHotelByCountry($country_id, $limit = 0)
+    function getHotelByCountry($country_id, $limit = 0)
 
-	{
+    {
 
-		$clsHotel = new Hotel();
+        $clsHotel = new Hotel();
 
-		$res = $clsHotel->getAll("is_trash=0 and country_id='$country_id' order by order_no DESC limit 0,$limit", $clsHotel->pkey);
+        $res = $clsHotel->getAll("is_trash=0 and country_id='$country_id' order by order_no DESC limit 0,$limit", $clsHotel->pkey);
 
-		return $res;
-	}
+        return $res;
+    }
 
-	function getHotCityByCountry($country_id, $limit)
+    function getHotCityByCountry($country_id, $limit)
 
-	{
+    {
 
-		$clsCity = new City();
+        $clsCity = new City();
 
-		$sql = "is_trash=0 and country_id='$country_id' and city_id IN (SELECT target_id FROM " . DB_PREFIX . "hoteltop WHERE fromid = 'CITY') order by order_no DESC LIMIT 0,$limit";
+        $sql = "is_trash=0 and country_id='$country_id' and city_id IN (SELECT target_id FROM " . DB_PREFIX . "hoteltop WHERE fromid = 'CITY') order by order_no DESC LIMIT 0,$limit";
 
-		return $clsCity->getAll($sql);
-	}
+        return $clsCity->getAll($sql);
+    }
 
-	function getCityTourByCountry($country_id)
+    function getCityTourByCountry($country_id)
 
-	{
+    {
 
-		$clsCity = new City();
+        $clsCity = new City();
 
-		$sql = "is_trash=0 and country_id='$country_id' and city_id IN (SELECT city_id FROM " . DB_PREFIX . "tour_destination WHERE is_trash=0) order by order_no DESC";
+        $sql = "is_trash=0 and country_id='$country_id' and city_id IN (SELECT city_id FROM " . DB_PREFIX . "tour_destination WHERE is_trash=0) order by order_no DESC";
 
-		return $clsCity->getAll($sql, $clsCity->pkey);
-	}
+        return $clsCity->getAll($sql, $clsCity->pkey);
+    }
 
-	#- Count Number In Country
+    #- Count Number In Country
 
 
+    function countNumberCityStore($country_id = 0, $type = '')
 
-	function countNumberCityStore($country_id = 0, $type = '')
+    {
 
-	{
+        $clsCityStore = new CityStore();
 
-		$clsCityStore = new CityStore();
+        return $clsCityStore->countItem("is_trash='0' and country_id='$country_id' and type='$type'");
+    }
 
-		return $clsCityStore->countItem("is_trash='0' and country_id='$country_id' and type='$type'");
-	}
+    function countChildGuide($guide_id)
 
-	function countChildGuide($guide_id)
+    {
 
-	{
+        global $_LANG_ID;
 
-		global $_LANG_ID;
+        $clsGuide = new Guide();
 
-		$clsGuide = new Guide();
+        $one = $clsGuide->getAll("is_trash=0 and parent_id='$guide_id'");
 
-		$one = $clsGuide->getAll("is_trash=0 and parent_id='$guide_id'");
+        if ($one[0]['guide_id'] != '')
 
-		if ($one[0]['guide_id'] != '')
+            return count($one);
 
-			return count($one);
+        return 0;
+    }
 
-		return 0;
-	}
+    function getLinkDestination($is_sort = false)
 
-	function getLinkDestination($is_sort = false)
+    {
 
-	{
+        global $extLang, $_LANG_ID;
 
-		global $extLang, $_LANG_ID;
+        if ($is_sort)
 
-		if ($is_sort)
+            return $extLang . '/destinations';
 
-			return $extLang . '/destinations';
+        return $extLang . '/destinations/';
+    }
 
-		return $extLang . '/destinations/';
-	}
+    function getLinkTourSort($cat_id = '', $is_sort = false)
 
-	function getLinkTourSort($cat_id = '', $is_sort = false)
+    {
 
-	{
+        global $extLang;
 
-		global $extLang;
+        if ($is_sort)
 
-		if ($is_sort)
+            return $extLang . '/destinations/c' . $cat_id;
 
-			return $extLang . '/destinations/c' . $cat_id;
+        return $extLang . '/destinations/c' . $cat_id . '/';
+    }
 
-		return $extLang . '/destinations/c' . $cat_id . '/';
-	}
 
+    function checkExits($continent_id = 0, $country_id = 0)
 
+    {
 
-	function checkExits($continent_id = 0, $country_id = 0)
+        $cond = "is_trash=0";
 
-	{
+        if (intval($continent_id) != 0) {
 
-		$cond = "is_trash=0";
+            $cond .= " and continent_id = '$continent_id'";
+        }
 
-		if (intval($continent_id) != 0) {
+        if (intval($country_id) != 0) {
 
-			$cond .= " and continent_id = '$continent_id'";
-		}
+            $cond .= " and country_id = '$country_id'";
+        }
 
-		if (intval($country_id) != 0) {
+        $res = $this->getAll($cond . " limit 0,1");
 
-			$cond .= " and country_id = '$country_id'";
-		}
+        return !empty($res) ? 1 : 0;
+    }
 
-		$res = $this->getAll($cond . " limit 0,1");
+    function doDelete($country_id)
 
-		return !empty($res) ? 1 : 0;
-	}
+    {
 
-	function doDelete($country_id)
+        $clsISO = new ISO();
 
-	{
 
-		$clsISO = new ISO();
+        // Delete City
 
+        $clsCity = new City();
 
+        $lstCity = $clsCity->getAll("country_id='$country_id'", $clsCity->pkey);
 
-		// Delete City
+        if (is_array($lstCity) && count($lstCity) > 0) {
 
-		$clsCity = new City();
+            for ($i = 0; $i < count($lstCity); $i++) {
 
-		$lstCity = $clsCity->getAll("country_id='$country_id'", $clsCity->pkey);
+                $clsCity->updateOne($lstCity[$i]['city_id'], "country_id=0");
+            }
+        }
 
-		if (is_array($lstCity) && count($lstCity) > 0) {
+        $clsHotel = new Hotel();
 
-			for ($i = 0; $i < count($lstCity); $i++) {
+        $lstHotel = $clsHotel->getAll("country_id='$country_id'");
 
-				$clsCity->updateOne($lstCity[$i]['city_id'], "country_id=0");
-			}
-		}
+        if (is_array($lstHotel) && count($lstHotel) > 0) {
 
-		$clsHotel = new Hotel();
+            for ($i = 0; $i < count($lstHotel); $i++) {
 
-		$lstHotel = $clsHotel->getAll("country_id='$country_id'");
+                $clsHotel->updateOne($lstHotel[$i][$clsHotel->pkey], "country_id=0,city_id=0,region_id=0");
+            }
+        }
 
-		if (is_array($lstHotel) && count($lstHotel) > 0) {
 
-			for ($i = 0; $i < count($lstHotel); $i++) {
+        // Delete
 
-				$clsHotel->updateOne($lstHotel[$i][$clsHotel->pkey], "country_id=0,city_id=0,region_id=0");
-			}
-		}
+        $clsCityStore = new CityStore();
 
+        $clsCityStore->deleteByCond("country_id='$country_id'");
 
+        // Delete
 
-		// Delete 
+        $clsTourDestination = new TourDestination();
 
-		$clsCityStore = new CityStore();
+        $clsTourDestination->deleteByCond("country_id='$country_id'");
 
-		$clsCityStore->deleteByCond("country_id='$country_id'");
+        // Delete
 
-		// Delete 
+        $this->deleteOne($country_id);
 
-		$clsTourDestination = new TourDestination();
+        return 1;
+    }
 
-		$clsTourDestination->deleteByCond("country_id='$country_id'");
 
-		// Delete
+    function getSelectCountryCitySearch($selected = '')
 
-		$this->deleteOne($country_id);
+    {
 
-		return 1;
-	}
+        global $core, $core;
 
+        $clsTour = new Tour();
 
+        $clsCity = new City();
 
-	function getSelectCountryCitySearch($selected = '')
 
-	{
+        $where = "is_trash=0 and is_online=1";
 
-		global $core, $core;
 
-		$clsTour = new Tour();
+        $limit = " order by order_no ASC";
 
-		$clsCity = new City();
 
+        $html = '';
 
 
-		$where = "is_trash=0 and is_online=1";
+        $lstCountry = $this->getAll($where . $limit, $this->pkey . ",title,slug");
 
+        if (is_array($lstCountry) && count($lstCountry) > 0) {
 
+            $i = 0;
 
-		$limit = " order by order_no ASC";
+            foreach ($lstCountry as $k => $v) {
 
+                $total_tour_country = $clsTour->countTourGolobal($v[$this->pkey]);
 
+                if ($total_tour_country > 0) {
 
-		$html = '';
+                    $selected_index = ($selected == $v[$this->pkey]) ? 'selected="selected"' : '';
 
+                    $html .= '<option data-label="Country" data-number_tour="' . $total_tour_country . '" data-slug="' . strtolower($v['slug']) . '" data-strtolower_title="' . strtolower($v['title']) . '" value="' . $v[$this->pkey] . '">' . $v['title'] . '</option>';
+                }
 
+                ++$i;
+            }
+        }
 
-		$lstCountry = $this->getAll($where . $limit, $this->pkey . ",title,slug");
 
-		if (is_array($lstCountry) && count($lstCountry) > 0) {
+        $lstCity = $clsCity->getAll($where . $limit, $clsCity->pkey . ",title,slug,country_id");
 
-			$i = 0;
+        if (is_array($lstCity) && count($lstCity) > 0) {
 
-			foreach ($lstCountry as $k => $v) {
+            $j = 0;
 
-				$total_tour_country = $clsTour->countTourGolobal($v[$this->pkey]);
+            foreach ($lstCity as $k => $v) {
 
-				if ($total_tour_country > 0) {
+                $total_tour_city = $clsTour->countTourGolobal($v['country_id'], $v[$clsCity->pkey]);
 
-					$selected_index = ($selected == $v[$this->pkey]) ? 'selected="selected"' : '';
+                if ($total_tour_city > 0) {
 
-					$html .= '<option data-label="Country" data-number_tour="' . $total_tour_country . '" data-slug="' . strtolower($v['slug']) . '" data-strtolower_title="' . strtolower($v['title']) . '" value="' . $v[$this->pkey] . '">' . $v['title'] . '</option>';
-				}
+                    $selected_index = ($selected == $v[$clsCity->pkey]) ? 'selected="selected"' : '';
 
-				++$i;
-			}
-		}
+                    $html .= '<option data-label="City" data-number_tour="' . $total_tour_city . '" data-slug="' . strtolower($v['slug']) . '" data-strtolower_title="' . strtolower($v['title']) . '" value="country-' . $v['country_id'] . '-city-' . $v[$clsCity->pkey] . '" data-country="' . $this->getTitle($v['country_id']) . '" >' . $v['title'] . '</option>';
+                }
 
+                ++$j;
+            }
+        }
 
+        if (empty($lstCountry) && empty($lstCity)) {
 
-		$lstCity = $clsCity->getAll($where . $limit, $clsCity->pkey . ",title,slug,country_id");
+            $html .= '_EMPTY';
+        }
 
-		if (is_array($lstCity) && count($lstCity) > 0) {
+        return $html;
+    }
 
-			$j = 0;
 
-			foreach ($lstCity as $k => $v) {
+    function checkIsOnline($country_id)
+    {
 
-				$total_tour_city = $clsTour->countTourGolobal($v['country_id'], $v[$clsCity->pkey]);
+        $one = $this->getOne($country_id, 'is_online');
 
-				if ($total_tour_city > 0) {
-
-					$selected_index = ($selected == $v[$clsCity->pkey]) ? 'selected="selected"' : '';
-
-					$html .= '<option data-label="City" data-number_tour="' . $total_tour_city . '" data-slug="' . strtolower($v['slug']) . '" data-strtolower_title="' . strtolower($v['title']) . '" value="country-' . $v['country_id'] . '-city-' . $v[$clsCity->pkey] . '" data-country="' . $this->getTitle($v['country_id']) . '" >' . $v['title'] . '</option>';
-				}
-
-				++$j;
-			}
-		}
-
-		if (empty($lstCountry) && empty($lstCity)) {
-
-			$html .= '_EMPTY';
-		}
-
-		return $html;
-	}
-
-
-
-	function checkIsOnline($country_id)
-	{
-
-		$one = $this->getOne($country_id, 'is_online');
-
-		return $one['is_online'];
-	}
+        return $one['is_online'];
+    }
 }

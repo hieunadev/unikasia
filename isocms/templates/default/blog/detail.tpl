@@ -9,6 +9,8 @@
 {assign var=cateBlogSlug value=$clsBlogCategory->getSlug($cat_id)}
 
 {assign var=regionBlog value=$clsCountryEx->getTitle($country_id)}
+{assign var=blogSlug value=$clsCountryEx->getSlug($country_id)}
+
 
 
 {literal}
@@ -78,8 +80,8 @@
             <div class="col-text">
 
                 <div class="blog_info">
-
-                    <p class="country_cat"><a href="/blog/{$regionBlog}" title="{$regionBlog}">{$regionBlog}</a> | <a href="/blog?blogcat_id={$lstBlogCat[i].blogcat_id}" title="{$lstBlogCat[i].title}">{$cateBlog}</a></p>
+					
+                    <p class="country_cat"><a href="/blog/{$blogSlug}" title="{$regionBlog}">{$regionBlog}</a> | <a href="/blog?blogcat_id={$cat_id}" title="{$cateBlog}">{$cateBlog}</a></p>
 
                     <h1 class="title text3line">{$title_blog}</h1>
 
@@ -116,10 +118,10 @@
     <div class="breadcrumb_list">
         <div class="container">
             <div class="breadcrumb">
-                <h2 class="txt_youarehere">You are here:</h2>
+                <h2 class="txt_youarehere">{$core->get_Lang('You are here')}</h2>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{PCMS_URL}" title="{$core->get_Lang('Home')}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{PCMS_URL}blog" title="{$core->get_Lang('Blog')}">Blog</a></li>
+                    <li class="breadcrumb-item"><a href="{PCMS_URL}" title="{$core->get_Lang('Home')}">{$core->get_Lang('Home')}</a></li>
+                    <li class="breadcrumb-item"><a href="{PCMS_URL}blog" title="{$core->get_Lang('Blog')}">{$core->get_Lang('Blog')}</a></li>
                     <li class="breadcrumb-item"><a href="{PCMS_URL}blog/{$regionBlog}" title="{$regionBlog}">{$regionBlog}</a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">{$title_blog}</li>
@@ -136,7 +138,6 @@
                 <div class="item_blogdetail">
                     <div class="content_blog">
                         {$blogItem.content}
-
                     </div>
 
                     <div class="txt_ico_share_star">
@@ -154,6 +155,18 @@
                             </div>
                         </div>
                         <div class="rating-and-votes">
+							
+							{assign var=fileAj value='saveRating'}
+                            {assign var=typeAj value='blog'}
+                            {assign var=table_id value=$blog_id}
+							
+							{if $percentRateAVG}
+                                {assign var=percentAVG value=$percentRateAVG}
+                            {else}
+                                {assign var=percentAVG value='0'}
+                            {/if}
+                            {$core->getBlock('rate_star')}
+<!--
                             <div class="star-icons">
                              <div class="rating" style="width: 20rem">
 							<input id="rating-5" type="radio" name="rating" value="5"/><label for="rating-5"><i class="fa-solid fa-star fa-xl"></i></label>
@@ -165,15 +178,17 @@
 								
                             </div>
                             <span class="vote-count">| 2 voted</span>
+-->
                         </div>
                     </div>
 
+					{if $listTag ne ''}
+
                     <div class="tag_blog">
-                        <p class="txt_tags">Tags:</p>
-                        <div class="tags_">
-							{$listTag}
-                        </div>
+                        <p class="txt_tags">{$core->get_Lang('Tags')}:</p>
+                        <ul class="listtag">{$listTag}</ul>
                     </div>
+					{/if}
 
                     <div class="comment_box mtm mt30 w-100">
                         <div class="fb-comments" data-href="{$PCMS_URL}{$clsBlog->getLink($blog_id,$blogItem)}"
@@ -234,7 +249,7 @@
                         </div>
                     </form>
                     <div class="featured-blogs">
-                        <h2 class="txt_featureblog">FEATURED BLOG</h2>
+                        <h2 class="txt_featureblog">{$core->get_Lang('FEATURED BLOG')}</h2>
                         {section name=i loop=$lstFeatureBlog}
                         <div class="row featured-blog">
                             <div class="col-lg-4 overflow-hidden">
@@ -257,7 +272,7 @@
                         <hr style="margin-bottom: 32px; margin-top: 32px">
 
                         <div class="related_tours">
-                            <h2 class="txt_featureblog">RELATED TOURS</h2>
+                            <h2 class="txt_featureblog">{$core->get_Lang('RELATED TOURS')}</h2>
 							 {section name=i loop=$lstRelatedTour}
                             <div class="list_viewtour">
                                 <div class="img_toursrelated">
@@ -313,8 +328,7 @@
 								<div class="btn_exploremore">
                                 <a href="/tour/{$regionBlog}" alt="tour" title="tour">
 
-                                    <button class="btn btn_seealltour">See all tours <i
-                                                class="fa-regular fa-arrow-right" style="color: #ffffff;"></i></button>
+                                    <button class="btn btn_seealltour">{$core->get_Lang('See all tours')} <i class="fa-regular fa-arrow-right" style="color: #ffffff;"></i></button>
                                 </a>
 									</div>
                             </div>
@@ -328,6 +342,7 @@
 
 <section class="read_blognext">
     <div class="container">
+		{if !empty($lstRelated)}
         <h2 class="txt_readblog">{$core->get_Lang('Read the next')}</h2>
         <div class="pic_textread">
 			<div class="row">
@@ -362,6 +377,7 @@
 					</div>
         </div>
 			</div>
+				{/if}
 			
 			{section name=i loop=$lstRelated start=1}
 

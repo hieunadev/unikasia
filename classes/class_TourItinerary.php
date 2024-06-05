@@ -237,8 +237,8 @@ class TourItinerary extends dbBasic{
 	}
 	function getTitle($pvalTable,$one=null){
 		if(!isset($one['title'])){
-			$one=$this->getOne($pvalTable,'title');	
-		}		
+			$one=$this->getOne($pvalTable,'title');
+		}
 		return $one['title'];
 	}
 	function getContent($pvalTable){
@@ -332,6 +332,29 @@ class TourItinerary extends dbBasic{
     function getTitleContingencyMeal($pvalTable){
         $one=$this->getOne($pvalTable,'title_contingency');
         return $one['title_contingency'].': '.$this->getTitleMeal($pvalTable);
+    }
+
+    function getGoodMeal($tour_id) {
+        $content = '';
+        $rec = $this->getAll(" tour_id = $tour_id");
+        $clsTourProperty = new TourProperty();
+        $values_to_count = [98, 99, 100];
+        $count_values = array_fill_keys($values_to_count, 0);
+
+        foreach ($rec as $k=>$v) {
+            $meals = explode(",", $v['meals']);
+            foreach ($meals as $meal) {
+                if (array_key_exists($meal, $count_values)) {
+                    $count_values[$meal]++;
+                }
+            }
+        }
+        $arr = [];
+        foreach ($count_values as $meal => $count) {
+            $arr[] = $count . " " . $clsTourProperty->getTitle($meal);
+        }
+        $content = implode(", ", $arr);
+        return $content;
     }
 }
 ?>

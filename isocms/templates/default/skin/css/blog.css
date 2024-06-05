@@ -9,6 +9,7 @@
     flex-direction: column; /* Hoặc các thuộc tính grid khác */}
 
 
+
 .blog_default_body .owl-carousel {
 	z-index: auto;
 }
@@ -66,6 +67,10 @@ a.readyToStart-btn:hover {
 
 /* CSS HEADER */
 
+.blog_detail_body #header_fixed {
+	box-shadow: rgba(125, 135, 158, 0.09) 0px 12px 32px 0px;
+}
+
 .blog_detail_body .txt_header1 {
 	background-color: #111D37;
 }
@@ -120,8 +125,6 @@ a.readyToStart-btn:hover {
     margin-top: 32px;
   }
 
-
-
 .txt_youarehere {
     color: #111D37;
     font-size: 16px;
@@ -145,8 +148,6 @@ a.readyToStart-btn:hover {
   content: "\f054";
   color: #ffa718; 
 }
-
-
 
 .breadcrumb .container {
     display: flex;
@@ -204,6 +205,7 @@ a.readyToStart-btn:hover {
   .img-blog {
     border-radius: 8px;
 	overflow: hidden;
+	  width: 100%;
   }
 
 .blog-top .blog-item .img_blog_left,
@@ -221,7 +223,6 @@ a.readyToStart-btn:hover {
 /*    height: 100%;*/
     transition: transform 0.3s ease;
 }
-
 
 .blog-top .blog-item:hover .img_blog_left,
 .blog-top .blog-item:hover .img_blog_mid1,
@@ -346,7 +347,7 @@ a .btn_seealltour:hover,
     border-bottom: 1px solid #D3DCE1;
     padding-bottom: 32px;
 	overflow: hidden;
-	border-radius: 8px;
+/*	border-radius: 8px;*/
   }
 
 .lastblog .col-md-6 {
@@ -379,7 +380,6 @@ a .btn_seealltour:hover,
   text-overflow: ellipsis;
 }
 
-
   .lastest-blog .last-blog-item {
     display: flex;
     flex-direction: column;
@@ -409,7 +409,6 @@ a .btn_seealltour:hover,
     z-index: -1;
   }
 
-
 .list_lastblog {
   display: flex;
   border-bottom: 1px solid #D3DCE1;
@@ -425,7 +424,6 @@ a .btn_seealltour:hover,
 	width: 100%;
 	border-radius: 8px;
 	overflow: hidden;
-	
 }
 
 .last-blog-item h3 a {
@@ -555,8 +553,6 @@ input[type="checkbox"] {
   border: 2px solid #ffa718;
   background-color: #ffa718;
 }
-
-
 
 .list_filter {
   display: flex;
@@ -835,56 +831,74 @@ img.img_featureblog {
 /* CSS Review End */
 
 
-@media only screen and (max-width: 575px) { /* Text Intro blog Header*/
-  .txt_introblog, .txt_h1, .txt_pp {
-    display: block;
-    padding-top: 0px;
-    margin: 0;
-  }
-}
+/* CSS Mobile*/
 
-@media only screen and (max-width: 575px) { /*Dropdown menu Header*/
-  .list_dropdownmenu {
+@media only screen and (max-width: 575px) { 
+	 .txt_blogvn {/* Text Intro blog Header*/
+    display: flex;
+    margin: 0;
+	 bottom: 20% !important;
+  }
+	
+	.blog_des_destination { /* Border-radius Page Blog*/
+	padding: 34px 0 0px 0;
+    background: #fff;
+	border-radius: 50px 50px 0 0;
+    position: relative;
+    z-index: 2;
+    margin-top: -2.75rem;	
+	}
+	
+	.bread_crumb {
+		margin: 0 0 0 14px;
+	}
+		
+	.list_dropdownmenu {/*Dropdown menu Header*/
     display: block;
     padding-top: 0px;
     margin: 0;
 	content-visibility: hidden;
   }
-}
+	
+	.blog-mid {
+		border-top: 1px solid #D3DCE1;
+		border-bottom: 1px solid #D3DCE1;
+	}
+	
+	.bloglastest {
+		margin-bottom: 16px;
+	}
+	
+	.lastblog .col-md-6 {
+		display: flex;
+		flex-direction: column;
+	}
 
-@media only screen and (max-width: 575px) {
-  .title-lastest-blog::after { Lastest Blog
+	
+	.title-lastest-blog::after {/* Lastest Blog*/
     display: block;
     padding-top: 0px;
     margin: 0;
-	width: 46% !important;
-  left: 23% !important;
-  bottom: 18% !important;
-  }
-}
-
-@media only screen and (max-width: 575px) {
-  .title-recently-view::after { /*Recently Views*/
-    display: block;
-    padding-top: 0px;
-    margin: 0;
-	width: 39% !important;
-  	left: 20% !important;
+	width: 28% !important;
+  	left: 15% !important;
   	bottom: 18% !important;
   }
-}
-
-
-
-@media only screen and (max-width: 575px) {
+	
+	.title-recently-view::after { /*Recently Views*/
+    display: block;
+    padding-top: 0px;
+    margin: 0;
+	width: 33% !important;
+  	left: 17% !important;
+  	bottom: 18% !important;
+  }
+	
 	.blog-item img {
 		width: 100%;
 		height: auto;
 	}
-}
-
-@media only screen and (max-width: 575px) {
-  .txtreviews_::after { /*Reviews*/
+	
+	.txtreviews_::after { /*Reviews*/
     display: block;
     padding-top: 0px;
     margin: 0;
@@ -892,7 +906,16 @@ img.img_featureblog {
   	left: 54% !important;
   	bottom: 18% !important;
   }
+	
 }
+
+@media screen and (max-width: 575px) {
+	.hnv_item_holiday .hnv_item_image_holiday img {
+		width: 100% !important;
+	}
+}
+
+/* CSS End Mobile Blog */
 
 @media only screen and (max-width: 1350px) {
   .search-item .search-item-txt input {
@@ -1473,19 +1496,14 @@ img.img_featureblog {
 	.rounded_right {
 		width: auto;
 	}
-}
-
-@media only screen and (max-width: 750px) {
-  .bground_introtxt .col-md-6 {
+	 .bground_introtxt .col-md-6 {
 	  padding-right: revert-layer;
   }
-}
-
-@media only screen and (max-width: 750px) {
-  .txth2_blogdetail {
+	.txth2_blogdetail {
 	 width: auto;
   }
 }
+
 
 .alsoLike {
     margin-top: 68px;
@@ -1603,12 +1621,14 @@ img.img_featureblog {
 }
 
 
+/*
 .rating {
 	direction: rtl;
 	unicode-bidi: bidi-override;
 	color: #ddd;
-/*	color: #ffc107;*/
+	color: #ffc107;
 }
+*/
 .rating input {
 	display: none;
 }
@@ -1642,11 +1662,40 @@ img.img_featureblog {
 }
 
 .tag-link a {
-  color: #959AA4;
+  ;
 }
 
+/*
 .tag-link a::before {
   content: "#";
+}
+*/
+
+.tag_blog .listtag {
+  list-style: none;
+  padding: 0;
+  margin: 0 10px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.tag_blog .listtag li {
+  margin: 0;
+}
+
+.tag_blog .listtag a {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #959AA4;
+  display: inline-block;
+}
+
+.listtag .tag-link a:not(:empty)::before {
+  content: "#"; /* Nội dung của phần tử giả là ký tự # */
 }
 
 .list_readthenextitem {
@@ -1892,6 +1941,31 @@ img.img_featureblog {
 .intro p strong {
   font-weight: normal; /* Hoặc 400 */
 }
+
+@media only screen and (max-width: 575px) {
+    .item_blogdetail{
+        display: flex;
+    }
+	.txt_ico_share_star {
+		display: block;
+	}
+	.img_relatedtour img {
+		width: 100%;
+		max-width: 100% !important;
+	}
+	.border_exploremore {
+		max-width: 100%;
+		
+	}
+	.border_exploremore img {
+		width: 100%;
+	}
+	.tour_exploretxt {
+		left: 25%;
+	}
+}
+
+
 
 
 

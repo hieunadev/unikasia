@@ -118,6 +118,7 @@
     <link rel="stylesheet" href="{$URL_CSS}/home/home.css">
     {if $mod eq 'tour'}
     <link rel="stylesheet" href="{$URL_CSS}/tours/tour.css">
+    <link rel="stylesheet" href="{$URL_CSS}/tours/tour_detail.css" />
     {/if}
     <link rel="stylesheet" href="{$URL_CSS}/common.css" />
 

@@ -1,22 +1,24 @@
 <div class="des_travel_guide_side">
-    <form action="">
+    <form action="" method="POST">
         <div class="des_travel_guide_search">
             <i class="fa-light fa-magnifying-glass"></i><input type="text" placeholder="Search">
         </div>
     </form>
     <div class="des_travel_guide_category">
-        {if ($mod eq 'destination' && $act eq 'travel_guide') || ($mod eq 'destination' && $act eq 'travel_guide_detail')}
+        {if ($mod eq 'destination' && $act eq 'travel_guide') || ($mod eq 'destination' && $act eq 'travel_guide_detail') || ($mod eq 'guide' && $act eq 'cat')}
         <div class="des_travel_guide_category_title">
-            <h2>Vietnam</h2>
+            <h2>{$country_title}</h2>
         </div>
         <div class="des_travel_guide_category_list">
-            <a href="#" class="active" title="Activities">Activities</a>
-            <a href="#" title="Reasons to travel">Reasons to travel</a>
-            <a href="#" title="Travel Tips">Travel Tips</a>
-            <a href="#" title="Preparing for your trip">Preparing for your trip</a>
-            <a href="#" title="Travel files">Travel files</a>
+            {if $arr_guide_cat}
+            {foreach from=$arr_guide_cat key=key item=item}
+            {assign var="guideCatID" value=$item.guidecat_id}
+            {assign var="guideCatSlug" value=$item.slug}
+            <a href="{$clsGuide->getLinkGuide($country_slug, $guideCatSlug, $guideCatID)}" title="{$clsGuideCat->getTitle($guideCatID)}" {if $guideCatID eq $guidecat_id} class="active" {/if}>{$clsGuideCat->getTitle($guideCatID)}</a>
+            {/foreach}
+            {/if}
         </div>
-        {elseif $mod eq 'destination' && $act eq 'attraction'}
+        {elseif ($mod eq 'destination' && $act eq 'attraction')}
         <div class="des_travel_guide_category_title">
             <h2>Hanoi</h2>
         </div>
@@ -29,107 +31,63 @@
         </div>
         {/if}
     </div>
-    {if ($mod eq 'destination' && $act eq 'travel_guide') || ($mod eq 'destination' && $act eq 'travel_guide_detail')}
+    {if ($mod eq 'destination' && $act eq 'travel_guide') || ($mod eq 'destination' && $act eq 'travel_guide_detail') || ($mod eq 'guide' && $act eq 'cat')}
     <div class="des_travel_guide_exciting_trip">
         <div class="des_travel_guide_exciting_trip_title">
-            <h2>EXCITING TRIP</h2>
+            <h2>{$core->get_Lang('EXCITING TRIP')}</h2>
         </div>
         <div class="des_travel_guide_exciting_trip_content">
+            {if $arr_tour_country}
+            {foreach from=$arr_tour_country key=key item=item}
+            {assign var="tourID" value=$item.tour_id}
             <div class="des_travel_guide_exciting_trip_item">
-                <img src="https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fG5hdHVyZXxlbnwwfHwwfHx8MA%3D%3D" alt="" width="296" height="200">
-                <div class="des_travel_guide_exciting_trip_title">
-                    <h3>Splendors of Vietnam with the center’s must-sees 19 days</h3>
+                <div class="des_travel_guide_exciting_trip_image">
+                    <a href="{$clsTour->getLink($tourID)}" title="{$clsTour->getTitle($tourID)}">
+                        <img src="{$clsTour->getImage($tourID, 296, 200)}" alt="{$clsTour->getTitle($tourID)}" width="296" height="200">
+                    </a>
                 </div>
-                <div class="des_travel_guide_exciting_trip_content">
+                <div class="des_travel_guide_exciting_trip_item_title">
+                    <h3><a href="#" title="{$clsTour->getTitle($tourID)}">{$clsTour->getTitle($tourID)}</a></h3>
+                </div>
+                <div class="des_travel_guide_exciting_trip_item_content">
                     <div class="des_travel_guide_exciting_trip_rate">
                         <div class="des_travel_guide_exciting_trip_rate_score">9.9</div>
                         <div class="des_travel_guide_exciting_trip_rate_title">Excellent</div>
                         <div class="des_travel_guide_exciting_trip_rate_total">- 10 reviews</div>
                     </div>
                     <div class="des_travel_guide_exciting_trip_place">
-                        <i class="fa-light fa-location-dot"></i> Place: Hanoi – Halong – Hue – Hoian
+                        <i class="fa-light fa-location-dot"></i>
+                        Place: {$clsTourDestination->getByCountry($tourID, 'city')}
+                        {if $clsTourDestination->getByCountry($tourID) > 0}
+                        <button type="button" class="tooltips_tour" data-bs-toggle="tooltip" title="{$clsTourDestination->getByCountry($tourID, 'other_city')}">+{$clsTourDestination->getByCountry($tourID)}</button>
+                        {/if}
                     </div>
                     <div class="des_travel_guide_exciting_trip_description">
-                        Les “MUST” + découverte des Ethnies du Nord “À NE PAS MANQUER” et la nuit étoilée sur la jonque traditionnelle en baie […]
+                        {$clsTour->getIntro($tourID)}
                     </div>
                     <div class="des_travel_guide_exciting_trip_detail">
                         <div class="box_left">
                             <p>From</p>
-                            <span class="price_type">US</span> <span class="price">$650</span>
+                            <span class="price_type">US</span> <span class="price">${$item.min_price}</span>
                         </div>
                         <div class="box_right">
-                            <a href="#" title="View tour">View tour <i class="fa-light fa-arrow-right"></i></a>
+                            <a href="{$clsTour->getLink($tourID)}" title="{$clsTour->getTitle($tourID)}">View tour <i class="fa-light fa-arrow-right"></i></a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="des_travel_guide_exciting_trip_item">
-                <img src="https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fG5hdHVyZXxlbnwwfHwwfHx8MA%3D%3D" alt="" width="296" height="200">
-                <div class="des_travel_guide_exciting_trip_title">
-                    <h3>Splendors of Vietnam with the center’s must-sees 19 days</h3>
-                </div>
-                <div class="des_travel_guide_exciting_trip_content">
-                    <div class="des_travel_guide_exciting_trip_rate">
-                        <div class="des_travel_guide_exciting_trip_rate_score">9.9</div>
-                        <div class="des_travel_guide_exciting_trip_rate_title">Excellent</div>
-                        <div class="des_travel_guide_exciting_trip_rate_total">- 10 reviews</div>
-                    </div>
-                    <div class="des_travel_guide_exciting_trip_place">
-                        <i class="fa-light fa-location-dot"></i> Place: Hanoi – Halong – Hue – Hoian
-                    </div>
-                    <div class="des_travel_guide_exciting_trip_description">
-                        Les “MUST” + découverte des Ethnies du Nord “À NE PAS MANQUER” et la nuit étoilée sur la jonque traditionnelle en baie […]
-                    </div>
-                    <div class="des_travel_guide_exciting_trip_detail">
-                        <div class="box_left">
-                            <p>From</p>
-                            <span class="price_type">US</span> <span class="price">$650</span>
-                        </div>
-                        <div class="box_right">
-                            <a href="#" title="View tour">View tour <i class="fa-light fa-arrow-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="des_travel_guide_exciting_trip_item">
-                <img src="https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fG5hdHVyZXxlbnwwfHwwfHx8MA%3D%3D" alt="" width="296" height="200">
-                <div class="des_travel_guide_exciting_trip_title">
-                    <h3>Splendors of Vietnam with the center’s must-sees 19 days</h3>
-                </div>
-                <div class="des_travel_guide_exciting_trip_content">
-                    <div class="des_travel_guide_exciting_trip_rate">
-                        <div class="des_travel_guide_exciting_trip_rate_score">9.9</div>
-                        <div class="des_travel_guide_exciting_trip_rate_title">Excellent</div>
-                        <div class="des_travel_guide_exciting_trip_rate_total">- 10 reviews</div>
-                    </div>
-                    <div class="des_travel_guide_exciting_trip_place">
-                        <i class="fa-light fa-location-dot"></i> Place: Hanoi – Halong – Hue – Hoian
-                    </div>
-                    <div class="des_travel_guide_exciting_trip_description">
-                        Les “MUST” + découverte des Ethnies du Nord “À NE PAS MANQUER” et la nuit étoilée sur la jonque traditionnelle en baie […]
-                    </div>
-                    <div class="des_travel_guide_exciting_trip_detail">
-                        <div class="box_left">
-                            <p>From</p>
-                            <span class="price_type">US</span> <span class="price">$650</span>
-                        </div>
-                        <div class="box_right">
-                            <a href="#" title="View tour">View tour <i class="fa-light fa-arrow-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {/foreach}
+            {/if}
         </div>
     </div>
     <div class="des_travel_guide_tour_more">
         <div class="des_travel_guide_tour_more_image">
-            <img src="https://media.istockphoto.com/id/1458782106/photo/scenic-aerial-view-of-the-mountain-landscape-with-a-forest-and-the-crystal-blue-river-in.webp?b=1&s=170667a&w=0&k=20&c=enOEV-PXzYGODA36Cd-1-90gukicyKLX5CXoTYsSPSc=" alt="Tour more" width="296" height="152">
+            <img src="{$clsCountry->getImage($country_id, 296, 152)}" alt="Tour {$country_title}" width="296" height="152">
             <div class="des_travel_guide_tour_more_title">
-                <h4>Explore more Vietnam tours</h4>
-                <a href="#" title="See all tours">See all tours <i class="fa-light fa-arrow-right"></i></a>
+                <h4>Explore more {$country_title} tours</h4>
+                <a href="{$clsTourCategory->getLink(0, '', '', $country_id)}" title="See all tours in {$country_title}">See all tours <i class="fa-light fa-arrow-right"></i></a>
             </div>
         </div>
-
     </div>
     {elseif $mod eq 'destination' && $act eq 'attraction'}
     <div class="des_travel_guide_most_read">
@@ -191,7 +149,6 @@
         </div>
     </div>
     {/if}
-
 </div>
 
 {literal}
@@ -208,6 +165,7 @@
         width: 24px;
         height: 24px;
         margin-left: 20px;
+        margin-top: 10px;
     }
 
     .des_travel_guide_search input {
@@ -238,7 +196,6 @@
     }
 
     .des_travel_guide_category_list {
-        color: var(--Neutral-2, #434B5C);
         font-family: "SF Pro Display";
         font-size: 16px;
         font-style: normal;
@@ -248,6 +205,15 @@
         flex-direction: column;
         text-align: left;
         gap: 16px;
+    }
+
+    .des_travel_guide_category_list a {
+        color: var(--Neutral-2, #434B5C);
+        transition: all .3s ease-in-out;
+    }
+
+    .des_travel_guide_category_list a:hover {
+        color: #FFA718;
     }
 
     .des_travel_guide_category_list .active {
@@ -265,8 +231,7 @@
         margin-bottom: 22px;
     }
 
-    .des_travel_guide_exciting_trip_title h3 {
-        color: var(--Neutral-1, #111D37);
+    .des_travel_guide_exciting_trip_item_title h3 {
         font-family: "SF Pro Display";
         font-size: 18px;
         font-style: normal;
@@ -276,7 +241,16 @@
         margin-bottom: 10px;
     }
 
-    .des_travel_guide_exciting_trip_content {
+    .des_travel_guide_exciting_trip_item_title h3 a {
+        color: var(--Neutral-1, #111D37);
+        transition: all .3s ease-in-out;
+    }
+
+    .des_travel_guide_exciting_trip_item_title h3 a:hover {
+        color: #FFA718;
+    }
+
+    .des_travel_guide_exciting_trip_item_content {
         display: flex;
         flex-direction: column;
         gap: 9px;
@@ -328,6 +302,25 @@
         display: flex;
         flex-direction: row;
         gap: 8px;
+    }
+
+    .des_travel_guide_exciting_trip_place .fa-location-dot {
+        margin-top: 3px;
+    }
+
+    .des_travel_guide_exciting_trip_place .tooltips_tour {
+        padding: 1px 9px;
+        height: 22px;
+        border: none;
+        border-radius: 2px;
+        background: #ffeed3;
+        color: var(--Primary, #FFA718);
+        text-align: center;
+        font-family: "SF Pro Display";
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 20px;
     }
 
     .des_travel_guide_exciting_trip_description {
@@ -479,6 +472,21 @@
         font-style: normal;
         font-weight: 500;
         line-height: 20px;
+    }
+
+    .des_travel_guide_exciting_trip_image {
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .des_travel_guide_exciting_trip_image img {
+        border-radius: 8px;
+        transition: all .3s ease-in-out;
+
+    }
+
+    .des_travel_guide_exciting_trip_image img:hover {
+        scale: 1.2;
     }
 
     @media (min-width: 1200px) {}

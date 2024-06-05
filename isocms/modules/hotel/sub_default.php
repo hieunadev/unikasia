@@ -1062,7 +1062,8 @@ function default_detail() {
 		#-- Hotel Related
 		$lstHotelRelated = $clsHotel->getAll("is_trash=0 and is_online=1 and hotel_id <> '$hotel_id' and city_id ='".$oneItem['city_id']."' order by order_no desc limit 0,10",$clsHotel->pkey.',star_id,slug,title,image,intro,address');
 		
-		$assign_list['lstHotelRelated'] = $lstHotelRelated; unset($lstHotelRelated);
+		$assign_list['lstHotelRelated'] = $lstHotelRelated; 
+
 	}
 	
 	if($clsISO->getCheckActiveModulePackage($package_id,'hotel','hotel_custom_field','customize')){

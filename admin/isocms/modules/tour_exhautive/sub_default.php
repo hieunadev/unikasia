@@ -1327,6 +1327,7 @@ function default_edit()
     $assign_list["show"] = $show;
     $assign_list["message"] = $message;
     $assign_list["run_ajax"] = $run_ajax;
+
     $assign_list["cat_run"] = $cat_run;
     $assign_list["tour_id"] = $tour_id;
     $assign_list["pvalTable"] = $pvalTable;
@@ -1340,6 +1341,7 @@ function default_edit()
     $child_basic[] = 'duration-tour';
     $child_basic[] = 'image-file-tour';
     $child_basic[] = 'overview-tour';
+    $child_basic[] = 'love-trip';
 
 
     if ($clsISO->getCheckActiveModulePackage($package_id, 'property', 'activities', 'default')) {
@@ -1493,9 +1495,15 @@ function default_edit()
             $list_check_target[] = array('result' => 'check_caution', 'cat' => 'basic', 'target' => 'image-file-tour', 'name' => $core->get_Lang('Image, file Tour'));
         }
         if ($oneItem['overview'] != '') {
+
             $list_check_target[] = array('result' => 'check_success', 'cat' => 'basic', 'target' => 'overview-tour', 'name' => $core->get_Lang('Overview Tour') . ($oneItem['yield_id'] ? $clsISO->makeIcon('compress', '', 'ml-2') : ''));
         } else {
             $list_check_target[] = array('result' => 'check_caution', 'cat' => 'basic', 'target' => 'overview-tour', 'name' => $core->get_Lang('Overview Tour'));
+        }
+        if ($oneItem['love_trip'] != '') {
+            $list_check_target[] = array('result' => 'check_success', 'cat' => 'basic', 'target' => 'love-trip', 'name' => $core->get_Lang('Love Trip') . ($oneItem['yield_id'] ? $clsISO->makeIcon('compress', '', 'ml-2') : ''));
+        } else {
+            $list_check_target[] = array('result' => 'check_caution', 'cat' => 'basic', 'target' => 'love-trip', 'name' => $core->get_Lang('Love Trip'));
         }
         if ($clsISO->getCheckActiveModulePackage($package_id, 'property', 'activities', 'default')) {
             if ($oneItem['list_activities_id'] != '' && $oneItem['list_activities_id'] != '||' && $oneItem['list_activities_id'] != '|0|') {

@@ -10,7 +10,7 @@
 <div class="relate_slide_item">
     <div class="relate_slide_image">
         <a href="{$link}" title="{$title}">
-            <img class="img-responsive img100" id="imgAddOn" src="{$clsHotel->getImage($hotel_id,296,200,$arrHotel)}" alt="{$title}" />
+            <img class="img-responsive img100" id="imgAddOn" src="{$clsHotel->getImage($hotel_id,296,200,$arrHotel)}" alt="{$title}" onerror="this.src='{$URL_IMAGES}/none_image.png'"/>
         </a>
     </div>
     <div class="relate_slide_item_body">
@@ -29,3 +29,4 @@
         </div>
     </div>
 </div>
+

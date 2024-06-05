@@ -5237,7 +5237,9 @@ AND COLUMN_NAME = '" . $name . "'";
 		switch (gettype($data)) {
 			case "boolean":
 			case "object":
-				var_dump($data);
+				// var_dump($data);
+				// break;
+				print_r($data);
 				break;
 
 			case "array":

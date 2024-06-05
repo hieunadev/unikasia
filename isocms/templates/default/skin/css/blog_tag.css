@@ -102,3 +102,7 @@
 .pageBlogTag .blogPopular .featured-blog {
 	margin-left: 0px;
 }
+
+.last-blog-content .linkBlog {
+	color: #FFA718;
+}

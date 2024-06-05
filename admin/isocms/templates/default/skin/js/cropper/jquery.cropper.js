@@ -86,6 +86,10 @@ function upload_file_picker(file, params) {
                     // var aspectRatio=(532/355);
                     var aspectRatio = 294 / 462;
                 }
+            } else if (params.clsTable == "GuideCat") {
+                if (params.openFrom == "banner") {
+                    var aspectRatio = 1920 / 600;
+                }
             } else if (
                 params.clsTable == "Country" ||
                 params.clsTable == "Region"
@@ -96,9 +100,6 @@ function upload_file_picker(file, params) {
                     params.openFrom == "image_hotel"
                 ) {
                     var aspectRatio = 1920 / 400;
-                }
-                if (params.openFrom == "image_hotel_sub") {
-                    var aspectRatio = 166 / 261;
                 }
             } else if (params.clsTable == "City") {
                 var aspectRatio = 295 / 168;

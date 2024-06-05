@@ -31,17 +31,23 @@ class TourDestination extends dbBasic{
                 $count_other_city++;
             }
         }
+        $first_city_name = $clsCity->getTitle($rec[0]["city_id"]);
+        $last_city_name = $clsCity->getTitle(end($rec)["city_id"]);
         switch ($act) {
             case "startFinish":
-                $first_city_name = $clsCity->getTitle($rec[0]["city_id"]);
-                $last_city_name = $clsCity->getTitle(end($rec)["city_id"]);
                 $rec = ($first_city_name == $last_city_name) ? $first_city_name : "$first_city_name/$last_city_name";
+                break;
+            case "startFinish_detail":
+                $rec = '<span class="bold_txtlocation">'.$first_city_name.'</span> to <span class="bold_txtlocation">'.$last_city_name.'</span>';
                 break;
             case "city":
                 $rec = implode(' - ', $cities);
                 break;
             case "other_city":
                 $rec = implode(' - ', $other_city);
+                break;
+            case "all_city":
+                $rec = implode(' - ', array_merge($cities,$other_city));
                 break;
             default:
                 $rec = $count_other_city;

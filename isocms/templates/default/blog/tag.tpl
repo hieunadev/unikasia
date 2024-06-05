@@ -17,6 +17,7 @@
 		
     <section id="contentPage" class="blogPage pageBlogTag bg_f1f1f1">
 		<div class="container">
+			<div class="listtag_blog" style="display: flex">
 			<div class="last-blog-item col-sm-9">
 			<h1 class="title32 color_333 mb20">{$core->get_Lang('Blog listing by tag')} {$title_tag_blog} </h1>
 			{section name=i loop=$lstBlogs}
@@ -72,6 +73,14 @@
 				<aside class="col-lg-3 sidebar rightBlog">
 					{$core->getBlock('l_rightblog')}
 				</aside> 
-             
+             </div>
     </section>
 </div>
+	
+	<script>
+		$(document).ready(function() {
+  if ($('.lastblog .bloglastest').length === 1) { // Hoặc '.col-md-6'
+    $('.lastblog').css('border-bottom', 'none');
+  }
+});
+	</script>

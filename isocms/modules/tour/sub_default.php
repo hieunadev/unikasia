@@ -179,6 +179,50 @@ function default_default()
 	$assign_list["lstCountry"] = $lstCountry;
 	$assign_list['page_view'] = $page_view;
 }
+
+function default_detaildeparture() {
+    global $assign_list, $clsISO, $core, $dbconn, $mod, $act, $_LANG_ID, $title_page, $description_page, $global_image_seo_page, $tour_id;
+
+    $clsTour = new Tour();
+    $assign_list["clsTour"] = $clsTour;
+    $clsTourDestination = new TourDestination();
+    $assign_list["clsTourDestination"] = $clsTourDestination;
+    $clsTourItinerary = new TourItinerary();
+    $assign_list["clsTourItinerary"] = $clsTourItinerary;
+    $clsTourImage = new TourImage();
+    $assign_list["clsTourImage"] = $clsTourImage;
+
+    $where = " is_trash = 0";
+    $order = " order by order_no";
+
+    if (isset($_GET['tour_id']) && !empty($_GET['tour_id'])) {
+        $post_id = intval($_GET['tour_id']);
+        if (isset($_COOKIE['recent_view_tour'])) {
+            $recent_view_tour = json_decode($_COOKIE['recent_view_tour'], true);
+        } else {
+            $recent_view_tour = array();
+        }
+        if (!in_array($post_id, $recent_view_tour)) {
+            $recent_view_tour[] = $post_id;
+        }
+
+        setcookie('recent_view_tour', json_encode($recent_view_tour), time() + (86400), "/");
+    }
+
+    $tour_id = !empty($_GET['tour_id']) ? $_GET['tour_id'] : '0';
+    $assign_list["tour_id"] = $tour_id;
+
+    $oneItem = $clsTour->getOne($tour_id);
+    $assign_list["oneItem"] = $oneItem;
+
+    if ($oneItem['is_online'] == 0) header('location:' . PCMS_URL);
+
+    $lstTourImage = $clsTourImage->getAll("$where and is_trash=0 and table_id = $tour_id $order", "tour_image_id, image");
+    $lstTourItinerary = $clsTourItinerary->getAll("$where and tour_id = $tour_id order by day");
+    $assign_list["lstTourItinerary"] = $lstTourItinerary;
+    $assign_list["lstTourImage"] = $lstTourImage;
+}
+
 function default_tag()
 {
 	global $assign_list, $_CONFIG, $core, $dbconn, $mod, $act, $_LANG_ID, $title_page, $description_page, $keyword_page, $extLang, $cat_id, $tag_id;
@@ -1590,7 +1634,7 @@ function default_ajWhenToGo()
 		die;
 	}
 }
-function default_detaildeparture()
+function default_detaildeparture2()
 {
 	global $assign_list, $clsISO, $core, $dbconn, $mod, $act, $_LANG_ID, $title_page, $description_page, $global_image_seo_page, $tour_id;
 	#
@@ -1736,20 +1780,6 @@ function default_detaildeparture()
 		$lstHotelRelated = $clsHotel->getAll($cond);
 		$assign_list['lstHotelRelated'] = $lstHotelRelated;
 		unset($lstGuideRelated);
-	}
-
-	if (isset($_GET['tour_id']) && !empty($_GET['tour_id'])) {
-		$post_id = intval($_GET['tour_id']);
-		if (isset($_COOKIE['recent_view_tour'])) {
-			$recent_view_tour = json_decode($_COOKIE['recent_view_tour'], true);
-		} else {
-			$recent_view_tour = array();
-		}
-		if (!in_array($post_id, $recent_view_tour)) {
-			$recent_view_tour[] = $post_id;
-		}
-
-		setcookie('recent_view_tour', json_encode($recent_view_tour), time() + (86400), "/");
 	}
 
 	if (isset($_POST['Hid']) && $_POST['Hid']) {

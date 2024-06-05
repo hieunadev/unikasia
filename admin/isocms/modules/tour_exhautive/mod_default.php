@@ -407,7 +407,7 @@ function default_SiteFrmTourItinerary(){
 			$lstItem = $clsTourItinerary->getAll("is_trash=0 and tour_id='$tour_id'  and title_contingency='' order by order_no asc", $clsTourItinerary->pkey.',day,day2,reg_date,is_show_image');
 		}
 		$html='';
-		//$clsISO->print_pre($lstItem,true);
+//		$clsISO->print_pre($lstItem,true);
 		//die();
 		if(!empty($lstItem)){
 			for($i=0, $max=count($lstItem); $i<$max; $i++){

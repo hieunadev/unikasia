@@ -15,8 +15,8 @@ function default_default(){
 	$clsPagination = new Pagination();
 	$clsHotel = new Hotel(); $assign_list['clsHotel']=$clsHotel;
 
-	ini_set('display_errors',1);
-    error_reporting(E_ERROR & ~E_STRICT);//E_ALL
+//	ini_set('display_errors',1);
+//    error_reporting(E_ERROR & ~E_STRICT);//E_ALL
 
     #
 	$lstBlogCat = $clsBlogCategory->getAll("is_trash=0 and is_online=1 order by order_no ASC",$clsBlogCategory->pkey.',slug,title');
@@ -39,7 +39,8 @@ function default_default(){
 
 	if ($show=='Default'){
 
-	}else{
+	}
+	else{
 		$slug_country = isset($_GET['slug_country'])?$_GET['slug_country']:'';
 		$assign_list["slug_country"] = $slug_country;
 		$res = $clsCountryEx->getAll("is_trash=0 and is_online=1 and slug='$slug_country' LIMIT 0,1",$clsCountryEx->pkey.',slug,title');
@@ -52,17 +53,27 @@ function default_default(){
 		$oneItemCountry = $res[0];
 		$assign_list['oneItemCountry'] = $oneItemCountry;
 	}
+	$cond_cat_id = "";
+	$blogcat_id = isset($_GET['blogcat_id'])?$_GET['blogcat_id']:'';
+	
+		if (!empty($blogcat_id))
+		
+		{
+			$cond_cat_id = "and cat_id=$blogcat_id";
+		}
 	$slug_country = isset($_GET['slug_country'])?$_GET['slug_country']:'';
 	$res = $clsCountryEx->getAll("is_trash=0 and is_online=1 and slug='$slug_country' LIMIT 0,1",$clsCountryEx->pkey.',slug,title');
 	$country_id = $res[0][$clsCountryEx->pkey];
 	$country_id_1 = !empty($country_id) ? " and country_id = $country_id" : '';
-	$cond = "is_trash=0 and is_online=1 $country_id_1";
+	$cond = "is_trash=0 and is_online=1 $country_id_1 $cond_cat_id";
 	
-	$slug_category = isset($_GET['slug_category'])?$_GET['slug_category']:'';
-	$res_1 = $clsBlogCategory->getAll("is_trash=0 and is_online=1 and slug='$slug_category' LIMIT 0,1",$clsBlogCategory->pkey.',slug,title');
-	$blogcat_id = $res_1[0][$clsBlogCategory->pkey];
-	$blogcat_id_1 = !empty($blogcat_id) ? "and blogcat_id = $blogcat_id" : '';
-	$cond_1 = "is_trash=0 and is_online=1 $blogcat_id_1";
+	
+	$blogcat_id = isset($_GET['blogcat_id'])?$_GET['blogcat_id']:'';
+//	var_dump($blogcat_id);die();
+	$res_1 = $clsBlogCategory->getAll("is_trash=0 and is_online=1 and slug='$blogcat_id' LIMIT 0,1",$clsBlogCategory->pkey.',slug,title');
+	$cat_id = $res_1[0][$clsBlogCategory->pkey];
+	$cat_id_1 = !empty($cat_id) ? "and cat_id = $cat_id" : '';
+	$cond_1 = "is_trash=0 and is_online=1 $cat_id_1";
 	
 
 
@@ -120,39 +131,30 @@ function default_default(){
 		}
 
 	}
-			if(isset($_POST['search_blog']) &&  $_POST['search_blog']=='search_blog'){
-        if($show=='Default'){
-             $link= $clsISO->getLink('blog');
-        }
-        
-        $link.='?action=search';
-        $link.=(!empty($_POST['keyword']))?'&keyword='.addslashes($_POST['keyword']):'';
-        
-        if($_POST['country_id']>0){
-             header('location:'.$clsCountryEx->getLinkGuide($_POST['country_id']));
-             exit();
-        }
-        if($_POST['cat_id']>0){
-             header('location:'.$clsBlogCategory->getLinkGuide($_POST['cat_id']));
-             exit();
-        }
-        
-        
-        //print_r($link); die();
-        header('location:'.$link);
-        exit();
-    }
+//		if(isset($_POST['search_blog']) &&  $_POST['search_blog']=='search_blog'){
+//        if($show=='Default'){
+//             $link= $clsISO->getLink('blog');
+//        }
+//        
+//        $link.='?action=search';
+//        $link.=(!empty($_POST['keyword']))?'&keyword='.addslashes($_POST['keyword']):'';
+//        
+//        if($_POST['country_id']>0){
+//             header('location:'.$clsCountryEx->getLinkGuide($_POST['country_id']));
+//             exit();
+//        }
+//        if($_POST['cat_id']>0){
+//             header('location:'.$clsBlogCategory->getLinkGuide($_POST['cat_id']));
+//             exit();
+//        }
+//        
+//        
+//        //print_r($link); die();
+//        header('location:'.$link);
+//        exit();
+//    }
 	
-//	if(empty($blogcat_search_id)){
-//        $blogcat_search_id =$cat_id;
-//    }
-//    $smarty->assign('blogcat_search_id',$blogcat_search_id);
-//
-//
-//    if(empty($tag_search_id)){
-//        $tag_search_id =$tag_id;
-//    }
-//    $smarty->assign('tag_search_id',$tag_search_id);
+
 
 
 	$keyword = isset($_GET['keyword']) ? $_GET['keyword'] : '';$assign_list['keyword'] = $keyword;
@@ -478,6 +480,9 @@ function default_tag(){
 	$lstBlogCat = $clsBlogCategory->getAll("is_trash=0 and is_online=1 order by order_no ASC",$clsBlogCategory->pkey.',slug,title');
 	$assign_list['lstBlogCat'] = $lstBlogCat;
 	
+	$listCountry = $clsCountryEx->getAll("is_trash=0 order by order_no",$clsCountryEx->pkey.',slug,title');
+	$assign_list['listCountry'] = $listCountry;
+	
     /*=============Title & Description Page==================*/
 	$title_page = $title_page.' | '.$core->get_Lang('blogs').' | '.PAGE_NAME;
 	$assign_list["title_page"] = $title_page;
@@ -632,9 +637,20 @@ function default_detail(){
         exit();
     }
 	
+    $totalRate = $blogItem['rate'];	
+    $rateAVG = $blogItem['rate_avg'];	
+	$percentRateAVG = ($rateAVG / 5)*100;
+	$assign_list['percentRateAVG'] = $percentRateAVG;
+	$assign_list['totalRate'] = $totalRate;
+    
+    $datePublished=date('Y-m-d H:i:s',$blogItem['reg_date']);
+    $dateModified=date('Y-m-d H:i:s',$blogItem['upd_date']);
+    $rateavg=round($blogItem['rate_avg'],1);
+    
+	$assign_list["datePublished"] = $datePublished;
+	$assign_list["dateModified"] = $dateModified;
+	$assign_list["rateavg"] = $rateavg;
 	
-	
-
 	
 	/*=============Title & Description Page==================*/
 	$title_page = $clsBlog->getTitle($blog_id,$blogItem).' | '.$core->get_Lang('blogs').' | '.PAGE_NAME;
@@ -786,5 +802,47 @@ function default_test_form(){
      
     $clsBlog->updateOne($blog_id,"num_view=$num_view");
 	echo(1); die();
+}
+
+function default_saveRating(){
+	global $assign_list, $smarty, $core, $dbconn, $mod, $act, $_LANG_ID,$title_page,$description_page,$keyword_page;
+	$table_id = isset($_POST['table_id'])?$_POST['table_id']:'';
+	$star = isset($_POST['star'])?$_POST['star']:0;
+    if($star<5){
+        $star=4;
+    }
+    
+	$type = isset($_GET['type'])?$_GET['type']:'blog';
+	$ip_log = $_SERVER['REMOTE_ADDR'];
+	$data = [
+		'result'  	=>	false,
+		'text'		=>	""
+	];
+	if(isset($_SESSION['checkVoteNews_'.$table_id.'_'.$type]) && $_SESSION['checkVoteNews_'.$table_id.'_'.$type] == $ip_log){
+		$data = [
+			'result'  	=>	false,
+			'text'		=>	$core->get_Lang('Voted')
+		];
+	}else if($table_id != ''){
+        if($type=='blog'){
+            $clsBlog = new Blog();
+            $oneItem = $clsBlog->getOne($table_id,'rate,rate_avg');
+            $rate = $oneItem['rate'];
+            $rate_avg = $oneItem['rate_avg'];
+            $rate_avg_new = (($oneItem['rate_avg'] * $rate) + $star)/($rate+1);
+            $rate_avg_new = number_format($rate_avg_new, 2, '.', '');
+            $percentRateAVG = ($rate_avg_new / 5)*100;
+            if($clsBlog->updateOne($table_id,"rate=rate+1,rate_avg='".$rate_avg_new."'")){
+                $_SESSION['checkVoteNews_'.$table_id.'_'.$type] = $ip_log;
+                $data = [
+                    'result'  		=>	true,
+                    'text'			=>	' '.$star."/5 - (".($rate+1).' '.$core->get_Lang('Vote').")",
+                    'percentAVG'	=>	$percentRateAVG
+                ];
+            }
+        }
+		
+	}
+	echo json_encode($data);
 }
 ?>

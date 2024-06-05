@@ -16,7 +16,7 @@
                                     <a class="nav-link" data-link="des_tailor_detail_destination_place" href="{$clsCountry->getLink($country_id)}" title="OVERVIEW">OVERVIEW</a>
                                 </li>
                                 <li class="nav-item dropdown des_tailor_dropdown">
-                                    <a class="nav-link dropdown-toggle" data-link="des_tailor_detail_tour_cat" href="#" id="navbarDropdownMenuLink1" role="button" data-bs-toggle="dropdown" aria-expanded="false" title="{$clsCountry->getTitle($country_id)} TOURS">
+                                    <a class="nav-link dropdown-toggle" data-link="des_tailor_detail_tour_cat" href="javascript:void(0);" id="navbarDropdownMenuLink1" role="button" data-bs-toggle="dropdown" aria-expanded="false" title="{$clsCountry->getTitle($country_id)} TOURS">
                                         {$clsCountry->getTitle($country_id)} TOURS <i class="fa-light fa-angle-down"></i>
                                     </a>
                                     <ul class="dropdown-menu des_tailor_dropdown_menu" aria-labelledby="navbarDropdownMenuLink1">
@@ -31,13 +31,13 @@
                                     <a class="nav-link" href="#" title="TOP ATTRACTION">TOP ATTRACTION</a>
                                 </li>
                                 <li class="nav-item dropdown des_tailor_dropdown">
-                                    <a class="nav-link dropdown-toggle" data-link="des_tailor_detail_travel_guide" href="#" id="navbarDropdownMenuLink2" role="button" data-bs-toggle="dropdown" aria-expanded="false" title="TRAVEL GUIDE">
+                                    <a class="nav-link dropdown-toggle" data-link="des_tailor_detail_guide_cat" href="{$clsGuide->getLinkGuide($country_slug)}" id="navbarDropdownMenuLink2" role="button" data-bs-toggle="dropdown" aria-expanded="false" title="TRAVEL GUIDE">
                                         TRAVEL GUIDE <i class="fa-light fa-angle-down"></i>
                                     </a>
                                     <ul class="dropdown-menu des_tailor_dropdown_menu" aria-labelledby="navbarDropdownMenuLink2">
-                                        {if $arr_trvg}
-                                        {foreach from=$arr_trvg key=key item=item}
-                                        <li><a class="dropdown-item" href="{$clsGuideCat->getLink($item.guidecat_id)}" title="{$clsGuideCat->getTitle($item.guidecat_id)}">{$clsGuideCat->getTitle($item.guidecat_id)}</a></li>
+                                        {if $arr_trvg_country}
+                                        {foreach from=$arr_trvg_country key=key item=item}
+                                        <li><a class="dropdown-item" href="{$clsGuide->getLinkGuide($country_slug, $item.slug, $item.guidecat_id)}" title="{$clsGuideCat->getTitle($item.guidecat_id)}">{$clsGuideCat->getTitle($item.guidecat_id)}</a></li>
                                         {/foreach}
                                         {/if}
                                     </ul>
@@ -112,7 +112,7 @@
                     </div>
                 </div>
             </div>
-            <div class="des_tailor_detail_travel_guide hnv_hide">
+            <!-- <div class="des_tailor_detail_travel_guide hnv_hide">
                 <div class="container">
                     <div class="row">
                         <div class="col-12 col-sm-12 col-md-9">
@@ -410,11 +410,11 @@
                             </div>
                         </div>
                         <div class="col-12 col-sm-12 col-md-3">
-                            {$core->getBlock('des_travel_guide_side')}
+                            {* {$core->getBlock('des_travel_guide_side')} *}
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>
@@ -577,158 +577,6 @@
     .des_group_dream .des_dream_rec .fa-arrow-right-long {
         margin-left: 8px;
         margin-bottom: 3px;
-    }
-
-    .des_tailor_detail_travel_guide_description {
-        color: var(--Neutral-1, #111D37);
-        font-family: "SF Pro Display";
-        font-size: 16px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: 24px;
-        margin-bottom: 32px;
-    }
-
-    .des_travel_guide_item {
-        margin-bottom: 48px;
-        transition: all 0.3s ease-in-out;
-    }
-
-    .des_travel_guide_item:hover {
-        filter: drop-shadow(0px 12px 24px rgba(255, 167, 24, 0.36));
-    }
-
-    .des_travel_guide_item:hover .des_travel_guide_link {
-        display: block;
-    }
-
-    .des_travel_guide_item:hover img {
-        filter: brightness(70%);
-    }
-
-    .des_travel_guide_image {
-        position: relative;
-    }
-
-    .des_travel_guide_image img {
-        border-radius: 8px;
-    }
-
-    .des_travel_guide_link {
-        display: inline-flex;
-        padding: 12px 20px;
-        justify-content: center;
-        align-items: center;
-        gap: 16px;
-        border-radius: 8px;
-        border: 1px solid var(--Primary, #FFA718);
-        color: #FFA718 !important;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        display: none;
-        transition: all 0.3s ease-in-out;
-    }
-
-    .des_travel_guide_intro {
-        display: flex;
-        padding: 24px 16px;
-        flex-direction: column;
-        justify-content: center;
-        align-items: flex-start;
-        gap: 10px;
-        border-radius: 8px;
-        background: #FFF;
-        border: 1px solid var(--Neutral-5, #F0F0F0);
-        margin-top: -15px;
-        position: relative;
-        z-index: 1;
-    }
-
-    .des_travel_guide_title h3 {
-        color: var(--Neutral-1, #111D37);
-        font-family: "SF Pro Display";
-        font-size: 20px;
-        font-style: normal;
-        font-weight: 600;
-        line-height: 32px;
-    }
-
-    .des_travel_guide_place {
-        color: var(--Neutral-2, #434B5C);
-        font-family: "SF Pro Display";
-        font-size: 16px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: 24px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-
-    .des_travel_guide_place .fa-location-dot {
-        color: #004EA8;
-    }
-
-    .des_travel_guide_description {
-        color: var(--Neutral-3, #959AA4);
-        font-family: "SF Pro Display";
-        font-size: 14px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: 20px;
-    }
-
-    .des_travel_guide_paginate {
-        display: flex;
-        flex-direction: row;
-        gap: 12px;
-        justify-content: center;
-        margin-bottom: 80px;
-    }
-
-    .des_travel_guide_paginate .btn_link {
-        display: flex;
-        width: 24px;
-        height: 24px;
-        padding: 4px 7.5px;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-    }
-
-    .page_link {
-        width: 26px;
-        height: 26px;
-        color: var(--Neutral-2, #434B5C);
-        font-family: "SF Pro Display";
-        font-size: 16px;
-        font-style: normal;
-        font-weight: 600;
-        line-height: 24px;
-        text-align: center;
-        cursor: pointer;
-    }
-
-    .page_link.active {
-        border-radius: 3px;
-        background: #ffeed3;
-    }
-
-    .des_travel_guide_recent_view {
-        padding-bottom: 32px;
-    }
-
-    .des_travel_guide_recent_view_title h2 {
-        color: var(--Neutral-1, #111D37);
-        text-align: left;
-        font-family: "SF Pro Display";
-        font-size: 32px;
-        font-style: normal;
-        font-weight: 600;
-        line-height: 52px;
-        margin-bottom: 24px;
     }
 
     .des_list_why_choose_country .owl-item {

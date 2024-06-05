@@ -4,6 +4,8 @@
 {assign var=intro_hotel value=$oneItem.intro}
 {assign var=overview_hotel value=$oneItem.overview}
 {assign var=bookingPolicy_hotel value=$clsHotel->getHotelBookingPolicy($hotel_id,oneItem)}
+{assign var = getImageStar value = $clsHotel->getStarNumber($hotel_id)}
+
 
 {if $clsISO->getCheckActiveModulePackage($package_id,'member','default','default')}
     {assign var= ratingValue value= $clsReviews->getRateAvg($hotel__id,'hotel')}
@@ -43,7 +45,10 @@
             }
         </script>
     {/literal}
-    <div class="page_container bg_fff">
+
+    <link rel="stylesheet" href="{$URL_CSS}/detail_hotel.css?v={$upd_version}" as="style" />
+
+    <div class="page_container page_detail_stay bg_fff">
         <nav class="breadcrumb-main  breadcrumb-cruise bg-default breadcrumb-more bg_fff">
             <div class="container">
                 <ul class="breadcrumb hidden-xs mt0 bg_fff navbarHeads" itemscope
@@ -90,11 +95,21 @@
             </li>
             </ul>
             <div class="navbarHeads-title">
+				<div class="container">
                 {if $oneItem.country_id}
                     {assign var=title_country value=$clsCountryEx->getTitle($oneItem.country_id)}
                     <h1 class="navbarHeads-li">
                         <a href="{$curl}" title="{$title_hotel}">
                             <span itemprop="name" class="reb navbarHeads-nav">{$title_hotel}</span></a>
+						<div class="border-icoshare submitted">
+						 <div class="share_box">
+							<i class="fa-regular fa-share-nodes fa-2xs"></i>                                
+							 <script type="text/javascript" src="{$URL_JS}/jquery.sharer.js?v={$upd_version}"></script>
+                                {assign var=link_share value=$curl}
+                                {assign var=$title_share value=$title_blog}
+                                {$core->getBlock('box_share')}
+                            </div>
+							</div>
                         <meta itemprop="position" content="4" />
                     </h1>
                 {else}
@@ -106,10 +121,7 @@
                 {/if}
 
                 <div class="detailStartsHotels">
-                    {if $clsHotel->getImageStar($oneItem.star_id) != ''}
-                        <img height="19" src="{$clsHotel->getImageStar($oneItem.star_id)}" alt="{$title_hotel}"
-                            style="width:auto" />
-                    {/if}
+                    <div class="star_hotel">{$getImageStar}</div>
                 </div>
 
                 <div class="detailReviewsHotels">
@@ -135,18 +147,48 @@
                         title="{$core->get_Lang('Reviews')}">{$core->get_Lang('Show all reviews')}</a> *}
 
                     <div class="scroll-nav">
-                        <ul class="scroll-title">
+						 <div class="record_txt">
+                    <div class="txt_score-review">
+                <div class="border_score">
+                    <p class="numb_scorestay">4.5</p>
+                </div>
+                <div class="txt_reviewsquality">
+                <p class="txt_qualityreview">Very good <span class="txt_reviews">(3 review)</span></p>
+					 <ul class="scroll-title">
                             <li><a href="#Reviews"
                                     class="ShowAllReviewDetailHotel">{$core->get_Lang('Show all reviews')}</a></li>
                         </ul>
-                    </div>
-
-                </div>
-
+            </div>		
+            </div>			 
             </div>
 
+									<div class="txt_icolocation">
+							<i class="fa-sharp fa-solid fa-location-dot" style="color: #9a9aa4;"></i>
+							<p class="txt_location">{$clsHotel->getAddress($hotel_id,$arrHotel)}</p>
+						<a role="link" title="map" data-bs-toggle="modal"
+                    data-bs-target="#mapModal{$hotel_id}">{$core->get_Lang('Show map')}</a>
+						</div>
+            </div>
+					
 
-
+					
+					<div class="txt_numbt">
+						<p class="txt_fromnum">from</p>
+						<div class="txt_numbfromus">
+						<p class="txt_txtus">US <span class="txt_numbus">$1250</span></p>
+						<div class="btn_contactus">
+							<a href="#" alt="contactus" title="contactus">
+                               <button class="btn btn_viewtour">Contact <i
+                                                        class="fa-regular fa-arrow-right" style="color: #ffffff;"></i>
+                                  </button>
+                                        </a>
+							</div>
+						</div>
+					</div>
+                       
+                  </div>
+</div>
+                </div>
     </div>
     </nav>
     <div id="contentPage" class="content hotelPageDetail mt05">
@@ -157,7 +199,7 @@
                         <div class="col-lg-8">
                             <div class="big_image">
                                 <img class="img100" alt="{$title_hotel}"
-                                    src="{$clsHotel->getImage($hotel_id,850,391,$oneItem)}" />
+                                    src="{$clsHotel->getImage($hotel_id,841,420,$oneItem)}" />
                                 <p class="view_all" data-fancybox="gallery" href="{$oneItem.image}">
                                     {$core->get_Lang('See all')}</p>
                             </div>
@@ -169,9 +211,10 @@
                                         {if $smarty.section.i.index gt 3}hidden{/if}>
                                         <img class="img100"
                                             alt="{$clsHotelImage->getTitle($listImage[i].hotel_image_id,$listImage[i])}"
-                                            src="{$clsHotelImage->getImage($listImage[i].hotel_image_id,202,189,$listImage[i])}" />
+                                            src="{$clsHotelImage->getImage($listImage[i].hotel_image_id,202,202,$listImage[i])}" />
                                     </div>
                                 {/section}
+								
                             </div>
                         </div>
                     </div>
@@ -194,7 +237,27 @@
                                 {if !isset($overview_hotel) || !$overview_hotel}
                                 {else}
                                     <div class="nav-content">
-                                        <h2 class="nav-content-title title-etap">{$core->get_Lang('Overview')}</h2>
+                                        <h2 class="nav-content-title title_overview">{$core->get_Lang('Overview')}</h2>
+										<div class="overview_favor">
+											<div class="item">
+												<img src="{$URL_IMAGES}/hotel/detail/overview_hoteldetail1.png"> Bordering the sea
+											</div>
+											<div class="item">
+												<img src="{$URL_IMAGES}/hotel/detail/overview_hoteldetail2.png"> Restaurant
+											</div>
+											<div class="item">
+												<img src="{$URL_IMAGES}/hotel/detail/overview_hoteldetail3.png"> Poolside bar
+											</div>
+											<div class="item">
+												<img src="{$URL_IMAGES}/hotel/detail/overview_hoteldetail4.png"> Free parking
+											</div>
+											<div class="item">
+												<img src="{$URL_IMAGES}/hotel/detail/overview_hoteldetail6.png"> Free wifi
+											</div>
+											
+										</div>
+
+
                                         <div class="overview-content">{$overview_hotel|html_entity_decode}</div>
                                     </div>
 
@@ -286,14 +349,16 @@
                     <div class="col-lg-4">
                         <section class="box_right_info_hotel sticky_fix">
                             <div class="box_info_right_top">
+								<h3 class="txt_bestprice">Best price for you</h3>
                                 <div class="price_from_text">
                                     {if $clsHotel->getPriceOnPromotion($hotel_id,'detail')}
                                         <div class="from_text">
-                                            {$core->get_Lang('Only from')}
+                                            {$core->get_Lang('Avg price package')}
                                         </div>
                                         <div class="val_price">
-                                            {$clsHotel->getPriceOnPromotion($hotel_id,'detail')}
+                                           <p class="txt_prival">US <h3 class="numb_prival">$1250</h3></p>
                                         </div>
+								<p class="txt_pricepax">Price includes package</p>
                                     {/if}
                                 </div>
                                 <form action="" method="post">
@@ -302,7 +367,7 @@
                                     <button class="departure_day">{$core->get_Lang('Contact')}</button>
                                 </form>
                             </div>
-                            {$core->getBlock('Lfaqscolbox')}
+                           
                         </section>
                     </div>
                 </div>
@@ -317,6 +382,72 @@
                             <div class="Accommodation-txt">
                                 {$oneItem.booking_policy|unescape}
                             </div>
+							
+<div class="border-accomm">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="column-content">
+                <h4>Bathroom</h4>
+                <div class="item"><i class="fa-thin fa-toilet-paper-blank-under fa-xl" style="color: #434b5c;"></i> Toilet paper</div>
+                <div class="item"><img src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgaWQ9ImJhdGgtdG93ZWwgMSI+CjxwYXRoIGlkPSJWZWN0b3IiIGQ9Ik0yMy42MjUxIDkuMDU3NzRDMjMuNjI0NCA4LjUyNTE1IDIzLjQ1OCA4LjAwNTk3IDIzLjE0ODkgNy41NzIyN0MyMi44Mzk4IDcuMTM4NTYgMjIuNDAzMyA2LjgxMTg1IDIxLjkwMDEgNi42Mzc0OUwxNS4xMTkzIDQuMjg4ODdDMTMuMTU0MiAzLjYxMTQzIDExLjAyNSAzLjU3NDQgOS4wMzc1NiA0LjE4MzEyTDEuOTg3NTYgNi4zNTE3NEMxLjUxOTY4IDYuNDkzODcgMS4xMTAwOSA2Ljc4MzA5IDAuODE5NjA4IDcuMTc2NDVDMC41MjkxMjYgNy41Njk4MiAwLjM3MzIzIDguMDQ2MzcgMC4zNzUwNjIgOC41MzUzN0MwLjM3NTYzIDkuMDYwOTIgMC40ODEwNjMgOS41ODEwNyAwLjY4NTE4NyAxMC4wNjU0QzAuNDgyNzExIDEwLjM0NjMgMC4zNzQxNjkgMTAuNjg0IDAuMzc1MDYyIDExLjAzMDJDMC4zNzUyMjYgMTEuMjY3IDAuNDQ1NzA1IDExLjQ5ODQgMC41Nzc1NiAxMS42OTUxQzAuNzA5NDE1IDExLjg5MTggMC44OTY3MDcgMTIuMDQ0OSAxLjExNTY5IDEyLjEzNUMwLjgyMjA1IDEyLjQzMTQgMC42MDUzODMgMTIuNzk1MiAwLjQ4NDU3NCAxMy4xOTQ2QzAuMzYzNzY0IDEzLjU5NCAwLjM0MjQ3OSAxNC4wMTY5IDAuNDIyNTc1IDE0LjQyNjRDMC41MDI2NyAxNC44MzU5IDAuNjgxNzE0IDE1LjIxOTYgMC45NDQwOTkgMTUuNTQ0QzEuMjA2NDggMTUuODY4NCAxLjU0NDI0IDE2LjEyMzggMS45Mjc5NCAxNi4yODc3TDEwLjE0MDQgMTkuODA3MUMxMS4zNzMyIDIwLjMzNTYgMTIuNzU3MiAyMC4zOTMxIDE0LjAyOTYgMTkuOTY4N0wyMi44MDQ2IDE3LjA0MzdDMjMuMDQzNSAxNi45NjQxIDIzLjI1MTMgMTYuODExMyAyMy4zOTg2IDE2LjYwNjlDMjMuNTQ1OCAxNi40MDI2IDIzLjYyNTEgMTYuMTU3MSAyMy42MjUxIDE1LjkwNTJDMjMuNjI2IDE1LjU1OSAyMy41MTc0IDE1LjIyMTMgMjMuMzE0OSAxNC45NDA0QzIzLjUxOTEgMTQuNDU2MSAyMy42MjQ1IDEzLjkzNTkgMjMuNjI1MSAxMy40MTA0QzIzLjYyNjEgMTIuOTY1NSAyMy40OTYxIDEyLjUzMDIgMjMuMjUxNSAxMi4xNTg2QzIzLjAwNjggMTEuNzg3MSAyMi42NTgyIDExLjQ5NTcgMjIuMjQ5MiAxMS4zMjA5QzIyLjY2MzYgMTEuMTA1NiAyMy4wMTEgMTAuNzgwNyAyMy4yNTM2IDEwLjM4MTdDMjMuNDk2MSA5Ljk4MjY1IDIzLjYyNDYgOS41MjQ3MiAyMy42MjUxIDkuMDU3NzRaTTIyLjg3NTEgMTMuNDEwNEMyMi44NzI5IDEzLjg1MjkgMjIuNzc4OCAxNC4yOTAxIDIyLjU5ODcgMTQuNjk0NEwxNS4xMTk3IDE3LjA3NDFDMTQuNzUzNiAxNy4xOTA2IDE0LjM3MTcgMTcuMjQ5OSAxMy45ODc2IDE3LjI1QzEzLjg3MTcgMTcuMjQ4NyAxMy43NiAxNy4yMDYyIDEzLjY3MjYgMTcuMTMwMUMxMy41ODUzIDE3LjA1MzkgMTMuNTI3OSAxNi45NDkxIDEzLjUxMDggMTYuODM0NUMxMy40OTM3IDE2LjcxOTkgMTMuNTE3OSAxNi42MDI5IDEzLjU3OTMgMTYuNTA0NUMxMy42NDA2IDE2LjQwNjIgMTMuNzM1IDE2LjMzMjkgMTMuODQ1NCAxNi4yOTc5TDIxLjg1OTkgMTMuODYwNEwyMS42NDE3IDEzLjE0MjZMMTMuNjI2NCAxNS41ODA1QzEzLjM0NDEgMTUuNjY4IDEzLjEwMjMgMTUuODUzOCAxMi45NDUgMTYuMTA0MUMxMi43ODc3IDE2LjM1NDQgMTIuNzI1MyAxNi42NTI4IDEyLjc2ODkgMTYuOTQ1MkMxMi44MTI1IDE3LjIzNzYgMTIuOTU5NCAxNy41MDQ3IDEzLjE4MyAxNy42OTgyQzEzLjQwNjUgMTcuODkxNyAxMy42OTE5IDE3Ljk5ODcgMTMuOTg3NiAxOEMxNC40NDkxIDE4LjAwMDEgMTQuOTA3OSAxNy45Mjg5IDE1LjM0NzcgMTcuNzg4OUwyMi43NDEyIDE1LjQzNjVDMjIuODI3NiAxNS41Nzc3IDIyLjg3MzkgMTUuNzM5NyAyMi44NzUxIDE1LjkwNTJDMjIuODc1MSAxNS45OTk3IDIyLjg0NTQgMTYuMDkxOSAyMi43OTAxIDE2LjE2ODVDMjIuNzM0OCAxNi4yNDUyIDIyLjY1NjkgMTYuMzAyNSAyMi41NjcyIDE2LjMzMjRMMTMuNzkyMiAxOS4yNTc0QzEyLjY5MzggMTkuNjIxNiAxMS41MDAzIDE5LjU3MiAxMC40MzU5IDE5LjExNzlMMi4yMjM0NCAxNS42QzEuOTIyMTEgMTUuNDcxMyAxLjY2MTQxIDE1LjI2MzEgMS40NjkxNyAxNC45OTc3QzEuMjc2OTQgMTQuNzMyNCAxLjE2MDM5IDE0LjQxOTggMS4xMzE5NyAxNC4wOTMzQzEuMTAzNTYgMTMuNzY2OSAxLjE2NDM0IDEzLjQzODkgMS4zMDc4MyAxMy4xNDQzQzEuNDUxMzIgMTIuODQ5NyAxLjY3MjE0IDEyLjU5OTYgMS45NDY2OSAxMi40MjA3TDkuOTcxNjkgMTUuMDk1MkMxMS4yNDQxIDE1LjUxOTYgMTIuNjI4IDE1LjQ2MjEgMTMuODYwOCAxNC45MzM2TDIxLjIzNDggMTEuNzczNUwyMS43OTI0IDExLjk0NTJDMjIuMTA2NCAxMi4wNDA3IDIyLjM4MTIgMTIuMjM0NyAyMi41NzYyIDEyLjQ5ODZDMjIuNzcxMiAxMi43NjI1IDIyLjg3NiAxMy4wODIyIDIyLjg3NTEgMTMuNDEwNFpNMjEuNzc2NyAxMC43MjVMMTMuNTY0MiAxNC4yNDQ0QzEyLjQ5OTkgMTQuNjk4OCAxMS4zMDYyIDE0Ljc0ODUgMTAuMjA3OSAxNC4zODM5TDEuNDMyOTQgMTEuNDU4OUMxLjM0MzAyIDExLjQyODkgMS4yNjQ4NSAxMS4zNzE0IDEuMjA5NTcgMTEuMjk0NEMxLjE1NDI5IDExLjIxNzUgMS4xMjQ3MSAxMS4xMjUgMS4xMjUwNiAxMS4wMzAyQzEuMTI2NSAxMC44NjQ3IDEuMTczMDQgMTAuNzAyNiAxLjI1OTY5IDEwLjU2MTVMOC42NTMxOSAxMi45MTM5QzkuMDkyNzMgMTMuMDUzOCA5LjU1MTI3IDEzLjEyNTEgMTAuMDEyNiAxMy4xMjVDMTAuMzA4MSAxMy4xMjM2IDEwLjU5MzQgMTMuMDE2NCAxMC44MTY4IDEyLjgyMjhDMTEuMDQwMiAxMi42MjkzIDExLjE4NyAxMi4zNjIyIDExLjIzMDUgMTIuMDY5OEMxMS4yNzQxIDExLjc3NzUgMTEuMjExNSAxMS40NzkyIDExLjA1NDIgMTEuMjI4OUMxMC44OTY5IDEwLjk3ODcgMTAuNjU1MyAxMC43OTMgMTAuMzcyOSAxMC43MDU1TDIuMzU4NDQgOC4yNjc5OUwyLjE0MDE5IDguOTg1NzRMMTAuMTU0NyAxMS40MjMyQzEwLjI2NDkgMTEuNDU4NSAxMC4zNTg5IDExLjUzMTggMTAuNDIgMTEuNjMwMUMxMC40ODExIDExLjcyODMgMTAuNTA1MyAxMS44NDUxIDEwLjQ4ODIgMTEuOTU5NUMxMC40NzExIDEyLjA3NCAxMC40MTM5IDEyLjE3ODYgMTAuMzI2OCAxMi4yNTQ3QzEwLjIzOTYgMTIuMzMwOCAxMC4xMjgzIDEyLjM3MzUgMTAuMDEyNiAxMi4zNzVDOS42MjgxNCAxMi4zNzUgOS4yNDYwMiAxMi4zMTU3IDguODc5NjkgMTIuMTk5MUwxLjQwMTQ0IDkuODE5MzdDMS4yMjEzMyA5LjQxNTE0IDEuMTI3MjIgOC45Nzc4OSAxLjEyNTA2IDguNTM1MzdDMS4xMjM4MiA4LjIwNjg4IDEuMjI4NTcgNy44ODY3NiAxLjQyMzc0IDcuNjIyNTVDMS42MTg5MSA3LjM1ODMzIDEuODk0MSA3LjE2NDExIDIuMjA4NDQgNy4wNjg3NEw5LjI1ODQ0IDQuODk5NzRDMTEuMDkzNyA0LjMzNTExIDEzLjA2MTEgNC4zNjkzOSAxNC44NzU2IDQuOTk3NjJMMjEuNjU3MSA3LjM0NDc0QzIyLjAwMjYgNy40NjQ0OSAyMi4zMDM5IDcuNjg1OTYgMjIuNTIxMyA3Ljk4MDA2QzIyLjczODcgOC4yNzQxNiAyMi44NjIgOC42MjcxNCAyMi44NzUxIDguOTkyNjJDMjIuODg4MiA5LjM1ODExIDIyLjc5MDUgOS43MTkwMSAyMi41OTQ3IDEwLjAyNzlDMjIuMzk4OSAxMC4zMzY4IDIyLjExNDMgMTAuNTc5MyAyMS43NzgyIDEwLjcyMzVMMjEuNzc2NyAxMC43MjVaIiBmaWxsPSIjNDM0QjVDIi8+CjwvZz4KPC9zdmc+Cg=='/> Towel</div>
+                <div class="item"><i class="fa-thin fa-circle-check fa-xl" style="color: #434b5c;"></i> Bath or Shower</div>
+				<div class="item"><i class="fa-thin fa-circle-check fa-xl" style="color: #434b5c;"></i> Private bathroom</div>
+				<div class="item"><i class="fa-thin fa-circle-check fa-xl" style="color: #434b5c;"></i> Free toiletries</div>
+            </div> 
+			
+			<div class="column-content" style="margin-top: 24px">
+				<h4>Bedroom</h4>
+				<div class="item"><i class="fa-thin fa-circle-check fa-xl" style="color: #434b5c;"></i> Bedspread</div>
+				<div class="item"><i class="fa-thin fa-circle-check fa-xl" style="color: #434b5c;"></i> Closet or closet</div>
+				<div class="item"><i class="fa-thin fa-circle-check fa-xl" style="color: #434b5c;"></i> Alarm clock</div>
+				
+			</div>
+        </div>
+        <div class="col-md-4">
+            <div class="column-content">
+                <h4>Outside</h4>
+                <div class="item"><i class="fa-thin fa-circle-check fa-xl" style="color: #434b5c;"></i> Outdoor tables and chairs</div>
+                <div class="item"><i class="fa-thin fa-circle-check fa-xl" style="color: #434b5c;"></i> Sun terrace</div>
+                <div class="item"><i class="fa-thin fa-circle-check fa-xl" style="color: #434b5c;"></i> Terrace/patio</div>
+            </div>
+			
+			<div class="column-content" style="margin-top: 24px">
+                <h4>Kitchen</h4>
+                <div class="item"><i class="fa-thin fa-circle-check fa-xl" style="color: #434b5c;"></i> Electric kettle</div>
+                <div class="item"><i class="fa-light fa-refrigerator fa-xl" style="color: #434b5c;"></i>  Fridge</div>
+            </div>
+			
+			<div class="column-content" style="margin-top: 24px">
+                <h4>Work</h4>
+                 <div class="item"><i class="fa-thin fa-circle-check fa-xl" style="color: #434b5c;"></i> Bicycle rental</div>
+                <div class="item"><i class="fa-thin fa-circle-check fa-xl" style="color: #434b5c;"></i> Cycling tour</div>
+            </div>
+			
+        </div>
+        <div class="col-md-4">
+            <div class="column-content">
+                <h4>Reception service</h4>
+                <div class="item"><i class="fa-thin fa-circle-check fa-xl" style="color: #434b5c;"></i> Lockers</div>
+                <div class="item"><i class="fa-thin fa-circle-check fa-xl" style="color: #434b5c;"></i> Private check-in/check-out</div>
+                <div class="item"><i class="fa-thin fa-circle-check fa-xl" style="color: #434b5c;"></i>Concierge service</div>
+				<div class="item"><i class="fa-thin fa-circle-check fa-xl" style="color: #434b5c;"></i>Keep your luggage</div>
+				<div class="item"><i class="fa-thin fa-circle-check fa-xl" style="color: #434b5c;"></i>Tour desk</div>
+				
+				<div class="item"><i class="fa-thin fa-circle-check fa-xl" style="color: #434b5c;"></i>Currency exchange</div>
+            </div>
+			
+			<div class="column-content" style="margin-top: 24px">
+                <h4>Cleaning service</h4>
+                <div class="item"><i class="fa-thin fa-circle-check fa-xl" style="color: #434b5c;"></i> Clean the room every day</div>
+                <div class="item"><i class="fa-thin fa-circle-check fa-xl" style="color: #434b5c;"></i> Trouser ironing board</div>
+			</div>
+			
+			
+        </div>
+    </div>
+</div>
+
+
                         </div>
                     {/if}
 
@@ -331,33 +462,19 @@
                 <h2 class="title-prix">{$core->get_Lang('Add-ons')}</h2>
                 <p>{$core->get_Lang('We suggest you some')}</p>
                 {* {if $lstHotelRelated}
-                                                            <section class="sec_relate_box">
-
-
-
-
-
+                     <section class="sec_relate_box">
                     {section name=i loop=$lstHotelRelated}
-
-
-
-
-
                         {assign var=hotel_id value = $lstHotelRelated[i].hotel_id}
 
-
-
-
-
                         {assign var=arrHotel value = $lstHotelRelated[i]}
-                                                                                        {$clsISO->getBlock('hotelRelateBox',["hotel_id"=>$hotel_id,"arrHotel"=>$arrHotel])}
+                       {$clsISO->getBlock('hotelRelateBox',["hotel_id"=>$hotel_id,"arrHotel"=>$arrHotel])}
 
 
 
 
 
                     {/section}
-                                                            </section>
+                   </section>
 
 
 
@@ -372,7 +489,7 @@
             {if !isset($oneItem.other_policy) || !$oneItem.other_policy}
             {else}
                 <div class="demander-title">
-                    <h2>{$core->get_Lang('Inclusion')}</h2>
+                    <h2 class="txt_inclus">{$core->get_Lang('Inclusion')}</h2>
                     <div class="Inclusion-txt">
                         {$oneItem.other_policy|unescape}
                     </div>
@@ -386,7 +503,6 @@
 
             <div class="nav-content">
                 <div class="nav-content-title tabs2">
-                    <h2 class="tabs2-title title-au">{$core->get_Lang('Accommodation')}</h2>
                     {assign var=_CheckInRoom value=$clsHotel->getCheckInRoom($hotel_id,$oneItem)}
                     {assign var=_CheckOutRoom value=$clsHotel->getCheckOutRoom($hotel_id,$oneItem)}
                     {assign var=_BookingPolicy value=$clsHotel->getBookingPolicy($hotel_id,$oneItem)}
@@ -396,23 +512,50 @@
                     {if $_CheckInRoom || $_BookingPolicy || $_ChildPolicy || $_CancellationPolicy || $_OtherPolicy ||$listCustomField}
                         <section class="sec_info_hotel">
                             <div class="important_note_box">
-                                {if $_CheckInRoom || $_CheckOutRoom}
+                                {if $_CheckInRoom}
                                     <div class="important_note_item">
-                                        <h3 class="note_title check_in_out">
-                                            {$core->get_Lang('Check-in/check-out time')}</h3>
+                                        <h3 class="note_title check_in">
+											<i class="fa-solid fa-arrow-right-to-bracket fa-xl" style="color: #004ea8; margin-right:8px"></i>
+                                            {$core->get_Lang('Check-in')}</h3>
                                         <div class="box_right">
-                                            <p class="box_right_content">{$_CheckInRoom} - {$_CheckOutRoom}
+                                            <p class="box_right_content">By {$_CheckInRoom}
                                             </p>
                                         </div>
                                     </div>
                                 {/if}
+								
+								   {if $_CheckOutRoom}
+                                    <div class="important_note_item">
+                                        <h3 class="note_title check_out">
+											<i class="fa-solid fa-arrow-left-from-bracket fa-xl" style="color: #004ea8; margin-right:8px"></i>
+                                            {$core->get_Lang('Check-out')}</h3>
+                                        <div class="box_right">
+                                            <p class="box_right_content">By {$_CheckOutRoom}
+                                            </p>
+                                        </div>
+                                    </div>
+                                {/if}
+								
+								
 
                                 {if $_BookingPolicy ne ''}
                                     <div class="important_note_item">
                                         <h3 class="note_title booking_policy">
-                                            {$core->get_Lang('Booking policy')}</h3>
+											<i class="fa-solid fa-circle-info fa-xl" style="color: #004ea8; margin-right:8px"></i>
+                                            {$core->get_Lang('Excludes')}</h3>
                                         <div class="box_right">
                                             <p class="box_right_content">{$_BookingPolicy}</p>
+                                        </div>
+                                    </div>
+                                {/if}
+								
+								{if $_CancellationPolicy ne ''}
+                                    <div class="important_note_item">
+                                        <h3 class="note_title cancel_prepay">
+											<i class="fa-solid fa-circle-info fa-xl" style="color: #004ea8; margin-right:8px"></i>
+                                            {$core->get_Lang('Cancel reservation/ Prepay')}</h3>
+                                        <div class="box_right">
+                                            <p class="box_right_content">{$_CancellationPolicy}</p>
                                         </div>
                                     </div>
                                 {/if}
@@ -420,7 +563,8 @@
                                 {if $_ChildPolicy ne ''}
                                     <div class="important_note_item">
                                         <h3 class="note_title bed">
-                                            {$core->get_Lang('Children policy and bed')}
+											<img src='data:image/svg+xml;base64, PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIj4KPG1hc2sgaWQ9Im1hc2swXzFfMjc4NTIiIHN0eWxlPSJtYXNrLXR5cGU6bHVtaW5hbmNlIiBtYXNrVW5pdHM9InVzZXJTcGFjZU9uVXNlIiB4PSIwIiB5PSIwIiB3aWR0aD0iMjQiIGhlaWdodD0iMjQiPgo8cGF0aCBkPSJNMCAxLjkwNzM1ZS0wNkgyNFYyNEgwVjEuOTA3MzVlLTA2WiIgZmlsbD0id2hpdGUiLz4KPC9tYXNrPgo8ZyBtYXNrPSJ1cmwoI21hc2swXzFfMjc4NTIpIj4KPHBhdGggZD0iTTE0LjY4MDYgMy4xNjE2MUgyMC4zNzY5QzIxLjU3MTUgMy4xNjE2MSAyMi41Mzk4IDQuMTI5OTcgMjIuNTM5OCA1LjMyNDU3VjE2LjUyNzRDMjIuNTM5OCAxNy43MjIgMjEuNTcxNSAxOC42OTA0IDIwLjM3NjkgMTguNjkwNEg0LjE2Mjk3QzIuOTY4NDEgMTguNjkwNCAyIDE3LjcyMiAyIDE2LjUyNzRWNS4zMjQ1N0MyIDQuMTI5OTcgMi45Njg0MSAzLjE2MTYxIDQuMTYyOTcgMy4xNjE2MUgxMC4xMzAzIiBzdHJva2U9IiMwMDRFQTgiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGQ9Ik0xMi4wMDkzIDIuODI3MjFDOC42ODQ1OSAyLjk2NzM2IDYuMzY3ODQgNS43OTkyNyA1LjY2MTU0IDguOTU1MjZDNS40Nzk1NSA4Ljg5NzgxIDUuNzYzNTcgOC44NjY4IDUuNTYyNTIgOC44NjY4QzQuNTA3NTggOC44NjY4IDMuNjUyMzQgOS43MjAwNCAzLjY1MjM0IDEwLjc3MjVDMy42NTIzNCAxMS44MjUxIDQuNTA3NTggMTIuNjc4MyA1LjU2MjUyIDEyLjY3ODNDNS44MDQzMyAxMi42NzgzIDUuNTU3ODkgMTIuNjMzNCA1Ljc3MDc4IDEyLjU1MTZDNi41MjExMyAxNS4xNDYzIDguMjA4ODMgMTYuNjY1NiAxMC45MDE3IDE3LjE3NzNWMTguNjg5NkgxMy42MzQzVjE3LjE3NzNDMTYuMzI3MiAxNi42NjU2IDE4LjAxNDggMTUuMTQ2MyAxOC43NjUyIDEyLjU1MTZDMTguOTc4MSAxMi42MzM0IDE4LjczMTYgMTIuNjc4MyAxOC45NzM0IDEyLjY3ODNDMjAuMDI4NCAxMi42NzgzIDIwLjg4MzYgMTEuODI1MSAyMC44ODM2IDEwLjc3MjVDMjAuODgzNiA5LjcyMDA0IDIwLjAyODQgOC44NjY4IDE4Ljk3MzQgOC44NjY4QzE4Ljc3MjQgOC44NjY4IDE5LjA1NjQgOC44OTc4MSAxOC44NzQ0IDguOTU1MjZDMTguMzQxOSA2LjU3NTQ3IDE2Ljg5MzUgNC4zNzk5MyAxNC43ODc4IDMuMzgzODQiIHN0cm9rZT0iIzAwNEVBOCIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHBhdGggZD0iTTEzLjkxMDIgMTAuMDQzVjkuMzczNzFDMTMuOTEwMiA4Ljg0NDc2IDE0LjM0IDguNDE1OTYgMTQuODcwMiA4LjQxNTk2QzE1LjQwMDQgOC40MTU5NiAxNS44MzAyIDguODQ0NzYgMTUuODMwMiA5LjM3MzcxVjEwLjA0M0gxNi4wNDk0IiBzdHJva2U9IiMwMDRFQTgiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGQ9Ik0xMC42Mjk1IDEwLjA0M1Y5LjM3MzcxQzEwLjYyOTUgOC44NDQ3NiAxMC4xOTk3IDguNDE1OTYgOS42Njk1IDguNDE1OTZDOS4xMzkzMSA4LjQxNTk2IDguNzA5NDggOC44NDQ3NiA4LjcwOTQ4IDkuMzczNzFWMTAuMDQzSDguNDkwMjMiIHN0cm9rZT0iIzAwNEVBOCIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHBhdGggZD0iTTEyLjEwODEgMS40Njg2QzExLjk5MzcgMS40Njg2IDExLjg4MSAxLjQ3NTc2IDExLjc3MDUgMS40ODk2NkMxMS45ODU2IDEuODc0OSAxMi4xMDgxIDIuMzE4NjIgMTIuMTA4MSAyLjc5MTAzQzEyLjEwODEgNC4xNTQ5OCAxMS4wODY0IDUuMjgwNjYgOS43NjU2MiA1LjQ0NjQ1QzEwLjIyMzUgNi4yNjY2OCAxMS4xMDA5IDYuODIxNTMgMTIuMTA4MSA2LjgyMTUzQzEzLjU4ODIgNi44MjE1MyAxNC43ODgxIDUuNjIzMjEgMTQuNzg4MSA0LjE0NTA3QzE0Ljc4ODEgMi42NjY5MyAxMy41ODgyIDEuNDY4NiAxMi4xMDgxIDEuNDY4NloiIHN0cm9rZT0iIzAwNEVBOCIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHBhdGggZD0iTTEzLjUyOTggMTMuMjI0NEMxMy41Mjk4IDE0LjA4NjcgMTIuOTcwNSAxNC43ODU2IDEyLjI4MDUgMTQuNzg1NkMxMS41OTA2IDE0Ljc4NTYgMTEuMDMxMiAxNC4wODY3IDExLjAzMTIgMTMuMjI0NEMxMS4wMzEyIDEyLjM2MjEgMTEuNTkwNiAxMS42NjMyIDEyLjI4MDUgMTEuNjYzMkMxMi45NzA1IDExLjY2MzIgMTMuNTI5OCAxMi4zNjIxIDEzLjUyOTggMTMuMjI0NFoiIHN0cm9rZT0iIzAwNEVBOCIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHBhdGggZD0iTTkuODM1OTQgMjJIMlYyMC4yNDI2QzIgMTkuMzg1MiAyLjY5NTExIDE4LjY5MDEgMy41NTI1NSAxOC42OTAxSDIwLjk4NzNDMjEuODQ0OCAxOC42OTAxIDIyLjUzOTggMTkuMzg1MiAyMi41Mzk4IDIwLjI0MjZWMjJIMTQuNzA0IiBzdHJva2U9IiMwMDRFQTgiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjwvZz4KPC9zdmc+'style="margin-right: 8px"/>
+                                            {$core->get_Lang('Children and beds')}
                                         </h3>
                                         <div class="box_right">
                                             <p class="box_right_content">{$_ChildPolicy}</p>
@@ -428,15 +572,8 @@
                                     </div>
                                 {/if}
 
-                                {if $_CancellationPolicy ne ''}
-                                    <div class="important_note_item">
-                                        <h3 class="note_title cancel_prepay">
-                                            {$core->get_Lang('Cancellation/prepayment')}</h3>
-                                        <div class="box_right">
-                                            <p class="box_right_content">{$_CancellationPolicy}</p>
-                                        </div>
-                                    </div>
-                                {/if}
+                                
+<!--
                                 {if $_OtherPolicy ne ''}
                                     <div class="important_note_item">
                                         <h3 class="note_title other_regulation">
@@ -446,6 +583,7 @@
                                         </div>
                                     </div>
                                 {/if}
+-->
 
                                 {if $listCustomField}
                                     {section name=i loop=$listCustomField}
@@ -561,38 +699,7 @@
                                     </div>
                                 </div>
 
-                                <div class="box_rate_score">
-                                    {if $lstReviewHotel.clean}
-                                        {math equation='x/10' x=$lstReviewHotel.clean assign=clean}
-                                    {else}
-                                        {assign var=clean value=0}
-                                    {/if}
-                                    <label for="" class="lbl_rate_score">{$core->get_Lang('Clean')}</label>
-                                    <div class="d-flex flex-wrap justify-content-between align-items-center">
-                                        <div class="progress">
-                                            <div class="progress-bar" role="progressbar" aria-valuenow="{$clean}"
-                                                aria-valuemin="0" aria-valuemax="100"
-                                                style="width: {$lstReviewHotel.clean}%"></div>
-                                        </div>
-                                        <span>{$clean}</span>
-                                    </div>
-                                </div>
-                                <div class="box_rate_score">
-                                    {if $lstReviewHotel.worthy}
-                                        {math equation='x/10' x=$lstReviewHotel.worthy assign=worthy}
-                                    {else}
-                                        {assign var=worthy value=0}
-                                    {/if}
-                                    <label for="" class="lbl_rate_score">{$core->get_Lang('Worthy')}</label>
-                                    <div class="d-flex flex-wrap justify-content-between align-items-center">
-                                        <div class="progress">
-                                            <div class="progress-bar" role="progressbar" aria-valuenow="{$worthy}"
-                                                aria-valuemin="0" aria-valuemax="100"
-                                                style="width: {$lstReviewHotel.worthy}%"></div>
-                                        </div>
-                                        <span>{$worthy}</span>
-                                    </div>
-                                </div>
+
 
                                 <a class="view_all_review btn_write_review btn_write_review_login Write-reviews"
                                     href="javascript:void(0);"
@@ -748,3 +855,12 @@ var otherPolicy = '{$oneItem.other_policy|unescape}';
             });
         </script>
     {/literal}
+
+{literal}
+<style>
+	.owl-carousel_overview .owl-item {
+		width: unset !important;
+	}
+	
+</style>
+{/literal}

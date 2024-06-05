@@ -3,7 +3,20 @@
 		{if $show ne 'Region' && $clsISO->getCheckActiveModulePackage($package_id,'blog','category','default') && $lstCategory}
 		<div class="linkDestination">
 		 <div class="filter-articles">
-			<h2 class="title_box">{$core->get_Lang('Categories')}</h2>
+			<h2 class="title_box">{$core->get_Lang('Filter Articles')}</h2>
+			 <div class="filter-radio2">
+			 {section name=i loop=$listCountry}
+								<div class="form-check2">
+									<a href="/blog/{$listCountry[i].slug}" title="{$listCountry[i].title}">
+                    <label class="form-check-label custom-control-label {if $country_id eq $listCountry[i].country_id}active{/if}"  for="country_id_{$listCountry[i].country_id}">
+									   {$listCountry[i].title}
+									</label>
+										</a>
+								</div>
+								{/section}
+			 </div>
+			 
+			 <div class="filter-checkbox2">
 							{section name=i loop=$lstBlogCat}
                                 <div class="form-check2">
 									<a href="/blog?blogcat_id={$lstBlogCat[i].blogcat_id}" title="{$lstBlogCat[i].title}">
@@ -11,6 +24,7 @@
 									</a>
                                 </div>
 								{/section}
+			 </div>
 
                                 <a class="view-more2" id="viewMore">View more</a>
                                 <button id="hideCities" style="display:none;">Hide Cities</button>
