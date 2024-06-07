@@ -1,3 +1,4 @@
+{assign var=maxStars value=5}
 <main>
     <section class="listtourdetail_breadcrumb">
         <div class="breadcrumb_list">
@@ -6,13 +7,11 @@
                     <h2 class="txt_youarehere">You are here:</h2>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{PCMS_URL}" title="{$core->get_Lang('Home')}">Home</a></li>
-                        <li class="breadcrumb-item"><a href="{PCMS_URL}tour" title="{$core->get_Lang('Travel Styles')}">Travel
-                                Styles</a></li>
-                        <li class="breadcrumb-item"><a href="{PCMS_URL}tour/vietnam"
-                                                       title="{$core->get_Lang('Vietnam')}">Vietnam</a>
+                        <li class="breadcrumb-item"><a href="{$clsCountry->getLink($country_id, 'tour')}"
+                                                       title="{$core->get_Lang('Vietnam')}">{$clsCountry->getTitle($country_id)}</a>
                         </li>
-                        <li class="breadcrumb-item"><a href="{PCMS_URL}tour/vietnam/honeymoon"
-                                                       title="{$core->get_Lang('Honeymoon')}">Honeymoon</a></li>
+                        <li class="breadcrumb-item"><a href="{$clsTourCat->getLink($travel_style_id,'','home')}"
+                                                       title="{$core->get_Lang('Honeymoon')}">{$clsTourCat->getTitle($travel_style_id)}</a></li>
 
                         <li class="breadcrumb-item active" aria-current="page">{$clsTour->getTitle($tour_id)}</li>
                     </ol>
@@ -26,14 +25,14 @@
             <div class="txt-share-detailtour">
                 <h2 class="txt_detailhotel">{$clsTour->getTitle($tour_id)}</h2>
                 <div class="txt_numbpricetour">
-                    <p class="txt_numbtour">From US <span class="under_numbprice">$1200</span> <span
-                                class="number_pricetour">$900</span> /pax </p>
+                    <p class="txt_numbtour">From US <span class="under_numbprice">${$oneItem.min_price}</span> <span
+                                class="number_pricetour">${$clsTour->getDiscount($tour_id, $oneItem.min_price)}</span> /pax </p>
                 </div>
             </div>
 
             <div class="d-flex align-items-center score_reviewtour">
-                <span class="border_score">9.9</span>
-                <span class="txt_score">Excellent </span> <span class="txt_reviewstour">- 10 reviews</span>
+                <span class="border_score">{$averageRate}</span>
+                <span class="txt_score">{$txt_rv} </span> <span class="txt_reviewstour"> - {$countReview} reviews</span>
             </div>
 
             <div class="img_detailtour">
@@ -41,7 +40,6 @@
                     <div class="col-md-8">
                         <div class="image_tourdetail">
                             <div id="gallery_detail_tour" class="owl-carousel">
-                                <img class="img_tourdetail" src="{$clsTour->getImage($tour_id, 841, 552)}">
                                 {section name=i loop=$lstTourImage}
                                 <img class="img_tourdetail" data-fancybox="gallery_detail_tour" src="{$clsTourImage->getImage($lstTourImage[i].tour_image_id, 841, 552)}">
                                 {/section}
@@ -65,38 +63,33 @@
                                         {$oneItem.number_day} {if $oneItem.number_day lt 2}day {else} days {/if}
                                     {/if}
                                 </p>
-
                                 <p class="txt_location">
                                     <i class="fa-light fa-location-dot" style="color: #111d37;"></i>
                                     <span class="bold_txtlocation">Place:</span> {$clsTourDestination->getByCountry($tour_id, 'all_city')}
                                 </p>
-
                                 <p class="txt_location">
                                     <i class="fa-solid fa-bell-concierge" style="color: #000111;"></i>
                                     <span class="bold_txtlocation">Meals:</span> {$clsTourItinerary->getGoodMeal($tour_id)}
                                 </p>
-
                                 <p class="txt_location">
                                     <i class="fa-light fa-users" style="color: #111d37;"></i>
                                     <span class="bold_txtlocation">Group size:</span> Min 1, max 15
                                 </p>
-
                                 <p class="txt_location">
                                     <i class="fa-regular fa-circle-dot" style="color: #111d37;"></i>
                                     <span class="bold_txtlocation">Operated in:</span> English
                                 </p>
-
-                                <div class="txt_button_excluing">
-                                    <p class="excluding_explore">Excluding international flights</p>
-                                    <div class="d-flex flex-column">
-                                        <div class="d-flex flex-column flex-sm-row">
-                                            <button class="btn btn-request-book btn-hover-home">Request a quote</button>
-                                            <button class="btn btn-request-book btn-hover-home">Book it now</button>
-                                        </div>
-                                        <button class="btn btn-download">Download itinerary</button>
-                                    </div>
-                                </div>
                             </div>
+                            <div class="txt_button_excluing">
+                                <p class="excluding_explore">Excluding international flights</p>
+                                <div class="d-flex flex-column align-items-center">
+                                    <div class="d-flex flex-column flex-sm-row justify-content-center" style="gap: 16px; width: 100%">
+                                        <button class="btn btn-request-book btn-hover-home">Request a quote</button>
+                                        <button class="btn btn-request-book btn-hover-home">Book it now</button>
+                                    </div>
+                                    <button class="btn btn-download">Download itinerary</button>
+                                </div>
+                            </div> 
                         </div>
                     </div>
                 </div>
@@ -104,23 +97,23 @@
         </div>
     </section>
     <section class="list_class_tour">
-        <div class="container">
+        <div class="">
             <div class="class-tour">
-                <div class="top-section">
+                <div class="top-section container">
                     <ul class="nav list_nav">
-                        <li class="nav-item"><a class="nav-link active" href="#overview">Overview</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#itinerary">Itinerary</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#inclusion">Inclusion</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#price">Price</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#review_tour">Reviews</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#faqs">Q&As</a></li>
+                        <li class="nav-item"><a class="nav-link active" data-target=".section_overview">Overview</a></li>
+                        <li class="nav-item"><a class="nav-link" data-target=".section_itinerary">Itinerary</a></li>
+                        <li class="nav-item"><a class="nav-link" data-target=".section_inclusion">Inclusion</a></li>
+                        <li class="nav-item"><a class="nav-link" data-target=".section_price">Price</a></li>
+                        <li class="nav-item"><a class="nav-link" data-target=".section_review_tour">Reviews</a></li>
+                        <li class="nav-item"><a class="nav-link" data-target=".des_list_faq">Q&As</a></li>
                     </ul>
 
                     <div class="price_button">
                         <div class="txt_numbpricetour">
-                            <p class="txt_numbtour">From US <span class="under_numbprice">$1200</span> <span
-                                        class="number_pricetour">$900</span> /pax </p>
-                            <button class="btn btn-inquirenow">Book Now</button>
+                            <p class="txt_numbtour">From US <span class="under_numbprice">${$oneItem.min_price}</span> <span
+                                        class="number_pricetour">${$clsTour->getDiscount($tour_id, $oneItem.min_price)}</span> /pax </p>
+                            <button class="btn btn-inquirenow btn-hover-home">Book Now</button>
                         </div>
                     </div>
                 </div>
@@ -132,7 +125,7 @@
         <div class="love-trip">
             <div class="container">
                 <div class="tab-content">
-                    <div class="tab-pane active" id="overview">
+                    <div class="tab-pane active section_overview" id="overview">
                         <div class="txt_lovetrip d-flex">
                             <div class="txt_triplove_parent">
                                 <h2 class="txt_triplove">You will love this trip</h2>
@@ -146,13 +139,13 @@
             </div>
 
         </div>
-        <div class="tab-pane" id="itinerary">
+        <div class="tab-pane section_itinerary" id="itinerary">
             <div class="container">
                 <h2 class="txt_mapiti">Trip map &amp itinerary</h2>
                 <div class="detail_tours">
                     <div class="detail_mapitine">
-                        <img class="img_maps"
-                             src="{$URL_IMAGES}/tour/img_maps.png">
+                        <div class="img_maps_parent"><img class="img_maps"
+                             src="{$URL_IMAGES}/tour/img_maps.png"></div>
                         <div class="daytour">
                             <div class="txtdaybyday">
                                 <h2 class="txt_daytours">Day by day itinerary</h2>
@@ -173,12 +166,13 @@
                                                     </button>
                                                 </h2>
                                                 <div id="collapse{$lstTourItinerary[i].tour_itinerary_id}"
-                                                     class="accordion-collapse collapse {if $smarty.section.i.index eq 0}show{/if}"
+                                                     class="accordion-collapse collapse"
                                                      data-bs-parent="#accordionExample">
                                                     <div class="accordion-body">
                                                         {$lstTourItinerary[i].content|html_entity_decode}
                                                     </div>
                                                 </div>
+                                            </div>
                                         </li>
                                     {/section}
                                 </ul>
@@ -194,11 +188,11 @@
                                     <p class="txt_destravel">{$core->get_Lang('Let us help you plan an unforgettable trip!')}</p>
                                     <p class="txt_destravel"><i class="fa-solid fa-phone"></i> Whatapps: 0983033966</p>
                                 </div>
-                                <button class="btn btn-tailor btn-hover-home">Tailor Made Tour</button>
+                                <a href="{$clsTour->getLink2(0,1)}" class="btn btn-tailor btn-hover-home">Tailor Made Tour</a>
                             </div>
                         </div>
 
-                        <div class="price_tour">
+                        <div class="price_tour section_price">
                             <h2 class="txt_price">Price</h2>
 
                             <p class="txt_pricedes">Select departure date and number of guests</p>
@@ -275,7 +269,7 @@
             </div>
     </section>
 
-    <section class="bg_inclusion" id="inclusion">
+    <section class="bg_inclusion section_inclusion" id="inclusion">
         <div class="container">
             <h2 class="txt_inclusions">Inclusions</h2>
             <div class="bg_inexclues">
@@ -301,142 +295,182 @@
         </div>
     </section>
 
-    <section id="review_tour">
+    <section id="review_tour" class="section_review_tour">
         <h2 class="title_review_tour">Review</h2>
         <div class="reviews_box_top">
             <div class="row review-evaluation">
                 <div class="col-lg-4 measure-evaluation">
                     <div class="box_score">
-                        <div class="semi-donut margin" style="--percentage : 80; --fill: #FFBA55 ;"></div>
+                        <div class="semi-donut margin" style="--percentage : {($averageRate / $sumRate) * 100}; --fill: #FFBA55 ;"></div>
                         <div class="score_text">
-                            <h3 class="point_rate">4.8</h3>
-                            <div class="txt_score">Excellent</div>
+                            <h3 class="point_rate">{$averageRate}</h3>
+                            <div class="txt_score">{$txt_rv}</div>
                             <div class="number_review">
-                                (3 {$core->get_Lang('Reviews')})
+                                ({$countReview} {$core->get_Lang('Reviews')})
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-7">
                     <div class="progress_parent">
+                        {section name=i loop=$reviewProgress}
                         <div class="progress_child">
-                            <div class="txt_content">Wonderful</div>
+                            <div class="txt_content">{$reviewProgress[i].reviews}</div>
                             <div class="progress">
-                                <div class="progress-bar" role="progressbar" aria-valuenow="70"
-                                     aria-valuemin="0" aria-valuemax="100" style="width:70%">
-                                    <span class="sr-only">70% Complete</span>
+                                <div class="progress-bar" role="progressbar"
+                                     aria-valuemin="0" aria-valuemax="100" style="width:{$reviewProgress[i].count_percent}%">
                                 </div>
                             </div>
-                            <div class="count_review">10</div>
+                            <div class="count_review">{$reviewProgress[i].count}</div>
                         </div>
-                        <div class="progress_child">
-                            <div class="txt_content">Good</div>
-                            <div class="progress">
-                                <div class="progress-bar" role="progressbar" aria-valuenow="70"
-                                     aria-valuemin="0" aria-valuemax="100" style="width:70%">
-                                    <span class="sr-only">70% Complete</span>
-                                </div>
-                            </div>
-                            <div class="count_review">0</div>
-                        </div>
+                        {/section}
                         <a class="btn_write_review fr" href="javascript:void(0);" title="{$core->get_Lang('Write a review')}">{$core->get_Lang('Write a review')}</a>
                     </div>
                 </div>
             </div>
+            {$core->getBlock('review_tour')}
         </div>
-
         <div class="list_reviews">
-            <div class="review">
-                <div class="person_review">
-                    <img class="avatar" src="https://unikasia.vietiso.com/uploads//test/thumb-1920-371321.png" alt="avatar" width="50"
-                         height="50">
-                    <div class="name_reviewer">
-                        <p class="name">Kitt</p>
-                        <p class="time_review">March 12, 2024</p>
+            {if $lstReviews}
+            {section name=i loop=$lstReviews}
+                <div class="review">
+                    <div class="person_review">
+                        {assign var=numStars value=$lstReviews[i].rates}
+                        <div class="avatar_custom" style="background-color:
+                        {php}
+                                $bg_colors = ['#FFA718', '#FFF9F1', '#004EA8', '#111D37', '#959AA4', '#13B97D'];
+                                echo $bg_colors[array_rand($bg_colors)];
+                        {/php}">{strtoupper(substr($lstReviews[i].fullname, 0, 2))}</div>
+                        <div class="name_reviewer">
+                            <p class="name">{$lstReviews[i].fullname}</p>
+                            <p class="time_review">{$lstReviews[i].review_date|date_format:"%d %b, %Y"}</p>
+                        </div>
                     </div>
+                    <div class="stars_review">
+                        {assign var=numStars value=$lstReviews[i].rates}
+                        {assign var=remainingStars value=$maxStars - $numStars}
+                        {section name=j loop=$numStars}
+                            <i class="fa-solid fa-star"></i>
+                        {/section}
+                        {section name=k loop=$remainingStars}
+                            <i class="fa-regular fa-star"></i>
+                        {/section}
+                    </div>
+                    <p class="title_review">What a wonderful place to stay</p>
+                    <p class="content_review">{$lstReviews[i].content}</p>
+                    <button class="view_more_review d-none">View more</button>
                 </div>
-                <div class="stars_review">
+            {/section}
+            {else}
+                <div>Not yet reviews</div>
+            {/if}
+        </div>
+    </section>
+    {$core->getBlock('des_list_faq')}
 
+    {if $lstRelateTour}
+    <section id="maybe_interested">
+        <div class="maybe_you_interest container">
+            <h2 class="txtInterested">May be you are interested</h2>
+            <div class="recently-view">
+                <div class="related_tours owl-carousel" id="maybe_interest">
+                    {section name=i loop=$lstRelateTour}
+                        <div class="list_viewtour">
+                            <div class="img_toursrelated">
+                                <a href="{$clsTour->getLink($lstRelateTour[i].tour_id)}"><img
+                                            src="{$lstRelateTour[i].image}"
+                                            alt="{$lstRelateTour[i].title}" class="img-fluid"> </a>
+                            </div>
+                            <div class="txt_des_tour">
+                                <h3>
+                                    <a class="txth_relatedtour txt-hover-home"
+                                       href="{$clsTour->getLink($lstRelateTour[i].tour_id)}" alt="tour"
+                                       title="tour">{$lstRelateTour[i].title}</a>
+                                </h3>
+                                <div class="d-flex align-items-center score_reviewtour"><span class="border_score">9.9</span>
+                                    <span class="txt_score">Excellent </span> <span class="txt_reviewstour">- 10 views</span>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <i class="fa-light fa-location-dot" style="color: #43485c;"
+                                       aria-hidden="true"></i>
+                                    <span class="txt_placetours">Place: {$clsTourDestination->getByCountry($lstRelateTour[i].tour_id, 'city')}</span>
+                                    {if $clsTourDestination->getByCountry($lstRelateTour[i].tour_id)}
+                                        <button type="button" class="tooltips_tour" data-bs-toggle="tooltip"
+                                                title="{$clsTourDestination->getByCountry($lstRelateTour[i].tour_id, 'other_city')}">
+                                            +{$clsTourDestination->getByCountry($lstRelateTour[i].tour_id)}
+                                        </button>
+                                    {/if}
+                                </div>
+                                <div class="intro_recent_view_tour">{$lstRelateTour[i].overview|html_entity_decode}</div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="from_price"><p class="from_txtp">From</p> <span
+                                                class="txt_price">US
+                                            <h3 class="txt_numbprice"> ${$lstRelateTour[i].min_price}</h3> </span>
+                                    </div>
+                                    <a href="{$clsTour->getLink($lstRelateTour[i].tour_id)}" alt="tour"
+                                       title="tour">
+                                        <button class="btn btn_viewtour btn-hover-home">View Tour <i
+                                                    class="fa-regular fa-arrow-right" style="color: #ffffff;"
+                                                    aria-hidden="true"></i></button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    {/section}
                 </div>
-                <p class="title_review">What a wonderful place to stay</p>
-                <p class="content_review">My husband is a wonderful person</p>
-                <button class="view_more_review d-none">View more</button>
             </div>
         </div>
     </section>
+    {/if}
 
-    <section id="faqs_detail_tour">
-        <div class="des_list_faq_title">
-            <h2>{$clsConfiguration->getValue('FAQTitle')|html_entity_decode}</h2>
-        </div>
-        <div class="accordion container" id="accordion_detailTour">
-            <div class="row">
-                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingOne1">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapseOne1" aria-expanded="true" aria-controls="collapseOne1">
-                                Accordion Item #1
-                            </button>
-                        </h2>
-                        <div id="collapseOne1" class="accordion-collapse collapse show" aria-labelledby="headingOne1"
-                             data-bs-parent="#accordion_detailTour">
-                            <div class="accordion-body">
-                                <strong>This is the first item's accordion body.</strong> It is shown by default, until
-                                the collapse plugin adds the appropriate classes that we use to style each element.
-                                These classes control the overall appearance, as well as the showing and hiding via CSS
-                                transitions. You can modify any of this with custom CSS or overriding our default
-                                variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>,
-                                though the transition does limit overflow.
+    <section id="recently-view" class="container">
+        {if $lstTourRecent}
+            <div class="recently-view">
+                <h2 class="recently-view-title">{$core->get_Lang('Recently viewed')}</h2>
+                <div class="related_tours row">
+                    {section name=i loop=$lstTourRecent}
+                        <div class="list_viewtour">
+                            <div class="img_toursrelated">
+                                <a href="{$clsTour->getLink($lstTourRecent[i].tour_id)}"><img
+                                            src="{$lstTourRecent[i].image}"
+                                            alt="{$lstTourRecent[i].title}" class="img-fluid"> </a>
+                            </div>
+                            <div class="txt_des_tour">
+                                <h3>
+                                    <a class="txth_relatedtour txt-hover-home" href="{$clsTour->getLink($lstTourRecent[i].tour_id)}" alt="tour" title="tour">{$lstTourRecent[i].title}</a>
+                                </h3>
+                                <div class="d-flex align-items-center score_reviewtour"><span class="border_score">9.9</span>
+                                    <span class="txt_score">Excellent </span> <span class="txt_reviewstour">- 10 views</span>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <i class="fa-light fa-location-dot" style="color: #43485c;" aria-hidden="true"></i>
+                                    <span class="txt_placetours">Place: {$clsTourDestination->getByCountry($lstTourRecent[i].tour_id, 'city')}</span>
+                                    {if $clsTourDestination->getByCountry($lstTourRecent[i].tour_id)}
+                                        <button type="button" class="tooltips_tour" data-bs-toggle="tooltip" title="{$clsTourDestination->getByCountry($lstTourRecent[i].tour_id, 'other_city')}">
+                                            +{$clsTourDestination->getByCountry($lstTourRecent[i].tour_id)}
+                                        </button>
+                                    {/if}
+                                </div>
+                                <div class="intro_recent_view_tour">{$lstTourRecent[i].overview|html_entity_decode}</div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="from_price"><p class="from_txtp">From</p> <span
+                                                class="txt_price">US
+												<h3 class="txt_numbprice"> ${$lstTourRecent[i].min_price}</h3> </span></div>
+                                    <a href="{$clsTour->getLink($lstTourRecent[i].tour_id)}" alt="tour" title="tour">
+                                        <button class="btn btn_viewtour btn-hover-home">View Tour <i
+                                                    class="fa-regular fa-arrow-right" style="color: #ffffff;"
+                                                    aria-hidden="true"></i></button>
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingTwo2">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapseTwo2" aria-expanded="false" aria-controls="collapseTwo2">
-                                Accordion Item #2
-                            </button>
-                        </h2>
-                        <div id="collapseTwo2" class="accordion-collapse collapse" aria-labelledby="headingTwo2"
-                             data-bs-parent="#accordion_detailTour">
-                            <div class="accordion-body">
-                                <strong>This is the second item's accordion body.</strong> It is hidden by default,
-                                until the collapse plugin adds the appropriate classes that we use to style each
-                                element. These classes control the overall appearance, as well as the showing and hiding
-                                via CSS transitions. You can modify any of this with custom CSS or overriding our
-                                default variables. It's also worth noting that just about any HTML can go within the
-                                <code>.accordion-body</code>, though the transition does limit overflow.
-                            </div>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingThree3">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapseThree3" aria-expanded="false"
-                                    aria-controls="collapseThree3">
-                                Accordion Item #3
-                            </button>
-                        </h2>
-                        <div id="collapseThree3" class="accordion-collapse collapse" aria-labelledby="headingThree"
-                             data-bs-parent="#accordion_detailTour">
-                            <div class="accordion-body">
-                                <strong>This is the third item's accordion body.</strong> It is hidden by default, until
-                                the collapse plugin adds the appropriate classes that we use to style each element.
-                                These classes control the overall appearance, as well as the showing and hiding via CSS
-                                transitions. You can modify any of this with custom CSS or overriding our default
-                                variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>,
-                                though the transition does limit overflow.
-                            </div>
-                        </div>
-                    </div>
+                    {/section}
                 </div>
             </div>
-        </div>
+        {/if}
     </section>
 
     {$core->getBlock("why_choose_us")}
-
     <section class="framevideotxt">
         <div class="container">
             <div class="row">
@@ -466,6 +500,7 @@
         </div>
     </section>
 </main>
+
 {literal}
     <script>
         Fancybox.bind('#gallery_detail_tour .img_tourdetail', {
@@ -474,23 +509,78 @@
         Fancybox.bind("[data-fancybox]", {
 
         });
-        $('#gallery_detail_tour').owlCarousel({
-            loop:false,
-            margin:10,
-            nav:true,
-            navText: ["<i class='fa fa-chevron-left'></i>", "<i class='fa fa-chevron-right'></i>"],
-            dots: false,
-            autoplay: true,
-            items: 1
+        $(document).ready(function() {
+            $('#gallery_detail_tour').owlCarousel({
+                loop: false,
+                margin: 10,
+                nav: true,
+                navText: ["<i class='fa fa-chevron-left'></i>", "<i class='fa fa-chevron-right'></i>"],
+                dots: false,
+                autoplay: true,
+                items: 1
+            })
+            $('.btn_write_review').click(function () {
+                if ($(this).hasClass('active')) {
+                    $(this).removeClass('active');
+                    $('#writeTourReview').hide(500);
+                } else {
+                    $(this).addClass('active');
+                    $('#writeTourReview').show(500);
+                }
+            });
+
+            $('#maybe_interest').owlCarousel({
+                loop: true,
+                margin: 32,
+                nav: true,
+                responsive: {
+                    0: {
+                        items: 1
+                    },
+                    600: {
+                        items: 3
+                    },
+                    1000: {
+                        items: 4
+                    }
+                }
+            })
         })
-        $('.btn_write_review').click(function(){
-            if($(this).hasClass('active')){
-                $(this).removeClass('active');
-                $('#writeTourReview').hide(500);
-            }else{
-                $(this).addClass('active');
-                $('#writeTourReview').show(500);
+        document.addEventListener('DOMContentLoaded', () => {
+            const links = document.querySelectorAll('.nav-link');
+
+            links.forEach(link => {
+                link.addEventListener('click', (event) => {
+                    $('.nav-link').removeClass('active');
+                    $(event.currentTarget).addClass('active');
+                    const targetClass = event.currentTarget.getAttribute('data-target');
+                    const targetElement = document.querySelector(targetClass);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 210,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            })
+            window.onscroll = function() {
+                if (window.scrollY >= 630) {
+                    $('.class-tour').addClass('list_nav_fixed');
+                } else {
+                    $('.class-tour').removeClass('list_nav_fixed');
+                }
             }
+            $('.btn-expand').click(function() {
+                const $accordionCollapse = $(".accordion-collapse.collapse");
+                $accordionCollapse.addClass('show');
+                if ($(this).hasClass('expand')) {
+                    $(this).removeClass('expand').text('Expand all');
+                    $accordionCollapse.removeClass('show');
+                } else {
+                    $(this).addClass('expand').text('Collapse all');
+                    $accordionCollapse.addClass('show');
+                }
+            });
         });
     </script>
 {/literal}

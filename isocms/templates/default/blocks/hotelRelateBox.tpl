@@ -1,6 +1,9 @@
 {assign var = link value = $clsHotel->getLink($hotel_id,$arrHotel)}
 {assign var = title value = $clsHotel->getTitle($hotel_id,$arrHotel)}
-{assign var = getImageStar value = $clsHotel->getHotelStar($hotel_id,$arrHotel)}
+<!--{assign var = getImageStar value = $clsHotel->getHotelStar($hotel_id,$arrHotel)}-->
+
+{assign var = getImageStar value = $clsHotel->getStarNumber($hotel_id)}
+
 {if $clsISO->getCheckActiveModulePackage($package_id,'member','default','default')}
     {assign var= ratingValue value= $clsReviews->getRateAvg($hotel_id,'hotel','10')}
 {else}
@@ -17,10 +20,9 @@
         <h3 class="relate_slide_item_title">
             <a href="{$link}" title="{$title}">{$title}</a>
         </h3>
-        {if $clsHotel->getImageStar($oneItem.star_id) != ''}
-            <img height="19" src="{$clsHotel->getImageStar($oneItem.star_id)}" alt="{$title_hotel}"
-                style="width:auto" />
-        {/if}
+        <div class="detailStartsHotels">
+                    <div class="star_hotel">{$getImageStar}</div>
+                </div>
         <div class="score_number">
             {$ratingValue} <span>{$textRateAvg}</span>
         </div>

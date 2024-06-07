@@ -1,7 +1,9 @@
 <div class="des_travel_guide_side">
-    <form action="" method="POST">
+    <form action="" method="GET">
         <div class="des_travel_guide_search">
-            <i class="fa-light fa-magnifying-glass"></i><input type="text" placeholder="Search">
+            <button class="btn_search_guide"><i class="fa-light fa-magnifying-glass"></i></button>
+            <input type="text" name="keyword" class="keyword_search_guide" placeholder="Search">
+            <input type="hidden" value="search_guide">
         </div>
     </form>
     <div class="des_travel_guide_category">
@@ -47,7 +49,7 @@
                     </a>
                 </div>
                 <div class="des_travel_guide_exciting_trip_item_title">
-                    <h3><a href="#" title="{$clsTour->getTitle($tourID)}">{$clsTour->getTitle($tourID)}</a></h3>
+                    <h3><a href="{$clsTour->getLink($tourID)}" title="{$clsTour->getTitle($tourID)}">{$clsTour->getTitle($tourID)}</a></h3>
                 </div>
                 <div class="des_travel_guide_exciting_trip_item_content">
                     <div class="des_travel_guide_exciting_trip_rate">
@@ -161,11 +163,11 @@
         align-items: center;
     }
 
-    .fa-magnifying-glass {
+    .btn_search_guide {
         width: 24px;
         height: 24px;
         margin-left: 20px;
-        margin-top: 10px;
+        border: none;
     }
 
     .des_travel_guide_search input {
@@ -239,6 +241,9 @@
         line-height: 28px;
         margin-top: 8px;
         margin-bottom: 10px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .des_travel_guide_exciting_trip_item_title h3 a {
@@ -330,6 +335,10 @@
         font-style: normal;
         font-weight: 500;
         line-height: 20px;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
 
     .des_travel_guide_exciting_trip_detail {
@@ -399,7 +408,7 @@
 
     .des_travel_guide_tour_more_image img {
         transition: all 0.3s ease-in-out;
-
+        border-radius: 8px;
     }
 
     .des_travel_guide_tour_more_image:hover img {
@@ -482,7 +491,7 @@
     .des_travel_guide_exciting_trip_image img {
         border-radius: 8px;
         transition: all .3s ease-in-out;
-
+        width: 100%;
     }
 
     .des_travel_guide_exciting_trip_image img:hover {
@@ -505,4 +514,41 @@
 
     @media (max-width: 575px) {}
 </style>
+{/literal}
+
+<script>
+    var country_id  =   {$country_id};
+</script>
+{literal}
+<script>
+    $(document).ready(function() {
+
+        console.log(mod);
+        console.log(act);
+        console.log(country_id);
+
+
+        $('form').on('submit', function(e) {
+            e.preventDefault();
+            var keyword = $('.keyword_search_guide').val();
+
+            $.ajax({
+                url: 'index.php?mod=' + mod + '&act=search&keyword=' + keyword, // URL mà bạn muốn gửi dữ liệu đến
+                type: 'GET', 
+                data: {
+                    country_id: country_id,
+                    keyword: keyword 
+                },
+                success: function(response) {
+                    // xử lý phản hồi từ server ở đây
+                    console.log(response);
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    // xử lý lỗi ở đây
+                    console.log(textStatus, errorThrown);
+                }
+            });
+        });
+    });
+</script>
 {/literal}

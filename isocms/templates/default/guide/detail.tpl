@@ -1,123 +1,123 @@
-{assign var=title_guide value=$clsGuideCat->getTitle($guidecat_id)}
-<div class="page_container">
-    <nav class="breadcrumb-main  breadcrumb-cruise bg-default breadcrumb-more bg_fff">
+<section class="page_container trvgd_page_container">
+    {$core->getBlock('des_nav_breadcrumb')}
+    <div class="trvgd_main">
         <div class="container">
-            <ol class="breadcrumb hidden-xs mt0 bg_fff" itemscope itemtype="https://schema.org/BreadcrumbList">
-               <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-				   <a itemprop="item" href="{$PCMS_URL}">
-					   <span itemprop="name" class="reb">{$core->get_Lang('Home')}</span></a>
-					<meta itemprop="position" content="1" />
-				</li>
-               <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-				   <a itemprop="item" href="{$curl}" title="{$core->get_Lang('Destinations')}">
-					   <span itemprop="name" class="reb">{$core->get_Lang('Destinations')}</span></a>
-					<meta itemprop="position" content="2" />
-				</li>
-               <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-				   <a itemprop="item" href="{$clsGuideCat->getLink($country_id,$city_id,$guidecat_id)}" title="{$title_guide}">
-					   <span itemprop="name" class="reb">{$title_guide}</span></a>
-					<meta itemprop="position" content="3" />
-				</li>
-               <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" class="active">
-                  <a itemprop="item" title="{$title_guide}">
-                    <span itemprop="name" class="reb">{$clsGuide->getTitle($guide_id)}</span>
-                  </a>
-				   <meta itemprop="position" content="4" />
-               </li>
-            </ol>
-        </div>
-    </nav>
-    <div class="container pdt40">
-        <div class="row">
-            <div class="col-lg-9 mb991_30">
-                <article class="guideDetail bg_fff">
-					<h1 class="pane-title text-left mb10">{$clsGuide->getTitle($guide_id)}</h1>
-					<div class="post_meta mb10">
-							{$core->get_Lang('Post on')} : {$clsISO->converTimeToText($clsGuide->getOneField('publish_date',$guide_id))}
-							<div class="sharethis-buttons mt0">
-						<div class="sharethis-wrapper">
-							<div class="addthis_toolbox addthis_default_style" addthis:media="{$DOMAIN_NAME}{$clsGuide->getImage($guide_id,400,300)}" addthis:url="{$DOMAIN_NAME}{$clsGuide->getLink($guide_id)}" addthis:title="{$clsGuide->getTitle($guide_id)}">
-								<a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
-								<a class="addthis_button_tweet"></a>
-								<a class="addthis_button_pinterest_pinit"></a>
-								<a class="addthis_counter addthis_pill_style"></a>
-							</div>
-							<script  src="//s7.addthis.com/js/300/addthis_widget.js#pubid=thiembv"></script>
-						</div>
-					</div>
-					</div>
-					<div class="intro14_2 mb50">
-							<div class="intro15_2 mb10">{$clsGuide->getIntro($guide_id)}</div>
-							{$clsGuide->getContent($guide_id)}
-					</div>
-					<div class="comment_box mtm">
-							<div class="fb-comments" data-href="{$PCMS_URL}{$clsGuide->getLink($guide_id)}" data-width="100%" data-numposts="5" data-colorscheme="light"></div>
-					</div>
-                </article>			
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-9">
+                    <div class="trvgd_content">
+                        {$clsGuide->getContent($guide_id)}
+                    </div>
+                </div>
+                <div class="col-12 col-sm-12 col-md-3">
+                    {$core->getBlock('des_travel_guide_side')}
+                </div>
             </div>
-            <aside class="col-lg-3">
-                {$core->getBlock('right_guide')}
-            </aside>
         </div>
-        <section class="Relateds-guide mt30 mb30">
-            {if $lstRelated[0].guide_id}
-            <h2 class="pane-title text-left mb10">{$core->get_Lang('See more')}</h2>                 
-            <div class="jcarousel-box owl-carousel" id="jcarousel-guide-Relateds"> 
-                    {section name=i loop=$lstRelated}
-                    {assign var=link value=$clsGuide->getLink($lstRelated[i].guide_id)} 
-                    {assign var=title value=$clsGuide->getTitle($lstRelated[i].guide_id)}
-                    <div class="h_traveltip_item_fisrt">
-                        <a class="h_image" href="{$link}" title="{$title}">
-                            <img class="full-width height-auto" src="{$clsGuide->getImage($lstRelated[i].guide_id,462,308)}" alt="{$title}" />
-                        </a>
-                        <div class="desc pd10">
-                          <div class="name"><a href="{$link}" target="_blank">{$title}</a></div>
+    </div>
+    <div class="trvgd_similar">
+        {if $lstRelated}
+        <div class="container">
+            <div class="trvgd_similar_title">
+                <h2>{$core->get_Lang('Similar travel guide')}</h2>
+            </div>
+            <div class="trvgd_similar_content">
+                <div class="owl-carousel owl-theme trvgd_similar_travel_guide">
+                    {foreach from=$lstRelated key=key item=item}
+                    {assign var=link value=$clsGuide->getLink2($item.guide_id)}
+                    {assign var=title value=$clsGuide->getTitle($item.guide_id)}
+                    {assign var=intro value=$clsGuide->getIntro($item.guide_id)}
+                    {assign var=image value=$clsGuide->getImage($item.guide_id, 292, 216)}
+                    {assign var=place value=$clsGuide->getPlaceGuide($item.guide_id)}
+                    <div class="item" data-merge="1">
+                        <div class="trvgd_similar_item">
+                            <div class="trvgd_similar_item_image">
+                                <a href="{$link}" title="{$title}">
+                                    <img src="{$image}" alt="{$title}" width="292" height="216" loading="lazy" />
+                                </a>
+                            </div>
+                            <div class="trvgd_similar_item_intro">
+                                <div class="trvgd_similar_item_title">
+                                    <h3><a href="{$link}" title="{$title}">{$title}</a></h3>
+                                </div>
+                                <div class="trvgd_similar_item_place">
+                                    <i class="fa-sharp fa-light fa-location-dot"></i> {$place}
+                                </div>
+                                <div class="trvgd_similar_item_description">
+                                    {$intro}
+                                </div>
+                            </div>
                         </div>
                     </div>
-                 {/section}   
-            </div>                
-            {/if}
-		</section>
+                    {/foreach}
+                </div>
+            </div>
+        </div>
+        {/if}
     </div>
-</div>
+    <div class="trvgd_recent_view">
+        <div class="container">
+            <div class="trvgd_recent_view_title">
+                <h2>{$core->get_Lang('Recently viewed')}</h2>
+            </div>
+            <div class="trvgd_recent_view_content">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+                        <div class="trvgd_similar_item">
+                            <div class="trvgd_similar_item_image">
+                                <a href="#" title="Cao Dai Temple">
+                                    <img src="https://media.istockphoto.com/id/1254474165/photo/tropical-leaves-abstract-green-leaves-texture-nature-background.webp?b=1&s=170667a&w=0&k=20&c=biSlIchE6-xYY0_MLX5yrboockYYaGF04uM79eTKSX8=" alt="Cao Dai Temple" width="292" height="216" loading="lazy" />
+                                </a>
+                            </div>
+                            <div class="trvgd_similar_item_intro">
+                                <div class="trvgd_similar_item_title">
+                                    <h3><a href="#" title="Cao Dai Temple">Cao Dai Temple</a></h3>
+                                </div>
+                                <div class="trvgd_similar_item_place">
+                                    <i class="fa-sharp fa-light fa-location-dot"></i> Da Nang, Vietnam
+                                </div>
+                                <div class="trvgd_similar_item_description">
+                                    Explore several breathtaking landscapes - Discover local daily lifestyles - Get closer to the...
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 {literal}
-<script >
-$(function(){
-    if($('#jcarousel-guide-Relateds').length > 0){
-        var $owl = $('#jcarousel-guide-Relateds');
+<script>
+    if ($('.trvgd_similar_travel_guide').length > 0) {
+        var $owl = $('.trvgd_similar_travel_guide');
         $owl.owlCarousel({
-            loop:true,
-            margin:25,
-            responsiveClass:true,
-            autoplay:true,
-            responsive:{
-                0:{
-                items:1,
-                nav:false
+            lazyLoad: true,
+            loop: false,
+            margin: 36,
+            nav: true,
+            navText: ["<i class='fa-solid fa-angle-left'></i>", "<i class='fa-solid fa-angle-right'></i>"],
+            dots: false,
+            // autoplay: false,
+            // autoplayTimeout:3000,	
+            // animateOut: 'fadeOut',
+            // animateIn: 'fadeIn',
+            merge: true,
+            autoHeight: true,
+            responsiveClass: true,
+            responsive: {
+                0: {
+                    items: 1.3,
+                    nav: false,
                 },
-                500:{
-                items:2,
-                nav:false
+                600: {
+                    items: 2
                 },
-                900:{
-                items:3,
-                nav:false
-                },
-                1200:{
-                items:4,
-                nav:false
+                1000: {
+                    items: 4
                 }
             }
-            });
-            $('#next_1').click(function(){
-            $('#jcarousel-tours-slides .owl-next').trigger('click');
-            });
-            $('#prev_1').click(function(){
-            $('#jcarousel-tours-slides .owl-prev').trigger('click');
         });
     }
-});
 </script>
 {/literal}
-
-

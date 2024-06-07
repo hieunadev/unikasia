@@ -216,6 +216,8 @@ function default_ajLoadListISOCMSTicketGlobe(){
 		$to_date = str_replace("/","-",$to_date);
 	}
 	$lstYm = $clsISO->getYmByRangeDate($start_date,$to_date);
+	//$clsISO->pre($lstYm);die();
+	//ini_set( "display_errors", 1);
 	$isocms_ticket = $clsISO->getISOCMSTicket($lstYm);
 	//$clsISO->pre($isocms_ticket);die;
 	if(!empty($isocms_ticket)){

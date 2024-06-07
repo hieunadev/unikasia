@@ -24,17 +24,21 @@ function getFrame(){
 					'name' => $core->get_Lang('Check-in/ Check-out')
 				),
 				'booking_policy' => array(
-					'name' =>  $core->get_Lang('Booking Policy')
+					'name' =>  $core->get_Lang('Accommodation')
 				),
 				'child_policy' => array(
-					'name' =>  $core->get_Lang('Children and bed policy')
+					'name' =>  $core->get_Lang('Children and bed')
 				),
 				'cancellation_policy' => array(
-					'name' =>  $core->get_Lang('Cancellation Policy')
+					'name' =>  $core->get_Lang('Cancel reservation/ Prepay')
+				),
+				
+				'exclude_policy' => array(
+					'name' =>  $core->get_Lang('Excludes')
 				),
 
 				'other_policy' => array(
-					'name' => $core->get_Lang('Other Rule')
+					'name' => $core->get_Lang('Inclusion')
 				)
 			)
 		),
@@ -244,6 +248,9 @@ function default_getMainFormStep(){
 			if($key == 'cancellation_policy' && $oneItem['cancellation_policy'] !=''){
 				$status = 1;
 			}
+			if($key == 'exclude_policy' && $oneItem['exclude_policy'] !=''){
+				$status = 1;
+			}
 			if($key == 'other_policy' && $oneItem['other_policy'] !=''){
 				$status = 1;
 			}
@@ -338,6 +345,7 @@ function default_getMainFormStep(){
     $clsForm->addInputTextArea("full", "hotel_booking_policy", "", "hotel_booking_policy", 255, 25, 15, 1, "style='width:100%'");
     $clsForm->addInputTextArea("full", "child_policy", "", "child_policy", 255, 25, 2, 1, "style='width:100%'");
     $clsForm->addInputTextArea("full", "cancellation_policy", "", "cancellation_policy", 255, 25, 2, 1, "style='width:100%'");
+	$clsForm->addInputTextArea("full", "exclude_policy", "", "exclude_policy", 255, 25, 2, 1, "style='width:100%'");
 	$clsForm->addInputTextArea("full", "other_policy", "", "other_policy", 255, 25, 8, 1, "style='width:100%'");
 	
 	#
@@ -442,6 +450,7 @@ error_reporting(E_ALL);*/
 			'child_policy',
 			'cancellation_policy',
 			'other_policy',
+			'exclude_policy'
 		))){
 		$valueField = Input::post($currentstep);
 		$clsClassTable->updateOne($table_id, array(

@@ -1,21 +1,21 @@
-
 {assign var=title_hotel value=$clsHotel->getTitle($hotel_id,$oneItem)}
 {assign var=hotel__id value=$hotel_id}
 {assign var=intro_hotel value=$oneItem.intro}
 {assign var=overview_hotel value=$oneItem.overview}
 {assign var=bookingPolicy_hotel value=$clsHotel->getHotelBookingPolicy($hotel_id,oneItem)}
 {assign var = getImageStar value = $clsHotel->getStarNumber($hotel_id)}
-
+{assign var = roomFaciliti value = $clsHotel->getRoomFaci($hotel_id, $oneItem)}
 
 {if $clsISO->getCheckActiveModulePackage($package_id,'member','default','default')}
-    {assign var= ratingValue value= $clsReviews->getRateAvg($hotel__id,'hotel')}
-    {assign var= bestRating value= $clsReviews->getBestRate($hotel__id,'hotel')}
-    {assign var= ratingCount value= $clsReviews->getToTalReview($hotel__id,'hotel')}
+    {assign var= ratingValue value= $clsReviews->getRateAvg($hotel_id,'hotel')}
+    {assign var= bestRating value= $clsReviews->getBestRate($hotel_id,'hotel')}
+    {assign var= ratingCount value= $clsReviews->getToTalReview($hotel_id,'hotel')}
 {else}
-    {assign var= ratingValue value= $clsReviews->getRateAvgNoLogin($hotel__id,'hotel')}
-    {assign var= bestRating value= $clsReviews->getBestRate($hotel__id,'hotel')}
-    {assign var= ratingCount value= $clsReviews->getToTalReviewNoLogin($hotel__id,'hotel')}
+    {assign var= ratingValue value= $clsReviews->getRateAvgNoLogin($hotel_id,'hotel')}
+    {assign var= bestRating value= $clsReviews->getBestRate($hotel_id,'hotel')}
+    {assign var= ratingCount value= $clsReviews->getToTalReviewNoLogin($hotel_id,'hotel')}
 {/if}
+
 {math equation=x*2 assign="rating_value_of_10" x=$ratingValue}
 {assign var=textRateAvg value=$clsReviews->getTextRateAvg($hotel__id,'hotel')}
 {literal}
@@ -48,6 +48,7 @@
 
     <link rel="stylesheet" href="{$URL_CSS}/detail_hotel.css?v={$upd_version}" as="style" />
 
+<section class="detail_hotel_body pageen stayBody computer">
     <div class="page_container page_detail_stay bg_fff">
         <nav class="breadcrumb-main  breadcrumb-cruise bg-default breadcrumb-more bg_fff">
             <div class="container">
@@ -146,14 +147,14 @@
                         href="javascript:void(0);"
                         title="{$core->get_Lang('Reviews')}">{$core->get_Lang('Show all reviews')}</a> *}
 
-                    <div class="scroll-nav">
+                    <div class="location_scorereview">
 						 <div class="record_txt">
                     <div class="txt_score-review">
                 <div class="border_score">
-                    <p class="numb_scorestay">4.5</p>
+                    <p class="numb_scorestay">0.0</p>
                 </div>
                 <div class="txt_reviewsquality">
-                <p class="txt_qualityreview">Very good <span class="txt_reviews">(3 review)</span></p>
+                <p class="txt_qualityreview">{$textRateAvg} <span class="txt_reviews">({$ratingCount} {$core->get_Lang('reviews')})</span></p>
 					 <ul class="scroll-title">
                             <li><a href="#Reviews"
                                     class="ShowAllReviewDetailHotel">{$core->get_Lang('Show all reviews')}</a></li>
@@ -162,28 +163,53 @@
             </div>			 
             </div>
 
-									<div class="txt_icolocation">
+							<div class="txt_icolocation">
 							<i class="fa-sharp fa-solid fa-location-dot" style="color: #9a9aa4;"></i>
 							<p class="txt_location">{$clsHotel->getAddress($hotel_id,$arrHotel)}</p>
-						<a role="link" title="map" data-bs-toggle="modal"
+						<a href="#myMapModal" role="link" title="map" data-bs-toggle="modal"
                     data-bs-target="#mapModal{$hotel_id}">{$core->get_Lang('Show map')}</a>
+							<div class="modal fade" id="myMapModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                 <h4 class="modal-title">Modal title</h4>
+
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div id="map-canvas" class=""></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->	
 						</div>
             </div>
 					
-
-					
 					<div class="txt_numbt">
-						<p class="txt_fromnum">from</p>
 						<div class="txt_numbfromus">
-						<p class="txt_txtus">US <span class="txt_numbus">$1250</span></p>
+						<p class="txt_fromnum">{$core->get_Lang('from')}</p>
+						<p class="txt_txtus">{$core->get_Lang('US')} <span class="txt_numbus">{$clsHotel->getPriceOnPromotion($hotel_id)}</span></p>
+						</div>
+													
+
 						<div class="btn_contactus">
-							<a href="#" alt="contactus" title="contactus">
-                               <button class="btn btn_viewtour">Contact <i
+							<a href="{$PCMS_URL}contact-us" alt="contactus" title="contactus">
+                               <button class="btn btn_viewtour">{$core->get_Lang('Contact')} <i
                                                         class="fa-regular fa-arrow-right" style="color: #ffffff;"></i>
                                   </button>
                                         </a>
 							</div>
-						</div>
 					</div>
                        
                   </div>
@@ -240,8 +266,10 @@
                                         <h2 class="nav-content-title title_overview">{$core->get_Lang('Overview')}</h2>
 										<div class="overview_favor">
 											<div class="item">
-												<img src="{$URL_IMAGES}/hotel/detail/overview_hoteldetail1.png"> Bordering the sea
+												{$roomFaciliti}
+<!--												<img src="{$URL_IMAGES}/hotel/detail/overview_hoteldetail1.png"> Bordering the sea-->
 											</div>
+<!--
 											<div class="item">
 												<img src="{$URL_IMAGES}/hotel/detail/overview_hoteldetail2.png"> Restaurant
 											</div>
@@ -254,6 +282,7 @@
 											<div class="item">
 												<img src="{$URL_IMAGES}/hotel/detail/overview_hoteldetail6.png"> Free wifi
 											</div>
+-->
 											
 										</div>
 
@@ -349,23 +378,27 @@
                     <div class="col-lg-4">
                         <section class="box_right_info_hotel sticky_fix">
                             <div class="box_info_right_top">
-								<h3 class="txt_bestprice">Best price for you</h3>
+								<h3 class="txt_bestprice">{$core->get_Lang('Best price for you')}</h3>
                                 <div class="price_from_text">
                                     {if $clsHotel->getPriceOnPromotion($hotel_id,'detail')}
                                         <div class="from_text">
                                             {$core->get_Lang('Avg price package')}
                                         </div>
                                         <div class="val_price">
-                                           <p class="txt_prival">US <h3 class="numb_prival">$1250</h3></p>
+                                           <p class="txt_prival">US <h3 class="numb_prival">${$clsHotel->getPriceAvg($hotel_id)}</h3></p>
                                         </div>
 								<p class="txt_pricepax">Price includes package</p>
                                     {/if}
                                 </div>
-                                <form action="" method="post">
-                                    <input type="hidden" name="hotel_id" value="{$hotel_id}">
+							<div class="btn_contactus">
+								 <input type="hidden" name="hotel_id" value="{$hotel_id}">
                                     <input type="hidden" name="ContactHotel" value="ContactHotel">
-                                    <button class="departure_day">{$core->get_Lang('Contact')}</button>
-                                </form>
+							<a href="{$PCMS_URL}contact-us" alt="contactus" title="contactus">
+                               <button class="btn btn_contactprice">{$core->get_Lang('Contact')} <i
+                                                        class="fa-regular fa-arrow-right" style="color: #ffffff;"></i>
+                                  </button>
+                                        </a>
+							</div>
                             </div>
                            
                         </section>
@@ -458,6 +491,7 @@
 
     <div id="Add-ons">
         <div class="prix">
+			<div class="container">
             <div class="prix-title">
                 <h2 class="title-prix">{$core->get_Lang('Add-ons')}</h2>
                 <p>{$core->get_Lang('We suggest you some')}</p>
@@ -469,47 +503,52 @@
                         {assign var=arrHotel value = $lstHotelRelated[i]}
                        {$clsISO->getBlock('hotelRelateBox',["hotel_id"=>$hotel_id,"arrHotel"=>$arrHotel])}
 
-
-
-
-
                     {/section}
                    </section>
-
-
-
-
 
                 {/if} *}
             </div>
         </div>
     </div>
+		</div>
     <div id="Inclusion">
         <div class="prix">
+			<div class="container">
             {if !isset($oneItem.other_policy) || !$oneItem.other_policy}
             {else}
                 <div class="demander-title">
                     <h2 class="txt_inclus">{$core->get_Lang('Inclusion')}</h2>
                     <div class="Inclusion-txt">
-                        {$oneItem.other_policy|unescape}
+                        {$oneItem.other_policy|html_entity_decode}
+
                     </div>
                 </div>
             {/if}
         </div>
     </div>
+		</div>
     <div id="Things">
         <div class="Things">
+			<div class="container">
             <h2 class="Things-prix">{$core->get_Lang('Things to know')}</h2>
 
             <div class="nav-content">
                 <div class="nav-content-title tabs2">
                     {assign var=_CheckInRoom value=$clsHotel->getCheckInRoom($hotel_id,$oneItem)}
+					
                     {assign var=_CheckOutRoom value=$clsHotel->getCheckOutRoom($hotel_id,$oneItem)}
+					
                     {assign var=_BookingPolicy value=$clsHotel->getBookingPolicy($hotel_id,$oneItem)}
+					
                     {assign var=_ChildPolicy value=$clsHotel->getChildPolicy($hotel_id,$oneItem)}
+					
                     {assign var=_CancellationPolicy value=$clsHotel->getCancellationPolicy($hotel_id,$oneItem)}
+					
+					{assign var=_ExcludesPolicy value=$clsHotel->getExcludesPolicy($hotel_id,$oneItem)}
+					
                     {assign var=_OtherPolicy value=$clsHotel->getOtherPolicy($hotel_id,$oneItem)}
-                    {if $_CheckInRoom || $_BookingPolicy || $_ChildPolicy || $_CancellationPolicy || $_OtherPolicy ||$listCustomField}
+					{if $_CheckInRoom || $_BookingPolicy || $_ChildPolicy || $_CancellationPolicy || $_OtherPolicy ||$listCustomField}
+                   
                         <section class="sec_info_hotel">
                             <div class="important_note_box">
                                 {if $_CheckInRoom}
@@ -518,7 +557,7 @@
 											<i class="fa-solid fa-arrow-right-to-bracket fa-xl" style="color: #004ea8; margin-right:8px"></i>
                                             {$core->get_Lang('Check-in')}</h3>
                                         <div class="box_right">
-                                            <p class="box_right_content">By {$_CheckInRoom}
+                                            <p class="box_right_content">{$_CheckInRoom}
                                             </p>
                                         </div>
                                     </div>
@@ -530,7 +569,7 @@
 											<i class="fa-solid fa-arrow-left-from-bracket fa-xl" style="color: #004ea8; margin-right:8px"></i>
                                             {$core->get_Lang('Check-out')}</h3>
                                         <div class="box_right">
-                                            <p class="box_right_content">By {$_CheckOutRoom}
+                                            <p class="box_right_content">{$_CheckOutRoom}
                                             </p>
                                         </div>
                                     </div>
@@ -538,13 +577,13 @@
 								
 								
 
-                                {if $_BookingPolicy ne ''}
+                                {if $_ExcludesPolicy ne ''}
                                     <div class="important_note_item">
                                         <h3 class="note_title booking_policy">
 											<i class="fa-solid fa-circle-info fa-xl" style="color: #004ea8; margin-right:8px"></i>
                                             {$core->get_Lang('Excludes')}</h3>
                                         <div class="box_right">
-                                            <p class="box_right_content">{$_BookingPolicy}</p>
+                                            <p class="box_right_content">{$_ExcludesPolicy}</p>
                                         </div>
                                     </div>
                                 {/if}
@@ -608,10 +647,12 @@
             </div>
         </div>
     </div>
+		</div>
     <div id="Reviews">
         <div class="Reviews">
+			<div class="container">
             <div class="Reviews-title">
-                <h2>{$core->get_Lang('Reviews')}</h2>
+                <h2 class="txt_reviews_ct">{$core->get_Lang('Reviews')}</h2>
                 <div class="Reviews-content_txt">
                     <div class="reviews_box_top">
                         <div class="row review-evaluation">
@@ -638,7 +679,7 @@
                                     {else}
                                         {assign var=staff value=0}
                                     {/if}
-                                    <label for="" class="lbl_rate_score">{$core->get_Lang('Staff')}</label>
+                                    <label for="" class="lbl_rate_score">{$core->get_Lang('Wonderful')}</label>
                                     <div class="d-flex flex-wrap justify-content-between align-items-center">
                                         <div class="progress">
                                             <div class="progress-bar" role="progressbar" aria-valuenow="{$staff}"
@@ -654,7 +695,7 @@
                                     {else}
                                         {assign var=place value=0}
                                     {/if}
-                                    <label for="" class="lbl_rate_score">{$core->get_Lang('Place')}</label>
+                                    <label for="" class="lbl_rate_score">{$core->get_Lang('Excellent')}</label>
                                     <div class="d-flex flex-wrap justify-content-between align-items-center">
                                         <div class="progress">
                                             <div class="progress-bar" role="progressbar" aria-valuenow="{$place}"
@@ -670,7 +711,7 @@
                                     {else}
                                         {assign var=amenities value=0}
                                     {/if}
-                                    <label for="" class="lbl_rate_score">{$core->get_Lang('Amenities')}</label>
+                                    <label for="" class="lbl_rate_score">{$core->get_Lang('Good')}</label>
                                     <div class="d-flex flex-wrap justify-content-between align-items-center">
                                         <div class="progress">
                                             <div class="progress-bar" role="progressbar" aria-valuenow="{$amenities}"
@@ -687,7 +728,25 @@
                                     {else}
                                         {assign var=food_drink value=0}
                                     {/if}
-                                    <label for="" class="lbl_rate_score">{$core->get_Lang('Food&amp;Drink')}</label>
+                                    <label for="" class="lbl_rate_score">{$core->get_Lang('Average')}</label>
+                                    <div class="d-flex flex-wrap justify-content-between align-items-center">
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" aria-valuenow="{$food_drink}"
+                                                aria-valuemin="0" aria-valuemax="100"
+                                                style="width: {$lstReviewHotel.food_drink}%">
+                                            </div>
+                                        </div>
+                                        <span>{$food_drink}</span>
+                                    </div>
+                                </div>
+								
+								<div class="box_rate_score">
+                                    {if $lstReviewHotel.food_drink}
+                                        {math equation='x/10' x=$lstReviewHotel.food_drink assign=food_drink}
+                                    {else}
+                                        {assign var=food_drink value=0}
+                                    {/if}
+                                    <label for="" class="lbl_rate_score">{$core->get_Lang('Bad')}</label>
                                     <div class="d-flex flex-wrap justify-content-between align-items-center">
                                         <div class="progress">
                                             <div class="progress-bar" role="progressbar" aria-valuenow="{$food_drink}"
@@ -699,8 +758,6 @@
                                     </div>
                                 </div>
 
-
-
                                 <a class="view_all_review btn_write_review btn_write_review_login Write-reviews"
                                     href="javascript:void(0);"
                                     title="{$core->get_Lang('Reviews')}">{$core->get_Lang('Write reviews')}</a>
@@ -709,11 +766,7 @@
                     </div>
                     <div class="box_write_review">
                         <div class="clearfix mb20"></div>
-                        {if $clsISO->getCheckActiveModulePackage($package_id,'member','default','default')}
-                            {$core->getBlock('review_Star')}
-                        {else}
-                            {$core->getBlock('review_Star_No_Login')}
-                        {/if}
+									{$core->getBlock('review_stay_No_Login')}
                     </div>
                     {section name=i loop=$lstReview}
                         {assign var=reviews_content value=$clsReviews->getContent($lstReview[i].reviews_id,400,true,$lstReview[i])}
@@ -740,12 +793,14 @@
 
         </div>
     </div>
+		</div>
 
     {$core->getBlock('box_service_ad')}
 
     {if $lstHotelRelated}
         <section class="sec_relate_box">
             <div class="headBox">
+				<div class="container">
                 <h2 class="sec_relate_title text-left">{$core->get_Lang('Maybe you are interested')}</h2>
             </div>
             <div class="container">
@@ -760,6 +815,33 @@
         </section>
     {/if}
     </div>
+		</div>
+
+<section class="recently_hotel">
+	<div class="txt_recentlyhotel">
+		<h2 class="txtrecentview">{$core->get_Lang('Recently viewed')}</h2>
+		<div class="container">
+	<div class="recentlyViewed-dev">
+                            <div class="clicked-details"></div>
+                        </div>
+
+
+                        <div class="recentlyViewed-mobile">
+                            <div class="sec_relate_box-slide owl-carousel_overviewReviews owl-carousel ">
+                                <div class="clicked-details">
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="btnShowViewed">{$core->get_Lang('More')}</button>
+                        <button class="btnNoneViewed">{$core->get_Lang('Collapse all')}</button>
+
+	</div>
+		</div>
+	</div>
+</section>
+
+
     {$core->getBlock('customer_review')}
     {$core->getBlock('also_like')}
     <!-- Modal -->
@@ -773,9 +855,11 @@
             </div>
         </div>
     </div>
+</section>
 
 
 
+<!--
     <script>
 
 var otherPolicy = '{$oneItem.other_policy|unescape}';
@@ -795,6 +879,7 @@ var otherPolicy = '{$oneItem.other_policy|unescape}';
     }
 
     </script>
+-->
 
 
     {literal}
@@ -853,14 +938,39 @@ var otherPolicy = '{$oneItem.other_policy|unescape}';
                     }
                 }
             });
+
+    $(window).scroll(function() {
+        if ($(this).scrollTop() >= 500) {
+            $('.scroll-nav').addClass('scroll-nav_sticky');
+			$('.txt_numbt').addClass('txt_numbt_sticky');
+			
+			
+        } else {
+            $('.scroll-nav').removeClass('scroll-nav_sticky');
+
+        }
+    });
+			
+			    $(window).scroll(function() {
+        if ($(this).scrollTop() >= 500) {
+			$('.txt_numbt').addClass('txt_numbt_sticky');
+			
+			
+        } else {
+			$('.txt_numbt').removeClass('txt_numbt_sticky');
+
+        }
+    });
+			
+			var link = document.querySelector('link[href="vietisocms.css"]');
+
+
+  			if (link) {
+				link.parentNode.removeChild(link);
+			  }
+
+
+			
         </script>
     {/literal}
 
-{literal}
-<style>
-	.owl-carousel_overview .owl-item {
-		width: unset !important;
-	}
-	
-</style>
-{/literal}

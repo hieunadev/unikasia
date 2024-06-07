@@ -1,3 +1,12 @@
+.hotel_detail_body {
+	width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  display: flex; /* Hoặc grid */
+  flex-direction: column; /* Hoặc các thuộc tính grid khác */
+}
+
 .hotel_detail_body #header_fixed {
 	box-shadow: rgba(125, 135, 158, 0.09) 0px 12px 32px 0px;
 }
@@ -157,6 +166,7 @@
 .detailReviewsHotels {
     display: flex;
     justify-content: space-between;
+	margin-bottom: 32px;
 }
 
 .scroll-nav {
@@ -165,20 +175,64 @@
 }
 
 .txt_numbt {
-    align-self: flex-start; /* Căn chỉnh phần tử này lên trên cùng */
-	display: flex;
-    align-items: center;
+   align-self: flex-start;
+    display: grid; /* Sử dụng Grid Layout */
+    gap: 13px; /* Khoảng cách giữa các phần tử */
 }
 
-.txt_numbfromus {
-    display: flex; /* Sử dụng Flexbox cho phần "From" và giá tiền */
-    justify-content: space-between; /* Đặt nút ở giữa */
-    align-items: center; /* Căn giữa theo chiều dọc */
-    flex: 1; /* Cho phép phần này co giãn để chiếm không gian còn lại */
+.txt_numbt span.price {
+	color: #FFA718;
+	font-size: 24px;
+	font-style: normal;
+	font-weight: 600;
+	line-height: 36px;
 }
+
 
 .btn_contactus {
+	 align-self: center;
     margin-left: 10px; /* Khoảng cách giữa nút và giá tiền */
+	 grid-column: 2;
+}
+
+.txt_fromnum {
+	color: #959AA4;
+	font-size: 14px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 20px;
+	margin-bottom: 8px;
+	margin-top: 8px;
+	display: flex;
+	justify-content: end;
+}
+
+.txt_numbfromus > p:not(.txt_fromnum) { /* Áp dụng cho các thẻ <p> trừ .txt_fromnum */
+    display: inline-flex; /* Sắp xếp các phần tử con thành hàng ngang */
+    align-items: baseline; /* Căn chỉnh các phần tử con theo baseline */
+}
+
+.price { /* Điều chỉnh margin của phần giá */
+    margin-left: 5px; /* hoặc giá trị khác tùy theo mong muốn của bạn */
+}
+
+
+.txt_txtus {
+	color: #FFA718;
+	text-align: right;
+	font-size: 20px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 32px;
+	margin: auto;
+}
+
+.txt_numbus {
+	color: #FFA718;
+	font-size: 24px;
+	font-style: normal;
+	font-weight: 600;
+	line-height: 36px;
 }
 
 .hotelPageDetail {
@@ -187,8 +241,8 @@
 
 .btn_viewtour {
 	display: flex;
-	width: 117px;
-	padding: 12px 0px;
+	width: 148px;
+	padding: 12px 20px;
 	justify-content: center;
 	align-items: center;
 	gap: 6px;
@@ -198,6 +252,30 @@
 }
 
 .btn_viewtour:hover {
+	background: #e88f00 !important;
+}
+
+.txt_reviews {
+	color: #959AA4;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 24px;
+}
+
+.btn_contactprice {
+	display: flex;
+	width: 357px;
+	padding: 12px 20px;
+	justify-content: center;
+	align-items: center;
+	gap: 6px;
+	border-radius: 8px;
+	background: #FFA718 !important;
+	color: #FFF !important;
+}
+
+.btn_contactprice:hover {
 	background: #e88f00 !important;
 }
 
@@ -265,6 +343,7 @@ line-height: 32px;
 	font-weight: 600;
 	line-height: 52px;
 	position: sticky;
+	margin-bottom: 32px;
 }
 
 .customersay .txt_reviews::after {
@@ -304,15 +383,17 @@ line-height: 32px;
 }
 
 .navbarHeads-title {
-    max-width: 1396px;
+/*    max-width: 1396px;*/
     width: 100%;
     margin: 0 auto;
     padding: 0 15px;
 }
 
+/*
 ul li {
     list-style: none;
 }
+*/
 
 .navbarHeads-nav {
     font-size: 32px;
@@ -365,8 +446,9 @@ ul li {
 	font-style: normal;
 	font-weight: 400;
 	line-height: 24px;
-	    padding: 0;
+	padding: 0;
     margin-left: 4px;
+	list-style: none;
 }
 
 .hotel_detail_main .scroll-title li .active {
@@ -559,8 +641,8 @@ form .departure_day:hover {
     padding: 2.083px 1.665px 2.082px 1.666px;
 }
 
-.overview-content .Inclusion-txt p {
-    width: 100%;
+.Inclusion-txt p {
+    width: 90%;
     font-weight: 400;
     font-size: 16px;
     line-height: 24px;
@@ -574,6 +656,7 @@ form .departure_day:hover {
     line-height: 24px;
     color: #111D37;
 }
+
 
 .tabs2-title {
 	font-size: 32px;
@@ -667,7 +750,7 @@ form .departure_day:hover {
 }
 
 #Add-ons .prix {
-    max-width: 1310px;
+/*    max-width: 1310px;*/
     width: 100%;
     margin: 0 auto;
 }
@@ -705,6 +788,7 @@ form .departure_day:hover {
 	position: sticky;	
 	font-size: 32px;
 	margin-top: 82px;
+	margin-bottom: 32px;
 
     }
 
@@ -726,6 +810,7 @@ form .departure_day:hover {
     line-height: 52px;
     color: #111D37;
 	position: sticky;
+	margin-top: 80px;
 }
 
 .Things-prix::after {
@@ -832,7 +917,7 @@ form .departure_day:hover {
 	font-style: normal;
 }
 
-.Reviews-title h2 {
+.txt_reviews_ct {
 	color: #111D37;
 	text-align: center;
 	font-size: 32px;
@@ -843,7 +928,7 @@ form .departure_day:hover {
 	position: sticky;
 }
 
-.Reviews-title h2::after {
+.txt_reviews_ct::after {
 	width: 41px;
     left: 637px;
     bottom: 15%;
@@ -878,5 +963,251 @@ form .departure_day:hover {
     z-index: -1;
 }
 
+.txtrecentview {
+	color: #111D37;
+	text-align: center;
+	font-size: 32px;
+	font-style: normal;
+	font-weight: 600;
+	line-height: 52px;
+	position: sticky;
+	margin: 93px 0 32px 0;
+}
+
+.txtrecentview::after {
+	width: 40px;
+    left: 48%;
+    bottom: 15%;
+	content: "";
+    position: absolute;
+    transform: translate(-50%, -50%);
+    height: 10px;
+    background-color: #ffa718;
+    z-index: -1;
+}
+
+.relate_slide_item_body .star_hotel i.fa-star{
+    font-size: 20px;
+    color: var(--Primary);
+    padding: 2.083px 1.665px 2.082px 1.666px;
+}
 
 
+
+.reviews_box_top .box_score {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.reviews_box_top .box_score .score_number {
+    width: 46px;
+    height: 47px;
+    line-height: 47px;
+    background: var(--main-bg-color);
+    text-align: center;
+    color: var(--color-text-main-bg);
+    font-size: 22px;
+    font-weight: 500;
+    border-radius: 80px 80px 0px 80px;
+    margin-right: 12px;
+}
+
+.reviews_box_top .box_score .score_text .txt_score {
+    color: #1C1C1C;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 27px;
+    margin-bottom: 0;
+}
+
+.reviews_box_top .box_score .score_text .number_review {
+    color: #666;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    margin: 0;
+}
+
+.reviews_box_top .box_score .score_text .number_review .view_all_review {
+    color: #07C;
+    font-weight: 600;
+    margin-left: 15px;
+}
+
+.reviews_box_top .box_rate_score:first-child {
+    margin-bottom: 25px;
+}
+
+.reviews_box_top .lbl_rate_score {
+    color: #1C1C1C;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 21px;
+}
+
+.reviews_box_top .progress {
+    background: var(--main-bg-opcity-30);
+    border-radius: 2px;
+    height: 11px;
+    width: calc(100% - 27px);
+}
+
+.reviews_box_top .progress-bar {
+    border-radius: 2px;
+    background: var(--main-bg-color);
+}
+
+.reviews_box_top {
+    padding: 9px 30px 30px 27px;
+/*	max-width: 838px;*/
+	display: flex;
+	flex-direction: column;
+	margin: 0 auto;
+	width: 100%;	
+}
+
+.reviews_box_top .box_rate_score {
+        margin-bottom: 20px;
+    }
+
+.rating_block{
+	border: 1px solid rgba(36, 107, 72, 0.12);
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-khtml-border-radius: 4px;
+}
+.rating_block .rating-header{
+	padding:20px 25px;
+	color:#FFA718;
+	background: rgba(255, 167, 24, 0.08); 
+
+}
+.rating_block:not(.phone) .rating-body{
+	padding:25px;
+}
+.rating_block.phone .rating-body{
+	padding:15px;
+}
+
+.box_write_review {
+	 max-width: 838px;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+	flex-direction: column;
+}
+
+.btn_green {
+	width: 100%;
+	max-width: 242px;
+	height: 48px;
+	flex-shrink: 0;
+	border-radius: 8px;
+	background: var(--Primary, #FFA718) !important;
+	color: #FFF !important;
+}
+
+.btn_green:hover {
+	background: #e88f00 !important;
+}
+
+.rating-body .form-group {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.hotel_detail_body .customersay {
+	background-color: unset;
+}
+
+.box_right-body_mobile {
+	margin-left: 0;
+}
+
+.box_right-body_mobile .price_from_text {
+	background: unset;
+	width: auto;
+	padding: 0;
+}
+
+.box_right_body {
+	padding: 0;
+}
+
+.Inclusion-txt {
+   display: grid;
+  grid-template-columns: 1fr 1fr;
+  list-style-type: none;
+  padding: 0;
+}
+
+.Inclusion-txt ul {
+   display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 0;
+}
+
+.Inclusion-txt ul {
+    width: 200%;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #111D37;
+}
+
+.Inclusion-txt li {
+	width: 90%;
+}
+
+.Inclusion-txt .imporant_info_highlight {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Tạo hai cột bằng nhau */
+  gap: 20px; /* Khoảng cách giữa các cột (tùy chỉnh) */
+}
+
+.scroll-nav_sticky {
+	position: fixed;
+    width: 100%;
+    top: 140px;
+    z-index: 8;
+    box-shadow: rgba(125, 135, 158, 0.09) 0px 12px 32px 0px;
+    left: 0;
+/*	width: auto;*/
+    background: #fff;
+/*    padding: 0;*/
+/*    border-top: 1px solid #ccc;*/
+    padding-top: 5%;
+    border: none;
+	display: flex;
+	justify-content: center;
+	align-items: center;  /* Căn giữa theo chiều dọc */
+	
+}
+
+.scroll-nav_sticky ul {
+  position: absolute;
+  top: 50%;
+  left: 35%;
+  transform: translate(-50%, -50%); /* Dịch chuyển phần tử về giữa */
+	list-style: none;
+}
+
+
+
+.location_scorereview {
+	flex: 1;
+}
+
+.txt_numbt_sticky {
+  position: fixed;
+  top: 125px; /* Giống với top của scroll-nav_sticky */
+  right: -90px; /* Cố định ở bên phải */
+  z-index: 9;
+/*  background-color: #fff;  Hoặc màu nền khác tùy chỉnh */
+  padding: 12px 14% 0 0;
+  border: none;
+
+}

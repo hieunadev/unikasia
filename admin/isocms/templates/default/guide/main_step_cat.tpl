@@ -7,9 +7,11 @@
 						{if $currentstep=='image'}
 						{assign var= image_detail value='image_guideCat'}
 						{$core->getBlock('box_detail_image')}
+
 						{elseif $currentstep=='basic'}
 						<h3 class="title_box">{$core->get_Lang('Basic')}</h3>
 
+						{if $type eq 'cat'}
 						<div class="inpt_tour">
 							<label for="title">{$core->get_Lang('Name')} <span class="required_red">*</span>
 								{assign var= title_guideCat value='title_guideCat'}
@@ -21,15 +23,72 @@
 							<input class="input_text_form input-title required" data-table_id="{$pvalTable}" name="title" value="{$clsClassTable->getTitle($pvalTable)}" maxlength="255" type="text" onClick="loadHelp(this)" />
 							<div class="text_help" hidden="">{$clsConfiguration->getValue($title_guideCat)|html_entity_decode}</div>
 						</div>
+						{elseif $type eq 'trvg_country'}
 						<div class="inpt_tour">
 							<label for="country_id">{$core->get_Lang('Country')} <span class="required_red">*</span>
 							</label>
 							<div class="fieldarea">
-								<select class="slb full glSlBox required" name="iso-country_id" id="slb_Country">
+								<select class="slb full glSlBox required" name="iso-country_id" id="">
 									{$clsCountry->makeSelectboxOption($oneItem.country_id)}
 								</select>
 							</div>
 						</div>
+						<div class="inpt_tour">
+							<label for="guidecat_id">{$core->get_Lang('Category')} <span class="required_red">*</span>
+							</label>
+							<div class="fieldarea">
+								<select class="slb full glSlBox required" name="iso-guidecat_id" id="">
+									{$clsGuideCat->makeSelectboxOption(0, $oneItem.guidecat_id)}
+								</select>
+							</div>
+						</div>
+						<div class="inpt_tour">
+							<label for="content">{$core->get_Lang('Description')}
+							</label>
+							<textarea style="width:100%" table_id="{$pvalTable}" name="iso-content" class="textarea_intro_editor" data-column="iso-content" id="textarea_intro_editor_overview_{$now}" cols="255" rows="2">{$oneItem.content}</textarea>
+							{literal}
+							<script>
+								$(".showdate").datepicker({
+									dateFormat: "dd/mm/yy"
+								});
+							</script>
+							{/literal}
+						</div>
+						<div class="box_title_trip_code">
+							<div class="row d-flex full-height">
+								<div class="col-md-12">
+									<div class="">
+										<div class="form-group inpt_tour">
+											<label class="col-form-label" for="title">
+												{$core->get_Lang('Banner Size')}
+											</label>
+											<div class="row">
+												<div class="col-xs-12 col-md-5">
+													<div class="drop_gallery" onClick="loadHelp(this)">
+														<div class="filedrop full" onClick="file_explorer(this,event);" ondrop="file_drop(this,event)" toid="selectFile" toel="isoman_show_image" data-options='{ldelim}"openFrom":"image","clsTable":"GuideCatStore", "table_id":"{$pvalTable}","toId":"isoman_show_image" {rdelim}' ondragover="return false">
+															<h3>{$core->get_Lang('Drop files to upload')}</h3>
+															<p>Kích thước (WxH=1920x600)<br />
+																Các loại tệp được hỗ trợ là: .png,.jpg,.jpeg</p>
+															<button type="button" class="btn btn-upload">{if $oneItem.image}Thay ảnh{else}Tải ảnh lên{/if}</button>
+														</div>
+														<input class="hidden" id="selectFile" type="file" data-options='{ldelim}"openFrom":"image","clsTable":"GuideCatStore", "table_id":"{$pvalTable}","toId":"isoman_show_image"{rdelim}' name="image">
+
+														<input type="hidden" value="{$oneItem.image}" name="image" id="image" />
+														<a table_id="{$pvalTable}" isoman_multiple="0" isoman_callback='isoman_callback({ldelim}"openFrom":"image", "clsTable":"GuideCatStore", "pvalTable":"{$pvalTable}","toField":"image","toId":"isoman_show_image"{rdelim})' class="btn-upload-2 ajOpenDialog" isoman_for_id="image" isoman_name="image">{$clsISO->makeIcon('folder-o', $core->get_Lang('From library'))}</a>
+														<div class="text_help" hidden="">{$clsConfiguration->getValue($banner_guideCat)|html_entity_decode}</div>
+													</div>
+												</div>
+												<div class="col-xs-12 col-md-12">
+													<img class="img-responsive radius-3" id="isoman_show_image" src="{$clsClassTable->getImage($pvalTable,1920,480)}" onerror="this.src='{$URL_IMAGES}/none_image.png'" alt="{$core->get_Lang('image')}" style="width:100%; height:334px" />
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						{/if}
+
 						{elseif $currentstep=='intro'}
 						<div class="inpt_tour">
 							<h3 class="title_box">{$core->get_Lang('Description')}

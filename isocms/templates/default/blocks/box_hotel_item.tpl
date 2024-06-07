@@ -33,7 +33,7 @@
             </h3>
             <div class="box_body-hotel">
                 <img src="{$URL_IMAGES}/hotel/iconHome.svg" alt="error">
-                <p>{$clsHotel->getTypeHotel($hotel_id)}</p>
+                <p style="margin: 0">{$clsHotel->getTypeHotel($hotel_id)}</p>
 
             </div>
             <div class="address">
@@ -79,12 +79,12 @@
         <div class="box_right_body">
             {if !isset($ratingCount) || !$ratingCount}
                 <div class="review" style="">
+					<div class="rate">0.0</div>
                     <p>No review
                         <span>
                             (0 {$core->get_Lang('review')})
                         </span>
                     </p>
-                    <div class="rate">0.0</div>
                 </div>
             {else}
                 <div class="review">

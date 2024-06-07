@@ -2293,7 +2293,7 @@ class ISO
 				} else {
 					if ($MailType == "smtp") {
 						//$mail->Mailer = 'smtp';
-						//Enable SMTP debugging.  1 or 2 on 
+						//Enable SMTP debugging.  1 or 2 on
 						$mail->SMTPDebug = 0; //off
 						$mail->Priority  = 3;
 						$mail->Encoding  = $CFG->getValue("SiteMailEncoding");
@@ -2303,7 +2303,7 @@ class ISO
 						if ('text/html' == $content_type) {
 							$mail->IsHTML(true);
 						}
-						//Set SMTP host name    
+						//Set SMTP host name
 						$mail->Host = $CFG->getValue('SiteSmtpHost');
 						$mail->Port = $CFG->getValue('SiteSmtpPort');
 						if ($CFG->getValue('SiteSmtpSSL') !== 'none') {
@@ -5096,10 +5096,8 @@ AND COLUMN_NAME = '" . $name . "'";
 	function getPromotion($product_id, $type, $booking_date, $travel_date, $type_check = 'check_is_promotion')
 	{
 		global $dbconn;
-
 		if (_IS_PROMOTION) {
 			$clsDiscount = new Discount();
-
 			$sql = "SELECT discount_id FROM " . DB_PREFIX . "discount_item WHERE is_trash=0 and clsTable='$type' and item_id='$product_id'";
 			$array_discount_id = $dbconn->getAll($sql);
 			if (!empty($array_discount_id)) {
@@ -5120,7 +5118,6 @@ AND COLUMN_NAME = '" . $name . "'";
 				}
 			} else {
 				$listDiscount = $clsDiscount->getAll("is_trash=0 and is_online=1 and product_type='all' and " . $booking_date . " between booking_date_from and booking_date_to and " . $travel_date . " between travel_date_from and travel_date_to order by travel_date_from ASC limit 0,1", 'more_information');
-
 				$more_information = !empty($listDiscount[0]['more_information'])
 					? @json_decode($listDiscount[0]['more_information'], true)
 					: array();

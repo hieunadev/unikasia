@@ -19,14 +19,16 @@
 								<div class="des_travel_guide_item">
 									<div class="des_travel_guide_image">
 										<img src="{$clsGuide->getImage($guide_id, 292, 219)}" alt="{$clsGuide->getTitle($guide_id)}" width="292" height="219">
-										<a href="#" class="des_travel_guide_link" title="{$clsGuide->getTitle($guide_id)}">SEE DETAILS</a>
+										<a href="{$clsGuide->getLink2($guide_id)}" class="des_travel_guide_link" title="{$clsGuide->getTitle($guide_id)}">
+											SEE DETAILS <i class="fa-sharp fa-regular fa-arrow-right" aria-hidden="true"></i>
+										</a>
 									</div>
 									<div class="des_travel_guide_intro">
 										<div class="des_travel_guide_title">
-											<h3><a href="#" title="{$clsGuide->getTitle($guide_id)}">{$clsGuide->getTitle($guide_id)}</a></h3>
+											<h3><a href="{$clsGuide->getLink2($guide_id)}" title="{$clsGuide->getTitle($guide_id)}">{$clsGuide->getTitle($guide_id)}</a></h3>
 										</div>
 										<div class="des_travel_guide_place">
-											<i class="fa-sharp fa-light fa-location-dot"></i> Da Nang, Vietnam
+											<i class="fa-sharp fa-light fa-location-dot"></i> {$clsGuide->getPlaceGuide($guide_id)}
 										</div>
 										<div class="des_travel_guide_description">
 											{$clsGuide->getIntro($guide_id)}
@@ -54,11 +56,13 @@
 									<div class="des_travel_guide_item">
 										<div class="des_travel_guide_image">
 											<img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fG5hdHVyZXxlbnwwfHwwfHx8MA%3D%3D" alt="Cau Vang, Da Nang" width="292" height="219">
-											<a href="#" class="des_travel_guide_link" title="Cau Vang, Da Nang">SEE DETAILS</a>
+											<a href="{$clsGuide->getLink2($guide_id)}" class="des_travel_guide_link" title="Cau Vang, Da Nang">
+												SEE DETAILS <i class="fa-sharp fa-regular fa-arrow-right" aria-hidden="true"></i>
+											</a>
 										</div>
 										<div class="des_travel_guide_intro">
 											<div class="des_travel_guide_title">
-												<h3><a href="#" title="Cau Vang, Da Nang">Cau Vang, Da Nang</a></h3>
+												<h3><a href="{$clsGuide->getLink2($guide_id)}" title="Cau Vang, Da Nang">Cau Vang, Da Nang</a></h3>
 											</div>
 											<div class="des_travel_guide_place">
 												<i class="fa-sharp fa-light fa-location-dot"></i> Da Nang, Vietnam
@@ -73,11 +77,13 @@
 									<div class="des_travel_guide_item">
 										<div class="des_travel_guide_image">
 											<img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fG5hdHVyZXxlbnwwfHwwfHx8MA%3D%3D" alt="Cau Vang, Da Nang" width="292" height="219">
-											<a href="#" class="des_travel_guide_link" title="Cau Vang, Da Nang">SEE DETAILS</a>
+											<a href="{$clsGuide->getLink2($guide_id)}" class="des_travel_guide_link" title="Cau Vang, Da Nang">
+												SEE DETAILS <i class="fa-sharp fa-regular fa-arrow-right" aria-hidden="true"></i>
+											</a>
 										</div>
 										<div class="des_travel_guide_intro">
 											<div class="des_travel_guide_title">
-												<h3><a href="#" title="Cau Vang, Da Nang">Cau Vang, Da Nang</a></h3>
+												<h3><a href="{$clsGuide->getLink2($guide_id)}" title="Cau Vang, Da Nang">Cau Vang, Da Nang</a></h3>
 											</div>
 											<div class="des_travel_guide_place">
 												<i class="fa-sharp fa-light fa-location-dot"></i> Da Nang, Vietnam

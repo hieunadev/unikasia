@@ -35,7 +35,7 @@
 							{elseif $mod=='tour_exhautive' && $image_detail eq 'image_category_country'}
 						<p>{$core->get_Lang('Image size')} (WxH=294x462px)<br />
 							{else}
-						<p>{$core->get_Lang('Image size')} (WxH=750x500px)<br />
+						<p>{$core->get_Lang('Image size')} (WxH=1034x861px)<br />
 							{/if}
 							Các loại tệp được hỗ trợ là: .png,.jpg,.jpeg</p>
 						<button type="button" class="btn btn-upload">{if $oneItem.image}{$core->get_Lang('Change Image')}{else}{$core->get_Lang('Upload Image')}{/if}</button>

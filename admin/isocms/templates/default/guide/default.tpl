@@ -25,11 +25,11 @@
 						</div>
 						{/if}
 						{if $clsRegion->makeSelectboxOption($country_id,$region_id) && $clsISO->getCheckActiveModulePackage($package_id,'region','default','default')}
-						<div class="form-group form-country">
+						<!-- <div class="form-group form-country">
 							<select onchange="_reload2();" name="region_id" class="form-control" data-width="100%" id="slb_country">
 								{$clsRegion->makeSelectboxOption($country_id,$region_id)}
 							</select>
-						</div>
+						</div> -->
 						{/if}
 						<div class="form-group form-country">
 							<select onchange="_reload2();" name="city_id" class="form-control" data-width="100%" id="slb_country">
@@ -57,6 +57,9 @@
 										<a href="{$PCMS_URL}/?mod={$mod}&act=cat" class="btn btn-success btnNew" title="{$core->get_Lang('Guide Category')}"><i class="icon-list icon-white"></i> <span>{$core->get_Lang('Guide Category')}</span> </a>
 									</div>
 									{/if}
+									<div class="group_buttons mt10_767">
+										<a href="{$PCMS_URL}/?mod={$mod}&act=category_country" class="btn btn-success btnNew ml10" title="{$core->get_Lang('Guide Category Country')}"><i class="icon-list icon-white"></i> <span>{$core->get_Lang('Guide Category Country')}</span> </a>
+									</div>
 									<div class="form-group form-button">
 										<a class="btn btn-delete-all" id="btn_delete" clsTable="Guide" style="display:none">
 											{$core->get_Lang('Delete')}

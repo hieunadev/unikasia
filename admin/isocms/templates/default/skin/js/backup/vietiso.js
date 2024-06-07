@@ -349,6 +349,10 @@ $().ready(function(){
 		var $_this = $(this);
 		var $listID = getCheckBoxValueByClass('chkitem');
 		var $clsTable = $_this.attr('clsTable');
+
+		// console.log($listID);
+		// console.log($clsTable);
+
 		if($listID==''){   
 			alertify.error('Bạn chưa chọn những menu cần xóa !');  
 			return false;

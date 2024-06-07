@@ -1,11 +1,19 @@
 <div class="trvg_header">
-    <h1 class="trvg_header_title">WHEN TO GO TO?</h1>
-    <a href="{$clsTour->getLink2(0, 1)}" title="Create your trip" class="trvg_header_link">Create your trip</a>
+    <h1 class="trvg_header_title">
+        {if $show eq 'Country'}
+        WHEN TO GO TO?
+        {elseif $show eq 'GuideCat'}
+        {$clsGuideCat->getTitle($guidecat_id)}
+        {/if}
+    </h1>
+    <a href="{$clsTour->getLink2(0, 1)}" title="Create your trip" class="trvg_header_link">
+        Create your trip <i class="fa-sharp fa-regular fa-arrow-right" aria-hidden="true"></i>
+    </a>
 </div>
 <div class="trvg_header_background_image">
     <img src="
     {if $url_banner}
-        {$clsGuideCat->getBanner($guidecat_id, 1920, 600)} 
+        {$clsGuideCatStore->getImage($guidecat_store_id, 1920, 600)} 
     {else}
         https://unikasia.vietiso.com/isocms/templates/default/skin/images/destination/bg_trvg.png
     {/if}
@@ -43,6 +51,11 @@
         font-style: normal;
         font-weight: 600;
         line-height: 64px;
+        text-transform: uppercase;
+    }
+
+    .trvg_header_link .fa-arrow-right {
+        margin-left: 8px;
     }
 
     .trvg_header_link {

@@ -16,11 +16,11 @@
 					<div class="form-group form-keyword">
 						<input class="form-control" type="text" name="keyword" value="{$keyword}" placeholder="{$core->get_Lang('search')}..." />
 					</div>
-					<div class="form-group form-category">
+					<!-- <div class="form-group form-category">
 						<select onchange="_reload()" name="country_id" class="form-control">
 							{$clsCountry->makeSelectboxOption($country_id)}
 						</select>
-					</div>
+					</div> -->
 					<div class="form-group form-button">
 						<button type="submit" class="btn btn-main" id="findtBtn">Tìm kiếm</button>
 						<input type="hidden" name="filter" value="filter" />
@@ -55,7 +55,7 @@
 								<th class="gridheader" style="width:40px"><input id="check_all" type="checkbox" class="el-checkbox" /></th>
 								<th class="gridheader hiden767" style="width:60px">{$core->get_Lang('ID')}</th>
 								<th class="gridheader name_responsive" style="text-align:left">{$core->get_Lang('Name')}</th>
-								<th class="gridheader hiden_responsive" style="text-align:left;width:150px;">{$core->get_Lang('Country')}</th>
+								<!-- <th class="gridheader hiden_responsive" style="text-align:left;width:150px;">{$core->get_Lang('Country')}</th> -->
 								<th class="gridheader hiden_responsive" style="width:60px; text-align:center">{$core->get_Lang('Status')}</th>
 								<th class="gridheader hiden_responsive" style="width:70px">{$core->get_Lang('func')}</th>
 							</tr>
@@ -79,8 +79,7 @@
 									{if $allItem[i].is_trash eq '1'}<span class="fr" style="color:#CCC">{$core->get_Lang('intrash')}</span>{/if}
 									<button type="button" class="toggle-row inline_block767" style="display:none"><i class="fa fa-caret fa-caret-down"></i></button>
 								</td>
-								<td data-title="{$core->get_Lang('Country')}" class="block_responsive border_top_responsive"><strong style="font-size:16px;">{$clsCountry->getTitle($allItem[i].country_id)}</strong></td>
-
+								<!-- <td data-title="{$core->get_Lang('Country')}" class="block_responsive border_top_responsive"><strong style="font-size:16px;">{$clsCountry->getTitle($allItem[i].country_id)}</strong></td> -->
 								<td data-title="{$core->get_Lang('status')}" class="block_responsive" style="text-align:center">
 									<a href="javascript:void(0);" class="SiteClickPublic" clsTable="GuideCat" pkey="{$pkeyTable}" sourse_id="{$allItem[i].$pkeyTable}" rel="{$clsClassTable->getOneField('is_online',$allItem[i].$pkeyTable)}" title="{$core->get_Lang('Click to change status')}">
 										{if $clsClassTable->getOneField('is_online',$allItem[i].$pkeyTable) eq '1'}

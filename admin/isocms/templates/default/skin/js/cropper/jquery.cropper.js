@@ -86,8 +86,16 @@ function upload_file_picker(file, params) {
                     // var aspectRatio=(532/355);
                     var aspectRatio = 294 / 462;
                 }
+            } else if (params.clsTable == "Guide") {
+                if (params.openFrom == "image") {
+                    var aspectRatio = 1034 / 861;
+                }
             } else if (params.clsTable == "GuideCat") {
                 if (params.openFrom == "banner") {
+                    var aspectRatio = 1920 / 600;
+                }
+            } else if (params.clsTable == "GuideCatStore") {
+                if (params.openFrom == "overview") {
                     var aspectRatio = 1920 / 600;
                 }
             } else if (

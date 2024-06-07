@@ -181,6 +181,12 @@ $().ready(function () {
                     "/index.php?mod=" +
                     mod +
                     "&act=ajSaveMainStepGuideCat";
+            } else if ($type == "trvg_country") {
+                var urlAj =
+                    path_ajax_script +
+                    "/index.php?mod=" +
+                    mod +
+                    "&act=ajSaveMainStepGuideCatCountry";
             } else if ($type == "guide2") {
                 var urlAj =
                     path_ajax_script +

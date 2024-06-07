@@ -127,6 +127,7 @@ function default_insert()
 function getFrameCat($guideCat_id = null)
 {
 	global $core, $dbconn, $_LANG_ID, $clsISO;
+	#
 	$frames = array(
 		'overview' => array(
 			'href_group'	=> 'overview',
@@ -139,12 +140,12 @@ function getFrameCat($guideCat_id = null)
 				// 'image' => array(
 				// 	'name' => $core->get_Lang('Image cover')
 				// ),
-				'banner' => array(
-					'name' => $core->get_Lang('Banner')
-				),
-				'intro' => array(
-					'name' => $core->get_Lang('Intro')
-				),
+				// 'banner' => array(
+				// 	'name' => $core->get_Lang('Banner')
+				// ),
+				// 'intro' => array(
+				// 	'name' => $core->get_Lang('Intro')
+				// ),
 			)
 		),
 	);
@@ -162,23 +163,17 @@ function default_insertCat()
 	$show = isset($_GET['show']) ? $_GET['show'] : '';
 	$assign_list["show"] = $show;
 	$assign_list["msg"] = isset($_GET['message']) ? $_GET['message'] : '';
-
-
-	$pvalTable = Input::get('guidecat_id', 0);
-	$assign_list["pvalTable"] = $pvalTable;
-	$panel = Input::get('panel', '');
-	$assign_list["panel"] = $panel;
-
-	$currentstep = Input::get('step', 'basic');
-	$assign_list["currentstep"] = $currentstep;
-
-
-
-	$currentstepx = 0;
-
-	$frames = getFrameCat($pvalTable);
-	//$clsISO->pre($oneTour);die;
-	$ii = 0;
+	#
+	$pvalTable	= 	Input::get('guidecat_id', 0);
+	#
+	$assign_list["pvalTable"]	= 	$pvalTable;
+	$panel	= 	Input::get('panel', '');
+	$assign_list["panel"]	= 	$panel;
+	$currentstep	= 	Input::get('step', 'basic');
+	$assign_list["currentstep"]	= 	$currentstep;
+	$currentstepx 	= 	0;
+	$frames 		= 	getFrameCat($pvalTable);
+	$ii = 	0;
 	$arrStep = array();
 	foreach ($frames as $okey => $frame) {
 		$steps = $frame['steps'];
@@ -193,14 +188,10 @@ function default_insertCat()
 			++$ii;
 		}
 	}
-	/*if($profile_id==18696){
-			die('ss');
-		}*/
 	$nextstep = $arrStep[$currentstepx + 1];
 	$assign_list["frames"] = $frames;
 	$assign_list["nextstep"] = $nextstep;
-
-
+	#
 	$classTable = "GuideCat";
 	$clsClassTable = new $classTable;
 	$oneItem = $clsClassTable->getOne($pvalTable);
@@ -219,7 +210,72 @@ function default_insertCat()
 	$clsForm->addInputTextArea("full", 'intro', "", 'intro', 255, 25, 5, 1,  "style='width:100%'");
 	$clsForm->addInputTextArea("full", 'easy_cancel', "", 'easy_cancel', 255, 25, 5, 1,  "style='width:100%'");
 }
+function default_insertCatCountry()
+{
+	//	ini_set('display_errors', '1');
+	//ini_set('display_startup_errors', '1');
+	//error_reporting(E_ALL);
+	global $assign_list, $_CONFIG, $_SITE_ROOT, $mod, $_LANG_ID, $act, $menu_current, $current_page, $oneSetting, $core, $pvalTable,
+		$clsModule, $clsButtonNav, $dbconn, $clsISO, $clsConfiguration, $adult_type_id, $child_type_id, $infant_type_id, $show, $nextstep;
+	$assign_list["clsModule"] = $clsModule;
+	$user_id = $core->_USER['user_id'];
+	$show = isset($_GET['show']) ? $_GET['show'] : '';
+	$assign_list["show"] = $show;
+	$assign_list["msg"] = isset($_GET['message']) ? $_GET['message'] : '';
+	#
+	$clsGuideCat = new GuideCat();
+	$assign_list["clsGuideCat"] = $clsGuideCat;
+	#
+	$pvalTable 	= 	Input::get('guidecat_store_id', 0);
+	#
+	$assign_list["pvalTable"]	= 	$pvalTable;
+	$panel	= 	Input::get('panel', '');
+	$assign_list["panel"]	= 	$panel;
+	$currentstep	= 	Input::get('step', 'basic');
+	$assign_list["currentstep"]	= 	$currentstep;
+	$currentstepx 	= 	0;
+	$frames 		= 	getFrameCat($pvalTable);
+	$ii = 	0;
+	$arrStep = array();
+	foreach ($frames as $okey => $frame) {
+		$steps = $frame['steps'];
+		foreach ($steps as $key => $step) {
+			$status = 0;
+			$arrStep[$ii] = array(
+				'key' => $key,
+				'name' => $step['name'],
+				'status' => $status
+			);
+			$frames[$okey]['steps'][$key]['status'] = $status;
+			++$ii;
+		}
+	}
+	$nextstep = $arrStep[$currentstepx + 1];
+	$assign_list["frames"] = $frames;
+	$assign_list["nextstep"] = $nextstep;
+	#
+	$classTable = "GuideCatStore";
+	$clsClassTable = new $classTable;
+	$oneItem = $clsClassTable->getOne($pvalTable);
+	$assign_list["oneItem"] = $oneItem;
+	$tableName = $clsClassTable->tbl;
+	$pkeyTable = $clsClassTable->pkey;
 
+	$guidecat_id	=	$oneItem['guidecat_id'];
+	$assign_list["guidecat_id"] = $guidecat_id;
+
+
+	$assign_list["clsClassTable"] = $clsClassTable;
+	$assign_list["pkeyTable"] = $pkeyTable;
+
+	require_once DIR_COMMON . "/clsForm.php";
+	$clsForm = new Form();
+	$clsForm->setDbTable($tableName, $pkeyTable, $pvalTable);
+	$assign_list["clsForm"] = $clsForm;
+
+	$clsForm->addInputTextArea("full", 'intro', "", 'intro', 255, 25, 5, 1,  "style='width:100%'");
+	$clsForm->addInputTextArea("full", 'easy_cancel', "", 'easy_cancel', 255, 25, 5, 1,  "style='width:100%'");
+}
 function getFrame2($guide2 = null)
 {
 	global $core, $dbconn, $_LANG_ID, $clsISO;
@@ -373,6 +429,7 @@ function default_getMainFormStep()
 	//ini_set('display_startup_errors', '1');
 	//error_reporting(E_ALL);
 	global $smarty, $assign_list, $_frontIsLoggedin_user_id, $core, $clsISO, $clsProperty, $clsUser, $_company_iom_id, $dbconn, $nextstep, $clsConfiguration, $mod, $package_id, $pvalTable;
+	#
 	$clsGuide = new Guide();
 	$clsCountry = new Country();
 	$smarty->assign('clsCountry', $clsCountry);
@@ -384,16 +441,18 @@ function default_getMainFormStep()
 	$smarty->assign('clsGuideCat', $clsGuideCat);
 	$clsGuide2 = new Guide2();
 	$smarty->assign('clsGuide2', $clsGuide2);
-
+	$clsGuideCatStore = new GuideCatStore();
+	$smarty->assign('clsGuideCatStore', $clsGuideCatStore);
 	#
 	$table_id = Input::post('table_id', 0);
 	$type = Input::post('type', '');
+	$smarty->assign('type', $type);
 	$currentstep = Input::post('currentstep', '');
-
+	#
 	#Step follow index
 	$ii = 0;
 	$arrStep = array();
-
+	#
 	if ($type == "cat") {
 		$smarty->assign('clsClassTable', $clsGuideCat);
 		$tableName = $clsGuideCat->tbl;
@@ -401,6 +460,41 @@ function default_getMainFormStep()
 		$smarty->assign('clsTable', 'GuideCat');
 		$oneItem = $clsGuideCat->getOne($table_id);
 		$file_step = 'main_step_cat.tpl';
+		$frames = getFrameCat();
+		foreach ($frames as $okey => $frame) {
+			$steps = $frame['steps'];
+			foreach ($steps as $key => $step) {
+				$status = 0;
+				if ($key == 'basic' && $oneItem['title'] != '') {
+					$status = 1;
+				}
+				if ($key == 'image' && $oneItem['image'] != '') {
+					$status = 1;
+				}
+				if ($key == 'intro' && $oneItem['intro'] != '') {
+					$status = 1;
+				}
+				if ($key == 'banner' && $oneItem['banner'] != '' && $oneItem['link_banner'] != '' && $oneItem['intro_banner'] != '') {
+					$status = 1;
+				}
+				$arrStep[$ii] = array(
+					'key' => $key,
+					'panel' => $okey,
+					'name' => $step['name'],
+					'status' => $status,
+					//				'description' => $step['description']
+				);
+				++$ii;
+			}
+		}
+	} else if ($type == "trvg_country") {
+		$smarty->assign('clsClassTable', $clsGuideCatStore);
+		$tableName = $clsGuideCatStore->tbl;
+		$pkeyTable = $clsGuideCatStore->pkey;
+		$smarty->assign('clsTable', 'GuideCatStore');
+		$oneItem = $clsGuideCatStore->getOne($table_id);
+		$file_step = 'main_step_cat.tpl';
+		#
 		$frames = getFrameCat();
 		foreach ($frames as $okey => $frame) {
 			$steps = $frame['steps'];
@@ -590,9 +684,9 @@ function default_getMainFormStep()
 }
 function default_ajSaveMainStepGuideCat()
 {
-	ini_set('display_errors', '1');
-	ini_set('display_startup_errors', '1');
-	error_reporting(E_ALL);
+	// ini_set('display_errors', '1');
+	// ini_set('display_startup_errors', '1');
+	// error_reporting(E_ALL);
 	global $_frontIsLoggedin_user_id, $core, $clsISO, $clsProperty, $clsUser, $_company_iom_id, $dbconn;
 	#
 	$msg = '_error';
@@ -676,10 +770,54 @@ function default_ajSaveMainStepGuideCat()
 	echo $msg;
 	die();
 }
+function default_ajSaveMainStepGuideCatCountry()
+{
+	// ini_set('display_errors', '1');
+	// ini_set('display_startup_errors', '1');
+	// error_reporting(E_ALL);
+	global $_frontIsLoggedin_user_id, $core, $clsISO, $clsProperty, $clsUser, $_company_iom_id, $dbconn;
+	#
+	$msg	= 	'_error';
+	$clsClassTable 	= 	new GuideCatStore();
+	$table_id 		= 	Input::post('table_id', 0);
+	$currentstep 	= 	Input::post('currentstep');
+	$arr_update 	= 	[
+		'user_id_update' 	=> 	addslashes($core->_SESS->user_id),
+		'upd_date' 			=> 	time(),
+		'is_trash'			=> 	0,
+		'is_online'			=> 	1,
+	];
+	if ($currentstep == 'basic') {
+		$image	= 	Input::post('image', '');
+		$arr_update['image']	= 	addslashes($image);
+		foreach ($_POST as $key => $val) {
+			$tmp	= 	explode('-', $key);
+			if ($tmp[0] == 'iso') {
+				$arr_update[$tmp[1]]	= 	($val);
+			}
+		}
+		$clsClassTable->updateOne($table_id, $arr_update);
+	} else {
+		$val_post 	= 	input::post();
+		$arr_update = 	[];
+		foreach ($val_post as $key => $val) {
+			$tmp 	= 	explode('-', $key);
+			if ($tmp[0] == 'iso') {
+				$arr_update[$tmp[1]]	= 	addslashes($val);
+			}
+		}
+		$clsClassTable->updateOne($table_id, $arr_update);
+	}
+	$msg 	= 	'_success';
+	// Output
+	echo $msg;
+	die();
+}
 function default_ajSaveMainStep()
 {
 	global $_frontIsLoggedin_user_id, $core, $clsISO, $clsProperty, $clsUser, $_company_iom_id, $dbconn;
 	#
+
 	$msg = '_error';
 	$clsClassTable = new Guide();
 	$table_id = Input::post('table_id', 0);
@@ -688,6 +826,8 @@ function default_ajSaveMainStep()
 		'user_id_update' => addslashes($core->_SESS->user_id),
 		'upd_date' => time()
 	];
+
+
 	if ($currentstep == 'basic') {
 		$title = Input::post('title');
 		$title = html_entity_decode($title);
@@ -767,7 +907,7 @@ function default_ajSaveMainStep()
 		foreach ($val_post as $key => $val) {
 			$tmp = explode('-', $key);
 			if ($tmp[0] == 'iso') {
-				$arr_update[$tmp[1]] = addslashes($val);
+				$arr_update[$tmp[1]] = ($val);
 			}
 		}
 		$clsClassTable->updateOne($table_id, $arr_update);
@@ -1105,9 +1245,12 @@ function default_ajActionNewGuide()
 	$clsGuide = new Guide();
 	$clsGuideCat = new GuideCat();
 	$clsGuide2 = new Guide2();
+	$clsGuideCatStore 	= 	new GuideCatStore();
 	$assign_list["clsGuide"] = $clsGuide;
 	$assign_list["clsGuideCat"] = $clsGuideCat;
 	$assign_list["clsGuide2"] = $clsGuide2;
+	$assign_list["clsGuideCatStore"] = $clsGuideCatStore;
+	#
 	$tp = Input::post('tp');
 	$type = Input::post('type', '');
 	if ($type == 'cat') {
@@ -1133,6 +1276,18 @@ function default_ajActionNewGuide()
 			$value = "'" . $guide2_id . "','" . $user_id . "','" . $user_id . "',1,'" . time() . "','" . time() . "'";
 			$clsGuide2->insertOne($field, $value);
 			$results = array('result' => 'success', 'link' => 'guide/compose/insert/' . $guide2_id . '/overview');
+		}
+	} elseif ($type == 'trvg_country') {
+		$guide_id = $clsGuideCatStore->getMaxId();
+		$results = array('result' => 'error');
+		if ($tp = 'S') {
+			$clsISO->UpdateOrderNo('GuideCatStore');
+			#
+			$field = $clsGuideCatStore->pkey . ", user_id, user_id_update, reg_date, upd_date";
+			$value = "'" . $guide_id . "','" . $user_id . "','" . $user_id . "','" . time() . "','" . time() . "'";
+			#
+			$clsGuideCatStore->insertOne($field, $value);
+			$results = array('result' => 'success', 'link' => 'guide/category_country/insert/' . $guide_id . '/overview');
 		}
 	} else {
 		$guide_id = $clsGuide->getMaxId();

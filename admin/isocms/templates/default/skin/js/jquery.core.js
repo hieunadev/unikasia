@@ -238,7 +238,7 @@ $Core = (function($, window, document, undefined) {
                 if ($("#" + id).length)
                     return tinyMCE.get(id).getContent();
                 else
-					return '';
+                    return '';
             },
 			stopEventHandler: function(e){
 				e.preventDefault();
@@ -573,6 +573,9 @@ $().ready(function(){
 		var $_this = $(this);
 		var $listID = getCheckBoxValueByClass('chkitem');
 		var $clsTable = $_this.attr('clsTable');
+		// console.log($listID);
+		// console.log($clsTable);
+		
 		if ($listID == '') {
 			alertify.error(confirm_delete);
 			return false;

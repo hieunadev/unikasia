@@ -4223,4 +4223,12 @@ class Tour extends dbBasic
 			return $clsISO->formatPrice($priceAdultAds);
 		}
 	}
+
+    function getDiscount($tour_id, $origin_price) {
+        global $clsISO;
+        $more_infomation = $clsISO->getPromotion($tour_id, 'Tour', time(), time(), 'info_promotion');
+        $discount_value = $more_infomation["discount_value"];
+        $price = $origin_price * (100 - $discount_value) / 100;
+        return $price;
+    }
 }

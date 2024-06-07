@@ -536,7 +536,6 @@ class Reviews extends dbBasic{
         }else{
             $email_template_id=$email_template_review_cruise_id;
         }
-
         #
         header('Content-Type: text/html; charset=utf-8');
         $message = $clsEmailTemplate->getContent($email_template_id);

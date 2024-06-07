@@ -191,11 +191,33 @@ function default_detaildeparture() {
     $assign_list["clsTourItinerary"] = $clsTourItinerary;
     $clsTourImage = new TourImage();
     $assign_list["clsTourImage"] = $clsTourImage;
+    $clsReviews = new Reviews();
+    $assign_list["clsReviews"] = $clsReviews;
+    $clsTourExtension = new TourExtension();
+    $assign_list["clsTourExtension"] = $clsTourExtension;
+    $clsTourCategory = new TourCategory();
+    $assign_list["clsTourCategory"] = $clsTourCategory;
+    $clsDiscount = new Discount();
+    $assign_list["clsDiscount"] = $clsDiscount;
+    $clsCountry = new Country();
+    $assign_list["clsCountry"] = $clsCountry;
+    $clsTourCat = new TourCategory();
+    $assign_list["clsTourCat"] = $clsTourCat;
 
-    $where = " is_trash = 0";
+    $tour_id = !empty($_GET['tour_id']) ? $_GET['tour_id'] : '0';
+    $cond = " is_trash = 0 and";
     $order = " order by order_no";
 
-    if (isset($_GET['tour_id']) && !empty($_GET['tour_id'])) {
+    $lstReviews = $clsReviews->getAll("$cond table_id = $tour_id $order");
+    $countReview = $clsReviews->countItem("$cond table_id = $tour_id $order");
+    $lstTourImage = $clsTourImage->getAll("$cond table_id = $tour_id $order", "tour_image_id, image");
+    $lstTourItinerary = $clsTourItinerary->getAll("$cond tour_id = $tour_id order by day");
+    $oneItem = $clsTour->getOne($tour_id);
+    $travel_style_id = explode('|', $oneItem[8])[1];
+    $lstRelateTour = $clsTour->getAll("$cond tour_id IN (select tour_2_id from default_tour_extension where tour_1_id = $tour_id)");
+    $country_id = $clsTourDestination->getAll("$cond tour_id = $tour_id limit 1", "country_id")[0]["country_id"];
+
+    if (!empty($_GET['tour_id'])) {
         $post_id = intval($_GET['tour_id']);
         if (isset($_COOKIE['recent_view_tour'])) {
             $recent_view_tour = json_decode($_COOKIE['recent_view_tour'], true);
@@ -209,18 +231,65 @@ function default_detaildeparture() {
         setcookie('recent_view_tour', json_encode($recent_view_tour), time() + (86400), "/");
     }
 
-    $tour_id = !empty($_GET['tour_id']) ? $_GET['tour_id'] : '0';
-    $assign_list["tour_id"] = $tour_id;
+    if (isset($_COOKIE['recent_view_tour'])) {
+        $recent_view_tour = json_decode($_COOKIE['recent_view_tour'], true);
+        if (!empty($recent_view_tour)) {
+            $ids = implode(',', array_map('intval', $recent_view_tour));
+            $lstTourRecent = $clsTour->getAll("tour_id IN ($ids) LIMIT 3");
+            $assign_list["lstTourRecent"] = $lstTourRecent;
+        }
+    }
 
-    $oneItem = $clsTour->getOne($tour_id);
-    $assign_list["oneItem"] = $oneItem;
+    $sumRate = 5;
+    $sqlAverageRate = "SELECT AVG(rates) AS average_rate FROM default_reviews WHERE $cond table_id = $tour_id";
+    $averageRate = round($dbconn->GetOne($sqlAverageRate), 1);
+    $sqlCountRate = "SELECT rates, ROUND(COUNT(rates) / $countReview * 100) AS count_percent, COUNT(rates) as count FROM default_reviews WHERE $cond table_id = $tour_id GROUP BY rates;";
+    $countRate = $dbconn->GetAll($sqlCountRate);
+
+    $bg_colors = ['#FFA718', '#FFF9F1', '#004EA8', '#111D37', '#434B5C', '#959AA4'];
+    $random_color = $bg_colors[array_rand($bg_colors)];
+
+    $txtReview = ['Bad', 'Average', 'Good', 'Excellent', 'Wonderful'];
+    $validRates = [5, 4, 3, 2, 1];
+    $result = [];
+    $rateMap = array_column($countRate, null, 'rates');
+
+    foreach ($validRates as $rates) {
+        if (isset($rateMap[$rates])) {
+            $entry = $rateMap[$rates];
+            $count_percent = $entry['count_percent'];
+            $count = $entry['count'];
+        } else {
+            $count_percent = $count = 0;
+        }
+        $reviewName = $txtReview[$rates - 1];
+        $result[] = [
+            'rates' => $rates,
+            'count' => $count,
+            'count_percent' => $count_percent,
+            'reviews' => $reviewName
+        ];
+    }
+
+    $index = (int)round(max(1, min(5, $averageRate)) - 1);
+    $txt_rv = $txtReview[$index];
 
     if ($oneItem['is_online'] == 0) header('location:' . PCMS_URL);
-
-    $lstTourImage = $clsTourImage->getAll("$where and is_trash=0 and table_id = $tour_id $order", "tour_image_id, image");
-    $lstTourItinerary = $clsTourItinerary->getAll("$where and tour_id = $tour_id order by day");
+    $assign_list["oneItem"] = $oneItem;
+    $assign_list["tour_id"] = $tour_id;
+    $assign_list["table_id"] = $tour_id;
     $assign_list["lstTourItinerary"] = $lstTourItinerary;
     $assign_list["lstTourImage"] = $lstTourImage;
+    $assign_list["lstReviews"] = $lstReviews;
+    $assign_list["lstRelateTour"] = $lstRelateTour;
+    $assign_list["countReview"] = $countReview;
+    $assign_list["sumRate"] = $sumRate;
+    $assign_list["reviewProgress"] = $result;
+    $assign_list["txt_rv"] = $txt_rv;
+    $assign_list["travel_style_id"] = $travel_style_id;
+    $assign_list["averageRate"] = !empty($averageRate) ? number_format($averageRate,1) : 0.0;
+    $assign_list["random_color"] = $random_color;
+    $assign_list["country_id"] = $country_id;
 }
 
 function default_tag()

@@ -445,6 +445,7 @@ class Hotel extends dbBasic
 		$one = $this->getOne($hotel_id, "note");
 		return html_entity_decode($one['note']);
 	}
+	
 	function getHotelBookingPolicy($pvalTable, $one = null)
 	{
 		if (!isset($one['other_policy'])) {
@@ -452,6 +453,7 @@ class Hotel extends dbBasic
 		}
 		return html_entity_decode($one['other_policy']);
 	}
+	
 	function getOtherPolicy($pvalTable, $one = null)
 	{
 		if (!isset($one['other_policy'])) {
@@ -459,6 +461,7 @@ class Hotel extends dbBasic
 		}
 		return html_entity_decode($one['other_policy']);
 	}
+	
 	function getBookingPolicy($pvalTable, $one = null)
 	{
 		if (!isset($one['booking_policy'])) {
@@ -466,6 +469,7 @@ class Hotel extends dbBasic
 		}
 		return html_entity_decode($one['booking_policy']);
 	}
+	
 	function getChildPolicy($pvalTable, $one = null)
 	{
 		if (!isset($one['child_policy'])) {
@@ -480,6 +484,15 @@ class Hotel extends dbBasic
 		}
 		return html_entity_decode($one['cancellation_policy']);
 	}
+	
+	function getExcludesPolicy($pvalTable, $one = null)
+	{
+		if (!isset($one['exclude_policy'])) {
+			$one = $this->getOne($pvalTable, 'exclude_policy');
+		}
+		return html_entity_decode($one['exclude_policy']);
+	}
+	
 	function getPrice($hotel_id, $addition = '', $is_has = false, $one = null)
 	{
 		global $core, $extLang, $_LANG_ID;
@@ -814,6 +827,7 @@ class Hotel extends dbBasic
 		$clsHotel = new Hotel();
 		$one = $clsHotel->getOne($hotel_id, 'list_RoomFacilities');
 		return $one['list_RoomFacilities'];
+		
 	}
 	function getRuler($hotel_id)
 	{

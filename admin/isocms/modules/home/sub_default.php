@@ -189,18 +189,17 @@ function default_ajUpdateMultiItemStatus()
 function default_ajDeleteMultiItem()
 {
 	global $assign_list, $_CONFIG, $_SITE_ROOT, $mod, $_LANG_ID, $act, $menu_current, $current_page;
-	global $core, $clsModule, $clsButtonNav;
+	global $core, $clsModule, $clsButtonNav, $clsISO;
 	#
 	$clsTable = $_POST['clsTable'];
 	$listID = isset($_POST['listID']) ? $_POST['listID'] : '';
-	//	print_r($clsTable);die();
 	#
 	$clsClassTable = new $clsTable();
 	if ($listID != '' && $listID != '0') {
 		$temp = explode('|', $listID);
+
 		if (is_array($temp) && count($temp) > 0) {
 			for ($i = 0; $i < count($temp); $i++) {
-				//				print_r($clsTable);die();
 				$clsClassTable->doDelete($temp[$i]);
 			}
 		}

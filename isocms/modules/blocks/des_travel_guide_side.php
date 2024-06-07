@@ -37,13 +37,14 @@ if ($show === 'GuideCat') {
 // $smarty->assign('guidecat_slug', $guidecat_slug);
 $smarty->assign('guidecat_id', $guidecat_id);
 #
-$cond   =   'is_trash = 0 AND is_online = 1';
-$order  =   ' ORDER BY order_no ASC';
+$cond   =   ' is_trash = 0 AND is_online = 1';
+$order1 =   ' ORDER BY order_no ASC';
+$order2 =   ' ORDER BY rand()';
 $limit  =   ' LIMIT 3';
 #
-$arr_guide_cat  =   $clsGuideCat->getAll($cond . " AND country_id = " . $country_id . $order, "guidecat_id, slug");
+$arr_guide_cat  =   $clsGuideCat->getAll($cond . " AND guidecat_id IN (SELECT guidecat_id FROM default_guidecat_store WHERE country_id = " . $country_id . ")" . $order1, "guidecat_id, slug");
 $smarty->assign('arr_guide_cat', $arr_guide_cat);
 #
 // List tour liên quan trong quốc gia
-$arr_tour_country   =   $clsTour->getAll($cond . " AND tour_id IN (SELECT tour_id FROM default_tour_destination WHERE country_id = " . $country_id . ")" . $order . $limit, "tour_id, min_price");
+$arr_tour_country   =   $clsTour->getAll($cond . " AND tour_id IN (SELECT tour_id FROM default_tour_destination WHERE country_id = " . $country_id . ")" . $order2 . $limit, "tour_id, min_price");
 $smarty->assign('arr_tour_country', $arr_tour_country);

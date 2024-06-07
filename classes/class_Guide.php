@@ -328,4 +328,23 @@ class Guide extends dbBasic
         }
         return  $link;
     }
+    function getPlaceGuide($pvalTable)
+    {
+        global $extLang, $_LANG_ID, $clsISO;
+        #
+        $clsCountry =   new Country();
+        $clsCity    =   new City();
+        #
+        $html   =   '';
+        $city_id    =   $this->getOneField("city_id", $pvalTable);
+        if (!empty($city_id)) {
+            $html   .=   $clsCity->getTitle($city_id) . ', ';
+        }
+        #
+        $country_id =   $this->getOneField("country_id", $pvalTable);
+        if (!empty($country_id)) {
+            $html   .=   $clsCountry->getTitle($country_id);
+        }
+        return $html;
+    }
 }

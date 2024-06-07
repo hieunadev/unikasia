@@ -31,6 +31,11 @@
     color: rgba(var(--bs-secondary-rgb),var(--bs-text-opacity))!important;
 }
 
+/* Common */
+.location-info p{
+    margin-bottom: 0;
+}
+
 .listblog_breadcrumb {
     padding: 1px 0 0px 0;
     background: #fff;
@@ -113,13 +118,12 @@
 }
 
 .txt-share-detailtour {
-    display: flex; /* Sử dụng Flexbox để sắp xếp */
-    align-items: center; /* Canh giữa theo chiều dọc */
+    display: flex;
+    align-items: flex-end;
 }
 
 .txt_numbpricetour {
-    margin-left: auto; /* Đẩy khung biểu tượng sang phải */
-    padding: 8px; /* Khoảng đệm tùy chỉnh */
+    margin-left: auto;
     display: flex;
 }
 
@@ -128,9 +132,9 @@
 .txt_numbtour {
     color: #959AA4;
     font-size: 16px;
-    
+    margin-bottom: 0;
     font-weight: 400;
-    line-height: 24px; /* 150% */
+    line-height: 24px;
 }
 
 .under_numbprice {
@@ -248,7 +252,6 @@
 .border-locationinfo {
     max-width: 406px;
     min-height: 552px;
-    flex-shrink: 0;
     border-radius: 8px;
     border: 1px solid var(--Neutral-5, #F0F0F0);
     background: #FFF;
@@ -256,6 +259,9 @@
     width: 100%;
     height: 100%;
     padding-bottom: 17px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .location-info {
@@ -297,7 +303,6 @@
 }
 
 .btn-request-book {
-    display: flex;
     max-width: 172px;
     padding: 12px 20px;
     justify-content: center;
@@ -306,7 +311,6 @@
     border-radius: 8px;
     background: #FFA718 !important;
     color: #FFF !important;
-    margin-right: 13px;
     margin-bottom: 17px;
     width: 100%;
 }
@@ -324,6 +328,11 @@
     width: 100%;
 }
 
+.btn-download:hover {
+    background-color: #FFA718 ;
+    color: #ffffff !important;
+}
+
 .list_class_tour {
     padding: 50px 0;
 }
@@ -333,13 +342,20 @@
 }
 
 .class-tour .nav-link {
-    color: #333;
+    color: #959AA4;
     border: none;
     border-bottom: 2px solid transparent;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 32px;
 }
 
 .class-tour .nav-link.active {
     border-bottom-color: #FFA718 !important;
+    color: var(--Neutral-1, #111D37);
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 32px;
 }
 
 .details {
@@ -369,21 +385,32 @@
     border-radius: 4px;
     background: #FFA718 !important;
     color: #FFF !important;
-    /* padding: 10px 20px; */
     border: none;
-    border-radius: 5px;
     margin-left: 12px;
 }
 
 .top-section {
-    display: flex; /* Áp dụng flexbox cho phần tử cha của nav-container và price-box */
-    align-items: center; /* Căn giữa theo chiều dọc */
-    border-bottom: 1px solid #F0F0F0; /* Thêm đường viền dưới */
-    /* padding-bottom: 20px; Khoảng cách giữa đường viền và nội dung phía dưới */
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #F0F0F0;
     justify-content: space-between;
-    margin-bottom: 20px;
 }
 
+.top-section .list_nav {
+    cursor: pointer;
+}
+.list_nav_fixed {
+    position: fixed;
+    top: 140px;
+    z-index: 8;
+    box-shadow: 0 12px 32px 0 #7d879e17;
+    background: #fff;
+    padding-top: 20px;
+    border: none;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 100%;
+}
 .nav-container ul {
     list-style: none;
     padding: 0;
@@ -391,12 +418,10 @@
     display: flex;
     justify-content: space-around;
     width: 100%;
-
 }
 
 .nav-item {
-    margin-bottom: 10px;
-    margin-right: 15px; /* Khoảng cách giữa các nav item */
+    margin-right: 15px;
 }
 
 .nav-link {
@@ -549,13 +574,17 @@
     display: flex;
     justify-content: center;
     justify-items: center;
-    margin: 0 246px 0px 246px;
     flex-direction: column;
+    max-width: 842px;
+}
+
+.img_maps_parent {
+    max-height: 672px;
 }
 
 .img_maps {
-    max-width: 842px;
-    height: 672px;
+    width: 100%;
+    height: 100%;
 }
 
 .daytour {
@@ -646,17 +675,15 @@
     height: 190px;
     border-radius: 8px;
     background: #004EA8;
-    margin: 60px 0 68px 0px;
+    margin: 60px 0 13px 0px;
     padding: 24px 0px 0px 20px;
 }
 
 .txt_price {
     color: #FFF;
-    /* text-align: center; */
     font-size: 32px;
-    
     font-weight: 600;
-    line-height: 52px; /* 162.5% */
+    line-height: 52px
 }
 
 .txt_pricedes {
@@ -758,9 +785,13 @@ ul.timeline .accordion-button:not(.collapsed) {
     font-size: 18px;
     font-weight: 500;
     line-height: 28px;
-    font-family: 'SF Pro Display Bold';
+    box-shadow: none;
 }
 
+ul.timeline .accordion-item{
+    border-radius: unset !important;
+    border-bottom: 1px solid #F0F0F0;
+}
 .accordion-item {
     border: unset;
 }
@@ -1057,6 +1088,28 @@ ul.timeline .accordion-button:not(.collapsed) {
     background: #F7FAFC;
     padding: 40px
 }
+
+/* Form review */
+
+#stories{
+    max-width: 838px;
+    margin: 0 auto;
+    background-color: #ffffff;
+}
+
+#writeTourReview .rate {
+    border-radius: 4px 4px 0px 0px;
+    background-color: rgba(255, 167, 24, 0.08);
+    padding: 18px 28px
+}
+#writeTourReview .rate .title {
+    color: var(--Primary, #FFA718);
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 28px;
+    margin-right: 8px;
+}
+/* End form review */
 .measure-evaluation {
     max-width: 198px !important;
     width: 100%;
@@ -1160,13 +1213,15 @@ ul.timeline .accordion-button:not(.collapsed) {
     width: 38px;
 }
 
+.list_reviews {
+    max-width: 836px;
+    margin: 0 auto;
+}
 .list_reviews p {
     margin-bottom: 0;
 }
 
 .list_reviews .review{
-    max-width: 836px;
-    margin: 0 auto;
     display: flex;
     gap: 12px;
     flex-direction: column;
@@ -1175,6 +1230,18 @@ ul.timeline .accordion-button:not(.collapsed) {
 .list_reviews .person_review{
     display: flex;
     gap: 15px
+}
+
+.list_reviews .avatar_custom{
+    border-radius: 50%;
+    width: 64px;
+    height: 64px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: black;
 }
 
 .list_reviews .avatar{
@@ -1204,6 +1271,13 @@ ul.timeline .accordion-button:not(.collapsed) {
     font-weight: 400;
     line-height: 24px;
 }
+.list_reviews .stars_review i{
+    color: var(--Primary) !important;
+}
+.list_reviews .review {
+    padding: 32px 0;
+    border-bottom: 1px solid #D3DCE1
+}
 /* FAQs */
 
 #faqs_detail_tour {
@@ -1219,6 +1293,20 @@ ul.timeline .accordion-button:not(.collapsed) {
     line-height: 28px;
 }
 
+/* Maybe you are interested */
+#maybe_interested {
+    margin-top: 100px;
+}
+#maybe_interested .txtInterested {
+    color: var(--Neutral-1, #111D37);
+    text-align: center;
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 52px;
+}
+#maybe_interested .recently-view {
+    margin-top: 32px
+}
 @media screen and (max-width: 576px) {
     .listtourdetail_breadcrumb {
         display: none;

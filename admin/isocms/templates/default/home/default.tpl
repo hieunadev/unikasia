@@ -29,7 +29,7 @@
 			{if $clsAdminButton->checkPackage($_adminbutton_id,$package_id)}
 			{if $core->checkAccess($listQuickAccessShow[i].mod_page)}
 			<div class="quick_access_item">
-				<a title="{$core->get_Lang($listQuickAccessShow[i].title)}" href="{$clsAdminButton->getURL($listQuickAccessShow[i].adminbutton_id)}" >
+				<a title="{$core->get_Lang($listQuickAccessShow[i].title)}" href="{$clsAdminButton->getURL($listQuickAccessShow[i].adminbutton_id)}">
 					<span class="icon"><img class="imgIcon" src="{$listQuickAccessShow[i].image}" width="28" height="28" /></span>
 					<span class="text">{$core->get_Lang($listQuickAccessShow[i].title_page)}</span>
 				</a>
@@ -46,7 +46,7 @@
 		</div>
 	</div>
 	hello
-{*
+	{*
 	{if $clsISO->getCheckActiveModulePackage($package_id,'booking','booking_tour','default')}
 	<div class="home_box performance_box">
 		<div class="header_box">
@@ -96,7 +96,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<div class="chart_booking">
 		<div class="home_box chart_booking_box">
 			<div class="top_chart_booking">
@@ -105,7 +105,7 @@
 					<div class="input_year">
 						<select class="form-control year_chart_booking" name="" id="">
 							{foreach from=$rangeDate item=year}
-							<option value="{$year}" {if $year == $smarty.now|date_format:"%Y"}selected{/if}>{$year}</option>
+							<option value="{$year}" {if $year==$smarty.now|date_format:"%Y"}selected{/if}>{$year}</option>
 							{/foreach}
 						</select>
 						<!--<input class="form-control year_chart_booking" type="text" min="2000" max="{$smarty.now|date_format:"%Y"}" step="1" value="{$smarty.now|date_format:"%Y"}" />
@@ -138,11 +138,11 @@
 			{$core->getBlock('chart_booking')}
 		</div>
 		<div class="ads_travelmaster">
-			<a href="" title=""><img src="{$URL_IMAGES}/img_travelmaster.jpg"  /></a>
+			<a href="" title=""><img src="{$URL_IMAGES}/img_travelmaster.jpg" /></a>
 		</div>
 	</div>
-    {/if}
-*}
+	{/if}
+	*}
 	<div class="home_box actions_required_box">
 		<div class="header_box">
 			<h2 class="title_box">{$core->get_Lang('Actions Required')}</h2>
@@ -157,7 +157,7 @@
 					</td>
 					<td class="customer_booking">
 						<p class="text1">{$clsBooking->getContactName($lstBooking[i].booking_id)}</p>
-{*						<p class="text2">{$clsBooking->getHTMLService($lstBooking[i].booking_id)}</p>*}
+						{* <p class="text2">{$clsBooking->getHTMLService($lstBooking[i].booking_id)}</p>*}
 						<span class="booking_code">{$lstBooking[i].booking_code}</span>
 					</td>
 					<td class="pay_booking">
@@ -172,33 +172,37 @@
 </div>
 {literal}
 <script type="text/javascript">
-	function manager_tasks(){
-		$.post(path_ajax_script+'/index.php?mod=home&act=load_quick_access', {
-			'holderG' : '_modal'
-		}, function(html){
-			$Core.popup.open('auto','auto', html, 'add_task');
+	function manager_tasks() {
+		$.post(path_ajax_script + '/index.php?mod=home&act=load_quick_access', {
+			'holderG': '_modal'
+		}, function(html) {
+			$Core.popup.open('auto', 'auto', html, 'add_task');
 			loadHtmlQuickAccess();
 		});
 	}
-	function loadHtmlQuickAccess(){
-		$.post(path_ajax_script+'/index.php?mod=home&act=load_quick_access', {
-			'holderG' : '_list'
-		}, function(html){
+
+	function loadHtmlQuickAccess() {
+		$.post(path_ajax_script + '/index.php?mod=home&act=load_quick_access', {
+			'holderG': '_list'
+		}, function(html) {
 			$('.quick_access_html').html(html);
 		});
 	}
-	$(function(){
+	$(function() {
 		$_document.on('click', ".remove_item_quick_access,.add_item_quick_access", function(ev) {
 			ev.preventDefault();
 			var $_this = $(this),
 				holderG = $_this.data('tp'),
 				adminbutton_id = $_this.data('adminbutton_id');
-			$.ajax({  
-				type:'POST',
-				url:path_ajax_script+'/index.php?mod=home&act=load_quick_access', 
-				data:{"holderG":holderG,"adminbutton_id":adminbutton_id},
-				dataType:'html',
-				success:function(html){
+			$.ajax({
+				type: 'POST',
+				url: path_ajax_script + '/index.php?mod=home&act=load_quick_access',
+				data: {
+					"holderG": holderG,
+					"adminbutton_id": adminbutton_id
+				},
+				dataType: 'html',
+				success: function(html) {
 					loadHtmlQuickAccess();
 				}
 			});

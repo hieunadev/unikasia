@@ -180,8 +180,8 @@
                                                 {$lstTour[i].number_day} {if $lstTour[i].number_day lt 2}DAY {else} DAYS {/if}
                                             {/if}
                                         </p>
-                                        <p class="from">From <span class="text-decoration-line-through">$2,049</span></p>
-                                        <p class="us">US ${$lstTour[i].min_price}</p>
+                                        <p class="from">From <span class="text-decoration-line-through">${$lstTour[i].min_price}</span></p>
+                                        <p class="us">US ${$clsTour->getDiscount($lstTour[i].toiur_id, $lstTour[i].min_price)}</p>
                                     </div>
                                     <div class="btn-view-tour mt-auto">
                                         <a class="btn-hover-home" href="{$clsTour->getLink($lstTour[i].tour_id)}"><span>View tour</span><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
@@ -228,7 +228,7 @@
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div class="from_price"><p class="from_txtp">From</p> <span
                                                         class="txt_price">US
-												<h3 class="txt_numbprice"> ${$lstTour[i].min_price}</h3> </span></div>
+												<h3 class="txt_numbprice"> ${$lstTourRecent[i].min_price}</h3> </span></div>
                                             <a href="{$clsTour->getLink($lstTourRecent[i].tour_id)}" alt="tour" title="tour">
                                                 <button class="btn btn_viewtour btn-hover-home">View Tour <i
                                                             class="fa-regular fa-arrow-right" style="color: #ffffff;"

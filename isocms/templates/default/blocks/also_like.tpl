@@ -2,7 +2,7 @@
     <div class="alsoLike">
         <div class="alsoLike-title-parent">
             <h2 class="alsoLike-title">
-                {if $mod eq 'tour' && $act eq 'cat'}
+                {if ($mod eq 'tour' && $act eq 'cat' || ($mod eq 'guide' && $act eq 'cat'))}
                 {$clsConfiguration->getValue('TrvsCountryTitle')|html_entity_decode}
                 {else}
                 {$core->get_Lang('also like')}

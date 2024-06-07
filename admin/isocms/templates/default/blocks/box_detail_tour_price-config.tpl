@@ -30,6 +30,7 @@
 						<div class="admin-toolbar-action mt-0">
 							<a class="text-link" href="{$PCMS_URL}/?&mod=tour_exhautive&act=property&type=SIZEGROUP" target="_blank"> {$core->get_Lang('Manage')}</a>
 						</div>
+						{$adult_type_id}
 						<div id="slb_ContainerAdultSizeGroup">
 							<select name="adult_size_group[]" id="adult_size_group" class="chosen-select required" multiple="multiple">
 								{assign var = selected value = $oneItem.adult_group_size}
