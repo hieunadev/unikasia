@@ -98,6 +98,7 @@ function default_cat()
 	$clsGuide	= 	new Guide();
 	$smarty->assign('clsGuide', $clsGuide);
 	$clsPagination	= 	new Pagination();
+	$smarty->assign('_LANG_ID', $_LANG_ID);
 	#	
 	$trvg_intro	=	'';
 	$show		=	isset($_GET['show']) ? $_GET['show'] : '';
@@ -158,10 +159,26 @@ function default_cat()
 	unset($page_view);
 	$assign_list['totalPage']	= 	$clsPagination->getTotalPage();
 	/** --- End of Phân trang --- **/
+	#
+	// Get recent view
+	$arr_recent_view	=	$clsISO->getRecentView('guide');
+	$smarty->assign('arr_recent_view', $arr_recent_view);
+	#
+	/* =============Title & Description Page================== */
+	if ($show === 'GuideCat') {
+		$title_page = $clsGuideCat->getTitle($guidecat_id) . ' | ' . $clsCountry->getTitle($country_id) . ' | ' . PAGE_NAME;
+	} else {
+		$title_page = $clsCountry->getTitle($country_id) . ' | ' . PAGE_NAME;
+	}
+	$assign_list["title_page"] = $title_page;
+	$description_page = $clsISO->getMetaDescription($guidecat_id, 'GuideCat');
+	$assign_list["description_page"] = $description_page;
+	$global_image_seo_page = $clsISO->getPageImageShare($guidecat_id, 'GuideCat');
+	$assign_list["global_image_seo_page"] = $global_image_seo_page;
 }
 function default_detail()
 {
-	global $assign_list, $_CONFIG, $core, $dbconn, $mod, $act, $_LANG_ID, $title_page, $description_page, $global_image_seo_page, $city_id, $country_id, $extLang, $clsISO;
+	global $assign_list, $smarty, $_CONFIG, $core, $dbconn, $mod, $act, $_LANG_ID, $title_page, $description_page, $global_image_seo_page, $city_id, $country_id, $extLang, $clsISO;
 	#
 	$clsGuide = new Guide();
 	$assign_list["clsGuide"] = $clsGuide;
@@ -202,6 +219,13 @@ function default_detail()
 	$assign_list["lstRelated"]	= 	$lstRelated;
 	unset($lstRelated);
 	#
+	// Set recent view
+	$clsISO->setRecentView($guide_id);
+	#
+	// Get recent view
+	$arr_recent_view	=	$clsISO->getRecentView('guide', 4);
+	$smarty->assign('arr_recent_view', $arr_recent_view);
+	#
 	/*=============Title & Description Page==================*/
 	$title_page = $clsGuide->getTitle($guide_id) . ' | ' . $core->get_Lang('travelguide') . ' | ' . PAGE_NAME;
 	$assign_list["title_page"] = $title_page;
@@ -213,129 +237,70 @@ function default_detail()
 }
 function default_search()
 {
-	global $assign_list, $smarty, $_CONFIG, $core, $dbconn, $mod, $act, $_LANG_ID, $title_page, $description_page, $global_image_seo_page, $city_id;
-	global $clsISO;
+	global $assign_list, $_CONFIG, $core, $dbconn, $mod, $act, $_LANG_ID, $title_page, $description_page, $keyword_page, $domain, $clsISO;
 	#
-	$clsISO->dump($_GET);
-
-	// $clsCountry	=   new Country();
-	// $smarty->assign('clsCountry', $clsCountry);
-	// $clsGuideCat	=   new GuideCat();
-	// $smarty->assign('clsGuideCat', $clsGuideCat);
-	// $clsGuideCatStore	=   new GuideCatStore();
-	// $smarty->assign('clsGuideCatStore', $clsGuideCatStore);
-	// $clsGuide	= 	new Guide();
-	// $smarty->assign('clsGuide', $clsGuide);
-	// $clsPagination	= 	new Pagination();
-	// #	
-	// $trvg_intro	=	'';
-	// $show		=	isset($_GET['show']) ? $_GET['show'] : '';
-	// if ($show === 'Country') {
-	// 	$guidecat_slug	=   '';
-	// 	$guidecat_id    =   0;
-	// 	$country_slug  	=   isset($_GET['slug_country']) ? $_GET['slug_country'] : '';
-	// 	$country_id 	= 	$clsCountry->getBySlug($country_slug);
-	// 	if (intval($country_id) == 0 && $clsCountry->checkExitsId($country_id) == '0') {
-	// 		header('location:' . PCMS_URL);
-	// 		exit();
-	// 	}
-	// } elseif ($show === 'GuideCat') {
-	// 	$guidecat_slug	=   isset($_GET['slug_guidecat']) ? $_GET['slug_guidecat'] : '';
-	// 	$guidecat_id    =   isset($_GET['guidecat_id']) ? $_GET['guidecat_id'] : 0;
-	// 	$country_slug  	=   isset($_GET['slug_country']) ? $_GET['slug_country'] : '';
-	// 	$country_id 	= 	$clsCountry->getBySlug($country_slug);
-	// 	if (intval($guidecat_id) == 0) {
-	// 		header('location:' . PCMS_URL);
-	// 		exit();
-	// 	}
-	// 	$trvg_intro	.=	$clsGuideCatStore->getContent($guidecat_id, $country_id);
-	// }
-	// $smarty->assign('country_id', $country_id);
-	// $smarty->assign('guidecat_id', $guidecat_id);
-	// $smarty->assign('trvg_intro', $trvg_intro);
-	// #
-	// /** --- Phân trang --- **/
-	// $currentPage	= 	isset($_GET['page']) ? $_GET['page'] : 1;
-	// $assign_list['currentPage'] = $currentPage;
-	// $recordPerPage 	= 	12;
-	// $assign_list['recordPerPage'] = $recordPerPage;
-	// #
-	// $cond	= 	"is_trash=0 AND is_online=1 AND country_id = '$country_id'";
-	// if ($guidecat_id > 0) {
-	// 	$cond	.= 	" AND (cat_id='$guidecat_id' OR list_cat_id LIKE '%|" . $guidecat_id . "|%')";
-	// }
-	// $order_by		= 	" ORDER BY order_no ASC";
-	// $totalRecord 	= 	$clsGuide->getAll($cond) ? count($clsGuide->getAll($cond)) : 0;
-	// #
-	// $link_page	= 	$clsGuide->getLinkGuide($country_slug, $guidecat_slug, $guidecat_id);
-	// #
-	// $config	= 	[
-	// 	'total'				=> $totalRecord,
-	// 	'number_per_page'	=> $recordPerPage,
-	// 	'current_page'		=> $currentPage,
-	// 	'link'				=> str_replace('.html', '/', $link_page),
-	// 	'link_page'			=> $link_page
-	// ];
-	// $clsPagination->initianize($config);
-	// $page_view	= 	$clsPagination->create_links(false);
-	// $offset 	= 	($currentPage - 1) * $recordPerPage;
-	// $limit 		= 	" LIMIT $offset,$recordPerPage";
-	// $listGuide 	= 	$clsGuide->getAll($cond . $order_by . $limit, $clsGuide->pkey);
-	// $assign_list['listGuide']	= 	$listGuide;
-	// unset($listGuide);
-	// $assign_list['page_view']	= 	$page_view;
-	// unset($page_view);
-	// $assign_list['totalPage']	= 	$clsPagination->getTotalPage();
-	// /** --- End of Phân trang --- **/
-
-
-	// global $assign_list, $_CONFIG, $core, $dbconn, $mod, $act, $_LANG_ID, $title_page, $description_page, $keyword_page, $domain;
-
-	// $show = isset($_GET['show']) ? $_GET['show'] : '';
-	// $assign_list["show"] = $show;
-
-	// $clsCountry = new Country();
-	// $assign_list["clsCountry"] = $clsCountry;
-
-	// $country_id = (isset($_GET['country_id']) && $_GET['country_id'] != '') ? $_GET['country_id'] : '';
-	// $keyword = (isset($_GET['key']) && !empty($_GET['key'])) ? $_GET['key'] : '';
-
-	// $cond = "is_trash=0 and is_online=1";
-	// if (intval($country_id) > 0) {
-	// 	$cond .= " and country_id='$country_id'";
-	// 	$assign_list["country_id"] = $country_id;
-	// }
-	// if ($keyword != '') {
-	// 	$cond .= " and (title like '$keyword' or slug like '%" . $core->replaceSpace($keyword) . "%')";
-	// 	$assign_list["keyword"] = $keyword;
-	// }
-	// #
-	// $order_by = " order by order_no ASC";
-	// $recordPerPage = 12;
-	// $currentPage = isset($_GET['page']) ? intval($_GET['page']) : 1;
-
-	// $offset = ($currentPage - 1) * $recordPerPage;
-	// $limit = " LIMIT $offset,$recordPerPage";
-	// #
-	// $totalRecord = $clsHotel->getAll($cond) ? count($clsHotel->getAll($cond)) : 0;
-	// #
-	// $assign_list['totalRecord'] = $totalRecord;
-	// $totalPage = ceil($totalRecord / $recordPerPage);
-	// $assign_list['totalPage'] = $totalPage;
-	// #
-	// $listHotel = $clsHotel->getAll($cond . $order_by . $limit, $clsHotel->pkey . ',star_id');
-	// $assign_list['listHotel'] = $listHotel;
-	// unset($listHotel);
-	// #
-	// /*=============Title & Description Page==================*/
-	// $title_page = $core->get_Lang('resultsearch') . ' | ' . PAGE_NAME;
-	// $assign_list["title_page"] = $title_page;
-	// $description_page = $title_page;
-	// $assign_list["description_page"] = $description_page;
-	// $keyword_page = $title_page;
-	// $assign_list["keyword_page"] = $keyword_page;
-	// /*=============Content Page==================*/
-	// unset($clsHotel);
+	$clsCountry	= 	new Country();
+	$assign_list["clsCountry"]	= 	$clsCountry;
+	$clsGuide	= 	new Guide();
+	$assign_list["clsGuide"] 	= 	$clsGuide;
+	$clsPagination	= 	new Pagination();
+	#
+	$country_slug 	= 	isset($_GET['slug_country']) ? $_GET['slug_country'] : '';
+	if (!empty($country_slug)) {
+		$country_id	= 	$clsCountry->getBySlug($country_slug);
+	}
+	$keyword 		= 	isset($_GET['keyword']) ? $_GET['keyword'] : '';
+	#
+	/** --- Code phân trang  --- **/
+	$cond	= 	"is_trash = 0 AND is_online = 1";
+	if (intval($country_id) > 0) {
+		$cond	.= 	" AND country_id = '$country_id'";
+		$assign_list["country_id"]	= 	$country_id;
+	}
+	if ($keyword != '') {
+		$cond	.= 	" AND (title LIKE '$keyword' OR slug LIKE '%" . $core->replaceSpace($keyword) . "%')";
+		$assign_list["keyword"]	= 	$keyword;
+		#
+		$pretty_keyword	=	str_replace(' ', '+', $keyword);
+	}
+	#
+	$order_by		= 	" ORDER BY order_no ASC";
+	$recordPerPage 	= 	12;
+	$currentPage 	= 	isset($_GET['page']) ? intval($_GET['page']) : 1;
+	$offset 		= 	($currentPage - 1) * $recordPerPage;
+	$limit 			= 	" LIMIT $offset,$recordPerPage";
+	#
+	$totalRecord 	= 	$clsGuide->getAll($cond) ? count($clsGuide->getAll($cond)) : 0;
+	$assign_list['totalRecord']	= 	$totalRecord;
+	#
+	$totalPage 		= 	ceil($totalRecord / $recordPerPage);
+	$assign_list['totalPage']	= 	$totalPage;
+	#
+	$list_guide 	= 	$clsGuide->getAll($cond . $order_by . $limit, $clsGuide->pkey);
+	$assign_list['list_guide'] 	= 	$list_guide;
+	unset($listHotel);
+	$link_page	= 	DOMAIN_URL . '/' . $_LANG_ID . '/search-guide/' . $country_slug . '/' . $pretty_keyword;
+	#
+	$config	= 	[
+		'total'				=> $totalRecord,
+		'number_per_page'	=> $recordPerPage,
+		'current_page'		=> $currentPage,
+		'link'				=> str_replace('.html', '/', $link_page),
+		'link_page'			=> $link_page
+	];
+	$clsPagination->initianize($config);
+	$page_view	= 	$clsPagination->create_links(false);
+	$assign_list['page_view']	= 	$page_view;
+	/** --- End of Code phân trang  --- **/
+	#
+	/*=============Title & Description Page==================*/
+	$title_page 	= 	$core->get_Lang('resultsearch') . ' | ' . PAGE_NAME;
+	$assign_list["title_page"]	= 	$title_page;
+	$description_page	= 	$title_page;
+	$assign_list["description_page"]	= 	$description_page;
+	$keyword_page 	= 	$title_page;
+	$assign_list["keyword_page"]	= 	$keyword_page;
+	/*=============Content Page==================*/
 }
 function default_loadGuideItems()
 {

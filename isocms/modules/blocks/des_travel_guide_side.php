@@ -18,6 +18,8 @@ $clsTourDestination =   new TourDestination();
 $smarty->assign('clsTourDestination', $clsTourDestination);
 $clsTourCategory    =   new TourCategory();
 $smarty->assign('clsTourCategory', $clsTourCategory);
+$clsReviews =   new Reviews();
+$smarty->assign('clsReviews', $clsReviews);
 #	
 $show   =   isset($_GET['show']) ? $_GET['show'] : '';
 #

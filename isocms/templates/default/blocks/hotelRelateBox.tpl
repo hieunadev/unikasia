@@ -23,9 +23,24 @@
         <div class="detailStartsHotels">
                     <div class="star_hotel">{$getImageStar}</div>
                 </div>
-        <div class="score_number">
-            {$ratingValue} <span>{$textRateAvg}</span>
-        </div>
+            <div class="box_body-hotel">
+                <img src="{$URL_IMAGES}/hotel/iconHome.svg" alt="error">
+                <p style="margin: 0">{$clsHotel->getTypeHotel($hotel_id)}</p>
+            </div>
+		 <div class="address">
+                <div class="box_body_adress">
+                    <img src="{$URL_IMAGES}/hotel/address.svg" alt="error">
+                    <p>{$clsHotel->getAddress($hotel_id,$arrHotel)}</p>
+                </div>
+            </div>
+		                    <div class="txt_score-review">
+                <div class="border_score">
+                    <p class="numb_scorestay">0.0</p>
+                </div>
+                <div class="txt_reviewsquality">
+                <p class="txt_qualityreview">{$textRateAvg} <span class="txt_reviews">({$ratingCount} {$core->get_Lang('reviews')})</span></p>
+            </div>
+		</div>
         <div class="price_from">
             {$core->get_Lang('Only from')} <span>{$clsHotel->getPriceOnPromotion($hotel_id)}</span>
         </div>

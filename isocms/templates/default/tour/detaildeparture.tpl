@@ -31,8 +31,8 @@
             </div>
 
             <div class="d-flex align-items-center score_reviewtour">
-                <span class="border_score">{$averageRate}</span>
-                <span class="txt_score">{$txt_rv} </span> <span class="txt_reviewstour"> - {$countReview} reviews</span>
+                <span class="border_score">{$clsReviews->getReviews($tour_id, 'avg_point')}</span>
+                <span class="txt_score">{$clsReviews->getReviews($tour_id, 'txt_review')} </span> <span class="txt_reviewstour"> - {$clsReviews->getReviews($tour_id)} reviews</span>
             </div>
 
             <div class="img_detailtour">
@@ -356,7 +356,7 @@
                             <i class="fa-regular fa-star"></i>
                         {/section}
                     </div>
-                    <p class="title_review">What a wonderful place to stay</p>
+                    <p class="title_review">{$lstReviews[i].title}</p>
                     <p class="content_review">{$lstReviews[i].content}</p>
                     <button class="view_more_review d-none">View more</button>
                 </div>
@@ -500,7 +500,6 @@
         </div>
     </section>
 </main>
-
 {literal}
     <script>
         Fancybox.bind('#gallery_detail_tour .img_tourdetail', {

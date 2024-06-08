@@ -54,6 +54,7 @@
         </div>
         {/if}
     </div>
+    {if $arr_recent_view}
     <div class="trvgd_recent_view">
         <div class="container">
             <div class="trvgd_recent_view_title">
@@ -61,30 +62,34 @@
             </div>
             <div class="trvgd_recent_view_content">
                 <div class="row">
+                    {foreach from=$arr_recent_view key=key item=item}
+                    {assign var="guideID" value=$item}
                     <div class="col-12 col-sm-12 col-md-6 col-lg-3">
                         <div class="trvgd_similar_item">
                             <div class="trvgd_similar_item_image">
-                                <a href="#" title="Cao Dai Temple">
-                                    <img src="https://media.istockphoto.com/id/1254474165/photo/tropical-leaves-abstract-green-leaves-texture-nature-background.webp?b=1&s=170667a&w=0&k=20&c=biSlIchE6-xYY0_MLX5yrboockYYaGF04uM79eTKSX8=" alt="Cao Dai Temple" width="292" height="216" loading="lazy" />
+                                <a href="{$clsGuide->getLink2($guideID)}" title="{$clsGuide->getTitle($guideID)}">
+                                    <img src="{$clsGuide->getImage($guideID, 292, 216)}" alt="{$clsGuide->getTitle($guideID)}" width="292" height="216" loading="lazy" />
                                 </a>
                             </div>
                             <div class="trvgd_similar_item_intro">
                                 <div class="trvgd_similar_item_title">
-                                    <h3><a href="#" title="Cao Dai Temple">Cao Dai Temple</a></h3>
+                                    <h3><a href="{$clsGuide->getLink2($guideID)}" title="{$clsGuide->getTitle($guideID)}">{$clsGuide->getTitle($guideID)}</a></h3>
                                 </div>
                                 <div class="trvgd_similar_item_place">
-                                    <i class="fa-sharp fa-light fa-location-dot"></i> Da Nang, Vietnam
+                                    <i class="fa-sharp fa-light fa-location-dot"></i> {$clsGuide->getPlaceGuide($guideID)}
                                 </div>
                                 <div class="trvgd_similar_item_description">
-                                    Explore several breathtaking landscapes - Discover local daily lifestyles - Get closer to the...
+                                    {$clsGuide->getIntro($guideID)}
                                 </div>
                             </div>
                         </div>
                     </div>
+                    {/foreach}
                 </div>
             </div>
         </div>
     </div>
+    {/if}
 </section>
 
 {literal}

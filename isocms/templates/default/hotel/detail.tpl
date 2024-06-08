@@ -166,36 +166,36 @@
 							<div class="txt_icolocation">
 							<i class="fa-sharp fa-solid fa-location-dot" style="color: #9a9aa4;"></i>
 							<p class="txt_location">{$clsHotel->getAddress($hotel_id,$arrHotel)}</p>
-						<a href="#myMapModal" role="link" title="map" data-bs-toggle="modal"
-                    data-bs-target="#mapModal{$hotel_id}">{$core->get_Lang('Show map')}</a>
-							<div class="modal fade" id="myMapModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                 <h4 class="modal-title">Modal title</h4>
+                            <a role="link" title="map" data-bs-toggle="modal" data-bs-target="#mapModal{$hotel_id}">{$core->get_Lang('Show map')}</a>
 
-            </div>
-            <div class="modal-body">
-                <div class="container">
-                    <div class="row">
-                        <div id="map-canvas" class=""></div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-    </div>
-    <!-- /.modal -->	
-						</div>
-            </div>
+                                    <div class="modal fade mapModal" id="mapModal{$hotel_id}" tabindex="-1" aria-labelledby="mapModalLabel" aria-hidden="true">
+
+                                        <div class="modal-dialog">
+
+                                            <div class="modal-content">
+
+                                                <div class="modal-header">
+
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                                                </div>
+
+                                                <div class="modal-body">
+
+                                                    <iframe src="https://maps.google.it/maps?q={$clsHotel->getAddressMapView($hotel_id,$oneItem)}&output=embed" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+								</div>
+							
 					
+					</div>
 					<div class="txt_numbt">
 						<div class="txt_numbfromus">
 						<p class="txt_fromnum">{$core->get_Lang('from')}</p>
@@ -264,27 +264,34 @@
                                 {else}
                                     <div class="nav-content">
                                         <h2 class="nav-content-title title_overview">{$core->get_Lang('Overview')}</h2>
-										<div class="overview_favor">
-											<div class="item">
-												{$roomFaciliti}
-<!--												<img src="{$URL_IMAGES}/hotel/detail/overview_hoteldetail1.png"> Bordering the sea-->
-											</div>
-<!--
-											<div class="item">
-												<img src="{$URL_IMAGES}/hotel/detail/overview_hoteldetail2.png"> Restaurant
-											</div>
-											<div class="item">
-												<img src="{$URL_IMAGES}/hotel/detail/overview_hoteldetail3.png"> Poolside bar
-											</div>
-											<div class="item">
-												<img src="{$URL_IMAGES}/hotel/detail/overview_hoteldetail4.png"> Free parking
-											</div>
-											<div class="item">
-												<img src="{$URL_IMAGES}/hotel/detail/overview_hoteldetail6.png"> Free wifi
-											</div>
--->
+										
+										{if $lstHotelFacility}
+
+                                <div class="list_facilities">
+
+                                    {section name=i loop=$lstHotelFacility}
+
+                                    <div class="facilities_item align-items-center">
+
+                                        {if $clsProperty->getImage($lstHotelFacility[i])}
+
+                                        <img width="16" height="16" src="{$clsProperty->getImage($lstHotelFacility[i])}" alt="{$clsProperty->getTitle($lstHotelFacility[i])}"/> 
+
+                                        {/if}
+
+                                        <div class="facilities_name">
+
+                                            {$clsProperty->getTitle($lstHotelFacility[i])}
+
+                                        </div>
+
+                                    </div>
+
+                                    {/section}
+
 											
 										</div>
+								{/if}
 
 
                                         <div class="overview-content">{$overview_hotel|html_entity_decode}</div>
@@ -379,7 +386,7 @@
                         <section class="box_right_info_hotel sticky_fix">
                             <div class="box_info_right_top">
 								<h3 class="txt_bestprice">{$core->get_Lang('Best price for you')}</h3>
-                                <div class="price_from_text">
+									<div class="price_from_text" {if !$clsHotel->getPriceOnPromotion($hotel_id,'detail')} style="display: none;"{/if}>
                                     {if $clsHotel->getPriceOnPromotion($hotel_id,'detail')}
                                         <div class="from_text">
                                             {$core->get_Lang('Avg price package')}
@@ -804,7 +811,7 @@
                 <h2 class="sec_relate_title text-left">{$core->get_Lang('Maybe you are interested')}</h2>
             </div>
             <div class="container">
-                <div class="sec_relate_box-slide owl-carousel_overview owl-carousel ">
+                <div class="sec_relate_box-slide owl-carousel_overview owl-carousel">
                     {section name=i loop=$lstHotelRelated}
                         {assign var=hotel_id value = $lstHotelRelated[i].hotel_id}
                         {assign var=arrHotel value = $lstHotelRelated[i]}
@@ -859,14 +866,19 @@
 
 
 
-<!--
     <script>
 
 var otherPolicy = '{$oneItem.other_policy|unescape}';
 
     if (otherPolicy.length > 0) {
+        $('.Inclusion-txt li').prepend('<img class="Inclusion-icon" src="/isocms/templates/default/skin/images/hotel/checkInclus.svg" alt="error">');
+    }
+		
+	if (otherPolicy.length > 0) {
         $('.Inclusion-txt p').prepend('<img class="Inclusion-icon" src="/isocms/templates/default/skin/images/hotel/checkInclus.svg" alt="error">');
     }
+		
+		
     if (otherPolicy.length > 0) {
     $('.Inclusion-txt .description').each(function() {
         if (!$(this).hasClass('description--house-rule')) {
@@ -879,7 +891,6 @@ var otherPolicy = '{$oneItem.other_policy|unescape}';
     }
 
     </script>
--->
 
 
     {literal}

@@ -1360,6 +1360,7 @@ ul {
     padding: 0;
     display: flex;
     gap: 0 24px;
+	list-style: none;
 }
 
 .box_form_banner .search_hotel .form-control {
@@ -3931,15 +3932,6 @@ div[slider]>input[type=range]::-ms-tooltip {
     z-index: 9999;
 }
 
-.score_text h3 {
-    font-size: 48px;
-    grid-row: 600;
-    line-height: 64px;
-    color: #FFBA55;
-}
-
-
-
 
 .semi-donut {
     --percentage: 0;
@@ -3976,7 +3968,7 @@ div[slider]>input[type=range]::-ms-tooltip {
     content: '';
     width: 160px;
     height: 70px;
-    background: white;
+    background: #F7FAFC;
     position: absolute;
     left: 0;
     bottom: 0;

@@ -151,9 +151,9 @@
                                 <div class="item-center">
                                     <h3><a class="txt_title_tour txt-hover-home" href="{$clsTour->getLink($lstTour[i].tour_id)}" target="_blank">{$lstTour[i].title}</a></h3>
                                     <div class="reviews">
-                                        <span class="rate_number">9.9</span>
-                                        <span class="text_score">Excellent</span>
-                                        <span class="txt_review"> - 10 reviews</span>
+                                        <span class="rate_number">{$clsReviews->getReviews($lstTour[i].tour_id, 'avg_point')}</span>
+                                        <span class="text_score">{$clsReviews->getReviews($lstTour[i].tour_id, 'txt_review')}</span>
+                                        <span class="txt_review"> - {$clsReviews->getReviews($lstTour[i].tour_id)} reviews</span>
                                     </div>
                                     <div class="txt_quot d-flex align-items-start">
                                         <img class="me-2" src="{$URL_IMAGES}/tour/quot.svg" alt=""><div>{$clsISO->limit_textIso($lstTour[i].overview|html_entity_decode, 20)}</div>
@@ -212,8 +212,8 @@
                                         <h3>
                                             <a class="txth_relatedtour txt-hover-home" href="{$clsTour->getLink($lstTourRecent[i].tour_id)}" alt="tour" title="tour">{$lstTourRecent[i].title}</a>
                                         </h3>
-                                        <div class="d-flex align-items-center score_reviewtour"><span class="border_score">9.9</span>
-                                            <span class="txt_score">Excellent </span> <span class="txt_reviewstour">- 10 views</span>
+                                        <div class="d-flex align-items-center score_reviewtour"><span class="border_score">{$clsReviews->getReviews($lstTourRecent[i].tour_id, 'avg_point')}</span>
+                                            <span class="txt_score">{$clsReviews->getReviews($lstTourRecent[i].tour_id, 'txt_review')} </span> <span class="txt_reviewstour">- {$clsReviews->getReviews($lstTour[i].tour_id)} views</span>
                                         </div>
                                         <div class="d-flex align-items-center">
                                             <i class="fa-light fa-location-dot" style="color: #43485c;" aria-hidden="true"></i>

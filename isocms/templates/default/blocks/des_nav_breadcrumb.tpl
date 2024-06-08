@@ -5,6 +5,12 @@
             <li class="breadcrumb-item des_breadcrumb_link">
                 <a href="/" title="{$core->get_Lang('Home')}">{$core->get_Lang('Home')}</a>
             </li>
+            {if $show eq 'SearchGuide'}
+            <li class="breadcrumb-item des_breadcrumb_link">
+                <a href="javascript:void(0);" class="cancel_link">{$core->get_Lang($clsCountry->getTitle($country_id))}</a>
+            </li>
+            <li class="breadcrumb-item active des_breadcrumb_active" aria-current="page">{$keyword}</li>
+            {else}
             <li class="breadcrumb-item des_breadcrumb_link">
                 <a href="javascript:void(0);" class="cancel_link">{$core->get_Lang('Destinations')}</a>
             </li>
@@ -44,6 +50,7 @@
             <li class="breadcrumb-item des_breadcrumb_link"><a href="#" title="Vietnam">Vietnam</a></li>
             <li class="breadcrumb-item des_breadcrumb_link"><a href="#" title="Top attraction">Top attraction</a></li>
             <li class="breadcrumb-item active des_breadcrumb_active" aria-current="page">Hanoi, Vietnam</li>
+            {/if}
             {/if}
         </ol>
     </div>

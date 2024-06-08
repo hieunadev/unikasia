@@ -128,6 +128,10 @@
 
 {literal}
     <script>
+        $(".btn-close").click(function(){
+            $(this).closest('.mapModal').remove();
+        });
+
         function toggleShorted(_this, e){
         	e.preventDefault();
         	if(!$(_this).hasClass('clicked')){

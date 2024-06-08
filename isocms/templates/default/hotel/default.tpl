@@ -159,6 +159,10 @@
     var $_Expand_all = '{$core->get_Lang("Expand all")}';
     var $_Collapse_all = '{$core->get_Lang("Collapse all")}';
     var $_LANG_ID = '{$_LANG_ID}';
+
+    $(".btn-close").click(function(){
+        $(this).closest('.mapModal').remove();
+    });
 </script>
 
 <script src="{$URL_JS}/jquery.countdown.min.js?v={$upd_version}"></script>

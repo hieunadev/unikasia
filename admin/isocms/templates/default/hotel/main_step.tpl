@@ -273,14 +273,14 @@
 							</div>
 						
 						{elseif $currentstep=='other_policy'}
-							<h3 class="title_box mb05">{$core->get_Lang('Other Rule')}
+							<h3 class="title_box mb05">{$core->get_Lang('Inclusion')}
 								{assign var= other_policy_hotel value='other_policy_hotel'}
 								{assign var= help_first value=$other_policy_hotel}
 								{if $CHECKHELP eq 1}
 									<button data-key="{$other_policy_hotel}" data-label="{$core->get_Lang('Other Rule')}" type="button" title="Thêm mô tả" onclick="open_texthelp(this, event)" class="btn btn-xs btn-default"><i class="fa fa-plus-circle"></i></button>
 								{/if}
 							</h3>
-							<p class="intro_box mb40">{$core->get_Lang('introotherpolicyhotel')}</p>
+							<p class="intro_box mb40">{$core->get_Lang('introinclusionpolicyhotel')}</p>
 							<div class="inpt_tour">
 								<textarea style="width:100%" table_id="{$pvalTable}" class="textarea_intro_editor" data-column="{$currentstep}" id="textarea_intro_editor_other_policy_{$now}" cols="255" rows="2">{$oneItem.other_policy}</textarea>
 							</div>

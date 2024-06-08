@@ -107,7 +107,7 @@
                 </div>
             </div>
         </div>
-        {if $mod eq 'destination' && $act eq 'place'}
+        {if ($mod eq 'destination' && $act eq 'place') || $mod eq 'guide' && $act eq 'search'}
         {$core->getBlock('des_header_destination')}
         {/if}
         {if $mod eq 'destination' && $act eq 'travel_style' || $mod eq 'tour' && $act eq 'cat'}

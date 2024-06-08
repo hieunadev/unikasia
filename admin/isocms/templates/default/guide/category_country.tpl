@@ -98,11 +98,11 @@
                                             <li><a title="{$core->get_Lang('edit')}" href="{$PCMS_URL}/guide/category_country/insert/{$guidecat_store_id}/overview"><i class="icon-edit"></i> <span>{$core->get_Lang('edit')}</span></a></li>
                                             {if $clsISO->checkInArray('3,5,15,20',$guidecat_store_id)}
                                             {else}
-                                            <li><a title="{$core->get_Lang('trash')}" href="{$PCMS_URL}/?mod={$mod}&act=cat&action=Trash&guidecat_store_id={$core->encryptID($guidecat_store_id)}"><i class="icon-trash"></i> <span>{$core->get_Lang('trash')}</span></a></li>
+                                            <li><a title="{$core->get_Lang('trash')}" href="{DOMAIN_NAME}/admin/?mod={$mod}&act=trash3&action=category_country&guidecat_store_id={$core->encryptID($guidecat_store_id)}"><i class="icon-trash"></i> <span>{$core->get_Lang('trash')}</span></a></li>
                                             {/if}
                                             {else}
-                                            <li><a title="{$core->get_Lang('restore')}" href="{$PCMS_URL}/?mod={$mod}&act=cat&action=Restore&guidecat_store_id={$core->encryptID($guidecat_store_id)}"><i class="icon-refresh"></i> <span>{$core->get_Lang('restore')}</span></a></li>
-                                            <li><a title="{$core->get_Lang('delete')}" class="confirm_delete" href="{$PCMS_URL}/?mod={$mod}&act=cat&action=Delete&guidecat_store_id={$core->encryptID($guidecat_store_id)}"><i class="icon-remove"></i> <span>{$core->get_Lang('delete')}</span></a></li>
+                                            <li><a title="{$core->get_Lang('restore')}" href="{$PCMS_URL}/?mod={$mod}&act=restore3&action=category_country&guidecat_store_id={$core->encryptID($guidecat_store_id)}"><i class="icon-refresh"></i> <span>{$core->get_Lang('restore')}</span></a></li>
+                                            <li><a title="{$core->get_Lang('delete')}" class="confirm_delete" href="{$PCMS_URL}/?mod={$mod}&act=delete3&action=category_country&guidecat_store_id={$core->encryptID($guidecat_store_id)}"><i class="icon-remove"></i> <span>{$core->get_Lang('delete')}</span></a></li>
                                             {/if}
                                         </ul>
                                     </div>

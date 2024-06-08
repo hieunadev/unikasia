@@ -539,7 +539,7 @@ class Country extends dbBasic
         }
 
         $slug = $oneTable['slug'];
-
+        $type = trim($type);
         switch ($type) {
 
             case 'Attraction':

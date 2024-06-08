@@ -1,5 +1,5 @@
 <div class="des_travel_guide_side">
-    <form action="" method="GET">
+    <form action="" method="GET" class="form_search_guide">
         <div class="des_travel_guide_search">
             <button class="btn_search_guide"><i class="fa-light fa-magnifying-glass"></i></button>
             <input type="text" name="keyword" class="keyword_search_guide" placeholder="Search">
@@ -7,7 +7,7 @@
         </div>
     </form>
     <div class="des_travel_guide_category">
-        {if ($mod eq 'destination' && $act eq 'travel_guide') || ($mod eq 'destination' && $act eq 'travel_guide_detail') || ($mod eq 'guide' && $act eq 'cat')}
+        {if ($mod eq 'destination' && $act eq 'travel_guide') || ($mod eq 'destination' && $act eq 'travel_guide_detail') || ($mod eq 'guide' && $act eq 'cat') || ($mod eq 'guide' && $act eq 'search')}
         <div class="des_travel_guide_category_title">
             <h2>{$country_title}</h2>
         </div>
@@ -33,7 +33,7 @@
         </div>
         {/if}
     </div>
-    {if ($mod eq 'destination' && $act eq 'travel_guide') || ($mod eq 'destination' && $act eq 'travel_guide_detail') || ($mod eq 'guide' && $act eq 'cat')}
+    {if ($mod eq 'destination' && $act eq 'travel_guide') || ($mod eq 'destination' && $act eq 'travel_guide_detail') || ($mod eq 'guide' && $act eq 'cat') || ($mod eq 'guide' && $act eq 'search')}
     <div class="des_travel_guide_exciting_trip">
         <div class="des_travel_guide_exciting_trip_title">
             <h2>{$core->get_Lang('EXCITING TRIP')}</h2>
@@ -53,9 +53,15 @@
                 </div>
                 <div class="des_travel_guide_exciting_trip_item_content">
                     <div class="des_travel_guide_exciting_trip_rate">
-                        <div class="des_travel_guide_exciting_trip_rate_score">9.9</div>
-                        <div class="des_travel_guide_exciting_trip_rate_title">Excellent</div>
-                        <div class="des_travel_guide_exciting_trip_rate_total">- 10 reviews</div>
+                        <div class="des_travel_guide_exciting_trip_rate_score">
+                            {$clsReviews->getReviews($tourID, 'avg_point')}
+                        </div>
+                        <div class="des_travel_guide_exciting_trip_rate_title">
+                            {$clsReviews->getReviews($tourID, 'txt_review')}
+                        </div>
+                        <div class="des_travel_guide_exciting_trip_rate_total">
+                            - {$clsReviews->getReviews($tourID)} reviews
+                        </div>
                     </div>
                     <div class="des_travel_guide_exciting_trip_place">
                         <i class="fa-light fa-location-dot"></i>
@@ -65,7 +71,7 @@
                         {/if}
                     </div>
                     <div class="des_travel_guide_exciting_trip_description">
-                        {$clsTour->getIntro($tourID)}
+                        {$clsTour->getTripOverview($tourID)}
                     </div>
                     <div class="des_travel_guide_exciting_trip_detail">
                         <div class="box_left">
@@ -517,37 +523,19 @@
 {/literal}
 
 <script>
-    var country_id  =   {$country_id};
+    var country_id = {$country_id};
+    var country_slug = '{$country_slug}';
+    var lang_id = '{$_LANG_ID}';
 </script>
 {literal}
 <script>
     $(document).ready(function() {
-
-        console.log(mod);
-        console.log(act);
-        console.log(country_id);
-
-
-        $('form').on('submit', function(e) {
-            e.preventDefault();
+        $('.form_search_guide').on('submit', function(e) {
+        e.preventDefault();
             var keyword = $('.keyword_search_guide').val();
-
-            $.ajax({
-                url: 'index.php?mod=' + mod + '&act=search&keyword=' + keyword, // URL mà bạn muốn gửi dữ liệu đến
-                type: 'GET', 
-                data: {
-                    country_id: country_id,
-                    keyword: keyword 
-                },
-                success: function(response) {
-                    // xử lý phản hồi từ server ở đây
-                    console.log(response);
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    // xử lý lỗi ở đây
-                    console.log(textStatus, errorThrown);
-                }
-            });
+            var pretty_keyword = keyword.replace(/\s/g, '+');
+            var newUrl = '/' + lang_id + '/search-guide/' + country_slug + '/' + pretty_keyword;
+            window.location.href = newUrl;
         });
     });
 </script>

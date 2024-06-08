@@ -46,57 +46,41 @@
 					</div>
 					{/if}
 
+					{if $arr_recent_view}
 					<div class="des_travel_guide_recent_view">
 						<div class="des_travel_guide_recent_view_title">
 							<h2>{$core->get_Lang('Recently viewed')}</h2>
 						</div>
 						<div class="des_travel_guide_recent_view_content">
 							<div class="row">
+								{foreach from=$arr_recent_view key=key item=item}
+								{assign var="guideID" value=$item}
 								<div class="col-12 col-sm-12 col-md-6 col-lg-4">
 									<div class="des_travel_guide_item">
 										<div class="des_travel_guide_image">
-											<img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fG5hdHVyZXxlbnwwfHwwfHx8MA%3D%3D" alt="Cau Vang, Da Nang" width="292" height="219">
-											<a href="{$clsGuide->getLink2($guide_id)}" class="des_travel_guide_link" title="Cau Vang, Da Nang">
+											<img src="{$clsGuide->getImage($guideID, 292, 219)}" alt="{$clsGuide->getTitle($guideID)}" width="292" height="219">
+											<a href="{$clsGuide->getLink2($guideID)}" class="des_travel_guide_link" title="{$clsGuide->getTitle($guideID)}">
 												SEE DETAILS <i class="fa-sharp fa-regular fa-arrow-right" aria-hidden="true"></i>
 											</a>
 										</div>
 										<div class="des_travel_guide_intro">
 											<div class="des_travel_guide_title">
-												<h3><a href="{$clsGuide->getLink2($guide_id)}" title="Cau Vang, Da Nang">Cau Vang, Da Nang</a></h3>
+												<h3><a href="{$clsGuide->getLink2($guideID)}" title="{$clsGuide->getTitle($guideID)}">{$clsGuide->getTitle($guideID)}</a></h3>
 											</div>
 											<div class="des_travel_guide_place">
-												<i class="fa-sharp fa-light fa-location-dot"></i> Da Nang, Vietnam
+												<i class="fa-sharp fa-light fa-location-dot"></i> {$clsGuide->getPlaceGuide($guideID)}
 											</div>
 											<div class="des_travel_guide_description">
-												Explore several breathtaking landscapes - Discover local daily lifestyles - Get closer to the...
+												{$clsGuide->getIntro($guideID)}
 											</div>
 										</div>
 									</div>
 								</div>
-								<div class="col-12 col-sm-12 col-md-6 col-lg-4">
-									<div class="des_travel_guide_item">
-										<div class="des_travel_guide_image">
-											<img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fG5hdHVyZXxlbnwwfHwwfHx8MA%3D%3D" alt="Cau Vang, Da Nang" width="292" height="219">
-											<a href="{$clsGuide->getLink2($guide_id)}" class="des_travel_guide_link" title="Cau Vang, Da Nang">
-												SEE DETAILS <i class="fa-sharp fa-regular fa-arrow-right" aria-hidden="true"></i>
-											</a>
-										</div>
-										<div class="des_travel_guide_intro">
-											<div class="des_travel_guide_title">
-												<h3><a href="{$clsGuide->getLink2($guide_id)}" title="Cau Vang, Da Nang">Cau Vang, Da Nang</a></h3>
-											</div>
-											<div class="des_travel_guide_place">
-												<i class="fa-sharp fa-light fa-location-dot"></i> Da Nang, Vietnam
-											</div>
-											<div class="des_travel_guide_description">
-												Explore several breathtaking landscapes - Discover local daily lifestyles - Get closer to the...
-											</div>
-										</div>
-									</div>
-								</div>
+								{/foreach}
 							</div>
 						</div>
 					</div>
+					{/if}
 				</div>
 				<div class="col-12 col-sm-12 col-md-3">
 					{$core->getBlock('des_travel_guide_side')}

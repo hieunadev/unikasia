@@ -12,8 +12,12 @@ $smarty->assign('clsGuideCat', $clsGuideCat);
 $clsGuide           =   new Guide();
 $smarty->assign('clsGuide', $clsGuide);
 #
-if (!empty($_GET['slug_country'])) {
-    $country_id     =   $clsCountry->getBySlug($_GET['slug_country']);
+$show   =   isset($_GET['show']) ? $_GET['show'] : '';
+$smarty->assign('show', $show);
+#
+$country_slug   =   isset($_GET['slug_country']) ? $_GET['slug_country'] : '';
+if (!empty($country_slug)) {
+    $country_id     =   $clsCountry->getBySlug($country_slug);
     $smarty->assign('country_id', $country_id);
     $country_info   =   $clsCountry->getOne($country_id);
     $smarty->assign('country_info', $country_info);
@@ -39,3 +43,6 @@ if (!empty($guide_id)) {
     $guide_guidecat_title    =   $clsGuideCat->getTitle($guide_info['cat_id']);
     $smarty->assign('guidecat_guidecat_title', $guide_guidecat_title);
 }
+#
+$keyword    =   isset($_GET['keyword']) ? $_GET['keyword'] : '';
+$smarty->assign('keyword', $keyword);

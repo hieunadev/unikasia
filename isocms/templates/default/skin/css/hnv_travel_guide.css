@@ -15,8 +15,13 @@ body {
 .guide_cat_body .readyToStart {
     display: none;
 }
-.guide_cat_body .reasonandrecom {
+.guide_cat_body .reasonandrecom,
+.guide_search_body .reasonandrecom {
     margin-top: 50px;
+}
+.guide_search_body .trvg_page_container {
+    position: relative;
+    z-index: 2;
 }
 .des_tailor_detail_travel_guide_description {
     color: var(--Neutral-1, #111d37);

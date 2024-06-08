@@ -864,6 +864,29 @@ function default_trash2()
         header('location: ' . PCMS_URL . '/?mod=' . $mod . $param_url . '&message=TrashSuccess');
     }
 }
+function default_trash3()
+{
+    global $assign_list, $_CONFIG,  $_SITE_ROOT, $mod, $act, $clsISO;
+    global $core, $clsModule, $clsButtonNav, $oneSetting;
+    $user_id = $core->_USER['user_id'];
+    #
+    $classTable = "GuideCatStore";
+    $clsClassTable = new $classTable;
+    $tableName = $clsClassTable->tbl;
+    $pkeyTable = $clsClassTable->pkey;
+    $pvalTable = isset($_GET[$pkeyTable]) ? intval($core->decryptID($_GET[$pkeyTable])) : "";
+    $one = $clsClassTable->getOne($pvalTable);
+    $country_id = isset($_GET['country_id']) ? $_GET['country_id'] : '';
+    $action = isset($_GET['action']) ? $_GET['action'] : '';
+    #
+    if ($string = '' && $pvalTable == 0) {
+        header('location: ' . PCMS_URL . '/?mod=' . $mod . '&country_id=' . $country_id . '&message=notPermission');
+    }
+    #
+    if ($clsClassTable->updateOne($pvalTable, "is_trash='1'")) {
+        header('location: ' . PCMS_URL . '/?mod=' . $mod . '&act=' . $action . '&message=TrashSuccess');
+    }
+}
 function default_restore()
 {
     global $assign_list, $_CONFIG,  $_SITE_ROOT, $mod, $act;
@@ -926,6 +949,29 @@ function default_restore2()
     #
     if ($clsClassTable->updateOne($pvalTable, "is_trash='0'")) {
         header('location: ' . PCMS_URL . '/?mod=' . $mod . $param_url . '&message=RestoreSuccess');
+    }
+}
+function default_restore3()
+{
+    global $assign_list, $_CONFIG,  $_SITE_ROOT, $mod, $act, $clsISO;
+    global $core, $clsModule, $clsButtonNav, $oneSetting;
+    $user_id = $core->_USER['user_id'];
+    #
+    $classTable = "GuideCatStore";
+    $clsClassTable = new $classTable;
+    $tableName = $clsClassTable->tbl;
+    $pkeyTable = $clsClassTable->pkey;
+    $pvalTable = isset($_GET[$pkeyTable]) ? intval($core->decryptID($_GET[$pkeyTable])) : "";
+    $one = $clsClassTable->getOne($pvalTable);
+    $country_id = isset($_GET['country_id']) ? $_GET['country_id'] : '';
+    $action = isset($_GET['action']) ? $_GET['action'] : '';
+    #
+    if ($string = '' && $pvalTable == 0) {
+        header('location: ' . PCMS_URL . '/?mod=' . $mod . '&country_id=' . $country_id . '&message=notPermission');
+    }
+    #
+    if ($clsClassTable->updateOne($pvalTable, "is_trash='0'")) {
+        header('location: ' . PCMS_URL . '/?mod=' . $mod . '&act=' . $action . '&message=RestoreSuccess');
     }
 }
 function default_delete()
@@ -994,7 +1040,30 @@ function default_delete2()
         }
     }
 }
-
+function default_delete3()
+{
+    global $assign_list, $_CONFIG,  $_SITE_ROOT, $mod, $act;
+    global $core, $clsModule, $clsButtonNav, $oneSetting, $clsISO;
+    $user_id = $core->_USER['user_id'];
+    #
+    $classTable = "GuideCatStore";
+    $clsClassTable = new $classTable;
+    $tableName = $clsClassTable->tbl;
+    $pkeyTable = $clsClassTable->pkey;
+    $pvalTable = isset($_GET[$pkeyTable]) ? intval($core->decryptID($_GET[$pkeyTable])) : "";
+    $country_id = isset($_GET['country_id']) ? $_GET['country_id'] : '';
+    $action = isset($_GET['action']) ? $_GET['action'] : '';
+    #
+    if ($pvalTable == "") {
+        header('location: ' . PCMS_URL . '/?mod=' . $mod . '&act=' . $action . '&message=notPermission');
+    }
+    #
+    // if (isset($_POST['agree']) && $_POST['agree'] == 'agree') {
+    if ($clsClassTable->deleteOne($pvalTable)) {
+        header('location: ' . PCMS_URL . '/?mod=' . $mod . '&act=' . $action . '&message=DeleteSuccess');
+    }
+    // }
+}
 function default_move()
 {
     global $assign_list, $_CONFIG,  $_SITE_ROOT, $mod, $act;

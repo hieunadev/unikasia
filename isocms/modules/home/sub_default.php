@@ -702,23 +702,23 @@ function default_ajSaveReviews(){
 	}
 }
 function default_ajSaveReviewsNoLogin(){
-	global $assign_list, $_CONFIG, $core, $dbconn, $mod, $act, $_LANG_ID,$title_page,$description_page,$keyword_page,$profile_id;
-	$clsISO = new ISO();
 	$clsReviews = new Reviews();
 	#
 	$type = $_POST['type'];
 	$table_id = $_POST['table_id'];
 	$rates = $_POST['rates'];
 	$fullname = $_POST['fullname'];
-	$email = $_POST['email_reviews'];
-	$country_id = $_POST['country_id'];
+	$title = $_POST['title'];
+	$email = $_POST['email_reviews'] ?? $title;
+	$country_id = $_POST['country_id'] ?? 0;
 	$message = nl2br(rawurldecode($_POST['message']));
     
 
 	#
-	$f="reviews_id,reg_date,review_date,upd_date,table_id,type,rates,fullname,email,country_id,content,order_no,is_trash,is_online";
+	$f="reviews_id,title, reg_date,review_date,upd_date,table_id,type,rates,fullname,email,country_id,content,order_no,is_trash,is_online";
 	$reviews_id = $clsReviews->getMaxId();
 	$v ="'".$reviews_id."'
+	,'".$title."'
 	,'".time()."'
 	,'".time()."'
 	,'".time()."'
@@ -731,7 +731,7 @@ function default_ajSaveReviewsNoLogin(){
 	,'".$message."'
 	,'".$clsReviews->getMaxOrderNo()."'
 	,'0','0'";	
-	
+
 	if($clsReviews->insertOne($f, $v)){
 	    $aaa = $clsReviews->sendMail($email,$message,$type);
         if($aaa){

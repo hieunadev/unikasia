@@ -1109,6 +1109,35 @@ ul.timeline .accordion-item{
     line-height: 28px;
     margin-right: 8px;
 }
+
+#writeTourReview .bottom {
+    overflow: hidden;
+    padding: 0 25px 25px 0;
+}
+
+#writeTourReview .btn_green {
+    background: #FFA718;
+    color: #ffffff;
+    border: 0;
+    padding: 12px 55px;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px;
+    border-radius: 8px;
+}
+
+#writeTourReview .details{
+    padding: 20px 25px;
+    margin: 0
+}
+#writeTourReview .rating_block {
+    border-radius: 4px;
+    border: 1px solid var(--Neutral-4, #D3DCE1);
+}
 /* End form review */
 .measure-evaluation {
     max-width: 198px !important;

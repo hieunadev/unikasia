@@ -235,6 +235,10 @@
 	line-height: 36px;
 }
 
+.txt_numbus .contactLink {
+	margin-left: 8px;
+}
+
 .hotelPageDetail {
     margin-bottom: 100px;
 }
@@ -473,6 +477,7 @@ ul li {
 	font-weight: 400;
 	line-height: 24px;
 	text-decoration-line: underline !important;
+	cursor: pointer;
 }
 
 .title-etap::after {
@@ -647,6 +652,8 @@ form .departure_day:hover {
     font-size: 16px;
     line-height: 24px;
     color: #111D37;
+	display: flex;
+  	align-items: flex-start;
 }
 
 .overview-content .Inclusion-txt .description {
@@ -1016,8 +1023,8 @@ form .departure_day:hover {
 
 .reviews_box_top .box_score .score_text .txt_score {
     color: #1C1C1C;
-    font-size: 18px;
-    font-weight: 600;
+    font-size: 16px;
+    font-weight: 400;
     line-height: 27px;
     margin-bottom: 0;
 }
@@ -1047,8 +1054,15 @@ form .departure_day:hover {
     line-height: 21px;
 }
 
+.score_text h3 {
+    font-size: 48px;
+    grid-row: 600;
+    line-height: 64px;
+    color: #FFA718;
+}
+
 .reviews_box_top .progress {
-    background: var(--main-bg-opcity-30);
+    background: #E2E8F0;
     border-radius: 2px;
     height: 11px;
     width: calc(100% - 27px);
@@ -1061,11 +1075,13 @@ form .departure_day:hover {
 
 .reviews_box_top {
     padding: 9px 30px 30px 27px;
-/*	max-width: 838px;*/
+	max-width: 838px;
 	display: flex;
 	flex-direction: column;
 	margin: 0 auto;
-	width: 100%;	
+	width: 100%;
+	border-radius: 8px;
+background: #F7FAFC;
 }
 
 .reviews_box_top .box_rate_score {
@@ -1156,10 +1172,13 @@ form .departure_day:hover {
     font-size: 16px;
     line-height: 24px;
     color: #111D37;
+	list-style: none;
 }
 
 .Inclusion-txt li {
 	width: 90%;
+		display: flex;
+  	align-items: flex-start;
 }
 
 .Inclusion-txt .imporant_info_highlight {
@@ -1203,11 +1222,44 @@ form .departure_day:hover {
 
 .txt_numbt_sticky {
   position: fixed;
-  top: 125px; /* Giống với top của scroll-nav_sticky */
+  top: 154px; /* Giống với top của scroll-nav_sticky */
   right: -90px; /* Cố định ở bên phải */
   z-index: 9;
 /*  background-color: #fff;  Hoặc màu nền khác tùy chỉnh */
-  padding: 12px 14% 0 0;
+  padding: 0 14% 0 0;
   border: none;
-
 }
+
+.txt_numbt_sticky .txt_numbfromus {
+	 display: flex;
+  align-items: center;
+	color: #959AA4;
+}
+
+.txt_numbt_sticky .txt_fromnum {
+	margin-right: 8px;
+}
+
+.txt_numbt_sticky .btn_contactus button {
+  padding: 6px 14px; /* Điều chỉnh padding để nhỏ hơn */
+  font-size: 14px; /* Điều chỉnh cỡ chữ nếu cần */
+	max-width: 140px;
+	width: 100%;
+}
+
+.txt_numbt_sticky .price {
+	margin-top: auto;
+	margin-bottom: auto;
+}
+
+.owl-carousel .owl-item img {
+	width: unset;
+}
+
+.address .box_body_adress {
+	 display: flex;
+    align-items: flex-start;
+    gap: 0 6px;
+}
+
+

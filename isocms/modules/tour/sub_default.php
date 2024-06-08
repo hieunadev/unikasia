@@ -18,6 +18,8 @@ function default_default()
 	$assign_list["clsTourDestination"] = $clsTourDestination;
 	$clsMonth = new Month();
 	$assign_list['clsMonth'] = $clsMonth;
+    $clsReviews = new Reviews();
+    $assign_list["clsReviews"] = $clsReviews;
 
 	$where = "is_trash = 0 and is_online = 1";
 	$order_by = " order by order_no";
@@ -246,9 +248,6 @@ function default_detaildeparture() {
     $sqlCountRate = "SELECT rates, ROUND(COUNT(rates) / $countReview * 100) AS count_percent, COUNT(rates) as count FROM default_reviews WHERE $cond table_id = $tour_id GROUP BY rates;";
     $countRate = $dbconn->GetAll($sqlCountRate);
 
-    $bg_colors = ['#FFA718', '#FFF9F1', '#004EA8', '#111D37', '#434B5C', '#959AA4'];
-    $random_color = $bg_colors[array_rand($bg_colors)];
-
     $txtReview = ['Bad', 'Average', 'Good', 'Excellent', 'Wonderful'];
     $validRates = [5, 4, 3, 2, 1];
     $result = [];
@@ -271,7 +270,7 @@ function default_detaildeparture() {
         ];
     }
 
-    $index = (int)round(max(1, min(5, $averageRate)) - 1);
+    $index = round( $averageRate - 1);
     $txt_rv = $txtReview[$index];
 
     if ($oneItem['is_online'] == 0) header('location:' . PCMS_URL);
@@ -288,8 +287,15 @@ function default_detaildeparture() {
     $assign_list["txt_rv"] = $txt_rv;
     $assign_list["travel_style_id"] = $travel_style_id;
     $assign_list["averageRate"] = !empty($averageRate) ? number_format($averageRate,1) : 0.0;
-    $assign_list["random_color"] = $random_color;
     $assign_list["country_id"] = $country_id;
+
+    /*=============Title & Description Page==================*/
+    $title_page = $clsTour->getTitle($tour_id) . ' | ' . $core->get_Lang('tours') . ' | ' . PAGE_NAME;
+    $assign_list["title_page"] = $title_page;
+    $description_page = $clsISO->getMetaDescription($tour_id, 'Tour');
+    $assign_list["description_page"] = $description_page;
+    $global_image_seo_page = $clsISO->getPageImageShare($tour_id, 'Tour');
+    $assign_list["global_image_seo_page"] = $global_image_seo_page;
 }
 
 function default_tag()

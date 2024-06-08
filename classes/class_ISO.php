@@ -5262,4 +5262,54 @@ AND COLUMN_NAME = '" . $name . "'";
 		self::dump($data);
 		exit;
 	}
+
+	/**
+	 * Author: 2024-HoangNv
+	 * setRecentView()
+	 * Set recent view by cookie
+	 * @param mixed $data
+	 */
+	function setRecentView($id, $type = 'guide')
+	{
+		// Cookie tồn tại trong 1 ngày
+		$expire	= 	time() + 86400;
+		#
+		// Thiết lập cookie với ID chi tiết theo từng module
+		setcookie($type . "_" . $id, $id, $expire, "/");
+	}
+
+	/**
+	 * Author: 2024-HoangNv
+	 * getRecentView()
+	 * Get recent view by cookie
+	 * @param mixed $data
+	 */
+	function getRecentView($type = '', $element_number = 3)
+	{
+		$recentViews	= 	[];
+		if (!empty($type)) {
+			// Kiểm tra xem $_COOKIE có tồn tại và không rỗng
+			if (isset($_COOKIE) && !empty($_COOKIE)) {
+				foreach ($_COOKIE as $key => $value) {
+					// Kiểm tra cookie có phải là của loại được chỉ định không
+					if (strpos($key, $type . '_') === 0) {
+						$recentViews[$key]	= 	$_COOKIE[$key];
+					}
+				}
+				// Kiểm tra xem $recentViews có tồn tại và không rỗng
+				if (!empty($recentViews)) {
+					// Hàm array_slice có 4 param
+					// Param 1: arr, 
+					// Param 2: 3 phần tử cuối, 
+					// Param 3: 3 phần tử trong arr, 
+					// Param 4: giữ nguyên index của arr
+					$last3RecentViews	= 	array_slice($recentViews, -$element_number, $element_number, true);
+					#
+					// Đảo ngược thứ tự của mảng
+					$last3RecentViews 	= 	array_reverse($last3RecentViews, true);
+				}
+			}
+		}
+		return $last3RecentViews;
+	}
 }
