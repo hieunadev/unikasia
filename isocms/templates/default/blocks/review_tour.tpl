@@ -1,5 +1,5 @@
 <div class="stories" id="stories">
-    <div id="writeTourReview">
+    <div id="writeTourReview" style="display:none">
         <form action="" class="simple_form new_review" enctype="multipart/form-data" id="frmCommentCrx" method="post">
             <div class="rating_block">
                 <div class="rating-body">
@@ -43,6 +43,7 @@
 <script>
     var msg_fullname_required = "{$core->get_Lang('Your full name should not be empty')}!";
     var msg_email_required = "{$core->get_Lang('Your email should not be empty')}!";
+    var msg_title_required = "{$core->get_Lang('Your title should not be empty')}!";
     var msg_message_required = "{$core->get_Lang('Your message should not be empty')}!";
     var msg_login = "{$core->get_Lang('Sign in saved to review')}!";
     var msg_rating = "{$core->get_Lang('Your rating should not be empty')}!";
@@ -67,6 +68,12 @@
                     $('input[name=fullname]').focus();
                     return false;
                 }
+                if ($.trim($('input[name=title]').val()) == '') {
+                    alert(msg_title_required);
+                    $('input[name=title]').addClass('error');
+                    $('input[name=title]').focus();
+                    return false;
+                }
                 if ($.trim($('textarea[name=message]').val()) == '') {
                     alert(msg_message_required);
                     $('input[name=message]').addClass('error');
@@ -82,29 +89,30 @@
                     type: "POST",
                     url: path_ajax_script + '/index.php?mod=home&act=ajSaveReviewsNoLogin&lang=' + LANG_ID,
                     beforeSend: function (xhr) {
-                        $('button[id^=btnClick]').text(process);
+                        $('button[id^=btnClick]').text(process).prop('disabled', true);
                     },
                     dataType: "html",
                     success: function (html) {
                         $('button[id^=btnClick]')
                             .text(Completed)
                             .delay(2000)
-                            .text(Publish_Review);
-                        // $_this.closest('form.simple_form').resetForm();
-                        // $_this.closest('form.simple_form').clearForm();
+                            .text(Publish_Review)
+                            .prop('disabled', false);
+                        $_this.closest('form.simple_form').resetForm();
+                        $_this.closest('form.simple_form').clearForm();
 
                         if (html.indexOf("_ERROR") >= 0) {
                             $('#message_box').html(msg_insert_error).show();
                             return false;
                         } else if (html.indexOf('_SUCCESS') >= 0) {
                             alert(msg_insert_success);
-                            // $('#media-preview').empty().hide();
-                            // $(".rate_row .rate_star").removeClass('checked');
-                            // $("#rates").val('');
-                            // $("#fullname").val('');
-                            // $("#email").val('');
-                            // $("#message").val('');
-                            // $('#commentCrx li:first').fadeIn().delay(10000).fadeOut();
+                            $('#media-preview').empty().hide();
+                            $(".rate_row .rate_star").removeClass('checked');
+                            $("#rates").val('');
+                            $("#fullname").val('');
+                            $("#title").val('');
+                            $("#message").val('');
+                            $('#commentCrx li:first').fadeIn().delay(10000).fadeOut();
                         }
                     }
                 });

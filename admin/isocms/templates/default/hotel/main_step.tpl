@@ -223,19 +223,19 @@
 							</style>
 						{/literal}
 						{elseif $currentstep=='booking_policy'}
-							<h3 class="title_box mb05">{$core->get_Lang('Booking Policy')}
+							<h3 class="title_box mb05">{$core->get_Lang('Accommodation')}
 								{assign var= booking_policy_hotel value='booking_policy_hotel'}
 								{assign var= help_first value=$booking_policy_hotel}
 								{if $CHECKHELP eq 1}
 									<button data-key="{$booking_policy_hotel}" data-label="{$core->get_Lang('Booking Policy')}" type="button" title="Thêm mô tả" onclick="open_texthelp(this, event)" class="btn btn-xs btn-default"><i class="fa fa-plus-circle"></i></button>
 								{/if}
 							</h3>
-							<p class="intro_box mb40">{$core->get_Lang('introhotelbookingpolicy')}</p>
+							<p class="intro_box mb40">{$core->get_Lang('introhotelaccommodationpolicy')}</p>
 							<div class="inpt_tour">
 								<textarea style="width:100%" table_id="{$pvalTable}" class="textarea_intro_editor" data-column="{$currentstep}" id="textarea_intro_editor_booking_policy_{$now}" cols="255" rows="2">{$oneItem.booking_policy}</textarea>
 							</div>
 						{elseif $currentstep=='child_policy'}
-							<h3 class="title_box mb05">{$core->get_Lang('Children and bed policy')}
+							<h3 class="title_box mb05">{$core->get_Lang('Children and bed')}
 								{assign var= child_policy_hotel value='child_policy_hotel'}
 								{assign var= help_first value=$child_policy_hotel}
 								{if $CHECKHELP eq 1}
@@ -247,7 +247,7 @@
 								<textarea style="width:100%" table_id="{$pvalTable}" class="textarea_intro_editor" data-column="{$currentstep}" id="textarea_intro_editor_child_policy_{$now}" cols="255" rows="2">{$oneItem.child_policy}</textarea>
 							</div>
 						{elseif $currentstep=='cancellation_policy'}
-							<h3 class="title_box mb05">{$core->get_Lang('Cancellation Policy')}
+							<h3 class="title_box mb05">{$core->get_Lang('Cancellation')}
 								{assign var= cancellation_policy_hotel value='cancellation_policy_hotel'}
 								{assign var= help_first value=$cancellation_policy_hotel}
 								{if $CHECKHELP eq 1}
@@ -260,7 +260,7 @@
 							</div>
 						
 							{elseif $currentstep=='exclude_policy'}
-							<h3 class="title_box mb05">{$core->get_Lang('Excludes Policy')}
+							<h3 class="title_box mb05">{$core->get_Lang('Excludes')}
 								{assign var= exclude_policy_hotel value='exclude_policy_hotel'}
 								{assign var= help_first value=$exclude_policy_hotel}
 								{if $CHECKHELP eq 1}

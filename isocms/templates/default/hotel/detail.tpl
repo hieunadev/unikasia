@@ -217,27 +217,34 @@
                 </div>
     </div>
     </nav>
+
     <div id="contentPage" class="content hotelPageDetail mt05">
         <div class="hotelDetail">
             <div class="container">
                 <section class="section_box_image_top">
                     <div class="row">
                         <div class="col-lg-8">
+							{section name=i loop=1}
                             <div class="big_image">
-                                <img class="img100" alt="{$title_hotel}"
-                                    src="{$clsHotel->getImage($hotel_id,841,420,$oneItem)}" />
-                                <p class="view_all" data-fancybox="gallery" href="{$oneItem.image}">
-                                    {$core->get_Lang('See all')}</p>
+                                <img class="img100" alt="{$clsHotelImage->getTitle($listImage[i].hotel_image_id,$listImage[i])}"
+                                    src="{$clsHotelImage->getImage($listImage[i].hotel_image_id,841,420)}" />
+                                {if $listImage}
+								<div class="view_all" data-fancybox="gallery-hotel" href="{$clsHotelImage->getImage($listImage[i].hotel_image_id,841,420)}">+{$listImage|count}
+                                    </div>
+								{/if}
                             </div>
+							{/section}
+							                               
+
                         </div>
                         <div class="col-lg-4">
                             <div class="list_image_small">
-                                {section name=i loop=$listImage}
-                                    <div class="small_image" data-fancybox="gallery" href="{$listImage[i].image}"
-                                        {if $smarty.section.i.index gt 3}hidden{/if}>
+                                {section name=i loop=$listImage start=1}
+                                    <div class="small_image" data-fancybox="gallery-hotel" href="{$listImage[i].image}"
+                                        {if $smarty.section.i.index gt 4}hidden{/if}>
                                         <img class="img100"
                                             alt="{$clsHotelImage->getTitle($listImage[i].hotel_image_id,$listImage[i])}"
-                                            src="{$clsHotelImage->getImage($listImage[i].hotel_image_id,202,202,$listImage[i])}" />
+                                            src="{$clsHotelImage->getImage($listImage[i].hotel_image_id,202,202)}" />
                                     </div>
                                 {/section}
 								
@@ -250,54 +257,66 @@
                     <div class="col-lg-8">
                         <section class="hotel_detail_main">
                             <div class="scroll-nav">
-                                <ul class="scroll-title">
-                                    <li><a href="#Overview">{$core->get_Lang('Overview')}</a></li>
-                                    <li><a href="#Accommodation">{$core->get_Lang('Accommodation')}</a></li>
-                                    <li><a href="#Add-ons">{$core->get_Lang('Add-ons')}</a></li>
-                                    <li><a href="#Inclusion">{$core->get_Lang('Inclusion')}</a></li>
-                                    <li><a href="#Things">{$core->get_Lang('Things to know')}</a></li>
-                                    <li><a href="#Reviews">{$core->get_Lang('Reviews')}</a></li>
+                                <ul class="scroll-title container">
+                                    <li><a class="nav-link" data-target=".scroll_overview">{$core->get_Lang('Overview')}</a></li>
+                                    <li><a class="nav-link" data-target=".scroll_accommodation">{$core->get_Lang('Accommodation')}</a></li>
+                                    <li><a class="nav-link" data-target=".scroll_addons">{$core->get_Lang('Add-ons')}</a></li>
+                                    <li><a class="nav-link" data-target=".scroll_inclusion">{$core->get_Lang('Inclusion')}</a></li>
+                                    <li><a class="nav-link" data-target=".scroll_thing">{$core->get_Lang('Things to know')}</a></li>
+                                    <li><a class="nav-link" data-target=".scroll_reviews">{$core->get_Lang('Reviews')}</a></li>
+									
+									<div class="txt_numbt">
+						<div class="txt_numbfromus">
+						<p class="txt_fromnum">{$core->get_Lang('from')}</p>
+						<p class="txt_txtus">{$core->get_Lang('US')} <span class="txt_numbus">{$clsHotel->getPriceOnPromotion($hotel_id)}</span></p>
+						</div>
+						<div class="btn_contactus">
+							<a href="{$PCMS_URL}contact-us" alt="contactus" title="contactus">
+                               <button class="btn btn_viewtour">{$core->get_Lang('Contact')} <i
+                                                        class="fa-regular fa-arrow-right" style="color: #ffffff;"></i>
+                                  </button>
+                                        </a>
+							</div>
+					</div>
                                 </ul>
+								
+								
                             </div>
-                            <div id="Overview">
+                            <div id="Overview" class="scroll_overview">
                                 {if !isset($overview_hotel) || !$overview_hotel}
                                 {else}
                                     <div class="nav-content">
                                         <h2 class="nav-content-title title_overview">{$core->get_Lang('Overview')}</h2>
 										
-										{if $lstHotelFacility}
-
                                 <div class="list_facilities">
 
-                                    {section name=i loop=$lstHotelFacility}
+                                    {section name=i loop=$listHotelFacilitiesFavorite}
 
+									
                                     <div class="facilities_item align-items-center">
 
-                                        {if $clsProperty->getImage($lstHotelFacility[i])}
+                                        <img width="16" height="16" src="{$listHotelFacilitiesFavorite[i].image}"/>
 
-                                        <img width="16" height="16" src="{$clsProperty->getImage($lstHotelFacility[i])}" alt="{$clsProperty->getTitle($lstHotelFacility[i])}"/> 
-
-                                        {/if}
+                                 
 
                                         <div class="facilities_name">
 
-                                            {$clsProperty->getTitle($lstHotelFacility[i])}
+                                            {$clsProperty->getTitle($listHotelFacilitiesFavorite[i].property_id)}
 
                                         </div>
 
                                     </div>
 
                                     {/section}
-
 											
 										</div>
-								{/if}
-
-
-                                        <div class="overview-content">{$overview_hotel|html_entity_decode}</div>
+										
+										 <div class="overview-content">{$overview_hotel|html_entity_decode}</div>
                                     </div>
 
-                                {/if}
+ 
+										</div>
+																				{/if}
 
 
                                 {* <div class="info_review_top">
@@ -386,16 +405,18 @@
                         <section class="box_right_info_hotel sticky_fix">
                             <div class="box_info_right_top">
 								<h3 class="txt_bestprice">{$core->get_Lang('Best price for you')}</h3>
-									<div class="price_from_text" {if !$clsHotel->getPriceOnPromotion($hotel_id,'detail')} style="display: none;"{/if}>
-                                    {if $clsHotel->getPriceOnPromotion($hotel_id,'detail')}
+									<div class="price_from_text">
                                         <div class="from_text">
                                             {$core->get_Lang('Avg price package')}
                                         </div>
                                         <div class="val_price">
-                                           <p class="txt_prival">US <h3 class="numb_prival">${$clsHotel->getPriceAvg($hotel_id)}</h3></p>
+                                           <p class="txt_prival">US <h3 class="numb_prival">{if $clsHotel->getPriceOnPromotion($hotel_id,'detail')}
+                            ${$clsHotel->getPriceAvg($hotel_id)}
+                        {else}
+                            {$core->get_Lang('Contact us')}
+                        {/if}</h3></p>
                                         </div>
 								<p class="txt_pricepax">Price includes package</p>
-                                    {/if}
                                 </div>
 							<div class="btn_contactus">
 								 <input type="hidden" name="hotel_id" value="{$hotel_id}">
@@ -412,7 +433,7 @@
                     </div>
                 </div>
 
-                <div id="Accommodation">
+                <div id="Accommodation" class="scroll_accommodation">
                     {if !isset($oneItem) || !$oneItem}
                     {else}
                         <div class="nav-content">
@@ -496,7 +517,7 @@
         </div>
     </div>
 
-    <div id="Add-ons">
+    <div id="Add-ons" class="scroll_addons">
         <div class="prix">
 			<div class="container">
             <div class="prix-title">
@@ -518,7 +539,7 @@
         </div>
     </div>
 		</div>
-    <div id="Inclusion">
+    <div id="Inclusion" class="scroll_inclusion">
         <div class="prix">
 			<div class="container">
             {if !isset($oneItem.other_policy) || !$oneItem.other_policy}
@@ -534,7 +555,7 @@
         </div>
     </div>
 		</div>
-    <div id="Things">
+    <div id="Things" class="scroll_thing">
         <div class="Things">
 			<div class="container">
             <h2 class="Things-prix">{$core->get_Lang('Things to know')}</h2>
@@ -655,7 +676,7 @@
         </div>
     </div>
 		</div>
-    <div id="Reviews">
+    <div id="Reviews" class="scroll_reviews">
         <div class="Reviews">
 			<div class="container">
             <div class="Reviews-title">
@@ -826,9 +847,9 @@
 
 <section class="recently_hotel">
 	<div class="txt_recentlyhotel">
-		<h2 class="txtrecentview">{$core->get_Lang('Recently viewed')}</h2>
 		<div class="container">
-	<div class="recentlyViewed-dev">
+                        <h2 class="recentlyViewed">{$core->get_Lang('Recently viewed')}</h2>
+                        <div class="recentlyViewed-dev">
                             <div class="clicked-details"></div>
                         </div>
 
@@ -836,16 +857,19 @@
                         <div class="recentlyViewed-mobile">
                             <div class="sec_relate_box-slide owl-carousel_overviewReviews owl-carousel ">
                                 <div class="clicked-details">
+
                                 </div>
                             </div>
                         </div>
 
                         <button class="btnShowViewed">{$core->get_Lang('More')}</button>
+
                         <button class="btnNoneViewed">{$core->get_Lang('Collapse all')}</button>
 
-	</div>
+
+                    </div>
 		</div>
-	</div>
+
 </section>
 
 
@@ -953,25 +977,21 @@ var otherPolicy = '{$oneItem.other_policy|unescape}';
     $(window).scroll(function() {
         if ($(this).scrollTop() >= 500) {
             $('.scroll-nav').addClass('scroll-nav_sticky');
-			$('.txt_numbt').addClass('txt_numbt_sticky');
+//			$("#header_fixed").removeClass('nah_header_sticky');
+			$('#header_fixed').hide();
+
 			
 			
         } else {
             $('.scroll-nav').removeClass('scroll-nav_sticky');
+			$('#header_fixed').show();
+
+			
 
         }
     });
 			
-			    $(window).scroll(function() {
-        if ($(this).scrollTop() >= 500) {
-			$('.txt_numbt').addClass('txt_numbt_sticky');
-			
-			
-        } else {
-			$('.txt_numbt').removeClass('txt_numbt_sticky');
 
-        }
-    });
 			
 			var link = document.querySelector('link[href="vietisocms.css"]');
 
@@ -981,7 +1001,64 @@ var otherPolicy = '{$oneItem.other_policy|unescape}';
 			  }
 
 
-			
+
+			$(document).ready(function() {
+  $('.scroll-title a').on('click', function(event) {
+    event.preventDefault(); // Ngăn chặn hành vi mặc định
+
+    var targetId = $(this).attr('href').substring(1); // Lấy ID mục tiêu (loại bỏ dấu #)
+    var $targetElement = $('#' + targetId);
+
+    if ($targetElement.length) {
+      var targetOffset = $targetElement.offset().top;
+      var headerHeight = $('.header').outerHeight() || 0; // Điều chỉnh nếu có header
+      targetOffset -= headerHeight;
+
+      $('html, body').animate({
+        scrollTop: targetOffset
+      }, 800); // Thời gian cuộn (milliseconds)
+    }
+
+    // Loại bỏ #overview khỏi URL (nếu có)
+    if (window.location.hash) {
+        history.replaceState("", document.title, window.location.pathname + window.location.search);
+    }
+  });
+
+  // Xử lý trường hợp người dùng nhấp vào liên kết từ một trang khác
+  if (window.location.hash) {
+    var initialTargetId = window.location.hash.substring(1);
+    var $initialTargetElement = $('#' + initialTargetId);
+
+    if ($initialTargetElement.length) {
+      var initialTargetOffset = $initialTargetElement.offset().top;
+      var headerHeight = $('.header').outerHeight() || 0; 
+      initialTargetOffset -= headerHeight;
+
+      $('html, body').animate({
+        scrollTop: initialTargetOffset
+      }, 0); // Cuộn ngay lập tức (không có animation)
+
+      history.replaceState("", document.title, window.location.pathname + window.location.search);
+    }
+  }
+});
+
+const links = document.querySelectorAll('.nav-link');
+            links.forEach(link => {
+                link.addEventListener('click', (event) => {
+                    $('.nav-link').removeClass('active');
+                    $(event.currentTarget).addClass('active');
+                    const targetClass = event.currentTarget.getAttribute('data-target');
+                    const targetElement = document.querySelector(targetClass);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            })
         </script>
     {/literal}
 

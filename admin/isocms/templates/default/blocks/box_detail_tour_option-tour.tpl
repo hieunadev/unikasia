@@ -46,7 +46,7 @@
 						<div id="slb_ContainerTourCategory" onClick="loadHelp(this)">
 							<select name="cat_id[]" id="cat_id" class="required full-width chosen-select" multiple="multiple">
 								{assign var = selected value = $oneItem.list_cat_id}
-								{$clsTourCategory->makeSelectboxOption($oneItem.tour_group_id, $selected, 1,0,0)}
+								{$clsTourCategory->makeSelectboxOption($oneItem.list_cat_id, $selected, 1,0,0)}
 								{$selected}
 							</select>
 							<div class="text_help" hidden="">{$clsConfiguration->getValue($travel_style_tour)|html_entity_decode}</div>

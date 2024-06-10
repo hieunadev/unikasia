@@ -83,13 +83,13 @@
 							<th class="gridheader text-center hiden_responsive" width="100px"></th>
 						</tr></thead>
 						{if $allItem[0].tour_id ne ''}
-						<tbody>
+						<tbody id="SortAble">
 							{section name=i loop=$allItem}
 							{assign var = tour_id value = $allItem[i].tour_id}
 							{assign var=nameServices value=$clsClassTable->getTitle($tour_id)}
 							{assign var=oneUserCreator value=$clsUser->getOne($allItem[i].user_id,'first_name,last_name')}
 							{assign var=oneUserUpdate value=$clsUser->getOne($allItem[i].user_id_update,'first_name,last_name')}
-							<tr id="order_{$tour_id}" >
+							<tr style="cursor: move" id="order_{$tour_id}" >
 								<td class="check_40 has-checkbox text-center"><input name="p_key[]" class="chkitem el-checkbox" type="checkbox" value="{$tour_id}" /></td>
 								<td class="index hiden767"><img src="{$clsClassTable->getImage($tour_id,105,69)}" alt="Image" width="105" height="69" onerror="this.src='{$URL_IMAGES}/none_image.png'"/></td>
 								<td class="text-left name_service">
@@ -99,6 +99,7 @@
 										<div>
 											{if $clsISO->checkConnTMS() && (!empty($allItem[i].yield_id) || !empty($allItem[i].tms_code))}<span class="btn_connect is_connect_tms">{$core->get_Lang('TravelMaster')}</span>{/if}
 											<span class="btn_connect is_connect_itrsm hidden">{$core->get_Lang('iTourism')}</span>
+											{if $allItem[i].is_trash eq '1'}<span class="fr" style="color:#CCC">{$core->get_Lang('intrash')}</span>{/if}
 										</div>
 									</div>
 									<button type="button" class="toggle-row inline_block767" style="display:none">

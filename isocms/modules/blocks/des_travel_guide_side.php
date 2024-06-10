@@ -44,7 +44,7 @@ $order1 =   ' ORDER BY order_no ASC';
 $order2 =   ' ORDER BY rand()';
 $limit  =   ' LIMIT 3';
 #
-$arr_guide_cat  =   $clsGuideCat->getAll($cond . " AND guidecat_id IN (SELECT guidecat_id FROM default_guidecat_store WHERE country_id = " . $country_id . ")" . $order1, "guidecat_id, slug");
+$arr_guide_cat  =   $clsGuideCat->getAll($cond . " AND guidecat_id IN (SELECT guidecat_id FROM default_guidecat_store WHERE " . $cond . " AND country_id = " . $country_id . ")" . $order1, "guidecat_id, slug");
 $smarty->assign('arr_guide_cat', $arr_guide_cat);
 #
 // List tour liên quan trong quốc gia

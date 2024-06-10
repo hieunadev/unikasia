@@ -16,7 +16,7 @@
 							<div class="drop_gallery" onClick="loadHelp(this)">
 								<div class="filedrop full" onClick="file_explorer(this,event);" ondrop="file_drop(this,event)" toid="selectFile" toel="isoman_show_image" data-options='{ldelim}"openFrom":"image","clsTable":"Tour", "table_id":"{$pvalTable}","toId":"isoman_show_image" {rdelim}' ondragover="return false">
 									<h3>{$core->get_Lang('Drop files to upload')}</h3>
-									<p>Kích thước (WxH=840x480)<br />
+									<p>Kích thước (WxH=841x552)<br />
 									Các loại tệp được hỗ trợ là: .png,.jpg,.jpeg</p>
 									<button type="button" class="btn btn-upload">{if $oneItem.image}Thay ảnh{else}Tải ảnh lên{/if}</button>
 								</div>

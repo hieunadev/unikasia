@@ -709,7 +709,7 @@ function default_ajSaveReviewsNoLogin(){
 	$rates = $_POST['rates'];
 	$fullname = $_POST['fullname'];
 	$title = $_POST['title'];
-	$email = $_POST['email_reviews'] ?? $title;
+	$email = $_POST['email_reviews'] ?? $fullname;
 	$country_id = $_POST['country_id'] ?? 0;
 	$message = nl2br(rawurldecode($_POST['message']));
     

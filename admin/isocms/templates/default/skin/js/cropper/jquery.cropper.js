@@ -123,7 +123,7 @@ function upload_file_picker(file, params) {
                 params.clsTable == "Tour" ||
                 params.clsTableGal == "TourImage"
             ) {
-                var aspectRatio = 840 / 480;
+                var aspectRatio = 841 / 552;
             } else {
                 var aspectRatio = 750 / 500;
             }

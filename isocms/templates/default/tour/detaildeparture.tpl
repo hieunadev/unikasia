@@ -26,7 +26,7 @@
                 <h2 class="txt_detailhotel">{$clsTour->getTitle($tour_id)}</h2>
                 <div class="txt_numbpricetour">
                     <p class="txt_numbtour">From US <span class="under_numbprice">${$oneItem.min_price}</span> <span
-                                class="number_pricetour">${$clsTour->getDiscount($tour_id, $oneItem.min_price)}</span> /pax </p>
+                                class="number_pricetour">${$clsTour->getDiscount($tour_id)}</span> /pax </p>
                 </div>
             </div>
 
@@ -112,7 +112,7 @@
                     <div class="price_button">
                         <div class="txt_numbpricetour">
                             <p class="txt_numbtour">From US <span class="under_numbprice">${$oneItem.min_price}</span> <span
-                                        class="number_pricetour">${$clsTour->getDiscount($tour_id, $oneItem.min_price)}</span> /pax </p>
+                                        class="number_pricetour">${$clsTour->getDiscount($tour_id)}</span> /pax </p>
                             <button class="btn btn-inquirenow btn-hover-home">Book Now</button>
                         </div>
                     </div>
@@ -186,25 +186,29 @@
                                 <div class="details">
                                     <h3 class="txt_trevllingous">"{$core->get_Lang('TRAVELING IS OUR PASSION')}"</h3>
                                     <p class="txt_destravel">{$core->get_Lang('Let us help you plan an unforgettable trip!')}</p>
-                                    <p class="txt_destravel"><i class="fa-solid fa-phone"></i> Whatapps: 0983033966</p>
+                                    <p class="whatapps"><i class="fa-solid fa-phone"></i> Whatapps: 0983033966</p>
                                 </div>
                                 <a href="{$clsTour->getLink2(0,1)}" class="btn btn-tailor btn-hover-home">Tailor Made Tour</a>
                             </div>
                         </div>
 
                         <div class="price_tour section_price">
-                            <h2 class="txt_price">Price</h2>
-
-                            <p class="txt_pricedes">Select departure date and number of guests</p>
+                            <h2 class="txt_price">{$core->get_Lang('Price')}</h2>
+                            <p class="txt_pricedes">{$core->get_Lang('Select departure date and number of guests')}</p>
                             <div class="select_pricetour">
-                                <input type="date" id="date-picker" class="date_selecttour">
-                                <select id="tour-select" class="date_selecttour">
-                                    <option value="">2 Adults, 1 Children</option>
-                                    <option value="tour1">Tour 1</option>
-                                    <option value="tour2">Tour 2</option>
-                                </select>
-                                <button id="btn check-btnn" class="check-btnn btn-hover-home">Check Availability
-                                </button>
+                                <div class="box_input">
+                                    <i class="fa-regular fa-clock icon"></i>
+                                    <input type="text" id="departure_date" class="date_selecttour" value="{$format_time_now}">
+                                </div>
+                                <div class="box_input">
+                                    <i class="fa-regular fa-user icon"></i>
+                                    <select id="tour-select" class="date_selecttour">
+                                        <option value="">2 Adults, 1 Children</option>
+                                        <option value="tour1">Tour 1</option>
+                                        <option value="tour2">Tour 2</option>
+                                    </select>
+                                </div>
+                                <button id="check-available" class="check-btnn btn-hover-home">Check Availability</button>
                             </div>
                         </div>
 
@@ -285,11 +289,7 @@
             <div class="booking_policy">
                 <div class="row">
                     <div class="col-3"><h3 class="title_booking_policy">BOOKING POLICY</h3></div>
-                    <div class="col-9">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                        Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer
-                        took a galley of type and scrambled it to make a type specimen book. It has survived not only
-                        five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-                    </div>
+                    <div class="col-9">{$oneItem.confirmation_policy|html_entity_decode}</div>
                 </div>
             </div>
         </div>
@@ -324,7 +324,7 @@
                             <div class="count_review">{$reviewProgress[i].count}</div>
                         </div>
                         {/section}
-                        <a class="btn_write_review fr" href="javascript:void(0);" title="{$core->get_Lang('Write a review')}">{$core->get_Lang('Write a review')}</a>
+                        <a class="btn_write_review_tour fr" href="javascript:void(0);" title="{$core->get_Lang('Write a review')}">{$core->get_Lang('Write reviews')}</a>
                     </div>
                 </div>
             </div>
@@ -362,7 +362,7 @@
                 </div>
             {/section}
             {else}
-                <div>Not yet reviews</div>
+                <div>Not reviews yet</div>
             {/if}
         </div>
     </section>
@@ -518,7 +518,7 @@
                 autoplay: true,
                 items: 1
             })
-            $('.btn_write_review').click(function () {
+            $('.btn_write_review_tour').click(function () {
                 if ($(this).hasClass('active')) {
                     $(this).removeClass('active');
                     $('#writeTourReview').hide(500);
@@ -556,7 +556,7 @@
                     const targetElement = document.querySelector(targetClass);
                     if (targetElement) {
                         window.scrollTo({
-                            top: targetElement.offsetTop - 210,
+                            top: targetElement.offsetTop - 80,
                             behavior: 'smooth'
                         });
                     }
@@ -565,6 +565,7 @@
             window.onscroll = function() {
                 if (window.scrollY >= 630) {
                     $('.class-tour').addClass('list_nav_fixed');
+                    $("#header_fixed").removeClass('nah_header_sticky');
                 } else {
                     $('.class-tour').removeClass('list_nav_fixed');
                 }
@@ -579,6 +580,19 @@
                     $(this).addClass('expand').text('Collapse all');
                     $accordionCollapse.addClass('show');
                 }
+            });
+        });
+        var numberMonth = 2;
+        if ($( document ).width() <= 767){
+            numberMonth = 1;
+        }
+        $(function(){
+            $( "#departure_date" ).datepicker({
+                dateFormat: 'M dd, yy',
+                minDate: "+1d",
+                maxDate: "+1Y",
+                numberOfMonths: numberMonth,
+                firstDay:1,
             });
         });
     </script>

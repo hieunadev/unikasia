@@ -52,27 +52,25 @@
 							<h2>{$core->get_Lang('Recently viewed')}</h2>
 						</div>
 						<div class="des_travel_guide_recent_view_content">
-							<div class="row">
+							<div class="owl-carousel owl-theme trvg_list_guidecat_carousel">
 								{foreach from=$arr_recent_view key=key item=item}
 								{assign var="guideID" value=$item}
-								<div class="col-12 col-sm-12 col-md-6 col-lg-4">
-									<div class="des_travel_guide_item">
-										<div class="des_travel_guide_image">
-											<img src="{$clsGuide->getImage($guideID, 292, 219)}" alt="{$clsGuide->getTitle($guideID)}" width="292" height="219">
-											<a href="{$clsGuide->getLink2($guideID)}" class="des_travel_guide_link" title="{$clsGuide->getTitle($guideID)}">
-												SEE DETAILS <i class="fa-sharp fa-regular fa-arrow-right" aria-hidden="true"></i>
-											</a>
+								<div class="item des_travel_guide_item" data-merge="1">
+									<div class="des_travel_guide_image">
+										<img src="{$clsGuide->getImage($guideID, 292, 219)}" alt="{$clsGuide->getTitle($guideID)}" width="292" height="219">
+										<a href="{$clsGuide->getLink2($guideID)}" class="des_travel_guide_link" title="{$clsGuide->getTitle($guideID)}">
+											SEE DETAILS <i class="fa-sharp fa-regular fa-arrow-right" aria-hidden="true"></i>
+										</a>
+									</div>
+									<div class="des_travel_guide_intro">
+										<div class="des_travel_guide_title">
+											<h3><a href="{$clsGuide->getLink2($guideID)}" title="{$clsGuide->getTitle($guideID)}">{$clsGuide->getTitle($guideID)}</a></h3>
 										</div>
-										<div class="des_travel_guide_intro">
-											<div class="des_travel_guide_title">
-												<h3><a href="{$clsGuide->getLink2($guideID)}" title="{$clsGuide->getTitle($guideID)}">{$clsGuide->getTitle($guideID)}</a></h3>
-											</div>
-											<div class="des_travel_guide_place">
-												<i class="fa-sharp fa-light fa-location-dot"></i> {$clsGuide->getPlaceGuide($guideID)}
-											</div>
-											<div class="des_travel_guide_description">
-												{$clsGuide->getIntro($guideID)}
-											</div>
+										<div class="des_travel_guide_place">
+											<i class="fa-sharp fa-light fa-location-dot"></i> {$clsGuide->getPlaceGuide($guideID)}
+										</div>
+										<div class="des_travel_guide_description">
+											{$clsGuide->getIntro($guideID)}
 										</div>
 									</div>
 								</div>
@@ -92,3 +90,38 @@
 	{$core->getBlock('customer_review')}
 	{$core->getBlock('also_like')}
 </section>
+
+{literal}
+<script>
+	if ($('.trvg_list_guidecat_carousel').length > 0) {
+		var $owl = $('.trvg_list_guidecat_carousel');
+		$owl.owlCarousel({
+			lazyLoad: true,
+			loop: false,
+			margin: 37,
+			nav: false,
+			navText: ["<i class='fa-solid fa-angle-left'></i>", "<i class='fa-solid fa-angle-right'></i>"],
+			dots: false,
+			// autoplay: false,
+			// autoplayTimeout:3000,	
+			// animateOut: 'fadeOut',
+			// animateIn: 'fadeIn',
+			merge: true,
+			autoHeight: true,
+			responsiveClass: true,
+			responsive: {
+				0: {
+					items: 1.3,
+					nav: false,
+				},
+				600: {
+					items: 3
+				},
+				1000: {
+					items: 3
+				}
+			}
+		});
+	}
+</script>
+{/literal}

@@ -135,7 +135,7 @@
                     </div>
                     <h2 class="count-tour">{$totalRecord} {$clsCountry->getTitle($country_id)} tour packages</h2>
                     <div class="recommend">
-                        <span><img class="me-2" src="/uploads//icon/route.png" alt="route"> {$core->get_Lang('70+ Tour packages with 20K+ bookings')}</span>
+                        <span><img class="me-2" src="/uploads//AdminButton/icon/route.png" alt="route"> {$core->get_Lang('70+ Tour packages with 20K+ bookings')}</span>
                     </div>
                     <div class="list-tour">
                         {section name=i loop=$lstTour}
@@ -181,7 +181,7 @@
                                             {/if}
                                         </p>
                                         <p class="from">From <span class="text-decoration-line-through">${$lstTour[i].min_price}</span></p>
-                                        <p class="us">US ${$clsTour->getDiscount($lstTour[i].toiur_id, $lstTour[i].min_price)}</p>
+                                        <p class="us">US ${$clsTour->getDiscount($lstTour[i].tour_id)}</p>
                                     </div>
                                     <div class="btn-view-tour mt-auto">
                                         <a class="btn-hover-home" href="{$clsTour->getLink($lstTour[i].tour_id)}"><span>View tour</span><i class="fa fa-arrow-right" aria-hidden="true"></i></a>

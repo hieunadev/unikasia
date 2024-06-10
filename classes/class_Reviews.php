@@ -567,6 +567,7 @@ class Reviews extends dbBasic{
         $subject = $clsEmailTemplate->getSubject($email_template_id). ' '.PAGE_NAME;
         $subject = str_replace('[%PAGE_NAME%]','',$subject);
 
+
         $is_send_email = $clsISO->sendEmail($from,$to,$subject,$message,$owner);
         
         $to = $clsEmailTemplate->getCopyTo($email_template_id);

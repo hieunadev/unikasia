@@ -187,14 +187,20 @@ function default_ajUpdPosSortGuideCat()
 function default_ajUpdPosSortGuideCatCountry()
 {
     global $dbconn, $assign_list, $_CONFIG,  $_SITE_ROOT, $mod, $_LANG_ID, $act, $menu_current, $current_page, $core, $clsModule;
-    global $clsConfiguration;
+    global $clsConfiguration, $clsISO;
     #
-    $clsGuideCat    =   new GuideCatStore();
+    $clsGuideCatStore       =   new GuideCatStore();
+    $clsGuideCat            =   new GuideCat();
+    #
     $order          =   $_POST['order'];
     $currentPage    =   $_POST['currentPage'];
     $recordPerPage  =   $_POST['recordPerPage'];
     #
-    foreach ($order as $key => $val) {
+    $arr_guidecat_id    =   [];
+    foreach ($order as $row) {
+        $arr_guidecat_id[]  =   $clsGuideCatStore->getGuideCatID($row);
+    }
+    foreach ($arr_guidecat_id as $key => $val) {
         $key    =   (($currentPage - 1) * $recordPerPage + $key + 1);
         $clsGuideCat->updateOne($val, "order_no='" . $key . "'");
     }
@@ -1568,7 +1574,7 @@ function default_editcat()
 function default_category_country()
 {
     global $assign_list, $_CONFIG,  $_SITE_ROOT, $mod, $_LANG_ID, $act, $menu_current, $current_page, $oneSetting;
-    global $core, $clsModule, $clsButtonNav, $oneSetting, $clsISO, $package_id;
+    global $core, $clsModule, $clsButtonNav, $oneSetting, $clsISO, $package_id, $dbconn;
     #
     $assign_list["clsModule"] = $clsModule;
     $clsCountry = new Country();
@@ -1595,95 +1601,83 @@ function default_category_country()
         if (isset($_POST['country_id']) && intval($_POST['country_id']) > 0) {
             $link .= '&country_id=' . $_POST['country_id'];
         }
-        if (isset($_POST['city_id']) && intval($_POST['city_id']) > 0) {
-            $link .= '&city_id=' . $_POST['city_id'];
-        }
-        if (isset($_POST['cat_id']) && intval($_POST['cat_id']) > 0) {
-            $link .= '&cat_id=' . $_POST['cat_id'];
-        }
-
         if (isset($_POST['keyword']) && !empty($_POST['keyword'])) {
             $link .= '&keyword=' . $_POST['keyword'];
         }
         header('location: ' . PCMS_URL . '/?mod=' . $mod . '&act=' . $act . $link);
     }
-
+    #
     /*List all item*/
-    $cond = "1=1";
+    $inner_join =   " INNER JOIN default_guidecat ON default_guidecat.guidecat_id = default_guidecat_store.guidecat_id";
+    $cond       =   " 1 = 1";
+    $cond2      =   " AND default_guidecat.is_trash = '0' AND default_guidecat.is_online = '1'";
+    $orderBy    =   " ORDER BY default_guidecat.order_no ASC";
     if (intval($country_id) > 0) {
-        $cond .= " and country_id='$country_id'";
-        $pUrl .= '&country_id=' . $country_id;
+        $cond   .=  " AND default_guidecat_store.country_id = '$country_id'";
+        $pUrl   .=  '&country_id=' . $country_id;
     }
     #Filter By Keyword
     if (isset($_GET['keyword']) && !empty($_GET['keyword'])) {
-        $keyword = $core->replaceSpace($_GET['keyword']);
-        $cond .= " and slug like '%" . $keyword . "%'";
+        $keyword    =   $core->replaceSpace($_GET['keyword']);
+        $cond       .=  " AND slug LIKE '%" . $keyword . "%'";
         $assign_list["keyword"] = $_GET['keyword'];
     }
     $assign_list["pUrl"] = $pUrl;
-    $cond2 = $cond;
-    if ($type_list == 'Active') {
-        $cond .= " and is_trash=0";
-    }
-    if ($type_list == 'Trash') {
-        $cond .= " and is_trash=1";
-    }
-    $orderBy = " order_no asc";
-    #-------Page Divide---------------------------------------------------------------
-    $recordPerPage = isset($_GET["recordperpage"]) ? $_GET["recordperpage"] : 20;
-    $currentPage = isset($_GET["page"]) ? $_GET["page"] : 1;
-    $start_limit = ($currentPage - 1) * $recordPerPage;
-    $limit = " limit $start_limit,$recordPerPage";
     #
-    $lstAllItem = $clsClassTable->getAll($cond);
+    $recordPerPage  =   isset($_GET["recordperpage"]) ? $_GET["recordperpage"] : 20;
+    $currentPage    =   isset($_GET["page"]) ? $_GET["page"] : 1;
+    $start_limit    =   ($currentPage - 1) * $recordPerPage;
+    $limit          =   " LIMIT $start_limit,$recordPerPage";
     #
-    $totalRecord = $clsClassTable->getAll($cond) ? count($clsClassTable->getAll($cond)) : 0;
-    $totalPage = ceil($totalRecord / $recordPerPage);
-    $assign_list['totalRecord'] = $totalRecord;
-    $assign_list['recordPerPage'] = $recordPerPage;
-    $assign_list['totalPage'] = $totalPage;
-    $assign_list['currentPage'] = $currentPage;
-
-    $stt = ($currentPage - 1) * $recordPerPage;
-    $assign_list['stt'] = $stt;
-
-
+    $sql    =   "SELECT default_guidecat_store.* FROM default_guidecat_store " . $inner_join . " WHERE " . $cond . $cond2 . $orderBy . $limit;
+    #
+    $totalRecord    =   $dbconn->GetAll($sql) ? count($dbconn->GetAll($sql)) : 0;
+    #
+    $totalPage  =   ceil($totalRecord / $recordPerPage);
+    $assign_list['totalRecord']     =   $totalRecord;
+    $assign_list['recordPerPage']   =   $recordPerPage;
+    $assign_list['totalPage']       =   $totalPage;
+    $assign_list['currentPage']     =   $currentPage;
+    #
+    $stt    =   ($currentPage - 1) * $recordPerPage;
+    $assign_list['stt'] =   $stt;
+    #
     $listPageNumber =  array();
     for ($i = 1; $i <= $totalPage; $i++) {
-        $listPageNumber[] = $i;
+        $listPageNumber[]   =   $i;
     }
-    $assign_list['listPageNumber'] = $listPageNumber;
-    $query_string = $_SERVER['QUERY_STRING'];
-    $lst_query_string = explode('&', $query_string);
-    $link_page_current = '';
-    for ($i = 0; $i < count($lst_query_string); $i++) {
-        $tmp = explode('=', $lst_query_string[$i]);
-        if ($tmp[0] != 'page')
-            $link_page_current .= ($i == 0) ? '?' . $lst_query_string[$i] : '&' . $lst_query_string[$i];
-    }
-    $assign_list['link_page_current'] = $link_page_current;
+    $assign_list['listPageNumber']  =   $listPageNumber;
     #
-    $link_page_current_2 = '';
+    $query_string       =   $_SERVER['QUERY_STRING'];
+    $lst_query_string   =   explode('&', $query_string);
+    $link_page_current  =   '';
     for ($i = 0; $i < count($lst_query_string); $i++) {
-        $tmp = explode('=', $lst_query_string[$i]);
-        if ($tmp[0] != 'page' && $tmp[0] != 'type_list')
-            $link_page_current_2 .= ($i == 0) ? '?' . $lst_query_string[$i] : '&' . $lst_query_string[$i];
+        $tmp    =   explode('=', $lst_query_string[$i]);
+        if ($tmp[0] != 'page')
+            $link_page_current  .=  ($i == 0) ? '?' . $lst_query_string[$i] : '&' . $lst_query_string[$i];
     }
-    $assign_list['link_page_current_2'] = $link_page_current_2;
-    #-------End Page Divide-----------------------------------------------------------
-    // $clsClassTable->setDebug(1);
-    $allItem = $clsClassTable->getAll($cond . " order by " . $orderBy . $limit);
-    // die;
-    // $clsISO->dd($allItem);
-
+    $assign_list['link_page_current']   =   $link_page_current;
+    #
+    $link_page_current_2    =   '';
+    for ($i = 0; $i < count($lst_query_string); $i++) {
+        $tmp    =   explode('=', $lst_query_string[$i]);
+        if ($tmp[0] != 'page' && $tmp[0] != 'type_list')
+            $link_page_current_2    .=  ($i == 0) ? '?' . $lst_query_string[$i] : '&' . $lst_query_string[$i];
+    }
+    $assign_list['link_page_current_2'] =   $link_page_current_2;
+    #
+    // $clsISO->dd($sql);
+    #
+    $allItem    =   $dbconn->GetAll($sql);
+    #
     $assign_list["allItem"] = $allItem;
-
+    #
     //Action
-    $action = isset($_GET['action']) ? $_GET['action'] : '';
+    $action     =   isset($_GET['action']) ? $_GET['action'] : '';
     if ($action == 'Trash') {
-        $string = isset($_GET['guidecat_store_id']) ? ($_GET['guidecat_store_id']) : '';
-        $guidecat_store_id = intval($core->decryptID($string));
-        $pUrl = '';
+        $string =   isset($_GET['guidecat_store_id']) ? ($_GET['guidecat_store_id']) : '';
+        $guidecat_store_id  =   intval($core->decryptID($string));
+        $pUrl   =   '';
         if ($string == '' && $guidecat_store_id == 0) {
             header('location:' . PCMS_URL . '/index.php?admin&mod=' . $mod . '&act=' . $act . $pUrl . '&message=NotPermission');
             exit();
@@ -1693,9 +1687,9 @@ function default_category_country()
         }
     }
     if ($action == 'Restore') {
-        $string = isset($_GET['guidecat_store_id']) ? ($_GET['guidecat_store_id']) : '';
+        $string =   isset($_GET['guidecat_store_id']) ? ($_GET['guidecat_store_id']) : '';
         $guidecat_store_id = intval($core->decryptID($string));
-        $pUrl = '';
+        $pUrl   =   '';
         if ($string == '' && $guidecat_store_id == 0) {
             header('location:' . PCMS_URL . '/index.php?admin&mod=' . $mod . '&act=' . $act . $pUrl . '&message=NotPermission');
             exit();
@@ -1705,9 +1699,9 @@ function default_category_country()
         }
     }
     if ($action == 'Delete') {
-        $string = isset($_GET['guidecat_store_id']) ? ($_GET['guidecat_store_id']) : '';
+        $string =   isset($_GET['guidecat_store_id']) ? ($_GET['guidecat_store_id']) : '';
         $guidecat_store_id = intval($core->decryptID($string));
-        $pUrl = '';
+        $pUrl   =   '';
         if ($string == '' && $guidecat_store_id == 0) {
             header('location:' . PCMS_URL . '/index.php?admin&mod=' . $mod . '&act=' . $act . $pUrl . '&message=NotPermission');
             exit();
@@ -1716,6 +1710,159 @@ function default_category_country()
             header('location: ' . PCMS_URL . '/?mod=' . $mod . '&act=' . $act . $pUrl . '&message=DeleteSuccess');
         }
     }
+
+
+
+
+
+    // global $assign_list, $_CONFIG,  $_SITE_ROOT, $mod, $_LANG_ID, $act, $menu_current, $current_page, $oneSetting;
+    // global $core, $clsModule, $clsButtonNav, $oneSetting, $clsISO, $package_id;
+    // #
+    // $assign_list["clsModule"] = $clsModule;
+    // $clsCountry = new Country();
+    // $assign_list["clsCountry"] = $clsCountry;
+    // $clsGuideCat = new GuideCat();
+    // $assign_list["clsGuideCat"] = $clsGuideCat;
+    // #
+    // $user_id = $core->_USER['user_id'];
+    // $country_id = isset($_GET['country_id']) ? $_GET['country_id'] : 0;
+    // $assign_list["country_id"] = $country_id;
+    // #
+    // $pUrl = '&country_id=' . $country_id;
+    // $assign_list["pUrl"] = $pUrl;
+    // #
+    // $classTable = "GuideCatStore";
+    // $clsClassTable = new $classTable;
+    // $tableName = $clsClassTable->tbl;
+    // $pkeyTable = $clsClassTable->pkey;
+    // $assign_list["clsClassTable"] = $clsClassTable;
+    // $assign_list["pkeyTable"] = $pkeyTable;
+    // #
+    // if (isset($_POST['filter']) && $_POST['filter'] == 'filter') {
+    //     $link = '';
+    //     if (isset($_POST['country_id']) && intval($_POST['country_id']) > 0) {
+    //         $link .= '&country_id=' . $_POST['country_id'];
+    //     }
+    //     if (isset($_POST['city_id']) && intval($_POST['city_id']) > 0) {
+    //         $link .= '&city_id=' . $_POST['city_id'];
+    //     }
+    //     if (isset($_POST['cat_id']) && intval($_POST['cat_id']) > 0) {
+    //         $link .= '&cat_id=' . $_POST['cat_id'];
+    //     }
+
+    //     if (isset($_POST['keyword']) && !empty($_POST['keyword'])) {
+    //         $link .= '&keyword=' . $_POST['keyword'];
+    //     }
+    //     header('location: ' . PCMS_URL . '/?mod=' . $mod . '&act=' . $act . $link);
+    // }
+    // #
+    // /*List all item*/
+    // $cond = "1=1";
+    // if (intval($country_id) > 0) {
+    //     $cond .= " and country_id='$country_id'";
+    //     $pUrl .= '&country_id=' . $country_id;
+    // }
+    // #Filter By Keyword
+    // if (isset($_GET['keyword']) && !empty($_GET['keyword'])) {
+    //     $keyword = $core->replaceSpace($_GET['keyword']);
+    //     $cond .= " and slug like '%" . $keyword . "%'";
+    //     $assign_list["keyword"] = $_GET['keyword'];
+    // }
+    // $assign_list["pUrl"] = $pUrl;
+    // $cond2 = $cond;
+    // if ($type_list == 'Active') {
+    //     $cond .= " and is_trash=0";
+    // }
+    // if ($type_list == 'Trash') {
+    //     $cond .= " and is_trash=1";
+    // }
+    // $orderBy = " order_no asc";
+    // #-------Page Divide---------------------------------------------------------------
+    // $recordPerPage = isset($_GET["recordperpage"]) ? $_GET["recordperpage"] : 20;
+    // $currentPage = isset($_GET["page"]) ? $_GET["page"] : 1;
+    // $start_limit = ($currentPage - 1) * $recordPerPage;
+    // $limit = " limit $start_limit,$recordPerPage";
+    // #
+    // $lstAllItem = $clsClassTable->getAll($cond);
+    // #
+    // $totalRecord = $clsClassTable->getAll($cond) ? count($clsClassTable->getAll($cond)) : 0;
+    // $totalPage = ceil($totalRecord / $recordPerPage);
+    // $assign_list['totalRecord'] = $totalRecord;
+    // $assign_list['recordPerPage'] = $recordPerPage;
+    // $assign_list['totalPage'] = $totalPage;
+    // $assign_list['currentPage'] = $currentPage;
+    // #
+    // $stt = ($currentPage - 1) * $recordPerPage;
+    // $assign_list['stt'] = $stt;
+    // #
+    // $listPageNumber =  array();
+    // for ($i = 1; $i <= $totalPage; $i++) {
+    //     $listPageNumber[] = $i;
+    // }
+    // $assign_list['listPageNumber'] = $listPageNumber;
+    // $query_string = $_SERVER['QUERY_STRING'];
+    // $lst_query_string = explode('&', $query_string);
+    // $link_page_current = '';
+    // for ($i = 0; $i < count($lst_query_string); $i++) {
+    //     $tmp = explode('=', $lst_query_string[$i]);
+    //     if ($tmp[0] != 'page')
+    //         $link_page_current .= ($i == 0) ? '?' . $lst_query_string[$i] : '&' . $lst_query_string[$i];
+    // }
+    // $assign_list['link_page_current'] = $link_page_current;
+    // #
+    // $link_page_current_2 = '';
+    // for ($i = 0; $i < count($lst_query_string); $i++) {
+    //     $tmp = explode('=', $lst_query_string[$i]);
+    //     if ($tmp[0] != 'page' && $tmp[0] != 'type_list')
+    //         $link_page_current_2 .= ($i == 0) ? '?' . $lst_query_string[$i] : '&' . $lst_query_string[$i];
+    // }
+    // $assign_list['link_page_current_2'] = $link_page_current_2;
+    // #
+    // // $clsClassTable->setDebug(1);
+    // $allItem = $clsClassTable->getAll($cond . " order by " . $orderBy . $limit);
+    // // die;
+    // // $clsISO->dd($allItem);
+    // #
+    // $assign_list["allItem"] = $allItem;
+    // #
+    // //Action
+    // $action = isset($_GET['action']) ? $_GET['action'] : '';
+    // if ($action == 'Trash') {
+    //     $string = isset($_GET['guidecat_store_id']) ? ($_GET['guidecat_store_id']) : '';
+    //     $guidecat_store_id = intval($core->decryptID($string));
+    //     $pUrl = '';
+    //     if ($string == '' && $guidecat_store_id == 0) {
+    //         header('location:' . PCMS_URL . '/index.php?admin&mod=' . $mod . '&act=' . $act . $pUrl . '&message=NotPermission');
+    //         exit();
+    //     }
+    //     if ($clsClassTable->updateOne($guidecat_store_id, "is_trash='1'")) {
+    //         header('location: ' . PCMS_URL . '/?mod=' . $mod . '&act=' . $act . $pUrl . '&message=TrashSuccess');
+    //     }
+    // }
+    // if ($action == 'Restore') {
+    //     $string = isset($_GET['guidecat_store_id']) ? ($_GET['guidecat_store_id']) : '';
+    //     $guidecat_store_id = intval($core->decryptID($string));
+    //     $pUrl = '';
+    //     if ($string == '' && $guidecat_store_id == 0) {
+    //         header('location:' . PCMS_URL . '/index.php?admin&mod=' . $mod . '&act=' . $act . $pUrl . '&message=NotPermission');
+    //         exit();
+    //     }
+    //     if ($clsClassTable->updateOne($guidecat_store_id, "is_trash='0'")) {
+    //         header('location: ' . PCMS_URL . '/?mod=' . $mod . '&act=' . $act . $pUrl . '&message=RestoreSuccess');
+    //     }
+    // }
+    // if ($action == 'Delete') {
+    //     $string = isset($_GET['guidecat_store_id']) ? ($_GET['guidecat_store_id']) : '';
+    //     $guidecat_store_id = intval($core->decryptID($string));
+    //     $pUrl = '';
+    //     if ($string == '' && $guidecat_store_id == 0) {
+    //         header('location:' . PCMS_URL . '/index.php?admin&mod=' . $mod . '&act=' . $act . $pUrl . '&message=NotPermission');
+    //         exit();
+    //     }
+    //     if ($clsClassTable->deleteOne($guidecat_store_id)) {
+    //         header('location: ' . PCMS_URL . '/?mod=' . $mod . '&act=' . $act . $pUrl . '&message=DeleteSuccess');
+    //     }
+    // }
 }
 function default_OpenGuideCategory()
 {

@@ -33,17 +33,20 @@
                     <p>{$clsHotel->getAddress($hotel_id,$arrHotel)}</p>
                 </div>
             </div>
-		                    <div class="txt_score-review">
+		       <div class="txt_score-review">
                 <div class="border_score">
                     <p class="numb_scorestay">0.0</p>
                 </div>
                 <div class="txt_reviewsquality">
-                <p class="txt_qualityreview">{$textRateAvg} <span class="txt_reviews">({$ratingCount} {$core->get_Lang('reviews')})</span></p>
+                <p class="txt_qualityreview">{$textRateAvg} 
+					<span class="txt_reviews">({$ratingCount} {$core->get_Lang('reviews')})</span></p>
             </div>
 		</div>
-        <div class="price_from">
-            {$core->get_Lang('Only from')} <span>{$clsHotel->getPriceOnPromotion($hotel_id)}</span>
-        </div>
+         <div class="des_list_hotel_item_price">
+                                    <span class="des_price_title">Avg price per night</span>
+                                    <span class="des_price_show_text">US</span>
+                                    <span class="des_price_show_number">${$clsHotel->getPriceAvg($hotel_id)}</span>
+                                </div>
     </div>
 </div>
 

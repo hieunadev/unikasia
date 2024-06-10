@@ -12,9 +12,9 @@ class TourStore extends dbBasic{
 		global $core,$clsISO,$package_id;
 		$lstType = array();
 		$lstType['TOPTOUR'] = $core->get_Lang('Top Trip');
-		if($clsISO->getCheckActiveModulePackage($package_id,'tour_exhautive','store','default','REVQQVJUVVJFLVZpZXRJU08=')){
-			$lstType['DEPARTURE'] = $core->get_Lang('Tour Departure');
-		}
+//		if($clsISO->getCheckActiveModulePackage($package_id,'tour_exhautive','store','default','REVQQVJUVVJFLVZpZXRJU08=')){
+//			$lstType['DEPARTURE'] = $core->get_Lang('Tour Departure');
+//		}
 //        $clsISO->dd($lstType);
 		return $lstType;
 	}

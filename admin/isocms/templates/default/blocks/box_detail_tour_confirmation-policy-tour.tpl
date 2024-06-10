@@ -2,13 +2,13 @@
 	<div class="row d-flex full-height">
 		<div class="col-md-9">
 			<div class="fill_data_box">
-				<h3 class="title_box mb05">{$core->get_Lang('Confirmation policy tour')}
+				<h3 class="title_box mb40">{$core->get_Lang('Booking policy')}
 				{assign var= confirmation_policy_tour value='confirmation_policy_tour'}
 				{if $CHECKHELP eq 1}
 				<button data-key="{$confirmation_policy_tour}" data-label="{$core->get_Lang('Confirmation policy tour')}" type="button" title="Thêm mô tả" onclick="open_texthelp(this, event)" class="btn btn-xs btn-default"><i class="fa fa-plus-circle"></i></button>
 				{/if}
 				</h3>
-				<p class="intro_box mb40">{$core->get_Lang('introconfirmationpolicytour')}</p>
+{*				<p class="intro_box mb40">{$core->get_Lang('introconfirmationpolicytour')}</p>*}
 				<div class="form_option_tour">
 					<div class="inpt_tour p-b-30">
 						{if $oneItem.yield_id}

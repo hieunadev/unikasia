@@ -759,16 +759,29 @@ class Hotel extends dbBasic
 	}
 	function checkProperty($type, $pvalTable, $property_id)
 	{
+		global $clsISO;
+//		$clsISO->pre($type);
+//		$clsISO->pre($pvalTable);
+//		$clsISO->pre($property_id);
+//		die();
 		$oneItem = $this->getOne($pvalTable);
+//				$clsISO->pre($oneItem);
+//		die();
 		$str = $oneItem['list_' . $type];
+//						$clsISO->pre($str);
+//		die();
 		$str_array = explode('|', $str);
+//			$clsISO->pre($str_array);
+//		die();
 		for ($i = 0; $i < count($str_array); $i++) {
 			if ($str_array[$i] == $property_id) {
 				return 1;
 			}
+			
 		}
 		return 0;
 	}
+	
 	function checkAttraction($pvalTable, $hotel_attraction_id)
 	{
 		$oneItem = $this->getOne($pvalTable, 'list_attraction');

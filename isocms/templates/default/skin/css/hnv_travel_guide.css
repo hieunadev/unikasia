@@ -52,6 +52,7 @@ body {
 .des_travel_guide_image img {
     border-radius: 8px;
     width: 100%;
+    object-fit: cover;
 }
 
 .des_travel_guide_link {

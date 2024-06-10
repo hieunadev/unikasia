@@ -1,6 +1,6 @@
 <div class="trvg_header">
     <h1 class="trvg_header_title">
-        {if $show eq 'Country'}
+        {if $show eq 'Country' || $show eq 'SearchGuide'}
         WHEN TO GO TO?
         {elseif $show eq 'GuideCat'}
         {$clsGuideCat->getTitle($guidecat_id)}

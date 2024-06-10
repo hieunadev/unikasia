@@ -1018,8 +1018,14 @@ function default_detail() {
 	$assign_list["table_id"] = $hotel_id;
     
    ////$abc= $clsHotel->getImageMapStatic($hotel_id,400,400);print_r($abc);die();
-    
-    
+    $order_by = " order by order_no ASC";
+	
+    $limit_left ="limit 1";
+	$limit_right ="limit 4";
+	
+//	$lstHotelLeft = "$clsHotelImage->getAll($clsHotelImage->getAll($order_by. "is_trash=0 and table_id='$hotel_id' and image <> '' ",$clsHotelImage->pkey.',image,title');)"
+		
+	
 	$oneItem = $clsHotel->getOne($hotel_id);
 	
 	$assign_list['oneItem']=$oneItem;
@@ -1150,9 +1156,18 @@ function default_detail() {
         header('location:'.$link);
         exit();
     }
+	
+	$listHotelFacilitiesFavorite=$clsProperty->getAll("is_trash=0 and type='HotelFacilities' and is_favorite=1 order by order_no ASC");
+
+//	var_dump($listHotelFacilitiesFavorite); die();
+	
+	$assign_list["listHotelFacilitiesFavorite"] = $listHotelFacilitiesFavorite;
+	$listHotelFacilitiesOther=$clsProperty->getAll("is_trash=0 and type='HotelFacilities' and is_favorite=0 order by order_no ASC");
+	$assign_list["listHotelFacilitiesOther"] = $listHotelFacilitiesOther;
+	
 	 
     /*=============Title & Description Page==================*/
-	$title_page = $clsHotel->getTitle($hotel_id,$oneItem).' | '.$core->get_Lang('Hotels').' | '.PAGE_NAME;
+	$title_page = $clsHotel->getTitle($hotel_id,$oneItem);
 	 $assign_list["title_page"] = $title_page;
 	$description_page =$title_page;
 	$description_page = $clsISO->getMetaDescription($hotel_id,'Hotel',$oneItem);

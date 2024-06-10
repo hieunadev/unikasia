@@ -43,7 +43,7 @@ $arr_trvs_country   =   $clsCategory_Country->getAll("is_trash = 0 AND is_online
 $smarty->assign('arr_trvs_country', $arr_trvs_country);
 #
 // List danh mục travel guide by country
-$arr_trvg_country   =   $clsGuideCat->getAll("is_trash = 0 AND is_online = 1 AND guidecat_id IN (SELECT guidecat_id FROM default_guidecat_store WHERE country_id = $country_id) ORDER BY order_no ASC", 'guidecat_id, slug');
+$arr_trvg_country   =   $clsGuideCat->getAll("is_trash = 0 AND is_online = 1 AND guidecat_id IN (SELECT guidecat_id FROM default_guidecat_store WHERE is_trash = 0 AND is_online = 1 AND country_id = $country_id) ORDER BY order_no ASC", 'guidecat_id, slug');
 $smarty->assign('arr_trvg_country', $arr_trvg_country);
 #
 // Data danh mục travel style by country hiện tại

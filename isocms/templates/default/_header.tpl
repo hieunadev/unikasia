@@ -58,7 +58,7 @@
                                 <div class="dropdown-menu dropdown-stay-parent">
                                     <div class="dropdown-menu-stay">
                                         {section name=i loop=$lstCountry}
-                                        <a class="dropdown-item position-relative overflow-hidden" href="{$clsCountryEx->getLink($lstCountry[i].country_id, "Hotel")}">
+                                        <a class="dropdown-item position-relative overflow-hidden" href="{$clsCountryEx->getLink($lstCountry[i].country_id, " Hotel")}">
                                             <img src="{$lstCountry[i].image_hotel_sub}" onerror="this.src='{$URL_IMAGES}/none_image.png'" alt="{$lstCountry[i].slug}">
                                             <span class="text-light">{$lstCountry[i].title}</span>
                                         </a>
@@ -84,7 +84,7 @@
                                 </button>
                                 <div class="dropdown-menu">
                                     {section name=i loop=$lstCountry}
-                                    <a class="dropdown-item" href="{$clsCountryEx->getLink($lstCountry[i].country_id, "Blog")}">{$lstCountry[i].title}</a>
+                                    <a class="dropdown-item" href="{$clsCountryEx->getLink($lstCountry[i].country_id, " Blog")}">{$lstCountry[i].title}</a>
                                     {/section}
                                 </div>
                             </div>
@@ -107,16 +107,16 @@
                 </div>
             </div>
         </div>
-        {if ($mod eq 'destination' && $act eq 'place') || $mod eq 'guide' && $act eq 'search'}
+        {if ($mod eq 'destination' && $act eq 'place')}
         {$core->getBlock('des_header_destination')}
         {/if}
         {if $mod eq 'destination' && $act eq 'travel_style' || $mod eq 'tour' && $act eq 'cat'}
         {$core->getBlock('des_header_travel_style')}
         {/if}
-        {if ($mod eq 'destination' && $act eq 'travel_guide') || ($mod eq 'guide' && $act eq 'cat')}
+        {if ($mod eq 'destination' && $act eq 'travel_guide') || ($mod eq 'guide' && $act eq 'cat') || ($mod eq 'guide' && $act eq 'search')}
         {$core->getBlock('des_header_travel_guide')}
         {/if}
-        {if ($mod eq 'destination' && $act eq 'travel_guide_detail') || ($mod eq 'destination' && $act eq 'attraction')}
+        {if ($mod eq 'destination' && $act eq 'travel_guide_detail') || ($mod eq 'destination' && $act eq 'attraction') || ($mod eq 'guide' && $act eq 'detail')}
         {$core->getBlock('des_header_travel_guide_detail')}
         {/if}
         {if $mod eq 'homepackage'}

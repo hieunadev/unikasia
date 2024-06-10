@@ -210,7 +210,7 @@ function default_detaildeparture() {
     $cond = " is_trash = 0 and";
     $order = " order by order_no";
 
-    $lstReviews = $clsReviews->getAll("$cond table_id = $tour_id $order");
+    $lstReviews = $clsReviews->getAll("$cond is_online = 1 and table_id = $tour_id $order");
     $countReview = $clsReviews->countItem("$cond table_id = $tour_id $order");
     $lstTourImage = $clsTourImage->getAll("$cond table_id = $tour_id $order", "tour_image_id, image");
     $lstTourItinerary = $clsTourItinerary->getAll("$cond tour_id = $tour_id order by day");
@@ -288,9 +288,10 @@ function default_detaildeparture() {
     $assign_list["travel_style_id"] = $travel_style_id;
     $assign_list["averageRate"] = !empty($averageRate) ? number_format($averageRate,1) : 0.0;
     $assign_list["country_id"] = $country_id;
+    $format_time_now = date('M d,Y',strtotime("+1 day")); $assign_list['format_time_now'] = $format_time_now;
 
     /*=============Title & Description Page==================*/
-    $title_page = $clsTour->getTitle($tour_id) . ' | ' . $core->get_Lang('tours') . ' | ' . PAGE_NAME;
+    $title_page = $clsTour->getTitle($tour_id);
     $assign_list["title_page"] = $title_page;
     $description_page = $clsISO->getMetaDescription($tour_id, 'Tour');
     $assign_list["description_page"] = $description_page;

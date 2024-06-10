@@ -222,7 +222,7 @@
 	});
 </script>
 <style type="text/css">
-	#writeTourReview{margin-bottom:32px}
+	#writeTourReview{margin-bottom:32px; display: none}
 	#writeTourReview .bottom {
 		overflow: hidden;
 		padding: 10px 0;

@@ -14,8 +14,8 @@
 							<div class="col-md-5 col-sm-12">
 								<div class="filedrop-picker">
 									<div class="filedrop" onclick="file_explorer(this,event);" ondrop="file_drop(this,event)" toId="selectFile" data-options='{ldelim}"openFrom":"gallery","table_id":"{$pvalTable}","clsTableGal":"TourImage"{rdelim}' ondragover="return false">
-										<h3>Kéo ảnh vào đây để tải lên</h3>
-										<p>Kích thước (WxH=840x480px)<br>
+										<h3>{$core->get_Lang('Kéo ảnh vào đây để tải lên')}</h3>
+										<p>Kích thước (WxH=841x552px)<br>
 										Các loại tệp được hỗ trợ là: .png,.jpg,.jpeg</p>
 										<button type="button" class="btn btn-upload">{$core->get_Lang('From computer')}</button>
 									</div>

@@ -41,12 +41,12 @@
 								{section name=i loop=$lst_travel_style_overview}
 								{$clsTourCategory->getTitle($lst_travel_style_overview[i])}{if !$smarty.section.i.last};{/if}
 								{/section}
-							</ul>
+							</p>
 							{else}
 							<p class="text">{$core->get_Lang('No Travel style selected')}</p>
 							{/if}
 						</div>
-						<div class="box-item">
+						{*<div class="box-item">
 							<h3 class="box-title d-flex justify-content-between align-items-center">
 								<span>{$core->get_Lang('Tag')}</span>
 								<a class="link_open" href="{$PCMS}/admin/tour/edit/{$pvalTable}/basic/option-tour">
@@ -58,11 +58,11 @@
 								{section name=i loop=$lst_tag_overview}
 								{$clsTag->getTitle($lst_tag_overview[i])}{if !$smarty.section.i.last};{/if}
 								{/section}
-							</ul>
+							</p>
 							{else}
 							<p class="text">{$core->get_Lang('No Tag selected')}</p>
 							{/if}
-						</div>
+						</div>*}
 						<div class="box-item">
 							<h3 class="box-title d-flex justify-content-between align-items-center">
 								<span>{$core->get_Lang('Departure point')}</span>
@@ -75,7 +75,7 @@
 								{section name=i loop=$lst_departure_point_overview}
 								{$clsCity->getTitle($lst_departure_point_overview[i])}{if !$smarty.section.i.last};{/if}
 								{/section}
-							</ul>
+							</p>
 							{else}
 							<p class="text">{$core->get_Lang('No Departure point selected')}</p>
 							{/if}
@@ -93,7 +93,7 @@
 								{section name=i loop=$lst_activities_overview}
 								{$clsActivities->getTitle($lst_activities_overview[i])}{if !$smarty.section.i.last};{/if}
 								{/section}
-							</ul>
+							</p>
 							{else}
 							<p class="text">{$core->get_Lang('No Activities tour selected')}</p>
 							{/if}

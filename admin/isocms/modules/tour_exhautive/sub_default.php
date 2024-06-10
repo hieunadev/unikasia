@@ -1344,14 +1344,14 @@ function default_edit()
     $child_basic[] = 'love-trip';
 
 
-    if ($clsISO->getCheckActiveModulePackage($package_id, 'property', 'activities', 'default')) {
-        $child_basic[] = 'activities-tour';
-    }
+//    if ($clsISO->getCheckActiveModulePackage($package_id, 'property', 'activities', 'default')) {
+//        $child_basic[] = 'activities-tour';
+//    }
     $child_basic[] = 'inclusion-tour';
     $child_basic[] = 'exclusion-tour';
-    $child_basic[] = 'whatcarry-tour';
-    $child_basic[] = 'cancellation_policy-tour';
-    $child_basic[] = 'refund-tour';
+//    $child_basic[] = 'whatcarry-tour';
+//    $child_basic[] = 'cancellation_policy-tour';
+//    $child_basic[] = 'refund-tour';
     $child_basic[] = 'confirmation-policy-tour';
     $list_basic_ar['child'] = $child_basic;
 
@@ -1539,9 +1539,9 @@ function default_edit()
             $list_check_target[] = array('result' => 'check_caution', 'cat' => 'basic', 'target' => 'refund-tour', 'name' => $core->get_Lang('Refund Policy'));
         }
         if ($oneItem['confirmation_policy'] != '') {
-            $list_check_target[] = array('result' => 'check_success', 'cat' => 'basic', 'target' => 'confirmation-policy-tour', 'name' => $core->get_Lang('Confirmation Policy') . ($oneItem['yield_id'] ? $clsISO->makeIcon('compress', '', 'ml-2') : ''));
+            $list_check_target[] = array('result' => 'check_success', 'cat' => 'basic', 'target' => 'confirmation-policy-tour', 'name' => $core->get_Lang('Booking Policy') . ($oneItem['yield_id'] ? $clsISO->makeIcon('compress', '', 'ml-2') : ''));
         } else {
-            $list_check_target[] = array('result' => 'check_caution', 'cat' => 'basic', 'target' => 'confirmation-policy-tour', 'name' => $core->get_Lang('Confirmation Policy'));
+            $list_check_target[] = array('result' => 'check_caution', 'cat' => 'basic', 'target' => 'confirmation-policy-tour', 'name' => $core->get_Lang('Booking Policy'));
         }
 
         if ($oneItem['duration_type'] == 0) {

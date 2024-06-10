@@ -12,7 +12,16 @@
 			{section name=i loop=$listHotelFacilitiesFavorite}
 			{if $clsProperty->getTitle($listHotelFacilitiesFavorite[i].property_id)}
 			<div class="col-md-3 col-sm-4 col-xs-6">
-				<div class="facilities_item" hotel_id="{$pvalTable}"><input type="checkbox" name="list_HotelFacilities[]" {if $clsHotel->checkProperty('HotelFacilities', $pvalTable,$listHotelFacilitiesFavorite[i].property_id)}checked {/if} value="{$listHotelFacilitiesFavorite[i].property_id}"/> <span class="text">{$clsProperty->getTitle($listHotelFacilitiesFavorite[i].property_id)}</span></div>
+				<div class="facilities_item" hotel_id="{$pvalTable}">
+					<input type="checkbox" name="list_HotelFacilities[]" 
+						{if $clsHotel->checkProperty('HotelFacilities', $pvalTable,$listHotelFacilitiesFavorite[i].property_id)}
+								checked 
+						{/if} 
+					value="{$listHotelFacilitiesFavorite[i].property_id}"/> 
+					<span class="text">
+						{$clsProperty->getTitle($listHotelFacilitiesFavorite[i].property_id)}
+					</span>
+				</div>
 			</div>
 			{/if}
 			{/section}

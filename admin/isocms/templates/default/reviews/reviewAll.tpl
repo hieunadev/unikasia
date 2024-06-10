@@ -93,7 +93,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-lg-4 col-md-6 box-col">
+			{*<div class="col-lg-4 col-md-6 box-col">
 				<div class="box_chart box_white">
 					<div class="head_box_chart d-flex flex-wrap justify-content-between">
 						<h3 class="title_box_chart">{$core->get_Lang("Review voucher")}</h3>
@@ -109,7 +109,7 @@
 						<div class="box_chart_voucher" id="box_chart_voucher"></div>
 					</div>
 				</div>
-			</div>
+			</div>*}
 		</div>
 		<div class="row" style="margin-top: 12px">
 			<div class="col-lg-12">
@@ -122,7 +122,7 @@
 								<li><a data-toggle="tab" href="#tour" data-url="{$PCMS_URL}?mod=reviews&type=tour">{$core->get_Lang('Tour')}</a></li>
 								<li><a data-toggle="tab" href="#cruise" data-url="{$PCMS_URL}?mod=reviews&type=cruise">{$core->get_Lang('Cruise')}</a></li>
 								<li><a data-toggle="tab" href="#hotel" data-url="{$PCMS_URL}?mod=reviews&type=hotel">{$core->get_Lang('Hotel')}</a></li>
-								<li><a data-toggle="tab" href="#voucher" data-url="{$PCMS_URL}?mod=reviews&type=voucher">{$core->get_Lang('Voucher')}</a></li>
+{*								<li><a data-toggle="tab" href="#voucher" data-url="{$PCMS_URL}?mod=reviews&type=voucher">{$core->get_Lang('Voucher')}</a></li>*}
 							</ul>
 						</div>
 						<a href="{$PCMS_URL}?mod=reviews&act=reviewAll" class="view_all" id="view_all">{$core->get_Lang('View all')}</a>

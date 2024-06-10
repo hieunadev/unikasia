@@ -653,7 +653,7 @@ function default_detail(){
 	
 	
 	/*=============Title & Description Page==================*/
-	$title_page = $clsBlog->getTitle($blog_id,$blogItem).' | '.$core->get_Lang('blogs').' | '.PAGE_NAME;
+	$title_page = $clsBlog->getTitle($blog_id,$blogItem);
 	$assign_list["title_page"] = $title_page;
 	$description_page = $clsISO->getMetaDescription($blog_id,'Blog',$blogItem);
 	$assign_list["description_page"] = $description_page;

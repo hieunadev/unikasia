@@ -30,7 +30,7 @@ function getFrame(){
 					'name' =>  $core->get_Lang('Children and bed')
 				),
 				'cancellation_policy' => array(
-					'name' =>  $core->get_Lang('Cancel reservation/ Prepay')
+					'name' =>  $core->get_Lang('Cancellation')
 				),
 				
 				'exclude_policy' => array(

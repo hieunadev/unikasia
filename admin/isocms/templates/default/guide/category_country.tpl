@@ -67,7 +67,7 @@
                             {assign var="guidecat_store_id" value=$allItem[i].guidecat_store_id}
                             {assign var="country_id" value=$allItem[i].country_id}
                             {assign var="guidecat_id" value=$allItem[i].guidecat_id}
-                            <tr style="cursor:move" id="order_{$guidecat_store_id}">
+                            <tr id="order_{$guidecat_store_id}">
                                 <td class="check_40 has-checkbox text-center">
                                     <input name="p_key[]" class="chkitem el-checkbox" type="checkbox" value="{$guidecat_store_id}" />
                                 </td>
@@ -78,7 +78,11 @@
                                     {if $allItem[i].is_trash eq '1'}<span class="fr" style="color:#CCC">{$core->get_Lang('intrash')}</span>{/if}
                                     <button type="button" class="toggle-row inline_block767" style="display:none"><i class="fa fa-caret fa-caret-down"></i></button>
                                 </td>
-                                <td data-title="{$core->get_Lang('Country')}" class="block_responsive border_top_responsive"><strong style="font-size:16px;">{$clsCountry->getTitle($allItem[i].country_id)}</strong></td>
+                                <td data-title="{$core->get_Lang('Country')}" class="block_responsive border_top_responsive">
+                                    <strong style="font-size:16px;">
+                                        {$clsCountry->getTitle($allItem[i].country_id)}
+                                    </strong>
+                                </td>
                                 <td data-title="{$core->get_Lang('status')}" class="block_responsive" style="text-align:center">
                                     <a href="javascript:void(0);" class="SiteClickPublic" clsTable="GuideCatStore" pkey="{$pkeyTable}" sourse_id="{$allItem[i].$pkeyTable}" rel="{$clsClassTable->getOneField('is_online',$allItem[i].$pkeyTable)}" title="{$core->get_Lang('Click to change status')}">
                                         {if $clsClassTable->getOneField('is_online',$allItem[i].$pkeyTable) eq '1'}
@@ -135,25 +139,25 @@
 <script type="text/javascript" src="{$URL_THEMES}/guide/jquery.guide.js?v={$upd_version}"></script>
 {literal}
 <script type="text/javascript">
-    $("#SortAble").sortable({
-        opaguide: 0.8,
-        cursor: 'move',
-        start: function() {
-            vietiso_loading(1);
-        },
-        stop: function() {
-            vietiso_loading(0);
-        },
-        update: function() {
-            var recordPerPage = $recordPerPage;
-            var currentPage = $currentPage;
-            var order = $(this).sortable("serialize") + '&update=update' + '&recordPerPage=' + recordPerPage + '&currentPage=' + currentPage;
-            $.post(path_ajax_script + "/index.php?mod=guide&act=ajUpdPosSortGuideCatCountry", order,
-                function(html) {
-                    vietiso_loading(0);
-                    location.href = REQUEST_URI;
-                });
-        }
-    });
+    // $("#SortAble").sortable({
+    //     opaguide: 0.8,
+    //     cursor: 'move',
+    //     start: function() {
+    //         vietiso_loading(1);
+    //     },
+    //     stop: function() {
+    //         vietiso_loading(0);
+    //     },
+    //     update: function() {
+    //         var recordPerPage = $recordPerPage;
+    //         var currentPage = $currentPage;
+    //         var order = $(this).sortable("serialize") + '&update=update' + '&recordPerPage=' + recordPerPage + '&currentPage=' + currentPage;
+    //         $.post(path_ajax_script + "/index.php?mod=guide&act=ajUpdPosSortGuideCatCountry", order,
+    //             function(html) {
+    //                 vietiso_loading(0);
+    //                 location.href = REQUEST_URI;
+    //             });
+    //     }
+    // });
 </script>
 {/literal}

@@ -194,6 +194,7 @@
 .img_tourdetail {
     width: 100%;
     border-radius: 8px;
+    height: 552px
 }
 
 .prev-btn, .next-btn {
@@ -401,7 +402,7 @@
 }
 .list_nav_fixed {
     position: fixed;
-    top: 140px;
+    top: 0;
     z-index: 8;
     box-shadow: 0 12px 32px 0 #7d879e17;
     background: #fff;
@@ -641,10 +642,10 @@
 }
 
 .avatar img {
-    width: 120px; /* Kích thước avatar */
+    width: 120px;
     height: 120px;
-    border-radius: 50%; /* Bo tròn avatar */
-    object-fit: cover; /* Giữ tỷ lệ ảnh và đảm bảo nó vừa với kích thước khung */
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 .btn-tailor {
@@ -652,7 +653,7 @@
     border-radius: 8px;
     background: #FFA718 !important;
     color: #FFF !important;
-    margin: 0 0 0 22%;
+    margin-left: 28%;
 }
 
 .txt_trevllingous {
@@ -667,6 +668,16 @@
     font-size: 16px;
     font-weight: 600;
     line-height: 24px;
+}
+.whatapps {
+    color: var(--Neutral-1, #111D37);
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 32px;
+}
+.whatapps .fa-phone {
+    color: #FFA718;
+    margin-right: 8px;
 }
 
 .price_tour {
@@ -695,20 +706,43 @@
 }
 
 .select_pricetour {
-    display: flex; /* Sắp xếp các phần tử thành hàng */
-    align-items: center; /* Căn giữa theo chiều dọc */
-    /* flex-wrap: wrap; */
+    display: flex;
+    align-items: center;
 }
 
 .select_pricetour > * {
-    margin-right: 10px; /* Khoảng cách giữa các phần tử */
+    margin-right: 10px;
+}
+.select_pricetour .box_input {
+    position: relative;
+    width: 100%;
+}
+
+.select_pricetour .box_input .icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #004EA8;
+    font-size: 24px;
+    padding-left: 8px;
+}
+
+.select_pricetour .box_input input, .select_pricetour .box_input select{
+    width: 100%;
+    padding-left: 54px;
+    box-sizing: border-box;
+    border-radius: 8px;
+    color: var(--Neutral-1, #111D37);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
 }
 
 .date_selecttour {
     width: 100%;
     max-width: 292px;
     height: 48px;
-    flex-shrink: 0;
     flex: 1 1 auto;
 }
 
@@ -1066,6 +1100,16 @@ ul.timeline .accordion-item{
 #review_tour {
     padding: 60px 0
 }
+#review_tour .btn_write_review_tour{
+    color: #FFA718;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 28px;
+    width: 130px;
+    height: 45px;
+    text-align: center;
+    border-radius: 4px;
+}
 .title_review_tour {
     color: var(--Neutral-1, #111D37);
     text-align: center;
@@ -1138,7 +1182,58 @@ ul.timeline .accordion-item{
     border-radius: 4px;
     border: 1px solid var(--Neutral-4, #D3DCE1);
 }
-/* End form review */
+
+.rate_row {
+    width: auto !important;
+    margin: 0 auto !important;
+    vertical-align: sub !important;
+}
+
+#writeTourReview .rate_star.checked {
+    color: #FFA718;
+}
+#writeTourReview .rate_star {
+    display: inline-block;
+    width: 28px;
+    float: left;
+    height: 24px;
+    color: #cccccc;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 0px;
+    text-align: center;
+    margin-right: 0;
+    line-height: 27px;
+    border: none
+}
+
+#writeTourReview .rate_star:before {
+    content: "\f005";
+    font-family: "Font Awesome 6 Pro" !important;
+    font-style: normal;
+    font-weight: 900 !important;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 20px;
+}
+
+#writeTourReview input::placeholder,  #writeTourReview textarea::placeholder{
+    color: var(--Neutral-3, #959AA4);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px
+}
+
+#writeTourReview input {
+    height: 50px;
+}
+#writeTourReview textarea {
+    height: 120px;
+}
+    /* End form review */
 .measure-evaluation {
     max-width: 198px !important;
     width: 100%;

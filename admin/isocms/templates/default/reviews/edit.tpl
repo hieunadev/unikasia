@@ -44,7 +44,7 @@
 									<input class="text full email" name="iso-type" value="{$clsClassTable->getOneField('type',$pvalTable)}" maxlength="255" type="text" disabled="disabled">
 								</div>
 							</div>
-							{if $clsClassTable->getOneField('profile_id',$pvalTable) gt 0}
+							{*{if $clsClassTable->getOneField('profile_id',$pvalTable) gt 0}
 							<div class="row-span">
 								<div class="fieldlabel ">{$core->get_Lang('international')} <span class="requiredMask">*</span></div>
 								<div class="fieldarea">
@@ -58,8 +58,14 @@
 									<input class="text full country" name="iso-country" value="{$clsClassTable->getCountry($pvalTable)}" maxlength="255" type="text" disabled="disabled">
 								</div>
 							</div>
-							{/if}
+							{/if}*}
 
+							<div class="row-span">
+								<div class="fieldlabel ">{$core->get_Lang('Title')} <span class="requiredMask">*</span></div>
+								<div class="fieldarea">
+									<input class="text full"  value="{$clsClassTable->getOneField('title',$pvalTable)}" maxlength="255" type="text" disabled="disabled">
+								</div>
+							</div>
 							<div class="row-span">
 								<div class="fieldlabel ">{$core->get_Lang('Name service')} <span class="requiredMask">*</span></div>
 								<div class="fieldarea">
@@ -90,7 +96,7 @@
 							<div class="row-span">
 								<div class="fieldlabel ">{$core->get_Lang('status')} <span class="requiredMask">*</span></div>
 								<div class="fieldarea">
-								<div class="checkbox-switch">
+								<div class="checkbox-switch switch_public" data-clstable="{$mod}" data-pkey="{$clsClassTable->pkey}" data-sourse_id="{$pvalTable}">
 									{if $clsClassTable->getOneField("is_online",$pvalTable) eq 1}
 									<input type="checkbox" checked value="1" name="is_online" class="input-checkbox" id="toolbar-active">
 									{else}
@@ -100,7 +106,7 @@
 										<span class="checkbox-off">PRIVATE</span>
 										<span class="checkbox-on">PUBLIC</span>
 									</div>
-								</div>	
+								</div>
 								<span class="notice" id="prv_status" {if $clsClassTable->getOneField("is_online",$pvalTable) eq 1}style="display:none;"{/if}>PRIVATE: {$core->get_Lang('This article can only be seen via the link in the admin page')}.</span>
 								<span class="notice" id="pub_status" {if $clsClassTable->getOneField("is_online",$pvalTable) eq 0}style="display:none;"{/if}>PUBLIC: {$core->get_Lang('This article is available online show normal status')}.</span>
 							</div>
