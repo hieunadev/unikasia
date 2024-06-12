@@ -181,7 +181,7 @@
                                             {/if}
                                         </p>
                                         <p class="from">From <span class="text-decoration-line-through">${$lstTour[i].min_price}</span></p>
-                                        <p class="us">US ${$clsTour->getDiscount($lstTour[i].tour_id)}</p>
+                                        <p class="us">US ${$clsTour->getPriceAfterDiscount($lstTour[i].tour_id)}</p>
                                     </div>
                                     <div class="btn-view-tour mt-auto">
                                         <a class="btn-hover-home" href="{$clsTour->getLink($lstTour[i].tour_id)}"><span>View tour</span><i class="fa fa-arrow-right" aria-hidden="true"></i></a>

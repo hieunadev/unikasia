@@ -44,5 +44,52 @@ class TourProperty extends dbBasic{
 		$this->deleteOne($property_country_id);
 		return 1;
 	}
+    function makeSelectboxOption($selected='', $is_multiple=false, $type='TOURGUIDE')
+    {
+        global $core, $clsISO;
+        $sql = "is_trash=0 and is_online=1 and type='".$type."'";
+        $lstTourGuide = $this->getAll($sql,"DISTINCT({$this->pkey}),title");
+        if($is_multiple){
+            $html = '<option value="0" '.(($is_multiple)?"disabled":"").'>-- '.$core->get_Lang('select').' --</option>';
+        }else{
+            $html = '<option value="0" '.(($selected == '')?'selected':"").'>-- '.$core->get_Lang('select').' --</option>';
+        }
+
+        if(!empty($lstTourGuide)){
+            if(!$is_multiple){
+                foreach($lstTourGuide as $k=>$v){
+                    if($v['title'] != ''){
+                        $html .= '<option value="'.$v[$this->pkey].'" '.($selected==$v[$this->pkey]?'selected="selected"':'').'>'.$v['title'].'</option>';
+                    }
+                }
+            } else {
+                $_array = $this->getArray($selected);
+                foreach($lstTourGuide as $k=>$v){
+                    if($v['title'] != ''){
+                        $html .= '<option value="'.$v[$this->pkey].'" '.($clsISO->checkItemInArray($v[$this->pkey],$_array)?'selected="selected"':'').'>'.$v['title'].'</option>';
+                    }
+                }
+            }
+            unset($lstTourGuide);
+        }
+        return $html;
+    }
+
+    function getListTourProperty($string_id){
+        $list_id = implode(',',$this->getArray($string_id));
+        $listProperty = $this->getAll('is_trash=0 and is_online=1 and tour_property_id IN ('.$list_id.')',$this->pkey.',title');
+        return $listProperty;
+    }
+
+    function getArray($string){
+        if($string=='' || $string=='|'){ return array();}
+        $string = str_replace('||','|',$string);
+        $string = str_replace(',','|',$string);
+        $string = str_replace(':','|',$string);
+        $string = str_replace(';','|',$string);
+        $string = ltrim($string, '|');
+        $string = rtrim($string, '|');
+        return explode('|',$string);
+    }
 }
 ?>

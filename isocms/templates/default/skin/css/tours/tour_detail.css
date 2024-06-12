@@ -728,7 +728,7 @@
     padding-left: 8px;
 }
 
-.select_pricetour .box_input input, .select_pricetour .box_input select{
+.select_pricetour .box_input input{
     width: 100%;
     padding-left: 54px;
     box-sizing: border-box;
@@ -738,13 +738,92 @@
     font-weight: 400;
     line-height: 24px;
 }
+.select_pricetour .box_age_child {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding: 16px 0
+}
+/* Box Price  */
 
-.date_selecttour {
-    width: 100%;
+.number_travellers {
     max-width: 292px;
     height: 48px;
-    flex: 1 1 auto;
+    border: none
 }
+
+.check_number_travellers {
+    display: none;
+    position: absolute;
+    width: 440px;
+    border-radius: 5px;
+    border: 1px solid #E7E7E7;
+    background: #FFF;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
+    top: 60px;
+    padding: 12px 20px 10px;
+    z-index: 2;
+}
+
+.inputTraveller:not(:last-child) {
+    border-bottom: 1px solid #F2F4F7;
+}
+.inputTraveller {
+    padding: 20px 0;
+}
+.inputTraveller .right__inputTraveller {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.inputTraveller .right__inputTraveller label {
+    color: #242424;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 34px;
+}
+.inputTraveller .right__inputTraveller .ui-spinner {
+    width: 145px;
+    display: flex;
+    justify-content: space-between;
+    border: 0;
+    border-radius: 0;
+    align-items: center;
+    color: #242424;
+    font-size: 18px;
+    font-weight: 700;
+    padding: 0;
+    box-shadow: 0 0 0;
+}
+.inputTraveller .right__inputTraveller .ui-spinner .ui-spinner-button {
+    width: 23px;
+    height: 23px;
+    border: 2px solid #FFA718;
+    border-radius: 50%;
+    background: #FFA718;
+    color: #fff;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: 6px;
+}
+.inputTraveller .right__inputTraveller .ui-spinner .ui-spinner-input {
+    border-radius: 2px;
+    border: 1px solid #D9D9D9;
+    width: 48px;
+    height: 29px;
+    text-align: center;
+    background: inherit;
+    color: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    padding: 0;
+}
+
+ .inputTraveller .right__inputTraveller label.title_room {
+    font-weight: 400;
+    font-size: 16px;
+}
+/* End Box Price  */
 
 .check-btnn {
     width: 100%;
@@ -764,7 +843,6 @@
 .infor_pricetour {
     width: 100%;
     max-width: 840px;
-    height: 486px;
     flex-shrink: 0;
     border-radius: 8px;
     border: 1.5px solid #004EA8;
@@ -1423,13 +1501,52 @@ ul.timeline .accordion-item{
 }
 #maybe_interested .txtInterested {
     color: var(--Neutral-1, #111D37);
+    font-family: "SF Pro Display Bold";
     text-align: center;
     font-size: 32px;
     font-weight: 600;
     line-height: 52px;
+    position: relative;
 }
+#maybe_interested .txtInterested::after {
+    content: "";
+    position: absolute;
+    background-color: #ffa718;
+    z-index: -1;
+    height: 8px;
+    width: 3%;
+    bottom: 15px;
+    left: 47%;
+}
+
 #maybe_interested .recently-view {
     margin-top: 32px
+}
+
+#maybe_interested .list_viewtour{
+    max-width: unset !important;
+}
+
+/* recently-view */
+
+#recently-view .recently-view-title {
+    color: var(--Neutral-1, #111D37);
+    text-align: center;
+    font-family: "SF Pro Display Bold";
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 52px;
+    position: relative;
+}
+#recently-view .recently-view-title::after {
+    content: "";
+    position: absolute;
+    background-color: #ffa718;
+    z-index: -1;
+    height: 8px;
+    width: 4%;
+    bottom: 15px;
+    left: 46%;
 }
 @media screen and (max-width: 576px) {
     .listtourdetail_breadcrumb {
@@ -1488,7 +1605,7 @@ ul.timeline .accordion-item{
         height: unset;
         padding: 24px 16px;
     }
-    .date_selecttour,.check-btnn {
+    .number_travellers,.check-btnn {
         max-width: unset;
     }
     .select_pricetour {

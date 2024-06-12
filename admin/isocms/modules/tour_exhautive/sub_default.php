@@ -1886,6 +1886,53 @@ function default_ajSaveDataasdsad()
                     $value .= ",list_month_id='{$list_month_id}'";
                 }
             }
+
+            $tour_guide_ids = Input::post('tour_guide_id', array());
+            if (!empty($tour_guide_ids) && is_array($tour_guide_ids)) {
+                $list_tour_guide_id = '|';
+                foreach ($tour_guide_ids as $c_id) {
+                    $list_tour_guide_id .= $c_id . '|';
+                }
+                if ($firstAdd == 0) {
+                    $value .= "list_tour_guide_id='" . addslashes($list_tour_guide_id) . "'";
+                    $firstAdd = 1;
+                } else {
+                    $value .= ",list_tour_guide_id='" . addslashes($list_tour_guide_id) . "'";
+                }
+            } else {
+                $month_id = $tour_guide_ids;
+                $list_tour_guide_id = '|' . $month_id . '|';
+                if ($firstAdd == 0) {
+                    $value .= "list_tour_guide_id='{$list_tour_guide_id}'";
+                    $firstAdd = 1;
+                } else {
+                    $value .= ",list_tour_guide_id='{$list_tour_guide_id}'";
+                }
+            }
+
+            $tour_room_ids = Input::post('tour_room_id', array());
+            if (!empty($tour_room_ids) && is_array($tour_room_ids)) {
+                $list_tour_room_id = '|';
+                foreach ($tour_room_ids as $c_id) {
+                    $list_tour_room_id .= $c_id . '|';
+                }
+                if ($firstAdd == 0) {
+                    $value .= "list_tour_room_id='" . addslashes($list_tour_room_id) . "'";
+                    $firstAdd = 1;
+                } else {
+                    $value .= ",list_tour_room_id='" . addslashes($list_tour_room_id) . "'";
+                }
+            } else {
+                $room_id = $tour_room_ids;
+                $list_tour_room_id = '|' . $room_id . '|';
+                if ($firstAdd == 0) {
+                    $value .= "list_tour_room_id='{$list_tour_room_id}'";
+                    $firstAdd = 1;
+                } else {
+                    $value .= ",list_tour_room_id='{$list_tour_room_id}'";
+                }
+            }
+
         } else if ($type_post == 'seotool') {
             $config_value_title = Input::post('config_value_title');
             $config_value_intro = Input::post('config_value_intro');

@@ -443,7 +443,7 @@ class Reviews extends dbBasic{
 	function getRateAvg($table_id,$type='',$typeScore = '5') {
 		global $dbconn;
 		if($type!='' && $table_id>0){
-			$res = $dbconn->getAll("SELECT AVG(rates) as rates FROM default_reviews WHERE is_online=1 and is_trash=0 and table_id = '$table_id' and type='$type' and profile_id>0");
+			$res = $dbconn->getAll("SELECT AVG(rates) as rates FROM default_reviews WHERE is_online=1 and is_trash=0 and table_id = '$table_id' and type='$type'");
 		}else{
 			$res = $dbconn->getAll("SELECT AVG(rates) as rates FROM default_reviews WHERE is_online=1 and is_trash=0 and profile_id>0");
 		}
@@ -590,7 +590,7 @@ class Reviews extends dbBasic{
     }
     function getReviews($id, $act='') {
         global $dbconn;
-        $cond = " is_trash = 0 and";
+        $cond = " is_trash = 0 and is_online = 1 and";
         $txtReview = ['Bad', 'Average', 'Good', 'Excellent', 'Wonderful'];
 
         $countReview = $this->countItem("$cond table_id = $id");

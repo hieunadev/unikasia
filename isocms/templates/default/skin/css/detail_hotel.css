@@ -551,7 +551,7 @@ ul li {
 
 .box_right_info_hotel .from_text {
     color: #FFF;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 400;
     line-height: 150%;
 }
@@ -584,6 +584,10 @@ display: flex;
 	font-weight: 600;
 	line-height: 30px;
 	margin: 0 0 0 8px;
+}
+
+.numb_prival p.price {
+	display: none;
 }
 
 .txt_pricepax {
@@ -945,7 +949,7 @@ form .departure_day:hover {
 
 .txt_reviews_ct::after {
 	width: 41px;
-    left: 637px;
+    left: 50%;
     bottom: 15%;
 	content: "";
     position: absolute;
@@ -1051,9 +1055,11 @@ form .departure_day:hover {
     margin-left: 15px;
 }
 
+/*
 .reviews_box_top .box_rate_score:first-child {
-    margin-bottom: 25px;
+    margin-bottom: 6px;
 }
+*/
 
 .reviews_box_top .lbl_rate_score {
     color: #434B5C;
@@ -1096,7 +1102,7 @@ form .departure_day:hover {
 }
 
 .reviews_box_top .box_rate_score {
-        margin-bottom: 20px;
+        margin-bottom: 6px;
     }
 
 .rating_block{
@@ -1229,10 +1235,8 @@ form .departure_day:hover {
 /*	padding: revert-layer;*/
     margin-left: auto;
 	list-style: none;
-	padding: auto;
+	padding: 0 15px;
 }
-
-
 
 .scroll-nav_sticky .txt_numbt {
 	    display: flex; /* Kích hoạt Flexbox cho .txt_numbt */
@@ -1352,3 +1356,75 @@ form .departure_day:hover {
 .btn_viewmoreless {
 	color: #ffa718;
 }
+
+.scroll-nav_sticky .btn_viewtour:hover {
+	background: #e88f00 !important;
+}
+
+#Overview .overview-content {
+    margin: 32px 0 0 0 ;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    color: #111D37;
+}
+
+.overview-content {
+    overflow: hidden; /* Ẩn nội dung vượt quá */
+  
+}
+
+.btn_viewmoreless {
+    display: none; /* Ẩn nút ban đầu */
+    margin: 20px 0 80px 0;
+    cursor: pointer;
+}
+
+.btn_viewmoreless:hover {
+	color: #e88f00;
+}
+
+
+.list_facilities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.facilities_item {
+/*  flex: 0 0 calc(20% - 8px);  Hoặc sử dụng width: calc(20% - 8px); */
+  margin-bottom: 8px;
+  display: flex;
+  gap: 8px;
+	margin-right: 32px;
+}
+
+.relate_slide_item, .relate_slide_image, .relate_slide_item a  {
+
+	overflow: hidden;
+}
+
+
+.relate_slide_item .relate_slide_image:hover {
+	    object-fit: cover;
+    -moz-transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+}
+
+.relate_slide_image img {
+	    object-fit: cover;
+    -moz-transition: all .3s !important;
+    -webkit-transition: all .3s !important;
+    border-radius: 8px;
+    transition: all .3s !important;
+    height: 100%;
+}
+
+.img-responsive {
+	overflow: hidᐕ 
+
+
+
+

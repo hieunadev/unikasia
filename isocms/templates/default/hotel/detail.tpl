@@ -138,14 +138,11 @@
                                 </span>
                             </p>
                             <ul class="scroll-title">
-                                <li><a href="#Reviews"
-                                        class="ShowAllReviewDetailHotel">{$core->get_Lang('Show all reviews')}</a></li>
+                                <li><a class="ShowAllReviewDetailHotel" >{$core->get_Lang('Show all reviews')}</a></li>
                             </ul>
                         </div>
                     {/if}
-                    {* <a class="view_all_review btn_write_review btn_write_review_login ShowAllReviewDetailHotel"
-                        href="javascript:void(0);"
-                        title="{$core->get_Lang('Reviews')}">{$core->get_Lang('Show all reviews')}</a> *}
+                    
 
                     <div class="location_scorereview">
 						 <div class="record_txt">
@@ -156,8 +153,7 @@
                 <div class="txt_reviewsquality">
                 <p class="txt_qualityreview">{$textRateAvg} <span class="txt_reviews">({$ratingCount} {$core->get_Lang('reviews')})</span></p>
 					 <ul class="scroll-title">
-                            <li><a href="#Reviews"
-                                    class="ShowAllReviewDetailHotel">{$core->get_Lang('Show all reviews')}</a></li>
+                            <li><a class="ShowAllReviewDetailHotel" data-target=".scroll_reviews">{$core->get_Lang('Show all reviews')}</a></li>
                         </ul>
             </div>		
             </div>			 
@@ -312,6 +308,7 @@
 										</div>
 										
 										 <div class="overview-content">{$overview_hotel|html_entity_decode}</div>
+										<div class="btn_viewmoreless">View more</div>
                                     </div>
 
  
@@ -411,7 +408,7 @@
                                         </div>
                                         <div class="val_price">
                                            <p class="txt_prival">US <h3 class="numb_prival">{if $clsHotel->getPriceOnPromotion($hotel_id,'detail')}
-                            ${$clsHotel->getPriceAvg($hotel_id)}
+                            {$clsHotel->getPriceOnPromotion($hotel_id)}
                         {else}
                             {$core->get_Lang('Contact us')}
                         {/if}</h3></p>
@@ -555,6 +552,7 @@
         </div>
     </div>
 		</div>
+		</div>
     <div id="Things" class="scroll_thing">
         <div class="Things">
 			<div class="container">
@@ -687,13 +685,13 @@
                             <div class="col-lg-3 measure-evaluation">
                                 <div class="box_score">
 
-                                    <div class="semi-donut margin" style="--percentage : {$ratingValue}; --fill: #FFBA55 ;">
+                                    <div class="semi-donut margin" style="--percentage : {($clsReviews->getReviews($oneItem.hotel_id, 'avg_point') / 5) * 100}; --fill: #FFBA55 ;">
                                     </div>
                                     <div class="score_text">
-                                        <h3>{$ratingValue}</h3>
-                                        <p class="txt_score">{$textRateAvg}</p>
+                                        <h3>{$clsReviews->getReviews($oneItem.hotel_id, 'avg_point')}</h3>
+                                        <p class="txt_score">{$clsReviews->getReviews($oneItem.hotel_id, 'txt_review')}</p>
                                         <p class="number_review">
-                                            {$ratingCount} {$core->get_Lang('Reviews')}
+                                            ({$clsReviews->getReviews($oneItem.tour_id)} {$core->get_Lang('Reviews')})
                                         </p>
                                     </div>
 
@@ -701,90 +699,19 @@
                                 </div>
                             </div>
                             <div class="col-lg-7 measure-evaluation-txt">
+								{section name=i loop=$reviewProgress}
                                 <div class="box_rate_score">
-                                    {if $lstReviewHotel.staff}
-                                        {math equation='x/10' x=$lstReviewHotel.staff assign=staff}
-                                    {else}
-                                        {assign var=staff value=0}
-                                    {/if}
-                                    <label for="" class="lbl_rate_score">{$core->get_Lang('Wonderful')}</label>
+                                    <label for="" class="lbl_rate_score">{$reviewProgress[i].reviews}</label>
                                     <div class="d-flex flex-wrap justify-content-between align-items-center">
                                         <div class="progress">
-                                            <div class="progress-bar" role="progressbar" aria-valuenow="{$staff}"
-                                                aria-valuemin="0" aria-valuemax="100"
-                                                style="width: {$lstReviewHotel.staff}%"></div>
+                                             <div class="progress-bar" role="progressbar"
+                                     aria-valuemin="0" aria-valuemax="100" style="width:{$reviewProgress[i].count_percent}%">
+                                </div>
                                         </div>
-                                        <span>{$staff}</span>
+                                        <span>{$reviewProgress[i].count}</span>
                                     </div>
                                 </div>
-                                <div class="box_rate_score">
-                                    {if $lstReviewHotel.place}
-                                        {math equation='x/10' x=$lstReviewHotel.place assign=place}
-                                    {else}
-                                        {assign var=place value=0}
-                                    {/if}
-                                    <label for="" class="lbl_rate_score">{$core->get_Lang('Excellent')}</label>
-                                    <div class="d-flex flex-wrap justify-content-between align-items-center">
-                                        <div class="progress">
-                                            <div class="progress-bar" role="progressbar" aria-valuenow="{$place}"
-                                                aria-valuemin="0" aria-valuemax="100"
-                                                style="width: {$lstReviewHotel.place}%"></div>
-                                        </div>
-                                        <span>{$place}</span>
-                                    </div>
-                                </div>
-                                <div class="box_rate_score">
-                                    {if $lstReviewHotel.amenities}
-                                        {math equation='x/10' x=$lstReviewHotel.amenities assign=amenities}
-                                    {else}
-                                        {assign var=amenities value=0}
-                                    {/if}
-                                    <label for="" class="lbl_rate_score">{$core->get_Lang('Good')}</label>
-                                    <div class="d-flex flex-wrap justify-content-between align-items-center">
-                                        <div class="progress">
-                                            <div class="progress-bar" role="progressbar" aria-valuenow="{$amenities}"
-                                                aria-valuemin="0" aria-valuemax="100"
-                                                style="width: {$lstReviewHotel.amenities}%">
-                                            </div>
-                                        </div>
-                                        <span>{$amenities}</span>
-                                    </div>
-                                </div>
-                                <div class="box_rate_score">
-                                    {if $lstReviewHotel.food_drink}
-                                        {math equation='x/10' x=$lstReviewHotel.food_drink assign=food_drink}
-                                    {else}
-                                        {assign var=food_drink value=0}
-                                    {/if}
-                                    <label for="" class="lbl_rate_score">{$core->get_Lang('Average')}</label>
-                                    <div class="d-flex flex-wrap justify-content-between align-items-center">
-                                        <div class="progress">
-                                            <div class="progress-bar" role="progressbar" aria-valuenow="{$food_drink}"
-                                                aria-valuemin="0" aria-valuemax="100"
-                                                style="width: {$lstReviewHotel.food_drink}%">
-                                            </div>
-                                        </div>
-                                        <span>{$food_drink}</span>
-                                    </div>
-                                </div>
-								
-								<div class="box_rate_score">
-                                    {if $lstReviewHotel.food_drink}
-                                        {math equation='x/10' x=$lstReviewHotel.food_drink assign=food_drink}
-                                    {else}
-                                        {assign var=food_drink value=0}
-                                    {/if}
-                                    <label for="" class="lbl_rate_score">{$core->get_Lang('Bad')}</label>
-                                    <div class="d-flex flex-wrap justify-content-between align-items-center">
-                                        <div class="progress">
-                                            <div class="progress-bar" role="progressbar" aria-valuenow="{$food_drink}"
-                                                aria-valuemin="0" aria-valuemax="100"
-                                                style="width: {$lstReviewHotel.food_drink}%">
-                                            </div>
-                                        </div>
-                                        <span>{$food_drink}</span>
-                                    </div>
-                                </div>
+                                {/section}
 
                                 <a class="view_all_review btn_write_review btn_write_review_login Write-reviews"
                                     href="javascript:void(0);"
@@ -844,6 +771,7 @@
     {/if}
     </div>
 		</div>
+
 
 <section class="recently_hotel">
 	<div class="txt_recentlyhotel">
@@ -1059,6 +987,74 @@ const links = document.querySelectorAll('.nav-link');
                     }
                 });
             })
+			
+			
+window.addEventListener('load', function() {
+  const overviewContent = document.querySelector('.overview-content');
+  const viewMoreLessBtn = document.querySelector('.btn_viewmoreless');
+
+  const lineHeight = parseFloat(getComputedStyle(overviewContent).lineHeight);
+  const maxLines = 6;
+
+  // Khởi tạo trạng thái ban đầu là ẩn bớt
+  overviewContent.style.maxHeight = (lineHeight * maxLines) + 'px';
+  viewMoreLessBtn.textContent = 'View more';
+  viewMoreLessBtn.style.display = 'block'; // Luôn hiển thị nút
+
+  viewMoreLessBtn.addEventListener('click', function() {
+    if (overviewContent.style.maxHeight !== 'none') { // Kiểm tra xem có đang ẩn bớt không
+      overviewContent.style.maxHeight = 'none';
+      viewMoreLessBtn.textContent = 'View less';
+    } else {
+      overviewContent.style.maxHeight = (lineHeight * maxLines) + 'px';
+      viewMoreLessBtn.textContent = 'View more';
+    }
+  });
+});
+
+
+			
+			document.addEventListener('DOMContentLoaded', function() {
+    // Chọn tất cả các liên kết có data-target=".scroll_reviews"
+    const links = document.querySelectorAll('[data-target=".scroll_reviews"]');
+    const reviewsNavLink = document.querySelector('.nav-link[data-target=".scroll_reviews"]'); // Lấy liên kết Reviews
+    const overviewNavLink = document.querySelector('.nav-link[data-target=".scroll_overview"]'); // Lấy liên kết Overview
+
+    links.forEach(link => {
+        link.addEventListener('click', (event) => {
+            event.preventDefault();
+
+            // Xử lý cho các liên kết trong menu (nếu cần)
+            if (link.classList.contains('nav-link')) {
+                // Xóa class 'active' khỏi tất cả các liên kết trong menu
+                document.querySelectorAll('.nav-link').forEach(navLink => navLink.classList.remove('active'));
+
+                // Thêm class 'active' vào liên kết được click
+                link.classList.add('active');
+            }
+
+            // Thêm class 'active' cho liên kết Reviews khi click vào "Show all reviews"
+            if (!link.classList.contains('nav-link')) {
+                reviewsNavLink.classList.add('active');
+
+                // Ẩn class 'active' của liên kết Overview
+                overviewNavLink.classList.remove('active');
+            }
+
+            // Cuộn đến phần tử đích
+            const targetElement = document.querySelector('.scroll_reviews');
+            if (targetElement) {
+                const targetRect = targetElement.getBoundingClientRect();
+                window.scrollTo({
+                    top: targetRect.top + window.pageYOffset - 250,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+});
+
+
         </script>
     {/literal}
 

@@ -71,7 +71,6 @@
     background: #fff;
     margin-top: -16px;
     position: relative;
-    flex: 1;
 }
 .trvgd_similar_item_title h3 a {
     color: var(--Neutral-1, #111d37);
@@ -98,14 +97,12 @@
     font-weight: 400;
     line-height: 24px;
 }
-
 .trvgd_similar_item_place .fa-location-dot {
     /* width: 24px;
     height: 24px; */
     color: #004ea8;
     margin-right: 8px;
 }
-
 .trvgd_similar_item_description {
     color: var(--Neutral-3, #959aa4);
     font-family: "SF Pro Display";
@@ -117,12 +114,14 @@
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    height: 60px;
 }
-
+.trvgd_similar_item_description p {
+    margin-bottom: unset;
+}
 .trvgd_recent_view {
     margin-bottom: 120px;
 }
-
 .trvgd_recent_view_title h2 {
     color: var(--Neutral-1, #111d37);
     text-align: left;
@@ -133,7 +132,6 @@
     line-height: 52px;
     margin-bottom: 24px;
 }
-
 .trvgd_similar_item img {
     width: 100%;
 }
@@ -145,4 +143,55 @@
 .trvgd_similar_travel_guide .owl-next:hover {
     background: #869791 !important;
     color: #333 !important;
+}
+.trvgd_action .txt_ico_share_star {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 48px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #d3dce1;
+}
+.trvgd_action .share-content {
+    display: flex;
+    align-items: center;
+}
+.trvgd_tags {
+    margin-top: 20px;
+    display: flex;
+    gap: 8px;
+}
+.trvgd_list_tags {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.trvgd_txttag {
+    color: var(--Neutral-1, #111d37);
+    font-family: "SF Pro Display";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+}
+.trvgd_list_tags a {
+    color: var(--Neutral-3, #959aa4);
+    font-family: "SF Pro Display";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+.guide_detail_body .sharer-icons a {
+    color: #959aa4 !important;
+    border-color: #959aa4 !important;
+    transition: all 0.3s ease-in-out;
+}
+.guide_detail_body .sharer-icons a:hover {
+    color: #ffa718 !important;
+    background: #fff !important;
+    box-shadow: 0px 12px 32px 0px #ffa718;
 }

@@ -79,7 +79,23 @@
                             </script>
                             {/literal}
                         </div>
-
+                        <div class="inpt_tour">
+                            <label>{$core->get_Lang('Tag')}</label>
+                            <div class="fieldarea">
+                                <select name="list_tag_id[]" id="tag_id" class="full-width chosen-select" multiple="multiple">
+                                    <option value="">-- Tag type --</option>
+                                    {foreach from=$arr_guide_tag key=key item=item}
+                                    <option value="{$item.tag_id}" {if $clsISO->checkItemInArray($item.tag_id, $list_tag_id)}selected{/if}>{$item.title}</option>
+                                    {/foreach}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="inpt_tour">
+                            <label>{$core->get_Lang('Author')}</label>
+                            <div class="fieldarea">
+                                <input class="input_text_form" data-table_id="{$pvalTable}" name="author" value="{$oneItem.author}" maxlength="255" type="text" />
+                            </div>
+                        </div>
                         {elseif $currentstep=='shortText'}
                         <div class="inpt_tour">
                             <h3 class="title_box">{$core->get_Lang('Short text')}

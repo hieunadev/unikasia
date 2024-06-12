@@ -32,12 +32,12 @@
 									<input class="text full required" name="iso-fullname" value="{$clsClassTable->getFullname($pvalTable)}" maxlength="255" type="text" disabled="disabled">
 								</div>
 							</div>
-							<div class="row-span">
+							{*<div class="row-span">
 								<div class="fieldlabel ">{$core->get_Lang('email')}</div>
 								<div class="fieldarea">
 									<input class="text full email" name="iso-email" value="{$clsClassTable->getEmail($pvalTable)}" maxlength="255" type="text" disabled="disabled">
 								</div>
-							</div>
+							</div>*}
 							<div class="row-span">
 								<div class="fieldlabel ">{$core->get_Lang('Type')} <span class="requiredMask">*</span></div>
 								<div class="fieldarea">

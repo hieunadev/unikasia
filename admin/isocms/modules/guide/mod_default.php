@@ -443,11 +443,17 @@ function default_getMainFormStep()
 	$smarty->assign('clsGuide2', $clsGuide2);
 	$clsGuideCatStore = new GuideCatStore();
 	$smarty->assign('clsGuideCatStore', $clsGuideCatStore);
+	$clsTag = new Tag();
+	$smarty->assign('clsTag', $clsTag);
+	$smarty->assign('clsISO', $clsISO);
 	#
 	$table_id = Input::post('table_id', 0);
 	$type = Input::post('type', '');
 	$smarty->assign('type', $type);
 	$currentstep = Input::post('currentstep', '');
+	#
+	$arr_guide_tag	=	$clsTag->getAll("is_trash = 0 AND type = '_GUIDE'");
+	$smarty->assign('arr_guide_tag', $arr_guide_tag);
 	#
 	#Step follow index
 	$ii = 0;
@@ -610,18 +616,22 @@ function default_getMainFormStep()
 	$smarty->assign('pvalTable', $table_id);
 	$smarty->assign('oneItem', $oneItem);
 	$smarty->assign('clsTableGal', 'GuideImage');
-
-
-
+	#
 	if ($clsISO->getCheckActiveModulePackage($package_id, 'continent', 'default', 'default') && $core->checkAccess('continent')) {
 		$clsContinent = new Continent();
 		$assign_list["clsContinent"] = $clsContinent;
 		$lstContinent = $clsContinent->GetAll("is_trash=0 and is_online=1 order by order_no ASC", $clsContinent->pkey);
 		$assign_list["lstContinent"] = $lstContinent;
 	}
-
+	#
 	$smarty->assign('arrStep', $arrStep);
 	$smarty->assign('list_check_target', json_encode($arrStep));
+	#
+	$list_tag_id = ltrim($oneItem['list_tag_id'], '|');
+	$list_tag_id = rtrim($list_tag_id, '|');
+	$list_tag_id = explode('|', $list_tag_id);
+	$smarty->assign('list_tag_id', $list_tag_id);
+	#
 	if ($currentstep == 'seo') {
 		$clsMeta = new Meta();
 		$assign_list["clsMeta"] = $clsMeta;
@@ -632,12 +642,11 @@ function default_getMainFormStep()
 		} else {
 			$linkMeta = $clsGuide->getLink($table_id);
 		}
-
+		#
 		$allMeta = $clsMeta->getAll("config_link='$linkMeta'");
 		$meta_id = $allMeta[0]['meta_id'];
-
+		#
 		if (empty($meta_id)) {
-
 			$introMeta = strip_tags(html_entity_decode(addslashes($oneItem['intro'])));
 			$introMeta = explode('$trun$', wordwrap($introMeta, 280, '$trun$', false), 2);
 			$introMeta = $introMeta[0] . (isset($introMeta[1]) ? '...' : '');
@@ -647,8 +656,7 @@ function default_getMainFormStep()
 		$smarty->assign('meta_id', $meta_id);
 	} else if ($currentstep == 'lhdl') {
 	}
-	//die('xx');
-	#Possition current step
+	#
 	$step = 0;
 	foreach ($arrStep as $k => $v) {
 		if ($v['key'] == $currentstep) {
@@ -662,7 +670,7 @@ function default_getMainFormStep()
 	$smarty->assign('prevstep', $prevstep);
 	$smarty->assign('nextstep', $nextstep);
 	$smarty->assign('currentstep', $currentstep);
-
+	#
 	require_once DIR_COMMON . "/clsForm.php";
 	$clsForm = new Form();
 	$clsForm->setDbTable($tableName, $pkeyTable, $pvalTable);
@@ -674,9 +682,7 @@ function default_getMainFormStep()
 	$clsForm->addInputTextArea("full", "child_policy", "", "child_policy", 255, 25, 2, 1, "style='width:100%'");
 	$clsForm->addInputTextArea("full", "cancellation_policy", "", "cancellation_policy", 255, 25, 2, 1, "style='width:100%'");
 	$clsForm->addInputTextArea("full", "other_policy", "", "other_policy", 255, 25, 8, 1, "style='width:100%'");
-
 	#
-
 	// Output
 	$html = $core->build($file_step);
 	echo $html;
@@ -817,7 +823,6 @@ function default_ajSaveMainStep()
 {
 	global $_frontIsLoggedin_user_id, $core, $clsISO, $clsProperty, $clsUser, $_company_iom_id, $dbconn;
 	#
-
 	$msg = '_error';
 	$clsClassTable = new Guide();
 	$table_id = Input::post('table_id', 0);
@@ -855,7 +860,17 @@ function default_ajSaveMainStep()
 			$publish_date = strtotime($publish_date);
 			$arr_update['publish_date'] = $publish_date;
 		}
-
+		$tag_guide 	= 	Input::post('list_tag_id', array());
+		if (!empty($tag_guide) && is_array($tag_guide)) {
+			$list_tag_id	= 	'|';
+			foreach ($tag_guide as $tag_id) {
+				$list_tag_id	.= 	$tag_id . '|';
+			}
+			$arr_update['list_tag_id']	= 	$list_tag_id;
+		}
+		$author = Input::post('author', '');
+		$arr_update['author']	= 	$author;
+		#
 		$clsClassTable->updateOne($table_id, $arr_update);
 	} else if ($currentstep == 'image') {
 		$image = Input::post('image', '');

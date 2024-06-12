@@ -7,6 +7,7 @@ $clsHotel=new Hotel();$smarty->assign('clsHotel',$clsHotel);
 
 $listHotelFacilitiesFavorite=$clsProperty->getAll("is_trash=0 and type='HotelFacilities' and is_favorite=1 order by order_no ASC",$clsProperty->pkey);
 
+//die();
 
 $smarty->assign('listHotelFacilitiesFavorite',$listHotelFacilitiesFavorite);
 

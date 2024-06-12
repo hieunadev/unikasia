@@ -4224,7 +4224,7 @@ class Tour extends dbBasic
 		}
 	}
 
-	function getDiscount($tour_id)
+	function getPriceAfterDiscount($tour_id)
 	{
 		global $clsISO;
 		$more_infomation = $clsISO->getPromotion($tour_id, 'Tour', time(), time(), 'info_promotion');
@@ -4233,4 +4233,11 @@ class Tour extends dbBasic
 		$price = $origin_price * (100 - $discount_value) / 100;
 		return $price;
 	}
+
+    function getDiscount($tour_id) {
+        global $clsISO;
+        $more_infomation = $clsISO->getPromotion($tour_id, 'Tour', time(), time(), 'info_promotion');
+        $discount_value = "-". ($more_infomation["discount_value"] ?? '0') ."%";
+        return $discount_value;
+    }
 }

@@ -1,6 +1,6 @@
 <div class="trvg_header">
     <h1 class="trvg_header_title">
-        {if $show eq 'Country' || $show eq 'SearchGuide'}
+        {if $show eq 'Country'}
         WHEN TO GO TO?
         {elseif $show eq 'GuideCat'}
         {$clsGuideCat->getTitle($guidecat_id)}
@@ -13,7 +13,7 @@
 <div class="trvg_header_background_image">
     <img src="
     {if $url_banner}
-        {$clsGuideCatStore->getImage($guidecat_store_id, 1920, 600)} 
+        {$clsGuideCatStore->getImage($guidecat_store_id, 1920, 600)}
     {else}
         https://unikasia.vietiso.com/isocms/templates/default/skin/images/destination/bg_trvg.png
     {/if}
@@ -70,7 +70,6 @@
         margin-top: 48px;
         color: #fff !important;
         transition: ease-in-out all 0.3s;
-
     }
 
     .trvg_header_link:hover {

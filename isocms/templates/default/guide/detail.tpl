@@ -7,6 +7,44 @@
                     <div class="trvgd_content">
                         {$clsGuide->getContent($guide_id)}
                     </div>
+                    <div class="trvgd_action">
+                        <div class="txt_ico_share_star">
+                            <div class="txt_ico_share">
+                                <div class="share-content">
+                                    <span class="txtshare">{$core->get_Lang('Share')}</span>
+                                    <div class="social-icon-share-blog">
+                                        <div class="sharethis-inline-share-buttons" data-image="{$DOMAIN_NAME}{$clsISO->getPageImageShare($guide_id,'Guide',$one)}" data-url="{$DOMAIN_NAME}{$curl}" data-title="{$guide_title}"></div>
+                                        <script type="text/javascript" src="{$URL_JS}/jquery.sharer.js?v={$up_version}"></script>
+                                        {assign var=link_share value=$curl}
+                                        {assign var=title_share value=$guide_title}
+                                        {$clsISO->getBlock('box_share',["link_share"=>$link_share,"title_share"=>$title_share])}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rating-and-votes">
+                                {assign var=fileAj value='saveRating'}
+                                {assign var=typeAj value='guide'}
+                                {assign var=table_id value=$guide_id}
+
+                                {if $percentRateAVG}
+                                {assign var=percentAVG value=$percentRateAVG}
+                                {else}
+                                {assign var=percentAVG value='0'}
+                                {/if}
+                                {include file='../blocks/rate_star.tpl'}
+                                <!-- {$core->getBlock('rate_star')} -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="trvgd_tags">
+                        <span class="trvgd_txttag">{$core->get_Lang('Tags:')}</span>
+                        {assign var="listTagGuide" value=$clsGuide->getListTag($guide_id,$one)}
+                        {if $listTagGuide ne ''}
+                        <ul class="trvgd_list_tags">
+                            {$listTagGuide}
+                        </ul>
+                        {/if}
+                    </div>
                 </div>
                 <div class="col-12 col-sm-12 col-md-3">
                     {$core->getBlock('des_travel_guide_side')}

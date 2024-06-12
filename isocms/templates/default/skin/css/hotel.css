@@ -119,13 +119,6 @@
     display: block;
 }
 
-#Overview .overview-content {
-    margin: 32px 0 60px;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 24px;
-    color: #111D37;
-}
 
 .hotel_default_body .mbReviews {
     margin-bottom: 120px !important;
@@ -2858,17 +2851,16 @@ padding: 0 7.5px;
     margin-bottom: 15px;
 }
 
-.list_facilities {
-    display: flex;
-    flex-wrap: wrap;
-}
 
+
+/*
 .facilities_item {
     width: calc(100%/3);
     display: flex;
     gap: 15px;
     margin-bottom: 20px;
 }
+*/
 
 .facilities_item img {
     object-fit: contain;
@@ -2879,7 +2871,7 @@ padding: 0 7.5px;
     font-size: 16px;
     font-weight: 400;
     line-height: 150%;
-    max-width: 270px;
+/*    max-width: 270px;*/
     padding-right: 10px;
 }
 
@@ -3093,7 +3085,7 @@ padding: 0 7.5px;
 /*    max-width: 1310px;*/
     width: 100%;
     margin: 0 auto;
-    padding: 0 15px;
+/*    padding: 0 15px;*/
 
 }
 

@@ -198,5 +198,34 @@ class TourOption extends dbBasic{
 		}
 		return $text;
 	}
+    function getSelectAgeChild($selected = '',$index=0,$tour_option_id=0){
+        global $core,$child_type_id,$age_type_id;
+        $sql_where = "";
+        if($tour_option_id > 0){
+            $lstAgeChild = $this->getOne($tour_option_id,'number_from,number_to');
+            $min_age = $lstAgeChild['number_from'];
+            $max_age = $lstAgeChild['number_to'];
+            $name_select = "children_".$tour_option_id."[]";
+        }else{
+            $lstAgeChild = $this->getAll("type = 'SIZEGROUP' and tour_property_id='".$age_type_id."' and tour_property_age = '".$child_type_id."'"," MIN(number_from) as min_age, MAX(number_to) as max_age");
+            $min_age = $lstAgeChild[0]['min_age'];
+            $max_age = $lstAgeChild[0]['max_age'];
+            $name_select = "children[]";
+        }
+
+
+        $html = '<select name="'.$name_select.'" class="slt_item_age_child">';
+        $html .= '<option value="">'.$core->get_Lang("Age").'*</option>';
+        for($i=$min_age; $i <= $max_age; $i++ ){
+            $check = "";
+            if($selected != ''){
+                $arr_select = explode(',',$selected);
+                $check = (in_array($i,$arr_select) && $i == $arr_select[$index])?"selected":"";
+            }
+            $html .= '<option value="'.$i.'" '.$check.'>'.$i.' '. $core->get_Lang('years old').'</option>';
+        }
+        $html .= '</select>';
+        return $html;
+    }
 }
 ?>

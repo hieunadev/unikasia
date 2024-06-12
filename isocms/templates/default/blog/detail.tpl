@@ -14,56 +14,106 @@
 
 
 {literal}
+
 <script type="application/ld+json">
-    {
-        "@context": "https://schema.org/",
-        "@type": "BlogPosting",
-        "@id": "{/literal}{$DOMAIN_NAME}{$curl}{literal}#BlogPosting",
+
+{
+
+    "@context": "https://schema.org/",
+
+    "@type": "BlogPosting",
+
+    "@id": "{/literal}{$DOMAIN_NAME}{$curl}{literal}#BlogPosting",
+
     "mainEntityOfPage": "{/literal}{$DOMAIN_NAME}{$curl}{literal}",
+
     "headline": "{/literal}{$title_blog}{literal}",
+
     "name": "{/literal}{$title_blog}{literal}",
-    "description": "{/literal}{$description_page}{literal}",
-    "datePublished": "{/literal}{$publish_date}{literal}",
-    "dateModified": "{/literal}{$upd_date}{literal}",
+
+    "description": "{/literal}{$description_page|replace:'"':'\"'}{literal}",
+
+    "datePublished": "{/literal}{$datePublished}{literal}",
+
+    "dateModified": "{/literal}{$dateModified}{literal}",
+
     "author": {
+
 		"@type": "Person",
+
 		"name": "{/literal}{$author}{literal}"
+
 	},
+
     "publisher": {
+
 		"@type": "Organization",
+
 		"@id": "{/literal}{$DOMAIN_NAME}{literal}",
-		"name": "VietISO Company",
+
+		"name": "{/literal}{$PAGE_NAME}{literal}",
+
 		"logo": {
+
 			"@type": "ImageObject",
-			"@id": "{/literal}{$DOMAIN_NAME}/uploads/logo/logo_footer_new.png{literal}",
-			"url": "{/literal}{$DOMAIN_NAME}/uploads/logo/logo_footer_new.png{literal}",
+
+			"@id": "{/literal}{$DOMAIN_NAME}{$clsConfiguration->getImageValue('HeaderLogo')}{literal}",
+
+			"url": "{/literal}{$DOMAIN_NAME}{$clsConfiguration->getImageValue('HeaderLogo')}{literal}",
+
 			"width": "98",
+
 			"height": "47"
+
 		}
+
 	},
+
     "image": {
+
         "@type": "ImageObject",
+
         "@id": "{/literal}{$DOMAIN_NAME}{$imgBlog}{literal}",
+
 		"url": "{/literal}{$DOMAIN_NAME}{$imgBlog}{literal}",
+
         "height": "535",
+
         "width": "800"
+
     },
+
     "url": "{/literal}{$DOMAIN_NAME}{$curl}{literal}",
+
     "isPartOf": {
+
         "@type" : "Blog",
+
          "@id": "{/literal}{$DOMAIN_NAME}{$clsISO->getLink('blog')}{literal}",
+
          "name": "{/literal}{$core->get_Lang('Blog')}{literal}",
+
          "publisher": {
+
              "@type": "Organization",
+
              "@id": "{/literal}{$DOMAIN_NAME}{literal}",
-             "name": "VietISO Company"
+
+             "name": "{/literal}{$PAGE_NAME}{literal}"
+
          }
+
      }
+
     {/literal}{if $listTag}{literal},"keywords": {/literal}{$listTag|@json_encode}{literal}{/literal}{/if}{literal}
-    }
+
+}
+
 </script>
+
 {/literal}
 
+    <link rel="stylesheet" href="{$URL_CSS}/detail_blog.css?v={$upd_version}" as="style" />
 
 
 <section name ="intro_detailblog">
@@ -450,8 +500,41 @@
 	<style>
 
 	</style>
+		
+		
+
+{if $blogItem.rate}
 
 {literal}
+
+<script type="application/ld+json">{
+
+    "@context": "https://schema.org/",
+
+    "@type": "CreativeWorkSeries",
+
+    "name": "{/literal}{$blogItem.title|html_entity_decode}{literal}",
+
+    "aggregateRating": {
+
+        "@type": "AggregateRating",
+
+        "ratingValue": "{/literal}{$rateavg}{literal}",
+
+        "bestRating": "5",
+
+        "ratingCount": "{/literal}{$blogItem.rate}{literal}"
+
+    }
+
+}
+		</script>
+
+{/literal}
+
+{/if}
+
+
     <script>
 		
 		document.addEventListener('DOMContentLoaded', () => {
@@ -512,6 +595,8 @@
 
 
     </script>
-{/literal}
+
+		
+		
 <link rel="stylesheet" href="{$URL_JS}/zoom/zoom.css?v={$upd_version}"/>
 <script src="{$URL_JS}/zoom/zoom.js?v={$upd_version}"></script>

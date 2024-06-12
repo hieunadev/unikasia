@@ -103,6 +103,28 @@
 							</select>
 						</div>
 					</div>
+					<div class="form-group inpt_tour">
+						<label class="col-form-label">{$core->get_Lang('Tour guide')} <span class="required_red">*</span></label>
+						<p class="help-block"></p>
+						<div id="slb_ContainerTourCategory">
+							<span class="check_all_select fr" style="margin-bottom:10px;cursor: pointer">{$core->get_Lang('Select all')}</span>
+							<select name="tour_guide_id[]" id="tour_guide_id" class="required full-width chosen-select" multiple="multiple">
+								{assign var = selected value = $oneItem.list_tour_guide_id}
+								{$clsTourProperty->makeSelectboxOption($selected, 1)}
+							</select>
+						</div>
+					</div>
+					<div class="form-group inpt_tour" id="box_input_room">
+						<label class="col-form-label">{$core->get_Lang('Room')}</label>
+						<p class="help-block"></p>
+						<div id="slb_ContainerTourCategory">
+							<span class="check_all_select fr" style="margin-bottom:10px;cursor: pointer">{$core->get_Lang('Select all')}</span>
+							<select name="tour_room_id[]" id="tour_room_id" class="full-width chosen-select" multiple="multiple">
+								{assign var = selected value = $oneItem.list_tour_room_id}
+								{$clsTourProperty->makeSelectboxOption($selected, 1,'TOURROOM')}
+							</select>
+						</div>
+					</div>
 				</div>
 				<div class="btn_save_titile_trip_code">
 					<a tour_id="{$pvalTable}" cat_run="{$cat_run}" prev_step="{if $child_cat_menu_j_index_prev eq ''}{if $list_cat_menu_prev eq ''}{$child_cat_menu_j}{/if}{if $list_cat_menu_prev ne ''}{$list_cat_menu_prev}/{$child_cat_menu_prev[$count_child_cat_menu_prev]}{/if}{else}{$child_cat_menu_j_index_prev}{/if}" class="back_step">{$core->get_Lang('Back')}</a>

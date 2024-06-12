@@ -119,8 +119,8 @@ $(document).ready(function () {
     $(window).scroll(function () {
         if (mod === 'guide' && act === 'detail') {
             // 
-        } else if (mod === 'destination' && act === 'place') {
-            let isScrolled = $(this).scrollTop() >= 500;
+        } else if ((mod === 'destination' && act === 'place') || (mod === 'tour' && act === 'cat') || (mod === 'guide' && act === 'cat')) {
+            let isScrolled = $(this).scrollTop() >= 600;
             $('.des_tailor_top').toggleClass('des_tailor_top_sticky', isScrolled);
             $('.des_tailor_top').css('top', isScrolled ? '0px' : '');
 

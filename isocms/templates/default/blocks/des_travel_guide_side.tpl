@@ -1,327 +1,209 @@
 <div class="des_travel_guide_side">
-
     <form action="" method="GET" class="form_search_guide">
-
         <div class="des_travel_guide_search">
-
             <button class="btn_search_guide"><i class="fa-light fa-magnifying-glass"></i></button>
-
             <input type="text" name="keyword" class="keyword_search_guide" placeholder="Search">
-
             <input type="hidden" value="search_guide">
-
         </div>
-
     </form>
-
     <div class="des_travel_guide_category">
-
-        {if ($mod eq 'destination' && $act eq 'travel_guide') || ($mod eq 'destination' && $act eq 'travel_guide_detail') || ($mod eq 'guide' && $act eq 'cat') || ($mod eq 'guide' && $act eq 'search')}
-
+        {if ($mod eq 'destination' && $act eq 'travel_guide') || ($mod eq 'destination' && $act eq 'travel_guide_detail') || ($mod eq 'guide' && $act eq 'cat') || ($mod eq 'guide' && $act eq 'search') || ($mod eq 'guide' && $act eq 'detail')}
         <div class="des_travel_guide_category_title">
-
             <h2>{$country_title}</h2>
-
         </div>
-
         <div class="des_travel_guide_category_list">
-
+            {if ($mod eq 'guide' && $act eq 'detail')}
+            <a href="{$clsGuide->getLinkGuideCat($country_slug)}" title="All">All</a>
+            {/if}
             {if $arr_guide_cat}
-
             {foreach from=$arr_guide_cat key=key item=item}
-
             {assign var="guideCatID" value=$item.guidecat_id}
-
             {assign var="guideCatSlug" value=$item.slug}
-
             <a href="{$clsGuide->getLinkGuideCat($country_slug, $guideCatSlug, $guideCatID)}" title="{$clsGuideCat->getTitle($guideCatID)}" {if $guideCatID eq $guidecat_id} class="active" {/if}>{$clsGuideCat->getTitle($guideCatID)}</a>
-
             {/foreach}
-
             {/if}
-
         </div>
-
         {elseif ($mod eq 'destination' && $act eq 'attraction')}
-
         <div class="des_travel_guide_category_title">
-
             <h2>Hanoi</h2>
-
         </div>
-
         <div class="des_travel_guide_category_list">
-
             <a href="#" title="Exciting trip">Exciting trip</a>
-
             <a href="#" title="Hotel">Hotel</a>
-
             <a href="#" title="Place to go">Place to go</a>
-
             <a href="#" title="Cusine">Cusine</a>
-
             <a href="#" title="Culture Hanoi">Culture Hanoi</a>
-
         </div>
-
         {/if}
-
     </div>
-
-    {if ($mod eq 'destination' && $act eq 'travel_guide') || ($mod eq 'destination' && $act eq 'travel_guide_detail') || ($mod eq 'guide' && $act eq 'cat') || ($mod eq 'guide' && $act eq 'search')}
-
-    <div class="des_travel_guide_exciting_trip">
-
-        <div class="des_travel_guide_exciting_trip_title">
-
-            <h2>{$core->get_Lang('EXCITING TRIP')}</h2>
-
+    {if ($mod eq 'guide' && $act eq 'detail')}
+    <div class="des_travel_guide_country_tour">
+        <div class="des_travel_guide_category_title">
+            <h2>{$country_title} tours</h2>
         </div>
-
-        <div class="des_travel_guide_exciting_trip_content">
-
-            {if $arr_tour_country}
-
-            {foreach from=$arr_tour_country key=key item=item}
-
-            {assign var="tourID" value=$item.tour_id}
-
-            <div class="des_travel_guide_exciting_trip_item">
-
-                <div class="des_travel_guide_exciting_trip_image">
-
-                    <a href="{$clsTour->getLink($tourID)}" title="{$clsTour->getTitle($tourID)}">
-
-                        <img src="{$clsTour->getImage($tourID, 296, 200)}" alt="{$clsTour->getTitle($tourID)}" width="296" height="200">
-
-                    </a>
-
-                </div>
-
-                <div class="des_travel_guide_exciting_trip_item_title">
-
-                    <h3><a href="{$clsTour->getLink($tourID)}" title="{$clsTour->getTitle($tourID)}">{$clsTour->getTitle($tourID)}</a></h3>
-
-                </div>
-
-                <div class="des_travel_guide_exciting_trip_item_content">
-
-                    <div class="des_travel_guide_exciting_trip_rate">
-
-                        <div class="des_travel_guide_exciting_trip_rate_score">
-
-                            {$clsReviews->getReviews($tourID, 'avg_point')}
-
-                        </div>
-
-                        <div class="des_travel_guide_exciting_trip_rate_title">
-
-                            {$clsReviews->getReviews($tourID, 'txt_review')}
-
-                        </div>
-
-                        <div class="des_travel_guide_exciting_trip_rate_total">
-
-                            - {$clsReviews->getReviews($tourID)} reviews
-
-                        </div>
-
-                    </div>
-
-                    <div class="des_travel_guide_exciting_trip_place">
-
-                        <i class="fa-light fa-location-dot"></i>
-
-                        Place: {$clsTourDestination->getByCountry($tourID, 'city')}
-
-                        {if $clsTourDestination->getByCountry($tourID) > 0}
-
-                        <button type="button" class="tooltips_tour" data-bs-toggle="tooltip" title="{$clsTourDestination->getByCountry($tourID, 'other_city')}">+{$clsTourDestination->getByCountry($tourID)}</button>
-
-                        {/if}
-
-                    </div>
-
-                    <div class="des_travel_guide_exciting_trip_description">
-
-                        {$clsTour->getTripOverview($tourID)}
-
-                    </div>
-
-                    <div class="des_travel_guide_exciting_trip_detail">
-
-                        <div class="box_left">
-
-                            <p>From</p>
-
-                            <span class="price_type">US</span> <span class="price">${$item.min_price}</span>
-
-                        </div>
-
-                        <div class="box_right">
-
-                            <a href="{$clsTour->getLink($tourID)}" title="{$clsTour->getTitle($tourID)}">View tour <i class="fa-light fa-arrow-right"></i></a>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
+        <div class="des_travel_guide_category_list">
+            {if $arr_trvs_country}
+            {foreach from=$arr_trvs_country key=key item=item}
+            {assign var="CatID" value=$item.cat_id}
+            <a href="{$clsTourCategory->getLink($CatID, '', '', $country_id)}" title="{$clsTourCategory->getTitle($item.cat_id)}" target="_blank">{$clsTourCategory->getTitle($item.cat_id)}</a>
             {/foreach}
-
             {/if}
-
         </div>
-
     </div>
-
-    <div class="des_travel_guide_tour_more">
-
-        <div class="des_travel_guide_tour_more_image">
-
-            <img src="{$clsCountry->getImage($country_id, 296, 152)}" alt="Tour {$country_title}" width="296" height="152">
-
-            <div class="des_travel_guide_tour_more_title">
-
-                <h4>Explore more {$country_title} tours</h4>
-
-                <a href="{$clsTourCategory->getLink(0, '', '', $country_id)}" title="See all tours in {$country_title}">See all tours <i class="fa-light fa-arrow-right"></i></a>
-
-            </div>
-
-        </div>
-
-    </div>
-
-    {elseif $mod eq 'destination' && $act eq 'attraction'}
-
-    <div class="des_travel_guide_most_read">
-
-        <div class="des_travel_guide_most_read_title">
-
-            <h2>MOST READ</h2>
-
-        </div>
-
-        <div class="des_travel_guide_most_read_content">
-
-            <div class="des_travel_guide_most_read_item">
-
-                <div class="row">
-
-                    <div class="col-4 col-sm-3 col-md-12 col-lg-4">
-
-                        <img src="https://images.unsplash.com/photo-1715522196138-1da0d3669bc5?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDl8RnpvM3p1T0hONnd8fGVufDB8fHx8fA%3D%3D" width="83" height="83" alt="Vietnam Airlines Launches New Routes To Singapore, Cambodia">
-
-                    </div>
-
-                    <div class="col-8 col-sm-9 col-md-12 col-lg-8">
-
-                        <h3>Vietnam Airlines Launches New Routes To Singapore, Cambodia</h3>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-
-            <div class="des_travel_guide_most_read_item">
-
-                <div class="row">
-
-                    <div class="col-4 col-sm-3 col-md-12 col-lg-4">
-
-                        <img src="https://images.unsplash.com/photo-1715522196138-1da0d3669bc5?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDl8RnpvM3p1T0hONnd8fGVufDB8fHx8fA%3D%3D" width="83" height="83" alt="Vietnam Airlines Launches New Routes To Singapore, Cambodia">
-
-                    </div>
-
-                    <div class="col-8 col-sm-9 col-md-12 col-lg-8">
-
-                        <h3>Vietnam Airlines Launches New Routes To Singapore, Cambodia</h3>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="des_travel_guide_most_read_item">
-
-                <div class="row">
-
-                    <div class="col-4 col-sm-3 col-md-12 col-lg-4">
-
-                        <img src="https://images.unsplash.com/photo-1715522196138-1da0d3669bc5?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDl8RnpvM3p1T0hONnd8fGVufDB8fHx8fA%3D%3D" width="83" height="83" alt="Vietnam Airlines Launches New Routes To Singapore, Cambodia">
-
-                    </div>
-
-                    <div class="col-8 col-sm-9 col-md-12 col-lg-8">
-
-                        <h3>Vietnam Airlines Launches New Routes To Singapore, Cambodia</h3>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="des_travel_guide_most_read_item">
-
-                <div class="row">
-
-                    <div class="col-4 col-sm-3 col-md-12 col-lg-4">
-
-                        <img src="https://images.unsplash.com/photo-1715522196138-1da0d3669bc5?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDl8RnpvM3p1T0hONnd8fGVufDB8fHx8fA%3D%3D" width="83" height="83" alt="Vietnam Airlines Launches New Routes To Singapore, Cambodia">
-
-                    </div>
-
-                    <div class="col-8 col-sm-9 col-md-12 col-lg-8">
-
-                        <h3>Vietnam Airlines Launches New Routes To Singapore, Cambodia</h3>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="des_travel_guide_most_read_item">
-
-                <div class="row">
-
-                    <div class="col-4 col-sm-3 col-md-12 col-lg-4">
-
-                        <img src="https://images.unsplash.com/photo-1715522196138-1da0d3669bc5?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDl8RnpvM3p1T0hONnd8fGVufDB8fHx8fA%3D%3D" width="83" height="83" alt="Vietnam Airlines Launches New Routes To Singapore, Cambodia">
-
-                    </div>
-
-                    <div class="col-8 col-sm-9 col-md-12 col-lg-8">
-
-                        <h3>Vietnam Airlines Launches New Routes To Singapore, Cambodia</h3>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
     {/if}
+    {if ($mod eq 'destination' && $act eq 'travel_guide') || ($mod eq 'destination' && $act eq 'travel_guide_detail') || ($mod eq 'guide' && $act eq 'cat') || ($mod eq 'guide' && $act eq 'search') || ($mod eq 'guide' && $act eq 'detail')}
+    <div class="des_travel_guide_exciting_trip">
+        <div class="des_travel_guide_exciting_trip_title">
+            <h2>{$core->get_Lang('EXCITING TRIP')}</h2>
+        </div>
+        <div class="des_travel_guide_exciting_trip_content">
+            {if $arr_tour_country}
+            {foreach from=$arr_tour_country key=key item=item}
+            {assign var="tourID" value=$item.tour_id}
+            <div class="des_travel_guide_exciting_trip_item">
+                <div class="des_travel_guide_exciting_trip_image">
+                    <a href="{$clsTour->getLink($tourID)}" title="{$clsTour->getTitle($tourID)}">
+                        <img src="{$clsTour->getImage($tourID, 296, 200)}" alt="{$clsTour->getTitle($tourID)}" width="296" height="200">
+                    </a>
+                </div>
+                <div class="des_travel_guide_exciting_trip_item_title">
+                    <h3><a href="{$clsTour->getLink($tourID)}" title="{$clsTour->getTitle($tourID)}">{$clsTour->getTitle($tourID)}</a></h3>
+                </div>
+                <div class="des_travel_guide_exciting_trip_item_content">
+                    <div class="des_travel_guide_exciting_trip_rate">
+                        <div class="des_travel_guide_exciting_trip_rate_score">
+                            {$clsReviews->getReviews($tourID, 'avg_point')}
+                        </div>
+                        <div class="des_travel_guide_exciting_trip_rate_title">
+                            {$clsReviews->getReviews($tourID, 'txt_review')}
+                        </div>
+                        <div class="des_travel_guide_exciting_trip_rate_total">
+                            - {$clsReviews->getReviews($tourID)} reviews
+                        </div>
+                    </div>
+                    <div class="des_travel_guide_exciting_trip_place">
+                        <i class="fa-light fa-location-dot"></i>
+                        Place: {$clsTourDestination->getByCountry($tourID, 'city')}
+                        {if $clsTourDestination->getByCountry($tourID) > 0}
+                        <button type="button" class="tooltips_tour" data-bs-toggle="tooltip" title="{$clsTourDestination->getByCountry($tourID, 'other_city')}">+{$clsTourDestination->getByCountry($tourID)}</button>
+                        {/if}
+                    </div>
+                    <div class="des_travel_guide_exciting_trip_description">
+                        {$clsTour->getTripOverview($tourID)}
+                    </div>
+                    <div class="des_travel_guide_exciting_trip_detail">
+                        <div class="box_left">
+                            <p>From</p>
+                            <span class="price_type">US</span> <span class="price">${$item.min_price}</span>
+                        </div>
+                        <div class="box_right">
+                            <a href="{$clsTour->getLink($tourID)}" title="{$clsTour->getTitle($tourID)}">View tour <i class="fa-light fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {/foreach}
+            {/if}
+        </div>
+    </div>
+    <div class="des_travel_guide_tour_more">
+        <div class="des_travel_guide_tour_more_image">
+            <img src="{$clsCountry->getImage($country_id, 296, 152)}" alt="Tour {$country_title}" width="296" height="152">
+            <div class="des_travel_guide_tour_more_title">
+                <h4>Explore more {$country_title} tours</h4>
+                <a href="{$clsTourCategory->getLink(0, '', '', $country_id)}" title="See all tours in {$country_title}">See all tours <i class="fa-light fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </div>
+    {elseif $mod eq 'destination' && $act eq 'attraction'}
+    <div class="des_travel_guide_most_read">
+        <div class="des_travel_guide_most_read_title">
+            <h2>MOST READ</h2>
+        </div>
+        <div class="des_travel_guide_most_read_content">
+            <div class="des_travel_guide_most_read_item">
+                <div class="row">
+                    <div class="col-4 col-sm-3 col-md-12 col-lg-4">
+                        <img src="https://images.unsplash.com/photo-1715522196138-1da0d3669bc5?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDl8RnpvM3p1T0hONnd8fGVufDB8fHx8fA%3D%3D" width="83" height="83" alt="Vietnam Airlines Launches New Routes To Singapore, Cambodia">
+                    </div>
+                    <div class="col-8 col-sm-9 col-md-12 col-lg-8">
+                        <h3>Vietnam Airlines Launches New Routes To Singapore, Cambodia</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="des_travel_guide_most_read_item">
+                <div class="row">
+                    <div class="col-4 col-sm-3 col-md-12 col-lg-4">
+                        <img src="https://images.unsplash.com/photo-1715522196138-1da0d3669bc5?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDl8RnpvM3p1T0hONnd8fGVufDB8fHx8fA%3D%3D" width="83" height="83" alt="Vietnam Airlines Launches New Routes To Singapore, Cambodia">
+                    </div>
+                    <div class="col-8 col-sm-9 col-md-12 col-lg-8">
+                        <h3>Vietnam Airlines Launches New Routes To Singapore, Cambodia</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="des_travel_guide_most_read_item">
+                <div class="row">
+                    <div class="col-4 col-sm-3 col-md-12 col-lg-4">
+                        <img src="https://images.unsplash.com/photo-1715522196138-1da0d3669bc5?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDl8RnpvM3p1T0hONnd8fGVufDB8fHx8fA%3D%3D" width="83" height="83" alt="Vietnam Airlines Launches New Routes To Singapore, Cambodia">
+                    </div>
+                    <div class="col-8 col-sm-9 col-md-12 col-lg-8">
+                        <h3>Vietnam Airlines Launches New Routes To Singapore, Cambodia</h3>
 
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="des_travel_guide_most_read_item">
+
+                <div class="row">
+
+                    <div class="col-4 col-sm-3 col-md-12 col-lg-4">
+
+                        <img src="https://images.unsplash.com/photo-1715522196138-1da0d3669bc5?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDl8RnpvM3p1T0hONnd8fGVufDB8fHx8fA%3D%3D" width="83" height="83" alt="Vietnam Airlines Launches New Routes To Singapore, Cambodia">
+
+                    </div>
+
+                    <div class="col-8 col-sm-9 col-md-12 col-lg-8">
+
+                        <h3>Vietnam Airlines Launches New Routes To Singapore, Cambodia</h3>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="des_travel_guide_most_read_item">
+
+                <div class="row">
+
+                    <div class="col-4 col-sm-3 col-md-12 col-lg-4">
+
+                        <img src="https://images.unsplash.com/photo-1715522196138-1da0d3669bc5?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDl8RnpvM3p1T0hONnd8fGVufDB8fHx8fA%3D%3D" width="83" height="83" alt="Vietnam Airlines Launches New Routes To Singapore, Cambodia">
+
+                    </div>
+
+                    <div class="col-8 col-sm-9 col-md-12 col-lg-8">
+
+                        <h3>Vietnam Airlines Launches New Routes To Singapore, Cambodia</h3>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    {/if}
 </div>
 
 
 
 {literal}
-
 <style>
 
     .des_travel_guide_search {
@@ -370,9 +252,12 @@
 
     }
 
+    .des_travel_guide_country_tour{
+        margin-top: 20px;
+    }
 
-
-    .des_travel_guide_category {
+    .des_travel_guide_category, 
+    .des_travel_guide_country_tour {
 
         border-radius: 4px;
 
@@ -381,9 +266,6 @@
         padding: 24px 16px;
 
         margin-top: 12px;
-
-        margin-bottom: 48px;
-
     }
 
 
@@ -457,9 +339,9 @@
         text-decoration: underline;
 
     }
-
-
-
+    .des_travel_guide_exciting_trip {
+        margin-top: 48px;
+    }
     .des_travel_guide_exciting_trip_title h2 {
 
         color: var(--Neutral-2, #434B5C);
@@ -1041,43 +923,24 @@
     @media (max-width: 575px) {}
 
 </style>
-
 {/literal}
 
-
-
 <script>
-
     var country_id = {$country_id};
-
     var country_slug = '{$country_slug}';
-
     var lang_id = '{$_LANG_ID}';
-
 </script>
 
 {literal}
-
 <script>
-
     $(document).ready(function() {
-
         $('.form_search_guide').on('submit', function(e) {
-
         e.preventDefault();
-
             var keyword = $('.keyword_search_guide').val();
-
             var pretty_keyword = keyword.replace(/\s/g, '+');
-
             var newUrl = '/' + lang_id + '/search-guide/' + country_slug + '/' + pretty_keyword;
-
             window.location.href = newUrl;
-
         });
-
     });
-
 </script>
-
 {/literal}

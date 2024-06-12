@@ -1002,7 +1002,7 @@ function default_detail() {
 	$clsHotelRoom=new HotelRoom(); $assign_list['clsHotelRoom']=$clsHotelRoom;
 	$clsHotelPriceCol=new HotelPriceCol(); $assign_list['clsHotelPriceCol']=$clsHotelPriceCol;
 	$clsHotelPriceVal=new HotelPriceVal(); $assign_list['clsHotelPriceVal']=$clsHotelPriceVal;
-	
+
 	$linkBack = vnSessionGetVar('linkBack');
 	$assign_list['linkBack']=$linkBack;
 
@@ -1024,6 +1024,19 @@ function default_detail() {
 	$limit_right ="limit 4";
 	
 //	$lstHotelLeft = "$clsHotelImage->getAll($clsHotelImage->getAll($order_by. "is_trash=0 and table_id='$hotel_id' and image <> '' ",$clsHotelImage->pkey.',image,title');)"
+	
+		if (isset($_COOKIE['recent_posts'])) {
+		$recent_posts = json_decode($_COOKIE['recent_posts'], true);
+
+		if (!empty($recent_posts)) {
+			$ids = implode(',', array_map('intval', $recent_posts));
+
+			$cond = "hotel_id IN ($ids)";
+			$limit = " LIMIT 3";
+			$lstHotelRecent = $clsHotel->getAll("$cond $limit");
+			$assign_list["lstHotelRecent"] = $lstHotelRecent;
+		}
+	}
 		
 	
 	$oneItem = $clsHotel->getOne($hotel_id);
@@ -1091,6 +1104,7 @@ function default_detail() {
 	$assign_list["min_price"] = $min_price;
 	$assign_list["number_adult"] = $number_adult;
 	
+	/*
 	#Review
 	$clsReviews = new Reviews(); $assign_list["clsReviews"] = $clsReviews;
 	$clsReviewsHotel = new ReviewsHotel(); $assign_list['clsReviewsHotel'] = $clsReviewsHotel;
@@ -1123,6 +1137,7 @@ function default_detail() {
 	$assign_list["lstReview"] = $lstReview; 
 	unset($lstReview);
 	$assign_list['btn_view_more'] = '<a data-bs-toggle="modal" data-bs-target="#mdReview" class="read_more read_more_review">'.$core->get_Lang('Read more').'</a>';
+	*/
 	
     if(isset($_POST['ContactHotel']) &&  $_POST['ContactHotel']=='ContactHotel'){
         vnSessionDelVar('ContactCruise');
@@ -1157,13 +1172,60 @@ function default_detail() {
         exit();
     }
 	
-	$listHotelFacilitiesFavorite=$clsProperty->getAll("is_trash=0 and type='HotelFacilities' and is_favorite=1 order by order_no ASC");
+	
+	$listProterty_id = $clsHotel->getOne($hotel_id, list_HotelFacilities)[0];
+	$string = trim($listProterty_id, '|');
+$array = explode('|', $string);
+$result = implode(',', $array);
+	$listHotelFacilitiesFavorite=$clsProperty->getAll("is_trash=0 and type='HotelFacilities' and is_favorite=1 and property_id IN ($result) order by order_no ASC");
 
 //	var_dump($listHotelFacilitiesFavorite); die();
 	
 	$assign_list["listHotelFacilitiesFavorite"] = $listHotelFacilitiesFavorite;
-	$listHotelFacilitiesOther=$clsProperty->getAll("is_trash=0 and type='HotelFacilities' and is_favorite=0 order by order_no ASC");
+	$listHotelFacilitiesOther=$clsProperty->getAll("is_trash=0 and type='HotelFacilities' and is_favorite=0 and property_id order by order_no ASC");
 	$assign_list["listHotelFacilitiesOther"] = $listHotelFacilitiesOther;
+	
+//	var_dump($listHotelFacilitiesOther); die();
+	
+	$sqlCountRate = "SELECT rates, ROUND(COUNT(rates) / $countReview * 100) AS count_percent, COUNT(rates) as count FROM default_reviews WHERE $cond is_online = 1 and table_id = $tour_id GROUP BY rates;";
+
+    $countRate = $dbconn->GetAll($sqlCountRate);
+
+    $txtReview = ['Bad', 'Average', 'Good', 'Excellent', 'Wonderful'];
+    $validRates = [5, 4, 3, 2, 1];
+    $result = [];
+    $rateMap = array_column($countRate, null, 'rates');
+
+    foreach ($validRates as $rates) {
+        if (isset($rateMap[$rates])) {
+            $entry = $rateMap[$rates];
+            $count_percent = $entry['count_percent'];
+            $count = $entry['count'];
+        } else {
+            $count_percent = $count = 0;
+        }
+        $reviewName = $txtReview[$rates - 1];
+        $result[] = [
+            'rates' => $rates,
+            'count' => $count,
+            'count_percent' => $count_percent,
+            'reviews' => $reviewName
+        ];
+    }
+
+    if ($oneItem['is_online'] == 0) header('location:' . PCMS_URL);
+    $assign_list["oneItem"] = $oneItem;
+    $assign_list["hotel_id"] = $hotel_id;
+    $assign_list["table_id"] = $hotel_id;
+    $assign_list["lstHotelItinerary"] = $lstHotelItinerary;
+    $assign_list["clsHotelImage"] = $clsHotelImage;
+    $assign_list["lstReviews"] = $lstReviews;
+    $assign_list["countReview"] = $countReview;
+    $assign_list["reviewProgress"] = $result;
+    $assign_list["travel_style_id"] = $travel_style_id;
+    $assign_list["country_id"] = $country_id;
+    $format_time_now = date('M d, Y', strtotime('+1 day')); $assign_list['format_time_now'] = $format_time_now;
+
 	
 	 
     /*=============Title & Description Page==================*/
