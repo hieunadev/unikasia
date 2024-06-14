@@ -140,3 +140,12 @@
 		</div>
 	</div>
 </div>
+{literal}
+	<script>
+		$_document.on('click','.check_all_select',function(ev){
+			console.log('sss');
+			$(this).closest(".form-group").find("select option:not([value='0'])").attr("selected","selected");
+			$(this).closest(".form-group").find("select").trigger("chosen:updated");
+		});
+	</script>
+{/literal}

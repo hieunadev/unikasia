@@ -1,107 +1,269 @@
 <header class="header-home">
     <div class="bground_header">
-        <div id="header_fixed" style="position: relative">
-            <nav class="txt_header1">
+        <div class="unika_header unika_true unika_header_2">
+            <nav class="unika_header_text">
                 <div class="container">
-                    <div class="row border-bottom" id="header_top">
-                        <div class="col-md-6 d-flex align-items-center ps-0">
-                            <p class="txt_pcust">{$core->get_Lang('Who knows Asia better than us? We are his children, we live there!')}</p>
+                    <div id="unika_header_top">
+                        <div class="unika_header_top_left">
+                            <span>Who knows Asia better than us? We are his children, we live there!</span>
                         </div>
-                        <div class="col-md-6 d-flex align-items-center justify-content-end icon-txt-mail-span pe-0">
-                            <img src="{$URL_IMAGES}/home/Message.png" alt="ico_mail" class="img_icon">
-                            <a href="mailto:info@hanoivoyage.com">
-                                <span class="me-4">info@hanoivoyage.com</span>
-                            </a>
-                            <img src="{$URL_IMAGES}/home/Call.png" alt="ico_phone" class="img_icon">
-                            <a href="tel:0983033966">
-                                <span>Whatsapp: 0983033966</span>
-                            </a>
+                        <div class="unika_header_top_right">
+                            <div class="unika_header_top_right_email">
+                                <div class="unika_div_img">
+                                    <img src="https://unikasia.vietiso.com/isocms/templates/default/skin/images/home/Message.png" alt="ico_mail" class="img_icon">
+                                </div>
+                                <a href="mailto:info@hanoivoyage.com" title="info@hanoivoyage.com">
+                                    info@hanoivoyage.com
+                                </a>
+                            </div>
+                            <div class="unika_header_top_right_whapsapp">
+                                <div class="unika_div_img">
+                                    <img src="https://unikasia.vietiso.com/isocms/templates/default/skin/images/home/Call.png" alt="ico_phone" class="img_icon">
+                                </div>
+                                <a href="tel:0983033966" title="0983033966">
+                                    Whatsapp: 0983033966
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </nav>
-            <div class="text-light py-3 nah_bg_header_bot">
+            <div class="unika_header_menu">
                 <div class="container">
-                    <div class="row">
-                        <div class="col-lg-2 col-md-2 d-flex align-items-center ps-0">
-                            <h1><a href="/" title="Home">
-                                    <img class="img_logo_voyages_1" src="{$clsConfiguration->getValue('HeaderLogo')}" alt="Logo" width="143" height="53">
-                                    <img class="img_logo_voyages_2 d-none" src="{$URL_IMAGES}/home/logo_header_2.png" alt="Logo" width="143" height="53">
-                                </a></h1>
-                        </div>
-                        <div class="col-lg-8 col-md-12 col-sm1-12 d-none d-md-flex align-items-center justify-content-center">
-                            <div class="dropdown txt_dropdown">
-                                <button class="btn dropdown-toggle txt_dropdown" type="button" data-bs-toggle="dropdown">
-                                    {$core->get_Lang('Destinations')} <i class="fas fa-angle-down ms-1"></i>
+                    <div class="unika_container">
+                        <a href="/" class="logo">
+                            <img class="unika_img_logo_1" src="https://unikasia.vietiso.com/isocms/templates/default/skin/images/home/logo_header_2.png" alt="Logo">
+                            <img class="unika_img_logo_2" src="https://unikasia.vietiso.com/uploads//Demo/image-6.png" alt="Logo">
+                        </a>
+                        <nav class="unika_menu menu navbar navbar-expand-lg bg-body-tertiary">
+                            <div class="container-fluid unika_container-fluid">
+                                <button class="navbar-toggler unika_navbar-toggler unika_div_img" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                                    <img class="unika_img_navbar_1" src="{$URL_IMAGES}/icon/navbar_icon.svg" alt="Icon">
+                                    <img class="unika_img_navbar_2" src="{$URL_IMAGES}/icon/navbar_icon_while.svg" alt="Icon">
                                 </button>
-                                <div class="dropdown-menu">
-                                    <div class=" dropdown_destination">
-                                        <div class="dropdown-menu_country">
-                                            {section name=i loop=$lstCountry}
-                                            <a class="dropdown-item" href="{$clsCountryEx->getLink($lstCountry[i].country_id)}" data-img="img_{$lstCountry[i].title}">{$lstCountry[i].title}</a>
-                                            {/section}
+                                <div class="collapse navbar-collapse unika_menu_navbar" id="navbarSupportedContent">
+                                    <ul class="unika_navbar-nav navbar-nav me-auto mb-2 mb-lg-0">
+                                        <div class="nav-item navbar-nav unika_navbar">
+                                            <li class="d-flex justify-content-end">
+                                                <button class="unika_btn_close_menu div_img">
+                                                    <img src="{$URL_IMAGES}/icon/head_close.svg" alt="Icon">
+                                                </button>
+                                            </li>
+                                            <li class="nav-item dropdown">
+                                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    DESTINATIONS
+                                                    <i class="fas fa-angle-down ms-1" aria-hidden="true"></i>
+                                                </a>
+                                                <ul class="dropdown-menu">
+                                                    <div class="unika_destination">
+                                                        <div class="unika_destination_item">
+                                                            {section name=i loop=$lstCountry}
+                                                            <li>
+                                                                <a class="dropdown-item unika_destination_hover" href="{$clsCountryEx->getLink($lstCountry[i].country_id)}" data-class="unika_img{$lstCountry[i].country_id}">{$lstCountry[i].title}</a>
+                                                            </li>
+                                                            {/section}
+                                                        </div>
+                                                        <div class="unika_destination_img">
+                                                            {section name=i loop=$lstCountry}
+                                                            <div class="unika_img_country unika_div_img unika_img{$lstCountry[i].country_id} {if $smarty.section.i.index eq 0} active {/if}">
+                                                                <img id="img_{$lstCountry[i].slug}" src="{$lstCountry[i].image_sub}" onerror="this.src='https://unikasia.vietiso.com/isocms/templates/default/skin/images/none_image.png'" alt="{$lstCountry[i].title}" class="active">
+                                                            </div>
+                                                            {/section}
+                                                        </div>
+                                                    </div>
+                                                </ul>
+                                            </li>
+                                            <li class="nav-item dropdown">
+                                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    STAY
+                                                    <i class="fas fa-angle-down ms-1" aria-hidden="true"></i>
+                                                </a>
+                                                <ul class="dropdown-menu unika_stay_dropdown-menu">
+                                                    <div class="unika_stay">
+                                                        {section name=i loop=$lstCountry}
+                                                        <a href="{$clsCountryEx->getLink($lstCountry[i].country_id, " Hotel")}" class="unika_stay_item">
+                                                            <div class="unika_div_img unika_stay_img">
+                                                                <img src="{$lstCountry[i].image_hotel_sub}" onerror="this.src='{$URL_IMAGES}/none_image.png'" alt="{$lstCountry[i].slug}">
+                                                            </div>
+                                                            <div class="unika_stay_txt">
+                                                                {$lstCountry[i].title}
+                                                            </div>
+                                                        </a>
+                                                        {/section}
+                                                    </div>
+                                                </ul>
+                                            </li>
+                                            <li class="nav-item dropdown">
+                                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    CRUISES
+                                                    <i class="fas fa-angle-down ms-1" aria-hidden="true"></i>
+                                                </a>
+                                                <ul class="dropdown-menu unika_cruises_dropdown-menu">
+                                                    <div class="unika_cruises">
+                                                        <div class="unika_cruises_left">
+                                                            <li>
+                                                                <div class="unika_dropdown_cruises" data-img="https://unikasia.vietiso.com/uploads//content/233-366.jpg">
+                                                                    <a class="dropdown-item">
+                                                                        Vietnam
+                                                                        <i class="fas fa-angle-right ms-1" aria-hidden="true"></i>
+                                                                    </a>
+                                                                    <div class="unika_cruises_hover active">
+                                                                        <div class="unika_hover_content active">
+                                                                            <a class="unika_hover_item" href="#" data-img="https://unikasia.vietiso.com/uploads//Demo/Rectangle-10499.png">Ha Long Bay Cruise</a>
+                                                                            <a class="unika_hover_item" href="#" data-img="https://unikasia.vietiso.com/uploads//Demo/Rectangle-5-(5).png">Mekong Cruise</a>
+                                                                            <a class="unika_hover_item" href="#" data-img="https://unikasia.vietiso.com/uploads//Demo/Rectangle-10498.png">Cruise 7 days 8 nights</a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="unika_dropdown_cruises" data-img="https://unikasia.vietiso.com/uploads//Demo/Rectangle-10499.png">
+                                                                    <a class="dropdown-item" href="#">
+                                                                        Cambodia
+                                                                        <i class="fas fa-angle-right ms-1" aria-hidden="true"></i>
+                                                                    </a>
+                                                                    <div class="unika_cruises_hover">
+                                                                        <div class="unika_hover_content">
+                                                                            <a class="unika_hover_item" href="#" data-img="https://unikasia.vietiso.com/uploads//Demo/Rectangle-10499.png">Ha Long Bay Cruise</a>
+                                                                            <a class="unika_hover_item" href="#" data-img="https://unikasia.vietiso.com/uploads//Demo/Rectangle-5-(5).png">Mekong Cruise</a>
+                                                                            <a class="unika_hover_item" href="#" data-img="https://unikasia.vietiso.com/uploads//Demo/Rectangle-10498.png">Cruise 7 days 8 nights</a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="unika_dropdown_cruises" data-img="https://unikasia.vietiso.com/uploads//Demo/Rectangle-5-(5).png">
+                                                                    <a class="dropdown-item" href="#">
+                                                                        Thailand
+                                                                        <i class="fas fa-angle-right ms-1" aria-hidden="true"></i>
+                                                                    </a>
+                                                                    <div class="unika_cruises_hover">
+                                                                        <div class="unika_hover_content">
+                                                                            <a class="unika_hover_item" href="#" data-img="https://unikasia.vietiso.com/uploads//Demo/Rectangle-10499.png">Ha Long Bay Cruise</a>
+                                                                            <a class="unika_hover_item" href="#" data-img="https://unikasia.vietiso.com/uploads//Demo/Rectangle-5-(5).png">Mekong Cruise</a>
+                                                                            <a class="unika_hover_item" href="#" data-img="https://unikasia.vietiso.com/uploads//Demo/Rectangle-10498.png">Cruise 7 days 8 nights</a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="unika_dropdown_cruises" data-img="https://unikasia.vietiso.com/uploads//Demo/Rectangle-10498.png">
+                                                                    <a class="dropdown-item" href="#">
+                                                                        Laos
+                                                                        <i class="fas fa-angle-right ms-1" aria-hidden="true"></i>
+                                                                    </a>
+                                                                    <div class="unika_cruises_hover">
+                                                                        <div class="unika_hover_content">
+                                                                            <a class="unika_hover_item" href="#" data-img="https://unikasia.vietiso.com/uploads//Demo/Rectangle-10499.png">Ha Long Bay Cruise</a>
+                                                                            <a class="unika_hover_item" href="#" data-img="https://unikasia.vietiso.com/uploads//Demo/Rectangle-5-(5).png">Mekong Cruise</a>
+                                                                            <a class="unika_hover_item" href="#" data-img="https://unikasia.vietiso.com/uploads//Demo/Rectangle-10498.png">Cruise 7 days 8 nights</a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="unika_dropdown_cruises" data-img="https://unikasia.vietiso.com/uploads//Demo/Myanmar.png">
+                                                                    <a class="dropdown-item" href="#">
+                                                                        Myanmar
+                                                                        <i class="fas fa-angle-right ms-1" aria-hidden="true"></i>
+                                                                    </a>
+                                                                    <div class="unika_cruises_hover">
+                                                                        <div class="unika_hover_content">
+                                                                            <a class="unika_hover_item" href="#" data-img="https://unikasia.vietiso.com/uploads//Demo/Rectangle-10499.png">Ha Long Bay Cruise</a>
+                                                                            <a class="unika_hover_item" href="#" data-img="https://unikasia.vietiso.com/uploads//Demo/Rectangle-5-(5).png">Mekong Cruise</a>
+                                                                            <a class="unika_hover_item" href="#" data-img="https://unikasia.vietiso.com/uploads//Demo/Rectangle-10498.png">Cruise 7 days 8 nights</a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        </div>
+                                                        <div class="unika_cruises_right">
+                                                            <div class="unika_right active">
+                                                                <div class="unika_cruises_img unika_div_img">
+                                                                    <img src="https://unikasia.vietiso.com/uploads//content/233-366.jpg" alt="Image">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </ul>
+                                            </li>
+                                            <li class="nav-item dropdown">
+                                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    BLOG
+                                                    <i class="fas fa-angle-down ms-1" aria-hidden="true"></i>
+                                                </a>
+                                                <ul class="dropdown-menu anika_blog">
+                                                    {section name=i loop=$lstCountry}
+                                                    <li><a class="dropdown-item" href="{$clsCountryEx->getLink($lstCountry[i].country_id, " Blog")}">{$lstCountry[i].title}</a></li>
+                                                    {/section}
+                                                </ul>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#">ABOUT US</a>
+                                            </li>
                                         </div>
-                                        <div class="dropdown-menu_img_country">
-                                            {section name=i loop=$lstCountry}
-                                            <div class="menu_img_country">
-                                                <img id="img_{$lstCountry[i].title}" src="{$lstCountry[i].image_sub}" onerror="this.src='{$URL_IMAGES}/none_image.png'" alt="{$lstCountry[i].slug}">
+                                        <div class="nav-item unika_ul-language">
+                                            <div>
+                                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <div class="ul-item-unika d-flex align-items-center justify-content-center">
+                                                        <div class="unika_div_img">
+                                                            <img src="https://unikasia.vietiso.com/isocms/templates/default/skin/images/home/flag_us.png" alt="Icon">
+                                                        </div>
+                                                        <span class="text-white">Change language</span>
+                                                    </div>
+                                                    <i class="fas fa-angle-down ms-1" aria-hidden="true"></i>
+                                                </a>
+                                                <ul class="dropdown-menu unika_language_item">
+                                                    <li>
+                                                        <a class="dropdown-item ul-item-unika d-flex align-items-center justify-content-start" href="#">
+                                                            <div class="unika_div_img">
+                                                                <img src="https://unikasia.vietiso.com/isocms/templates/default/skin/images/home/flag_france.png" alt="Icon">
+                                                            </div>
+                                                            <span class="text-white">France</span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
                                             </div>
-                                            {/section}
+                                            <a class="nav-link" href="tel:0983033966">
+                                                <div class="ul-item-unika d-flex align-items-center justify-content-center">
+                                                    <div class="unika_div_img">
+                                                        <img src="images/header/phone.svg" alt="ico_phone" class="img_icon">
+                                                    </div>
+                                                    <span class="text-white"> Whapsapp: 0983033966 </span>
+                                                </div>
+                                            </a>
+                                            <a class="nav-link" href="mailto:info@hanoivoyage.com">
+                                                <div class="ul-item-unika d-flex align-items-center justify-content-center">
+                                                    <div class="unika_div_img">
+                                                        <img src="images/header/email.svg" alt="ico_mail" class="img_icon">
+                                                    </div>
+                                                    <span class="text-white"> info@hanoivoyage.com </span>
+                                                </div>
+                                            </a>
                                         </div>
-                                    </div>
+                                    </ul>
                                 </div>
                             </div>
-                            <div class="dropdown txt_dropdown">
-                                <button class="btn dropdown-toggle txt_dropdown" type="button" data-bs-toggle="dropdown">
-                                    {$core->get_Lang('Stay')} <i class="fas fa-angle-down ms-1"></i>
-                                </button>
-                                <div class="dropdown-menu dropdown-stay-parent">
-                                    <div class="dropdown-menu-stay">
-                                        {section name=i loop=$lstCountry}
-                                        <a class="dropdown-item position-relative overflow-hidden" href="{$clsCountryEx->getLink($lstCountry[i].country_id, " Hotel")}">
-                                            <img src="{$lstCountry[i].image_hotel_sub}" onerror="this.src='{$URL_IMAGES}/none_image.png'" alt="{$lstCountry[i].slug}">
-                                            <span class="text-light">{$lstCountry[i].title}</span>
+                        </nav>
+                        <div class="unika_language">
+                            <div class="dropdown">
+                                <div class="nav-link dropdown-toggle unika_div_img" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img src="https://unikasia.vietiso.com/isocms/templates/default/skin/images/home/flag_us.png" alt="Icon">
+                                    <i class="fas fa-angle-down ms-1" aria-hidden="true"></i>
+                                </div>
+                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                                    <li>
+                                        <a class="dropdown-item unika_div_img" href="#">
+                                            <img src="https://unikasia.vietiso.com/isocms/templates/default/skin/images/home/flag_france.png" alt="Icon">
                                         </a>
-                                        {/section}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="dropdown txt_dropdown">
-                                <button class="btn dropdown-toggle txt_dropdown" type="button" data-bs-toggle="dropdown">
-                                    {$core->get_Lang('Cruises')} <i class="fas fa-angle-down ms-1"></i>
-                                </button>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="#">Vietnam</a>
-                                    <a class="dropdown-item" href="#">Cambodia</a>
-                                    <a class="dropdown-item" href="#">Laos</a>
-                                    <a class="dropdown-item" href="#">Thailand</a>
-                                    <a class="dropdown-item" href="#">Myanmar</a>
-                                </div>
-                            </div>
-                            <div class="dropdown txt_dropdown">
-                                <button class="btn dropdown-toggle txt_dropdown" type="button" data-bs-toggle="dropdown">
-                                    {$core->get_Lang('Blog')} <i class="fas fa-angle-down ms-1"></i>
-                                </button>
-                                <div class="dropdown-menu">
-                                    {section name=i loop=$lstCountry}
-                                    <a class="dropdown-item" href="{$clsCountryEx->getLink($lstCountry[i].country_id, " Blog")}">{$lstCountry[i].title}</a>
-                                    {/section}
-                                </div>
-                            </div>
-                            <div class="button txt_dropdown">
-                                <button class="btn txt_dropdown">{$core->get_Lang('About Us')}</button>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
-                        <div class="col-lg-2 col-md-2 d-flex align-items-center justify-content-end pe-0">
-                            <div class="drop_down ml-3">
-                                <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: none;">
-                                    <img src="{$URL_IMAGES}/home/flag_us.png" alt="">
-                                    <i class="far fa-angle-down text-white ms-2"></i>
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="--bs-dropdown-min-width: unset;">
-                                    <a class="dropdown-item" href="#"><img src="{$URL_IMAGES}/home/flag_france.png" alt=""></a>
-                                </div>
-                            </div>
+                        <div class="tailor_made_travel">
+                            <a href="#">
+                                TAILOR-MADE TRAVEL
+                            </a>
                         </div>
                     </div>
                 </div>

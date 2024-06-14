@@ -99,5 +99,20 @@
 			</a>
 		</li>
 		{/if}
+		<li class="{if $mod=='tour_exhautive' && $act=='faqs'}current{/if}">
+			<a href="{$PCMS_URL}/?mod=tour_exhautive&act=faqs" title="{$core->get_Lang('FAQs')}">
+				<span class="text">{$core->get_Lang('FAQs')}</span>
+			</a>
+		</li>
+		<li class="{if $type=='TOURGUIDE'}current{/if}">
+			<a href="{$PCMS_URL}/?mod=tour_exhautive&act=property&type=TOURGUIDE">
+				<span class="text">{$core->get_Lang('Tour guide')}</span>
+			</a>
+		</li>
+		<li class="{if $type=='TOURROOM'}current{/if}">
+			<a href="{$PCMS_URL}/?mod=tour_exhautive&act=property&type=TOURROOM" title="{$core->get_Lang('Room')}">
+				<span class="text">{$core->get_Lang('Room')}</span>
+			</a>
+		</li>
 	</ul>
 </div>

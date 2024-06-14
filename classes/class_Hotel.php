@@ -856,7 +856,9 @@ class Hotel extends dbBasic
 		}
 		if (!empty($one['check_in_out_time'])) {
 			$time = json_decode($one['check_in_out_time'], true);
-			return $time['hour_in'] . ':' . $time['minute_in'];
+			return $time['hour_in'] 
+//				. ':' . $time['minute_in']
+				;
 		}
 	}
 	function getCheckOutRoom($hotel_id, $one = null)
@@ -867,7 +869,9 @@ class Hotel extends dbBasic
 		}
 		if (!empty($one['check_in_out_time'])) {
 			$time = json_decode($one['check_in_out_time'], true);
-			return $time['hour_out'] . ':' . $time['minute_out'];
+			return $time['hour_out'] 
+//				. ':' . $time['minute_out']
+				;
 		}
 	}
 	function getUrlVideo($hotel_id)

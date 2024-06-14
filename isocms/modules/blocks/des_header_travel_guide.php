@@ -14,7 +14,8 @@ $smarty->assign('clsCountry', $clsCountry);
 #
 $show   =    isset($_GET['show']) ? $_GET['show'] : '';
 $smarty->assign('show', $show);
-if ($show === 'Country') {
+
+if ($show === 'GuideCatCountry') {
     $guidecat_slug  =   '';
     $guidecat_id    =   0;
     $country_slug   =   isset($_GET['slug_country']) ? $_GET['slug_country'] : '';
@@ -22,6 +23,9 @@ if ($show === 'Country') {
 } elseif ($show === 'GuideCat') {
     $guidecat_slug  =   isset($_GET['slug_guidecat']) ? $_GET['slug_guidecat'] : '';
     $guidecat_id    =   isset($_GET['guidecat_id']) ? $_GET['guidecat_id'] : 0;
+    $country_slug   =   isset($_GET['slug_country']) ? $_GET['slug_country'] : '';
+    $country_id     =   $clsCountry->getBySlug($country_slug);
+} elseif ($show === 'SearchGuide') {
     $country_slug   =   isset($_GET['slug_country']) ? $_GET['slug_country'] : '';
     $country_id     =   $clsCountry->getBySlug($country_slug);
 }

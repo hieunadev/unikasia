@@ -51,7 +51,7 @@
                                     {$clsCountry->makeSelectboxOption($oneItem.country_id)}
                                 </select>
                                 {/if}
-                                <select class="glSlBox border_aaa" id="" name="iso-city_id" style="width:250px">
+                                <select class="glSlBox border_aaa" id="slb_City" name="iso-city_id" style="width:250px">
                                     {$clsCity->makeSelectboxOption($oneItem.city_id,$oneItem.country_id)}
                                 </select>
                                 <div class="text_help" hidden="">{$clsConfiguration->getValue($location_guide)|html_entity_decode}</div>

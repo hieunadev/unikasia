@@ -8,21 +8,29 @@ class TourPriceGroup extends dbBasic{
 		$res = $this->getAll("tour_id='$tour_id' and tour_class_id='$tour_class_id' and tour_number_group_id='$tour_number_group_id' and tour_visitor_type_id='$tour_visitor_type_id' LIMIT 0,1");
 		return $res[0][$this->pkey];
 	}
-	function getPrice($tour_id,$tour_class_id,$tour_number_group_id,$tour_visitor_type_id,$departure=0,$tour_visitor_age_type_id=0,$tour_visitor_height_type_id=0){
-		global $_LANG_ID,$clsISO;
-		$price = 0;
-		$sql="tour_id='$tour_id' and tour_class_id='$tour_class_id' and tour_number_group_id='$tour_number_group_id' and tour_visitor_type_id='$tour_visitor_type_id' and tour_visitor_age_type_id='$tour_visitor_age_type_id' and tour_visitor_height_type_id='$tour_visitor_height_type_id'";
-		$sql.=" and departure_date='$departure'";
-		/*if($type!==''){
-			$sql.=" and type='$type'";
-		}*/
-		$sql.=" limit 0,1";
-		//return $sql;
-		$lst = $this->getAll($sql);
-		if(!empty($lst[0]['price'])){
-			$price = $lst[0]['price'];
-		}
-		return $clsISO->formatPrice($price);
+	function getPrice($tour_id,$tour_class_id,$tour_number_group_id,$tour_visitor_type_id,$departure=0,$type='',$tour_visitor_age_type_id=0,$tour_visitor_height_type_id=0){
+        global $_LANG_ID,$clsISO;
+        $price = 0;
+        /*if($type!==''){
+            $sql.=" and type='$type'";
+        }*/
+        if($type == "TourGuide"){
+            $sql="tour_id='$tour_id' and tour_class_id='0' and tour_room_id='0' and tour_number_group_id='$tour_number_group_id' and tour_visitor_type_id='$tour_visitor_type_id'";
+            $sql.=" and departure_date='$departure'";
+        }elseif($type == "TourRoom"){
+            $sql="tour_id='$tour_id' and tour_class_id='0' and tour_room_id='$tour_class_id' and tour_number_group_id='$tour_number_group_id' and tour_visitor_type_id='$tour_visitor_type_id'";
+            $sql.=" and departure_date='$departure'";
+        }else{
+            $sql="tour_id='$tour_id' and tour_class_id='$tour_class_id' and tour_number_group_id='$tour_number_group_id' and tour_visitor_type_id='$tour_visitor_type_id' and tour_visitor_age_type_id='$tour_visitor_age_type_id'";
+            $sql.=" and departure_date='$departure'";
+        }
+        $sql.=" limit 0,1";
+//        return $sql;
+        $lst = $this->getAll($sql);
+        if(!empty($lst[0]['price'])){
+            $price = $lst[0]['price'];
+        }
+        return $clsISO->formatPrice($price);
 	}
 	function getPriceType($tour_id,$tour_class_id,$tour_number_group_id,$tour_visitor_type_id,$departure=0,$tour_visitor_age_type_id=0,$tour_visitor_height_type_id=0){
 		global $_LANG_ID,$clsISO;

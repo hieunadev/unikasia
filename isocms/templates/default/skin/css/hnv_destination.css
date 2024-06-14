@@ -525,12 +525,21 @@ body {
     margin-top: 12px;
 }
 .des_list_hotel_item_title h3 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.des_list_hotel_item_title h3 a {
     color: var(--Neutral-1, #111d37);
     font-family: "SF Pro Display";
     font-size: 18px;
     font-style: normal;
     font-weight: 600;
     line-height: 28px;
+    transition: all 0.3s ease-in-out;
+}
+.des_list_hotel_item_title h3 a:hover {
+    color: #ffa718;
 }
 .des_list_hotel_item_star {
     color: #ffa718;

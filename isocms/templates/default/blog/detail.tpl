@@ -14,104 +14,56 @@
 
 
 {literal}
-
 <script type="application/ld+json">
-
 {
-
     "@context": "https://schema.org/",
-
     "@type": "BlogPosting",
-
     "@id": "{/literal}{$DOMAIN_NAME}{$curl}{literal}#BlogPosting",
-
     "mainEntityOfPage": "{/literal}{$DOMAIN_NAME}{$curl}{literal}",
-
     "headline": "{/literal}{$title_blog}{literal}",
-
     "name": "{/literal}{$title_blog}{literal}",
-
-    "description": "{/literal}{$description_page|replace:'"':'\"'}{literal}",
-
-    "datePublished": "{/literal}{$datePublished}{literal}",
-
-    "dateModified": "{/literal}{$dateModified}{literal}",
-
+    "description": "{/literal}{$description_page}{literal}",
+    "datePublished": "{/literal}{$publish_date}{literal}",
+    "dateModified": "{/literal}{$upd_date}{literal}",
     "author": {
-
 		"@type": "Person",
-
 		"name": "{/literal}{$author}{literal}"
-
 	},
-
     "publisher": {
-
 		"@type": "Organization",
-
 		"@id": "{/literal}{$DOMAIN_NAME}{literal}",
-
-		"name": "{/literal}{$PAGE_NAME}{literal}",
-
+		"name": "VietISO Company",
 		"logo": {
-
 			"@type": "ImageObject",
-
-			"@id": "{/literal}{$DOMAIN_NAME}{$clsConfiguration->getImageValue('HeaderLogo')}{literal}",
-
-			"url": "{/literal}{$DOMAIN_NAME}{$clsConfiguration->getImageValue('HeaderLogo')}{literal}",
-
+			"@id": "{/literal}{$DOMAIN_NAME}/uploads/logo/logo_footer_new.png{literal}",
+			"url": "{/literal}{$DOMAIN_NAME}/uploads/logo/logo_footer_new.png{literal}",
 			"width": "98",
-
 			"height": "47"
-
 		}
-
 	},
-
     "image": {
-
         "@type": "ImageObject",
-
         "@id": "{/literal}{$DOMAIN_NAME}{$imgBlog}{literal}",
-
 		"url": "{/literal}{$DOMAIN_NAME}{$imgBlog}{literal}",
-
         "height": "535",
-
         "width": "800"
-
     },
-
     "url": "{/literal}{$DOMAIN_NAME}{$curl}{literal}",
-
     "isPartOf": {
-
         "@type" : "Blog",
-
          "@id": "{/literal}{$DOMAIN_NAME}{$clsISO->getLink('blog')}{literal}",
-
          "name": "{/literal}{$core->get_Lang('Blog')}{literal}",
-
          "publisher": {
-
              "@type": "Organization",
-
              "@id": "{/literal}{$DOMAIN_NAME}{literal}",
-
-             "name": "{/literal}{$PAGE_NAME}{literal}"
-
+             "name": "VietISO Company"
          }
-
      }
-
     {/literal}{if $listTag}{literal},"keywords": {/literal}{$listTag|@json_encode}{literal}{/literal}{/if}{literal}
-
 }
-
 </script>
-
 {/literal}
+
 
     <link rel="stylesheet" href="{$URL_CSS}/detail_blog.css?v={$upd_version}" as="style" />
 
@@ -216,19 +168,7 @@
                                 {assign var=percentAVG value='0'}
                             {/if}
                             {$core->getBlock('rate_star')}
-<!--
-                            <div class="star-icons">
-                             <div class="rating" style="width: 20rem">
-							<input id="rating-5" type="radio" name="rating" value="5"/><label for="rating-5"><i class="fa-solid fa-star fa-xl"></i></label>
-							<input id="rating-4" type="radio" name="rating" value="4" checked /><label for="rating-4"><i class="fa-solid fa-star fa-xl"></i></label>
-							<input id="rating-3" type="radio" name="rating" value="3"/><label for="rating-3"><i class="fa-solid fa-star fa-xl"></i></label>
-							<input id="rating-2" type="radio" name="rating" value="2"/><label for="rating-2"><i class="fa-solid fa-star fa-xl"></i></label>
-							<input id="rating-1" type="radio" name="rating" value="1"/><label for="rating-1"><i class="fa-solid fa-star fa-xl"></i></label>
-						</div>
-								
-                            </div>
-                            <span class="vote-count">| 2 voted</span>
--->
+
                         </div>
                     </div>
 
@@ -498,44 +438,23 @@
     {/if}
 	
 	<style>
-
 	</style>
 		
 		
-
-{if $blogItem.rate}
-
-{literal}
-
-<script type="application/ld+json">{
-
-    "@context": "https://schema.org/",
-
-    "@type": "CreativeWorkSeries",
-
-    "name": "{/literal}{$blogItem.title|html_entity_decode}{literal}",
-
-    "aggregateRating": {
-
-        "@type": "AggregateRating",
-
-        "ratingValue": "{/literal}{$rateavg}{literal}",
-
-        "bestRating": "5",
-
-        "ratingCount": "{/literal}{$blogItem.rate}{literal}"
-
-    }
-
-}
-		</script>
-
-{/literal}
-
-{/if}
-
-
     <script>
+		
+$(window).scroll(function() {
+  setTimeout(function() {
+    if ($(window).scrollTop() === 0) {
+      $('.unika_header').removeClass('unika_header_2');
+    }
+  });
+});
+
+
+
+
+
 		
 		document.addEventListener('DOMContentLoaded', () => {
 	  const viewMoreLink = document.getElementById('viewMore');

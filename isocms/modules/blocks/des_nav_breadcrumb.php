@@ -46,3 +46,6 @@ if (!empty($guide_id)) {
 #
 $keyword    =   isset($_GET['keyword']) ? $_GET['keyword'] : '';
 $smarty->assign('keyword', $keyword);
+#
+$guidetag   =   isset($_GET['slug']) ? $_GET['slug'] : '';
+$smarty->assign('guidetag', $guidetag);

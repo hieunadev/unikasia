@@ -77,29 +77,33 @@
     </div>
     <div class="box_right-body_mobile">
         <div class="box_right_body">
-            {if !isset($ratingCount) || !$ratingCount}
                 <div class="review" style="">
-					<div class="rate">0.0</div>
-                    <p>No review
+					<div class="rate">{$clsReviews->getReviews($hotel_id, 'avg_point')}</div>
+                    <p>{$clsReviews->getReviews($hotel_id, 'txt_review')}
                         <span>
-                            (0 {$core->get_Lang('review')})
+                            ({$clsReviews->getReviews($hotel_id)} {$core->get_Lang('reviews')})
                         </span>
                     </p>
                 </div>
-            {else}
+
+<!--
                 <div class="review">
-                    <p>{$textRateAvg}
+                    <p>{$clsReviews->getReviews($hotel_id, 'txt_review')}
                         <span>
-                            ({$ratingCount} {$core->get_Lang('reviews')})
+                            ({$clsReviews->getReviews($hotel_id)} {$core->get_Lang('reviews')})
                         </span>
                     </p>
-                    <div class="rate">{$ratingValue|number_format:1}</div>
+                    <div class="rate">{$clsReviews->getReviews($hotel_id, 'avg_point')}</div>
                 </div>
-            {/if}
+-->
             <div class="box_price">
                 <div class="price_from_text">{$core->get_Lang('Avg price per night')}</div>
                 <div class="div_price text-end">{$core->get_Lang('US')}
-                    <span>{$clsHotel->getPriceOnPromotion($hotel_id)}</span>
+                    <span>{if $clsHotel->getPriceOnPromotion($hotel_id,'detail')}
+                            {$clsHotel->getPriceOnPromotion($hotel_id)}
+                        {else}
+                            {$core->get_Lang('Contact us')}
+                        {/if}</span>
                 </div>
                 <div class="box_right-price">
                 </div>

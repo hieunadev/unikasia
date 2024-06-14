@@ -7,7 +7,7 @@ $(document).ready(function(){
 		items: 4,
         margin: 32,
 
-        loop: true,
+        loop: false,
 
         nav: true,
 
@@ -43,7 +43,14 @@ $(document).ready(function(){
 
         }
 
-    });
+    }).on('changed.owl.carousel', function(event) {
+  // Kiểm tra xem carousel có đang ở trạng thái "disabled" (không thể chuyển tiếp) hay không
+  const isDisabled = $(this).hasClass('owl-carousel owl-theme owl-loaded owl-drag'); // Kiểm tra các class mặc định của Owl Carousel
+
+  // Ẩn nút "next" nếu carousel đang ở trạng thái "disabled"
+  $('.owl-next').toggle(!isDisabled);
+});
+	
 
 
 

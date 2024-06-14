@@ -25,12 +25,12 @@ if ($show === 'DetailGuide') {
     $smarty->assign('guide_info', $guide_info);
     #
     if (!empty($guide_info)) {
-        // // Country title
-        // $country_title  =   $clsCountry->getTitle($guide_info['country_id']);
-        // $smarty->assign('country_title', $country_title);
-        // // Guide category title
-        // $guidecat_title  =   $clsGuideCat->getTitle($guide_info['cat_id']);
-        // $smarty->assign('guidecat_title', $guidecat_title);
+        // Country title
+        $country_title  =   $clsCountry->getTitle($guide_info['country_id']);
+        $smarty->assign('country_title', $country_title);
+        // Guide category title
+        $guidecat_title  =   $clsGuideCat->getTitle($guide_info['cat_id']);
+        $smarty->assign('guidecat_title', $guidecat_title);
         #
         // Guide category link
         $country_slug   =   $clsCountry->getSlug($guide_info['country_id']);

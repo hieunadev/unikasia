@@ -8,12 +8,15 @@
                     <h2 class="txt_youarehere">You are here:</h2>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{PCMS_URL}" title="{$core->get_Lang('Home')}">Home</a></li>
+                        {if $clsCountry->getTitle($country_id)}
                         <li class="breadcrumb-item"><a href="{$clsCountry->getLink($country_id, 'tour')}"
                                                        title="{$core->get_Lang('Vietnam')}">{$clsCountry->getTitle($country_id)}</a>
                         </li>
+                        {/if}
+                        {if $clsTourCat->getTitle($travel_style_id)}
                         <li class="breadcrumb-item"><a href="{$clsTourCat->getLink($travel_style_id,'','home')}"
                                                        title="{$core->get_Lang('Honeymoon')}">{$clsTourCat->getTitle($travel_style_id)}</a></li>
-
+                        {/if}
                         <li class="breadcrumb-item active" aria-current="page">{$clsTour->getTitle($tour_id)}</li>
                     </ol>
                 </div>
@@ -78,7 +81,7 @@
                                 </p>
                                 <p class="txt_location">
                                     <i class="fa-regular fa-circle-dot" style="color: #111d37;"></i>
-                                    <span class="bold_txtlocation">Operated in:</span> English
+                                    <span class="bold_txtlocation">Operated in:</span> {$clsTourProperty->getListTourProperty($oneItem.list_tour_guide_id)}
                                 </p>
                             </div>
                             <div class="txt_button_excluing">
@@ -88,7 +91,11 @@
                                         <button class="btn btn-request-book btn-hover-home">Request a quote</button>
                                         <button class="btn btn-request-book btn-hover-home">Book it now</button>
                                     </div>
-                                    <button class="btn btn-download">Download itinerary</button>
+                                    {if $oneItem.file_programme}
+                                    <button type="button" class="btn btn-download" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                        Download itinerary
+                                    </button>
+                                    {/if}
                                 </div>
                             </div> 
                         </div>
@@ -204,7 +211,7 @@
                                 
                                 <div class="box_input">
                                     <i class="fa-regular fa-user icon"></i>
-                                    <input type="text" name="number_travellers" class="number_travellers" id="pick_travellers" placeholder="{$core->get_Lang('2 Adults, 1 Children')}" readonly>
+                                    <input type="text" name="number_travellers" class="number_travellers" id="pick_travellers" readonly>
                                     <div id="check_number_travellers" class="check_number_travellers">
                                         <ul class="check_number_travellers--ul list_style_none">
                                             {section name=i loop=$lstVisitorType}
@@ -224,12 +231,20 @@
                                                 {elseif $lstVisitorType[i].tour_property_id eq $child_type_id}
                                                     {if $max_child}
                                                         <li class="inputTraveller" {$max_child}>
-                                                            <div class="right__inputTraveller">
-                                                                <label>{$core->get_Lang('Children')} (4-10 {$core->get_Lang('age')})</label>
-                                                                <input type="hidden" id="tour_visitor_child_id" name="tour_visitor_child_id" value="{$lstVisitorType[i].tour_property_id}"/>
-                                                                <input type="hidden" id="max_child" name="max_child" value="{$max_child}"/>
+                                                            <div class="box_age" {$max_child}>
+                                                                <div class="right__inputTraveller">
+                                                                    <label>{$core->get_Lang('Children')} (4-12 {$core->get_Lang('age')})</label>
+                                                                    <span class="ui-spinner ui-corner-all ui-widget ui-widget-content">
+																					<button class="ui-spinner-button ui-spinner-down unNumChild" type="button" _type="number_child" traveler_type_id="{$lstVisitorType[i].tour_property_id}" visitor_age_child_id="{$list_age_child[j].tour_option_id}">-</button>
+																					<input min-number="0" abc max-number="{$max_child}" type="number" class="ui-spinner-input number_child input_number find_select" tour_visitor_type_id="{$lstVisitorType[i].tour_property_id}" name="national_visitor{$lstVisitorType[i].tour_property_id}_{$list_age_child[j].tour_option_id}" id="national_visitor{$lstVisitorType[i].tour_property_id}" value="0" visitor_age_child_id="{$list_age_child[j].tour_option_id}" readonly/>
+																					<button class="ui-spinner-button ui-spinner-up upNumChild" type="button" _type="number_child" traveler_type_id="{$lstVisitorType[i].tour_property_id} "  visitor_age_child_id="{$list_age_child[j].tour_option_id}">+</button>
+																				</span>
+                                                                    <input type="hidden" id="tour_visitor_child_id" name="tour_visitor_child_id" value="{$lstVisitorType[i].tour_property_id}"/>
+                                                                    <input type="hidden" id="max_child" name="max_child" value="{$max_child}"/>
+                                                                </div>
+                                                                <div class="box_age_child" id="box_age_child"></div>
                                                             </div>
-                                                            {section name=j loop=$list_age_child}
+                                                            {*{section name=j loop=$list_age_child}
                                                                 <div class="box_age" {$max_child}>
                                                                     <div class="right__inputTraveller">
                                                                         <label>{$core->get_Lang('Children')} ({$list_age_child[j].title})</label>
@@ -239,10 +254,9 @@
 																					<button class="ui-spinner-button ui-spinner-up upNumChild" type="button" _type="number_child" traveler_type_id="{$lstVisitorType[i].tour_property_id} "  visitor_age_child_id="{$list_age_child[j].tour_option_id}">+</button>
 																				</span>
                                                                     </div>
-                                                                    <div class="box_age_child" id="box_age_child"></div>
                                                                 </div>
 
-                                                            {/section}
+                                                            {/section}*}
 
                                                             <div class="txt_children">{$core->get_Lang("To find a property that suits your whole group at the exact same price, we need to know the children's ages at check-out")}</div>
                                                         </li>
@@ -383,7 +397,7 @@
     </section>
 
     <section id="review_tour" class="section_review_tour">
-        <h2 class="title_review_tour">Review</h2>
+        <div class="title_review_parent"><h2 class="title_review_tour">{$core->get_Lang('Review')}</h2></div>
         <div class="reviews_box_top">
             <div class="row review-evaluation">
                 <div class="col-lg-4 measure-evaluation">
@@ -445,7 +459,7 @@
                     </div>
                     <p class="title_review">{$lstReviews[i].title}</p>
                     <p class="content_review">{$lstReviews[i].content}</p>
-                    <button class="view_more_review d-none">View more</button>
+                    <p class="view_more_review">View more</p>
                 </div>
             {/section}
             {else}
@@ -460,7 +474,7 @@
         <div class="maybe_you_interest container">
             <h2 class="txtInterested">{$core->get_Lang('May be you are interested')}</h2>
             <div class="recently-view">
-                <div class="related_tours owl-carousel" id="maybe_interest">
+                <div class="related_tours owl-carousel" id="maybe_interested_owl">
                     {section name=i loop=$lstRelateTour}
                         <div class="list_viewtour">
                             <div class="img_toursrelated">
@@ -481,7 +495,7 @@
                                     <i class="fa-light fa-location-dot" style="color: #43485c;"
                                        aria-hidden="true"></i>
                                     <span class="txt_placetours">Place: {$clsTourDestination->getByCountry($lstRelateTour[i].tour_id, 'city')}</span>
-                                    {if $clsTourDestination->getByCountry($lstRelateTour[i].tour_id)}
+                                    {if $clsTourDestination->getByCountry($lstRelateTour[i].tour_id, 'other_city')}
                                         <button type="button" class="tooltips_tour" data-bs-toggle="tooltip"
                                                 title="{$clsTourDestination->getByCountry($lstRelateTour[i].tour_id, 'other_city')}">
                                             +{$clsTourDestination->getByCountry($lstRelateTour[i].tour_id)}
@@ -490,7 +504,7 @@
                                 </div>
                                 <div class="intro_recent_view_tour">{$lstRelateTour[i].overview|html_entity_decode}</div>
                                 <div class="d-flex justify-content-between align-items-center" style="margin-top: 20px">
-                                    <div class="from_price"><p class="from_txtp">From</p> <span
+                                    <div class="from_price"><p class="from_txtp">From <span class="text-decoration-line-through">${$lstRelateTour[i].min_price}</span></p> <span
                                                 class="txt_price">US
                                             <h3 class="txt_numbprice"> ${$clsTour->getPriceAfterDiscount($lstRelateTour[i].tour_id)}</h3> </span>
                                     </div>
@@ -514,7 +528,7 @@
         {if $lstTourRecent}
             <div class="recently-view">
                 <h2 class="recently-view-title">{$core->get_Lang('Recently viewed')}</h2>
-                <div class="related_tours row">
+                <div class="related_tours owl-carousel" id="related_tours_detail">
                     {section name=i loop=$lstTourRecent}
                         <div class="list_viewtour">
                             <div class="img_toursrelated">
@@ -532,7 +546,7 @@
                                 <div class="d-flex align-items-center">
                                     <i class="fa-light fa-location-dot" style="color: #43485c;" aria-hidden="true"></i>
                                     <span class="txt_placetours">Place: {$clsTourDestination->getByCountry($lstTourRecent[i].tour_id, 'city')}</span>
-                                    {if $clsTourDestination->getByCountry($lstTourRecent[i].tour_id)}
+                                    {if $clsTourDestination->getByCountry($lstTourRecent[i].tour_id, 'other_city')}
                                         <button type="button" class="tooltips_tour" data-bs-toggle="tooltip" title="{$clsTourDestination->getByCountry($lstTourRecent[i].tour_id, 'other_city')}">
                                             +{$clsTourDestination->getByCountry($lstTourRecent[i].tour_id)}
                                         </button>
@@ -540,7 +554,7 @@
                                 </div>
                                 <div class="intro_recent_view_tour">{$lstTourRecent[i].overview|html_entity_decode}</div>
                                 <div class="d-flex justify-content-between align-items-center" style="margin-top: 40px">
-                                    <div class="from_price"><p class="from_txtp">From</p> <span
+                                    <div class="from_price"><p class="from_txtp">From <span class="text-decoration-line-through">${$lstTourRecent[i].min_price}</span></p> <span
                                                 class="txt_price">US
 												<h3 class="txt_numbprice"> ${$clsTour->getPriceAfterDiscount($lstTourRecent[i].tour_id)}</h3> </span></div>
                                     <a href="{$clsTour->getLink($lstTourRecent[i].tour_id)}" alt="tour" title="tour">
@@ -586,6 +600,28 @@
             </div>
         </div>
     </section>
+    <!-- Modal Download Itinerary -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form action="" method="post" enctype="multipart/form-data">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Download Brochure</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="exampleInputEmail1" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" name="email" aria-describedby="emailHelp">
+                        <input type="hidden" class="form-control" name="tour_id" value="{$tour_id}">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button  id="download_brochure" type="button" class="btn btn-warning">Download brochure</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </main>
 <script type="text/javascript">
     var $tour_id = '{$tour_id}';
@@ -634,7 +670,7 @@
             window.onscroll = function() {
                 if (window.scrollY >= 630) {
                     $('.class-tour').addClass('list_nav_fixed');
-                    $("#header_fixed").removeClass('nah_header_sticky');
+                    $(".unika_true").removeClass('unika_header');
                 } else {
                     $('.class-tour').removeClass('list_nav_fixed');
                 }
@@ -645,9 +681,11 @@
                 if ($(this).hasClass('expand')) {
                     $(this).removeClass('expand').text('Expand all');
                     $accordionCollapse.removeClass('show');
+                    $(".accordion-button").removeClass('collapsed')
                 } else {
                     $(this).addClass('expand').text('Collapse all');
                     $accordionCollapse.addClass('show');
+                    $(".accordion-button").addClass('collapsed')
                 }
             });
         });
@@ -658,7 +696,6 @@
             Fancybox.bind("[data-fancybox]", {
 
             });
-
             $('#maybe_interest').owlCarousel({
                 loop: true,
                 margin: 32,
@@ -712,6 +749,31 @@
                     carousel.find('.owl-next').show();
                 }
             });
+
+            const itemCount = $('#related_tours_detail').children().length;
+            $('#related_tours_detail').owlCarousel({
+                items: 4,
+                loop: false,
+                margin: 32,
+                nav: false,
+                autoplay: itemCount > 4,
+                autoplayTimeout: 3000,
+                autoplayHoverPause: true,
+                dots: false
+            });
+
+            const itemCount_maybe = $('#maybe_interested_owl').children().length;
+            $('#maybe_interested_owl').owlCarousel({
+                items: 4,
+                loop: false,
+                margin: 32,
+                nav: false,
+                autoplay: itemCount_maybe > 4,
+                autoplayTimeout: 3000,
+                autoplayHoverPause: true,
+                dots: false
+            });
+
             let numberMonth = 2;
             if ($( document ).width() <= 767){
                 numberMonth = 1;
@@ -735,6 +797,55 @@
                 if (!target.closest('input[name="number_travellers"]').length &&
                     !target.closest('#check_number_travellers').length) {
                     $("#check_number_travellers").hide();
+                }
+            });
+            $("#download_brochure").click(function(event) {
+                event.preventDefault();
+                let $_this = $(this).closest('form');
+                let adata = {};
+
+                adata["email"] = $_this.find("input[name='email']").val();
+                if (adata["email"] == '') {
+                    alert("Please enter your email");
+                    return;
+                }
+                adata["tour_id"] = $_this.find("input[name='tour_id']").val();
+                $.ajax({
+                    type: "POST",
+                    url: path_ajax_script + "/index.php?mod=tour&act=sendMail",
+                    data: adata,
+                    dataType: "html",
+                    beforeSend: function (xhr) {
+                        $('#download_brochure').text("Processing...").prop('disabled', true);
+                    },
+                    success: function(res) {
+                        $('#download_brochure').text("Download Brochure").prop('disabled', false);
+                        alert("Successfully! Please check email!");
+                    },
+                    error: function() {
+                        console.error("Fail");
+                    }
+                });
+            });
+            $('.review').each(function() {
+                var moreText = $(this).find('.content_review');
+                var toggleButton = $(this).find('.view_more_review');
+
+                if (moreText[0].scrollHeight <= 72) {
+                    toggleButton.hide();
+                }
+            });
+            $('.view_more_review').click(function() {
+                var moreText = $(this).prev('.content_review');
+
+                if (moreText.hasClass('expanded')) {
+                    moreText.removeClass('expanded');
+                    $(this).text('View More');
+                    moreText.css({'max-height': '72px'});
+                } else {
+                    moreText.addClass('expanded');
+                    $(this).text('View Less');
+                    moreText.css({'max-height': moreText[0].scrollHeight + 'px', '-webkit-line-clamp': 'unset'});
                 }
             });
         })

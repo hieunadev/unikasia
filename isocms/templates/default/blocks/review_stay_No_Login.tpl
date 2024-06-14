@@ -27,7 +27,7 @@
 						</div>
 						<div class="form-group">
 							<input type="hidden" value="Review" name="Review"> 
-							<input type="hidden" value="{$type}" id="type" name="type">
+							<input type="hidden" value="{$mod}" id="type" name="type">
 							<input type="hidden" value="{$table_id}" id="table_id" name="table_id"> 
 							<input type="hidden" value="{$profile_id}" id="member_id" name="member_id"> 
 							<button type="button" id="btnClick" class="btn_green btn_main">{$core->get_Lang('Submit your review')}</button>

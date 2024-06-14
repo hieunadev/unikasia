@@ -160,37 +160,28 @@
 								{/if}
 							</h3>
 							<p class="intro_box mb40">{$core->get_Lang('introcheckinhotel')}</p>
+						
 							<div class="inpt_tour">
-								<label class="full-width">{$core->get_Lang('Time check in')}</label>
-								<div class="form-group pick_duration">
-<!--									<span class="minus"  data-step="1">-</span>-->
-									<input type="text" value="{$clsClassTable->getTimeCheckInOut($pvalTable,'hour_in')}" min="0" max="24" class="input_number find_select" name="hour_in">
-<!--									<span class="plus"  data-step="1">+</span>-->
-								</div>
-								<label class="label_duration ">{$core->get_Lang('Hours')}</label>
-								<div class="form-group pick_duration pick_night">
-<!--									<span class="minus" data-step="5">-</span>-->
-									<input type="text" value="{$clsClassTable->getTimeCheckInOut($pvalTable,'minute_in')}" min="0" max="60"  class="input_number find_select" name="minute_in">
-<!--									<span class="plus" data-step="5">+</span>-->
-								</div>
-								<label class="label_duration">{$core->get_Lang('Minute')}</label>
+							  <label class="full-width">{$core->get_Lang('Time check in')}</label>
+							  <div class="form-group pick_duration" style="width: 100%">
+								<input type="text" value="{$clsClassTable->getTimeCheckInOut($pvalTable,'hour_in')}" min="0" max="24" class="input_number find_select" name="hour_in">
+							  </div>
+							  <label class="label_duration" style="display: none;">{$core->get_Lang('Minute')}</label>  
 							</div>
-							<div class="inpt_tour">
+						
+								<div class="inpt_tour">
 								<label  class="full-width">{$core->get_Lang('Time check out')}</label>
-								<div class="form-group pick_duration">
-<!--									<span class="minus"  data-step="1">-</span>-->
-									<input type="number" value="{$clsClassTable->getTimeCheckInOut($pvalTable,'hour_out')}" min="0" max="24" class="input_number find_select" name="hour_out">
-<!--									<span class="plus"  data-step="1">+</span>-->
-								</div>
-								<label class="label_duration ">{$core->get_Lang('Hours')}</label>
-								<div class="form-group pick_duration pick_night">
-<!--									<span class="minus"  data-step="5">-</span>-->
-									<input type="number" value="{$clsClassTable->getTimeCheckInOut($pvalTable,'minute_out')}" min="0" max="60" class="input_number find_select" name="minute_out">
-<!--									<span class="plus" data-step="5">+</span>-->
-								</div>
-								<label class="label_duration">{$core->get_Lang('Minute')}</label>
-							</div>
+														
+								<div class="form-group pick_duration" style="width: 100%">
+							<input type="text" value="{$clsClassTable->getTimeCheckInOut($pvalTable,'hour_out')}" min="0" max="24" class="input_number find_select" name="hour_out">
+						  </div>
+						  <label class="label_duration" style="display: none;">{$core->get_Lang('Minute')}</label>  
+						</div>
+						
+						
+
 						{literal}
+<!--
 							<script>
 								$(document).ready(function() {
 									$('.minus').click(function () {
@@ -215,6 +206,7 @@
 									});
 								});
 							</script>
+-->
 							<style>
 								input[type=number]::-webkit-inner-spin-button,
 								input[type=number]::-webkit-outer-spin-button {

@@ -44,7 +44,7 @@
 					<p class="help-block">{$core->get_Lang('Chosse File in the warehouse data')}</p>
 					<img class="isoman_img_pop" id="isoman_show_file_programmes" src="{$URL_IMAGES}/icon_pdf.png" width="30px" height="30px" />
 					<input type="hidden" id="isoman_hidden_file_programme" name="isoman_url_file_programme"  value="{$oneItem.file_programme}" >
-					<input class="text_32 border_aaa bold" type="text" id="isoman_url_file_programme" name="file_programme" value="{$oneItem.file_programme}" style="width:100%; max-width:300px; float:left" onClick="loadHelp(this)" readonly><a style="float:left; margin-left:4px; margin-top:-4px;" href="#" class="ajOpenDialog" isoman_for_id="file_programme" isoman_val="{$oneItem.file_programme}" isoman_name="file_programme"><img src="{$URL_IMAGES}/general/folder-32.png" border="0" title="Open" alt="Open" /></a>
+					<input class="text_32 border_aaa bold" type="text" id="isoman_url_file_programme" name="file_programme" value="{$oneItem.file_programme}" style="width:100%; max-width:300px; float:left" onClick="loadHelp(this)"><a style="float:left; margin-left:4px; margin-top:-4px;" href="#" class="ajOpenDialog" isoman_for_id="file_programme" isoman_val="{$oneItem.file_programme}" isoman_name="file_programme"><img src="{$URL_IMAGES}/general/folder-32.png" border="0" title="Open" alt="Open" /></a>
 					<em style="padding-left:10px; padding-top:3px; display:inline-block">File chương trình tour</em>
 					<div class="text_help" hidden="">{$clsConfiguration->getValue($file_tour)|html_entity_decode}</div>
 				</div>

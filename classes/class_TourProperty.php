@@ -78,7 +78,8 @@ class TourProperty extends dbBasic{
     function getListTourProperty($string_id){
         $list_id = implode(',',$this->getArray($string_id));
         $listProperty = $this->getAll('is_trash=0 and is_online=1 and tour_property_id IN ('.$list_id.')',$this->pkey.',title');
-        return $listProperty;
+        $titles = array_column($listProperty, 'title');
+        return implode(', ', $titles);
     }
 
     function getArray($string){

@@ -4337,6 +4337,7 @@ function default_ajLoadTourPriceGroup(){
 	$tour_visitor_age_type_id = (int) Input::post('tour_visitor_age_type_id', 0);
 	$tour_visitor_height_type_id = (int) Input::post('tour_visitor_height_type_id', 0);
 	$tour_start_date_id = (int) Input::post('tour_start_date_id', 0);
+    $tour_room_id = (int) Input::post('tour_room_id', 0);
 	$is_agent = (int) Input::post('is_agent', 0);
 	$departure = (int) Input::post('departure', 0);
 	$currency = $clsConfiguration->getValue('Currency');
@@ -4344,7 +4345,7 @@ function default_ajLoadTourPriceGroup(){
 	$lstTourClass = $clsTourProperty->getAll("is_trash=0 and type='TOURCLASS' order by order_no ASC");
 	$lstTourNumberGroup = $clsTourProperty->getAll("is_trash=0 and type='TOURNUMBERGROUP' order by order_no ASC");
 	$lstTourVisitorType  = $clsTourProperty->getAll("is_trash=0 and type='VISITORTYPE' order by tour_property_id ASC");
-	$oneItem = $clsTour->getOne($tour_id, "tour_option,adult_group_size,child_group_size,infant_group_size,visitorage_child,visitorage_infant,visitorheight_child,visitorheight_infant");
+	$oneItem = $clsTour->getOne($tour_id, "tour_option,adult_group_size,child_group_size,infant_group_size,visitorage_child,visitorage_infant,visitorheight_child,visitorheight_infant, list_tour_room_id");
 	$lstOption = !empty($oneItem['tour_option']) 
 		? $clsISO->getArrayByTextSlash($oneItem['tour_option']) : array();
 	$lstAdultSize = !empty($oneItem['adult_group_size']) 
@@ -4357,7 +4358,7 @@ function default_ajLoadTourPriceGroup(){
 	$total_adult_group_size = !empty($lstAdultSize) ? count($lstAdultSize) : 0;
 	$total_child_group_size = !empty($lstChildSize) ? count($lstChildSize) : 0;
 	$total_infant_group_size = !empty($lstInfantSize) ? count($lstInfantSize) : 0;
-	
+    $lstTourRoom = !empty($oneItem['list_tour_room_id']) ? $clsISO->getArrayByTextSlash($oneItem['list_tour_room_id']) : array();
 	$visitorage_child = !empty($oneItem['visitorage_child'])? $clsISO->getArrayByTextSlash($oneItem['visitorage_child']) : array();
 	$visitorage_infant = !empty($oneItem['visitorage_infant'])? $clsISO->getArrayByTextSlash($oneItem['visitorage_infant']) : array();
 	$total_visitorage_child = !empty($visitorage_child) ? count($visitorage_child) : 0;
@@ -4426,7 +4427,7 @@ function default_ajLoadTourPriceGroup(){
 										if($price == 0 && !$check_exist){
 											$max_id=$clsTourPriceGroup->getMaxID();
 											$f = "tour_price_group_id,tour_id,tour_class_id,tour_number_group_id,tour_visitor_type_id,tour_visitor_age_type_id,tour_visitor_height_type_id,
-											price,price_type,departure_date,user_id,user_id_update,reg_date,upd_date";
+											price,price_type,departure_date,user_id,user_id_update,reg_date,upd_date,tour_room_id";
 											$v = "'$max_id','$tour_id','$val','".$listChildSizeAgeHeight[$i]."','".$b[$clsTourProperty->pkey]."','".$visitorage_child[$k17]."','".$tour_visitor_height_type_id."','".$price."','0','$departure','$user_id','$user_id','".time()."','".time()."'";
 											$clsTourPriceGroup->insertOne($f, $v);
 										}
@@ -4625,6 +4626,58 @@ function default_ajLoadTourPriceGroup(){
 				</div>';
 			}
 		}
+        if(!empty($lstTourRoom)){
+            $html .= '<div class="table-wrapper mb-half radius-3">
+						<table class="table table-iloocal table-bordered mb-0 radius-3" >
+							<tr class="bg-gray">
+								<td colspan="3" class="text-left bg-gray">'.$core->get_Lang("Tour Room").'</td>
+							</tr>';
+            foreach($lstTourRoom as $key=>$val){
+                if($val > 0){
+                    if($val == '195'){
+                        /*$html .= '<tr>
+                            <td colspan="2"  class="text-left"><strong>'.$clsTourProperty->getTitle($val).'</strong></td>
+                            <td colspan="1" style="width: 35%">
+                                <div class="radius-3 mb-half">
+                                    <div class="row">
+                                        <label class="col-form-label col-md-6 text-left">'.$core->get_Lang('Double').'</label>
+                                        <div class="col-md-6">
+                                            <div class="input-group">
+                                                <input class="form-control price-In h_tour_price_group fontLarge" tour_id="'.$tour_id.'" tour_class_id="0" tour_start_date_id="0" tour_number_group_id="0" tour_visitor_type_id="0" tour_room_id="'.$val.'" departure="0" value="'.$clsTourPriceGroup->getPrice($tour_id,$val,0,0,0,'TourRoom').'" type="text" />
+                                                <span class="input-group-addon">'.$clsISO->getRate().'</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>';
+                        $html .= '<div class="radius-3 mb-half">
+                            <div class="row">
+                                <label class="col-form-label col-md-6 text-left">'.$core->get_Lang('Single').'</label>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control h_price_single_supply fontLarge price-In numberonly" tour_id="'.$tour_id.'" tour_class_id="0" tour_start_date_id="0" departure="0" value="'.$clsTourPriceGroup->getPriceSingleSupplyAdmin($tour_id,$val,0,'TourRoom').'" name="price_single_supply" placeholder="0.00">
+                                        <span class="input-group-addon">'.$clsISO->getRate().'</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>';
+                        $html .= '</td></tr>';*/
+                    }else{
+                        $html .= '<tr>
+								<td colspan="2"  class="text-left"><strong>'.$clsTourProperty->getTitle($val).'</strong></td>
+								<td colspan="1" style="width: 35%">
+									<div class="input-group">
+										<input class="price_room form-control h_tour_price_group" tour_id="'.$tour_id.'" tour_class_id="0" tour_start_date_id="0" tour_number_group_id="0" tour_visitor_type_id="0" tour_room_id="'.$val.'" departure="0" value="'.$clsTourPriceGroup->getPrice($tour_id,$val,0,0,0,'TourRoom').'" type="text" />
+										<span class="input-group-addon">'.$clsISO->getRate().'</span>
+									</div>
+								</td>
+							</tr>';
+                    }
+
+                }
+            }
+            $html .= '</table>
+				</div>';
+        }
 		#
 		echo($html);die();
 	}elseif($tp == 'F') {
@@ -4791,11 +4844,10 @@ function default_ajLoadTourPriceGroup(){
 		$price = $clsISO->processSmartNumber2($_POST['price']);		
 		$price_type = Input::post('price_type',0);
 		
-		$res = $clsTourPriceGroup->getAll("tour_id='$tour_id' and tour_class_id='$tour_class_id' and tour_number_group_id='$tour_number_group_id' and tour_visitor_type_id='$tour_visitor_type_id' and tour_visitor_age_type_id='$tour_visitor_age_type_id' and tour_visitor_height_type_id='$tour_visitor_height_type_id' and departure_date='$departure'");
+		$res = $clsTourPriceGroup->getAll("tour_id='$tour_id' and tour_class_id='$tour_class_id' and tour_number_group_id='$tour_number_group_id' and tour_visitor_type_id='$tour_visitor_type_id' and tour_visitor_age_type_id='$tour_visitor_age_type_id' and tour_visitor_height_type_id='$tour_visitor_height_type_id' and departure_date='$departure' and tour_room_id='$tour_room_id'");
 		if($res[0]['tour_price_group_id'] != ''){
-			$clsTourPriceGroup->updateOne($res[0]['tour_price_group_id'],"price='".$price."',price_type='".$price_type."',tour_start_date_id='".$tour_start_date_id."'");
+			$clsTourPriceGroup->updateOne($res[0]['tour_price_group_id'],"price='".$price."',price_type='".$price_type."',tour_room_id='$tour_room_id',tour_start_date_id='".$tour_start_date_id."'");
 			if($tour_visitor_type_id==$adult_type_id){
-              
 				$SQL = "SELECT MIN(price) FROM ".DB_PREFIX."tour_price_group WHERE tour_id='$tour_id' and price > 0 and departure_date='$departure' and tour_visitor_type_id='$adult_type_id' and tour_number_group_id IN ($adult_group_size)";
 				$min_price = $dbconn->GetOne($SQL);
                 $min_price=$min_price?$min_price:0;
@@ -4804,10 +4856,11 @@ function default_ajLoadTourPriceGroup(){
 		}else{
 			$max_id=$clsTourPriceGroup->getMaxID();
 			$f = "tour_price_group_id,tour_id,tour_class_id,tour_number_group_id,tour_visitor_type_id,tour_visitor_age_type_id,tour_visitor_height_type_id,
-			price,price_type,departure_date,user_id,user_id_update,reg_date,upd_date";
+			price,price_type,departure_date,user_id,user_id_update,reg_date,upd_date,tour_room_id";
 			$v = "'$max_id','$tour_id','$tour_class_id','$tour_number_group_id','$tour_visitor_type_id','$tour_visitor_age_type_id','$tour_visitor_height_type_id'
-				,'".$price."','".$price_type."','$departure','$user_id','$user_id','".time()."','".time()."'";
+				,'".$price."','".$price_type."','$departure','$user_id','$user_id','".time()."','".time()."','".$tour_room_id."'";
 			$clsTourPriceGroup->insertOne($f, $v);
+
 			if($tour_visitor_type_id==$adult_type_id){
 				$SQL = "SELECT MIN(price) FROM ".DB_PREFIX."tour_price_group WHERE tour_id='$tour_id' and price > 0 and departure_date='$departure' and tour_visitor_type_id='$adult_type_id' and tour_number_group_id IN ($adult_group_size)";
 				$min_price = $dbconn->GetOne($SQL);

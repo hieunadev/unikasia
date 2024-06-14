@@ -63,13 +63,13 @@
     {$core->getBlock('var_javascript')}
 
 
-    
-<!--
+
+    <!--
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.css">
-<!--
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.css">
+    <!--
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
@@ -137,6 +137,9 @@
     <!-- Travel guide detail -->
     <link rel="stylesheet" href="{$URL_CSS}/hnv_travel_guide_detail.css?v={$upd_version}">
     <link rel="preload" href="{$URL_CSS}/hnv_travel_guide_detail.css?v={$upd_version}">
+    <!-- Travel guide tag -->
+    <link rel="stylesheet" href="{$URL_CSS}/hnv_travel_guide_tag.css?v={$upd_version}">
+    <link rel="preload" href="{$URL_CSS}/hnv_travel_guide_tag.css?v={$upd_version}">
     <!-- Attraction -->
     <link rel="stylesheet" href="{$URL_CSS}/hnv_attraction.css?v={$upd_version}">
     <link rel="preload" href="{$URL_CSS}/hnv_attraction.css?v={$upd_version}">
@@ -159,7 +162,7 @@
     <link rel="preload" href="{$URL_JS}/jquery.countdown.min.js?v={$upd_version}" as="script" />
     <link rel="preload" href="{$URL_JS}/jquery.lockfixed.js?v={$upd_version}" as="script" />
     <link rel="preload" href="{$URL_JS}/swiper.min.js?v={$upd_version}" as="script" />
-	
+
 
 
 
@@ -171,7 +174,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
 -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.js"></script>
 
     <script src="https://kit.fontawesome.com/42aa736347.js" crossorigin="anonymous"></script>
 
@@ -230,8 +233,8 @@
     {/if}
     {literal}
     <script type="text/javascript">
-        (function (c, l, a, r, i, t, y) {
-            c[a] = c[a] || function () {
+        (function(c, l, a, r, i, t, y) {
+            c[a] = c[a] || function() {
                 (c[a].q = c[a].q || []).push(arguments)
             };
             t = l.createElement(r);
@@ -251,7 +254,7 @@
     <div id="fb-root"></div>
     {literal}
     <script>
-        (function (d, s, id) {
+        (function(d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];
             if (d.getElementById(id)) return;
             js = d.createElement(s);
@@ -265,7 +268,7 @@
     <div class="fb-customerchat" attribution=setup_tool page_id="170710566975353"></div>
     {literal}
     <script>
-        (function (d, s, id) {
+        (function(d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];
             if (d.getElementById(id)) return;
             js = d.createElement(s);
@@ -287,7 +290,7 @@
 		<![endif]-->
     {literal}
     <script>
-        $(window).load(function () {
+        $(window).load(function() {
             $(".loader___page").fadeOut("slow");
         });
     </script>

@@ -823,6 +823,11 @@
     font-weight: 400;
     font-size: 16px;
 }
+
+ .form_booking_now {
+     border-radius: 8px;
+     border: 1.5px solid #004EA8;
+ }
 /* End Box Price  */
 
 .check-btnn {
@@ -844,8 +849,6 @@
     width: 100%;
     max-width: 840px;
     flex-shrink: 0;
-    border-radius: 8px;
-    border: 1.5px solid #004EA8;
 }
 
 .txt_infprice {
@@ -895,7 +898,7 @@ ul.timeline > li:before {
 ul.timeline .accordion-button:not(.collapsed) {
     color: var(--Neutral-1, #111D37);
     font-size: 18px;
-    font-weight: 500;
+    font-weight: 600;
     line-height: 28px;
     box-shadow: none;
 }
@@ -1188,14 +1191,30 @@ ul.timeline .accordion-item{
     text-align: center;
     border-radius: 4px;
 }
+.title_review_parent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .title_review_tour {
     color: var(--Neutral-1, #111D37);
     text-align: center;
     font-size: 32px;
     font-weight: 600;
     line-height: 52px;
+    position: relative;
 }
-
+.title_review_tour::after {
+    content: "";
+    position: absolute;
+    transform: translate(-50%, -50%);
+    height: 10px;
+    background-color: #ffa718;
+    z-index: -1;
+    width: 45%;
+    left: 36%;
+    bottom: 17%;
+}
 .reviews_box_top {
     padding: 24px 0 50px 0;
 }
@@ -1472,13 +1491,33 @@ ul.timeline .accordion-item{
     font-size: 16px;
     font-weight: 400;
     line-height: 24px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    max-height: 72px;
+    transition: max-height 0.3s ease-out;
 }
+
+.expanded {
+    height: auto;
+}
+
 .list_reviews .stars_review i{
     color: var(--Primary) !important;
 }
 .list_reviews .review {
     padding: 32px 0;
     border-bottom: 1px solid #D3DCE1
+}
+
+.list_reviews .view_more_review {
+    color: #FFA718;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    border: none;
+    cursor: pointer;
 }
 /* FAQs */
 

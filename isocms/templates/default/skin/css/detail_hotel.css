@@ -93,27 +93,8 @@
     cursor: pointer;
 }
 
-.section_box_image_top .big_image .view_all:before {
-    position: absolute;
-    background: url(../images/icon/icon_cruise.png) no-repeat;
-    content: "";
-    width: 16px;
-    height: 15px;
-    display: inline-block;
-    vertical-align: middle;
-    margin-right: 5px;
-    bottom: 6px;
-    left: 4px;
-    background-position: -28px -34px;
-}
 
-.view_all {
-	position: absolute;
-	right: 20%;
-	bottom: -141px;
-	color: #FFF;
-	cursor: pointer;
-}
+
 
 .img_see:after {
 	  content: "";
@@ -329,7 +310,8 @@ line-height: 32px;
   .txt_score-review {
     display: flex; /* Kích hoạt flexbox cho container bên trong */
     align-items: center; /* Căn giữa theo chiều dọc */
-	  margin-bottom: 12px;
+	  margin-bottom: 24px;
+	  margin-top: 12px;
   }
   
   .border_score {
@@ -417,9 +399,11 @@ ul li {
     color: #111D37;
 }
 
+/*
 .detailStartsHotels {
     margin-bottom: 12px;
 }
+*/
 
 .detailStartsHotels .star_rate {
 	justify-content: flex-start;
@@ -1403,15 +1387,19 @@ form .departure_day:hover {
 .relate_slide_item, .relate_slide_image, .relate_slide_item a  {
 
 	overflow: hidden;
+	border-radius: 8px;
 }
 
 
-.relate_slide_item .relate_slide_image:hover {
+.relate_slide_item #imgAddOn:hover,
+.img_hotel .img-responsive:hover{
 	    object-fit: cover;
     -moz-transform: scale(1.1);
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
 }
+
+
 
 .relate_slide_image img {
 	    object-fit: cover;
@@ -1423,8 +1411,282 @@ form .departure_day:hover {
 }
 
 .img-responsive {
-	overflow: hidᐕ 
-
+	overflow: hidden;
+}
+
+#nah_also_like {
+	overflow-x: hidden;
+}
+
+.view_all {
+	position: absolute;
+	right: 62px;
+	bottom: 76px;
+	color: #FFF;
+	cursor: pointer;
+	z-index: 2;
+}
+
+.small_image .view_all {
+  position: absolute;
+  bottom: 40%;
+  right: 25%;
+  padding: 8px 12px;
+/*  background-color: rgba(0, 0, 0, 0.7);*/
+  color: white;
+  font-size: 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+	z-index: 2;
+}
+
+/*
+.small_image .view_all:hover {
+  background-color: rgba(0, 0, 0, 0.9);  Màu nền đậm hơn khi hover 
+}
+*/
+
+.list_image_small .small_image:nth-child(4):not(.hidden) { 
+    position: relative; /* Để định vị view_all */
+	 display: flex;    /* Sử dụng flexbox */
+  align-items: center; /* Căn giữa theo chiều dọc */
+  justify-content: center; /* Căn giữa theo chiều ngang */
+}
+
+.list_image_small .small_image:nth-child(4):not(.hidden) .view_all {
+  position: absolute;
+}
+
+
+.list_image_small .small_image:nth-child(4):not(.hidden) { 
+    position: relative; /* Để định vị view_all */
+	  display: flex;    /* Sử dụng flexbox */
+  align-items: center; /* Căn giữa theo chiều dọc */
+  justify-content: center; /* Căn giữa theo chiều ngang */
+}
+
+.list_image_small .small_image:nth-child(4):not(.hidden) .view_all {
+  position: absolute; /* Đảm bảo view_all được đặt chồng lên ảnh */
+}
+
+.list_image_small .small_image:nth-child(4):not(.hidden)::after {
+    content: ''; 
+    display: block;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%; /* Hoặc giá trị khác nếu bạn muốn view_all chỉ chiếm một phần ảnh */
+    background-color: rgba(0, 0, 0, 0.5); /* Ví dụ màu nền */
+    color: white;
+	z-index: 1;
+    /* Các thuộc tính CSS khác của view_all (font-size, padding, etc.) */
+	
+}
+
+
+.owl-prev.disabled,
+.owl-next.disabled {
+  display: none !important; /* Hoặc visibility: hidden; nếu bạn muốn giữ lại khoảng trống của nút */
+}
+
+.relate_slide_item_title a:hover {
+
+    color: #ffa718;
+}
+
+.clicked-details .img_hotel {
+    position: relative;
+    max-height: none;
+    height: 100%;
+	overflow: hidden;
+	border-radius: 8px;
+}
+
+.revVier .box_item_body {
+    margin-top: auto;
+}
+
+.sec_relate_box .content {
+	    line-height: 24px;
+    text-align: justify;
+    max-width: 1312px;
+}
+
+.sec_relate_box .list_extensions {
+	padding-top: 19px;
+	display: flex;
+	max-width: 624px;
+	padding: 12px;
+	align-items: flex-start;
+	gap: 24px;
+		border-radius: 8px;
+	border: 1px solid var(--Neutral-5, #F0F0F0);
+	background: #FFF;
+	width: 100%;
+}
+
+.sec_relate_box .item_extensions {
+	gap: 24px;
+}
+
+.item_extensions .div_img {
+	max-width: 243px;
+	min-height: 168px;
+}
+
+.list_extensions .content_extensions {
+	flex-direction: column;
+	gap: 16px;
+}
+
+.div_img img {
+	border-radius: 8px;
+}
+
+.title_addon {
+	color: #111D37;
+	font-size: 20px;
+	font-style: normal;
+	font-weight: 600;
+	line-height: 30px; /* 150% */
+	max-width: 321px;
+	width: 100%;
+}
+
+.sec_relate_box .relate_slide_item_title a {
+	color: #111D37;
+	font-size: 18px;
+	font-style: normal;
+	font-weight: 600;
+	line-height: 28px; /* 155.556% */
+}
+
+
+.list_reviews {
+    max-width: 836px;
+    margin: 0 auto;
+}
+.list_reviews p {
+    margin-bottom: 0;
+}
+
+.list_reviews .review{
+    display: flex;
+    gap: 12px;
+    flex-direction: column;
+}
+
+.list_reviews .person_review{
+    display: flex;
+    gap: 15px
+}
+
+.list_reviews .avatar_custom{
+    border-radius: 50%;
+    width: 64px;
+    height: 64px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: black;
+}
+
+.list_reviews .avatar{
+    border-radius: 50%;
+}
+.list_reviews .name {
+    color: var(--Neutral-1, #111D37);
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+}
+.list_reviews .time_review {
+    color: var(--Neutral-3, #959AA4);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+}
+.list_reviews .title_review {
+    color: var(--Neutral-1, #111D37);
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 28px;
+}
+.list_reviews .content_review {
+    color: var(--Neutral-2, #434B5C);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+}
+.list_reviews .stars_review i{
+    color: var(--Primary) !important;
+}
+.list_reviews .review {
+    padding: 32px 0;
+    border-bottom: 1px solid #D3DCE1
+}
+
+.box_right_body span .contactLink {
+	  pointer-events: none; /* Ngăn chặn mọi tương tác chuột */
+    cursor: default;      /* Thay đổi con trỏ chuột thành mặc định */
+}
+
+.revVier .img-responsive {
+		    object-fit: cover;
+    -moz-transition: all .3s !important;
+    -webkit-transition: all .3s !important;
+    border-radius: 8px;
+    transition: all .3s !important;
+    height: 100%;
+}
+
+.box_body-hotel p {
+color: #434B5C;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 20px;
+}
+
+.box_body_adress p {
+	color: #434B5C;
+	font-size: 14px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 20px;
+	margin-bottom: 0;
+}
+
+.div_price span {
+	margin-left: 4px;
+}
+
+.txt_qualityreview .txt_reviews {
+	color: #959AA4;
+	font-size: 12px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 16px;
+}
+
+.revVier .box_body_title a {
+    font-size: 18px;
+    font-weight: 600;
+    color: #111D37;
+    line-height: 28px;
+    overflow: hidden;
+
+
+}
+
+
+
+
+
 
 
 

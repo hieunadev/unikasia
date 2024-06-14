@@ -63,7 +63,7 @@
 							<div class="row-span">
 								<div class="fieldlabel ">{$core->get_Lang('Title')} <span class="requiredMask">*</span></div>
 								<div class="fieldarea">
-									<input class="text full"  value="{$clsClassTable->getOneField('title',$pvalTable)}" maxlength="255" type="text" disabled="disabled">
+									<input class="text full" name="iso-title" value="{$clsClassTable->getOneField('title',$pvalTable)}" maxlength="255" type="text">
 								</div>
 							</div>
 							<div class="row-span">

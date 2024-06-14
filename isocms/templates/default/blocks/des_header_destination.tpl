@@ -63,11 +63,12 @@
         line-height: normal;
         letter-spacing: -2.61px;
         text-transform: uppercase;
+
     }
 
     .des_header_intro {
         position: absolute;
-        top: 30%;
+        top: 25%;
         left: 50%;
         transform: translateX(-50%);
     }
@@ -93,6 +94,14 @@
         line-height: 28px;
         margin-top: 4px;
         margin-bottom: 48px;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .des_header_info p {
+        margin-bottom: unset;
     }
 
     .des_header_link {

@@ -160,7 +160,7 @@
                                     </div>
                                     <div class="txt_place" style="cursor: pointer">
                                         <img class="me-2" src="{$URL_IMAGES}/tour/location.svg" alt="">Place: {$clsTourDestination->getByCountry($lstTour[i].tour_id, 'city')}
-                                        {if $clsTourDestination->getByCountry($lstTour[i].tour_id)}
+                                        {if $clsTourDestination->getByCountry($lstTour[i].tour_id, 'other_city')}
                                             <button type="button" class="tooltips_tour" data-bs-toggle="tooltip" title="{$clsTourDestination->getByCountry($lstTour[i].tour_id, 'other_city')}">+{$clsTourDestination->getByCountry($lstTour[i].tour_id)}</button>
                                         {/if}
                                     </div>
@@ -200,7 +200,7 @@
                     {if $lstTourRecent}
                     <div class="recently-view">
                         <h2 class="recently-view-title">{$core->get_Lang('Recently viewed')}</h2>
-                        <div class="related_tours row">
+                        <div class="related_tours owl-carousel" id="related_tours">
                             {section name=i loop=$lstTourRecent}
                                 <div class="list_viewtour">
                                     <div class="img_toursrelated">
@@ -218,7 +218,7 @@
                                         <div class="d-flex align-items-center">
                                             <i class="fa-light fa-location-dot" style="color: #43485c;" aria-hidden="true"></i>
                                             <span class="txt_placetours">Place: {$clsTourDestination->getByCountry($lstTourRecent[i].tour_id, 'city')}</span>
-                                            {if $clsTourDestination->getByCountry($lstTourRecent[i].tour_id)}
+                                            {if $clsTourDestination->getByCountry($lstTourRecent[i].tour_id, 'other_city')}
                                                 <button type="button" class="tooltips_tour" data-bs-toggle="tooltip" title="{$clsTourDestination->getByCountry($lstTourRecent[i].tour_id, 'other_city')}">
                                                     +{$clsTourDestination->getByCountry($lstTourRecent[i].tour_id)}
                                                 </button>
@@ -291,6 +291,20 @@
         let tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
             return new bootstrap.Tooltip(tooltipTriggerEl)
         })
+
+        const $owl = $('#related_tours');
+        const itemCount = $owl.children().length;
+
+        $owl.owlCarousel({
+            items: 3,
+            loop: itemCount > 3,
+            margin: 16,
+            nav: false,
+            autoplay: itemCount > 3,
+            autoplayTimeout: 3000,
+            autoplayHoverPause: true,
+            dots: false
+        });
     });
 </script>
 {/literal}

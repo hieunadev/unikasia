@@ -703,7 +703,10 @@ function default_ajSaveReviews(){
 }
 function default_ajSaveReviewsNoLogin(){
 	$clsReviews = new Reviews();
-	#
+	$clsProfile = new Profile();
+	$clsImage = new Image();
+
+	
 	$type = $_POST['type'];
 	$table_id = $_POST['table_id'];
 	$rates = $_POST['rates'];

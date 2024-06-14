@@ -855,59 +855,87 @@ function default_test_form()
 }
 
 function default_saveRating()
+
 {
-	global $assign_list, $smarty, $core, $dbconn, $mod, $act, $_LANG_ID, $title_page, $description_page, $keyword_page;
-	$table_id = isset($_POST['table_id']) ? $_POST['table_id'] : '';
-	$star = isset($_POST['star']) ? $_POST['star'] : 0;
-	if ($star < 5) {
-		$star = 4;
-	}
-	$type = isset($_GET['type']) ? $_GET['type'] : 'blog';
-	$ip_log = $_SERVER['REMOTE_ADDR'];
-	$data = [
+
+	global $assign_list, $smarty, $core, $dbconn, $mod, $act, $_LANG_ID, $title_page, $description_page, $keyword_page, $clsISO;
+
+	#
+
+	$table_id 	= 	isset($_POST['table_id']) ? $_POST['table_id'] : '';
+
+	$star 		= 	isset($_POST['star']) ? $_POST['star'] : 0;
+
+	#
+
+	$type	= 	isset($_GET['type']) ? $_GET['type'] : '';
+
+	$ip_log = 	$_SERVER['REMOTE_ADDR'];
+
+	$data 	= 	[
+
 		'result'  	=>	false,
+
 		'text'		=>	""
+
 	];
+
+	#
+
 	if (isset($_SESSION['checkVoteNews_' . $table_id . '_' . $type]) && $_SESSION['checkVoteNews_' . $table_id . '_' . $type] == $ip_log) {
+
 		$data = [
+
 			'result'  	=>	false,
+
 			'text'		=>	'| ' . $core->get_Lang('Voted')
+
 		];
+
 	} else if ($table_id != '') {
-		if ($type == 'blog') {
-			$clsBlog = new Blog();
-			$oneItem = $clsBlog->getOne($table_id, 'rate,rate_avg');
-			$rate = $oneItem['rate'];
-			$rate_avg = $oneItem['rate_avg'];
-			$rate_avg_new = (($oneItem['rate_avg'] * $rate) + $star) / ($rate + 1);
-			$rate_avg_new = number_format($rate_avg_new, 2, '.', '');
-			$percentRateAVG = ($rate_avg_new / 5) * 100;
-			if ($clsBlog->updateOne($table_id, "rate=rate+1,rate_avg='" . $rate_avg_new . "'")) {
+
+		if ($type === 'blog') {
+
+			$clsBlog	= 	new Blog();
+
+			$oneItem 	= 	$clsBlog->getOne($table_id, 'rate,rate_avg');
+
+			$rate 		= 	$oneItem['rate'];
+
+			$rate_avg 	= 	$oneItem['rate_avg'];
+
+			#
+
+			$rate_avg_new	= 	(($oneItem['rate_avg'] * $rate) + $star) / ($rate + 1);
+
+			$rate_avg_new 	= 	number_format($rate_avg_new, 2, '.', '');
+
+			$percentRateAVG = 	($rate_avg_new / 5) * 100;
+
+			#
+
+			if ($clsBlog->updateOne($table_id, "rate=" . ($rate + 1) . ",rate_avg='" . $rate_avg_new . "'", true)) {
+
 				$_SESSION['checkVoteNews_' . $table_id . '_' . $type] = $ip_log;
-				$data = [
+
+				$data	=	[
+
 					'result'  		=>	true,
+
 					'text'			=>	'| ' . ($rate + 1) . ' ' . $core->get_Lang('Voted'),
+
 					'percentAVG'	=>	$percentRateAVG
+
 				];
+
 			}
-		} else {
-			$clsNews = new News();
-			$oneItem = $clsNews->getOne($table_id, 'rate,rate_avg');
-			$rate = $oneItem['rate'];
-			$rate_avg = $oneItem['rate_avg'];
-			$rate_avg_new = (($oneItem['rate_avg'] * $rate) + $star) / ($rate + 1);
-			$rate_avg_new = number_format($rate_avg_new, 2, '.', '');
-			$percentRateAVG = ($rate_avg_new / 5) * 100;
-			if ($clsNews->updateOne($table_id, "rate=rate+1,rate_avg='" . $rate_avg_new . "'")) {
-				$_SESSION['checkVoteNews_' . $table_id . '_' . $type] = $ip_log;
-				$data = [
-					'result'  		=>	true,
-					'text'			=>	'| ' . ($rate + 1) . ' ' . $core->get_Lang('Voted'),
-					'percentAVG'	=>	$percentRateAVG
-				];
-			}
+
 		}
+
 	}
+
 	echo json_encode($data);
+
 	die();
+
 }

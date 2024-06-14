@@ -229,8 +229,10 @@ $().ready(function(){
 			if($("#online_tour").hasClass("private_tour")){
 				checkPublic = 0;
 			}
-			if(!$(".box_status_switch input[name='is_online']").is(":checked")){
-				checkPublic = 0;
+			if($(".box_status_switch").length > 0){
+				if(!$(".box_status_switch input[name='is_online']").is(":checked")){
+					checkPublic = 0;
+				}
 			}
 		}
 		if(!checkPublic){

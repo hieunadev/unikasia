@@ -148,10 +148,10 @@
 						 <div class="record_txt">
                     <div class="txt_score-review">
                 <div class="border_score">
-                    <p class="numb_scorestay">0.0</p>
+                    <p class="numb_scorestay">{$clsReviews->getReviews($hotel_id, 'avg_point')}</p>
                 </div>
                 <div class="txt_reviewsquality">
-                <p class="txt_qualityreview">{$textRateAvg} <span class="txt_reviews">({$ratingCount} {$core->get_Lang('reviews')})</span></p>
+                <p class="txt_qualityreview">{$clsReviews->getReviews($hotel_id, 'txt_review')} <span class="txt_reviews">({$clsReviews->getReviews($hotel_id)} {$core->get_Lang('reviews')})</span></p>
 					 <ul class="scroll-title">
                             <li><a class="ShowAllReviewDetailHotel" data-target=".scroll_reviews">{$core->get_Lang('Show all reviews')}</a></li>
                         </ul>
@@ -220,14 +220,10 @@
                 <section class="section_box_image_top">
                     <div class="row">
                         <div class="col-lg-8">
-							{section name=i loop=1}
-                            <div class="big_image">
+							{section name=i loop=1 start=0}
+                            <div class="big_image" data-fancybox="gallery-hotel" href="{$listImage[i].image}">
                                 <img class="img100" alt="{$clsHotelImage->getTitle($listImage[i].hotel_image_id,$listImage[i])}"
                                     src="{$clsHotelImage->getImage($listImage[i].hotel_image_id,841,420)}" />
-                                {if $listImage}
-								<div class="view_all" data-fancybox="gallery-hotel" href="{$clsHotelImage->getImage($listImage[i].hotel_image_id,841,420)}">+{$listImage|count}
-                                    </div>
-								{/if}
                             </div>
 							{/section}
 							                               
@@ -236,14 +232,19 @@
                         <div class="col-lg-4">
                             <div class="list_image_small">
                                 {section name=i loop=$listImage start=1}
-                                    <div class="small_image" data-fancybox="gallery-hotel" href="{$listImage[i].image}"
-                                        {if $smarty.section.i.index gt 4}hidden{/if}>
+                                    <div class="small_image" data-fancybox="gallery-hotel" href="{$listImage[i].image}" {if $smarty.section.i.index gt 4}hidden{/if}>
                                         <img class="img100"
                                             alt="{$clsHotelImage->getTitle($listImage[i].hotel_image_id,$listImage[i])}"
                                             src="{$clsHotelImage->getImage($listImage[i].hotel_image_id,202,202)}" />
+								
                                     </div>
                                 {/section}
-								
+								{if $countlistImage>5}
+									<div class="view_all">
+										+{$remaining}
+										<i class="fa-solid fa-folder-image" style="color: #ffffff; margin-left: 8px"></i>
+									</div>
+								{/if}
                             </div>
                         </div>
                     </div>
@@ -520,18 +521,34 @@
             <div class="prix-title">
                 <h2 class="title-prix">{$core->get_Lang('Add-ons')}</h2>
                 <p>{$core->get_Lang('We suggest you some')}</p>
-                {* {if $lstHotelRelated}
                      <section class="sec_relate_box">
-                    {section name=i loop=$lstHotelRelated}
-                        {assign var=hotel_id value = $lstHotelRelated[i].hotel_id}
-
-                        {assign var=arrHotel value = $lstHotelRelated[i]}
-                       {$clsISO->getBlock('hotelRelateBox',["hotel_id"=>$hotel_id,"arrHotel"=>$arrHotel])}
-
-                    {/section}
+                    <div class="content d-flex justify-content-between gap-32">
+						<div class="item_content">
+								<div class="list_extensions d-flex flex-direction-column">
+									<div class="item_extensions d-flex justify-content-between align-items-start">
+                                <div class="div_img img_extensions">
+                                    <img src="https://s3-alpha-sig.figma.com/img/047c/7f28/fd501ad3d83f87172b9b13d3d396b606?Expires=1719187200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=Yz-fVgXel1IQ65d3fLUVH9eOF6gTZN6uhE1QP1JLG3hTSr8IycfE~ePJ8WOgdmX4z0JNWwfMevxNcd6sA9GJN0enE7DT459L8jz7USqmqCus7FlaiGWZ8z0AaFqy6xSl2GChxF278wR6OVfzzojOvOqf70FSNZrApZfTVQ19RAwj55u-6pPEXAmuJA0HLTsiSRGngXRkwoz9srjYJKUfWy0N9QLY~Aa67HRIDH3PV9shLuJKcOFm5Ar3NsYJjCePZCxt1L~1htqgheohkKlt9GCUWTGCFd4vnH~IPFUp~qOGzw09BGJ~TA4tdhTJ-hyxPfqjPgvf-Aiq~FLWcBIOPg__" alt="Image">
+                                </div>
+                                <div class="content_extensions d-flex justify-content-start align-items-start gap-16 flex-direction-column">
+                                    <a href="#" class="title_extentions ellipsis_2 SF-Pro-Medium">
+										<p class="title_addon">
+                                        Splendors of Vietnam with the center’s must-sees 19 days</p>
+                                    </a>
+                                    <div class="money">
+                                        <span class="font-size-12 color-959AA4">Form</span>
+                                        <span class="font-size-14 color-FFA718">US</span>
+                                        <span class="color-FFA718 SF-Pro-Medium">$650</span>
+                                    </div>
+                                </div>
+                            </div>
+								</div>
+								
+							
+							</div>
+						</div>
                    </section>
 
-                {/if} *}
+                
             </div>
         </div>
     </div>
@@ -691,7 +708,7 @@
                                         <h3>{$clsReviews->getReviews($oneItem.hotel_id, 'avg_point')}</h3>
                                         <p class="txt_score">{$clsReviews->getReviews($oneItem.hotel_id, 'txt_review')}</p>
                                         <p class="number_review">
-                                            ({$clsReviews->getReviews($oneItem.tour_id)} {$core->get_Lang('Reviews')})
+                                            ({$clsReviews->getReviews($hotel_id)} {$core->get_Lang('reviews')})
                                         </p>
                                     </div>
 
@@ -723,26 +740,75 @@
                         <div class="clearfix mb20"></div>
 									{$core->getBlock('review_stay_No_Login')}
                     </div>
-                    {section name=i loop=$lstReview}
-                        {assign var=reviews_content value=$clsReviews->getContent($lstReview[i].reviews_id,400,true,$lstReview[i])}
-                        <div class="customer_reviews_item review_item">
-                            <div class="customer_intro">
-                                <div class="customer_avatar avatar">{$lstReview[i].fullname|truncate:1:"":true}
-                                </div>
-                                <div class="customer_info">
-                                    <div class="customer_name">{$lstReview[i].fullname}</div>
-                                    <div class="address">{$clsCountry->getTitle($lstReview[i].country_id)}</div>
-                                </div>
-                            </div>
-                            <div class="customer_reviews_text content_review content_review_short">
-                                {$clsISO->truncateWord($lstReview[i].content,30,$btn_view_more)|html_entity_decode}
-                            </div>
-                            <div class="content_review content_review_full" style="display:none">
-                                {$lstReview[i].content|html_entity_decode}
-                            </div>
+       				 <div class="list_reviews">
+
+           					 {if $lstReviews}
+
+           					 {section name=i loop=$lstReviews}
+
+                				<div class="review">
+
+                   				 <div class="person_review">
+
+                        {assign var=numStars value=$lstReviews[i].rates}
+
+                        <div class="avatar_custom" style="background-color:
+
+                        {php}
+
+                                $bg_colors = ['#F5F5F5', '#E0F7FA', '#FFF8E1', '#E8F5E9', '#FCE4EC', '#FFFDE7', '#F3E5F5'];
+
+                                echo $bg_colors[array_rand($bg_colors)];
+
+                        {/php}">{strtoupper(substr($lstReviews[i].fullname, 0, 2))}</div>
+
+                        <div class="name_reviewer">
+
+                            <p class="name">{$lstReviews[i].fullname}</p>
+
+                            <p class="time_review">{$lstReviews[i].review_date|date_format:"%d %b, %Y"}</p>
 
                         </div>
-                    {/section}
+
+                    </div>
+
+                    <div class="stars_review">
+
+                        {assign var=numStars value=$lstReviews[i].rates}
+
+                        {assign var=remainingStars value=$maxStars - $numStars}
+
+                        {section name=j loop=$numStars}
+
+                            <i class="fa-solid fa-star"></i>
+
+                        {/section}
+
+                        {section name=k loop=$remainingStars}
+
+                            <i class="fa-regular fa-star"></i>
+
+                        {/section}
+
+                    </div>
+
+                    <p class="title_review">{$lstReviews[i].title}</p>
+
+                    <p class="content_review">{$lstReviews[i].content}</p>
+
+                    <button class="view_more_review d-none">View more</button>
+
+                </div>
+
+            {/section}
+
+            {else}
+
+                <div>Not reviews yet</div>
+
+            {/if}
+
+        </div>
                 </div>
             </div>
 
@@ -778,14 +844,16 @@
 		<div class="container">
                         <h2 class="recentlyViewed">{$core->get_Lang('Recently viewed')}</h2>
                         <div class="recentlyViewed-dev">
-                            <div class="clicked-details"></div>
+                            <div class="clicked-details">
+							<div class="sec_relate_box-slide owl-carousel_overview owl-carousel">
+							</div>
                         </div>
+			</div>
 
 
                         <div class="recentlyViewed-mobile">
-                            <div class="sec_relate_box-slide owl-carousel_overviewReviews owl-carousel ">
                                 <div class="clicked-details">
-
+								<div class="sec_relate_box-slide owl-carousel_overview owl-carousel">
                                 </div>
                             </div>
                         </div>
@@ -819,6 +887,10 @@
 
 
     <script>
+		
+		if ($('.unika_header').hasClass('unika_header_2')) {
+                $('.unika_header').removeClass('unika_header_2');
+            }
 
 var otherPolicy = '{$oneItem.other_policy|unescape}';
 
@@ -973,20 +1045,29 @@ var otherPolicy = '{$oneItem.other_policy|unescape}';
 });
 
 const links = document.querySelectorAll('.nav-link');
-            links.forEach(link => {
-                link.addEventListener('click', (event) => {
-                    $('.nav-link').removeClass('active');
-                    $(event.currentTarget).addClass('active');
-                    const targetClass = event.currentTarget.getAttribute('data-target');
-                    const targetElement = document.querySelector(targetClass);
-                    if (targetElement) {
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 80,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            })
+
+links.forEach(link => {
+    link.addEventListener('click', (event) => {
+        event.preventDefault(); // Prevent default link behavior (jumping to #)
+
+        $('.nav-link').removeClass('active');
+        $(event.currentTarget).addClass('active');
+
+        const targetClass = event.currentTarget.getAttribute('data-target');
+        const targetElement = document.querySelector(targetClass);
+        
+        if (targetElement) {
+            const offset = 80; // Adjust this value for the desired offset
+            const scrollPosition = targetElement.getBoundingClientRect().top + window.scrollY - offset;
+
+            window.scrollTo({
+                top: scrollPosition, 
+                behavior: 'smooth'
+            });
+        }
+    });
+});
+
 			
 			
 window.addEventListener('load', function() {
@@ -1053,7 +1134,25 @@ window.addEventListener('load', function() {
         });
     });
 });
+			
+			$(document).ready(function() {
+    // Fancybox cho các hình nhỏ
+    $('.list_image_small [data-fancybox="gallery-hotel"]').fancybox({
+        loop: true,
+        // Các tùy chọn khác cho hình nhỏ (nếu cần)
+    });
 
+    $('.view_all').on('click', function() {
+        // Kích hoạt Fancybox, bắt đầu từ hình nhỏ đầu tiên
+        $.fancybox.open($('.list_image_small [data-fancybox="gallery-hotel"]'));
+
+        return false; // Ngăn chặn hành vi mặc định của liên kết
+    });
+});
+			
+			
+
+			
 
         </script>
     {/literal}

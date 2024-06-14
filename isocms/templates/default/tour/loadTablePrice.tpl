@@ -24,12 +24,12 @@
                     </div>
                     {if $number_child}
                         <div class="d-flex flex-wrap justify-content-between w-100 collapseHead collapsed mt-3" {if $arr_price_child|count gt 0}data-bs-toggle="collapse" data-bs-target="#collapseChild" aria-expanded="false" aria-controls="collapseChild"{/if}>
-                            <span class="w_240 text_left">{$number_child} {$core->get_Lang('Children')}</span>
-                            {if $check_contact_child eq 0 && $total_price_child ne 0}
+                            <div class="w_240 text_left">{$number_child} {$core->get_Lang('Children')}
                                 <span class="w_120 text_right">{if $arr_price_child|count gt 0}<i class="fa fa-angle-down" aria-hidden="true"></i>{/if}</span>
+                            </div>
+                            {if $check_contact_child eq 0 && $total_price_child ne 0}
                                 <span class="price text_right">{$clsISO->getShortRate()}{$total_price_child|number_format:0:".":","}</span>
                             {else}
-                                <span class="w_120 text_right">{if $arr_price_child|count gt 0}<i class="fa fa-angle-down" aria-hidden="true"></i>{/if}</span>
                                 <span class="price text_right">{$core->get_Lang('Contact')}</span>
                             {/if}
                         </div>
@@ -49,12 +49,12 @@
                     {/if}
                     {if $number_infants}
                         <div class="d-flex flex-wrap justify-content-between w-100 collapseHead collapsed mt-3" {if $arr_price_infant|count gt 0}data-bs-toggle="collapse" data-bs-target="#collapseInfant" aria-expanded="false" aria-controls="collapseInfant"{/if}>
-                            <span class="w_240 text_left">{$number_infants} {$core->get_Lang('Infants')}</span>
-                            {if $check_contact_infant eq 0 && $total_price_infants ne 0}
+                            <div class="w_240 text_left">{$number_infants} {$core->get_Lang('Infants')}
                                 <span class="w_120 text_right">{if $arr_price_infant|count gt 0}<i class="fa fa-angle-down" aria-hidden="true"></i>{/if}</span>
+                            </div>
+                            {if $check_contact_infant eq 0 && $total_price_infants ne 0}
                                 <span class="price text_right">{$clsISO->getShortRate()}{$total_price_infants|number_format:0:".":","}</span>
                             {else}
-                                <span class="w_120 text_right">{if $arr_price_infant|count gt 0}<i class="fa fa-angle-down" aria-hidden="true"></i>{/if}</span>
                                 <span class="price text_right">{$core->get_Lang('Contact')}</span>
                             {/if}
                         </div>
@@ -64,6 +64,31 @@
                                     <span class="w_240 text_left" style="padding-left:15px">{$arr_price_infant[i].number} ({$arr_price_infant[i].text})</span>
                                     {if $arr_price_infant[i].price gt 0}
                                         <span class="w_120 text_right">x {$clsISO->getShortRate()}{$arr_price_infant[i].price|number_format:0:".":","}</span> <span class="price text_right">{$clsISO->getShortRate()}{$arr_price_infant[i].total_price|number_format:0:".":","}</span>
+                                    {else}
+                                        <span class="w_120 text_right"></span>
+                                        <span class="price text_right">{$core->get_Lang('Contact')}</span>
+                                    {/if}
+                                </div>
+                            {/section}
+                        </div>
+                    {/if}
+                    {if $number_room}
+                        <div class="d-flex flex-wrap justify-content-between w-100 collapseHead collapsed mt-3" {if $arr_price_child|count gt 0}data-bs-toggle="collapse" data-bs-target="#collapseRoom" aria-expanded="false" aria-controls="collapseRoom"{/if}>
+                            <div class="w_240 text_left">{$number_room} {$core->get_Lang('Room')}</div>
+                            {if $total_price_room ne 0}
+                                <span class="w_120 text_right">{if $arr_price_child|count gt 0}<i class="fa fa-angle-down" aria-hidden="true"></i>{/if}</span>
+                                <span class="price text_right">{$clsISO->getShortRate()}{$total_price_room|number_format:0:".":","}</span>
+                            {else}
+                                <span class="w_120 text_right">{if $arr_price_child|count gt 0}<i class="fa fa-angle-down" aria-hidden="true"></i>{/if}</span>
+                                <span class="price text_right">{$core->get_Lang('Contact')}</span>
+                            {/if}
+                        </div>
+                        <div class="w-100 mt10 collapse" id="collapseRoom">
+                            {section name=i loop=$lst_room}
+                                <div class="d-flex flex-wrap justify-content-between  w-100">
+                                    <span class="w_240 text_left" style="padding-left:15px">Single</span>
+                                    {if $lst_room[i].price_room gt 0}
+                                        <span class="w_120 text_right">x {$clsISO->getShortRate()}{$lst_room[i].price_room|number_format:0:".":","}</span> <span class="price text_right">{$clsISO->getShortRate()}{$arr_price_child[i].total_price|number_format:0:".":","}</span>
                                     {else}
                                         <span class="w_120 text_right"></span>
                                         <span class="price text_right">{$core->get_Lang('Contact')}</span>

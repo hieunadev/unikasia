@@ -168,7 +168,7 @@ function default_default()
 		$recent_view_tour = json_decode($_COOKIE['recent_view_tour'], true);
 		if (!empty($recent_view_tour)) {
 			$ids = implode(',', array_map('intval', $recent_view_tour));
-			$lstTourRecent = $clsTour->getAll("tour_id IN ($ids) LIMIT 3");
+			$lstTourRecent = $clsTour->getAll("tour_id IN ($ids)");
 			$assign_list["lstTourRecent"] = $lstTourRecent;
 		}
 	}
@@ -330,7 +330,7 @@ function default_detaildeparture() {
         $recent_view_tour = json_decode($_COOKIE['recent_view_tour'], true);
         if (!empty($recent_view_tour)) {
             $ids = implode(',', array_map('intval', $recent_view_tour));
-            $lstTourRecent = $clsTour->getAll("tour_id IN ($ids) LIMIT 3");
+            $lstTourRecent = $clsTour->getAll("tour_id IN ($ids)");
             $assign_list["lstTourRecent"] = $lstTourRecent;
         }
     }
@@ -384,6 +384,51 @@ function default_detaildeparture() {
     $assign_list["global_image_seo_page"] = $global_image_seo_page;
 }
 
+function default_sendMail() {
+    global  $clsISO, $clsConfiguration,$_LANG_ID,$email_template_download_brochure;
+
+    $clsTour = new Tour();
+    $clsEmailTemplate = new EmailTemplate();
+    #
+
+    $email = $_POST['email'];
+    $tour_id = $_POST['tour_id'] ?? 0;
+    #
+    $oneItem = $clsTour->getOne($tour_id);
+    $email_template_id = 133;
+    $src_img = "https://".$_SERVER["HTTP_HOST"].$oneItem["image"];
+//    print_r($src_img); die();
+    #
+    header('Content-Type: text/html; charset=utf-8');
+
+    $message = $clsEmailTemplate->getContent($email_template_id);
+    $message = str_replace('[%PAGE_NAME%]',PAGE_NAME,$message);
+    $message = str_replace('{URL}','http://'.$_SERVER['HTTP_HOST'],$message);
+    $message = str_replace('[%CUSTOMER_EMAIL%]',$email,$message);
+    
+    $message = str_replace('[%COMPANY_HOTLINE%]',$clsConfiguration->getValue('CompanyHotline'),$message);
+    $message = str_replace('[%COMPANY_EMAIL%]',$clsConfiguration->getValue('CompanyEmail'),$message);
+    $message = str_replace('[%COMPANY_NAME%]',$clsConfiguration->getValue('CompanyName_'.$_LANG_ID),$message);
+    $message = str_replace('[%COMPANY_ADDRESS%]',$clsConfiguration->getValue('CompanyAddress_'.$_LANG_ID),$message);
+    $message = str_replace('[%COMPANY_PHONE%]',$clsConfiguration->getValue('CompanyPhone'),$message);
+    $message = str_replace('[%DATETIME%]',date('Y',time()),$message);
+
+    $message = str_replace('[%TOUR_IMAGE%]', '<img style="display: block; margin-left: auto; margin-right: auto;" src="'.$src_img.'" alt=""/>', $message);
+    $message = str_replace('[%TOUR_TITLE%]', $oneItem["title"],$message);
+    $message = str_replace('[%DOWNLOAD_BROCHURE%]', '<a style="text-decoration: none; color: #000; font-size: 16px; background-color: #ffa718; font-weight: 600;padding: 20px; border-radius: 8px;" href="'.$oneItem["file_programme"].'">Download Brochure</a>',$message);
+
+    #
+    $from = $clsEmailTemplate->getFromEmail($email_template_id);
+
+    $owner = $clsEmailTemplate->getFromName($email_template_id);
+    $to = $email;
+    $subject = $clsEmailTemplate->getSubject($email_template_id). ' '.PAGE_NAME;
+    $subject = str_replace('[%PAGE_NAME%]','',$subject);
+
+    $clsISO->sendEmail($from,$to,$subject,$message,$owner);
+    $clsEmailTemplate->getCopyTo($email_template_id);
+    return 1;
+}
 function default_loadTextDay(){
     global $core,$mod,$act,$clsISO,$_LANG_ID,$clsConfiguration,$adult_type_id,$child_type_id,$infant_type_id;
     $date = isset($_POST['date']) && !empty($_POST['date'])? $_POST['date']:'';
@@ -475,7 +520,6 @@ function default_loadTablePrice(){
     $clsPromotion = new Promotion(); $assign_list['clsPromotionr']=$clsPromotion;
     $clsTourPriceGroup = new TourPriceGroup(); $assign_list['clsTourPriceGroup']=$clsTourPriceGroup;
     $clsTourOption = new TourOption(); $assign_list['clsTourOption']=$clsTourOption;
-//    $clsISO->print_pre($_POST);
 
     $tour_id= $_POST['tour_id'];
     $is_last_hour= $_POST['is_last_hour'];
@@ -483,6 +527,7 @@ function default_loadTablePrice(){
     $number_adults= intval($_POST['number_adults']);
     $number_child= intval($_POST['number_child']);
     $number_infants= intval($_POST['number_infants']);
+
     $number_pick_travellers = $number_adults + $number_child + $number_infants;
 
     $check_in_book= $_POST['check_in_book'];
@@ -490,6 +535,8 @@ function default_loadTablePrice(){
     $tour_visitor_adult_id= $_POST['tour_visitor_adult_id'];
     $tour_visitor_child_id= $_POST['tour_visitor_child_id'];
     $tour_visitor_infant_id= $_POST['tour_visitor_infant_id'];
+    $number_room	= Input::post('number_room',[]);
+    $room_id		= Input::post('room_id',[]);
     $check_in_book= str_replace('/','-',$check_in_book);
     $str_check_in_book= 0 ;
     $promotion= 0 ;
@@ -893,9 +940,31 @@ function default_loadTablePrice(){
         }
     }
     #
+
+    $price_room = 0;
+    $lstPriceRoom = $lst_room = [];
+    if(count($room_id) > 0){
+        $listPriceRoom = $clsTourPriceGroup->getAll("is_trash=0 and tour_id='".$tour_id."' and tour_room_id IN (".implode(',',$room_id).")","price,tour_room_id");
+        foreach($listPriceRoom as $key => $value){
+            $lstPriceRoom[$value['tour_room_id']] = $value['price'];
+        }
+        foreach($room_id as $key => $id_room){
+            $price_room += (int)$lstPriceRoom[$id_room]*(int)$number_room[$key];
+            $lst_room[] = [
+                'room_id'			=>	$id_room,
+                'number_room'		=>	$number_room[$key],
+                'price_room'		=>	($lstPriceRoom[$id_room] && $lstPriceRoom[$id_room] != 0)?$lstPriceRoom[$id_room]:0,
+                'total_price_room'	=>	(int)$lstPriceRoom[$id_room]*(int)$number_room[$key]
+            ];
+        }
+    }
+
+    $assign_list['lstPriceRoom'] = $lstPriceRoom;
+    $assign_list['lst_room'] = $lst_room;
+
     $total_price_adults=$price_adults*$number_adults;
     #
-    $total_price=$total_price_adults + $total_price_child + $total_price_infants;
+    $total_price=$total_price_adults + $total_price_child + $total_price_infants + array_sum($lstPriceRoom);
     if($discount_type ==2){
         $price_promotion = $total_price / 100 * $promotion;
     }else{
@@ -934,6 +1003,10 @@ function default_loadTablePrice(){
     $assign_list["deposit"] = $deposit;
     $assign_list["price_deposit"] = $price_deposit;
     $assign_list["total_price_promotion"] = $total_price_promotion;
+    $assign_list["number_room"] = array_sum($number_room);
+    $assign_list["list_number_room"] = implode(',',$number_room);
+    $assign_list["room_id"] = implode(',',$room_id);
+    $assign_list["total_price_room"] = array_sum($lstPriceRoom);
 
     if($clsISO->getCheckActiveModulePackage($package_id,'booking','booking_tour','default')){
         $html = $core->build('loadTablePrice.tpl');

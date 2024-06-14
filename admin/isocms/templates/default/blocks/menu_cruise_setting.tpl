@@ -1,6 +1,6 @@
 <div class="menu_setting_box">
 	<ul class="ul_menu_setting">
-        <li class="{if $act=='setting'}current{/if}">
+		<li class="{if $act=='setting'}current{/if}">
 			<a href="{$PCMS_URL}/?mod=cruise&act=setting">
 				<span class="text">{$core->get_Lang('Module Setting')}</span>
 			</a>
@@ -9,7 +9,7 @@
 		{foreach from=$lstCruiseType key=k item=v}
 		{if $clsISO->getCheckActiveModulePackage($package_id,'property','default','default',$k)}
 		<li class="{if $type==$k}current{/if}">
-			<a title="{$v}" href="{$PCMS_URL}/index.php?mod=cruise&act=liststore&type={$core->encryptID($k)}" >
+			<a title="{$v}" href="{$PCMS_URL}/index.php?mod=cruise&act=liststore&type={$core->encryptID($k)}">
 				<span class="text">{$v}</span>
 			</a>
 		</li>
@@ -32,24 +32,29 @@
 		{/if}
 		{if $clsISO->getCheckActiveModulePackage($package_id,'cruise','service','default')}
 		<li class="{if $act=='service'}current{/if}">
-			<a title="{$core->get_Lang('Transfer Services')}" href="{$PCMS_URL}/index.php?mod={$mod}&act=service" >
+			<a title="{$core->get_Lang('Transfer Services')}" href="{$PCMS_URL}/index.php?mod={$mod}&act=service">
 				<span class="text"> {$core->get_Lang('Transfer Services')}</span>
 			</a>
 		</li>
 		{/if}
 		{if $clsISO->getCheckActiveModulePackage($package_id,'cruise','cat','default')}
 		<li class="{if $act=='cat'}current{/if}">
-			<a title="{$core->get_Lang('Cruise Class')}" href="{$PCMS_URL}/index.php?mod=cruise&act=cat" >
+			<a title="{$core->get_Lang('Cruise Class')}" href="{$PCMS_URL}/index.php?mod=cruise&act=cat">
 				<span class="text"> {$core->get_Lang('Cruise Category')}</span>
 			</a>
 		</li>
 		{/if}
+		<li class="{if $act=='cat_country'}current{/if}">
+			<a title="{$core->get_Lang('Cruise Category by Country')}" href="{$PCMS_URL}/index.php?mod=cruise&act=cat_country">
+				<span class="text"> {$core->get_Lang('Cruise Category by Country')}</span>
+			</a>
+		</li>
 		{assign var=lstCruiseProperty value=$clsCruiseProperty->getListType()}
 		{if $lstCruiseProperty}
 		{foreach from=$lstCruiseProperty key=k item=v}
 		{if $clsISO->getCheckActiveModulePackage($package_id,'cruise','property','default',$k)}
 		<li class="{if $act=='property' && $type == $k}current{/if}">
-			<a title="{$v}" href="{$PCMS_URL}/index.php?mod={$mod}&act=property&type={$k}" >
+			<a title="{$v}" href="{$PCMS_URL}/index.php?mod={$mod}&act=property&type={$k}">
 				<span class="text"> {$v}</span>
 			</a>
 		</li>
@@ -58,11 +63,11 @@
 		{/if}
 		{if $clsISO->getCheckActiveModulePackage($package_id,'cruise','childpolicy','default')}
 		<li class="{if $act=='childpolicy'}current{/if}">
-			<a title="{$core->get_Lang('chilpolicy')}" href="{$PCMS_URL}/index.php?mod=cruise&act=childpolicy" >
+			<a title="{$core->get_Lang('chilpolicy')}" href="{$PCMS_URL}/index.php?mod=cruise&act=childpolicy">
 				<span class="text"> {$core->get_Lang('childpolicy')}</span>
 			</a>
 		</li>
 		{/if}
-		
+
 	</ul>
 </div>

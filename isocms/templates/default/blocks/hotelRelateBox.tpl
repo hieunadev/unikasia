@@ -35,11 +35,11 @@
             </div>
 		       <div class="txt_score-review">
                 <div class="border_score">
-                    <p class="numb_scorestay">0.0</p>
+                    <p class="numb_scorestay">{$clsReviews->getReviews($hotel_id, 'avg_point')}</p>
                 </div>
                 <div class="txt_reviewsquality">
-                <p class="txt_qualityreview">{$textRateAvg} 
-					<span class="txt_reviews">({$ratingCount} {$core->get_Lang('reviews')})</span></p>
+                <p class="txt_qualityreview">{$clsReviews->getReviews($hotel_id, 'txt_review')} 
+				<span class="txt_reviews">({$clsReviews->getReviews($hotel_id)} {$core->get_Lang('reviews')})</span></p>
             </div>
 		</div>
          <div class="des_list_hotel_item_price">

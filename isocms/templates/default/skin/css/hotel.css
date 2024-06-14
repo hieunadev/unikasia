@@ -452,16 +452,20 @@ padding: 12px 0;
 }
 
 .revVier .img-responsive {
-    margin-bottom: 12px;
+		    object-fit: cover;
+    -moz-transition: all .3s !important;
+    -webkit-transition: all .3s !important;
     border-radius: 8px;
-    min-height: 244px;
+    transition: all .3s !important;
     height: 100%;
 
 }
 
+/*
 .revVier .box_item_body {
     margin-top: 48px;
 }
+*/
 
 .img_hotel {
     position: relative;
@@ -469,8 +473,10 @@ padding: 12px 0;
 
 .clicked-details .img_hotel {
     position: relative;
-    max-height: 193px;
+    max-height: none;
     height: 100%;
+	overflow: hidden;
+	border-radius: 8px;
 }
 
 .heartIcon {
@@ -987,12 +993,6 @@ padding: 12px 0;
     color: #111D37;
     line-height: 28px;
     overflow: hidden;
-    text-overflow: ellipsis;
-/*    min-height: 56px;*/
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    margin-top: 12px;
 }
 
 .revVier .address {
@@ -1002,8 +1002,13 @@ padding: 12px 0;
 
 .revVier .address .box_body_adress {
     display: flex;
-    align-items: baseline;
+/*    align-items: baseline;*/
     gap: 0 8px;
+	color: #434B5C;
+	font-size: 14px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 20px;
 }
 
 .revVier .box_body-hotel p {
@@ -1033,7 +1038,9 @@ padding: 12px 0;
     margin-top: 17px !important;
 }
 
-.revVier .review {}
+.revVier .review {
+	padding-top: 0;
+}
 
 .revVier .box_right_body .review {
     display: flex;
@@ -1047,10 +1054,39 @@ padding: 12px 0;
     gap: 0 2px;
 }
 
+.revVier .box_body-hotel {
+	margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0 6px;
+}
+
+.revVier .box_left_body{
+	display: flex;
+	gap: 12px;
+	flex-direction: column;
+}
+
+.revVier .box_body_title {
+	margin-top: 12px;
+}
+
+.revVier .star_hotel {
+	margin-top: 2px;
+}
+
 .revVier .box_right_body {
     max-width: 100% !important;
     width: 100% !important;
     margin-top: auto !important;
+	min-width: 174px;
+    width: 100%;
+    padding: 0;
+    background-color: #004EA8;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+	
 }
 
 .revVier .div_price span {
@@ -1069,6 +1105,21 @@ padding: 12px 0;
     font-size: 14px;
     font-weight: 500;
     padding: 3px 4px 5px 4px;
+}
+
+.revVier .box_right-body_mobile {
+    padding-top: 0;
+    display: flex;
+    justify-content: space-between;
+    margin-left: 0;
+}
+
+.revVier .div_price span {
+	margin-left: 4px;
+}
+
+.revVier .price .old_price {
+	display: none;
 }
 
 .revVier .review p {
@@ -1478,7 +1529,7 @@ ul {
 }
 
 .box_body-hotel {
-    margin: 10px 0 8px;
+    margin: 12px 0 12px;
     display: flex;
     align-items: center;
     gap: 0 6px;
@@ -1511,6 +1562,10 @@ ul {
     margin-bottom: 32px;
     max-width: 953px;
     width: 100%;
+}
+
+.detailStartsHotels {
+	margin-top: 2px;
 }
 
 .list-hotel-item .rate-2023,
@@ -1643,14 +1698,6 @@ svg:not(:root).svg-inline--fa {
 .owl-carousel button.owl-dot {
     width: 40px;
     height: 40px;
-}
-
-#Add-ons .prix-title p {
-    margin-bottom: 21px;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 24px;
-    color: #959AA4;
 }
 
 @media only screen and (max-width: 1100px) {
@@ -2673,6 +2720,7 @@ padding: 0 7.5px;
     display: flex;
     flex-wrap: wrap;
     gap: 15px;
+	position: relative;
 }
 
 .hotelDetail .list_image_small .small_image {
@@ -3093,12 +3141,7 @@ padding: 0 7.5px;
     border-radius: 8px;
 }
 
-.sec_relate_box .relate_slide_item_title a {
-    color: #2C2C2C;
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 150%;
-}
+
 
 .sec_relate_box .score_number {
     color: #454545;
@@ -3140,6 +3183,17 @@ padding: 0 7.5px;
     width: 100%;
 }
 
+/*
+.relate_slide_item_title {
+	margin-top: 12px;
+}
+*/
+
+.relate_slide_item {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
 
 
 #Inclusion {

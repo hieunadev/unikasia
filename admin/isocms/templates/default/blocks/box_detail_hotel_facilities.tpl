@@ -8,7 +8,7 @@
 		{/if}
 	</label>
 	<div class="facilities_box">
-		<div class="row" onClick="loadHelp(this)">
+		<div class="row d-flex flex-wrap" onClick="loadHelp(this)">
 			{section name=i loop=$listHotelFacilitiesFavorite}
 			{if $clsProperty->getTitle($listHotelFacilitiesFavorite[i].property_id)}
 			<div class="col-md-3 col-sm-4 col-xs-6">
@@ -39,7 +39,7 @@
 	</label>
 	<div class="facilities_other_box">
 		<div class="facilities_box">
-			<div class="row" onClick="loadHelp(this)">
+			<div class="row d-flex flex-wrap" onClick="loadHelp(this)">
 				{section name=i loop=$listHotelFacilitiesOther}
 				{if $clsProperty->getTitle($listHotelFacilitiesOther[i].property_id)}
 				<div class="col-md-3 col-sm-4 col-xs-6">

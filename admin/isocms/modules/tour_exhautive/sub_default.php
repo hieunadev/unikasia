@@ -1909,7 +1909,6 @@ function default_ajSaveDataasdsad()
                     $value .= ",list_tour_guide_id='{$list_tour_guide_id}'";
                 }
             }
-
             $tour_room_ids = Input::post('tour_room_id', array());
             if (!empty($tour_room_ids) && is_array($tour_room_ids)) {
                 $list_tour_room_id = '|';

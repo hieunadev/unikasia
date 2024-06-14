@@ -1007,6 +1007,7 @@ function default_detail() {
 	$assign_list['linkBack']=$linkBack;
 
 	$hotel_id = isset($_GET['hotel_id'])?$_GET['hotel_id']:0;
+
 	$slug = isset($_GET['slug'])?$_GET['slug']:'';
 	
 	if(empty($clsHotel->checkOnlineBySlug($hotel_id,$slug))){
@@ -1018,11 +1019,21 @@ function default_detail() {
 	$assign_list["table_id"] = $hotel_id;
     
    ////$abc= $clsHotel->getImageMapStatic($hotel_id,400,400);print_r($abc);die();
-    $order_by = " order by order_no ASC";
+	
+    $order = " order by order_no";
 	
     $limit_left ="limit 1";
 	$limit_right ="limit 4";
 	
+	$clsReviews = new Reviews();
+	$assign_list['clsReviews'] = $clsReviews;
+	$lstReviews = $clsReviews->getAll("$cond is_online = 1 and table_id = '$hotel_id' $order");
+	$countReview = $clsReviews->countItem("$cond is_online = 1 and table_id = $hotel_id $order");
+	
+//	$lstHotelItinerary = $clsHotelItinerary->getAll("$cond hotel_id = $hotel_id order by day");
+	
+
+
 //	$lstHotelLeft = "$clsHotelImage->getAll($clsHotelImage->getAll($order_by. "is_trash=0 and table_id='$hotel_id' and image <> '' ",$clsHotelImage->pkey.',image,title');)"
 	
 		if (isset($_COOKIE['recent_posts'])) {
@@ -1031,9 +1042,9 @@ function default_detail() {
 		if (!empty($recent_posts)) {
 			$ids = implode(',', array_map('intval', $recent_posts));
 
-			$cond = "hotel_id IN ($ids)";
+			$cond1 = "hotel_id IN ($ids)";
 			$limit = " LIMIT 3";
-			$lstHotelRecent = $clsHotel->getAll("$cond $limit");
+			$lstHotelRecent = $clsHotel->getAll("$cond1 $limit");
 			$assign_list["lstHotelRecent"] = $lstHotelRecent;
 		}
 	}
@@ -1048,7 +1059,16 @@ function default_detail() {
 	if($clsISO->getCheckActiveModulePackage($package_id,'hotel','hotel_gallery','customize')){
 		#-- Hotel Images
 		$listImage = $clsHotelImage->getAll("is_trash=0 and table_id='$hotel_id' and image <> '' order by order_no ASC",$clsHotelImage->pkey.',image,title');
-		$assign_list['listImage'] = $listImage;unset($listImage);
+		$assign_list['listImage'] = $listImage;
+		
+		
+		
+		$countlistImage= count($listImage);
+		if($countlistImage >5) {
+			$remaining = $countlistImage -5;
+		} 
+		$assign_list['countlistImage'] = $countlistImage;
+		$assign_list['remaining'] = $remaining;
 	}
 	
 	if($clsISO->getCheckActiveModulePackage($package_id,'hotel','hotel_room','customize')){
@@ -1175,8 +1195,8 @@ function default_detail() {
 	
 	$listProterty_id = $clsHotel->getOne($hotel_id, list_HotelFacilities)[0];
 	$string = trim($listProterty_id, '|');
-$array = explode('|', $string);
-$result = implode(',', $array);
+	$array = explode('|', $string);
+	$result = implode(',', $array);
 	$listHotelFacilitiesFavorite=$clsProperty->getAll("is_trash=0 and type='HotelFacilities' and is_favorite=1 and property_id IN ($result) order by order_no ASC");
 
 //	var_dump($listHotelFacilitiesFavorite); die();
@@ -1187,7 +1207,7 @@ $result = implode(',', $array);
 	
 //	var_dump($listHotelFacilitiesOther); die();
 	
-	$sqlCountRate = "SELECT rates, ROUND(COUNT(rates) / $countReview * 100) AS count_percent, COUNT(rates) as count FROM default_reviews WHERE $cond is_online = 1 and table_id = $tour_id GROUP BY rates;";
+	$sqlCountRate = "SELECT rates, ROUND(COUNT(rates) / $countReview * 100) AS count_percent, COUNT(rates) as count FROM default_reviews WHERE $cond is_online = 1 and table_id = $hotel_id GROUP BY rates;";
 
     $countRate = $dbconn->GetAll($sqlCountRate);
 
@@ -1225,7 +1245,16 @@ $result = implode(',', $array);
     $assign_list["travel_style_id"] = $travel_style_id;
     $assign_list["country_id"] = $country_id;
     $format_time_now = date('M d, Y', strtotime('+1 day')); $assign_list['format_time_now'] = $format_time_now;
+	
+	$filteredListImage = [];
+	foreach ($listImage as $image) {
+    if ($image['hotel_image_id'] != $big_image['hotel_image_id']) {
+        $filteredListImage[] = $image;
+    }
+}
 
+	$assign_list["filteredListImage"] = $filteredListImage;
+	
 	
 	 
     /*=============Title & Description Page==================*/

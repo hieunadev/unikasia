@@ -487,7 +487,7 @@ $().ready(function(){
 						data: adata,
 						dataType: "html",
 						success: function(html){
-							console.log(html); 
+							// console.log(html); 
 							vietiso_loading(0);
 							$_this.removeClass('disabled');
 							if(html.indexOf('_IN_SUCCESS')>=0){
@@ -697,7 +697,7 @@ $().ready(function(){
 					data: adata,
 					dataType: "html",
 					success: function(html) {
-						console.log(html);
+						// console.log(html);
 						vietiso_loading(0);
 						makepopupnotresize('30%', 'auto', html, 'box_CruiseProperty');
 						$('#box_CruiseProperty').css('top', 40 + 'px');
@@ -732,7 +732,7 @@ $().ready(function(){
 					dataType:'html',	
 					success:function(html){
 						vietiso_loading(0);
-						console.log(html);
+						// console.log(html);
 						if(html.indexOf('_EMPTY')>=0){
 							alertify.error('You must choose property !');
 						} else {
@@ -1105,7 +1105,7 @@ $().ready(function(){
 		});
 	}
 	// Page Cruise - Mod: Cruise - Act: Cat
-	if(mod == 'cruise' && act== 'cat') {
+	if((mod == 'cruise' && act== 'cat') || (mod == 'cruise' && act== 'cat_country')) {
 		if($SiteHasCruisesCategory == '1') {
 			loadListSysCategory('','');
 			$('#keyword').bind('keyup keydown change',function(){
@@ -1127,6 +1127,23 @@ $().ready(function(){
 				$.ajax({
 					type:'POST',
 					url:path_ajax_script+'/index.php?mod='+mod+'&act=ajSysCruiseCategory',
+					data : {'tp':'F'},
+					dataType:'html',
+					success:function(html){
+						makepopupnotresize('90%', 'auto', html, 'box_CreateCruiseCategory');
+						$('#box_CreateCruiseCategory').css('top','50px');
+						$('#'+$('.textarea_intro_editor').attr('id')).isoTextAreaFix();
+						vietiso_loading(0);
+					}
+				});
+				return false;
+			});
+			$(document).on('click', '.btnCreateCruiseCategoryCountry', function(ev){
+				console.log(123);
+				vietiso_loading(1);
+				$.ajax({
+					type:'POST',
+					url:path_ajax_script+'/index.php?mod='+mod+'&act=ajSysCruiseCategoryCountry',
 					data : {'tp':'F'},
 					dataType:'html',
 					success:function(html){

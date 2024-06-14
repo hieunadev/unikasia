@@ -358,98 +358,70 @@ function default_tag()
 	global $assign_list, $smarty, $_CONFIG, $core, $dbconn, $mod, $act, $_LANG_ID, $title_page, $description_page, $global_image_seo_page, $city_id;
 	global $clsISO, $deviceType;
 	#
-	die('12312312312');
-
-	// $clsCountry	=   new Country();
-	// $smarty->assign('clsCountry', $clsCountry);
-	// $clsGuideCat	=   new GuideCat();
-	// $smarty->assign('clsGuideCat', $clsGuideCat);
-	// $clsGuideCatStore	=   new GuideCatStore();
-	// $smarty->assign('clsGuideCatStore', $clsGuideCatStore);
-	// $clsGuide	= 	new Guide();
-	// $smarty->assign('clsGuide', $clsGuide);
-	// $clsPagination	= 	new Pagination();
-	// $smarty->assign('_LANG_ID', $_LANG_ID);
-	// #
-	// $trvg_intro	=	'';
-	// $show		=	isset($_GET['show']) ? $_GET['show'] : '';
-	// if ($show === 'GuideCatCountry') {
-	// 	$guidecat_slug	=   '';
-	// 	$guidecat_id    =   0;
-	// 	$country_slug  	=   isset($_GET['slug_country']) ? $_GET['slug_country'] : '';
-	// 	$country_id 	= 	$clsCountry->getBySlug($country_slug);
-	// 	if (intval($country_id) == 0 && $clsCountry->checkExitsId($country_id) == '0') {
-	// 		header('location:' . PCMS_URL);
-	// 		exit();
-	// 	}
-	// } elseif ($show === 'GuideCat') {
-	// 	$guidecat_slug	=   isset($_GET['slug_guidecat']) ? $_GET['slug_guidecat'] : '';
-	// 	$guidecat_id    =   isset($_GET['guidecat_id']) ? $_GET['guidecat_id'] : 0;
-	// 	$country_slug  	=   isset($_GET['slug_country']) ? $_GET['slug_country'] : '';
-	// 	$country_id 	= 	$clsCountry->getBySlug($country_slug);
-	// 	if (intval($guidecat_id) == 0) {
-	// 		header('location:' . PCMS_URL);
-	// 		exit();
-	// 	}
-	// 	$trvg_intro	.=	$clsGuideCatStore->getContent($guidecat_id, $country_id);
-	// }
-	// $smarty->assign('country_id', $country_id);
-	// $smarty->assign('guidecat_id', $guidecat_id);
-	// $smarty->assign('trvg_intro', $trvg_intro);
-	// #
-	// /** --- Phân trang --- **/
-	// $currentPage	= 	isset($_GET['page']) ? $_GET['page'] : 1;
-	// $assign_list['currentPage']	= 	$currentPage;
-	// #
-	// if ($deviceType == 'phone') {
-	// 	$recordPerPage 	= 	6;
-	// } else {
-	// 	$recordPerPage 	= 	12;
-	// }
-	// $assign_list['recordPerPage']	= 	$recordPerPage;
-	// #
-	// $cond	= 	"is_trash=0 AND is_online=1 AND country_id = '$country_id'";
-	// if ($guidecat_id > 0) {
-	// 	$cond	.= 	" AND (cat_id='$guidecat_id' OR list_cat_id LIKE '%|" . $guidecat_id . "|%')";
-	// }
-	// $order_by		= 	" ORDER BY order_no ASC";
-	// $totalRecord 	= 	$clsGuide->getAll($cond) ? count($clsGuide->getAll($cond)) : 0;
-	// #
-	// $link_page	= 	$clsGuide->getLinkGuideCat($country_slug, $guidecat_slug, $guidecat_id);
-	// #
-	// $config	= 	[
-	// 	'total'				=> $totalRecord,
-	// 	'number_per_page'	=> $recordPerPage,
-	// 	'current_page'		=> $currentPage,
-	// 	'link'				=> str_replace('.html', '/', $link_page),
-	// 	'link_page'			=> $link_page
-	// ];
-	// $clsPagination->initianize($config);
-	// $page_view	= 	$clsPagination->create_links(false);
-	// $offset 	= 	($currentPage - 1) * $recordPerPage;
-	// $limit 		= 	" LIMIT $offset,$recordPerPage";
-	// $listGuide 	= 	$clsGuide->getAll($cond . $order_by . $limit, $clsGuide->pkey);
-	// $assign_list['listGuide']	= 	$listGuide;
-	// // unset($listGuide);
-	// $assign_list['page_view']	= 	$page_view;
-	// // unset($page_view);
-	// $assign_list['totalPage']	= 	$clsPagination->getTotalPage();
-	// /** --- End of Phân trang --- **/
-	// #
-	// // Get recent view
-	// $arr_recent_view	=	$clsISO->getRecentView('guide', 10);
-	// $smarty->assign('arr_recent_view', $arr_recent_view);
-	// #
-	// /* =============Title & Description Page================== */
-	// if ($show === 'GuideCat') {
-	// 	$title_page = $clsGuideCat->getTitle($guidecat_id) . ' | ' . $clsCountry->getTitle($country_id) . ' | ' . PAGE_NAME;
-	// } else {
-	// 	$title_page = $clsCountry->getTitle($country_id) . ' | ' . PAGE_NAME;
-	// }
-	// $assign_list["title_page"] = $title_page;
-	// $description_page = $clsISO->getMetaDescription($guidecat_id, 'GuideCat');
+	$clsTag	=   new Tag();
+	$smarty->assign('clsTag', $clsTag);
+	$clsGuide	=   new Guide();
+	$smarty->assign('clsGuide', $clsGuide);
+	$clsGuideCat	=   new GuideCat();
+	$smarty->assign('clsGuideCat', $clsGuideCat);
+	$clsPagination	= 	new Pagination();
+	#
+	$show	=	isset($_GET['show']) ? $_GET['show'] : '';
+	if ($show === 'GuideTag') {
+		$guidetag_slug	=   isset($_GET['slug']) ? $_GET['slug'] : '';
+		if (empty($guidetag_slug)) {
+			header('location:' . PCMS_URL);
+			exit();
+		}
+	}
+	$smarty->assign('guidetag_slug', $guidetag_slug);
+	$guidetag_id	=	$clsTag->getBySlug($guidetag_slug);
+	$smarty->assign('guidetag_id', $guidetag_id);
+	#
+	/** --- Phân trang --- **/
+	$currentPage	= 	isset($_GET['page']) ? $_GET['page'] : 1;
+	$assign_list['currentPage']	= 	$currentPage;
+	#
+	if ($deviceType == 'phone') {
+		$recordPerPage 	= 	6;
+	} else {
+		$recordPerPage 	= 	10;
+	}
+	$assign_list['recordPerPage']	= 	$recordPerPage;
+	#
+	$cond	= 	"is_trash = 0 AND is_online = 1";
+	if (!empty($guidetag_id)) {
+		$cond	.= 	" AND list_tag_id LIKE '%" . $guidetag_id . "%'";
+	}
+	$order_by		= 	" ORDER BY order_no ASC";
+	$totalRecord 	= 	$clsGuide->getAll($cond) ? count($clsGuide->getAll($cond)) : 0;
+	#
+	$link_page	= 	$clsTag->getLinkTagGuide($guidetag_id);
+	#
+	$config	= 	[
+		'total'				=> $totalRecord,
+		'number_per_page'	=> $recordPerPage,
+		'current_page'		=> $currentPage,
+		'link'				=> str_replace('.html', '/', $link_page),
+		'link_page'			=> $link_page
+	];
+	$clsPagination->initianize($config);
+	$page_view	= 	$clsPagination->create_links(false);
+	$offset 	= 	($currentPage - 1) * $recordPerPage;
+	$limit 		= 	" LIMIT $offset,$recordPerPage";
+	$listGuide 	= 	$clsGuide->getAll($cond . $order_by . $limit, $clsGuide->pkey . ', cat_id');
+	#
+	$assign_list['listGuide']	= 	$listGuide;
+	$assign_list['page_view']	= 	$page_view;
+	$assign_list['totalPage']	= 	$clsPagination->getTotalPage();
+	/** --- End of Phân trang --- **/
+	#
+	/* =============Title & Description Page================== */
+	$title_page = $clsTag->getTitle($guidetag_id) . ' | ' . PAGE_NAME;
+	$assign_list["title_page"] = $title_page;
+	// $description_page = $clsISO->getMetaDescription($guidetag_id, 'GuideCat');
 	// $assign_list["description_page"] = $description_page;
-	// $global_image_seo_page = $clsISO->getPageImageShare($guidecat_id, 'GuideCat');
+	// $global_image_seo_page = $clsISO->getPageImageShare($guidetag_id, 'GuideCat');
 	// $assign_list["global_image_seo_page"] = $global_image_seo_page;
 }
 function default_loadGuideItems()

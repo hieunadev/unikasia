@@ -1692,7 +1692,7 @@ $_document.ready(function () {
     });
 });
 $_document.on('change', '.h_tour_price_group,.price_type', function(ev){
-    var $_this = $(this);	
+    var $_this = $(this);
 	if($_this.hasClass('price_type')){
 		var price = $_this.closest('.input-group').find(".h_tour_price_group").val();
 		var price_type = $_this.val();
@@ -1714,6 +1714,7 @@ $_document.on('change', '.h_tour_price_group,.price_type', function(ev){
             'tour_visitor_type_id':$_this.attr("tour_visitor_type_id"),
             'tour_visitor_age_type_id':$_this.attr("tour_visitor_age_type_id"),
             'tour_visitor_height_type_id':$_this.attr("tour_visitor_height_type_id"),
+			"tour_room_id":$_this.attr("tour_room_id"),
             "price":price,
             "price_type":price_type,
             'tp' : 'S'

@@ -1156,6 +1156,7 @@ $().ready(function() {
 						'tour_number_group_id':$_this.attr("tour_number_group_id"),
 						'tour_visitor_type_id':$_this.attr("tour_visitor_type_id"),
 						"price":$_this.val(),
+                        "tour_room_id":$_this.attr("tour_room_id"),
 						'tp' : 'S'
 					},
 					dataType: "html",

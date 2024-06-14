@@ -357,12 +357,9 @@
 						</div>
 						{elseif $currentstep=='month_country'}
 						{if $arr_month_country}
-
-
 						{foreach from=$arr_month_country key=key item=item}
 						{assign var="month_country_id" value=$item.month_country_id}
 						{assign var="title" value=$item.title}
-
 						<div class="inpt_tour">
 							<label for="month_country_{$key}">
 								{$core->get_Lang($title)}
@@ -372,29 +369,32 @@
 							</textarea>
 						</div>
 						{/foreach}
-
-
 						{/if}
-						<!-- <div class="inpt_tour">
-							<label for="month_country_1">
-								{$core->get_Lang('January')}
+						{elseif $currentstep=='common_banner'}
+						<div class="inpt_tour">
+							<label class="col-form-label" for="common_banner_image">
+								{$core->get_Lang('Common banner image')} ({$core->get_Lang('Size')}: 1920x600)
 							</label>
-							<textarea style="width:100%" table_id="{$pvalTable}" name="intro[]" id="month_country_1_{time()}" data-column="iso-month_country_1" class="textarea_intro_editor_simple" cols="255" rows="2">
-								{* {$oneItem.header_description} *}
-							</textarea>
-							<input type="hidden" name="month[]" value="1">
+							<div class="fieldarea">
+								<div class="row">
+									<div class="col-md-6 col-sm-12">
+										<input class="text_32 border_aaa bold" type="text" id="common_banner" name="iso-common_banner" value="{$oneItem.common_banner}" style="float: right;width: 85%;" onClick="loadHelp(this)" readonly>
+										<a style="float:left" href="#" class="ajOpenDialog" isoman_for_id="common_banner" isoman_name="iso-common_banner"><img src="{$URL_IMAGES}/general/folder-32.png" border="0" title="Open" alt="Open" /></a>
+									</div>
+									<div class="col-sm-12 col-md-6">
+										<img id="isoman_show_common_banner" class="float-left mr-3" src="{$oneItem.common_banner}" width="480" height="150" />
+									</div>
+								</div>
+							</div>
 						</div>
 						<div class="inpt_tour">
-							<label for="month_country_2">
-								{$core->get_Lang('February')}
+							<label for="common_banner_intro">
+								{$core->get_Lang('Common banner intro')}
 							</label>
-							<textarea style="width:100%" table_id="{$pvalTable}" name="intro[]" id="month_country_2_{time()}" data-column="iso-month_country_2" class="textarea_intro_editor_simple" cols="255" rows="2">
-								{* {$oneItem.header_description} *}
+							<textarea style="width:100%" table_id="{$pvalTable}" name="common_intro" id="common_intro_{time()}" class="textarea_intro_editor_simple" data-column="iso-common_intro" cols="255" rows="2">
+								{$oneItem.common_intro}
 							</textarea>
-							<input type="hidden" name="month[]" value="2">
-						</div> -->
-
-
+						</div>
 						{if $lstContinent}
 						<div class="inpt_tour">
 							<label for="title">{$core->get_Lang('Continent')} <span class="required_red">*</span>

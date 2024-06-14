@@ -3,24 +3,24 @@
 	<div class="box_info_tour_top box_top_opt_set">
 		<div class="info_tour">
 			<a href="{$PCMS}/admin/?mod=guide" class="back_list" title="{$core->get_Lang('guide_list')}"><i class="fa fa-angle-left"></i></a>
-			 <img class="image_nav_tour isoman_show_image" table_id="{$pvalTable}" src="{$clsClassTable->getImage($pvalTable,80,59)}" alt="{$clsClassTable->getTitle($pvalTable)}" width="80" height="59">
+			<img class="image_nav_tour isoman_show_image" table_id="{$pvalTable}" src="{$clsClassTable->getImage($pvalTable,80,59)}" alt="{$clsClassTable->getTitle($pvalTable)}" width="80" height="59">
 			<div class="body_tour">
 				<h3 class="table-title" table_id="{$pvalTable}">{$clsClassTable->getTitle($pvalTable)}</h3>
 				<p class="p_tripcode">
-					<a class="go_overview" href="{$PCMS}/admin/guide/insert/{$pvalTable}/overview">{$core->get_Lang('Go to overview')}</a></span> 
+					<a class="go_overview" href="{$PCMS}/admin/guide/insert/{$pvalTable}/overview">{$core->get_Lang('Go to overview')}</a></span>
 				</p>
 			</div>
 		</div>
 		<div class="info_button">
 			<div class="toggle_opt btn_online action_tour">
 				{if $oneItem.is_online ne 1}
-				<a class="online_tour private_tour" data-clstable="Country" data-pkey="{$clsClassTable->pkey}" data-val="0" data-sourse_id="{$pvalTable}" data-text_last="{$core->get_Lang('Public')}">{$core->get_Lang('Private')}</a>
+				<a id="online_tour" class="online_tour private_tour" data-clstable="Guide" data-pkey="{$clsClassTable->pkey}" data-val="0" data-sourse_id="{$pvalTable}" data-text_last="{$core->get_Lang('Public')}">{$core->get_Lang('Private')}</a>
 				{else}
-				<a class="online_tour" data-clstable="Country" data-pkey="{$clsClassTable->pkey}" data-val="1" data-sourse_id="{$pvalTable}" data-text_last="{$core->get_Lang('Private')}">{$core->get_Lang('Public')}</a>
+				<a id="online_tour" class="online_tour" data-clstable="Guide" data-pkey="{$clsClassTable->pkey}" data-val="1" data-sourse_id="{$pvalTable}" data-text_last="{$core->get_Lang('Private')}">{$core->get_Lang('Public')}</a>
 				{/if}
 			</div>
 			<div class="action_tour btn_preview">
-				<a class="btn_preview_tour preview_tour_ex" {if $oneItem.is_trash eq 1}style="pointer-events: none;color: rgb(204, 204, 204);border-color: rgb(204, 204, 204);background-color: rgb(255, 255, 255);cursor: not-allowed;"{/if} href="{$clsClassTable->getLink($pvalTable)}" target="_blank" title="{$clsClassTable->getTitle($pvalTable)}">{$core->get_Lang('Preview')}</a>
+				<a class="btn_preview_tour preview_tour_ex" {if $oneItem.is_trash eq 1} style="pointer-events: none;color: rgb(204, 204, 204);border-color: rgb(204, 204, 204);background-color: rgb(255, 255, 255);cursor: not-allowed;" {/if} data-href="{$clsClassTable->getLink2($pvalTable)}" target="_blank" title="{$clsClassTable->getTitle($pvalTable)}">{$core->get_Lang('Preview')}</a>
 			</div>
 			<div class="action_tour btn_delete" id="is_delete_tour">
 				<a class="btn_preview_tour delete_tour_ex" type_btn="delete" href="{$PCMS_URL}/?mod={$mod}&act=delete&{$clsClassTable->pkey}={$core->encryptID($pvalTable)}{$pUrl}" title="{$clsClassTable->getTitle($pvalTable)}">{$core->get_Lang('Delete')}</a>
@@ -33,7 +33,7 @@
 			<div class="row d-flex flex-wrap">
 				<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 box_left_opt_set">
 					{$core->getBlock('menu_step')}
-					
+
 				</div>
 				<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
 					<div class="main_step_box" id="frmMainStep_{$pvalTable}">
@@ -50,39 +50,36 @@
 
 
 <script type="text/javascript">
-    var table_id = '{$pvalTable}';
-    var panel = '{$panel}';
-    var currentstep = '{$currentstep}';
-    var nextstep = '{$nextstep}';
-    var continent_id = "{$oneItem.continent_id}";
+	var table_id = '{$pvalTable}';
+	var panel = '{$panel}';
+	var currentstep = '{$currentstep}';
+	var nextstep = '{$nextstep}';
+	var continent_id = "{$oneItem.continent_id}";
 	var country_id = "{$oneItem.country_id}";
-    var region_id = "{$oneItem.region_id}";
-    var city_id = "{$oneItem.city_id}";
-	var map_lo="{$oneItem.map_lo}";
-	var map_la="{$oneItem.map_la}";
+	var region_id = "{$oneItem.region_id}";
+	var city_id = "{$oneItem.city_id}";
+	var map_lo = "{$oneItem.map_lo}";
+	var map_la = "{$oneItem.map_la}";
 	var map_zoom = '{$oneItem.map_zoom}';
 	var map_type = '{$oneItem.map_tyle}';
 	var Select = 'Select';
 	var $type = '';
-	
-
 </script>
 {literal}
 <script>
-	$(function () {
-		
+	$(function() {
+
 		$(window).scroll(function() {
 			var sticky = $('.box_top_opt_set'),
 				scroll = $(window).scrollTop();
 			if (scroll >= 40) {
 				sticky.addClass('fixed');
-			}else {
+			} else {
 				sticky.removeClass('fixed');
 			}
 		});
-		loadMainFormStep(table_id,currentstep,nextstep);
+		loadMainFormStep(table_id, currentstep, nextstep);
 	});
-	
 </script>
 {/literal}
 <script type="text/javascript" src="{$URL_THEMES}/guide/jquery.guide.js?v={$upd_version}"></script>

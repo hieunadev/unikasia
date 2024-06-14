@@ -1,21 +1,22 @@
 <div class="trvg_header">
     <h1 class="trvg_header_title">
-        {if $show eq 'Country'}
-        WHEN TO GO TO?
-        {elseif $show eq 'GuideCat'}
+        {if $show eq 'GuideCat'}
         {$clsGuideCat->getTitle($guidecat_id)}
         {/if}
     </h1>
+    {if $show eq 'GuideCatCountry' || $show eq 'SearchGuide'}
+    <div class="common_banner_intro">{$clsCountry->getIntroBannerCommon($country_id)}</div>
+    {/if}
     <a href="{$clsTour->getLink2(0, 1)}" title="Create your trip" class="trvg_header_link">
         Create your trip <i class="fa-sharp fa-regular fa-arrow-right" aria-hidden="true"></i>
     </a>
 </div>
 <div class="trvg_header_background_image">
     <img src="
-    {if $url_banner}
+    {if $show eq 'GuideCatCountry' || $show eq 'SearchGuide'}
+        {$clsCountry->getImageBannerCommon($country_id, 1920, 600)}
+    {elseif $show eq 'GuideCat'}
         {$clsGuideCatStore->getImage($guidecat_store_id, 1920, 600)}
-    {else}
-        https://unikasia.vietiso.com/isocms/templates/default/skin/images/destination/bg_trvg.png
     {/if}
     " width="1920" height="600" alt="Travel Guide">
 </div>
@@ -74,6 +75,38 @@
 
     .trvg_header_link:hover {
         background: #E88F00;
+    }
+
+    .common_banner_intro {
+        color: var(--Neutral-5, #F0F0F0);
+        text-align: center;
+        font-family: "SF Pro Display";
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 28px;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .common_banner_intro p {
+        margin-bottom: unset;
+    }
+
+    @media (min-width: 991px) {
+        .common_banner_intro {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+    }
+
+    @media (max-width: 990px) {
+        .common_banner_intro {
+            max-width: unset;
+            margin: 0 20px;
+        }
     }
 </style>
 {/literal}

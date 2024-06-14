@@ -224,38 +224,40 @@ function default_ajSubmitTags()
 {
     global $assign_list, $_CONFIG, $_LANG_ID, $_SITE_ROOT, $mod, $act;
     global $core, $clsModule, $clsButtonNav, $oneSetting, $clsISO;
-    $user_id = $core->_USER['user_id'];
+    $user_id    =   $core->_USER['user_id'];
     #
-    $classTable = "Tag";
-    $clsClassTable = new $classTable;
-    $tableName = $clsClassTable->tbl;
-    $pkeyTable = $clsClassTable->pkey;
+    $classTable =   "Tag";
+    $clsClassTable  =   new $classTable;
+    $tableName  =   $clsClassTable->tbl;
+    $pkeyTable  =   $clsClassTable->pkey;
     $assign_list["clsClassTable"] = $clsClassTable;
     $assign_list["pkeyTable"] = $pkeyTable;
     #
-    $tag_id = isset($_POST['tag_id']) ? $_POST['tag_id'] : 0;
-    $titlePost = trim(strip_tags($_POST['title']));
-    $slugPost = $core->replaceSpace($titlePost);
-    $selectPost = isset($_POST['select']) ? $_POST['select'] : '';
+    $tag_id     =   isset($_POST['tag_id']) ? $_POST['tag_id'] : 0;
+    $titlePost  =   trim(strip_tags($_POST['title']));
+    $slugPost   =   $core->replaceSpace($titlePost);
+    $selectPost =   isset($_POST['select']) ? $_POST['select'] : '';
     #
     if (intval($tag_id) == 0) {
-        $all = $clsClassTable->getAll("is_trash=0 and slug='$slugPost' limit 0,1");
+        $all    =   $clsClassTable->getAll("is_trash = 0 AND slug = '$slugPost' LIMIT 0,1");
+
         if (!empty($all)) {
-            echo '_EXIST';
+            echo    '_EXIST';
             die();
         } else {
-            $listTable = $clsClassTable->getAll("1=1", $clsClassTable->pkey . ",order_no");
+            $listTable  =   $clsClassTable->getAll("1=1", $clsClassTable->pkey . ",order_no");
             for ($i = 0; $i <= count($listTable); $i++) {
-                $order_no = $listTable[$i]['order_no'] + 1;
+                $order_no   =   $listTable[$i]['order_no'] + 1;
                 $clsClassTable->updateOne($listTable[$i][$clsClassTable->pkey], "order_no='" . $order_no . "'");
             }
-            $fx = "title, slug, type, $clsClassTable->pkey, order_no";
-            $vx = "'$titlePost', '$slugPost', '$selectPost', '$clsClassTable->getMaxID()', '1'";
+            $fx =   "title, slug, type, $clsClassTable->pkey, order_no";
+            $vx =   "'$titlePost', '$slugPost', '$selectPost', '" . $clsClassTable->getMaxID() . "', '1'";
+
             if ($clsClassTable->insertOne($fx, $vx)) {
-                echo '_SUCCESS';
+                echo    '_SUCCESS';
                 die();
             } else {
-                echo '_ERROR';
+                echo    '_ERROR';
                 die();
             }
         }
