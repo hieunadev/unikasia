@@ -566,7 +566,7 @@ function default_SiteFrmTourItinerary(){
 						</div>';
 						}	
 					}
-					if($clsISO->getCheckActiveModulePackage($package_id,'property','transport','default')){
+					/*if($clsISO->getCheckActiveModulePackage($package_id,'property','transport','default')){
 						$lstItem = $clsTour->getListTransport();
 						if(!empty($lstItem)){
 						$html.='<div class="row-span">
@@ -586,7 +586,7 @@ function default_SiteFrmTourItinerary(){
 							</div>
 						</div>';
 						}
-					}
+					}*/
 					$html.='<div class="row-span">
 						<div class="fieldlabel" style="text-align:right;font-weight:700">'.$core->get_Lang('Short text').'</div>
 						<div class="fieldarea">
@@ -4368,7 +4368,6 @@ function default_ajLoadTourPriceGroup(){
 	$visitorheight_infant = !empty($oneItem['visitorheight_infant'])? $clsISO->getArrayByTextSlash($oneItem['visitorheight_infant']) : array();
 	$total_visitorheight_child = !empty($visitorheight_child) ? count($visitorheight_child) : 0;
 	$total_visitorheight_infant = !empty($visitorheight_infant) ? count($visitorheight_infant) : 0;
-	
 	if($tp=='L'){
 		$html= '';
 		if(!empty($lstOption)){
@@ -4417,19 +4416,19 @@ function default_ajLoadTourPriceGroup(){
 									$listChildSizeAgeHeight = explode(",",$v17);
 									for($i=0; $i<count($listChildSizeAgeHeight);$i++){
 										$tour_visitor_height_type_id = (int)$visitorheight_child[$k17];
-//										$clsTourPriceGroup->setDeBug(1);
-										$price = $clsTourPriceGroup->getPrice($tour_id,$val,$listChildSizeAgeHeight[$i],$b[$clsTourProperty->pkey],$departure,$visitorage_child[$k17],$tour_visitor_height_type_id);
-										
+
+										$price = $clsTourPriceGroup->getPrice($tour_id,$val,$listChildSizeAgeHeight[$i],$b[$clsTourProperty->pkey],$departure,'',$visitorage_child[$k17],$tour_visitor_height_type_id);
 										$sql="tour_id='$tour_id' and tour_class_id='$val' and tour_number_group_id='".$listChildSizeAgeHeight[$i]."' and tour_visitor_type_id='".$b[$clsTourProperty->pkey]."' and tour_visitor_age_type_id='".$visitorage_child[$k17]."' and tour_visitor_height_type_id='".$tour_visitor_height_type_id."'
 										and departure_date='$departure' limit 0,1";
 										$check_exist = $clsTourPriceGroup->getAll($sql,$clsTourPriceGroup->pkey);
-										
 										if($price == 0 && !$check_exist){
 											$max_id=$clsTourPriceGroup->getMaxID();
 											$f = "tour_price_group_id,tour_id,tour_class_id,tour_number_group_id,tour_visitor_type_id,tour_visitor_age_type_id,tour_visitor_height_type_id,
 											price,price_type,departure_date,user_id,user_id_update,reg_date,upd_date,tour_room_id";
 											$v = "'$max_id','$tour_id','$val','".$listChildSizeAgeHeight[$i]."','".$b[$clsTourProperty->pkey]."','".$visitorage_child[$k17]."','".$tour_visitor_height_type_id."','".$price."','0','$departure','$user_id','$user_id','".time()."','".time()."'";
+
 											$clsTourPriceGroup->insertOne($f, $v);
+
 										}
 										$html .= '<tr>';
 											if($i == 0){
@@ -4440,7 +4439,7 @@ function default_ajLoadTourPriceGroup(){
 											<td class="text-left">'.$clsTourOption->getTitle($listChildSizeAgeHeight[$i]).'</td>
 											<td class="text-left">
 												<div class="input-group">
-												<input class="form-control price-In h_tour_price_group fontLarge"  tour_id="'.$tour_id.'" tour_class_id="'.$val.'" tour_start_date_id="'.$tour_start_date_id.'" tour_number_group_id="'.$listChildSizeAgeHeight[$i].'" tour_visitor_type_id="'.$b[$clsTourProperty->pkey].'" tour_visitor_age_type_id="'.$visitorage_child[$k17].'" tour_visitor_height_type_id="'.$visitorheight_child[$k17].'" departure="'.$departure.'" value="'.$price.'" type="text" '.$price.' />';											
+												<input class="form-control price-In h_tour_price_group fontLarge" tour_id="'.$tour_id.'" tour_class_id="'.$val.'" tour_start_date_id="'.$tour_start_date_id.'" tour_number_group_id="'.$listChildSizeAgeHeight[$i].'" tour_visitor_type_id="'.$b[$clsTourProperty->pkey].'" tour_visitor_age_type_id="'.$visitorage_child[$k17].'" tour_visitor_height_type_id="'.$visitorheight_child[$k17].'" departure="'.$departure.'" value="'.$price.'" type="text" '.$price.' />';
 										$priceType = $clsTourPriceGroup->getPriceType($tour_id,$val,$listChildSizeAgeHeight[$i],$b[$clsTourProperty->pkey],$departure,$visitorage_child[$k17],$visitorheight_child[$k17]);
 										$html .='<span class="input-group-addon select_group_addon">
 													<select class="price_type" name="price_type" tour_id="'.$tour_id.'" tour_class_id="'.$val.'" tour_start_date_id="'.$tour_start_date_id.'" tour_number_group_id="'.$listChildSizeAgeHeight[$i].'" tour_visitor_type_id="'.$b[$clsTourProperty->pkey].'" tour_visitor_age_type_id="'.$visitorage_child[$k17].'" tour_visitor_height_type_id="'.$visitorheight_child[$k17].'" departure="'.$departure.'" '.$priceType.'>
@@ -4492,16 +4491,16 @@ function default_ajLoadTourPriceGroup(){
 									$listInfantSizeAgeHeight = explode(",",$v18);
 									for($i=0;$i<count($listInfantSizeAgeHeight);$i++){
 										$tour_visitor_height_type_id = (int)$visitorheight_infant[$k18];
-										$price = $clsTourPriceGroup->getPrice($tour_id,$val,$listInfantSizeAgeHeight[$i],$b[$clsTourProperty->pkey],$departure,$visitorage_infant[$k18],$tour_visitor_height_type_id);
-										
+
+										$price = $clsTourPriceGroup->getPrice($tour_id,$val,$listInfantSizeAgeHeight[$i],$b[$clsTourProperty->pkey],$departure,'',$visitorage_infant[$k18],$tour_visitor_height_type_id);
+
 										$sql="tour_id='$tour_id' and tour_class_id='$val' and tour_number_group_id='".$listInfantSizeAgeHeight[$i]."' and tour_visitor_type_id='".$b[$clsTourProperty->pkey]."' and tour_visitor_age_type_id='".$visitorage_infant[$k18]."' and tour_visitor_height_type_id='".$tour_visitor_height_type_id."'
 										and departure_date='$departure' limit 0,1";
 										$check_exist = $clsTourPriceGroup->getAll($sql,$clsTourPriceGroup->pkey);
-										
 										if($price == 0 && !$check_exist){
 											$max_id=$clsTourPriceGroup->getMaxID();
 											$f = "tour_price_group_id,tour_id,tour_class_id,tour_number_group_id,tour_visitor_type_id,tour_visitor_age_type_id,tour_visitor_height_type_id,
-											price,price_type,departure_date,user_id,user_id_update,reg_date,upd_date";
+											price,price_type,departure_date,user_id,user_id_update,reg_date,upd_date,tour_room_id";
 											$v = "'$max_id','$tour_id','$val','".$listInfantSizeAgeHeight[$i]."','".$b[$clsTourProperty->pkey]."','".$visitorage_infant[$k18]."','".$tour_visitor_height_type_id."','".$price."','0','$departure','$user_id','$user_id','".time()."','".time()."'";
 											$clsTourPriceGroup->insertOne($f, $v);
 										}
@@ -4515,7 +4514,7 @@ function default_ajLoadTourPriceGroup(){
 											<td class="text-left">'.$clsTourOption->getTitle($listInfantSizeAgeHeight[$i]).'</td>
 											<td class="text-left">
 												<div class="input-group">
-													<input class="form-control price-In h_tour_price_group fontLarge" tour_id="'.$tour_id.'" tour_class_id="'.$val.'" tour_start_date_id="'.$tour_start_date_id.'" tour_number_group_id="'.$listInfantSizeAgeHeight[$i].'" tour_visitor_type_id="'.$b[$clsTourProperty->pkey].'" tour_visitor_age_type_id="'.$visitorage_infant[$k18].'" tour_visitor_height_type_id="'.$visitorheight_infant[$k18].'" departure="'.$departure.'" value="'.$clsTourPriceGroup->getPrice($tour_id,$val,$listInfantSizeAgeHeight[$i],$b[$clsTourProperty->pkey],$departure,$visitorage_infant[$k18],$visitorheight_infant[$k18]).'" type="text" />';
+													<input class="form-control price-In h_tour_price_group fontLarge" tour_id="'.$tour_id.'" tour_class_id="'.$val.'" tour_start_date_id="'.$tour_start_date_id.'" tour_number_group_id="'.$listInfantSizeAgeHeight[$i].'" tour_visitor_type_id="'.$b[$clsTourProperty->pkey].'" tour_visitor_age_type_id="'.$visitorage_infant[$k18].'" tour_visitor_height_type_id="'.$visitorheight_infant[$k18].'" departure="'.$departure.'" value="'.$price.'" type="text" />';
 										
 										$priceType = $clsTourPriceGroup->getPriceType($tour_id,$val,$listInfantSizeAgeHeight[$i],$b[$clsTourProperty->pkey],$departure,$visitorage_infant[$k18],$visitoheight_infant[$k18]);
 											$html .='<span class="input-group-addon select_group_addon">
@@ -4552,7 +4551,7 @@ function default_ajLoadTourPriceGroup(){
 				$html .= '</table>
 				</div>';
 			}
-			if($clsISO->getCheckActiveModulePackage($package_id,'booking','booking_tour','default')){
+			/*if($clsISO->getCheckActiveModulePackage($package_id,'booking','booking_tour','default')){
 			$html .= '<div class="price_single_supply radius-3 mb-half">
 				<div class="row">
 					<label class="col-form-label col-md-6 text-left">'.$core->get_Lang('Single-Room Addition').'</label>
@@ -4564,7 +4563,7 @@ function default_ajLoadTourPriceGroup(){
 					</div>
 				</div>
 			</div>';
-			}
+			}*/
 			$html .= '</tr>';
 			if($is_last_hour == 1 && $clsISO->getCheckActiveModulePackage($package_id,$mod,'tour_last_hour','customize')) {
 				$end_date=$clsTour->getEndDate($departure,$tour_id);

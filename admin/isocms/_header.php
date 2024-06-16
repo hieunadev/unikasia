@@ -81,6 +81,7 @@
 	$email_template_reset_pass_id=15;
 	$email_template_review_tour_id=128;
 	$email_template_review_cruise_id=129;
+	$email_template_review_stay_id=134;
 	
 	#---Edit after here-----------------------------------------------------------------------------------------
 	$clsUser = new User();$assign_list["clsUser"] = $clsUser;

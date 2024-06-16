@@ -1000,6 +1000,7 @@ function default_detail() {
 	$clsCity=new City(); $assign_list['clsCity']=$clsCity;
 	$clsHotelImage=new HotelImage(); $assign_list['clsHotelImage']=$clsHotelImage;
 	$clsHotelRoom=new HotelRoom(); $assign_list['clsHotelRoom']=$clsHotelRoom;
+	$clsTour = new Tour(); $assign_list['clsTour'] = $clsTour;
 	$clsHotelPriceCol=new HotelPriceCol(); $assign_list['clsHotelPriceCol']=$clsHotelPriceCol;
 	$clsHotelPriceVal=new HotelPriceVal(); $assign_list['clsHotelPriceVal']=$clsHotelPriceVal;
 
@@ -1022,8 +1023,10 @@ function default_detail() {
 	
     $order = " order by order_no";
 	
-    $limit_left ="limit 1";
-	$limit_right ="limit 4";
+	$lstTour = $clsTour->getAll("$cond is_online = 1 and is_trash = 0 LIMIT 4");
+
+	$assign_list['lstTour'] = $lstTour;
+	
 	
 	$clsReviews = new Reviews();
 	$assign_list['clsReviews'] = $clsReviews;

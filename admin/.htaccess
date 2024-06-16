@@ -83,6 +83,8 @@ RewriteRule ^guide/insert/([0-9]*)/(.*)/(.*)$			index.php?mod=guide&act=insert&g
 RewriteRule ^guide/insert/([0-9]*)/(.*)$				index.php?mod=guide&act=insert&guide_id=$1&panel=$2 [QSA,L]
 RewriteRule ^guide/category/insert/([0-9]*)/(.*)/(.*)$	index.php?mod=guide&act=insertCat&guidecat_id=$1&panel=$2&step=$3 [QSA,L]
 RewriteRule ^guide/category/insert/([0-9]*)/(.*)$		index.php?mod=guide&act=insertCat&guidecat_id=$1&panel=$2 [QSA,L]
+RewriteRule ^guide/category_country/insert/([0-9]*)/(.*)/(.*)$	index.php?mod=guide&act=insertCatCountry&guidecat_store_id=$1&panel=$2&step=$3 [QSA,L]
+RewriteRule ^guide/category_country/insert/([0-9]*)/(.*)$		index.php?mod=guide&act=insertCatCountry&guidecat_store_id=$1&panel=$2 [QSA,L]
 
 RewriteRule ^guide/compose/insert/([0-9]*)/(.*)/(.*)$			index.php?mod=guide&act=insert2&guide2_id=$1&panel=$2&step=$3 [QSA,L]
 RewriteRule ^guide/compose/insert/([0-9]*)/(.*)$				index.php?mod=guide&act=insert2&guide2_id=$1&panel=$2 [QSA,L]
@@ -118,10 +120,14 @@ RewriteRule ^property/activities/insert/([0-9]*)/(.*)$				index.php?mod=property
 
 
 #--tour exhautive category country--
-RewriteRule ^tour/categorycountry/insert/([0-9]*)/(.*)/(.*)$			index.php?mod=tour_exhautive&act=insert_category_country&category_country_id=$1&panel=$2&step=$3 [QSA,L]
+RewriteRule ^tour/categorycountry/insert/([0-9]*)/(.*)/(.*)$	        index.php?mod=tour_exhautive&act=insert_category_country&category_country_id=$1&panel=$2&step=$3 [QSA,L]
 
-RewriteRule ^tour/categorycountry/insert/([0-9]*)/(.*)$				index.php?mod=tour_exhautive&act=insert_category_country&category_country_id=$1&panel=$2 [QSA,L]
+RewriteRule ^tour/categorycountry/insert/([0-9]*)/(.*)$				    index.php?mod=tour_exhautive&act=insert_category_country&category_country_id=$1&panel=$2 [QSA,L]
 
+#--tour exhautive travelstyle country--
+RewriteRule ^tour/whytravelstylecountry/insert/([0-9]*)/(.*)/(.*)$      index.php?mod=tour_exhautive&act=insert_why_travelstyle_country&travelstyle_country_id=$1&panel=$2&step=$3 [QSA,L]
+
+RewriteRule ^tour/whytravelstylecountry/insert/([0-9]*)/(.*)$		    index.php?mod=tour_exhautive&act=insert_why_travelstyle_country&travelstyle_country_id=$1&panel=$2 [QSA,L]
 
 
 #--member--

@@ -349,10 +349,11 @@ class CruiseCat extends dbBasic
     function makeSelectboxOptionValueName($selected = '')
     {
         global $core, $clsConfiguration, $clsISO;
-        $sql = "is_trash=0";
+        $sql = "is_trash=0 AND is_online = 1 AND parent_id = 0";
         #
-        $lstCat = $this->getAll($sql . " order by cruise_cat_id DESC");
+        $lstCat = $this->getAll($sql . " order by order_no ASC");
         if (is_array($lstCat) && count($lstCat) > 0) {
+            $html   =   '<option value="">-- Cruise Category --</option>';
             foreach ($lstCat as $k => $v) {
                 $_array = $this->getArray($selected);
                 $html .= '<option value="' . $v['cruise_cat_id'] . '" ' . ($clsISO->checkItemInArray($v[$this->pkey], $_array) ? 'selected="selected"' : '') . '>-- ' . $v['title'] . '</option>';

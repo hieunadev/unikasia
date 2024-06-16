@@ -1,10 +1,10 @@
 .hotel_detail_body {
 	width: 100%;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-  display: flex; /* Hoặc grid */
-  flex-direction: column; /* Hoặc các thuộc tính grid khác */
+	margin: 0;
+	padding: 0;
+	overflow-x: hidden;
+	display: flex;
+	flex-direction: column;
 }
 
 .hotel_detail_body #header_fixed {
@@ -69,6 +69,7 @@
 
 .share_box.open .share_news {
     display: block !important;
+	z-index: 2;
 }
 
 
@@ -93,17 +94,14 @@
     cursor: pointer;
 }
 
-
-
-
 .img_see:after {
-	  content: "";
-      position: absolute;
+	content: "";
+    position: absolute;
     top: 0;
-      left: 0;
-     width: 100%;
-     height: 100%;
-     background: linear-gradient(180deg, rgba(24, 28, 26, 0.48) 0%, rgba(24, 28, 26, 0.00) 100%);
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, rgba(24, 28, 26, 0.48) 0%, rgba(24, 28, 26, 0.00) 100%);
 }
 
 
@@ -122,26 +120,26 @@
 
 .sharer-icon {
 	display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  width: 40px !important;
-  height: 40px !important;
-  border-radius: 50% !important;
-  margin-right: 8px !important;
-  background-color: #ffffff !important;
-  color: #959aa4 !important;
-  text-decoration: none !important;
-  box-shadow: 0px 12px 32px 0px rgba(125, 135, 158, 0.09) !important;
-  transition: color 0.3s !important;
+	align-items: center !important;
+	justify-content: center !important;
+	width: 40px !important;
+	height: 40px !important;
+	border-radius: 50% !important;
+	margin-right: 8px !important;
+	background-color: #ffffff !important;
+	color: #959aa4 !important;
+	text-decoration: none !important;
+	box-shadow: 0px 12px 32px 0px rgba(125, 135, 158, 0.09) !important;
+	transition: color 0.3s !important;
 	margin-left: 5px !important;
 	border-color: unset !important;
 
 }
 
 .sharer-icon:hover {
-	  color: #ffa718 !important;
-  box-shadow: 0px 12px 32px 0px #ffa718 !important;
-  transform: scale(1.1) !important;
+	color: #ffa718 !important;
+	box-shadow: 0px 12px 32px 0px #ffa718 !important;
+	transform: scale(1.1) !important;
 }
 
 
@@ -152,16 +150,16 @@
 }
 
 .scroll-nav {
-    gap: 20px; /* Khoảng cách giữa "Reviews" và "Địa điểm" */
-    flex: 1; /* Cho phép phần này co giãn để chiếm không gian còn lại */
+    gap: 20px;
+    flex: 1;
 	margin: 0;
 	padding: 0 !important;
 }
 
 .txt_numbt {
    align-self: flex-start;
-    display: grid; /* Sử dụng Grid Layout */
-    gap: 13px; /* Khoảng cách giữa các phần tử */
+    display: grid;
+    gap: 13px;
 }
 
 .txt_numbt span.price {
@@ -172,13 +170,10 @@
 	line-height: 36px;
 }
 
-
-
-
 .btn_contactus {
-	 align-self: center;
-    margin-left: 10px; /* Khoảng cách giữa nút và giá tiền */
-	 grid-column: 2;
+	align-self: center;
+/*    margin-left: 10px;*/
+	grid-column: 2;
 }
 
 .txt_fromnum {
@@ -198,10 +193,9 @@
     align-items: baseline;
 }
 
-.price { /* Điều chỉnh margin của phần giá */
-    margin-left: 5px; /* hoặc giá trị khác tùy theo mong muốn của bạn */
+.price {
+    margin-left: 5px;
 }
-
 
 .txt_txtus {
 	color: #FFA718;
@@ -280,56 +274,56 @@
     background: var(--Accent-2, #004EA8);
   }
 
-  .numb_scorestay {
-  color: #FFF;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 24px; /* 150% */
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.numb_scorestay {
+  	color: #FFF;
+  	font-size: 16px;
+  	font-style: normal;
+  	font-weight: 600;
+  	line-height: 24px; /* 150% */
+  	position: absolute;
+  	top: 50%;
+  	left: 50%;
+  	transform: translate(-50%, -50%);
   }
 
 .hotel_detail_main .scroll-title li a {
-color: #959AA4;
-text-align: center;
-font-size: 20px;
-font-style: normal;
-font-weight: 400;
-line-height: 32px;
+	color: #959AA4;
+	text-align: center;
+	font-size: 20px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 32px;
 	cursor: pointer;
 }
 
-  .record_txt {
-    display: flex; /* Kích hoạt flexbox để căn chỉnh các phần tử con */
-    align-items: center; /* Căn giữa theo chiều dọc */
+.record_txt {
+    display: flex;
+    align-items: center; 
   }
   
-  .txt_score-review {
-    display: flex; /* Kích hoạt flexbox cho container bên trong */
-    align-items: center; /* Căn giữa theo chiều dọc */
-	  margin-bottom: 24px;
-	  margin-top: 12px;
+.txt_score-review {
+    display: flex;
+    align-items: center;
+	margin-bottom: 24px;
+	margin-top: 12px;
   }
   
-  .border_score {
-    margin-right: 10px; /* Tạo khoảng cách giữa khung điểm và chữ "Very good" */
+.border_score {
+    margin-right: 10px;
   }
 
-  .record_txt {
-  display: flex;
-  align-items: center; /* Căn giữa theo chiều dọc */
+.record_txt {
+  	display: flex;
+  	align-items: center;
 }
 
 .facilities_name:empty {
-  display: none;
+  	display: none;
 }
 
 .txt_reviewsquality {
-  display: flex;
-  align-items: center;
+  	display: flex;
+  	align-items: center;
 }
 
 .customersay .txt_reviews {
@@ -542,6 +536,7 @@ ul li {
 
 .box_right_info_hotel .val_price {
 display: flex;
+	align-items: center;
 	
 }
 
@@ -554,7 +549,7 @@ display: flex;
 }
 */
 .txt_prival {
-	color: #FFF;
+	color: #FFA718;
 	font-size: 20px;
 	font-style: normal;
 	font-weight: 400;
@@ -562,17 +557,20 @@ display: flex;
 	margin: 0;
 }
 .numb_prival {
-	color: #FFF;
+	color: #FFA718;
 	font-size: 24px;
 	font-style: normal;
 	font-weight: 600;
 	line-height: 30px;
 	margin: 0 0 0 8px;
+	display: flex;
 }
 
-.numb_prival p.price {
-	display: none;
+.box_right_info_hotel .val_price .old_price {
+	color: #FFF;
+	margin-right: 4px;
 }
+
 
 .txt_pricepax {
 	color: #D3DCE1;
@@ -1184,8 +1182,8 @@ form .departure_day:hover {
 
 .Inclusion-txt .imporant_info_highlight {
   display: grid;
-  grid-template-columns: 1fr 1fr; /* Tạo hai cột bằng nhau */
-  gap: 20px; /* Khoảng cách giữa các cột (tùy chỉnh) */
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
 }
 
 .scroll-nav .txt_numbt {
@@ -1223,16 +1221,16 @@ form .departure_day:hover {
 }
 
 .scroll-nav_sticky .txt_numbt {
-	    display: flex; /* Kích hoạt Flexbox cho .txt_numbt */
-    align-items: center; /* Căn giữa theo chiều dọc */
-    justify-content: space-between; /* Phân bố đều các phần tử con */
+	    display: flex;
+    align-items: center;
+    justify-content: space-between; 
     margin-left: auto;
 	align-self: auto;
 }
 
 .scroll-nav_sticky .txt_numbfromus {
-  display: flex; /* Sử dụng Flexbox cho phần tử con này */
-  align-items: baseline; /* Căn chỉnh theo đường cơ sở của chữ */
+  display: flex;
+  align-items: baseline;
 	color: #959AA4;
 } 
 
@@ -1243,8 +1241,8 @@ form .departure_day:hover {
 /*	color: #959AA4;*/
 }
 
-.scroll-nav_sticky .txt_numbfromus > *:last-child { /* Áp dụng cho phần tử cuối cùng trong .txt_numbfromus */
-  margin-right: 0; /* Loại bỏ margin-right cho phần tử cuối cùng */
+.scroll-nav_sticky .txt_numbfromus > *:last-child {
+  margin-right: 0;
 	color: #FFA718;
 }
 
@@ -1312,9 +1310,11 @@ form .departure_day:hover {
 	position: sticky;
 }
 
+/*
 .div_price p.price {
 	display: none;
 }
+*/
 
 .recently_hotel .recentlyViewed:after {
 	content: "";
@@ -1333,12 +1333,20 @@ form .departure_day:hover {
 }
 
 .scroll-title a {
-  scroll-behavior: smooth; /* Kích hoạt cuộn mượt */
+  scroll-behavior: smooth;
 }
 
 
 .btn_viewmoreless {
 	color: #ffa718;
+	display: none;
+    margin: 20px 0 80px 0;
+    cursor: pointer;
+}
+
+.btn_viewmoreless:hover,
+.title_addon:hover{
+	color: #e88f00;
 }
 
 .scroll-nav_sticky .btn_viewtour:hover {
@@ -1354,20 +1362,9 @@ form .departure_day:hover {
 }
 
 .overview-content {
-    overflow: hidden; /* Ẩn nội dung vượt quá */
+    overflow: hidden;
   
 }
-
-.btn_viewmoreless {
-    display: none; /* Ẩn nút ban đầu */
-    margin: 20px 0 80px 0;
-    cursor: pointer;
-}
-
-.btn_viewmoreless:hover {
-	color: #e88f00;
-}
-
 
 .list_facilities {
   display: flex;
@@ -1377,10 +1374,9 @@ form .departure_day:hover {
 }
 
 .facilities_item {
-/*  flex: 0 0 calc(20% - 8px);  Hoặc sử dụng width: calc(20% - 8px); */
-  margin-bottom: 8px;
-  display: flex;
-  gap: 8px;
+  	margin-bottom: 8px;
+  	display: flex;
+  	gap: 8px;
 	margin-right: 32px;
 }
 
@@ -1392,8 +1388,9 @@ form .departure_day:hover {
 
 
 .relate_slide_item #imgAddOn:hover,
-.img_hotel .img-responsive:hover{
-	    object-fit: cover;
+.img_hotel .img-responsive:hover,
+.item_extensions .img_extensions img:hover{
+	 object-fit: cover;
     -moz-transform: scale(1.1);
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
@@ -1401,8 +1398,9 @@ form .departure_day:hover {
 
 
 
-.relate_slide_image img {
-	    object-fit: cover;
+.relate_slide_image img,
+.img_extensions img{
+	object-fit: cover;
     -moz-transition: all .3s !important;
     -webkit-transition: all .3s !important;
     border-radius: 8px;
@@ -1417,58 +1415,62 @@ form .departure_day:hover {
 #nah_also_like {
 	overflow-x: hidden;
 }
+.img_big, .img_small {
+	cursor: pointer;
+}
 
+img.img_big, img.img_small {
+	max-width: none !important;
+}
+
+
+
+/* Định dạng cho .view_all */
 .view_all {
 	position: absolute;
-	right: 62px;
-	bottom: 76px;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	padding: 0.5em 1em;
 	color: #FFF;
 	cursor: pointer;
 	z-index: 2;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #FFF;
+	font-size: 24px;
+	font-style: normal;
+	font-weight: 600;
+	line-height: 36px;
 }
 
-.small_image .view_all {
-  position: absolute;
-  bottom: 40%;
-  right: 25%;
-  padding: 8px 12px;
-/*  background-color: rgba(0, 0, 0, 0.7);*/
-  color: white;
-  font-size: 24px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-	z-index: 2;
+.view_all:hover, .view_all .fa-folder-image:hover {
+	color: #e88f00;
 }
 
-/*
-.small_image .view_all:hover {
-  background-color: rgba(0, 0, 0, 0.9);  Màu nền đậm hơn khi hover 
+.list_image_small .small_image:nth-child(-n+3) .view_all {
+    display: none; 
 }
-*/
+
+.list_image_small {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.list_image_small .small_image:last-child {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 .list_image_small .small_image:nth-child(4):not(.hidden) { 
-    position: relative; /* Để định vị view_all */
-	 display: flex;    /* Sử dụng flexbox */
-  align-items: center; /* Căn giữa theo chiều dọc */
-  justify-content: center; /* Căn giữa theo chiều ngang */
+    position: relative;
+	 display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.list_image_small .small_image:nth-child(4):not(.hidden) .view_all {
-  position: absolute;
-}
-
-
-.list_image_small .small_image:nth-child(4):not(.hidden) { 
-    position: relative; /* Để định vị view_all */
-	  display: flex;    /* Sử dụng flexbox */
-  align-items: center; /* Căn giữa theo chiều dọc */
-  justify-content: center; /* Căn giữa theo chiều ngang */
-}
-
-.list_image_small .small_image:nth-child(4):not(.hidden) .view_all {
-  position: absolute; /* Đảm bảo view_all được đặt chồng lên ảnh */
-}
 
 .list_image_small .small_image:nth-child(4):not(.hidden)::after {
     content: ''; 
@@ -1477,39 +1479,47 @@ form .departure_day:hover {
     bottom: 0;
     right: 0;
     width: 100%;
-    height: 100%; /* Hoặc giá trị khác nếu bạn muốn view_all chỉ chiếm một phần ảnh */
-    background-color: rgba(0, 0, 0, 0.5); /* Ví dụ màu nền */
+    height: 100%; 
+    background-color: rgba(0, 0, 0, 0.5);
     color: white;
 	z-index: 1;
-    /* Các thuộc tính CSS khác của view_all (font-size, padding, etc.) */
-	
 }
 
 
 .owl-prev.disabled,
 .owl-next.disabled {
-  display: none !important; /* Hoặc visibility: hidden; nếu bạn muốn giữ lại khoảng trống của nút */
+  display: none !important;
 }
 
-.relate_slide_item_title a:hover {
-
-    color: #ffa718;
+.sec_relate_box .relate_slide_item_title a:hover {
+    color: #e88f00;
 }
 
 .clicked-details .img_hotel {
     position: relative;
     max-height: none;
-    height: 100%;
+    height: auto;
 	overflow: hidden;
 	border-radius: 8px;
 }
 
+/*
 .revVier .box_item_body {
     margin-top: auto;
 }
+*/
+
+.list_reviews .view_more_review {
+    color: #FFA718;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    border: none;
+    cursor: pointer;
+}
 
 .sec_relate_box .content {
-	    line-height: 24px;
+	line-height: 24px;
     text-align: justify;
     max-width: 1312px;
 }
@@ -1521,7 +1531,7 @@ form .departure_day:hover {
 	padding: 12px;
 	align-items: flex-start;
 	gap: 24px;
-		border-radius: 8px;
+	border-radius: 8px;
 	border: 1px solid var(--Neutral-5, #F0F0F0);
 	background: #FFF;
 	width: 100%;
@@ -1534,6 +1544,8 @@ form .departure_day:hover {
 .item_extensions .div_img {
 	max-width: 243px;
 	min-height: 168px;
+	overflow: hidden;
+	border-radius: 8px;
 }
 
 .list_extensions .content_extensions {
@@ -1550,7 +1562,7 @@ form .departure_day:hover {
 	font-size: 20px;
 	font-style: normal;
 	font-weight: 600;
-	line-height: 30px; /* 150% */
+	line-height: 30px;
 	max-width: 321px;
 	width: 100%;
 }
@@ -1560,7 +1572,7 @@ form .departure_day:hover {
 	font-size: 18px;
 	font-style: normal;
 	font-weight: 600;
-	line-height: 28px; /* 155.556% */
+	line-height: 28px;
 }
 
 
@@ -1631,12 +1643,12 @@ form .departure_day:hover {
 }
 
 .box_right_body span .contactLink {
-	  pointer-events: none; /* Ngăn chặn mọi tương tác chuột */
-    cursor: default;      /* Thay đổi con trỏ chuột thành mặc định */
+	  pointer-events: none;
+    cursor: default;     
 }
 
 .revVier .img-responsive {
-		    object-fit: cover;
+	object-fit: cover;
     -moz-transition: all .3s !important;
     -webkit-transition: all .3s !important;
     border-radius: 8px;
@@ -1683,10 +1695,86 @@ line-height: 20px;
 
 }
 
+.txt_money_from {
+	color: #959AA4;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 20px;
+}
+
+.txt_money_text {
+	color: var(--Primary, #FFA718);
+	font-size: 18px;
+	font-style: normal;
+	font-weight: 500;
+/*	line-height: 28px;*/
+	margin-left: 3px;
+}
 
 
 
 
+.txt_money_number {
+	color: var(--Primary, #FFA718);
+	font-size: 24px;
+	font-style: normal;
+	font-weight: 600;
+	line-height: 36px;
+}
+
+.sec_relate_box .content {
+    display: flex;         
+    flex-direction: column;
+    gap: 32px;            
+}
+
+
+.top-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 32px;
+    flex-wrap: wrap;
+}
+
+.revVier .address {
+	margin-bottom: 12px;
+}
+
+.revVier .box_right_body .review {
+	align-items: baseline;
+}
+
+p.price {
+	color: #FFA718;
+	font-size: 24px;
+	font-style: normal;
+	font-weight: 600;
+	line-height: 36px;
+	margin-bottom: 0;
+}
+
+.overview-content::before {
+	opacity: 0.5;
+}
+
+.money {
+	display: flex;
+  	align-items: center; /* Căn giữa theo chiều dọc */
+}
+
+.txt_money_number .contactLink {
+	color: #FFA718;
+	margin-left: 4px;
+}
+
+.money .txt_money_number {
+	margin-left: 4px;
+}
+
+.item_content {
+	width: 624px;
+}
 
 
 

@@ -1729,10 +1729,10 @@ function default_property(){
 	$type = isset($_GET['type']) ? $_GET['type'] : '';
 	$assign_list["type"] = $type;
 	
-	if($type==''){
-		header('location: '.PCMS_URL.'/index.php?mod='.$mod.'&act=property&type=TypeRoom');
-		exit();
-	}
+//	if($type==''){
+//		header('location: '.PCMS_URL.'/index.php?mod='.$mod.'&act=property&type=TypeRoom');
+//		exit();
+//	}
 	
 	if(isset($_POST['filter'])&&$_POST['filter']=='filter'){
 		$link = '';

@@ -1344,14 +1344,14 @@ function default_edit()
     $child_basic[] = 'love-trip';
 
 
-//    if ($clsISO->getCheckActiveModulePackage($package_id, 'property', 'activities', 'default')) {
-//        $child_basic[] = 'activities-tour';
-//    }
+    //    if ($clsISO->getCheckActiveModulePackage($package_id, 'property', 'activities', 'default')) {
+    //        $child_basic[] = 'activities-tour';
+    //    }
     $child_basic[] = 'inclusion-tour';
     $child_basic[] = 'exclusion-tour';
-//    $child_basic[] = 'whatcarry-tour';
-//    $child_basic[] = 'cancellation_policy-tour';
-//    $child_basic[] = 'refund-tour';
+    //    $child_basic[] = 'whatcarry-tour';
+    //    $child_basic[] = 'cancellation_policy-tour';
+    //    $child_basic[] = 'refund-tour';
     $child_basic[] = 'confirmation-policy-tour';
     $list_basic_ar['child'] = $child_basic;
 
@@ -1931,7 +1931,6 @@ function default_ajSaveDataasdsad()
                     $value .= ",list_tour_room_id='{$list_tour_room_id}'";
                 }
             }
-
         } else if ($type_post == 'seotool') {
             $config_value_title = Input::post('config_value_title');
             $config_value_intro = Input::post('config_value_intro');
@@ -2187,7 +2186,8 @@ function default_ajSaveDataasdsad()
                 }
             }
         }
-        //		var_dump($_POST);die;
+
+
         if (empty($_POST['skip'])) {
             if (empty($value)) {
                 $result = array(
@@ -5249,6 +5249,129 @@ function default_property()
     $cond_setting .= " ORDER BY number_to ASC";
     $lstAdultGroupSize = $clsTourOption->getAll($cond_setting, $clsTourOption->pkey . ",number_to,number_from");
     $assign_list["lstAdultGroupSize"] = $lstAdultGroupSize;
+}
+
+function default_faqs()
+{
+    global $assign_list, $_CONFIG,  $_SITE_ROOT, $mod, $_LANG_ID, $act, $menu_current, $current_page, $oneSetting, $clsConfiguration;
+    global $core, $clsModule, $clsButtonNav, $oneSetting;
+    $assign_list["clsModule"] = $clsModule;
+    $user_id = $core->_USER['user_id'];
+    $pUrl = '';
+    #
+    $clsCountry = new Country();
+    $assign_list["clsCountry"] = $clsCountry;
+    $clsFAQCategory = new FAQCategory();
+    $assign_list["clsFAQCategory"] = $clsFAQCategory;
+    #
+    if (isset($_POST['filter']) && $_POST['filter'] == 'filter') {
+        if ($_POST['keyword'] != '' && $_POST['keyword'] != 'testimonial title, intro') {
+            $link .= '&keyword=' . $_POST['keyword'];
+        }
+        if ($_POST['faqcat_id'] != '' && $_POST['faqcat_id'] != '0') {
+            $link .= '&faqcat_id=' . $_POST['faqcat_id'];
+        }
+        header('location: ' . PCMS_URL . '/?mod=' . $mod . $link);
+    }
+    /*Get type of list news*/
+    $type_list = isset($_GET['type_list']) ? $_GET['type_list'] : '';
+    $assign_list["type_list"] = $type_list;
+
+    $faqcat_id = isset($_GET['faqcat_id']) ? intval($_GET['faqcat_id']) : '';
+    $assign_list["faqcat_id"] = $faqcat_id;
+    /**/
+    $classTable = "FAQ";
+    $clsClassTable = new $classTable;
+    $tableName = $clsClassTable->tbl;
+    $pkeyTable = $clsClassTable->pkey;
+    $assign_list["clsClassTable"] = $clsClassTable;
+    $assign_list["pkeyTable"] = $pkeyTable;
+    /*List all item*/
+    $cond = "1='1'";
+    #Filter By Keyword
+    if (isset($_GET['keyword'])) {
+        if ($_GET['keyword'] != '') {
+            $keyword = $core->replaceSpace($_GET['keyword']);
+            $cond .= " and slug like '%" . $keyword . "%'";
+            $assign_list["keyword"] = $_GET['keyword'];
+        }
+    }
+    if ($faqcat_id > 0) {
+        $cond .= " and faqcat_id = '" . $faqcat_id . "'";
+        $pUrl .= '&faqcat_id=' . $faqcat_id;
+    }
+    $assign_list["pUrl"] = $pUrl;
+    $cond2 = $cond;
+    if ($type_list == 'Active') {
+        $cond .= " and is_trash=0";
+    }
+    if ($type_list == 'Trash') {
+        $cond .= " and is_trash=1";
+    }
+    $orderBy = " order_no asc";
+    #-------Page Divide---------------------------------------------------------------
+    $recordPerPage = isset($_GET["recordperpage"]) ? $_GET["recordperpage"] : 20;
+    $currentPage = isset($_GET["page"]) ? $_GET["page"] : 1;
+    $start_limit = ($currentPage - 1) * $recordPerPage;
+    $limit = " limit $start_limit,$recordPerPage";
+    $lstAllItem = $clsClassTable->getAll($cond);
+    $totalRecord = (is_array($lstAllItem) && count($lstAllItem) > 0) ? count($lstAllItem) : 0;
+    $totalPage = ceil($totalRecord / $recordPerPage);
+    $assign_list['totalRecord'] = $totalRecord;
+    $assign_list['recordPerPage'] = $recordPerPage;
+    $assign_list['totalPage'] = $totalPage;
+    $assign_list['currentPage'] = $currentPage;
+
+    $stt = ($currentPage - 1) * $recordPerPage;
+    $assign_list['stt'] = $stt;
+
+    $listPageNumber =  array();
+    for ($i = 1; $i <= $totalPage; $i++) {
+        $listPageNumber[] = $i;
+    }
+    $assign_list['listPageNumber'] = $listPageNumber;
+    $query_string = $_SERVER['QUERY_STRING'];
+    $lst_query_string = explode('&', $query_string);
+    $link_page_current = '';
+    for ($i = 0; $i < count($lst_query_string); $i++) {
+        $tmp = explode('=', $lst_query_string[$i]);
+        if ($tmp[0] != 'page')
+            $link_page_current .= ($i == 0) ? '?' . $lst_query_string[$i] : '&' . $lst_query_string[$i];
+    }
+    $assign_list['link_page_current'] = $link_page_current;
+    #
+    $link_page_current_2 = '';
+    for ($i = 0; $i < count($lst_query_string); $i++) {
+        $tmp = explode('=', $lst_query_string[$i]);
+        if ($tmp[0] != 'page' && $tmp[0] != 'type_list')
+            $link_page_current_2 .= ($i == 0) ? '?' . $lst_query_string[$i] : '&' . $lst_query_string[$i];
+    }
+    $assign_list['link_page_current_2'] = $link_page_current_2;
+    #-------End Page Divide-----------------------------------------------------------
+    $allItem = $clsClassTable->getAll($cond . " order by " . $orderBy . $limit); //print_r($cond." order by ".$orderBy.$limit);die();
+    $assign_list["allItem"] = $allItem;
+    #
+    $allTrash =  $clsClassTable->getAll("is_trash=1 and " . $cond2);
+    $assign_list["number_trash"] = $allTrash[0][$pkeyTable] != '' ? count($allTrash) : 0;
+    #
+    $allUnTrash =  $clsClassTable->getAll("is_trash=0 and " . $cond2);
+    $assign_list["number_item"] = $allUnTrash[0][$pkeyTable] != '' ? count($allUnTrash) : 0;
+    #
+    $allAll =  $clsClassTable->getAll($cond2);
+    $assign_list["number_all"] = $allAll[0][$pkeyTable] != '' ? count($allAll) : 0;
+
+    #----
+    if (isset($_POST['submit'])) {
+        if ($_POST['submit'] == 'UpdateFaqsIntro') {
+            foreach ($_POST as $key => $val) {
+                $tmp = explode('-', $key);
+                if ($tmp[0] == 'iso') {
+                    $clsConfiguration->updateValue($tmp[1], $val);
+                }
+            }
+            header('location: ' . PCMS_URL . '/?mod=' . $mod . '&act=' . $act . '&message=UpdateSuccess');
+        }
+    }
 }
 function default_ajUpdPosSortTourProperty()
 {

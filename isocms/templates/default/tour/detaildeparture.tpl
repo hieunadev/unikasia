@@ -77,7 +77,7 @@
                                 </p>
                                 <p class="txt_location">
                                     <i class="fa-light fa-users" style="color: #111d37;"></i>
-                                    <span class="bold_txtlocation">Group size:</span> Min 1, max 15
+                                    <span class="bold_txtlocation">Group size:</span> {$clsTourOption->getMinMaxGroupSizeAdult($tour_id)}
                                 </p>
                                 <p class="txt_location">
                                     <i class="fa-regular fa-circle-dot" style="color: #111d37;"></i>
@@ -159,7 +159,7 @@
                                 <h2 class="txt_daytours">Day by day itinerary</h2>
                                 <button class="btn btn-expand">Expand all</button>
                             </div>
-                            <div class="accordion" id="accordionExample">
+                            <div class="accordion" id="2accordionExample">
                                 <ul class="timeline">
                                     {section name=i loop=$lstTourItinerary}
                                         <li>
@@ -175,7 +175,7 @@
                                                 </h2>
                                                 <div id="collapse{$lstTourItinerary[i].tour_itinerary_id}"
                                                      class="accordion-collapse collapse"
-                                                     data-bs-parent="#accordionExample">
+                                                     data-bs-parent="#2accordionExample">
                                                     <div class="accordion-body">
                                                         {$lstTourItinerary[i].content|html_entity_decode}
                                                     </div>
@@ -223,7 +223,7 @@
 																		<button class="ui-spinner-button ui-spinner-down unNum" type="button" _type="number_adults" traveler_type_id="{$lstVisitorType[i].tour_property_id}">-</button>
 																		<input type="hidden" id="tour_visitor_adult_id" name="tour_visitor_adult_id" value="{$lstVisitorType[i].tour_property_id}"/>
 																		<input min-number="1" max-number="{$max_adult}" type="number" class="ui-spinner-input number_adults input_number find_select" tour_visitor_type_id="{$lstVisitorType[i].tour_property_id}" name="national_visitor{$lstVisitorType[i].tour_property_id}" id="national_visitor{$lstVisitorType[i].tour_property_id}" value="1" readonly/>
-				<input type="hidden" name="people_price{$lstVisitorType[i].tour_property_id}" value="{$price_adult}" id="people_price{$lstVisitorType[i].tour_property_id}" departure_in="{$departure_in}" departure_in_2="{$departure_in_2}">
+                                                                        <input type="hidden" name="people_price{$lstVisitorType[i].tour_property_id}" value="{$price_adult}" id="people_price{$lstVisitorType[i].tour_property_id}" departure_in="{$departure_in}" departure_in_2="{$departure_in_2}">
 																		<button class="ui-spinner-button ui-spinner-up upNum" type="button" _type="number_adults" traveler_type_id="{$lstVisitorType[i].tour_property_id}">+</button>
 																	</span>
                                                         </div>
@@ -233,7 +233,7 @@
                                                         <li class="inputTraveller" {$max_child}>
                                                             <div class="box_age" {$max_child}>
                                                                 <div class="right__inputTraveller">
-                                                                    <label>{$core->get_Lang('Children')} (4-12 {$core->get_Lang('age')})</label>
+                                                                    <label>{$core->get_Lang('Children')}</label>
                                                                     <span class="ui-spinner ui-corner-all ui-widget ui-widget-content">
 																					<button class="ui-spinner-button ui-spinner-down unNumChild" type="button" _type="number_child" traveler_type_id="{$lstVisitorType[i].tour_property_id}" visitor_age_child_id="{$list_age_child[j].tour_option_id}">-</button>
 																					<input min-number="0" abc max-number="{$max_child}" type="number" class="ui-spinner-input number_child input_number find_select" tour_visitor_type_id="{$lstVisitorType[i].tour_property_id}" name="national_visitor{$lstVisitorType[i].tour_property_id}_{$list_age_child[j].tour_option_id}" id="national_visitor{$lstVisitorType[i].tour_property_id}" value="0" visitor_age_child_id="{$list_age_child[j].tour_option_id}" readonly/>
@@ -255,10 +255,7 @@
 																				</span>
                                                                     </div>
                                                                 </div>
-
                                                             {/section}*}
-
-                                                            <div class="txt_children">{$core->get_Lang("To find a property that suits your whole group at the exact same price, we need to know the children's ages at check-out")}</div>
                                                         </li>
                                                     {/if}
                                                 {else}
@@ -273,6 +270,7 @@
 																		<button class="ui-spinner-button ui-spinner-up upNum" type="button" _type="number_infants" traveler_type_id="{$lstVisitorType[i].tour_property_id} " >+</button>
 																	</span>
                                                             </div>
+                                                            <div class="box_age_infants" id="box_age_infants"></div>
                                                         </li>
                                                     {/if}
                                                 {/if}
@@ -923,6 +921,12 @@
                         $('#box_age_child').append(`<div class="item_age_child">`+getSelectAgeChild+`</div>`);
                     }
                 }
+                if(_type == 'number_infants'){
+                    $number_infants = $('#box_age_infants').find(".item_age_infants").length;
+                    for(var i=$number_infants; i<val; i++){
+                        $('#box_age_infants').append(`<div class="item_age_infants">`+getSelectInfant+`</div>`);
+                    }
+                }
                 if(_type == 'number_room'){
                     var input_room = $(this).closest(".right__inputTraveller").find('input[name="number_room[]"]');
                     var value = input_room.val();
@@ -957,6 +961,13 @@
 
                 if(_type == 'number_child'){
                     $('#box_age_child').find(".item_age_child").each(function(index,element){
+                        if(index >= val){
+                            $(element).remove();
+                        }
+                    });
+                }
+                if(_type == 'number_infants'){
+                    $('#box_age_infants').find(".item_age_infants").each(function(index,element){
                         if(index >= val){
                             $(element).remove();
                         }
@@ -1135,6 +1146,16 @@
                 var check = 0;
                 if(parseInt($number_child) > 0){
                     $('.box_age_child').find('.slt_item_age_child').each(function(index,elm){
+                        if($(elm).val() == ''){
+                            ++check;
+                            $(elm).addClass('error');
+                        }else{
+                            $(elm).removeClass('error');
+                        }
+                    });
+                }
+                if(parseInt($number_infants) > 0){
+                    $('.box_age_infants').find('.slt_item_age_child').each(function(index,elm){
                         if($(elm).val() == ''){
                             ++check;
                             $(elm).addClass('error');

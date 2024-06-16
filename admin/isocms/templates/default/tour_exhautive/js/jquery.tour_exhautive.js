@@ -2506,7 +2506,7 @@ if ($SiteHasHotel_Tours == '1') {
             }
         });
     });
-    $_document.on('change', '.h_tour_price_group', function(ev){
+/*    $_document.on('change', '.h_tour_price_group', function(ev){
         var $_this = $(this);
         $.ajax({
             type: "POST",
@@ -2532,7 +2532,7 @@ if ($SiteHasHotel_Tours == '1') {
                 loadTourPriceGroup($tour_id,$_this.attr("departure"),$_this.attr("tour_start_date_id"));
             }
         });
-    });
+    });*/
     $_document.on('change', '.h_price_single_supply', function(ev){
         var $_this = $(this);
         $.ajax({

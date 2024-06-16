@@ -289,6 +289,7 @@
 								{$core->getBlock('box_detail_hotel_room')}
 							</div>
 							<script type="text/javascript" src="{$URL_JS}/repeater.js?v={$upd_version}"></script>
+						
 						{elseif $currentstep=='room_facilities'}
 							<h3 class="title_box mb05">{$core->get_Lang('Room facilities')}</h3>
 							<p class="intro_box mb40">{$core->get_Lang('introroomfacilities')}</p>

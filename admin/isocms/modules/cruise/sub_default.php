@@ -2101,127 +2101,134 @@ function default_cat_country()
 	global $assign_list, $_CONFIG,  $_SITE_ROOT, $mod, $act;
 	global $core, $clsModule, $clsButtonNav, $oneSetting, $clsConfiguration, $clsISO, $package_id;
 	#
-	// $clsISO->dd(123);
-
 	// if (!$clsISO->getCheckActiveModulePackage($package_id, $mod, $act, 'default')) {
 	// 	header('location:' . PCMS_URL . '/index.php?admin&mod=' . $mod . '&message=NotPermission');
 	// 	exit();
 	// }
-	// #
-	// #- End Check
-	// $assign_list["msg"]           = isset($_GET['message']) ? $_GET['message'] : '';
-	// #
-	// $classTable                   = "CruiseCat";
-	// $clsClassTable                = new $classTable;
-	// $tableName                    = $clsClassTable->tbl;
-	// $pkeyTable                    = $clsClassTable->pkey;
-	// $assign_list["clsClassTable"] = $clsClassTable;
-	// $assign_list["pkeyTable"]     = $pkeyTable;
-	// $assign_list["clsCruise"]       = new Cruise();
-	// #
-	// $type_list = isset($_GET['type_list']) ? $_GET['type_list'] : '';
-	// $assign_list["type_list"] = $type_list;
-	// #
+	#
+	#- End Check
+	$assign_list["msg"]          	=	isset($_GET['message']) ? $_GET['message'] : '';
+	#
+	$classTable                  	=	"CruiseCatCountry";
+	$clsClassTable               	=	new $classTable;
+	$tableName                   	=	$clsClassTable->tbl;
+	$pkeyTable                   	=	$clsClassTable->pkey;
+	$assign_list["clsClassTable"]	=	$clsClassTable;
+	$assign_list["pkeyTable"]    	=	$pkeyTable;
+	$clsCruise	=	new Cruise();
+	$assign_list["clsCruise"]    	=	$clsCruise;
+	$clsCruiseCat	=	new CruiseCat();
+	$assign_list["clsCruiseCat"]   	=	$clsCruiseCat;
+	$clsCountry	=	new Country();
+	$assign_list["clsCountry"]   	=	$clsCountry;
+	#
+	$type_list	= 	isset($_GET['type_list']) ? $_GET['type_list'] : '';
+	$assign_list["type_list"]	= 	$type_list;
+	#
+	$link	= 	'';
 	// if (isset($_POST['filter']) && $_POST['filter'] == 'filter') {
-	// 	$link = '';
 	// 	if (isset($_POST['keyword']) && !empty($_POST['keyword'])) {
-	// 		$link .= '&keyword=' . $_POST['keyword'];
+	// 		$link 	.= 	'&keyword=' . $_POST['keyword'];
 	// 	}
-	// 	header('location: ' . PCMS_URL . '/?mod=' . $mod . $link);
+	// 	header('location: ' . PCMS_URL . '/?mod=' . $mod . '&act=' . $act . $link);
 	// }
-	// if (isset($_POST['filter']) && $_POST['filter'] == 'filter') {
-	// 	$link = '&act=cat';
-	// 	if (isset($_POST['keyword']) && !empty($_POST['keyword'])) {
-	// 		$link .= '&keyword=' . $_POST['keyword'];
-	// 	}
-	// 	header('location: ' . PCMS_URL . '/?mod=' . $mod . $link);
-	// }
-	// $cond = "1=1 and parent_id=0";
+	if (isset($_POST['filter']) && $_POST['filter'] == 'filter') {
+		if (isset($_POST['country_id']) && !empty($_POST['country_id'])) {
+			$link 	.= 	'&country_id=' . $_POST['country_id'];
+		}
+		header('location: ' . PCMS_URL . '/?mod=' . $mod . '&act=' . $act . $link);
+	}
+	$cond 	= 	"1=1";
 	// if (isset($_GET['keyword']) && !empty($_GET['keyword'])) {
-	// 	$slug = $core->replaceSpace($_GET['keyword']);
-	// 	$cond .= " and (title like '%" . $_GET['keyword'] . "%' or slug like '%" . $slug . "%')";
-	// 	$assign_list["keyword"] = $_GET['keyword'];
+	// 	$slug 	= 	$core->replaceSpace($_GET['keyword']);
+	// 	$cond 	.= 	" AND (title LIKE '%" . $_GET['keyword'] . "%' OR slug LIKE '%" . $slug . "%')";
+	// 	$assign_list["keyword"]	= 	$_GET['keyword'];
 	// }
-	// $cond2 = $cond;
-	// $orderBy = " order_no desc";
-	// if ($type_list == 'Active') {
-	// 	$cond .= " and is_trash=0";
-	// } elseif ($type_list == 'Trash') {
-	// 	$cond .= " and is_trash=1";
-	// }
-	// $orderBy = " order_no asc";
-	// #-------Page Divide---------------------------------------------------------------
-	// $recordPerPage = isset($_GET["recordperpage"]) ? $_GET["recordperpage"] : 20;
-	// $currentPage = isset($_GET["page"]) ? $_GET["page"] : 1;
-	// $start_limit = ($currentPage - 1) * $recordPerPage;
-	// $limit = " limit $start_limit,$recordPerPage";
-	// $lstAllItem = $clsClassTable->getAll($cond);
-	// $totalRecord = (is_array($lstAllItem) && count($lstAllItem) > 0) ? count($lstAllItem) : 0;
-	// $totalPage = ceil($totalRecord / $recordPerPage);
-	// $assign_list['totalRecord'] = $totalRecord;
-	// $assign_list['recordPerPage'] = $recordPerPage;
-	// $assign_list['totalPage'] = $totalPage;
-	// $assign_list['currentPage'] = $currentPage;
-	// $listPageNumber =  array();
-	// for ($i = 1; $i <= $totalPage; $i++) {
-	// 	$listPageNumber[] = $i;
-	// }
-	// $assign_list['listPageNumber'] = $listPageNumber;
-	// $query_string = $_SERVER['QUERY_STRING'];
-	// $lst_query_string = explode('&', $query_string);
-	// $link_page_current = '';
-	// for ($i = 0; $i < count($lst_query_string); $i++) {
-	// 	$tmp = explode('=', $lst_query_string[$i]);
-	// 	if ($tmp[0] != 'page')
-	// 		$link_page_current .= ($i == 0) ? '?' . $lst_query_string[$i] : '&' . $lst_query_string[$i];
-	// }
-	// $assign_list['link_page_current'] = $link_page_current;
-	// #
-	// $link_page_current_2 = '';
-	// for ($i = 0; $i < count($lst_query_string); $i++) {
-	// 	$tmp = explode('=', $lst_query_string[$i]);
-	// 	if ($tmp[0] != 'page' && $tmp[0] != 'type_list')
-	// 		$link_page_current_2 .= ($i == 0) ? '?' . $lst_query_string[$i] : '&' . $lst_query_string[$i];
-	// }
-	// $assign_list['link_page_current_2'] = $link_page_current_2;
-	// #-------End Page Divide-----------------------------------------------------------
-	// $allItem = $clsClassTable->getAll($cond . " order by " . $orderBy . $limit);
-	// $assign_list["allItem"] = $allItem;
-	// //Action
-	// $action = isset($_GET['action']) ? $_GET['action'] : '';
-	// if ($action == 'Trash') {
-	// 	$string     = isset($_GET['cruise_cat_id']) ? ($_GET['cruise_cat_id']) : '';
-	// 	$cruise_cat_id = intval($core->decryptID($string));
-	// 	if ($string == '' && $cruise_cat_id == 0) {
-	// 		header('location:' . PCMS_URL . '/index.php?admin&mod=' . $mod . '&act=' . $act . '&message=NotPermission');
-	// 		exit();
-	// 	}
-	// 	if ($clsClassTable->updateOne($cruise_cat_id, "is_trash='1'")) {
-	// 		header('location: ' . PCMS_URL . '/index.php?mod=' . $mod . '&act=' . $act . '&message=TrashSuccess');
-	// 	}
-	// }
-	// if ($action == 'Restore') {
-	// 	$string     = isset($_GET['cruise_cat_id']) ? ($_GET['cruise_cat_id']) : '';
-	// 	$cruise_cat_id = intval($core->decryptID($string));
-	// 	if ($string == '' && $cruise_cat_id == 0) {
-	// 		header('location:' . PCMS_URL . '/index.php?admin&mod=' . $mod . '&act=' . $act . '&message=NotPermission');
-	// 		exit();
-	// 	}
-	// 	if ($clsClassTable->updateOne($cruise_cat_id, "is_trash='0'")) {
-	// 		header('location: ' . PCMS_URL . '/index.php?mod=' . $mod . '&act=' . $act . '&message=RestoreSuccess');
-	// 	}
-	// }
-	// if ($action == 'Delete') {
-	// 	$string     = isset($_GET['cruise_cat_id']) ? ($_GET['cruise_cat_id']) : '';
-	// 	$cruise_cat_id = intval($core->decryptID($string));
-	// 	if ($string == '' && $cruise_cat_id == 0) {
-	// 		header('location:' . PCMS_URL . '/index.php?admin&mod=' . $mod . '&act=' . $act . '&message=NotPermission');
-	// 		exit();
-	// 	}
-	// 	if ($clsClassTable->deleteOne($cruise_cat_id)) {
-	// 		header('location: ' . PCMS_URL . '/index.php?mod=' . $mod . '&act=' . $act . '&message=DeleteSuccess');
-	// 	}
-	// }
+	if (isset($_GET['country_id']) && !empty($_GET['country_id'])) {
+		$country_id 	= 	isset($_GET['country_id']) ? $_GET['country_id'] : '';
+		$cond 	.= 	" AND country_id = " . $country_id;
+		$assign_list["country_id"]	= 	$country_id;
+	}
+	$cond2 		= 	$cond;
+	$orderBy 	= 	" ORDER BY order_no ASC";
+	if ($type_list == 'Active') {
+		$cond 	.= 	" AND is_trash = 0";
+	} elseif ($type_list == 'Trash') {
+		$cond 	.= 	" AND is_trash = 1";
+	}
+	#-------Page Divide---------------------------------------------------------------
+	$recordPerPage	= 	isset($_GET["recordperpage"]) ? $_GET["recordperpage"] : 20;
+	$currentPage 	= 	isset($_GET["page"]) ? $_GET["page"] : 1;
+	$start_limit 	=	($currentPage - 1) * $recordPerPage;
+	$limit 			=	" limit $start_limit,$recordPerPage";
+	$lstAllItem 	=	$clsClassTable->getAll($cond);
+	$totalRecord 	=	(is_array($lstAllItem) && count($lstAllItem) > 0) ? count($lstAllItem) : 0;
+	$totalPage 		=	ceil($totalRecord / $recordPerPage);
+	$assign_list['totalRecord'] 	=	$totalRecord;
+	$assign_list['recordPerPage'] 	=	$recordPerPage;
+	$assign_list['totalPage'] 		=	$totalPage;
+	$assign_list['currentPage'] 	=	$currentPage;
+	$listPageNumber =  	array();
+	for ($i = 1; $i <= $totalPage; $i++) {
+		$listPageNumber[]	= 	$i;
+	}
+	$assign_list['listPageNumber']	= 	$listPageNumber;
+	#
+	$query_string 		= 	$_SERVER['QUERY_STRING'];
+	$lst_query_string 	= 	explode('&', $query_string);
+	$link_page_current 	= 	'';
+	for ($i = 0; $i < count($lst_query_string); $i++) {
+		$tmp 	= 	explode('=', $lst_query_string[$i]);
+		if ($tmp[0] != 'page')
+			$link_page_current	.= 	($i == 0) ? '?' . $lst_query_string[$i] : '&' . $lst_query_string[$i];
+	}
+	$assign_list['link_page_current']	= 	$link_page_current;
+	#
+	$link_page_current_2	= 	'';
+	for ($i = 0; $i < count($lst_query_string); $i++) {
+		$tmp 	= 	explode('=', $lst_query_string[$i]);
+		if ($tmp[0] != 'page' && $tmp[0] != 'type_list')
+			$link_page_current_2	.= 	($i == 0) ? '?' . $lst_query_string[$i] : '&' . $lst_query_string[$i];
+	}
+	$assign_list['link_page_current_2']	= 	$link_page_current_2;
+	#-------End Page Divide-----------------------------------------------------------
+	$allItem	= 	$clsClassTable->getAll($cond . $orderBy . $limit);
+	$assign_list["allItem"]	= 	$allItem;
+	//Action
+	$action = isset($_GET['action']) ? $_GET['action'] : '';
+	if ($action == 'Trash') {
+		$string     = isset($_GET['cruise_cat_country_id']) ? ($_GET['cruise_cat_country_id']) : '';
+		$cruise_cat_country_id = intval($core->decryptID($string));
+		if ($string == '' && $cruise_cat_country_id == 0) {
+			header('location:' . PCMS_URL . '/index.php?admin&mod=' . $mod . '&act=' . $act . '&message=NotPermission');
+			exit();
+		}
+		if ($clsClassTable->updateOne($cruise_cat_country_id, "is_trash='1'")) {
+			header('location: ' . PCMS_URL . '/index.php?mod=' . $mod . '&act=' . $act . '&message=TrashSuccess');
+		}
+	}
+	if ($action == 'Restore') {
+		$string     = isset($_GET['cruise_cat_country_id']) ? ($_GET['cruise_cat_country_id']) : '';
+		$cruise_cat_country_id = intval($core->decryptID($string));
+		if ($string == '' && $cruise_cat_country_id == 0) {
+			header('location:' . PCMS_URL . '/index.php?admin&mod=' . $mod . '&act=' . $act . '&message=NotPermission');
+			exit();
+		}
+		if ($clsClassTable->updateOne($cruise_cat_country_id, "is_trash='0'")) {
+			header('location: ' . PCMS_URL . '/index.php?mod=' . $mod . '&act=' . $act . '&message=RestoreSuccess');
+		}
+	}
+	if ($action == 'Delete') {
+		$string     = isset($_GET['cruise_cat_country_id']) ? ($_GET['cruise_cat_country_id']) : '';
+		$cruise_cat_country_id = intval($core->decryptID($string));
+		if ($string == '' && $cruise_cat_country_id == 0) {
+			header('location:' . PCMS_URL . '/index.php?admin&mod=' . $mod . '&act=' . $act . '&message=NotPermission');
+			exit();
+		}
+		if ($clsClassTable->deleteOne($cruise_cat_country_id)) {
+			header('location: ' . PCMS_URL . '/index.php?mod=' . $mod . '&act=' . $act . '&message=DeleteSuccess');
+		}
+	}
 	#
 }
 function default_ajSysCruiseCategory()
@@ -2454,24 +2461,29 @@ function default_ajSysCruiseCategory()
 		die();
 	}
 }
+
 function default_ajSysCruiseCategoryCountry()
 {
 	global $dbconn, $_CONFIG, $_SITE_ROOT, $mod, $_LANG_ID, $act, $core, $clsModule;
 	global $clsISO, $clsConfiguration, $package_id;
 	$user_id = $core->_USER['user_id'];
 	#
-	$clsISO->dump($_POST);
-	$clsISO->dd($_GET);
+	// $clsISO->dump($_POST);
+	// $clsISO->dump($_GET);
 	#
 	// if (!$clsISO->getCheckActiveModulePackage($package_id, $mod, 'cat', 'default')) {
 	// 	header('location:' . PCMS_URL . '/index.php?admin&mod=' . $mod . '&message=NotPermission');
 	// 	exit();
 	// }
 	#
-	$clsCruiseCatCountry = new CruiseCatCountry();
-	$tp = isset($_POST['tp']) ? $_POST['tp'] : '';
-	$cruise_cat_id = isset($_POST['cruise_cat_id']) ? intval($_POST['cruise_cat_id']) : 0;
-	$parent_id = (isset($_POST['parent_id']) && $_POST['parent_id'] > 0) ? $_POST['parent_id'] : 0;
+	$clsCountry 			= 	new Country();
+	$clsCruiseCat 			= 	new CruiseCat();
+	$clsCruiseCatCountry 	= 	new CruiseCatCountry();
+	$tp	= 	isset($_POST['tp']) ? $_POST['tp'] : '';
+	$cruise_cat_country_id 	= 	isset($_POST['cruise_cat_country_id']) ? intval($_POST['cruise_cat_country_id']) : 0;
+	// if (!empty($cruise_cat_country_id)) {
+	// 	$cruise_cat_country_info	=	$clsCruiseCatCountry->getOne($cruise_cat_country_id);
+	// }
 	#
 	if ($tp == 'L') {
 		$lstItem = array();
@@ -2538,59 +2550,82 @@ function default_ajSysCruiseCategoryCountry()
 		echo $html;
 		die();
 	} elseif ($tp == 'F') {
-		$parent_id = $clsCruiseCat->getOneField('parent_id', $cruise_cat_id);
-		$html = '';
-		$html .= '<div class="headPop">
-					<a class="closeEv close_pop" data-dismiss="modal" aria-hidden="true">&nbsp;</a>
-					<h3>' . $core->get_Lang('updatecruisecategory') . ' - ' . $clsCruiseCat->getTitle($cruise_cat_id) . '</h3>
-				</div>';
-		$html .= '
+		$country_id = 	$clsCruiseCatCountry->getOneField('country_id', $cruise_cat_country_id);
+		$cat_id 	= 	$clsCruiseCatCountry->getOneField('cat_id', $cruise_cat_country_id);
+		// $clsISO->dump($clsCountry->makeSelectboxOption($country_id));
+		// $clsISO->dump($clsCruiseCat->makeSelectboxOptionValueName($cat_id));
+		// die;
+
+		$html 	= 	'';
+		$html 	.= 	'
+			<div class="headPop">
+				<a class="closeEv close_pop" data-dismiss="modal" aria-hidden="true">&nbsp;</a>
+				<h3>' . $core->get_Lang('updatecruisecategorycountry') . '</h3>
+			</div>';
+		$html 	.= 	'
 			<form method="post" action="" id="form-post" class="frmform formborder" enctype="multipart/form-data">
 				<div class="wrap">
-					<div>
-						<div class="row-span">
-							<div class="fieldlabel" style="text-align:right"><strong >' . $core->get_Lang('title') . '</strong> <span class="color_r">*</span></div>
-							<div class="fieldarea"><input type="text" name="title" class="text_32 border_aaa full-width fontLarge" value="' . $clsCruiseCat->getTitle($cruise_cat_id) . '" style=" width:95%"/></div>
-						</div>';
-		if ($clsISO->getCheckActiveModulePackage($package_id, $mod, 'cruise_sub_category', 'customize')) {
-			$html .= '<div class="row-span">
-							<div class="fieldlabel" style="text-align:right"><strong> ' . $core->get_Lang('selectcategory') . '</strong><span class="color_r">*</span></div>
-							<div class="fieldarea">
-								<select class="slb" name="parent_id" id="slb_TourCategory">
-									' . ($cruise_cat_id > 0 ? $clsCruiseCat->makeSelectboxOption($parent_id, $cruise_cat_id, 0, '--', 1, 0) : $clsCruiseCat->makeSelectboxOption($parent_id, $cruise_cat_id, 0, '--', 0, 0)) . '
-								</select>
-							</div>
-						</div>';
-		}
-		//echo $cruise_cat_id;die('xxx');
-		$html .= '
-						<div class="row-span">
-							<div class="fieldlabel" style="text-align:right"><strong>' . $core->get_Lang('Short text') . '</strong> <span class="color_r">*</span></div>
-							<div class="fieldarea">
-								<textarea id="textarea_intro_editor' . time() . '" class="textarea_intro_editor" name="intro" style="width:100%">' . $clsCruiseCat->getIntro($cruise_cat_id) . '</textarea>
+					<div class="row-span">
+						<div class="fieldlabel" style="text-align:right"><strong >' . $core->get_Lang('Country') . '</strong> <span class="color_r">*</span></div>
+						<div class="fieldarea">
+							<select class="slb full glSlBox required" name="iso-country_id" id="slb_Country">
+								' . $clsCountry->makeSelectboxOption($country_id) . '            
+							</select>
+						</div>
+					</div>
+					<div class="row-span">
+						<div class="fieldlabel" style="text-align:right"><strong >' . $core->get_Lang('Cruise category') . '</strong> <span class="color_r">*</span></div>
+						<div class="fieldarea">
+							<select name="cat_id" class="glSlBox required" id="slb_CruiseCat">
+								' . $clsCruiseCat->makeSelectboxOptionValueName($cat_id) . '
+							</select>
+						</div>
+					</div>
+					<div class="row-span">
+						<div class="fieldlabel" style="text-align:right"><strong >' . $core->get_Lang('Banner title') . '</strong> <span class="color_r">*</span></div>
+						<div class="fieldarea"><input type="text" name="title" class="text_32 border_aaa full-width fontLarge" value="' . $clsCruiseCatCountry->getBannerTitle($cruise_cat_country_id) . '" style=" width:95%"/></div>
+					</div>
+					<div class="row-span">
+						<div class="fieldlabel" style="text-align:right"><strong>' . $core->get_Lang('Banner intro') . '</strong> <span class="color_r">*</span></div>
+						<div class="fieldarea">
+							<textarea id="textarea_intro_editor' . time() . '" class="textarea_intro_editor" name="intro" style="width:100%">' . $clsCruiseCatCountry->getBannerIntro($cruise_cat_country_id) . '</textarea>
+						</div>
+					</div>
+					<div class="row-span">
+						<div class="fieldlabel" style="text-align:right;line-height: 15px;">
+							<strong>' . $core->get_Lang('Banner vertical') . '</br> (WxH:344x434)</strong> 
+							<span class="color_r">*</span>
+						</div>
+						<div class="fieldarea">
+							<div class="box_upload_image" style="max-width: 100%;display: flex;gap: 30px;">
+								<div class="box_upload">
+									<input type="hidden" id="isoman_hidden_banner_image_vertical" value="' . $clsCruiseCatCountry->getOneField('banner_image_vertical', $cruise_cat_country_id) . '">
+									<input style="margin-left:4px;" type="text" id="isoman_url_banner_image_vertical" name="banner_image_vertical" value="' . $clsCruiseCatCountry->getOneField('banner_image_vertical', $cruise_cat_country_id) . '"><a style="float:left; margin-left:4px; margin-top:-4px;" href="#" class="ajOpenDialog" isoman_for_id="banner_image_vertical" isoman_val="' . $clsCruiseCatCountry->getOneField('banner_image_vertical', $cruise_cat_country_id) . '" isoman_name="banner_image_vertical"><img src="' . URL_IMAGES . '/general/folder-32.png" border="0" title="Open" alt="Open" /></a>
+								</div>
+								<div class="box_image">
+									<img id="isoman_show_banner_image_vertical" src="' . $clsCruiseCatCountry->getOneField('banner_image_vertical', $cruise_cat_country_id) . '" width="200"/>
+								</div>
 							</div>
 						</div>
-						<div class="row-span">
-							<div class="fieldlabel" style="text-align:right"><strong>' . $core->get_Lang('Image') . '</strong> <span class="color_r">*</span></div>
-							<div class="fieldarea">
-								<img class="isoman_img_pop" id="isoman_show_image" src="' . $clsCruiseCat->getOneField('image', $cruise_cat_id) . '" />
-								<input type="hidden" id="isoman_hidden_image" value="' . $clsCruiseCat->getOneField('image', $cruise_cat_id) . '">
-								<input style="width:70% !important;float:left;margin-left:4px;" type="text" id="isoman_url_image" name="image" value="' . $clsCruiseCat->getOneField('image', $cruise_cat_id) . '"><a style="float:left; margin-left:4px; margin-top:-4px;" href="#" class="ajOpenDialog" isoman_for_id="image" isoman_val="' . $clsCruiseCat->getOneField('image', $cruise_cat_id) . '" isoman_name="image"><img src="' . URL_IMAGES . '/general/folder-32.png" border="0" title="Open" alt="Open" /></a>
-							</div>
-						</div>
-						<div class="row-span">
-							<div class="fieldlabel" style="text-align:right"><strong>' . $core->get_Lang('Banner') . ' (WxH:1920x400)</strong> <span class="color_r">*</span></div>
-							<div class="fieldarea">
-								<img class="isoman_img_pop" id="isoman_show_image_banner" src="' . $clsCruiseCat->getOneField('image_banner', $cruise_cat_id) . '" />
-								<input type="hidden" id="isoman_hidden_image_banner" value="' . $clsCruiseCat->getOneField('image_banner', $cruise_cat_id) . '">
-								<input style="width:70% !important;float:left;margin-left:4px;" type="text" id="isoman_url_image_banner" name="image_banner" value="' . $clsCruiseCat->getOneField('image_banner', $cruise_cat_id) . '"><a style="float:left; margin-left:4px; margin-top:-4px;" href="#" class="ajOpenDialog" isoman_for_id="image_banner" isoman_val="' . $clsCruiseCat->getOneField('image_banner', $cruise_cat_id) . '" isoman_name="image_banner"><img src="' . URL_IMAGES . '/general/folder-32.png" border="0" title="Open" alt="Open" /></a>
+					</div>
+					<div class="row-span">
+						<div class="fieldlabel" style="text-align:right;line-height: 15px;"><strong>' . $core->get_Lang('Banner horizontal') . '</br> (WxH:1920x600)</strong> <span class="color_r">*</span></div>
+						<div class="fieldarea">
+							<div class="box_upload_image" style="max-width: 100%;display: flex;gap: 30px;">
+								<div class="box_upload">
+									<input type="hidden" id="isoman_hidden_banner_image_horizontal" value="' . $clsCruiseCatCountry->getOneField('banner_image_horizontal', $cruise_cat_country_id) . '">
+									<input style="margin-left:4px;" type="text" id="isoman_url_banner_image_horizontal" name="banner_image_horizontal" value="' . $clsCruiseCatCountry->getOneField('banner_image_horizontal', $cruise_cat_country_id) . '"><a style="float:left; margin-left:4px; margin-top:-4px;" href="#" class="ajOpenDialog" isoman_for_id="banner_image_horizontal" isoman_val="' . $clsCruiseCatCountry->getOneField('banner_image_horizontal', $cruise_cat_country_id) . '" isoman_name="banner_image_horizontal"><img src="' . URL_IMAGES . '/general/folder-32.png" border="0" title="Open" alt="Open" /></a>
+								</div>
+								<div class="box_image">
+									<img class="" id="isoman_show_banner_image_horizontal" src="' . $clsCruiseCatCountry->getOneField('banner_image_horizontal', $cruise_cat_country_id) . '" width="200"/>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</form>
 			<div class="modal-footer">
-				<button class="btn btn-primary submitCruiseCategory" cruise_cat_id="' . $cruise_cat_id . '">
+				<button class="btn btn-primary submitCruiseCategoryCountry" cruise_cat_country_id="' . $cruise_cat_country_id . '">
 					<i class="icon-ok icon-white"></i> ' . $core->get_Lang('save') . '
 				</button>
 				<button type="reset" class="btn btn-warning close_pop">
@@ -2600,50 +2635,52 @@ function default_ajSysCruiseCategoryCountry()
 		echo $html;
 		die();
 	} elseif ($tp == 'S') {
-		$titlePost = trim(strip_tags($_POST['title']));
-		$slugPost = $core->replaceSpace($titlePost);
-		$introPost = addslashes($_POST['intro']);
-		$imagePost = isset($_POST['image']) ? addslashes($_POST['image']) : '';
-		$image_bannerPost = isset($_POST['image_banner']) ? addslashes($_POST['image_banner']) : '';
+		$country_id 				=	isset($_POST['country_id']) ? ($_POST['country_id']) : '';
+		$cat_id 					=	isset($_POST['cat_id']) ? ($_POST['cat_id']) : '';
+		$banner_title 				=	trim(strip_tags($_POST['banner_title']));
+		$banner_intro 				=	isset($_POST['banner_intro']) ? ($_POST['banner_intro']) : '';
+		$banner_image_vertical 		=	isset($_POST['banner_image_vertical']) ? ($_POST['banner_image_vertical']) : '';
+		$banner_image_horizontal 	=	isset($_POST['banner_image_horizontal']) ? ($_POST['banner_image_horizontal']) : '';
 		#
-		if ($cruise_cat_id == '0') {
-			if ($clsCruiseCat->getAll("parent_id='$parent_id' and slug='$slugPost'") != '') {
-				echo '_EXIST';
+		if ($cruise_cat_country_id == '0') {
+			// if ($clsCruiseCatCountry->getAll("parent_id='$parent_id' and slug='$slugPost'") != '') {
+			// 	echo '_EXIST';
+			// 	die();
+			// } else {
+			$listTable	= 	$clsCruiseCatCountry->getAll("1=1 ", $clsCruiseCatCountry->pkey . ", order_no");
+			for ($i = 0; $i <= count($listTable); $i++) {
+				$order_no = $listTable[$i]['order_no'] + 1;
+				$clsCruiseCatCountry->updateOne($listTable[$i][$clsCruiseCatCountry->pkey], "order_no='" . $order_no . "'");
+			}
+			$max_id	= 	$clsCruiseCatCountry->getMaxID();
+			$max_order = $clsCruiseCatCountry->getMaxOrderNo();
+			$f 	= 	"user_id, user_id_update, country_id, cat_id, banner_title, banner_intro, order_no, cruise_cat_country_id, reg_date, upd_date, banner_image_vertical, banner_image_horizontal, is_trash, is_online";
+			$v 	= 	"'$user_id', '$user_id', '$country_id', '$cat_id', '" . addslashes($banner_title) . "', '" . ($banner_intro) . "'";
+			$v 	.= 	", '$max_order', '$max_id', '" . time() . "', '" . time() . "', '$banner_image_vertical', '$banner_image_horizontal', '0', '1'";
+			#
+			if ($clsCruiseCatCountry->insertOne($f, $v)) {
+				echo '_SUCCESS';
 				die();
 			} else {
-				$listTable = $clsCruiseCat->getAll("1=1 and parent_id='$parent_id'", $clsCruiseCat->pkey . ",order_no");
-				for ($i = 0; $i <= count($listTable); $i++) {
-					$order_no = $listTable[$i]['order_no'] + 1;
-					$clsCruiseCat->updateOne($listTable[$i][$clsCruiseCat->pkey], "order_no='" . $order_no . "'");
-				}
-				$max_id = $clsCruiseCat->getMaxID();
-				$max_order = $clsCruiseCat->getMaxOrderNo();
-				$f = "user_id,user_id_update,parent_id,title,slug,intro,order_no,cruise_cat_id,reg_date,upd_date,image,image_banner";
-				$v = "'$user_id','$user_id','$parent_id','" . addslashes($titlePost) . "','" . addslashes($slugPost) . "','" . addslashes($introPost) . "'";
-				$v .= ",'1','$max_id','" . time() . "','" . time() . "','$imagePost','$image_bannerPost'";
-				if ($clsCruiseCat->insertOne($f, $v)) {
-					echo '_SUCCESS';
-					die();
-				} else {
-					echo '_ERROR';
-					die();
-				}
+				echo '_ERROR';
+				die();
 			}
+			// }
 		} else {
-			if ($clsCruiseCat->getAll("parent_id='$parent_id' and cruise_cat_id <> '$cruise_cat_id' and slug='$slugPost'") != '') {
-				echo '_EXIST';
+			// if ($clsCruiseCatCountry->getAll("cruise_cat_country_id <> '$cruise_cat_country_id'") != '') {
+			// 	echo '_EXIST';
+			// 	die();
+			// } else {
+			$v = "banner_title='" . addslashes($banner_title) . "', country_id='" . addslashes($country_id) . "', cat_id='" . addslashes($cat_id) . "', banner_intro='$banner_intro'";
+			$v .= ", banner_image_vertical='" . addslashes($banner_image_vertical) . "', banner_image_horizontal='" . addslashes($banner_image_horizontal) . "', upd_date='" . time() . "', user_id_update='$user_id'";
+			if ($clsCruiseCatCountry->updateOne($cruise_cat_country_id, $v)) {
+				echo '_UPDATESUCCESS';
 				die();
 			} else {
-				$v = "title='" . addslashes($titlePost) . "',slug='" . addslashes($slugPost) . "',intro='$introPost'";
-				$v .= ",parent_id='$parent_id',image='" . addslashes($imagePost) . "',image_banner='" . addslashes($image_bannerPost) . "',upd_date='" . time() . "',user_id_update='$user_id'";
-				if ($clsCruiseCat->updateOne($cruise_cat_id, $v)) {
-					echo '_UPDATESUCCESS';
-					die();
-				} else {
-					echo '_ERROR';
-					die();
-				}
+				echo '_ERROR';
+				die();
 			}
+			// }
 		}
 	} elseif ($tp == 'M') {
 		#

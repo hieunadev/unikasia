@@ -4230,7 +4230,8 @@ class Tour extends dbBasic
 		$more_infomation = $clsISO->getPromotion($tour_id, 'Tour', time(), time(), 'info_promotion');
 		$discount_value = $more_infomation["discount_value"];
         $origin_price = $this->getOne($tour_id, 'min_price')[0];
-		$price = $origin_price * (100 - $discount_value) / 100;
+//		$price = $origin_price * (100 - $discount_value) / 100;
+		$price = $origin_price * (100 - 20) / 100;
 		return $price;
 	}
 

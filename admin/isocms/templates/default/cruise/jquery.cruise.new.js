@@ -306,6 +306,7 @@ $().ready(function() {
 		adata['number_day'] = $_form.find("input[name='number_day']").val();
 		adata['number_night'] = $_form.find("input[name='number_night']").val();
 		adata['cruise_itinerary_id'] = $cruise_itinerary_id;
+		adata['price_itinerary'] = $('.price_itinerary').val();;
 		adata['listService'] = [];
 		$_form.find("input[name='listService[]']:checked").each(function(index,elm){
 			adata['listService'].push($(elm).val());

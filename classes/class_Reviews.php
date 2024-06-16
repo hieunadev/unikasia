@@ -527,13 +527,18 @@ class Reviews extends dbBasic{
 		return 1;
 	}
     function sendMail($email,$mes,$type){
-        global $core, $clsISO, $clsConfiguration,$_LANG_ID,$email_template_review_tour_id,$email_template_review_cruise_id;
+        global $core, $clsISO, $clsConfiguration,$_LANG_ID,$email_template_review_tour_id,$email_template_review_cruise_id,$email_template_review_stay_id;
+;
         #
         $clsEmailTemplate = new EmailTemplate();
         #
         if($type =='tour'){
             $email_template_id=$email_template_review_tour_id;
-        }else{
+			
+        }else if($type =='hotel'){
+			$email_template_id=$email_template_review_stay_id;
+		}
+		else{
             $email_template_id=$email_template_review_cruise_id;
         }
         #
@@ -557,6 +562,7 @@ class Reviews extends dbBasic{
 		$message = str_replace('[%info_license%]',$clsConfiguration->getValue('GPKD'),$message);
 		$message = str_replace('[%DOMAIN_NAME%]',DOMAIN_NAME,$message);
 		$message = str_replace('[%DATETIME%]',date('Y',time()),$message);
+		$message .= $clsEmailTemplate->getFooter($email_template_id);
         
         #
 

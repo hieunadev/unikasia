@@ -74,7 +74,6 @@ class TourOption extends dbBasic{
 		}else{
 			$lstProperty = $this->getAll($sql." order by number_to ASC");
 		}
-		
 		$html = '';
 		if(is_array($lstProperty) && count($lstProperty) > 0){
 			foreach($lstProperty as $k=>$v){
@@ -226,6 +225,25 @@ class TourOption extends dbBasic{
         }
         $html .= '</select>';
         return $html;
+    }
+
+    function getMinMaxGroupSizeAdult($tour_id) {
+        global $dbconn;
+
+        $clsTour = new Tour();
+        $oneItem = $clsTour->getOne($tour_id);
+
+        $sql = "SELECT number_from, number_to FROM `default_tour_option` where tour_option_id IN (". $oneItem["adult_group_size"] .")";
+
+        $rec = $dbconn->GetAll($sql);
+        $values = [];
+        foreach ($rec as $item) {
+            $values[] = (int)$item['number_from'];
+            $values[] = (int)$item['number_to'];
+        }
+        $minValue = min($values);
+        $maxValue = max($values);
+        return "Min $minValue, Max $maxValue";
     }
 }
 ?>

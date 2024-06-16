@@ -637,7 +637,6 @@ function default_loadTablePrice(){
     $check_contact = $check_contact_child = $check_contact_infant = 0;
     if(!empty($checkExistTourStartDate)){//TH có departure date
         if(!empty($lstTourStartDate)){
-//			var_dump($lstTourStartDate);die;
             if($lstTourStartDate[0]['price_type']==1){//TH set giá trong departure date
                 $price = $lstTourStartDate[0]['price'];
                 $price= json_decode($price,'true');
@@ -840,6 +839,7 @@ function default_loadTablePrice(){
             $price_adults = 0;
             $price_child = 0;
             $price_infants = 0;
+
         }
     }else{
         $price_adults = $clsTourPriceGroup->getPriceBooking($tour_id,$tour_class_id,$tour_number_adults_id,$tour_visitor_adult_id,0);
@@ -964,7 +964,7 @@ function default_loadTablePrice(){
 
     $total_price_adults=$price_adults*$number_adults;
     #
-    $total_price=$total_price_adults + $total_price_child + $total_price_infants + array_sum($lstPriceRoom);
+    $total_price=$total_price_adults + $total_price_child + $total_price_infants + array_sum(array_column($lst_room, "total_price_room"));
     if($discount_type ==2){
         $price_promotion = $total_price / 100 * $promotion;
     }else{
@@ -1006,7 +1006,7 @@ function default_loadTablePrice(){
     $assign_list["number_room"] = array_sum($number_room);
     $assign_list["list_number_room"] = implode(',',$number_room);
     $assign_list["room_id"] = implode(',',$room_id);
-    $assign_list["total_price_room"] = array_sum($lstPriceRoom);
+    $assign_list["total_price_room"] =  array_sum(array_column($lst_room, "total_price_room"));
 
     if($clsISO->getCheckActiveModulePackage($package_id,'booking','booking_tour','default')){
         $html = $core->build('loadTablePrice.tpl');

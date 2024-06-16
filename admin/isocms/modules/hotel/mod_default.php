@@ -43,6 +43,7 @@ function getFrame(){
 			)
 		),
 	);
+	/*
     if($clsISO->getCheckActiveModulePackage($package_id,$mod,'hotel_room','customize')){
         $frames['room'] = array(
             'name'	=> $core->get_Lang('Room and Price'),
@@ -61,7 +62,8 @@ function getFrame(){
                 //),
             )
         );
-    }
+    }*/
+	
     if($clsISO->getCheckActiveModulePackage($package_id,$mod,'hotel_gallery','customize') && $clsISO->getCheckActiveModulePackage($package_id,$mod,'property','default','HotelFacilities')){
     $frames['config'] = array(
 		'name'	=> $core->get_Lang('Configs'),

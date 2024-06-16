@@ -702,6 +702,8 @@ function default_ajSaveReviews(){
 	}
 }
 function default_ajSaveReviewsNoLogin(){
+	global $assign_list, $_CONFIG, $core, $dbconn, $mod, $act, $_LANG_ID,$title_page,$description_page,$keyword_page,$profile_id;
+	$clsISO = new ISO();
 	$clsReviews = new Reviews();
 	$clsProfile = new Profile();
 	$clsImage = new Image();

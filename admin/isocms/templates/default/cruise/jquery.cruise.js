@@ -1172,6 +1172,23 @@ $().ready(function(){
 				});
 				return false;
 			});
+			$(document).on('click', '.btnEditCruiseCategoryCountry', function(ev){
+				var $_this = $(this);
+				vietiso_loading(1);
+				$.ajax({
+					type:'POST',
+					url:path_ajax_script+'/index.php?mod='+mod+'&act=ajSysCruiseCategoryCountry',
+					data : {'cruise_cat_country_id':$_this.attr('data'),'tp':'F'},
+					dataType:'html',
+					success:function(html){
+						makepopupnotresize('52%','auto',html,'box_EditCruiseCategory');
+						$('#box_EditCruiseCategory').css('top','50px');
+						$('#'+$('.textarea_intro_editor').attr('id')).isoTextAreaFix();
+						vietiso_loading(0);
+					}
+				});
+				return false;
+			});
 			$(document).on('click', '.submitCruiseCategory', function(ev){
 				var $_this = $(this);
 				var $_form = $_this.closest('.frmPop');
@@ -1199,6 +1216,56 @@ $().ready(function(){
 				$.ajax({
 					type:'POST',
 					url:path_ajax_script+'/index.php?mod='+mod+'&act=ajSysCruiseCategory',
+					data:adata,
+					dataType:'html',
+					success:function(html){
+						vietiso_loading(0);
+						if(html.indexOf('_SUCCESS') >= 0) {
+							alertify.success(insert_success);
+							location.href = REQUEST_URI;
+						}
+						if(html.indexOf('_UPDATESUCCESS') >= 0) {
+							alertify.success(update_success);
+							location.href = REQUEST_URI;
+						}
+						if(html.indexOf('_ERROR') >= 0) {
+							alertify.error(insert_error);
+						}
+						if(html.indexOf('_EXIST') >= 0) {
+							alertify.error(exist_error);
+						}
+					}
+				});
+			});
+			$(document).on('click', '.submitCruiseCategoryCountry', function(ev){
+				var $_this = $(this);
+				var $_form = $_this.closest('.frmPop');
+				
+				var $country_id = $_form.find('#slb_Country');
+				var $cat_id = $_form.find('#slb_CruiseCat');
+				var $title = $_form.find('input[name=title]');
+				var $intro = tinyMCE.get($('.textarea_intro_editor').attr('id')).getContent();
+				var $banner_image_vertical = $_form.find('#isoman_url_banner_image_vertical');
+				var $banner_image_horizontal = $_form.find('#isoman_url_banner_image_horizontal');
+				if($.trim($title.val())=='') {
+					$title.addClass('error').focus();
+					alertify.error(field_required);
+					return false;
+				}
+				var adata = {
+					'country_id' : $country_id.val(),
+					'cat_id' : $cat_id.val(),
+					'banner_title' : $title.val(),
+					'banner_intro' : $intro,
+					'banner_image_vertical' : $banner_image_vertical.val(),
+					'banner_image_horizontal' : $banner_image_horizontal.val(),
+					'cruise_cat_country_id' : $_this.attr('cruise_cat_country_id'),
+					'tp' : 'S'
+				};
+				vietiso_loading(1);
+				$.ajax({
+					type:'POST',
+					url:path_ajax_script+'/index.php?mod='+mod+'&act=ajSysCruiseCategoryCountry',
 					data:adata,
 					dataType:'html',
 					success:function(html){
@@ -1997,4 +2064,94 @@ function loadToursReview() {
             $('#ReviewsTableCruise').html(html);
         }
     });
-}
+};
+
+function search_tour() {
+    aj_search = setTimeout(function() {
+        $.ajax({
+            type: 'POST',
+            url: path_ajax_script + '/index.php?mod=' + mod + '&act=ajGetSearch',
+            data: {
+                "keyword": $("#searchkey").val(),
+                "cruise_id": table_id
+            },
+            dataType: 'html',
+            success: function(html) {
+                if (html.indexOf('_EMPTY') >= 0) {
+                    $('#autosugget').hide();
+                } else {
+                    $('#autosugget').stop(false, true).slideDown();
+                    $('#autosugget').find('.HTML_sugget').html(html);
+                }
+            }
+        });
+    }, 500);
+};
+function loadCruiseExtension(cruise_id) {
+    $.ajax({
+        type: 'POST',
+        url: path_ajax_script + '/index.php?mod=' + mod + '&act=ajLoadCruiseExtension',
+        data: {
+            "cruise_id": cruise_id
+        },
+        dataType: 'html',
+        success: function(html) {
+            if (html.replace(' ', '') == '') {
+                $("#tab5Note").removeClass("iso-check").addClass("iso-check-disabled");
+				$('#tblCruiseExtension').html('');
+            } else {
+                $('#tblCruiseExtension').html(html);
+                $("#tab5Note").addClass("iso-check").removeClass("iso-check-disabled");
+            }
+			if($("#tblCruiseExtension").find('tr').length > 0){
+				$('#related_tours').closest('li').removeAttr('class').addClass('check_success');
+			}else{
+				$('#related_tours').closest('li').removeAttr('class').addClass('check_caution');
+			}
+			
+        }
+    });
+};
+$_document.on('click', '.clickChooiseTour', function(ev) {
+	ev.preventDefault();
+	var $_this = $(this), 
+		tour_id = $_this.attr('data');
+		cruise_tour_type = $('#cruise_tour_type').val();
+
+	if (cruise_tour_type === '') {
+		alert('Please select a cruise tour type');
+		return;
+	}
+
+	vietiso_loading(1);
+	$.post(path_ajax_script + '/index.php?mod=' + mod + '&act=ajAddCruiseExtension', {
+		'cruise_id': table_id,
+		'tour_id': tour_id,
+		'cruise_tour_type': cruise_tour_type
+	}, function(html){
+		 vietiso_loading(0);
+		if (html.indexOf('_SUCCESS') >= 0) {
+			$_this.remove();
+			loadCruiseExtension(table_id);
+		} else if (html.indexOf('_EXIST') >= 0) {
+			alertify.error(exist_error);
+		}
+	});
+	return false;
+});
+$_document.on('click', '.clickDeleteCruiseExtension', function(ev) {
+	ev.preventDefault();
+	var _this = $(this),
+		cruise_extension_id = _this.attr('data');
+	$Core.alert.confirm(__['Message'], confirm_delete, function(){
+		vietiso_loading(1);
+		$.post(path_ajax_script + '/index.php?mod=' + mod + '&act=ajDeleteCruiseExtension', {
+			'table_id' : table_id,
+			"cruise_extension_id" : cruise_extension_id
+		}, function(html){
+			vietiso_loading(0);
+			loadCruiseExtension(table_id);
+		})
+	});
+	return false;
+});

@@ -1091,7 +1091,6 @@ $_ADMINLANG["mainpage"]="main page";
 $_ADMINLANG["move"]="Move";
 $_ADMINLANG["func"]="Function";
 $_ADMINLANG["index"]="No.";
-$_ADMINLANG["length"]="Length";
 $_ADMINLANG["statistical"]="Statistical";
 $_ADMINLANG["records"]="records";
 $_ADMINLANG["page"]="page";

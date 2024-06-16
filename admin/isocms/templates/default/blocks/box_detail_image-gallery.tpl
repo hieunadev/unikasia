@@ -1,9 +1,11 @@
 <h3 class="title_box">{$core->get_Lang('Photo Gallery')}
+<!--
 	{assign var= photo_gallery_hotel value='photo_gallery_hotel'}
 	{assign var= help_first value=$photo_gallery_hotel}
 	{if $CHECKHELP eq 1}
 	<button data-key="{$photo_gallery_hotel}" data-label="{$core->get_Lang('Photo Gallery')}" type="button" title="Thêm mô tả" onclick="open_texthelp(this, event)" class="btn btn-xs btn-default"><i class="fa fa-plus-circle"></i></button>
 	{/if}
+-->
 </h3>
 <div class="form_option_tour">
 	<div class="inpt_tour">

@@ -4,7 +4,7 @@ class CruiseCatCountry extends dbBasic
     function __construct()
     {
         $this->pkey = "cruise_cat_country_id";
-        $this->tbl = DB_PREFIX . "cruise_cat_country";
+        $this->tbl = DB_PREFIX . "cruise_category_country";
     }
     function getBannerTitle($pvalTable, $one = null)
     {

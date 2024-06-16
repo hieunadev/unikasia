@@ -17,8 +17,13 @@
                 <div class="wrap">
                     <div class="filter_box">
                         <form id="forums" method="post" class="filterForm" action="">
-                            <div class="form-group form-keyword">
+                            <!-- <div class="form-group form-keyword">
                                 <input class="form-control" type="text" name="keyword" value="{$keyword}" placeholder="{$core->get_Lang('search')}..." />
+                            </div> -->
+                            <div class="form-group">
+                                <select class="form-control" name="country_id">
+                                    {$clsCountry->makeSelectboxOption($country_id)}
+                                </select>
                             </div>
                             <div class="form-group form-button">
                                 <button type="submit" class="btn btn-main" id="findtBtn">Tìm kiếm</button>
@@ -28,7 +33,7 @@
                                 <button type="button" class="btn btn-export" id="btn_export">Export</button>
                             </div>
                             <div class="form-group form-button">
-                                <a class="btn btn-delete-all" id="btn_delete" clsTable="CruiseCat" style="display:none">
+                                <a class="btn btn-delete-all" id="btn_delete" clsTable="CruiseCatCountry" style="display:none">
                                     {$core->get_Lang('Delete')}
                                 </a>
                             </div>
@@ -47,25 +52,29 @@
                         <tr>
                             <th class="gridheader" style="width:40px"><input id="check_all" type="checkbox" /></th>
                             <th class="gridheader hiden767" style="width:60px"><strong>{$core->get_Lang('ID')}</strong></th>
-                            <th class="gridheader name_responsive" style="text-align:left"><strong>{$core->get_Lang('Name')}</strong></th>
+                            <th class="gridheader name_responsive" style="text-align:left"><strong>{$core->get_Lang('Cruise Category')}</strong></th>
+                            <th class="gridheader hiden767" style="text-align:center; width:60px"><strong>{$core->get_Lang('Country')}</strong></th>
                             <th class="gridheader hiden767" style="text-align:center; width:60px"><strong>{$core->get_Lang('status')}</strong></th>
                             <th class="gridheader hiden767" style="text-align:center; width:70px"><strong>{$core->get_Lang('func')}</strong></th>
                         </tr>
                     </thead>
-                    {* {if $allItem[0].cruise_cat_id ne ''}
+                    {if $allItem[0].cruise_cat_country_id ne ''}
                     <tbody id="SortAble">
                         {section name=i loop=$allItem}
-                        <tr style="cursor:move" id="order_{$allItem[i].cruise_cat_id}" class="{if $smarty.section.i.index%2 eq 0}row1{else}row2{/if}">
-                            <th class="index"><input name="p_key[]" class="chkitem" type="checkbox" value="{$allItem[i].cruise_cat_id}" /></th>
-                            <td class="index hiden767"> {$allItem[i].cruise_cat_id}</td>
+                        <tr style="cursor:move" id="order_{$allItem[i].cruise_cat_country_id}" class="{if $smarty.section.i.index%2 eq 0}row1{else}row2{/if}">
+                            <th class="index"><input name="p_key[]" class="chkitem" type="checkbox" value="{$allItem[i].cruise_cat_country_id}" /></th>
+                            <td class="index hiden767"> {$allItem[i].cruise_cat_country_id}</td>
                             <td class="name_service">
-                                <a style="text-decoration:none" title="{$clsClassTable->getTitle($allItem[i].cruise_cat_id)}"><strong style="font-size:14px;">{$clsClassTable->getTitle($allItem[i].cruise_cat_id)}</strong></a>
+                                <a style="text-decoration:none" title="{$clsCruiseCat->getTitle($allItem[i].cat_id)}"><strong style="font-size:14px;">{$clsCruiseCat->getTitle($allItem[i].cat_id)}</strong></a>
                                 {if $allItem[i].is_trash eq '1'}<span class="fr" style="color:#CCC">{$core->get_Lang('intrash')}</span>{/if}
                                 <button type="button" class="toggle-row inline_block767" style="display:none"><i class="fa fa-caret fa-caret-down"></i></button>
                             </td>
+                            <td class="block_responsive">
+                                <span>{$clsCountry->getTitle($allItem[i].country_id)}</span>
+                            </td>
                             <td class="block_responsive" data-title="{$core->get_Lang('status')}" style="text-align:center">
-                                <a href="javascript:void(0);" class="SiteClickPublic" clsTable="CruiseCat" pkey="cruise_cat_id" sourse_id="{$allItem[i].cruise_cat_id}" rel="{$clsClassTable->getOneField('is_online',$allItem[i].cruise_cat_id)}" title="{$core->get_Lang('Click to change status')}">
-                                    {if $clsClassTable->getOneField('is_online',$allItem[i].cruise_cat_id) eq '1'}
+                                <a href="javascript:void(0);" class="SiteClickPublic" clsTable="CruiseCatCountry" pkey="cruise_cat_country_id" sourse_id="{$allItem[i].cruise_cat_country_id}" rel="{$clsClassTable->getOneField('is_online',$allItem[i].cruise_cat_country_id)}" title="{$core->get_Lang('Click to change status')}">
+                                    {if $clsClassTable->getOneField('is_online',$allItem[i].cruise_cat_country_id) eq '1'}
                                     <i class="fa fa-check-circle green"></i>
                                     {else}
                                     <i class="fa fa-minus-circle red"></i>
@@ -79,27 +88,20 @@
                                     </button>
                                     <ul class="dropdown-menu" style="right:0px !important">
                                         {if $allItem[i].is_trash eq '0'}
-                                        <li><a href="{$DOMAIN_NAME}{$clsClassTable->getLink($allItem[i].cruise_cat_id)}" target="_blank" title="{$core->get_Lang('view')}"><i class="icon-eye-open"></i> <span>{$core->get_Lang('view')}</span></a></li>
-                                        <li><a class="btnEditCruiseCategory" title="{$core->get_Lang('edit')}" data="{$allItem[i].cruise_cat_id}"><i class="icon-edit"></i> <span>{$core->get_Lang('edit')}</span></a></li>
-                                        <li><a title="{$core->get_Lang('trash')}" href="{$PCMS_URL}/?mod={$mod}&act={$act}&action=Trash&cruise_cat_id={$core->encryptID($allItem[i].cruise_cat_id)}"><i class="icon-trash"></i> <span>{$core->get_Lang('Trash')}</span></a></li>
+                                        {*<li><a href="{$DOMAIN_NAME}{$clsClassTable->getLink($allItem[i].cruise_cat_country_id)}" target="_blank" title="{$core->get_Lang('view')}"><i class="icon-eye-open"></i> <span>{$core->get_Lang('view')}</span></a></li>*}
+                                        <li><a class="btnEditCruiseCategoryCountry" title="{$core->get_Lang('edit')}" data="{$allItem[i].cruise_cat_country_id}"><i class="icon-edit"></i> <span>{$core->get_Lang('edit')}</span></a></li>
+                                        <li><a title="{$core->get_Lang('trash')}" href="{$PCMS_URL}/?mod={$mod}&act={$act}&action=Trash&cruise_cat_country_id={$core->encryptID($allItem[i].cruise_cat_country_id)}"><i class="icon-trash"></i> <span>{$core->get_Lang('Trash')}</span></a></li>
                                         {else}
-                                        <li><a title="{$core->get_Lang('restore')}" href="{$PCMS_URL}/?mod={$mod}&act={$act}&action=Restore&cruise_cat_id={$core->encryptID($allItem[i].cruise_cat_id)}"><i class="icon-refresh"></i> <span>{$core->get_Lang('restore')}</span></a></li>
-                                        <li><a title="{$core->get_Lang('delete')}" class="confirm_delete" href="{$PCMS_URL}/?mod={$mod}&act={$act}&action=Delete&cruise_cat_id={$core->encryptID($allItem[i].cruise_cat_id)}"><i class="icon-remove"></i> <span>{$core->get_Lang('delete')}</span></a></li>
+                                        <li><a title="{$core->get_Lang('restore')}" href="{$PCMS_URL}/?mod={$mod}&act={$act}&action=Restore&cruise_cat_country_id={$core->encryptID($allItem[i].cruise_cat_country_id)}"><i class="icon-refresh"></i> <span>{$core->get_Lang('restore')}</span></a></li>
+                                        <li><a title="{$core->get_Lang('delete')}" class="confirm_delete" href="{$PCMS_URL}/?mod={$mod}&act={$act}&action=Delete&cruise_cat_country_id={$core->encryptID($allItem[i].cruise_cat_country_id)}"><i class="icon-remove"></i> <span>{$core->get_Lang('delete')}</span></a></li>
                                         {/if}
                                     </ul>
                                 </div>
                             </td>
                         </tr>
-                        {if $clsISO->getCheckActiveModulePackage($package_id,$mod,'cruise_sub_category','customize') eq 1}
-                        {assign var=listChild value=$clsClassTable->getChild($allItem[i].cruise_cat_id,0,0)}
-                        {if $listChild}
-                        {$clsClassTable->getLstChild($allItem[i].cruise_cat_id)}
-                        {/if}
-                        {/if}
                         {/section}
-
                     </tbody>
-                    {/if} *}
+                    {/if}
                 </table>
             </div>
             <div class="clearfix"></div>
@@ -107,6 +109,7 @@
         </div>
     </div>
 </div>
+
 <script type="text/javascript">
     var $recordPerPage = '{$recordPerPage}';
     var $currentPage = '{$currentPage}';

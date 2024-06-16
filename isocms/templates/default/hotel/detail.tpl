@@ -158,7 +158,6 @@
             </div>		
             </div>			 
             </div>
-
 							<div class="txt_icolocation">
 							<i class="fa-sharp fa-solid fa-location-dot" style="color: #9a9aa4;"></i>
 							<p class="txt_location">{$clsHotel->getAddress($hotel_id,$arrHotel)}</p>
@@ -222,7 +221,7 @@
                         <div class="col-lg-8">
 							{section name=i loop=1 start=0}
                             <div class="big_image" data-fancybox="gallery-hotel" href="{$listImage[i].image}">
-                                <img class="img100" alt="{$clsHotelImage->getTitle($listImage[i].hotel_image_id,$listImage[i])}"
+                                <img class="img_big" alt="{$clsHotelImage->getTitle($listImage[i].hotel_image_id,$listImage[i])}"
                                     src="{$clsHotelImage->getImage($listImage[i].hotel_image_id,841,420)}" />
                             </div>
 							{/section}
@@ -233,18 +232,21 @@
                             <div class="list_image_small">
                                 {section name=i loop=$listImage start=1}
                                     <div class="small_image" data-fancybox="gallery-hotel" href="{$listImage[i].image}" {if $smarty.section.i.index gt 4}hidden{/if}>
-                                        <img class="img100"
+                                        <img class="img_small"
                                             alt="{$clsHotelImage->getTitle($listImage[i].hotel_image_id,$listImage[i])}"
                                             src="{$clsHotelImage->getImage($listImage[i].hotel_image_id,202,202)}" />
 								
-                                    </div>
-                                {/section}
-								{if $countlistImage>5}
+										{if $countlistImage > 5}
 									<div class="view_all">
 										+{$remaining}
-										<i class="fa-solid fa-folder-image" style="color: #ffffff; margin-left: 8px"></i>
+										<i class="fa-solid fa-folder-image" style="margin-left: 8px"></i>
 									</div>
 								{/if}
+                                    </div>
+                                {/section}
+								
+								
+
                             </div>
                         </div>
                     </div>
@@ -309,7 +311,7 @@
 										</div>
 										
 										 <div class="overview-content">{$overview_hotel|html_entity_decode}</div>
-										<div class="btn_viewmoreless">View more</div>
+										<div class="btn_viewmoreless">{$core->get_Lang('View more')}</div>
                                     </div>
 
  
@@ -448,7 +450,7 @@
             <div class="column-content">
                 <h4>Bathroom</h4>
                 <div class="item"><i class="fa-thin fa-toilet-paper-blank-under fa-xl" style="color: #434b5c;"></i> Toilet paper</div>
-                <div class="item"><img src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgaWQ9ImJhdGgtdG93ZWwgMSI+CjxwYXRoIGlkPSJWZWN0b3IiIGQ9Ik0yMy42MjUxIDkuMDU3NzRDMjMuNjI0NCA4LjUyNTE1IDIzLjQ1OCA4LjAwNTk3IDIzLjE0ODkgNy41NzIyN0MyMi44Mzk4IDcuMTM4NTYgMjIuNDAzMyA2LjgxMTg1IDIxLjkwMDEgNi42Mzc0OUwxNS4xMTkzIDQuMjg4ODdDMTMuMTU0MiAzLjYxMTQzIDExLjAyNSAzLjU3NDQgOS4wMzc1NiA0LjE4MzEyTDEuOTg3NTYgNi4zNTE3NEMxLjUxOTY4IDYuNDkzODcgMS4xMTAwOSA2Ljc4MzA5IDAuODE5NjA4IDcuMTc2NDVDMC41MjkxMjYgNy41Njk4MiAwLjM3MzIzIDguMDQ2MzcgMC4zNzUwNjIgOC41MzUzN0MwLjM3NTYzIDkuMDYwOTIgMC40ODEwNjMgOS41ODEwNyAwLjY4NTE4NyAxMC4wNjU0QzAuNDgyNzExIDEwLjM0NjMgMC4zNzQxNjkgMTAuNjg0IDAuMzc1MDYyIDExLjAzMDJDMC4zNzUyMjYgMTEuMjY3IDAuNDQ1NzA1IDExLjQ5ODQgMC41Nzc1NiAxMS42OTUxQzAuNzA5NDE1IDExLjg5MTggMC44OTY3MDcgMTIuMDQ0OSAxLjExNTY5IDEyLjEzNUMwLjgyMjA1IDEyLjQzMTQgMC42MDUzODMgMTIuNzk1MiAwLjQ4NDU3NCAxMy4xOTQ2QzAuMzYzNzY0IDEzLjU5NCAwLjM0MjQ3OSAxNC4wMTY5IDAuNDIyNTc1IDE0LjQyNjRDMC41MDI2NyAxNC44MzU5IDAuNjgxNzE0IDE1LjIxOTYgMC45NDQwOTkgMTUuNTQ0QzEuMjA2NDggMTUuODY4NCAxLjU0NDI0IDE2LjEyMzggMS45Mjc5NCAxNi4yODc3TDEwLjE0MDQgMTkuODA3MUMxMS4zNzMyIDIwLjMzNTYgMTIuNzU3MiAyMC4zOTMxIDE0LjAyOTYgMTkuOTY4N0wyMi44MDQ2IDE3LjA0MzdDMjMuMDQzNSAxNi45NjQxIDIzLjI1MTMgMTYuODExMyAyMy4zOTg2IDE2LjYwNjlDMjMuNTQ1OCAxNi40MDI2IDIzLjYyNTEgMTYuMTU3MSAyMy42MjUxIDE1LjkwNTJDMjMuNjI2IDE1LjU1OSAyMy41MTc0IDE1LjIyMTMgMjMuMzE0OSAxNC45NDA0QzIzLjUxOTEgMTQuNDU2MSAyMy42MjQ1IDEzLjkzNTkgMjMuNjI1MSAxMy40MTA0QzIzLjYyNjEgMTIuOTY1NSAyMy40OTYxIDEyLjUzMDIgMjMuMjUxNSAxMi4xNTg2QzIzLjAwNjggMTEuNzg3MSAyMi42NTgyIDExLjQ5NTcgMjIuMjQ5MiAxMS4zMjA5QzIyLjY2MzYgMTEuMTA1NiAyMy4wMTEgMTAuNzgwNyAyMy4yNTM2IDEwLjM4MTdDMjMuNDk2MSA5Ljk4MjY1IDIzLjYyNDYgOS41MjQ3MiAyMy42MjUxIDkuMDU3NzRaTTIyLjg3NTEgMTMuNDEwNEMyMi44NzI5IDEzLjg1MjkgMjIuNzc4OCAxNC4yOTAxIDIyLjU5ODcgMTQuNjk0NEwxNS4xMTk3IDE3LjA3NDFDMTQuNzUzNiAxNy4xOTA2IDE0LjM3MTcgMTcuMjQ5OSAxMy45ODc2IDE3LjI1QzEzLjg3MTcgMTcuMjQ4NyAxMy43NiAxNy4yMDYyIDEzLjY3MjYgMTcuMTMwMUMxMy41ODUzIDE3LjA1MzkgMTMuNTI3OSAxNi45NDkxIDEzLjUxMDggMTYuODM0NUMxMy40OTM3IDE2LjcxOTkgMTMuNTE3OSAxNi42MDI5IDEzLjU3OTMgMTYuNTA0NUMxMy42NDA2IDE2LjQwNjIgMTMuNzM1IDE2LjMzMjkgMTMuODQ1NCAxNi4yOTc5TDIxLjg1OTkgMTMuODYwNEwyMS42NDE3IDEzLjE0MjZMMTMuNjI2NCAxNS41ODA1QzEzLjM0NDEgMTUuNjY4IDEzLjEwMjMgMTUuODUzOCAxMi45NDUgMTYuMTA0MUMxMi43ODc3IDE2LjM1NDQgMTIuNzI1MyAxNi42NTI4IDEyLjc2ODkgMTYuOTQ1MkMxMi44MTI1IDE3LjIzNzYgMTIuOTU5NCAxNy41MDQ3IDEzLjE4MyAxNy42OTgyQzEzLjQwNjUgMTcuODkxNyAxMy42OTE5IDE3Ljk5ODcgMTMuOTg3NiAxOEMxNC40NDkxIDE4LjAwMDEgMTQuOTA3OSAxNy45Mjg5IDE1LjM0NzcgMTcuNzg4OUwyMi43NDEyIDE1LjQzNjVDMjIuODI3NiAxNS41Nzc3IDIyLjg3MzkgMTUuNzM5NyAyMi44NzUxIDE1LjkwNTJDMjIuODc1MSAxNS45OTk3IDIyLjg0NTQgMTYuMDkxOSAyMi43OTAxIDE2LjE2ODVDMjIuNzM0OCAxNi4yNDUyIDIyLjY1NjkgMTYuMzAyNSAyMi41NjcyIDE2LjMzMjRMMTMuNzkyMiAxOS4yNTc0QzEyLjY5MzggMTkuNjIxNiAxMS41MDAzIDE5LjU3MiAxMC40MzU5IDE5LjExNzlMMi4yMjM0NCAxNS42QzEuOTIyMTEgMTUuNDcxMyAxLjY2MTQxIDE1LjI2MzEgMS40NjkxNyAxNC45OTc3QzEuMjc2OTQgMTQuNzMyNCAxLjE2MDM5IDE0LjQxOTggMS4xMzE5NyAxNC4wOTMzQzEuMTAzNTYgMTMuNzY2OSAxLjE2NDM0IDEzLjQzODkgMS4zMDc4MyAxMy4xNDQzQzEuNDUxMzIgMTIuODQ5NyAxLjY3MjE0IDEyLjU5OTYgMS45NDY2OSAxMi40MjA3TDkuOTcxNjkgMTUuMDk1MkMxMS4yNDQxIDE1LjUxOTYgMTIuNjI4IDE1LjQ2MjEgMTMuODYwOCAxNC45MzM2TDIxLjIzNDggMTEuNzczNUwyMS43OTI0IDExLjk0NTJDMjIuMTA2NCAxMi4wNDA3IDIyLjM4MTIgMTIuMjM0NyAyMi41NzYyIDEyLjQ5ODZDMjIuNzcxMiAxMi43NjI1IDIyLjg3NiAxMy4wODIyIDIyLjg3NTEgMTMuNDEwNFpNMjEuNzc2NyAxMC43MjVMMTMuNTY0MiAxNC4yNDQ0QzEyLjQ5OTkgMTQuNjk4OCAxMS4zMDYyIDE0Ljc0ODUgMTAuMjA3OSAxNC4zODM5TDEuNDMyOTQgMTEuNDU4OUMxLjM0MzAyIDExLjQyODkgMS4yNjQ4NSAxMS4zNzE0IDEuMjA5NTcgMTEuMjk0NEMxLjE1NDI5IDExLjIxNzUgMS4xMjQ3MSAxMS4xMjUgMS4xMjUwNiAxMS4wMzAyQzEuMTI2NSAxMC44NjQ3IDEuMTczMDQgMTAuNzAyNiAxLjI1OTY5IDEwLjU2MTVMOC42NTMxOSAxMi45MTM5QzkuMDkyNzMgMTMuMDUzOCA5LjU1MTI3IDEzLjEyNTEgMTAuMDEyNiAxMy4xMjVDMTAuMzA4MSAxMy4xMjM2IDEwLjU5MzQgMTMuMDE2NCAxMC44MTY4IDEyLjgyMjhDMTEuMDQwMiAxMi42MjkzIDExLjE4NyAxMi4zNjIyIDExLjIzMDUgMTIuMDY5OEMxMS4yNzQxIDExLjc3NzUgMTEuMjExNSAxMS40NzkyIDExLjA1NDIgMTEuMjI4OUMxMC44OTY5IDEwLjk3ODcgMTAuNjU1MyAxMC43OTMgMTAuMzcyOSAxMC43MDU1TDIuMzU4NDQgOC4yNjc5OUwyLjE0MDE5IDguOTg1NzRMMTAuMTU0NyAxMS40MjMyQzEwLjI2NDkgMTEuNDU4NSAxMC4zNTg5IDExLjUzMTggMTAuNDIgMTEuNjMwMUMxMC40ODExIDExLjcyODMgMTAuNTA1MyAxMS44NDUxIDEwLjQ4ODIgMTEuOTU5NUMxMC40NzExIDEyLjA3NCAxMC40MTM5IDEyLjE3ODYgMTAuMzI2OCAxMi4yNTQ3QzEwLjIzOTYgMTIuMzMwOCAxMC4xMjgzIDEyLjM3MzUgMTAuMDEyNiAxMi4zNzVDOS42MjgxNCAxMi4zNzUgOS4yNDYwMiAxMi4zMTU3IDguODc5NjkgMTIuMTk5MUwxLjQwMTQ0IDkuODE5MzdDMS4yMjEzMyA5LjQxNTE0IDEuMTI3MjIgOC45Nzc4OSAxLjEyNTA2IDguNTM1MzdDMS4xMjM4MiA4LjIwNjg4IDEuMjI4NTcgNy44ODY3NiAxLjQyMzc0IDcuNjIyNTVDMS42MTg5MSA3LjM1ODMzIDEuODk0MSA3LjE2NDExIDIuMjA4NDQgNy4wNjg3NEw5LjI1ODQ0IDQuODk5NzRDMTEuMDkzNyA0LjMzNTExIDEzLjA2MTEgNC4zNjkzOSAxNC44NzU2IDQuOTk3NjJMMjEuNjU3MSA3LjM0NDc0QzIyLjAwMjYgNy40NjQ0OSAyMi4zMDM5IDcuNjg1OTYgMjIuNTIxMyA3Ljk4MDA2QzIyLjczODcgOC4yNzQxNiAyMi44NjIgOC42MjcxNCAyMi44NzUxIDguOTkyNjJDMjIuODg4MiA5LjM1ODExIDIyLjc5MDUgOS43MTkwMSAyMi41OTQ3IDEwLjAyNzlDMjIuMzk4OSAxMC4zMzY4IDIyLjExNDMgMTAuNTc5MyAyMS43NzgyIDEwLjcyMzVMMjEuNzc2NyAxMC43MjVaIiBmaWxsPSIjNDM0QjVDIi8+CjwvZz4KPC9zdmc+Cg=='/> Towel</div>
+                <div class="item"><img src="{$URL_IMAGES}/hotel/detail/bath-towel.png"/> Towel</div>
                 <div class="item"><i class="fa-thin fa-circle-check fa-xl" style="color: #434b5c;"></i> Bath or Shower</div>
 				<div class="item"><i class="fa-thin fa-circle-check fa-xl" style="color: #434b5c;"></i> Private bathroom</div>
 				<div class="item"><i class="fa-thin fa-circle-check fa-xl" style="color: #434b5c;"></i> Free toiletries</div>
@@ -506,7 +508,6 @@
     </div>
 </div>
 
-
                         </div>
                     {/if}
 
@@ -522,29 +523,33 @@
                 <h2 class="title-prix">{$core->get_Lang('Add-ons')}</h2>
                 <p>{$core->get_Lang('We suggest you some')}</p>
                      <section class="sec_relate_box">
-                    <div class="content d-flex justify-content-between gap-32">
+                    <div class="content">
+						<div class="top-row">
+							{section name = i loop=$lstTour}
 						<div class="item_content">
 								<div class="list_extensions d-flex flex-direction-column">
 									<div class="item_extensions d-flex justify-content-between align-items-start">
                                 <div class="div_img img_extensions">
-                                    <img src="https://s3-alpha-sig.figma.com/img/047c/7f28/fd501ad3d83f87172b9b13d3d396b606?Expires=1719187200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=Yz-fVgXel1IQ65d3fLUVH9eOF6gTZN6uhE1QP1JLG3hTSr8IycfE~ePJ8WOgdmX4z0JNWwfMevxNcd6sA9GJN0enE7DT459L8jz7USqmqCus7FlaiGWZ8z0AaFqy6xSl2GChxF278wR6OVfzzojOvOqf70FSNZrApZfTVQ19RAwj55u-6pPEXAmuJA0HLTsiSRGngXRkwoz9srjYJKUfWy0N9QLY~Aa67HRIDH3PV9shLuJKcOFm5Ar3NsYJjCePZCxt1L~1htqgheohkKlt9GCUWTGCFd4vnH~IPFUp~qOGzw09BGJ~TA4tdhTJ-hyxPfqjPgvf-Aiq~FLWcBIOPg__" alt="Image">
+                                    <img src="{$clsTour->getImage($lstTour[i].tour_id,243,168,$arrTour)}" alt="Image">
                                 </div>
                                 <div class="content_extensions d-flex justify-content-start align-items-start gap-16 flex-direction-column">
-                                    <a href="#" class="title_extentions ellipsis_2 SF-Pro-Medium">
+                                    <a href="{$clsTour->getLink($lstTour[i].tour_id)}" class="title_extentions ellipsis_2 SF-Pro-Medium">
 										<p class="title_addon">
-                                        Splendors of Vietnam with the center’s must-sees 19 days</p>
+                                        {$lstTour[i].title}</p>
                                     </a>
                                     <div class="money">
-                                        <span class="font-size-12 color-959AA4">Form</span>
-                                        <span class="font-size-14 color-FFA718">US</span>
-                                        <span class="color-FFA718 SF-Pro-Medium">$650</span>
+                                        <span class="txt_money_from">{$core->get_Lang('Form')}</span>
+                                        <span class="txt_money_text">{$core->get_Lang('US')}</span>
+                                        <span class="txt_money_number">{$clsTour->getPriceAfterDiscount($lstTour[i].tour_id)}</span>
                                     </div>
                                 </div>
                             </div>
 								</div>
-								
-							
 							</div>
+							{/section}
+
+							</div>
+
 						</div>
                    </section>
 
@@ -645,7 +650,7 @@
                                 {if $_ChildPolicy ne ''}
                                     <div class="important_note_item">
                                         <h3 class="note_title bed">
-											<img src='data:image/svg+xml;base64, PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIj4KPG1hc2sgaWQ9Im1hc2swXzFfMjc4NTIiIHN0eWxlPSJtYXNrLXR5cGU6bHVtaW5hbmNlIiBtYXNrVW5pdHM9InVzZXJTcGFjZU9uVXNlIiB4PSIwIiB5PSIwIiB3aWR0aD0iMjQiIGhlaWdodD0iMjQiPgo8cGF0aCBkPSJNMCAxLjkwNzM1ZS0wNkgyNFYyNEgwVjEuOTA3MzVlLTA2WiIgZmlsbD0id2hpdGUiLz4KPC9tYXNrPgo8ZyBtYXNrPSJ1cmwoI21hc2swXzFfMjc4NTIpIj4KPHBhdGggZD0iTTE0LjY4MDYgMy4xNjE2MUgyMC4zNzY5QzIxLjU3MTUgMy4xNjE2MSAyMi41Mzk4IDQuMTI5OTcgMjIuNTM5OCA1LjMyNDU3VjE2LjUyNzRDMjIuNTM5OCAxNy43MjIgMjEuNTcxNSAxOC42OTA0IDIwLjM3NjkgMTguNjkwNEg0LjE2Mjk3QzIuOTY4NDEgMTguNjkwNCAyIDE3LjcyMiAyIDE2LjUyNzRWNS4zMjQ1N0MyIDQuMTI5OTcgMi45Njg0MSAzLjE2MTYxIDQuMTYyOTcgMy4xNjE2MUgxMC4xMzAzIiBzdHJva2U9IiMwMDRFQTgiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGQ9Ik0xMi4wMDkzIDIuODI3MjFDOC42ODQ1OSAyLjk2NzM2IDYuMzY3ODQgNS43OTkyNyA1LjY2MTU0IDguOTU1MjZDNS40Nzk1NSA4Ljg5NzgxIDUuNzYzNTcgOC44NjY4IDUuNTYyNTIgOC44NjY4QzQuNTA3NTggOC44NjY4IDMuNjUyMzQgOS43MjAwNCAzLjY1MjM0IDEwLjc3MjVDMy42NTIzNCAxMS44MjUxIDQuNTA3NTggMTIuNjc4MyA1LjU2MjUyIDEyLjY3ODNDNS44MDQzMyAxMi42NzgzIDUuNTU3ODkgMTIuNjMzNCA1Ljc3MDc4IDEyLjU1MTZDNi41MjExMyAxNS4xNDYzIDguMjA4ODMgMTYuNjY1NiAxMC45MDE3IDE3LjE3NzNWMTguNjg5NkgxMy42MzQzVjE3LjE3NzNDMTYuMzI3MiAxNi42NjU2IDE4LjAxNDggMTUuMTQ2MyAxOC43NjUyIDEyLjU1MTZDMTguOTc4MSAxMi42MzM0IDE4LjczMTYgMTIuNjc4MyAxOC45NzM0IDEyLjY3ODNDMjAuMDI4NCAxMi42NzgzIDIwLjg4MzYgMTEuODI1MSAyMC44ODM2IDEwLjc3MjVDMjAuODgzNiA5LjcyMDA0IDIwLjAyODQgOC44NjY4IDE4Ljk3MzQgOC44NjY4QzE4Ljc3MjQgOC44NjY4IDE5LjA1NjQgOC44OTc4MSAxOC44NzQ0IDguOTU1MjZDMTguMzQxOSA2LjU3NTQ3IDE2Ljg5MzUgNC4zNzk5MyAxNC43ODc4IDMuMzgzODQiIHN0cm9rZT0iIzAwNEVBOCIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHBhdGggZD0iTTEzLjkxMDIgMTAuMDQzVjkuMzczNzFDMTMuOTEwMiA4Ljg0NDc2IDE0LjM0IDguNDE1OTYgMTQuODcwMiA4LjQxNTk2QzE1LjQwMDQgOC40MTU5NiAxNS44MzAyIDguODQ0NzYgMTUuODMwMiA5LjM3MzcxVjEwLjA0M0gxNi4wNDk0IiBzdHJva2U9IiMwMDRFQTgiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGQ9Ik0xMC42Mjk1IDEwLjA0M1Y5LjM3MzcxQzEwLjYyOTUgOC44NDQ3NiAxMC4xOTk3IDguNDE1OTYgOS42Njk1IDguNDE1OTZDOS4xMzkzMSA4LjQxNTk2IDguNzA5NDggOC44NDQ3NiA4LjcwOTQ4IDkuMzczNzFWMTAuMDQzSDguNDkwMjMiIHN0cm9rZT0iIzAwNEVBOCIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHBhdGggZD0iTTEyLjEwODEgMS40Njg2QzExLjk5MzcgMS40Njg2IDExLjg4MSAxLjQ3NTc2IDExLjc3MDUgMS40ODk2NkMxMS45ODU2IDEuODc0OSAxMi4xMDgxIDIuMzE4NjIgMTIuMTA4MSAyLjc5MTAzQzEyLjEwODEgNC4xNTQ5OCAxMS4wODY0IDUuMjgwNjYgOS43NjU2MiA1LjQ0NjQ1QzEwLjIyMzUgNi4yNjY2OCAxMS4xMDA5IDYuODIxNTMgMTIuMTA4MSA2LjgyMTUzQzEzLjU4ODIgNi44MjE1MyAxNC43ODgxIDUuNjIzMjEgMTQuNzg4MSA0LjE0NTA3QzE0Ljc4ODEgMi42NjY5MyAxMy41ODgyIDEuNDY4NiAxMi4xMDgxIDEuNDY4NloiIHN0cm9rZT0iIzAwNEVBOCIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHBhdGggZD0iTTEzLjUyOTggMTMuMjI0NEMxMy41Mjk4IDE0LjA4NjcgMTIuOTcwNSAxNC43ODU2IDEyLjI4MDUgMTQuNzg1NkMxMS41OTA2IDE0Ljc4NTYgMTEuMDMxMiAxNC4wODY3IDExLjAzMTIgMTMuMjI0NEMxMS4wMzEyIDEyLjM2MjEgMTEuNTkwNiAxMS42NjMyIDEyLjI4MDUgMTEuNjYzMkMxMi45NzA1IDExLjY2MzIgMTMuNTI5OCAxMi4zNjIxIDEzLjUyOTggMTMuMjI0NFoiIHN0cm9rZT0iIzAwNEVBOCIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHBhdGggZD0iTTkuODM1OTQgMjJIMlYyMC4yNDI2QzIgMTkuMzg1MiAyLjY5NTExIDE4LjY5MDEgMy41NTI1NSAxOC42OTAxSDIwLjk4NzNDMjEuODQ0OCAxOC42OTAxIDIyLjUzOTggMTkuMzg1MiAyMi41Mzk4IDIwLjI0MjZWMjJIMTQuNzA0IiBzdHJva2U9IiMwMDRFQTgiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjwvZz4KPC9zdmc+'style="margin-right: 8px"/>
+											<img src="{$URL_IMAGES}/hotel/detail/icon_baby.png" style="margin-right: 8px"/>
                                             {$core->get_Lang('Children and beds')}
                                         </h3>
                                         <div class="box_right">
@@ -711,8 +716,6 @@
                                             ({$clsReviews->getReviews($hotel_id)} {$core->get_Lang('reviews')})
                                         </p>
                                     </div>
-
-
                                 </div>
                             </div>
                             <div class="col-lg-7 measure-evaluation-txt">
@@ -796,7 +799,7 @@
 
                     <p class="content_review">{$lstReviews[i].content}</p>
 
-                    <button class="view_more_review d-none">View more</button>
+                    <p class="view_more_review">View more</p>
 
                 </div>
 
@@ -890,6 +893,22 @@
 		
 		if ($('.unika_header').hasClass('unika_header_2')) {
                 $('.unika_header').removeClass('unika_header_2');
+            }
+		
+		            window.onscroll = function() {
+
+                if (window.scrollY >= 630) {
+
+                    $('.class-tour').addClass('list_nav_fixed');
+
+                    $(".unika_true").removeClass('unika_header');
+
+                } else {
+
+                    $('.class-tour').removeClass('list_nav_fixed');
+
+                }
+
             }
 
 var otherPolicy = '{$oneItem.other_policy|unescape}';
@@ -991,8 +1010,6 @@ var otherPolicy = '{$oneItem.other_policy|unescape}';
         }
     });
 			
-
-			
 			var link = document.querySelector('link[href="vietisocms.css"]');
 
 
@@ -1068,33 +1085,6 @@ links.forEach(link => {
     });
 });
 
-			
-			
-window.addEventListener('load', function() {
-  const overviewContent = document.querySelector('.overview-content');
-  const viewMoreLessBtn = document.querySelector('.btn_viewmoreless');
-
-  const lineHeight = parseFloat(getComputedStyle(overviewContent).lineHeight);
-  const maxLines = 6;
-
-  // Khởi tạo trạng thái ban đầu là ẩn bớt
-  overviewContent.style.maxHeight = (lineHeight * maxLines) + 'px';
-  viewMoreLessBtn.textContent = 'View more';
-  viewMoreLessBtn.style.display = 'block'; // Luôn hiển thị nút
-
-  viewMoreLessBtn.addEventListener('click', function() {
-    if (overviewContent.style.maxHeight !== 'none') { // Kiểm tra xem có đang ẩn bớt không
-      overviewContent.style.maxHeight = 'none';
-      viewMoreLessBtn.textContent = 'View less';
-    } else {
-      overviewContent.style.maxHeight = (lineHeight * maxLines) + 'px';
-      viewMoreLessBtn.textContent = 'View more';
-    }
-  });
-});
-
-
-			
 			document.addEventListener('DOMContentLoaded', function() {
     // Chọn tất cả các liên kết có data-target=".scroll_reviews"
     const links = document.querySelectorAll('[data-target=".scroll_reviews"]');
@@ -1135,21 +1125,117 @@ window.addEventListener('load', function() {
     });
 });
 			
-			$(document).ready(function() {
-    // Fancybox cho các hình nhỏ
-    $('.list_image_small [data-fancybox="gallery-hotel"]').fancybox({
-        loop: true,
-        // Các tùy chọn khác cho hình nhỏ (nếu cần)
-    });
+			// Lấy tất cả các liên kết trong thanh trượt
+const navLinks = document.querySelectorAll('.scroll-nav a.nav-link');
 
-    $('.view_all').on('click', function() {
-        // Kích hoạt Fancybox, bắt đầu từ hình nhỏ đầu tiên
-        $.fancybox.open($('.list_image_small [data-fancybox="gallery-hotel"]'));
+navLinks.forEach(link => {
+    link.addEventListener('click', (event) => {
+        event.preventDefault(); // Ngăn hành vi mặc định của liên kết
 
-        return false; // Ngăn chặn hành vi mặc định của liên kết
+        const targetId = link.getAttribute('data-target');
+        const targetElement = document.querySelector(targetId);
+
+        // Lấy vị trí của phần tử mục tiêu
+        const targetRect = targetElement.getBoundingClientRect();
+
+        // Cuộn phần tử cha (scroll-nav) để targetElement hiển thị ở vị trí mong muốn
+        window.scrollTo({
+            top: targetRect.top + window.pageYOffset - 230, // Điều chỉnh vị trí cuộn
+            behavior: 'smooth' // Cuộn mượt mà
+        });
     });
 });
+
 			
+			
+			$(window).scroll(function() {
+  requestAnimationFrame(function() {
+    if ($(window).scrollTop() === 0) {
+      $('.unika_header').removeClass('unika_header_2 !important');
+    } 
+  });
+});
+			
+var prevScrollpos = window.pageYOffset;
+$(window).scroll(function() {
+  var currentScrollPos = window.pageYOffset;
+  if (prevScrollpos > currentScrollPos) {
+    $('.unika_header').addClass('fixed'); // Thêm lại lớp 'fixed' khi cuộn lên
+  } else {
+    $('.unika_header').removeClass('fixed'); // Loại bỏ lớp 'fixed' khi cuộn xuống
+  }
+  prevScrollpos = currentScrollPos;
+});
+			
+			   $('.list_reviews').each(function() {
+
+                var moreText = $(this).find('.content_review');
+
+                var toggleButton = $(this).find('.view_more_review');
+
+
+
+                if (moreText[0].scrollHeight <= 72) {
+
+                    toggleButton.hide(); // Hide the button if content height is less than or equal to 50px
+
+                }
+
+            });
+
+            $('.view_more_review').click(function() {
+
+                var moreText = $(this).prev('.content_review');
+
+
+
+                if (moreText.hasClass('expanded')) {
+
+                    moreText.removeClass('expanded');
+
+                    $(this).text('View More');
+
+                    moreText.css({'max-height': '72px'});
+
+                } else {
+
+                    moreText.addClass('expanded');
+
+                    $(this).text('View Less');
+
+                    moreText.css({'max-height': moreText[0].scrollHeight + 'px', '-webkit-line-clamp': 'unset'});
+
+                }
+
+            });
+
+			
+			window.addEventListener('load', function() {
+  const overviewContent = document.querySelector('.overview-content');
+  const viewMoreLessBtn = document.querySelector('.btn_viewmoreless');
+
+  const lineHeight = parseFloat(getComputedStyle(overviewContent).lineHeight);
+  const maxLines = 6;
+
+  // Khởi tạo trạng thái ban đầu là ẩn bớt
+  overviewContent.style.maxHeight = (lineHeight * maxLines) + 'px';
+  viewMoreLessBtn.textContent = 'View more';
+  viewMoreLessBtn.style.display = 'block'; // Luôn hiển thị nút
+
+  viewMoreLessBtn.addEventListener('click', function() {
+    if (overviewContent.style.maxHeight !== 'none') { // Kiểm tra xem có đang ẩn bớt không
+      overviewContent.style.maxHeight = 'none';
+      viewMoreLessBtn.textContent = 'View less';
+    } else {
+      overviewContent.style.maxHeight = (lineHeight * maxLines) + 'px';
+      viewMoreLessBtn.textContent = 'View more';
+    }
+  });
+});
+
+
+
+
 			
 
 			

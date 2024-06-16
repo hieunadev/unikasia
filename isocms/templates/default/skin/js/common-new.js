@@ -124,7 +124,7 @@ $(document).ready(function () {
             let isScrolled = $(this).scrollTop() > 0;
             let unika_header = $('.unika_header');
             if(unika_header.hasClass('unika_true')){
-                if ((mod === 'guide' && act === 'detail') || (mod === 'guide' && act === 'tag') || (mod === 'destination' && act === 'place') || (mod === 'tour' && act === 'cat') || (mod === 'guide' && act === 'cat')) {
+                if ((mod === 'guide' && act === 'detail') || (mod === 'guide' && act === 'tag') || (mod === 'destination' && act === 'place') || (mod === 'tour' && act === 'cat') || (mod === 'guide' && act === 'cat') || (mod === 'tour' && act === 'detaildeparture')) {
                     //
                 } else {
                     if(isScrolled){

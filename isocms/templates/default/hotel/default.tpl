@@ -159,11 +159,35 @@
     var $_Expand_all = '{$core->get_Lang("Expand all")}';
     var $_Collapse_all = '{$core->get_Lang("Collapse all")}';
     var $_LANG_ID = '{$_LANG_ID}';
-
-    $(".btn-close").click(function(){
-        $(this).closest('.mapModal').remove();
-    });
 </script>
+
+{literal}
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+  // Lấy tham chiếu đến modal
+  var mapModal = document.getElementById('mapModal{$hotel_id}'); 
+
+  // Lấy tham chiếu đến nút đóng
+  var closeButton = mapModal.querySelector('.btn-close');
+
+  // Thêm sự kiện click cho nút đóng
+  closeButton.addEventListener('click', function () {
+    mapModal.classList.remove('show'); // Gỡ bỏ lớp 'show' để ẩn modal
+    mapModal.style.display = 'none';    // Thêm display: none để chắc chắn modal bị ẩn hoàn toàn
+  });
+
+  // Thêm sự kiện click cho toàn bộ document
+  document.addEventListener('click', function (event) {
+    // Kiểm tra xem click có nằm ngoài modal không
+    if (event.target === mapModal) { 
+      mapModal.classList.remove('show'); // Gỡ bỏ lớp 'show'
+      mapModal.style.display = 'none';    // Thêm display: none
+    }
+  });
+});
+
+</script>
+{/literal}
 
 <script src="{$URL_JS}/jquery.countdown.min.js?v={$upd_version}"></script>
 <script src="{$URL_JS}/jquery-confirm.min.js?v={$upd_version}"></script>

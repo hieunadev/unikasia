@@ -10,7 +10,7 @@
 				</h3>
 				<p class="intro_box mb40">{$core->get_Lang('Price_Config_Notes')}</p>
 				<div class="form_option_tour mb40">
-					<div class="form-group mb40">
+					<div class="form-group mb40" style="display:none;">
 						<label class="col-form-label text-bold">{$core->get_Lang('Price class')} <span class="text-red">*</span></label>
 						<div class="admin-toolbar-action mt-0">
 							<a class="text-link" href="{$PCMS_URL}/?&mod=tour_exhautive&act=property&type=TOUROPTION" target="_blank"> {$core->get_Lang('Manage')}</a>
@@ -18,7 +18,7 @@
 						<div id="slb_ContainerTourOption">
 							<select name="tour_option[]" id="tour_option" class="required chosen-select required" multiple="multiple">
 								{assign var = selected value = $oneItem.tour_option}
-								{$clsTourOption->makeSelectboxOption2($selected,'TOUROPTION',0)}
+								{$clsTourOption->makeSelectboxOption2(80,'TOUROPTION',0)}
 								{$selected}
 							</select>
 						</div>
@@ -30,7 +30,6 @@
 						<div class="admin-toolbar-action mt-0">
 							<a class="text-link" href="{$PCMS_URL}/?&mod=tour_exhautive&act=property&type=SIZEGROUP" target="_blank"> {$core->get_Lang('Manage')}</a>
 						</div>
-						{$adult_type_id}
 						<div id="slb_ContainerAdultSizeGroup">
 							<select name="adult_size_group[]" id="adult_size_group" class="chosen-select required" multiple="multiple">
 								{assign var = selected value = $oneItem.adult_group_size}
@@ -66,7 +65,7 @@
 										</select>
 									</div>
 								</div>
-								
+
 							{/section}*}
 						</div>
 					</div>

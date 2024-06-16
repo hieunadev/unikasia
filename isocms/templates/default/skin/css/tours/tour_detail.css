@@ -1,5 +1,5 @@
 /* Header */
-.tour_detaildeparture_body #header_fixed {
+/*.tour_detaildeparture_body #header_fixed {
     box-shadow: rgba(125, 135, 158, 0.09) 0px 12px 32px 0px;
 }
 .tour_detaildeparture_body .txt_header1 {
@@ -29,9 +29,13 @@
 .tour_detaildeparture_body .fa-angle-down {
     --bs-text-opacity: 1;
     color: rgba(var(--bs-secondary-rgb),var(--bs-text-opacity))!important;
-}
+}*/
 
 /* Common */
+
+.error {
+    border: 2px solid red;
+}
 .location-info p{
     margin-bottom: 0;
 }
@@ -399,6 +403,13 @@
 
 .top-section .list_nav {
     cursor: pointer;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 32px;
 }
 .list_nav_fixed {
     position: fixed;
@@ -433,16 +444,17 @@
 .nav-link.active {
     font-weight: bold;
 }
-
+/*
 
 .nav {
     list-style: none;
     padding: 0;
     margin: 0;
     display: flex;
-    justify-content: space-between; /* Căn đều các phần tử con trong nav */
+    justify-content: space-between;
     align-items: center;
-}
+    gap: 32px
+}*/
 
 .nav-item.price-box {
     display: flex;
@@ -738,7 +750,7 @@
     font-weight: 400;
     line-height: 24px;
 }
-.select_pricetour .box_age_child {
+.select_pricetour .box_age_child, .box_age_infants {
     display: flex;
     gap: 12px;
     flex-wrap: wrap;

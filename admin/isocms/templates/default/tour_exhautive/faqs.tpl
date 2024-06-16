@@ -12,7 +12,7 @@
     <div class="container-fluid container-fluid-2 d-flex">
         {$core->getBlock('menu_tour_exhautive_setting')}
 
-        <div class="page_container">
+        <div class="page_container w-100">
             <div class="page-title d-flex">
                 <div class="title">
                     <h2>{$core->get_Lang('faqs')} <div class="info_module" data-toggle="tooltip" data-placement="right" title="Chức năng quản lý danh sách {$core->get_Lang('faqs')} trong hệ thống isoCMS">i</div>
@@ -68,7 +68,6 @@
                             <th class="gridheader" style="width:40px"><input id="check_all" type="checkbox" /></th>
                             <th class="gridheader hiden767" style="width:60px"><strong>{$core->get_Lang('ID')}</strong></th>
                             <th class="gridheader name_responsive" style="text-align:left"><strong>{$core->get_Lang('Name')}</strong></th>
-                            <th class="gridheader name_responsive" style="text-align:left"><strong>{$core->get_Lang('Country')}</strong></th>
                             <th class="gridheader hiden_responsive" style="width:60px"><strong>{$core->get_Lang('status')}</strong></th>
                             <th class="gridheader hiden_responsive" style="width:120px;" align="center"><strong>{$core->get_Lang('update')}</strong></th>
                             <th class="gridheader hiden_responsive" style="width:70px"><strong>{$core->get_Lang('func')}</strong></th>
@@ -85,7 +84,6 @@
                                     {if $allItem[i].is_trash eq '1'}<span class="fr" style="color:#CCC">{$core->get_Lang('intrash')}</span>{/if}
                                     <button type="button" class="toggle-row inline_block767" style="display:none"><i class="fa fa-caret fa-caret-down"></i></button>
                                 </td>
-                                <td class="block_responsive">{$clsCountry->getTitle($allItem[i].country_id)}</td>
                                 <td data-title="{$core->get_Lang('status')}" class="block_responsive border_top_responsive" style="text-align:center">
                                     <a href="javascript:void(0);" class="SiteClickPublic" clsTable="FAQ" pkey="faq_id" sourse_id="{$allItem[i].faq_id}" rel="{$clsClassTable->getOneField('is_online',$allItem[i].faq_id)}" title="{$core->get_Lang('Click to change status')}">
                                         {if $clsClassTable->getOneField('is_online',$allItem[i].faq_id) eq '1'}
@@ -124,7 +122,7 @@
             var $recordPerPage = '{$recordPerPage}';
             var $currentPage = '{$currentPage}';
         </script>
-        <script type="text/javascript" src="{$URL_THEMES}/faqs/jquery.faqs.new.js?v={$upd_version}"></script>
+{*        <script type="text/javascript" src="{$URL_THEMES}/faqs/jquery.faqs.new.js?v={$upd_version}"></script>*}
         {literal}
             <script type="text/javascript">
                 $("#SortAble").sortable({

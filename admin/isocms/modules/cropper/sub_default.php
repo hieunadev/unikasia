@@ -25,7 +25,7 @@ function default_upload_image()
     $clsTable = Input::post('clsTable');
     $openFrom = Input::post('openFrom');
     $table_id = (int) Input::post('table_id', 0);
-    $toField = ($openFrom == 'image_hotel_sub') ? Input::post('toField', 'image_hotel_sub'):Input::post('toField', 'image');
+    $toField = ($openFrom == 'image_hotel_sub') ? Input::post('toField', 'image_hotel_sub') : Input::post('toField', 'image');
     // print_r($toField);die();
     $imgdata = Input::post('imgdata');
     $filename = Input::post('filename', "");
@@ -121,18 +121,12 @@ function default_upload_gallery()
     // error_reporting(E_ALL);
     global $dbconn, $assign_list, $_CONFIG, $_SITE_ROOT, $mod, $_LANG_ID, $act, $menu_current, $current_page, $core, $clsModule;
     global $clsConfiguration, $clsISO, $package_id;
-
+    #
     $tp                 =   Input::post('tp', "_crop");
     $table_id           =   (int) Input::post('table_id', 0);
     $clsTableGal        =   Input::post('clsTableGal');
     $clsClassTableGal   =   new $clsTableGal();
-
-    // $clsISO->dump($tp);
-    // $clsISO->dump($table_id);
-    // $clsISO->dump($clsTableGal);
-    // $clsISO->dump($clsClassTableGal);
-    // die;
-
+    #
     if ($clsTableGal == "Voucher") {
         $clsClassTableGal = new Image();
     }
@@ -171,7 +165,7 @@ function default_upload_gallery()
         #
         foreach ($list_images as $key => $image) {
             if (!empty($image) && file_exists(ABSPATH . $image)) {
-                if ($clsClassTableGal->insert(array(
+                $arr_data   =   array(
                     $clsClassTableGal->pkey =>  $clsClassTableGal->getMaxId(),
                     'type'      =>  $clsTableGal,
                     'table_id'  =>  $table_id,
@@ -183,8 +177,8 @@ function default_upload_gallery()
                     'is_trash'  =>  0,
                     'is_online' =>  1,
                     'lang_id'   =>  ''
-
-                ))) {
+                );
+                if ($clsClassTableGal->insert($arr_data)) {
                     $msg    =   'success';
                 }
             }
