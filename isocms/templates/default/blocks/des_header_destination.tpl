@@ -23,10 +23,6 @@
 {literal}
 <style>
     .destination_place_body .bground_header {
-        /* background: linear-gradient(rgba(24, 28, 26, 0.4), rgba(24, 28, 26, 0.4)),
-            url("https://unikasia.vietiso.com/isocms/templates/default/skin/images/destination/bg_des.png");
-        background-repeat: no-repeat;
-        background-size: cover; */
         position: relative;
     }
 
@@ -63,7 +59,6 @@
         line-height: normal;
         letter-spacing: -2.61px;
         text-transform: uppercase;
-
     }
 
     .des_header_intro {

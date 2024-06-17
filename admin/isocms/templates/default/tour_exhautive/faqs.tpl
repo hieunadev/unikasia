@@ -100,13 +100,13 @@
                                             <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                                         </button>
                                         <ul class="dropdown-menu" style="right:0px !important">
-                                            {if $allItem[i].is_trash eq '0'}
-                                                <li><a title="{$core->get_Lang('edit')}" href="{$PCMS_URL}/faqs/insert/{$allItem[i].faq_id}/overview"><i class="icon-edit"></i> <span>{$core->get_Lang('edit')}</span></a></li>
-                                                <li><a title="{$core->get_Lang('trash')}" href="{$PCMS_URL}/?mod={$mod}&act=trash&faq_id={$core->encryptID($allItem[i].faq_id)}{$pUrl}"><i class="icon-trash"></i> <span>{$core->get_Lang('trash')}</span></a></li>
-                                            {else}
-                                                <li><a title="{$core->get_Lang('restore')}" href="{$PCMS_URL}/?mod={$mod}&act=restore&faq_id={$core->encryptID($allItem[i].faq_id)}{$pUrl}"><i class="icon-refresh"></i> <span>{$core->get_Lang('restore')}</span></a></li>
-                                                <li><a title="{$core->get_Lang('delete')}" class="confirm_delete" href="{$PCMS_URL}/?mod={$mod}&act=delete&faq_id={$core->encryptID($allItem[i].faq_id)}{$pUrl}"><i class="icon-remove"></i> <span>{$core->get_Lang('delete')}</span></a></li>
-                                            {/if}
+{*                                            {if $allItem[i].is_trash eq '0'}*}
+                                                <li><a title="{$core->get_Lang('edit')}" href="{$PCMS_URL}/faqs/insert/{$allItem[i].faq_id}/overview?type=tour"><i class="icon-edit"></i> <span>{$core->get_Lang('edit')}</span></a></li>
+                                                <li><a title="{$core->get_Lang('delete')}" class="confirm_delete" href="{$PCMS_URL}/?mod={$mod}&act=delete_faq&faq_id={$core->encryptID($allItem[i].faq_id)}{$pUrl}?type=tour"><i class="icon-remove"></i> <span>{$core->get_Lang('delete')}</span></a></li>
+{*                                            {else}*}
+{*                                                <li><a title="{$core->get_Lang('restore')}" href="{$PCMS_URL}/?mod={$mod}&act=restore&faq_id={$core->encryptID($allItem[i].faq_id)}{$pUrl}?type=tour"><i class="icon-refresh"></i> <span>{$core->get_Lang('restore')}</span></a></li>*}
+{*                                                <li><a title="{$core->get_Lang('delete')}" class="confirm_delete" href="{$PCMS_URL}/?mod={$mod}&act=delete&faq_id={$core->encryptID($allItem[i].faq_id)}{$pUrl}?type=tour"><i class="icon-remove"></i> <span>{$core->get_Lang('delete')}</span></a></li>*}
+{*                                            {/if}*}
                                         </ul>
                                     </div>
                                 </td>
@@ -122,7 +122,7 @@
             var $recordPerPage = '{$recordPerPage}';
             var $currentPage = '{$currentPage}';
         </script>
-{*        <script type="text/javascript" src="{$URL_THEMES}/faqs/jquery.faqs.new.js?v={$upd_version}"></script>*}
+        <script type="text/javascript" src="{$URL_THEMES}/faqs/jquery.faqs.new.js?v={$upd_version}"></script>
         {literal}
             <script type="text/javascript">
                 $("#SortAble").sortable({

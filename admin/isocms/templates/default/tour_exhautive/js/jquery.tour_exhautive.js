@@ -442,7 +442,8 @@ $_document.ready(function () {
 		return false;
 	});
 
-    if(act != 'default' && act != 'edit_itinerary' && act != 'property'  && act != 'group' && act != 'price_range' && act != 'category_country' && act != 'insert_category_country' && act != 'store' && act != 'insert_why_travelstyle_country'){
+    if(act != 'default' && act != 'edit_itinerary' && act != 'property'  && act != 'group' && act != 'price_range' && act != 'category_country' && act != 'insert_category_country' && act != 'store' && act != 'insert_why_travelstyle_country'
+		&& act != 'faqs'){
         if(slug){
             openURL(url);
         }else{

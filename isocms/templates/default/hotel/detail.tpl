@@ -707,7 +707,7 @@
                             <div class="col-lg-3 measure-evaluation">
                                 <div class="box_score">
 
-                                    <div class="semi-donut margin" style="--percentage : {($clsReviews->getReviews($oneItem.hotel_id, 'avg_point') / 5) * 100}; --fill: #FFBA55 ;">
+                                    <div class="semi-donut margin cirle_semi" style="--percentage : {($clsReviews->getReviews($oneItem.hotel_id, 'avg_point') / 5) * 100}; --fill: #FFBA55 ;">
                                     </div>
                                     <div class="score_text">
                                         <h3>{$clsReviews->getReviews($oneItem.hotel_id, 'avg_point')}</h3>

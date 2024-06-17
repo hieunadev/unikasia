@@ -407,6 +407,10 @@ body {
 .des_our_team_content_img {
     text-align: center;
 }
+.des_our_team_content_img img {
+    width: 100%;
+    height: auto;
+}
 .des_our_team_list {
     border-radius: 8px;
     background: var(--Primary, #ffa718);
@@ -819,6 +823,9 @@ footer a:hover {
         top: 50%;
         transform: translateY(-50%);
         right: 0;
+    }
+    .des_header_bg {
+        display: none;
     }
 }
 @media screen and (max-width: 414px) {

@@ -1049,6 +1049,15 @@ ul.timeline .accordion-item{
     margin-right: 15px;
 }
 
+.numbtxtbook .txt_desus {
+    color: var(--Neutral-2, #434B5C);
+    font-size: 14px;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 20px;
+    margin-bottom: 0;
+}
+
 .price-wrapper {
     display: flex;
     align-items: baseline;

@@ -32,8 +32,8 @@
                 <div class="container">
                     <div class="unika_container">
                         <a href="/" class="logo">
-                            <img class="unika_img_logo_1" src="https://unikasia.vietiso.com/isocms/templates/default/skin/images/home/logo_header_2.png" alt="Logo">
-                            <img class="unika_img_logo_2" src="https://unikasia.vietiso.com/uploads//Demo/image-6.png" alt="Logo">
+                            <img class="unika_img_logo_1" src="https://unikasia.vietiso.com/isocms/templates/default/skin/images/home/logo_header_2.png" alt="Logo" width="143" height="53">
+                            <img class="unika_img_logo_2" src="https://unikasia.vietiso.com/uploads//Demo/image-6.png" alt="Logo" width="143" height="53">
                         </a>
                         <nav class="unika_menu menu navbar navbar-expand-lg bg-body-tertiary">
                             <div class="container-fluid unika_container-fluid">
@@ -66,7 +66,7 @@
                                                         <div class="unika_destination_img">
                                                             {section name=i loop=$lstCountry}
                                                             <div class="unika_img_country unika_div_img unika_img{$lstCountry[i].country_id} {if $smarty.section.i.index eq 0} active {/if}">
-                                                                <img id="img_{$lstCountry[i].slug}" src="{$lstCountry[i].image_sub}" onerror="this.src='https://unikasia.vietiso.com/isocms/templates/default/skin/images/none_image.png'" alt="{$lstCountry[i].title}" class="active">
+                                                                <img id="img_{$lstCountry[i].slug}" src="{$lstCountry[i].image_sub}" onerror="this.src='https://unikasia.vietiso.com/isocms/templates/default/skin/images/none_image.png'" alt="{$lstCountry[i].title}" class="active" width="344" height="434">
                                                             </div>
                                                             {/section}
                                                         </div>
@@ -83,7 +83,7 @@
                                                         {section name=i loop=$lstCountry}
                                                         <a href="{$clsCountryEx->getLink($lstCountry[i].country_id, " Hotel")}" class="unika_stay_item">
                                                             <div class="unika_div_img unika_stay_img">
-                                                                <img src="{$lstCountry[i].image_hotel_sub}" onerror="this.src='{$URL_IMAGES}/none_image.png'" alt="{$lstCountry[i].slug}">
+                                                                <img src="{$lstCountry[i].image_hotel_sub}" onerror="this.src='{$URL_IMAGES}/none_image.png'" alt="{$lstCountry[i].slug}" width="166" height="261">
                                                             </div>
                                                             <div class="unika_stay_txt">
                                                                 {$lstCountry[i].title}
@@ -101,86 +101,38 @@
                                                 <ul class="dropdown-menu unika_cruises_dropdown-menu">
                                                     <div class="unika_cruises">
                                                         <div class="unika_cruises_left">
+                                                            {if $cfg_cate ne ''}
+                                                            {foreach from=$cfg_cate key=key item=item}
+                                                            {assign var="CountryID" value=$item.info[0]}
+                                                            {assign var="Child" value=$item.child}
                                                             <li>
-                                                                <div class="unika_dropdown_cruises" data-img="https://unikasia.vietiso.com/uploads//content/233-366.jpg">
+                                                                <div class="unika_dropdown_cruises">
                                                                     <a class="dropdown-item">
-                                                                        Vietnam
+                                                                        {$clsCountryEx->getTitle($CountryID)}
                                                                         <i class="fas fa-angle-right ms-1" aria-hidden="true"></i>
                                                                     </a>
                                                                     <div class="unika_cruises_hover active">
                                                                         <div class="unika_hover_content active">
-                                                                            <a class="unika_hover_item" href="#" data-img="https://unikasia.vietiso.com/uploads//Demo/Rectangle-10499.png">Ha Long Bay Cruise</a>
-                                                                            <a class="unika_hover_item" href="#" data-img="https://unikasia.vietiso.com/uploads//Demo/Rectangle-5-(5).png">Mekong Cruise</a>
-                                                                            <a class="unika_hover_item" href="#" data-img="https://unikasia.vietiso.com/uploads//Demo/Rectangle-10498.png">Cruise 7 days 8 nights</a>
+                                                                            {if $Child ne ''}
+                                                                            {foreach from=$Child key=k item=i}
+                                                                            {assign var="CatCountryID" value=$i.cruise_cat_country_id}
+                                                                            {assign var="CatID" value=$i.cat_id}
+                                                                            <a class="unika_hover_item" href="{$clsCruiseCatCountry->getLink($CatCountryID)}" data-img="{$clsCruiseCatCountry->getBannerImageVertical($CatCountryID, 344, 434)}">
+                                                                                {$clsCruiseCat->getTitle($CatID)}
+                                                                            </a>
+                                                                            {/foreach}
+                                                                            {/if}
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </li>
-                                                            <li>
-                                                                <div class="unika_dropdown_cruises" data-img="https://unikasia.vietiso.com/uploads//Demo/Rectangle-10499.png">
-                                                                    <a class="dropdown-item" href="#">
-                                                                        Cambodia
-                                                                        <i class="fas fa-angle-right ms-1" aria-hidden="true"></i>
-                                                                    </a>
-                                                                    <div class="unika_cruises_hover">
-                                                                        <div class="unika_hover_content">
-                                                                            <a class="unika_hover_item" href="#" data-img="https://unikasia.vietiso.com/uploads//Demo/Rectangle-10499.png">Ha Long Bay Cruise</a>
-                                                                            <a class="unika_hover_item" href="#" data-img="https://unikasia.vietiso.com/uploads//Demo/Rectangle-5-(5).png">Mekong Cruise</a>
-                                                                            <a class="unika_hover_item" href="#" data-img="https://unikasia.vietiso.com/uploads//Demo/Rectangle-10498.png">Cruise 7 days 8 nights</a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="unika_dropdown_cruises" data-img="https://unikasia.vietiso.com/uploads//Demo/Rectangle-5-(5).png">
-                                                                    <a class="dropdown-item" href="#">
-                                                                        Thailand
-                                                                        <i class="fas fa-angle-right ms-1" aria-hidden="true"></i>
-                                                                    </a>
-                                                                    <div class="unika_cruises_hover">
-                                                                        <div class="unika_hover_content">
-                                                                            <a class="unika_hover_item" href="#" data-img="https://unikasia.vietiso.com/uploads//Demo/Rectangle-10499.png">Ha Long Bay Cruise</a>
-                                                                            <a class="unika_hover_item" href="#" data-img="https://unikasia.vietiso.com/uploads//Demo/Rectangle-5-(5).png">Mekong Cruise</a>
-                                                                            <a class="unika_hover_item" href="#" data-img="https://unikasia.vietiso.com/uploads//Demo/Rectangle-10498.png">Cruise 7 days 8 nights</a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="unika_dropdown_cruises" data-img="https://unikasia.vietiso.com/uploads//Demo/Rectangle-10498.png">
-                                                                    <a class="dropdown-item" href="#">
-                                                                        Laos
-                                                                        <i class="fas fa-angle-right ms-1" aria-hidden="true"></i>
-                                                                    </a>
-                                                                    <div class="unika_cruises_hover">
-                                                                        <div class="unika_hover_content">
-                                                                            <a class="unika_hover_item" href="#" data-img="https://unikasia.vietiso.com/uploads//Demo/Rectangle-10499.png">Ha Long Bay Cruise</a>
-                                                                            <a class="unika_hover_item" href="#" data-img="https://unikasia.vietiso.com/uploads//Demo/Rectangle-5-(5).png">Mekong Cruise</a>
-                                                                            <a class="unika_hover_item" href="#" data-img="https://unikasia.vietiso.com/uploads//Demo/Rectangle-10498.png">Cruise 7 days 8 nights</a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="unika_dropdown_cruises" data-img="https://unikasia.vietiso.com/uploads//Demo/Myanmar.png">
-                                                                    <a class="dropdown-item" href="#">
-                                                                        Myanmar
-                                                                        <i class="fas fa-angle-right ms-1" aria-hidden="true"></i>
-                                                                    </a>
-                                                                    <div class="unika_cruises_hover">
-                                                                        <div class="unika_hover_content">
-                                                                            <a class="unika_hover_item" href="#" data-img="https://unikasia.vietiso.com/uploads//Demo/Rectangle-10499.png">Ha Long Bay Cruise</a>
-                                                                            <a class="unika_hover_item" href="#" data-img="https://unikasia.vietiso.com/uploads//Demo/Rectangle-5-(5).png">Mekong Cruise</a>
-                                                                            <a class="unika_hover_item" href="#" data-img="https://unikasia.vietiso.com/uploads//Demo/Rectangle-10498.png">Cruise 7 days 8 nights</a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </li>
+                                                            {/foreach}
+                                                            {/if}
                                                         </div>
                                                         <div class="unika_cruises_right">
                                                             <div class="unika_right active">
                                                                 <div class="unika_cruises_img unika_div_img">
-                                                                    <img src="https://unikasia.vietiso.com/uploads//content/233-366.jpg" alt="Image">
+                                                                    <img src="{$clsCruiseCatCountry->getBannerImageVertical($cfg_cate_first, 344, 434)}" alt="Image" width="344" height="434">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -290,7 +242,7 @@
         {if $mod eq 'hotel' && $act eq 'default'}
         {$core->getBlock('des_header_stay')}
         {/if}
-        {if $mod eq 'cruise' && $act eq 'cat2'}
+        {if $mod eq 'cruise' && $act eq 'cat'}
         {$core->getBlock('des_header_cruise')}
         {/if}
     </div>

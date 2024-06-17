@@ -177,7 +177,7 @@ $(function () {
         $('.value_travelers').each(function() {
             if (parseInt($(this).text().trim()) > 0) {
                 valid = true;
-                return false; // Thoát khỏi vòng lặp khi tìm được một giá trị lớn hơn 0
+                return false;
             }
         });
         return valid;

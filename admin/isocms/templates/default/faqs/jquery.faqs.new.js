@@ -1,6 +1,6 @@
 $().ready(function () {
     $(document).on("click", '.add_new_faq:not(".disable")', function (ev) {
-        $(this).addClass("disable");
+        // $(this).addClass("disable");
         $.ajax({
             type: "POST",
             url:
@@ -1245,8 +1245,10 @@ $().ready(function () {
 });
 
 function loadMainFormStep(table_id, currentstep) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const type = urlParams.get('type') ?? "";
     $Core.util.toggleIndicatior(1);
-    var $_adata = { table_id: table_id, currentstep: currentstep };
+    var $_adata = { table_id: table_id, currentstep: currentstep, type: type};
     $.post(
         path_ajax_script + "/index.php?mod=" + mod + "&act=getMainFormStep",
         $_adata,

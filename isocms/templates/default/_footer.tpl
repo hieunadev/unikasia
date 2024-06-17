@@ -1,165 +1,193 @@
-{assign var=Copyright value=Copyright_|cat:$_LANG_ID}
-{assign var=CompanyAddress value=CompanyAddress_|cat:$_LANG_ID}
-{assign var=CompanyName value=CompanyName_|cat:$_LANG_ID}
-{assign var=CompanyAddress1 value=CompanyAddress1_|cat:$_LANG_ID}
-{assign var = DescriptionZoneFooter value = DescriptionZoneFooter_|cat:$_LANG_ID}
-{if $mod ne 'cart'}
-{if $act ne 'success'}
-<section class=" bg-footer">
+<div class="unika_footer">
     <div class="container">
-        <footer class="d-flex flex-wrap justify-content-between align-items-center">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-4 col-md-5 col-sm-6">
-                        <form method="post" action="#" class="form-sub">
-                            <div class="footer-filters">
-                                <div class="search"><input type="text" class="form-control" id="validationTooltip05" required placeholder="Entrer your email" oninvalid="this.setCustomValidity('{$core->get_Lang('Vui lòng điền vào trường này')}')">
-                                    <button type="submit" class="btn-hover-home">Submit</button>
-                                </div>
-                            </div>
-                        </form>
-                        <h3 class="txtfindus">Unikasia Travel</h3>
-                        <p class="txtheadersmll absolute-bar">
-                            <a href="#">
-                                {assign var=CompanyAddress1 value=CompanyAddress1_|cat:$_LANG_ID}
-                                <span class="txtadress">{$clsConfiguration->getValue($CompanyAddress1)}
-                                </span>
-                            </a>
-                        </p>
-                        <p class="txtheadersmll absolute-bar">
-                            <a href="{$clsConfiguration->getValue('CompanyWebsite')}">
-                                <span class="txtwebsite">{$clsConfiguration->getValue('CompanyWebsite')}</span>
-                            </a>
-                        </p>
-                        <p class="txtheadersmll absolute-bar">
-                            <a href="mailto:{$clsConfiguration->getValue('CompanyEmail')}">
-                                <span class="txtwebsite">{$clsConfiguration->getValue('CompanyEmail')}
-                                </span>
-                            </a>
-                        </p>
-                        <p class="txtheadersmll absolute-bar">
-                            <a href="tel:{$clsConfiguration->getValue('CompanyPhone')}">
-                                <span class="txtwebsite">{$clsConfiguration->getValue('CompanyPhone')}</span>
-                            </a>
-                        </p>
-                    </div>
-                    <div class="col-lg-8 col-md-6 col-sm-6">
-                        <div class="row">
-                            <div class="col-lg-4 col-sm-6 col-xs-6">
-                                <p class="txtheaderlarge">HANOI VOYAGES</p>
-                                <ul class="list-unstyled txthreflink">
-                                    <li class=""><a href="#">About us</a></li>
-                                    <li><a href="#">Tailor made travel</a></li>
-                                    <li><a href="#">Professional guarantees</a></li>
-                                    <li><a href="#">Contact</a></li>
-                                    <li><a href="#">Testimonials</a></li>
-                                    <li><a href="#">Our team</a></li>
-                                    <li><a href="#">Good reasons to choose us</a></li>
-                                    <li><a href="#">Recrutement</a></li>
-                                    <li><a href="#">Sitemap</a></li>
-                                </ul>
-                            </div>
-                            <div class="col-lg-4 col-sm-6 col-xs-6">
-                                <p class="txtheaderlarge">{$core->get_Lang('DESTINATIONS')}</p>
-                                <ul class="list-unstyled txthreflink">
-                                    <li><a href="#">{$core->get_Lang('Travel to Vietnam')}</a></li>
-                                    <li><a href="#">{$core->get_Lang('Travel to Cambodia')}</a></li>
-                                    <li><a href="#">{$core->get_Lang('Travel to Laos')}</a></li>
-                                    <li><a href="#">{$core->get_Lang('Travel to Myanmar')}</a></li>
-                                    <li><a href="#">{$core->get_Lang('Travel to Thailand')}</a></li>
-                                    <li><a href="#">{$core->get_Lang('Combined travel')}</a></li>
-                                </ul>
-                            </div>
-                            <div class="col-lg-4 col-sm-6 col-xs-6">
-                                <p class="txtheaderlarge">{$core->get_Lang('OTHERS')}
-                                </p>
-                                <ul class="list-unstyled txthreflink">
-                                    <li><a href="#">{$core->get_Lang('Stay')}</a></li>
-                                    <li><a href="#">{$core->get_Lang('Cruise')}</a></li>
-                                    <li><a href="#">{$core->get_Lang('Experiences')}</a></li>
-                                    <li><a href="#">{$core->get_Lang('Blog')}</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-5 border-top">
-                        <div class="d-flex flex-nowrap align-items-center">
-                            <div class="img_logohn">
-                                <a href="/" title="logohn">
-                                    <img title="logohanoi" src="{$clsConfiguration->getValue('FooterLogo')}" alt="img-hanoi">
-                                </a>
-                            </div>
-                            <p class="txtlogo">International tour operator approved by the National Tourism
-                                Administration in Vietnam. <br>LICENCE N°: 01 - 02 /TCDL-GP LHQT</p>
-                        </div>
-                        <div class="d-flex flex-column align-items-end">
-                            <p class="txt-contact">{$core->get_Lang('Follow our social networks')}</p>
-                            <div class="d-flex icon-mxh" style="gap: 32px">
-                                {if $clsConfiguration->getValue('Youtube_Link')}
-                                <a class="link-secondary" href="https://www.youtube.com/{$clsConfiguration->getValue('SiteYoutubeLink')}">
-                                    <i class="fa-brands fa-youtube fa-xl"></i>
-                                </a>
-                                {/if}
-                                {if $clsConfiguration->getValue('Twitter_Link')}
-                                <a class="link-secondary" href="https://x.com/{$clsConfiguration->getValue('SiteTwitterLink')}">
-                                    <i class="fa-brands fa-x-twitter"></i>
-                                </a>
-                                {/if}
-                                {if $clsConfiguration->getValue('Instagram_Link')}
-                                <a class="link-secondary" href="https://www.instagram.com/{$clsConfiguration->getValue('SiteInstagramLink')}">
-                                    <i class="fa-brands fa-instagram fa-xl"></i>
-                                </a>
-                                {/if}
-                                {if $clsConfiguration->getValue('Facebook_Link')}
-                                <a class="link-secondary" href="https://www.facebook.com/{$clsConfiguration->getValue('SiteFacebookLink')}">
-                                    <i class="fa-brands fa-facebook-f"></i>
-                                </a>
-                                {/if}
-                                {if $clsConfiguration->getValue('Printest_Link')}
-                                <a class="link-secondary" href="https://www.pinterest.com/{$clsConfiguration->getValue('SitePrintestLink')}">
-                                    <i class="fa-brands fa-pinterest"></i>
-                                </a>
-                                {/if}
-                                {if $clsConfiguration->getValue('LinkedIn_Link')}
-                                <a class="link-secondary" href="https://www.linkedin.com/{$clsConfiguration->getValue('SiteLinkedInLink')}">
-                                    <i class="fa-brands fa-linkedin-in"></i>
-                                </a>
-                                {/if}
-                            </div>
-                        </div>
-                    </div>
+        <div class="unika_footer_1 d-flex">
+            <div class="unika_footer_1_left d-flex flex-column">
+                <div class="unika_logo_footer_mobile">
+                    <a class="unika_logo_footer_1">
+                        <img src="https://unikasia.vietiso.com/uploads//Demo/image-6.png" alt="Logo" width="178" height="62">
+                    </a>
+                </div>
+                <form action="" class="unika_search">
+                    <input type="email" class="unika_input_search" name="" id="" placeholder="Enter your mail">
+                    <input type="submit" class="unika_btn_search" value="Submit">
+                </form>
+                <div class="unika_1_left_link d-flex flex-column">
+                    <a href="#" class="unikasia_travel">Unikasia Travel</a>
+                    <a href="#" class="unikasia_footer_link">
+                        4-5 floors, 13 Kim Mã Thượng, Ba Đình dist, Hanoi, Vietnam
+                    </a>
+                    <a href="#" class="unikasia_footer_link">
+                        www.hanoivoyage.com
+                    </a>
+                    <a href="#" class="unikasia_footer_link">
+                        info@hanoivoyage.com
+                    </a>
+                    <a href="#" class="unikasia_footer_link">
+                        +84 243 715 3012
+                    </a>
                 </div>
             </div>
-            <a id="backTop" class="bg_main" role="link" href="javascript:void(0);">
-                <i class="fa fa-arrow-up" aria-hidden="true"></i>
-            </a>
-            {* <div id="whatsapp-widget" class="ww-normal ww-right ww-standard">
-                <a target="_blank" title="{$core->get_Lang('Chat with us')}" href="https://wa.me/{$clsConfiguration->getValue('CompanyWhatsapp')}" class="ww-text">{$core->get_Lang('Chat with us')}
-                    <div class="ww-arrow"></div>
-                </a>
-                <div class="ww-icon">
-                    <div>
-                        <a title="Whatsapp" class="ww-icon-link" target="_blank" href="https://wa.me/{$clsConfiguration->getValue('CompanyWhatsapp')}">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-                                <path d=" M19.11 17.205c-.372 0-1.088 1.39-1.518 1.39a.63.63 0 0 1-.315-.1c-.802-.402-1.504-.817-2.163-1.447-.545-.516-1.146-1.29-1.46-1.963a.426.426 0 0 1-.073-.215c0-.33.99-.945.99-1.49 0-.143-.73-2.09-.832-2.335-.143-.372-.214-.487-.6-.487-.187 0-.36-.043-.53-.043-.302 0-.53.115-.746.315-.688.645-1.032 1.318-1.06 2.264v.114c-.015.99.472 1.977 1.017 2.78 1.23 1.82 2.506 3.41 4.554 4.34.616.287 2.035.888 2.722.888.817 0 2.15-.515 2.478-1.318.13-.33.244-.73.244-1.088 0-.058 0-.144-.03-.215-.1-.172-2.434-1.39-2.678-1.39zm-2.908 7.593c-1.747 0-3.48-.53-4.942-1.49L7.793 24.41l1.132-3.337a8.955 8.955 0 0 1-1.72-5.272c0-4.955 4.04-8.995 8.997-8.995S25.2 10.845 25.2 15.8c0 4.958-4.04 8.998-8.998 8.998zm0-19.798c-5.96 0-10.8 4.842-10.8 10.8 0 1.964.53 3.898 1.546 5.574L5 27.176l5.974-1.92a10.807 10.807 0 0 0 16.03-9.455c0-5.958-4.842-10.8-10.802-10.8z" fill-rule="evenodd"></path>
-                            </svg>
+            <div class="unika_footer_1_right d-flex">
+                <div class="unika_footer_item d-flex flex-column">
+                    <div class="unika_footer_title">
+                        HANOI VOYAGES
+                    </div>
+                    <div class="unika_footer_list_link flex-column">
+                        <a href="#" class="unikasia_footer_link">
+                            About us
+                        </a>
+                        <a href="#" class="unikasia_footer_link">
+                            Tailor made travel
+                        </a>
+                        <a href="#" class="unikasia_footer_link">
+                            Professional guarantees
+                        </a>
+                        <a href="#" class="unikasia_footer_link">
+                            Contact
+                        </a>
+                        <a href="#" class="unikasia_footer_link">
+                            Testimonials
+                        </a>
+                        <a href="#" class="unikasia_footer_link">
+                            Our team
+                        </a>
+                        <a href="#" class="unikasia_footer_link">
+                            Good reasons to choose us
+                        </a>
+                        <a href="#" class="unikasia_footer_link">
+                            Recrutement
+                        </a>
+                        <a href="#" class="unikasia_footer_link">
+                            Sitemap
                         </a>
                     </div>
                 </div>
-            </div>*}
-        </footer>
+                <div class="unika_footer_item d-flex flex-column">
+                    <div class="unika_footer_title">
+                        DESTINATIONS
+                    </div>
+                    <div class="unika_footer_list_link flex-column">
+                        <a href="#" class="unikasia_footer_link">
+                            Travel to Vietnam
+                        </a>
+                        <a href="#" class="unikasia_footer_link">
+                            Travel to Cambodia
+                        </a>
+                        <a href="#" class="unikasia_footer_link">
+                            Travel to Laos
+                        </a>
+                        <a href="#" class="unikasia_footer_link">
+                            Travel to Myanmar
+                        </a>
+                        <a href="#" class="unikasia_footer_link">
+                            Travel to Thailand
+                        </a>
+                        <a href="#" class="unikasia_footer_link">
+                            Travel to Thailand
+                        </a>
+                    </div>
+                </div>
+                <div class="unika_footer_item d-flex flex-column">
+                    <div class="unika_footer_title d-flex flex-column">
+                        OTHERS
+                    </div>
+                    <div class="unika_footer_list_link flex-column">
+                        <a href="#" class="unikasia_footer_link">
+                            Stay
+                        </a>
+                        <a href="#" class="unikasia_footer_link">
+                            Cruise
+                        </a>
+                        <a href="#" class="unikasia_footer_link">
+                            Experiences
+                        </a>
+                        <a href="#" class="unikasia_footer_link">
+                            Blog
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="unika_infor_mobile">
+                <a href="#" class="unikasia_travel">Unikasia Travel</a>
+                <div class="unika_link_mobile">
+                    <a href="#" class="unikasia_footer_link">
+                        {assign var=CompanyAddress1 value=CompanyAddress1_|cat:$_LANG_ID}
+                        {$clsConfiguration->getValue($CompanyAddress1)}
+                    </a>
+                    <a href="#" class="unikasia_footer_link">
+                        www.hanoivoyage.com
+                    </a>
+                    <a href="#" class="unikasia_footer_link">
+                        info@hanoivoyage.com
+                    </a>
+                    <a href="#" class="unikasia_footer_link">
+                        +84 243 715 3012
+                    </a>
+                </div>
+                <div class="unika_social_footer_icon">
+                    <a href="https://www.youtube.com/user/vietiso" class="unika_social_footer">
+                        <i class="fa-brands fa-youtube" aria-hidden="true"></i>
+                    </a>
+                    <a href="https://x.com/vietiso" class="unika_social_footer">
+                        <i class="fa-brands fa-twitter"></i>
+                    </a>
+                    <a href="https://www.instagram.com/unikaisa" class="unika_social_footer">
+                        <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+                    </a>
+                    <a href="https://www.facebook.com/unikasia" class="unika_social_footer">
+                        <i class="fa-brands fa-facebook-f" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="unika_footer_2 d-flex justify-content-between">
+            <div class="unika_footer_2_left d-flex align-items-center">
+                <a class="unika_logo_footer" href="/">
+                    <img src="https://unikasia.vietiso.com/uploads//Demo/image-6.png" alt="Logo" width="150" height="56">
+                </a>
+                <div class="unika_footer_2_txt d-flex flex-column">
+                    <span>International tour operator approved by the National Tourism Administration in Vietnam.</span>
+                    <span>LICENCE N°: 01 - 02 /TCDL-GP LHQT</span>
+                </div>
+            </div>
+            <div class="unika_footer_2_right">
+                <span>Follow our social networks</span>
+                <div class="unika_social_footer_icon">
+                    <a href="https://www.youtube.com/user/vietiso" class="unika_social_footer">
+                        <i class="fa-brands fa-youtube" aria-hidden="true"></i>
+                    </a>
+                    <a href="https://x.com/vietiso" class="unika_social_footer">
+                        <i class="fa-brands fa-twitter"></i>
+                    </a>
+                    <a href="https://www.instagram.com/unikaisa" class="unika_social_footer">
+                        <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+                    </a>
+                    <a href="https://www.facebook.com/unikasia" class="unika_social_footer">
+                        <i class="fa-brands fa-facebook-f" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
-</section>
-<div id="btn-tailor-fixed"><a href="{$clsTour->getLink2(0, 1)}" class="tailor_btn_fixed" title="TAILOR-MADE TRAVEL">
-        <div class="tailor_img_fixed"><img src="https://unikasia.vietiso.com/isocms/templates/default/skin/images/destination/hn_voyages.png" alt=""></div>
+</div>
+
+<script>
+    var mod = '{$mod}';
+    var act = '{$act}';
+</script>
+
+<!-- Code Backup cho Hiếu -->
+ <a id="backTop" class="bg_main" role="link" href="javascript:void(0);">
+    <i class="fa fa-arrow-up" aria-hidden="true"></i>
+</a>
+<div id="btn-tailor-fixed">
+    <a href="{$clsTour->getLink2(0, 1)}" class="tailor_btn_fixed" title="TAILOR-MADE TRAVEL">
+        <div class="tailor_img_fixed">
+            <img src="https://unikasia.vietiso.com/isocms/templates/default/skin/images/destination/hn_voyages.png" alt="">
+        </div>
         TAILOR-MADE TRAVEL
-    </a></div>
-{* <div class="footer-content-nav-icon">
-    <div class="footer-icon-img"><a href="#" title="Youtube"> <img src="{$URL_IMAGES}/icon/yt.svg" alt="error-yt" id="footer-icon-mess"> </a></div>
-    <div class="footer-icon-img"><a href="#" title="Twitter"> <img src="{$URL_IMAGES}/icon/tw.svg" alt="error-tw" id="footer-icon-mess" class="icon-color"> </a></div>
-    <div class="footer-icon-img"><a href="#" title="instagram"> <img src="{$URL_IMAGES}/icon/ins.svg" alt="error-ins" id="footer-icon-mess"> </a></div>
-    <div class="footer-icon-img"><a href="#" title="Facebook"> <img src="{$URL_IMAGES}/icon/fb.svg" alt="error-fb" id="footer-icon-mess"> </a></div>
-</div>*}
+    </a>
+</div>
 <div id="icon-fixed">
     <div class="social-icons">
         {if $clsConfiguration->getValue('Youtube_Link')}
@@ -184,42 +212,3 @@
         {/if}
     </div>
 </div>
-{/if}
-{/if}
-<script>
-    var mod = '{$mod}';
-    var act = '{$act}';
-</script>
-{literal}
-<style>
-    .aml_dk-style-default.aml_dk-bottom-right {
-        bottom: 100px !important;
-        transform: unset !important;
-        top: auto
-    }
-
-    img {
-        max-width: 100% !important
-    }
-</style>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var usernameInput = document.getElementById('username');
-        var usernameError = document.getElementById('usernameError');
-
-        usernameInput.addEventListener('invalid', function(event) {
-            event.preventDefault(); // Ngăn chặn thông báo lỗi mặc định của trình duyệt
-            if (!usernameInput.validity.valid) {
-                usernameInput.setCustomValidity('Vui lòng nhập tên người dùng!');
-                usernameError.textContent = usernameInput.validationMessage; // Hiển thị thông báo lỗi tùy chỉnh
-            }
-        });
-
-        usernameInput.addEventListener('input', function(event) {
-            // Xóa thông báo lỗi khi người dùng nhập vào
-            usernameInput.setCustomValidity('');
-            usernameError.textContent = '';
-        });
-    });
-</script>
-{/literal}

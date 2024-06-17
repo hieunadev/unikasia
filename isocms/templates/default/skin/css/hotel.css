@@ -4011,6 +4011,7 @@ div[slider]>input[type=range]::-ms-tooltip {
     box-sizing: border-box;
     transform: rotate(calc(1deg * (-45 + var(--percentage) * 1.8)));
     animation: fillAnimation 1s ease-in;
+	
 }
 .semi-donut::before {
     content: '';

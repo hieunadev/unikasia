@@ -1,71 +1,59 @@
-<div class="txt_blogvn">
-    <div class="container">
-        <h1 class="txt_h1">Halong Bay Cruises</h1>
-		<div class="text_pp">Culturels, zen ou plage, nos séjours au Vietnam conjuguent charme, élégance, dépaysement et authenticité. À découvrir urgemment pour une extension en fin de circuit accompagné, à enrichir des idées d’excursions de nos spécialistes de l’Asie du Sud-Est, ou un voyage de noces au Vietnam d’Hanoi à la baie d’Halong, perle du Nord du Vietnam classée au patrimoine mondial idéale pour un intermède romantique.
-</div>
-
+<div class="cru_header">
+    <h1 class="cru_header_title">{$clsCruiseCatCountry->getBannerTitle($cruise_cat_country_id)}</h1>
+    <div class="cru_header_description">
+        {$clsCruiseCatCountry->getBannerIntro($cruise_cat_country_id)}
     </div>
 </div>
-
-<div class="des_header_background_image">
-	<img src="{URL_IMAGES}/cruises/img_cruise_bg.png" width="1920" height="600" alt="HA LONG BAY">
+<div class="cru_header_background_image">
+    <img src="{$clsCruiseCatCountry->getBannerImageHorizontal($cruise_cat_country_id, 1920, 600)}" width="1920" height="600" alt="{$clsCruiseCatCountry->getBannerTitle($cruise_cat_country_id)}">
 </div>
-
+{literal}
 <style>
-	
-	.des_header_background_image{
-		width: 100%;
-		position: absolute;
-		top: 0;
-		left: 0;
-		background-size: cover;
-        background-position: center;
-	}
-	
-	    .bground_header {
-/*        background-image: url("https://unikasia.vietiso.com/isocms/templates/default/skin/images/cruises/img_cruise_bg.png");*/
-        
-        height: 600px;
-        /* padding: 0px 0 30px 0; */
-        position: relative;
-    }
-	
-		.bground_header:after {
- 		content: "";
+    .cru_header_background_image {
         position: absolute;
         top: 0;
         left: 0;
+        filter: brightness(65%);
         width: 100%;
-        height: 100%;
-        background: linear-gradient(180deg, rgba(24, 28, 26, 0.48) 0%, rgba(24, 28, 26, 0.00) 100%);
+        /* z-index: 1; */
     }
 
-    .des_header_background_image:after {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(180deg, rgba(24, 28, 26, 0.48) 0%, rgba(24, 28, 26, 0.00) 100%);
-    }
-	    .txt_blogvn {
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 305px;
-        z-index: 2;
-        transform: translate(0%, -56%);
-    }
-
-    .txt_h1 {
+    .cru_header_title {
         color: #FFF;
         text-align: center;
+        font-family: "SF Pro Display";
         font-size: 48px;
         font-style: normal;
         font-weight: 600;
-        line-height: 64px; /* 133.333% */
-        /*    margin-top: 127px;*/
+        line-height: 64px;
     }
-	
+
+    .cru_header_title p,
+    .cru_header_description p {
+        margin-bottom: unset;
+    }
+
+    .cru_header_description {
+        color: var(--Neutral-5, #F0F0F0);
+        text-align: center;
+        font-family: "SF Pro Display";
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 28px;
+        margin-top: 22px;
+        margin-bottom: 40px;
+    }
+
+    .cru_header_description p {
+        margin-bottom: 0;
+    }
+
+    .cru_header {
+        padding-top: 127px;
+        padding-bottom: 182px;
+        position: relative;
+        z-index: 1;
+    }
 </style>
+{/literal}

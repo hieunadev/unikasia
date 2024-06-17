@@ -5,21 +5,25 @@
 				<div class="fill_data_box">
 					<div class="form_title_and_table_code" {$currentstep}>
 						<h3 class="title_box">{$core->get_Lang('FAQs')}</h3>
+						{if $type != 'tour'}
 						<div class="inpt_tour">
 							<label for="title">{$core->get_Lang('Country')}</label>
 							{* <select onchange="_reload()" name="country_id" class="full-width" id="slb_Category"> *}
 								{* {$clsCountry->makeSelectboxOption($clsClassTable->getCountryID($pvalTable))} *}
 								{* </select> *}
-
-							<select class="text full full-width" name="iso-country_id" maxlength="255" style="width:200px">
-								<option value="0" {if $clsClassTable->getOneField('country_id',$pvalTable) eq ''}selected="selected"{/if}>Default</option>
-								{if $list_country}
-								{foreach from=$list_country key=key item=item}
-								<option value="{$item.country_id}" {if $clsClassTable->getOneField('country_id', $pvalTable) == ($item.country_id)} selected="selected" {/if}" >{$item.title}</option>
-								{/foreach}
-								{/if}
-							</select>
+								<select class="text full full-width" name="iso-country_id" maxlength="255" style="width:200px">
+									<option value="0" {if $clsClassTable->getOneField('country_id',$pvalTable) eq ''}selected="selected"{/if}>Default</option>
+									{if $list_country}
+									{foreach from=$list_country key=key item=item}
+									<option value="{$item.country_id}" {if $clsClassTable->getOneField('country_id', $pvalTable) == ($item.country_id)} selected="selected" {/if}" >{$item.title}</option>
+									{/foreach}
+									{/if}
+								</select>
 						</div>
+						{/if}
+						{if $type == 'tour'}
+							<input type="hidden" name="iso-country_id" value="0">
+						{/if}
 						<div class="inpt_tour">
 							<label for="title">{$core->get_Lang('question')} <span class="required_red">*</span>
 								{assign var= title_faq value='title_faq'}
@@ -44,8 +48,11 @@
 							</div>
 						</div>
 						<div class="btn_save_titile_table_code mt30">
+							{if $type == 'tour'}
+							<a href="{$PCMS}/admin/?mod=tour_exhautive&act=faqs" class="back_step">{$core->get_Lang('Back')}</a>
+							{else}
 							<a href="{$PCMS}/admin/?mod={$mod}" class="back_step">{$core->get_Lang('Back')}</a>
-
+							{/if}
 							<a data-table_id="{$pvalTable}" data-panel="{$arrStep[$step].panel}" data-currentstep="{$currentstep}" data-next_step="{$nextstep}" class="js_save_continue">{$core->get_Lang('Save')}</a>
 						</div>
 					</div>

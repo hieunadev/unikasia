@@ -115,6 +115,9 @@
     <link rel="preload" href="{$URL_CSS}/{$mod}.css?v={$upd_version}" as="style" />
     <link rel="stylesheet" href="{$URL_CSS}/{$mod}.css?v={$upd_version}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <!--  -->
+
     <link rel="stylesheet" href="{$URL_CSS}/home/home.css">
     {if $mod eq 'tour'}
     <link rel="stylesheet" href="{$URL_CSS}/tours/tour.css">

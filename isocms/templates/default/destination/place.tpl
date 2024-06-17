@@ -92,7 +92,7 @@
             </div>
         </div>
     </div>
-    {$core->getBlock('customer_review')}
+    {*{$core->getBlock('customer_review')}*}
     <div class="des_gallery">
         <div class="container-fluid">
             <div class="des_gallery_title">

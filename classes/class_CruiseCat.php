@@ -87,17 +87,6 @@ class CruiseCat extends dbBasic
             return $extLang . '/du-thuyen/' . $slug . '/';
         return $extLang . '/cruise/' . $slug . '/';
     }
-    function getLink2($cat_id, $oneTable = null)
-    {
-        global $extLang, $_LANG_ID;
-        if (!isset($oneTable['slug'])) {
-            $oneTable = $this->getOne($cat_id, 'slug');
-        }
-        $slug = $oneTable['slug'];
-        if ($_LANG_ID == 'vn')
-            return $_LANG_ID . '/du-thuyen/' . $slug . '/';
-        return $_LANG_ID . '/cruise/' . $slug . '/';
-    }
     function getImage($pvalTable, $w, $h, $oneTable = null)
     {
         global $clsISO;

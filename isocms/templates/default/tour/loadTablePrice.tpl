@@ -6,7 +6,7 @@
                 <div class="location_daytime">
                     <p class="txt_location"><i class="fa-regular fa-location-dot"
                                                style="color: #004ea8;"></i>Ha Noi
-                        <span style="color:#D3DCE1"> | </span> <span class="txt_timedays"> <i
+                        <span style="color:#D3DCE1; padding: 0 8px"> | </span> <span class="txt_timedays"> <i
                                     class="fa-solid fa-clock-three" style="color: #434b5c;"></i>{$clsTour->getTripDurationx($tour_id)}</span>
                     </p>
                 </div>
@@ -129,6 +129,27 @@
                 </div>
                 <p class="txt_desus">All taxes and fees included</p>
             </div>
+            <input type="hidden" name="tour_id_z" value="{$tour_id}" />
+            <input type="hidden" name="discount_type" value="{$discount_type}" />
+            <input type="hidden" name="promotion_z" id="promotion_z" value="{$promotion}" />
+            <input type="hidden" name="price_promotion" value="{$price_promotion}" />
+            <input type="hidden" name="number_adults_z" id="number_adults_z" value="{$number_adults}" />
+            <input type="hidden" name="number_child_z" id="number_child_z" value="{$number_child}" />
+            <input type="hidden" name="number_infants_z" id="number_infants_z" value="{$number_infants}" />
+            <input type="hidden" name="price_adults_z" id="price_adults_z" value="{$price_adults}" />
+            <input type="hidden" name="price_child_z" id="price_child_z" value="{$price_child}" />
+            <input type="hidden" name="str_price_child" id="str_price_child" value='{$str_price_child}' />
+            <input type="hidden" name="str_price_infant" id="str_price_infant" value='{$str_price_infant}' />
+            <input type="hidden" name="price_infants_z" id="price_infants_z" value="{$price_infants}" />
+            <input type="hidden" name="total_price_adults" id="total_price_adults" value="{$total_price_adults}" />
+            <input type="hidden" name="total_price_child" id="total_price_child" value="{$total_price_child}" />
+            <input type="hidden" name="total_price_infants" id="total_price_infants" value="{$total_price_infants}" />
+            <input type="hidden" name="check_in_book_z" id="check_in_book_z" value="{$check_in_book}" />
+            <input type="hidden" name="deposit" id="deposit" value="{$deposit}" />
+            <input type="hidden" name="price_deposit" id="price_deposit" value="{$price_deposit}" />
+            <input type="hidden" name="total_price_z" id="total_price_z" value="{$total_price_promotion}" />
+            <input type="hidden" name="total_addon" id="total_addon" value="{$total_addon_z}" />
+            <input type="hidden" name="list_room_id" id="list_room_id" value="{$list_room_id}" />
             {if $check_contact}
                 <input type="hidden" name="ContactTour" id="ContactTour" value="ContactTour" />
                 <button class="btn txt_booking">
@@ -136,7 +157,7 @@
                 </button>
             {else}
                 <input type="hidden" name="BookingTour" id="BookingTour" value="BookingTour" />
-                <button class="btn txt_booking">
+                <button class="btn txt_booking book_now_tour">
                     {$core->get_Lang("Book now")}
                 </button>
             {/if}
@@ -161,6 +182,16 @@
                     $span.html('<i class="fa fa-angle-down" aria-hidden="true"></i>');
                 });
             });
+        });
+        $(document).on('click','.contact_now',function(){
+            $("#BookingTour").val('');
+            $("#ContactTour").val('ContactTour');
+            $(".form_booking_now").submit();
+        });
+        $(document).on('click','.book_now_tour',function(){
+            $("#BookingTour").val('BookingTour');
+            $("#ContactTour").val('');
+            $(".form_booking_now").submit();
         });
     </script>
 {/literal}

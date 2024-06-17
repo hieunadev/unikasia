@@ -35,7 +35,7 @@ function default_insert()
     $show = isset($_GET['show']) ? $_GET['show'] : '';
     $assign_list["show"] = $show;
     $assign_list["msg"] = isset($_GET['message']) ? $_GET['message'] : '';
-
+    $assign_list["type"] = "tour";
 
     $pvalTable = Input::get('faq_id', 0);
     $assign_list["pvalTable"] = $pvalTable;
@@ -45,7 +45,7 @@ function default_insert()
     $currentstep = Input::get('step', 'faqs');
     $assign_list["currentstep"] = $currentstep;
 
-
+    $assign_list["type"] = $_GET['type'] ?? '';
 
     $currentstepx = 0;
     $frames = getFrame($pvalTable);
@@ -128,6 +128,8 @@ function default_getMainFormStep()
     #
     $table_id = Input::post('table_id', 0);
     $currentstep = Input::post('currentstep', '');
+    $type = Input::post('type', '');
+
     $oneItem = $clsFAQ->getOne($table_id);
     $tableName = $clsFAQ->tbl;
     $pkeyTable = $clsFAQ->pkey;
@@ -135,6 +137,7 @@ function default_getMainFormStep()
     $assign_list["classTable"] = $classTable;
     $assign_list["clsClassTable"] = $clsFAQ;
     $assign_list["pkeyTable"] = $pkeyTable;
+    $assign_list["type"] = $type;
     $smarty->assign('pvalTable', $table_id);
     $smarty->assign('oneItem', $oneItem);
 
@@ -334,7 +337,6 @@ function default_ajActionNewFaq()
     $clsFaqs = new FAQ();
     $assign_list["clsFaqs"] = $clsFaqs;
     $tp = Input::post('tp');
-
     $faq_id = $clsFaqs->getMaxId();
     $title_voucher_new = $core->get_Lang('New FAQ') . ' ' . $faq_id;
     $results = array('result' => 'error');

@@ -3,7 +3,7 @@
 		<div class="head d-flex justify-content-between align-items-center flex-wrap">
 			<div class="container">
 				<div class="d-flex justify-content-between align-items-center flex-wrap">
-					<a href="#" class="unika_logo_booking div_img">
+					<a href="/" class="unika_logo_booking div_img">
 						<img src="{$URL_IMAGES}/booking/logo.png" alt="Logo">
 					</a>
 					<div class="unika_contact d-flex  flex-wrap">
@@ -32,7 +32,7 @@
 						</div>
 						<span class=" text_booking">
                                 Choose booking
-                            </span>
+						</span>
 					</div>
 					<div class="line1_booking"></div>
 					<div class="item_booking d-flex flex-column justify-content-start align-items-center ">
@@ -52,6 +52,16 @@
 			</div>
 		</div>
 	</div>
+	{foreach from=$cartSessionService item=item name=item}
+		{assign var=tour_id value=$item.tour_id_z}
+		{if $tour_id}
+		{assign var=departure_date value=$clsISO->getStrToTime($item.check_in_book_z)}
+		{assign var=end_date value=$clsTour->getEndDate($departure_date,$tour_id)}
+		{assign var=title_package value=$clsTour->getTitle($item.tour_id_z)}
+		{assign var=link_package value=$clsTour->getLink($item.tour_id_z)}
+		{assign var=number_adults_z value=$item.number_adults_z|default:0}
+		{assign var=number_child_z value=$item.number_child_z|default:0}
+		{assign var=number_infants_z value=$item.number_infants_z|default:0}
 	<div class="container">
 		<div class="d-flex justify-content-center main-container">
 			<form class="booking_content d-flex  justify-content-between" method="POST" id="formBooking">
@@ -65,8 +75,9 @@
 								<div class="item_input d-flex flex-column  box_validate">
 									<label for="travel_date">Travel date*</label>
 									<input type="text" id="travel_date" name="travel_date" class="travel_input input_start"
-										   data-class="value_travel_date">
-									<input type="hidden" class="days_booking" value="3">
+										   data-class="value_travel_date" value="{$clsISO->converTimeToText5($departure_date)}">
+									{assign var="numberOfDays" value=$clsTour->getNumberDay($item.tour_id_z)}
+									<input type="hidden" class="days_booking" value="{$numberOfDays - 1}">
 								</div>
 								<div class="item_input d-flex flex-column ">
 									<label for="end_date">End Date</label>
@@ -87,7 +98,7 @@
 											<span
 													class="d-flex align-items-center value value_travelers justify-content-center"
 													name="value_travelers" onpaste="return false" contenteditable="true"
-													data-price="1">0</span>
+													data-price="1">{$number_adults_z}</span>
 											<div class="plus item_calc active cursor div_img">
 												<img src="{$URL_IMAGES}/booking/icon_plus.svg" alt="Icon">
 											</div>
@@ -105,7 +116,7 @@
 											<span
 													class="d-flex align-items-center value value_travelers justify-content-center"
 													name="value_travelers" onpaste="return false" contenteditable="true"
-													data-price="2">0</span>
+													data-price="2">{$number_child_z}</span>
 											<div class="plus item_calc active cursor div_img">
 												<img src="{$URL_IMAGES}/booking/icon_plus.svg" alt="Icon">
 											</div>
@@ -123,7 +134,7 @@
 											<span
 													class="d-flex align-items-center value value_travelers justify-content-center"
 													name="value_travelers" onpaste="return false" contenteditable="true"
-													data-price="3">0</span>
+													data-price="3">{$number_infants_z}</span>
 											<div class="plus item_calc active cursor div_img">
 												<img src="{$URL_IMAGES}/booking/icon_plus.svg" alt="Icon">
 											</div>
@@ -131,19 +142,21 @@
 									</div>
 								</div>
 							</div>
+							{if $lstRoom}
 							<div class="distribution number_travelers d-flex flex-column  box_validate" data-class="room">
                                     <span class="title_content">
                                         Distribution of travelers
                                     </span>
 								<div class="d-flex flex-column ">
+									{section name=i loop=$lstRoom}
 									<div
 											class="item_distribution item_content_booking d-flex justify-content-between align-items-start  flex-wrap">
 										<label class="item_checkbox">
 											<div class="d-flex flex-column">
-												<span class="item_checkbox_title title">Double Room</span>
-												<div class="item_checkbox_money">US <span>$4</span></div>
+												<span class="item_checkbox_title title">{$lstRoom[i].title}</span>
+												<div class="item_checkbox_money">US <span>${$clsTourPriceGroup->getPrice($tour_id,$lstRoom[i].tour_property_id,0,0,0,'TourRoom')}</span></div>
 											</div>
-											<input type="checkbox" name="checkbox_room">
+											<input type="checkbox" name="checkbox_room" {if $clsISO->checkInArray($list_room_id,$lstRoom[i].tour_property_id)} checked {/if}>
 											<span class="checkmark"></span>
 										</label>
 										<div class="calc_distribution number align-items-center "
@@ -154,44 +167,10 @@
 											<div class="plus item_calc_dis cursor active"></div>
 										</div>
 									</div>
-									<div
-											class="item_distribution item_content_booking d-flex justify-content-between align-items-start  flex-wrap">
-										<label class="item_checkbox">
-											<div class="d-flex flex-column">
-												<span class="item_checkbox_title title">Twin Room</span>
-												<div class="item_checkbox_money">US <span>$5</span></div>
-											</div>
-											<input type="checkbox" name="checkbox_room">
-											<span class="checkmark"></span>
-										</label>
-										<div class="calc_distribution number align-items-center "
-											 data-class="amount_twin_room">
-											<div class="minus item_calc_dis cursor"></div>
-											<span contenteditable="true" class="value value_distribution"
-												  name="value_distribution" onpaste="return false" data-price="5">0</span>
-											<div class="plus item_calc_dis cursor active"></div>
-										</div>
-									</div>
-									<div
-											class="item_distribution item_content_booking d-flex justify-content-between align-items-start  flex-wrap">
-										<label class="item_checkbox">
-											<div class="d-flex flex-column">
-												<span class="item_checkbox_title title">Room 1 adult(s) supplement </span>
-												<div class="item_checkbox_money">US <span>$0</span></div>
-											</div>
-											<input type="checkbox" name="checkbox_room">
-											<span class="checkmark"></span>
-										</label>
-										<div class="calc_distribution number align-items-center "
-											 data-class="amount_supplement">
-											<div class="minus item_calc_dis cursor"></div>
-											<span contenteditable="true" class="value value_distribution"
-												  name="value_distribution" onpaste="return false" data-price="6">0</span>
-											<div class="plus item_calc_dis cursor active"></div>
-										</div>
-									</div>
+									{/section}
 								</div>
 							</div>
+							{/if}
 						</div>
 					</div>
 					<div class="other_services item_booking_content number_travelers" data-class="other-services">
@@ -200,60 +179,26 @@
 						</div>
 						<div class="content d-flex flex-column ">
 							<div class="distribution d-flex flex-column ">
+								{section name=i loop=$lstAddOnService}
 								<div
 										class="item_distribution item_content_booking d-flex justify-content-between align-items-start  flex-wrap">
 									<label class="item_checkbox">
 										<div class="d-flex flex-column">
-											<span class="item_checkbox_title title">1 day cruise to visit the bays in Ha Long Bay</span>
-											<div class="item_checkbox_money">US <span>$8</span></div>
+											<span class="item_checkbox_title title">{$lstAddOnService[i].title}</span>
+											<div class="item_checkbox_money">US <span>${$lstAddOnService[i].price}</span></div>
 										</div>
 										<input type="checkbox">
 										<span class="checkmark"></span>
 									</label>
 									<div class="calc_distribution number align-items-center "
-										 data-class="amount_other1">
+										 data-class="amount_other_{$lstAddOnService[i].price}">
 										<div class="minus item_calc_dis cursor"></div>
 										<span contenteditable="true" class="value" onpaste="return false"
-											  data-price="7">0</span>
+											  data-price="{$lstAddOnService[i].price}">0</span>
 										<div class="plus item_calc_dis cursor active"></div>
 									</div>
 								</div>
-								<div
-										class="item_distribution item_content_booking d-flex justify-content-between align-items-start  flex-wrap">
-									<label class="item_checkbox">
-										<div class="d-flex flex-column">
-											<span class="item_checkbox_title title">1 day cruise to visit the bays in Ha Long Bay</span>
-											<div class="item_checkbox_money">US <span>$8</span></div>
-										</div>
-										<input type="checkbox">
-										<span class="checkmark"></span>
-									</label>
-									<div class="calc_distribution number align-items-center "
-										 data-class="amount_other2">
-										<div class="minus item_calc_dis cursor"></div>
-										<span contenteditable="true" class="value" onpaste="return false"
-											  data-price="8">0</span>
-										<div class="plus item_calc_dis cursor active"></div>
-									</div>
-								</div>
-								<div
-										class="item_distribution item_content_booking d-flex justify-content-between align-items-start  flex-wrap">
-									<label class="item_checkbox">
-										<div class="d-flex flex-column">
-											<span class="item_checkbox_title title">1 day cruise to visit the bays in Ha Long Bay</span>
-											<div class="item_checkbox_money">US <span>$8</span></div>
-										</div>
-										<input type="checkbox">
-										<span class="checkmark"></span>
-									</label>
-									<div class="calc_distribution number align-items-center "
-										 data-class="amount_other3">
-										<div class="minus item_calc_dis cursor"></div>
-										<span contenteditable="true" class="value" onpaste="return false"
-											  data-price="9">0</span>
-										<div class="plus item_calc_dis cursor active"></div>
-									</div>
-								</div>
+								{/section}
 							</div>
 						</div>
 					</div>
@@ -361,16 +306,16 @@
 					<div class="summary d-flex flex-column  justify-content-start">
 						<div class="title SF-Pro-Medium">Summary</div>
 						<div class="div_img">
-							<img src="{$URL_IMAGES}/booking/img_booking.png" alt="Images">
+							<img src="{$clsTour->getImage($item.tour_id_z, 364, 194)}" alt="Images">
 						</div>
 						<div class="title_content">
-							Sol by Melia Phu Quoc ex Sol Beach House Phu Quoc
+							<a class="title_content" href="{$link_package}" title="{$title_package}">{$title_package}</a>
 						</div>
 						<div class="booking_right_content d-flex flex-column ">
 							<div class="item_content d-flex flex-column ">
 								<div class="d-flex justify-content-between align-items-start ">
 									<span class=" span_title">Travel Date:</span>
-									<span class="span_content value_travel_date"></span>
+									<span class="span_content value_travel_date">{$clsISO->converTimeToText5($departure_date)}</span>
 								</div>
 								<div class="d-flex justify-content-between align-items-start ">
 									<span class=" span_title">End Date:</span>
@@ -427,6 +372,8 @@
 		</div>
 
 	</div>
+		{/if}
+	{/foreach}
 	<div class="unika_social">
 		<div class="unika_social_icons">
 			<a href="https://www.youtube.com/user/vietiso" class="unika_social_icon">

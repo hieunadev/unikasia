@@ -5263,8 +5263,10 @@ function default_faqs()
     $assign_list["clsCountry"] = $clsCountry;
     $clsFAQCategory = new FAQCategory();
     $assign_list["clsFAQCategory"] = $clsFAQCategory;
+
     #
     if (isset($_POST['filter']) && $_POST['filter'] == 'filter') {
+        $link  = "&act=faqs";
         if ($_POST['keyword'] != '' && $_POST['keyword'] != 'testimonial title, intro') {
             $link .= '&keyword=' . $_POST['keyword'];
         }
@@ -5348,7 +5350,7 @@ function default_faqs()
     }
     $assign_list['link_page_current_2'] = $link_page_current_2;
     #-------End Page Divide-----------------------------------------------------------
-    $allItem = $clsClassTable->getAll($cond . " order by " . $orderBy . $limit); //print_r($cond." order by ".$orderBy.$limit);die();
+    $allItem = $clsClassTable->getAll($cond . " and country_id = 0 order by " . $orderBy . $limit); //print_r($cond." order by ".$orderBy.$limit);die();
     $assign_list["allItem"] = $allItem;
     #
     $allTrash =  $clsClassTable->getAll("is_trash=1 and " . $cond2);
@@ -5373,6 +5375,61 @@ function default_faqs()
         }
     }
 }
+
+function default_delete_faq()
+{
+    global $assign_list, $_CONFIG,  $_SITE_ROOT, $mod, $act;
+    global $core, $clsModule, $clsButtonNav, $oneSetting;
+    $user_id = $core->_USER['user_id'];
+    #
+    $classTable = "FAQ";
+    $clsClassTable = new $classTable;
+    $tableName = $clsClassTable->tbl;
+    $pkeyTable = $clsClassTable->pkey;
+
+    $string = isset($_GET[$pkeyTable]) ? ($_GET[$pkeyTable]) : '';
+    $pvalTable = intval($core->decryptID($string));
+    $faq_cat_id = isset($_GET['faq_cat_id']) ? $_GET['faq_cat_id'] : "";
+
+    $param_url = '';
+    if (intval($faq_cat_id) != 0) {
+        $param_url .= '&faq_cat_id=' . $faq_cat_id;
+    }
+
+    if ($string = '' && $pvalTable == 0)
+        header('location: ' . PCMS_URL . '/?mod=' . $mod . '&message=notPermission');
+
+    if ($clsClassTable->doDelete($pvalTable)) {
+        header('location: ' . PCMS_URL . '/?mod=' . $mod  . '&act=faqs&message=DeleteSuccess');
+    }
+}
+
+function default_ajActionNewFaq()
+{
+    global $assign_list, $_CONFIG, $_SITE_ROOT, $mod, $_LANG_ID, $act, $menu_current, $current_page, $oneSetting, $core,
+           $clsModule, $clsButtonNav, $dbconn, $clsISO, $clsConfiguration, $adult_type_id, $child_type_id, $infant_type_id, $clsISO, $package_id;
+    $user_id = $core->_USER['user_id'];
+    #
+    $clsFaqs = new FAQ();
+    $assign_list["clsFaqs"] = $clsFaqs;
+    $tp = Input::post('tp');
+    $faq_id = $clsFaqs->getMaxId();
+    $title_voucher_new = $core->get_Lang('New FAQ') . ' ' . $faq_id;
+    $results = array('result' => 'error');
+    if ($tp = 'S') {
+        $clsISO->UpdateOrderNo('FAQ');
+
+        $field = $clsFaqs->pkey . ",user_id,user_id_update,title,slug,order_no,reg_date,upd_date";
+        $value = "'" . $faq_id . "','" . $user_id . "','" . $user_id . "','" . $title_voucher_new . "','" . $core->replaceSpace($title_voucher_new) . "',1,'" . time() . "','" . time() . "'";
+        //		$clsFaqs->setDeBug(1);
+        $clsFaqs->insertOne($field, $value);
+        $results = array('result' => 'success', 'link' => 'faqs/insert/' . $faq_id . '/overview?type=tour');
+    }
+    // Return
+    echo @json_encode($results);
+    die();
+}
+
 function default_ajUpdPosSortTourProperty()
 {
     global $dbconn, $assign_list, $_CONFIG,  $_SITE_ROOT, $mod, $_LANG_ID, $act, $menu_current, $current_page, $core, $clsModule;

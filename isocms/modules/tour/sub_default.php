@@ -242,11 +242,9 @@ function default_detaildeparture() {
     }
     if($oneItem['visitorage_infant'] != ''){
         $getSelectInfant = $clsTourOption->getSelectBySizeGroup($infant_type_id,"VISITORAGETYPE");
-        $textSizeGroupInfant = $clsTourOption->getTextSelectBySizeGroup($infant_type_id,"VISITORAGETYPE");
         $infant_visitor_type = $age_type_id;
     }elseif($oneItem['visitorheight_infant'] != ''){
         $getSelectInfant = $clsTourOption->getSelectBySizeGroup($infant_type_id,"VISITORHEIGHTTYPE");
-        $textSizeGroupInfant = $clsTourOption->getTextSelectBySizeGroup($infant_type_id,"VISITORHEIGHTTYPE");
         $infant_visitor_type = $height_type_id;
     }
     $assign_list['child_visitor_type'] = $child_visitor_type;
@@ -309,6 +307,39 @@ function default_detaildeparture() {
 
     $date_range_js_update = '<script> var date_range = [\'' . implode('\',\'', $list_date_array) . '\'];</script>';
     $assign_list["date_range_js_update"] = $date_range_js_update;
+
+    if(isset($_POST['BookingTour']) &&  $_POST['BookingTour']=='BookingTour'){
+        $cartSessionService = vnSessionGetVar('BookingTour_'.$_LANG_ID);
+        if(empty($cartSessionService)){
+            $cartSessionService = array();
+        }
+        $assign_list["cartSessionService"] = $cartSessionService;
+
+        $link=$clsISO->getLink('cart');
+//        $cartSessionService[$_LANG_ID][$tour_id] = array();
+        $cartSessionService[$_LANG_ID] = array();
+        foreach($_POST as $k=>$v){
+            if(!empty($v)){
+                if($k=='number_addon'){
+                    foreach($v as $k_addon=>$v_addon){
+                        if(!empty($v_addon)){
+                            $cartSessionService[$_LANG_ID][$tour_id][$k][$k_addon] = $v_addon;
+                        }
+                    }
+                }else{
+                    $cartSessionService[$_LANG_ID][$tour_id][$k] = $v;
+                }
+                if ($k=="list_room_id") {
+                    $cartSessionService[$_LANG_ID][$tour_id][$k] = $v;
+                }
+            }
+        }
+        ///$clsISO->print_pre($cartSessionService);die();
+        vnSessionDelVar('BookingVoucher_'.$_LANG_ID);
+        vnSessionSetVar('BookingTour_'.$_LANG_ID,$cartSessionService);
+        header('location:'.$link);
+        exit();
+    }
 
 //    End Form Box Tour
 
@@ -948,14 +979,17 @@ function default_loadTablePrice(){
         foreach($listPriceRoom as $key => $value){
             $lstPriceRoom[$value['tour_room_id']] = $value['price'];
         }
+
         foreach($room_id as $key => $id_room){
-            $price_room += (int)$lstPriceRoom[$id_room]*(int)$number_room[$key];
-            $lst_room[] = [
-                'room_id'			=>	$id_room,
-                'number_room'		=>	$number_room[$key],
-                'price_room'		=>	($lstPriceRoom[$id_room] && $lstPriceRoom[$id_room] != 0)?$lstPriceRoom[$id_room]:0,
-                'total_price_room'	=>	(int)$lstPriceRoom[$id_room]*(int)$number_room[$key]
-            ];
+            if ($number_room[$key]) {
+                $price_room += (int)$lstPriceRoom[$id_room] * (int)$number_room[$key];
+                $lst_room[] = [
+                    'room_id' => $id_room,
+                    'number_room' => $number_room[$key],
+                    'price_room' => ($lstPriceRoom[$id_room] && $lstPriceRoom[$id_room] != 0) ? $lstPriceRoom[$id_room] : 0,
+                    'total_price_room' => (int)$lstPriceRoom[$id_room] * (int)$number_room[$key]
+                ];
+            }
         }
     }
 
@@ -1005,7 +1039,8 @@ function default_loadTablePrice(){
     $assign_list["total_price_promotion"] = $total_price_promotion;
     $assign_list["number_room"] = array_sum($number_room);
     $assign_list["list_number_room"] = implode(',',$number_room);
-    $assign_list["room_id"] = implode(',',$room_id);
+//    $assign_list["room_id"] = implode(',',$room_id);
+    $assign_list["list_room_id"] = implode(',', array_column($lst_room, 'room_id'));
     $assign_list["total_price_room"] =  array_sum(array_column($lst_room, "total_price_room"));
 
     if($clsISO->getCheckActiveModulePackage($package_id,'booking','booking_tour','default')){

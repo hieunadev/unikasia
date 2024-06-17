@@ -159,13 +159,13 @@
                                 <h2 class="txt_daytours">Day by day itinerary</h2>
                                 <button class="btn btn-expand">Expand all</button>
                             </div>
-                            <div class="accordion" id="2accordionExample">
+                            <div class="accordion" id="accordionExample">
                                 <ul class="timeline">
                                     {section name=i loop=$lstTourItinerary}
                                         <li>
                                             <div class="accordion-item">
                                                 <h2 class="accordion-header">
-                                                    <button class="accordion-button" type="button"
+                                                    <button class="accordion-button collapsed" type="button"
                                                             data-bs-toggle="collapse"
                                                             data-bs-target="#collapse{$lstTourItinerary[i].tour_itinerary_id}"
                                                             aria-expanded="true"
@@ -175,7 +175,7 @@
                                                 </h2>
                                                 <div id="collapse{$lstTourItinerary[i].tour_itinerary_id}"
                                                      class="accordion-collapse collapse"
-                                                     data-bs-parent="#2accordionExample">
+                                                     data-bs-parent="#accordionExample">
                                                     <div class="accordion-body">
                                                         {$lstTourItinerary[i].content|html_entity_decode}
                                                     </div>
@@ -638,6 +638,8 @@
     var Room='{$core->get_Lang("Room")}';
     var Departure_date_invalid='{$core->get_Lang("Departure date is invalid")}';
     var Please_choose_departure_date='{$core->get_Lang("Please choose departure date")}';
+    var Please_select_children='{$core->get_Lang("Please select children")}';
+    var Please_select_infants='{$core->get_Lang("Please select infants")}';
     var Warning='{$core->get_Lang("Warning")}';
     var list_start_date=['{$list_start_date}'];
     var $check_tour_promotion='{$check_tour_promotion}';
@@ -673,17 +675,18 @@
                     $('.class-tour').removeClass('list_nav_fixed');
                 }
             }
+
             $('.btn-expand').click(function() {
                 const $accordionCollapse = $(".accordion-collapse.collapse");
                 $accordionCollapse.addClass('show');
                 if ($(this).hasClass('expand')) {
                     $(this).removeClass('expand').text('Expand all');
                     $accordionCollapse.removeClass('show');
-                    $(".accordion-button").removeClass('collapsed')
+                    $(".accordion-button").addClass('collapsed')
                 } else {
                     $(this).addClass('expand').text('Collapse all');
                     $accordionCollapse.addClass('show');
-                    $(".accordion-button").addClass('collapsed')
+                    $(".accordion-button").removeClass('collapsed')
                 }
             });
         });
@@ -1147,6 +1150,7 @@
                 if(parseInt($number_child) > 0){
                     $('.box_age_child').find('.slt_item_age_child').each(function(index,elm){
                         if($(elm).val() == ''){
+                            alert(Please_select_children)
                             ++check;
                             $(elm).addClass('error');
                         }else{
@@ -1157,6 +1161,7 @@
                 if(parseInt($number_infants) > 0){
                     $('.box_age_infants').find('.slt_item_age_child').each(function(index,elm){
                         if($(elm).val() == ''){
+                            alert(Please_select_infants)
                             ++check;
                             $(elm).addClass('error');
                         }else{

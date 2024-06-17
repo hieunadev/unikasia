@@ -33,13 +33,6 @@ class CruiseCatCountry extends dbBasic
         $noimage = URL_IMAGES . '/noimage.png';
         return '/files/thumb/' . $w . '/' . $h . '/' . $clsISO->parseImageURL($noimage);
     }
-    function getUrlBannerImageVertical($pvalTable)
-    {
-        global $clsISO;
-        $oneTable = $this->getOne($pvalTable, 'banner_image_vertical');
-        $url_image = $oneTable['banner_image_vertical'];
-        return $clsISO->tripslashUrl($url_image);
-    }
     function getBannerImageHorizontal($pvalTable, $w, $h, $oneTable = null)
     {
         global $clsISO;
@@ -52,13 +45,6 @@ class CruiseCatCountry extends dbBasic
         }
         $noimage = URL_IMAGES . '/noimage.png';
         return '/files/thumb/' . $w . '/' . $h . '/' . $clsISO->parseImageURL($noimage);
-    }
-    function getUrlBannerImageHorizontal($pvalTable)
-    {
-        global $clsISO;
-        $oneTable = $this->getOne($pvalTable, 'banner_image_horizontal');
-        $url_image = $oneTable['banner_image_horizontal'];
-        return $clsISO->tripslashUrl($url_image);
     }
     function doDelete($cat_id)
     {
@@ -76,5 +62,22 @@ class CruiseCatCountry extends dbBasic
         $string = ltrim($string, '|');
         $string = rtrim($string, '|');
         return explode('|', $string);
+    }
+    function getLink($pvalTable, $oneTable = null)
+    {
+        global $extLang, $_LANG_ID;
+        #
+        $clsCountry     =   new Country();
+        $clsCruiseCat   =   new CruiseCat();
+        #
+        $oneTable   =   $this->getOne($pvalTable);
+        $link       =   '';
+        if (!empty($oneTable)) {
+            $country_slug   =   $clsCountry->getSlug($oneTable['country_id']);
+            $guide_cat_slug =   $clsCruiseCat->getSlug($oneTable['cat_id']);
+            #
+            $link   .=  '/' . $_LANG_ID . '/cruise/' . $country_slug . '/' . $guide_cat_slug . '.html';
+        }
+        return $link;
     }
 }

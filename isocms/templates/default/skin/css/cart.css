@@ -733,6 +733,7 @@ img {}
 
 .summary .div_img {
     width: 100%;
+    border-radius: 8px;
 }
 
 .booking_right {

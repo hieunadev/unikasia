@@ -147,6 +147,7 @@ $(document).ready(function () {
                     unika_header.addClass('fixed');
                     $('.des_tailor_top').css('top', isScrolled ? '138px' : '');
                 } else {
+                    unika_header.addClass('unika_header_2');
                     unika_header.removeClass('fixed');
                 }
             } else {
@@ -162,7 +163,19 @@ $(document).ready(function () {
                 $('.unika_menu_navbar').collapse('hide');
             })
     })
-
+    // JS New Footer
+    $(document).on('click', '.unika_footer_title', function(){
+        let screenWidth = $(window).width();
+        if(screenWidth <= 991){
+            let list_link = $(this).parents('.unika_footer_item').find('.unika_footer_list_link');
+            if(list_link.hasClass('active')){
+                list_link.removeClass('active');
+            }else{
+                list_link.addClass('active');
+            }
+        }
+    });
+    // JS Click Detail
     var clickedDetails = JSON.parse(sessionStorage.getItem('clickedDetails')) || [];
     var maxItemsToShow = 3;
     function updateClickedDetails() {
