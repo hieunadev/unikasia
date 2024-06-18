@@ -90,6 +90,7 @@ RewriteRule ^guide/compose/insert/([0-9]*)/(.*)/(.*)$			index.php?mod=guide&act=
 RewriteRule ^guide/compose/insert/([0-9]*)/(.*)$				index.php?mod=guide&act=insert2&guide2_id=$1&panel=$2 [QSA,L]
 
 #--faqs--
+RewriteEngine On
 RewriteRule ^faqs/insert/([0-9]*)/(.*)$				index.php?mod=faqs&act=insert&faq_id=$1&panel=$2 [QSA,L]
 
 

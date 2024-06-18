@@ -23,7 +23,7 @@
 							{elseif $mod=='country'}
 						<p>{$core->get_Lang('Image size')} (WxH=298x198px)<br />
 							{elseif $mod=='hotel'}
-						<p>{$core->get_Lang('Image size')} (WxH=850x391px)<br />
+						<p>{$core->get_Lang('Image size')} (WxH=353x244px)<br />
 							{elseif $mod=='cruise'}
 						<p>{$core->get_Lang('Image size')} (WxH=733x486px)<br />
 							{elseif $mod=='service'}
@@ -37,7 +37,7 @@
 							{else}
 						<p>{$core->get_Lang('Image size')} (WxH=1034x861px)<br />
 							{/if}
-							Các loại tệp được hỗ trợ là: .png,.jpg,.jpeg</p>
+							{$core->get_Lang('Supported file types are: .png,.jpg,.jpeg')}</p>
 						<button type="button" class="btn btn-upload">{if $oneItem.image}{$core->get_Lang('Change Image')}{else}{$core->get_Lang('Upload Image')}{/if}</button>
 					</div>
 					<input class="hidden" id="selectFile" type="file" data-options='{ldelim}"openFrom":"image","clsTable":"{$clsTable}", "table_id":"{$pvalTable}","toId":"isoman_show_image"{rdelim}' name="image">

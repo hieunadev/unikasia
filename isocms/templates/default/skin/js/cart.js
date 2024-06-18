@@ -35,6 +35,7 @@ $(function () {
 
     $(".travel_input").datepicker({
         dateFormat: "M d, yy", // Định dạng ngày là "Apr 1, 2024"
+        minDate: new Date(),
         onSelect: function (dateText) {
             $(this).val(dateText); // Hiển thị ngày đã chọn
             let data_class = $(this).attr("data-class");
@@ -50,6 +51,13 @@ $(function () {
             calcDayNight();
         },
     });
+
+    let originalDate = new Date($(".travel_input").val());
+    let days_booking = $('.days_booking').val();
+    originalDate.setDate(originalDate.getDate() + parseInt(days_booking));
+    let newDateText = $.datepicker.formatDate("M d, yy", originalDate);
+    $(".input_end").val(newDateText);
+    $('.value_end_date').text(newDateText);
 
     function eventParticipants(self, value) {
 
@@ -88,6 +96,7 @@ $(function () {
     }
 
     function calculateTotalAmount(){
+        total_booking = parseInt($('#total_price').val());
         let total = 0;
         $('.value').each(function(){
             let quantity = parseInt($(this).text());
@@ -95,9 +104,9 @@ $(function () {
             total += quantity * price;
         })
 
-        $('.total_booking').text(`US $${total}`);
-        $('.subtotal_booking').text(`US $${total}`);
-        $('.payment_amount').text(`US $${total}`);
+        $('.total_booking').text(`US $${total_booking + total}`);
+        $('.subtotal_booking').text(`${total}`);
+        // $('.payment_amount').text(`${total}`);
     }
 
     $(document)

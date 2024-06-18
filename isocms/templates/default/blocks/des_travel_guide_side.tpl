@@ -72,13 +72,13 @@
                 <div class="des_travel_guide_exciting_trip_item_content">
                     <div class="des_travel_guide_exciting_trip_rate">
                         <div class="des_travel_guide_exciting_trip_rate_score">
-                            {$clsReviews->getReviews($tourID, 'avg_point')}
+                            {$clsReviews->getReviews($tourID, 'avg_point', 'tour')}
                         </div>
                         <div class="des_travel_guide_exciting_trip_rate_title">
-                            {$clsReviews->getReviews($tourID, 'txt_review')}
+                            {$clsReviews->getReviews($tourID, 'txt_review', 'tour')}
                         </div>
                         <div class="des_travel_guide_exciting_trip_rate_total">
-                            - {$clsReviews->getReviews($tourID)} reviews
+                            - {$clsReviews->getReviews($tourID, '', 'tour')} reviews
                         </div>
                     </div>
                     <div class="des_travel_guide_exciting_trip_place">

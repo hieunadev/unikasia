@@ -245,6 +245,9 @@
         {if $mod eq 'cruise' && $act eq 'cat'}
         {$core->getBlock('des_header_cruise')}
         {/if}
+        {if $mod eq 'blog' && $act eq 'detail'}
+            {$core->getBlock('des_header_blog_detail')}
+        {/if}
     </div>
 </header>
 {literal}

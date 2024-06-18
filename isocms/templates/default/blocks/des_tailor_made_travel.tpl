@@ -1054,7 +1054,7 @@
 
     .des_group_dream .des_dream_rec {
 
-        width: 879.048px;
+        //max-width: 879.048px;
 
         height: 91px;
 
@@ -1082,15 +1082,15 @@
 
     .des_group_dream .des_dream_rec p {
 
-        position: absolute;
+        position: relative;
 
-        top: -26px;
+        top: -35px;
 
         background: #fff;
 
         padding: 0px 10px;
 
-        width: 825px;
+        max-width: 825px;
 
         color: var(--black_color) !important;
 

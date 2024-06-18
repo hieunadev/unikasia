@@ -526,12 +526,17 @@ function default_detail()
 	$assign_list['clsTag'] = $clsTag;
 	$clsBlogCategory = new BlogCategory();
 	$assign_list['clsBlogCategory'] = $clsBlogCategory;
+	
+	$clsReviews = new Reviews();
+    $assign_list["clsReviews"] = $clsReviews;
 
 	$clsCountryEx = new Country();
 	$assign_list['clsCountryEx'] = $clsCountryEx;
 
 	$listCountry = $clsCountryEx->getAll("is_trash=0 order by order_no", $clsCountryEx->pkey . ',slug,title');
 	$assign_list['listCountry'] = $listCountry;
+	
+	
 
 	#
 	$blog_id = isset($_GET['blog_id']) ? $_GET['blog_id'] : 0;
@@ -685,6 +690,7 @@ function default_detail()
 	$assign_list["dateModified"] = $dateModified;
 	$assign_list["rateavg"] = $rateavg;
 
+	
 
 
 

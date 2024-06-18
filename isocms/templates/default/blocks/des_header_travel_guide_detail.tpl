@@ -50,10 +50,6 @@
 {/if}
 {literal}
 <style>
-    .trvgd_header {
-        margin-top: -138px;
-    }
-
     .trvgd_header_image {
         width: 53.9%;
         height: 100vh;

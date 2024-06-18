@@ -13,17 +13,24 @@ function default_default()
 	$assign_list["clsCruiseStore"] = $clsCruiseStore;
 	$clsCruiseItinerary = new CruiseItinerary();
 	$assign_list["clsCruiseItinerary"] = $clsCruiseItinerary;
+	$clsCountry = new Country();
+	$assign_list["clsCountry"] = $clsCountry;
 	#
 	$cruise_cat_id = isset($_GET['cruise_cat_id']) ? $_GET['cruise_cat_id'] : '';
 	$assign_list["cruise_cat_id"] = $cruise_cat_id;
+	$country_id = isset($_GET['country_id']) ? intval($_GET['country_id']) : 0;
+	$assign_list["country_id"] = $country_id;
 	#
 	if (isset($_POST['filter']) && $_POST['filter'] == 'filter') {
 		$link = '';
 		if (isset($_POST['cruise_cat_id']) && !empty($_POST['cruise_cat_id'])) {
-			$link .= '&cruise_cat_id=' . $_POST['cruise_cat_id'];
+			$link .= '&cruise_cat_id=' . intval($_POST['cruise_cat_id']);
 		}
 		if (isset($_POST['keyword']) && !empty($_POST['keyword'])) {
 			$link .= '&keyword=' . $_POST['keyword'];
+		}
+		if (isset($_POST['country_id']) && intval($_POST['country_id']) != 0) {
+			$link .= '&country_id=' . intval($_POST['country_id']);
 		}
 		header('location: ' . PCMS_URL . '/?mod=' . $mod . $link);
 	}
@@ -36,12 +43,17 @@ function default_default()
 	$tableName = $clsClassTable->tbl;
 	$pkeyTable = $clsClassTable->pkey;
 	$assign_list["clsClassTable"] = $clsClassTable;
-	/*List all item*/
+	#
 	$cond = "1=1";
 	#Filter By Category
 	if (isset($cruise_cat_id) && intval($cruise_cat_id) != 0) {
 		$cond .= " and (cruise_cat_id = '$cruise_cat_id' or list_cat_id like '%|" . $cruise_cat_id . "|%')";
 		$pUrl .= '&cruise_cat_id=' . $cruise_cat_id;
+	}
+	#Filter By Country
+	if (isset($country_id) && intval($country_id) > 0) {
+		$cond .= " and cruise_id IN (SELECT cruise_id FROM " . DB_PREFIX . "cruise_destination WHERE country_id='$country_id')";
+		$pUrl .= '&country_id=' . $country_id;
 	}
 	$assign_list["pUrl"] = $pUrl;
 	#Filter By Keyword
@@ -107,7 +119,6 @@ function default_default()
 	#
 	$allAll =  $clsClassTable->getAll($cond2);
 	$assign_list["number_all"] = $allAll[0][$pkeyTable] != '' ? count($allAll) : 0;
-	//print_r('xxxxxxx'); die();
 }
 function default_ajUpdPosSortCruise()
 {

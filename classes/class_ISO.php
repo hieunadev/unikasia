@@ -5081,6 +5081,7 @@ AND COLUMN_NAME = '" . $name . "'";
 		if (_IS_PROMOTION) {
 			$clsDiscount = new Discount();
 			$sql = "SELECT discount_id FROM " . DB_PREFIX . "discount_item WHERE is_trash=0 and clsTable='$type' and item_id='$product_id'";
+//            print_r($sql);
 			$array_discount_id = $dbconn->getAll($sql);
 			if (!empty($array_discount_id)) {
 				$list_discount_id = array();
@@ -5272,13 +5273,13 @@ AND COLUMN_NAME = '" . $name . "'";
 					// Param 2: 5 phần tử cuối,
 					// Param 3: 5 phần tử trong arr,
 					// Param 4: giữ nguyên index của arr
-					$last3RecentViews	= 	array_slice($recentViews, -$element_number, $element_number, true);
+					$lastRecentViews	= 	array_slice($recentViews, -$element_number, $element_number, true);
 					#
 					// Đảo ngược thứ tự của mảng
-					$last3RecentViews 	= 	array_reverse($last3RecentViews, true);
+					$lastRecentViews 	= 	array_reverse($lastRecentViews, true);
 				}
 			}
 		}
-		return $last3RecentViews;
+		return $lastRecentViews;
 	}
 }

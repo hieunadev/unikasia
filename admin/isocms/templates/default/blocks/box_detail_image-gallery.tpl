@@ -13,13 +13,13 @@
 			<div class="col-md-5 col-sm-12">
 				<div class="filedrop-picker">
 					<div class="filedrop" onclick="file_explorer(this,event);" ondrop="file_drop(this,event)" toId="selectFile" data-options='{ldelim}"openFrom":"gallery","table_id":"{$pvalTable}","clsTableGal":"{$clsTableGal}"{rdelim}' ondragover="return false">
-						<h3>Kéo ảnh vào đây để tải lên</h3>
+						<h3>{$core->get_Lang('Drop files to upload')}</h3>
 						{if $mod eq 'hotel'}
-						<p>Kích thước (WxH=850x391)<br>
+						<p>{$core->get_Lang('Image size')} (WxH=202x202)<br>
 						{else}
-						<p>Kích thước (WxH=750x500)<br>
+						<p>{$core->get_Lang('Image size')} (WxH=750x500)<br>
 						{/if}
-						Các loại tệp được hỗ trợ là: .png,.jpg,.jpeg</p>
+						{$core->get_Lang('Supported file types are: .png,.jpg,.jpeg')}</p>
 						<button type="button" class="btn btn-upload">{$core->get_Lang('From computer')}</button>
 					</div>
 					<input class="hidden" id="selectFile" type="file" data-options='{ldelim}"openFrom":"gallery","clsTableGal":"{$clsTableGal}","table_id":"{$pvalTable}"{rdelim}' name="image">

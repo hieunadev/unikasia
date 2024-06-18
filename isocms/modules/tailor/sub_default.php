@@ -1,7 +1,54 @@
 <?php
 
 function default_default(){
-		global $assign_list, $_CONFIG, $core, $dbconn, $mod, $act, $title_page,$description_page,$keyword_page;
+
+	global $assign_list, $_CONFIG, $core, $dbconn, $mod, $act, $title_page,$description_page,$keyword_page;
+	global $clsISO, $_LANG_ID, $_lang, $extLang, $_frontIsLoggedin_user_id,$lstCountryEx ;
+	
+	$clsTour = new Tour();
+	$assign_list["clsTour"] = $clsTour;
+	
+	$clsTourItinerary = new TourItinerary();
+	$assign_list['clsTourItinerary'] = $clsTourItinerary;
+	
+	$clsTourCategory = new TourCategory();
+    $assign_list["clsTourCategory"] = $clsTourCategory;
+   
+    $clsCruise = new Cruise();
+	$assign_list["clsCruise"] = $clsCruise;
+	
+	$clsTourGroup = new TourGroup();
+	$assign_list['clsTourGroup'] = $clsTourGroup;
+	$clsTourStartDate = new TourStartDate();
+	$assign_list['clsTourStartDate'] = $clsTourStartDate;
+
+    $clsCity = new City();
+	$assign_list["clsCity"] = $clsCity;
+	$clsCityStore = new CityStore();
+	$assign_list['clsCityStore'] = $clsCityStore;
+	
+	
+    $clsFeedback=new Feedback(); 
+	$assign_list['clsFeedback'] = $clsFeedback;
+	$clsCountry = new _Country(); 
+	$assign_list["clsCountry"] = $clsCountry;
+	#
+	$assign_list["lstCountryRegion"] = $clsCountry->getAll("1=1 and is_trash=0 order by order_no ASC",$clsCountry->pkey.",title");
+
+    #
+	
+	$tour_id = !empty($_GET['tour_id']) ? $_GET['tour_id'] : '0';
+	$cond = " is_trash = 0 and";
+	$order = " order by order_no";
+	$oneItem = $clsTour->getOne($tour_id);
+	
+	$lstTourItinerary = $clsTourItinerary->getAll("$cond tour_id = $tour_id order by");
+	$assign_list["lstTourItinerary"] = $lstTourItinerary;
+	
+
+	
+
+
 
 }
 function default_isocustomize(){

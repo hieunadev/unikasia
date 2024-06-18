@@ -509,130 +509,130 @@ $().ready(function() {
 			}
 		});*/
 		// Destination
-		$(document).on('click', '.ajQuickAddDestination', function(ev){
-			var $_this = $(this);
+		// $(document).on('click', '.ajQuickAddDestination', function(ev){
+		// 	var $_this = $(this);
 
-			if($SiteModActive_continent == '1') {
-				var $chauluc_id = $('#slb_Chauluc').val();
-				if($chauluc_id==undefined){
-					$chauluc_id = 0;
-				}
-			}
-			if($SiteActive_region == '1') {
-				var $area_id = $('#slb_AreaID').val();
-				if($area_id==undefined){
-					$area_id = 0;
-				}
-			}
-			if ($SiteModActive_country == '1') {
-				var $country_id = 1;
-				if($('.Hid_Country').length){
-					$country_id = $('.Hid_Country').val();
-				} else {
-					$country_id = $('.slb_Country_Id').val();
-				}
-				if($country_id==0 || $city_id==0){
-					alertify.error('Error !');
-					return false;
-				}
-            }
-			if($SiteActive_region == '1') {
-				var $region_id = $('#slb_RegionID').val();
-				if($region_id==undefined){
-					$region_id = 0;
-				}
-			}
-			if($SiteActive_city == '1') {
-				var $city_id = $('#slb_CityID').val();
-				if($city_id==undefined){
-					$city_id = 0;
-				}
-			}
-			if($SiteActive_destination == '1') {
-				var $destination_id = $('#slb_Destination').val();
-				if($destination_id==undefined){
-					$destination_id = 0;
-				}
-			}
-			var $placetogo_id = $('#slb_placetogoID').val();
+		// 	if($SiteModActive_continent == '1') {
+		// 		var $chauluc_id = $('#slb_Chauluc').val();
+		// 		if($chauluc_id==undefined){
+		// 			$chauluc_id = 0;
+		// 		}
+		// 	}
+		// 	if($SiteActive_region == '1') {
+		// 		var $area_id = $('#slb_AreaID').val();
+		// 		if($area_id==undefined){
+		// 			$area_id = 0;
+		// 		}
+		// 	}
+		// 	if ($SiteModActive_country == '1') {
+		// 		var $country_id = 1;
+		// 		if($('.Hid_Country').length){
+		// 			$country_id = $('.Hid_Country').val();
+		// 		} else {
+		// 			$country_id = $('.slb_Country_Id').val();
+		// 		}
+		// 		if($country_id==0 || $city_id==0){
+		// 			alertify.error('Error !');
+		// 			return false;
+		// 		}
+        //     }
+		// 	if($SiteActive_region == '1') {
+		// 		var $region_id = $('#slb_RegionID').val();
+		// 		if($region_id==undefined){
+		// 			$region_id = 0;
+		// 		}
+		// 	}
+		// 	if($SiteActive_city == '1') {
+		// 		var $city_id = $('#slb_CityID').val();
+		// 		if($city_id==undefined){
+		// 			$city_id = 0;
+		// 		}
+		// 	}
+		// 	if($SiteActive_destination == '1') {
+		// 		var $destination_id = $('#slb_Destination').val();
+		// 		if($destination_id==undefined){
+		// 			$destination_id = 0;
+		// 		}
+		// 	}
+		// 	var $placetogo_id = $('#slb_placetogoID').val();
 
-			/**/
-			var adata = {};
-			if($SiteModActive_continent == '1') {adata['chauluc_id'] = $chauluc_id;}
-			if($SiteActive_region == '1') {adata['area_id'] = $area_id;}
-			if($SiteModActive_country == '1') {adata['country_id'] = $country_id;}
-			if($SiteActive_region == '1') {adata['region_id'] = $region_id;}
-			if($SiteActive_city == '1') {adata['city_id'] = $city_id;}
-			if($SiteActive_destination == '1') {adata['destination_id'] = $destination_id;}
-			adata['cruise_id'] = $cruise_id;
-			adata['cruise_itinerary_id'] = $cruise_itinerary_id;
-			adata['placetogo_id'] = $placetogo_id;
+		// 	/**/
+		// 	var adata = {};
+		// 	if($SiteModActive_continent == '1') {adata['chauluc_id'] = $chauluc_id;}
+		// 	if($SiteActive_region == '1') {adata['area_id'] = $area_id;}
+		// 	if($SiteModActive_country == '1') {adata['country_id'] = $country_id;}
+		// 	if($SiteActive_region == '1') {adata['region_id'] = $region_id;}
+		// 	if($SiteActive_city == '1') {adata['city_id'] = $city_id;}
+		// 	if($SiteActive_destination == '1') {adata['destination_id'] = $destination_id;}
+		// 	adata['cruise_id'] = $cruise_id;
+		// 	adata['cruise_itinerary_id'] = $cruise_itinerary_id;
+		// 	adata['placetogo_id'] = $placetogo_id;
 
-			vietiso_loading(1);
-			$.ajax({
-				type: "POST",
-				url: path_ajax_script+'/?mod='+mod+'&act=ajaxAddMoreCruiseDestination',
-				data: adata,
-				dataType: "html",
-				success: function(html){
-					vietiso_loading(0);
-					if(html.indexOf('_SUCCESS')>=0){
-						loadListDestination($cruise_itinerary_id);
-						if($SiteModActive_continent == '1') {
-							loadChauLuc();
-						}else{
-							loadCountry();
-						}
+		// 	vietiso_loading(1);
+		// 	$.ajax({
+		// 		type: "POST",
+		// 		url: path_ajax_script+'/?mod='+mod+'&act=ajaxAddMoreCruiseDestination',
+		// 		data: adata,
+		// 		dataType: "html",
+		// 		success: function(html){
+		// 			vietiso_loading(0);
+		// 			if(html.indexOf('_SUCCESS')>=0){
+		// 				loadListDestination($cruise_itinerary_id);
+		// 				if($SiteModActive_continent == '1') {
+		// 					loadChauLuc();
+		// 				}else{
+		// 					loadCountry();
+		// 				}
 						
-						if($SiteActive_region == '1') {
-							$('#slb_AreaID').val('');
-							$('#'+'slb_region_Id_Container').addClass('hidden');
-						}
-						if($SiteModActive_country == '1') {
-							$('#slb_Country').val('');
-							$('#'+'slb_country_Id_Container').addClass('hidden');
-						}
-						if($SiteActive_region == '1') {
-							$('#slb_RegionID').val('');
-							$('#slb_region_Id_Container').addClass('hidden');
-						}
-						if($SiteActive_city == '1') {
-							$('#slb_CityID').val('');
-							$('#'+'slb_city_Id_Container').addClass('hidden');
-						}
-						$('#'+'slb_placetogoID_Container').addClass('hidden');
-					}
-					if(html.indexOf('_EXIST')>=0){
-						alertify.error(exist_error);
-					}
-				}
-			});
-			return 0;
-		});
-		$(document).on('click', '.removeDestination', function(ev){
-			var $_this = $(this);
-			if(confirm(confirm_delete)){
-				vietiso_loading(1);
-				$.ajax({
-					type: "POST",
-					url: path_ajax_script+'/?mod='+mod+'&act=ajaxDeleteCruiseDestination',
-					data:{"cruise_destination_id" : $_this.attr('data')},
-					dataType: "html",
-					success: function(html){
-						vietiso_loading(0);
-						var $country_id = $('#slb_Country').val();
-						if($country_id==undefined){
-							$country_id = $('#Hid_Country').val();
-						}
-						if($('#slb_CityID').is(':visible')){
-							loadCity($country_id, $('#slb_RegionID').val());
-						}
-						loadListDestination($cruise_itinerary_id);
-					}
-				});
-				return false;
-			}
-		});
+		// 				if($SiteActive_region == '1') {
+		// 					$('#slb_AreaID').val('');
+		// 					$('#'+'slb_region_Id_Container').addClass('hidden');
+		// 				}
+		// 				if($SiteModActive_country == '1') {
+		// 					$('#slb_Country').val('');
+		// 					$('#'+'slb_country_Id_Container').addClass('hidden');
+		// 				}
+		// 				if($SiteActive_region == '1') {
+		// 					$('#slb_RegionID').val('');
+		// 					$('#slb_region_Id_Container').addClass('hidden');
+		// 				}
+		// 				if($SiteActive_city == '1') {
+		// 					$('#slb_CityID').val('');
+		// 					$('#'+'slb_city_Id_Container').addClass('hidden');
+		// 				}
+		// 				$('#'+'slb_placetogoID_Container').addClass('hidden');
+		// 			}
+		// 			if(html.indexOf('_EXIST')>=0){
+		// 				alertify.error(exist_error);
+		// 			}
+		// 		}
+		// 	});
+		// 	return 0;
+		// });
+		// $(document).on('click', '.removeDestination', function(ev){
+		// 	var $_this = $(this);
+		// 	if(confirm(confirm_delete)){
+		// 		vietiso_loading(1);
+		// 		$.ajax({
+		// 			type: "POST",
+		// 			url: path_ajax_script+'/?mod='+mod+'&act=ajaxDeleteCruiseDestination',
+		// 			data:{"cruise_destination_id" : $_this.attr('data')},
+		// 			dataType: "html",
+		// 			success: function(html){
+		// 				vietiso_loading(0);
+		// 				var $country_id = $('#slb_Country').val();
+		// 				if($country_id==undefined){
+		// 					$country_id = $('#Hid_Country').val();
+		// 				}
+		// 				if($('#slb_CityID').is(':visible')){
+		// 					loadCity($country_id, $('#slb_RegionID').val());
+		// 				}
+		// 				loadListDestination($cruise_itinerary_id);
+		// 			}
+		// 		});
+		// 		return false;
+		// 	}
+		// });
 		$(document).on('click', '.ajRemoveAllDestinationInCruise', function(ev){
 			var $_this = $(this);
 			if(confirm(confirm_delete)){

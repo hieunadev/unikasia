@@ -11,8 +11,6 @@
 {assign var=regionBlog value=$clsCountryEx->getTitle($country_id)}
 {assign var=blogSlug value=$clsCountryEx->getSlug($country_id)}
 
-
-
 {literal}
 <script type="application/ld+json">
 {
@@ -66,55 +64,6 @@
 
 
     <link rel="stylesheet" href="{$URL_CSS}/detail_blog.css?v={$upd_version}" as="style" />
-
-
-<section name ="intro_detailblog">
-	    <div class="detail_top_box">
-
-        <div class="d-flex">
-
-            <div class="col-photo">
-
-                <img src="{$imgBlog}" width="1034" height="861" alt="{$title_blog}" />
-
-            </div>
-
-            <div class="col-text">
-
-                <div class="blog_info">
-					
-                    <p class="country_cat"><a href="/blog/{$blogSlug}" title="{$regionBlog}">{$regionBlog}</a> | <a href="/blog?blogcat_id={$cat_id}" title="{$cateBlog}">{$cateBlog}</a></p>
-
-                    <h1 class="title text3line">{$title_blog}</h1>
-
-                    <div class="intro text5line">
-
-                    {$clsBlog->getIntro($blog_id)|@html_entity_decode}
-
-                    </div>
-
-                    <div lang="publish_author submitted">
-
-                        <span class="publish_date mgr10">
-							<i class="fa-regular fa-clock-three" style="color: #ffffff;"></i>{$publish_date}
-						</span>
-						
-                        <span class="author">
-							<i class="fa-solid fa-user" style="color: #ffffff;"></i>{$author}
-						</span>
-
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
 
 <section class="listblogdetail_breadcrumb">
     <div class="breadcrumb_list">
@@ -277,13 +226,13 @@
                                     <h3 class="txth_relatedtour">{$clsTour->getTitle($lstRelatedTour[i].tour_id)}</h3>
                                     </a>
                                     <div class="d-flex align-items-center score_reviewtour">
-                                        <span class="border_score">9.9</span>
-                                        <span class="txt_score">Excellent </span> <span class="txt_reviewstour">- 10 views</span>
+                                        <span class="border_score">{$clsReviews->getReviews($tour_id, 'avg_point')}</span>
+                                        <span class="txt_score">{$clsReviews->getReviews($tour_id, 'txt_review')} </span> 
+										<span class="txt_reviewstour">- {$clsReviews->getReviews($tour_id)} reviews</span>
                                     </div>
                                     <div class="d-flex align-items-center">
                                         <i class="fa-light fa-location-dot" style="color: #43485c;"></i> <span
-                                                class="txt_placetours">Place: Hanoi – Halong – Hue – Hoian</span> <span
-                                                class="border_place">+2</span>
+                                                class="txt_placetours">Place: Hanoi – Halong – Hue – Hoian</span> <span class="border_place">+2</span>
                                     </div>
 
                                     <p>{$clsTour->getIntro($lstRelatedTour[i].tour_id)}</p>
@@ -291,7 +240,7 @@
                                         <div class="from_price">
                                             <p class="from_txtp">From</p>
                                             <span class="txt_price">US
-												<h3 class="txt_numbprice"> $650</h3>
+												<h3 class="txt_numbprice">${$clsTour->getPriceAfterDiscount($tour_id)}</h3>
 												</span>
                                         </div>
 
@@ -443,19 +392,18 @@
 		
     <script>
 		
-$(window).scroll(function() {
-  setTimeout(function() {
-    if ($(window).scrollTop() === 0) {
+$(document).ready(function() {
+  $('.unika_header').removeClass('unika_header_2');
+
+  $(window).scroll(function() {
+    requestAnimationFrame(function() {
       $('.unika_header').removeClass('unika_header_2');
-    }
+    });
   });
 });
 
 
 
-
-
-		
 		document.addEventListener('DOMContentLoaded', () => {
 	  const viewMoreLink = document.getElementById('viewMore');
 	  const cityCheckboxes = document.querySelectorAll('.filter-checkbox2 > .form-check2');

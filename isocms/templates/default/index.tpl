@@ -165,12 +165,12 @@
     <link rel="preload" href="{$URL_JS}/jquery.countdown.min.js?v={$upd_version}" as="script" />
     <link rel="preload" href="{$URL_JS}/jquery.lockfixed.js?v={$upd_version}" as="script" />
     <link rel="preload" href="{$URL_JS}/swiper.min.js?v={$upd_version}" as="script" />
-
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/umd/popper.min.js"></script>
 
 
 
     <!--
-	{* <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/umd/popper.min.js"></script>*}
+	
 	{* <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"></script>*}
 	{* <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>*}
 	{* <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>*}

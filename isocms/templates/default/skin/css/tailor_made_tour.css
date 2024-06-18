@@ -289,11 +289,11 @@ input::placeholder {
 	padding: 12px 20px;
 	flex-shrink: 0;
 	border-radius: 8px;
-	background: var(--Primary, #FFA718);
+	background: #FFA718;
 	font-size: 20px;
-font-style: normal;
-font-weight: 600;
-line-height: 32px; /* 160% */
+	font-style: normal;
+	font-weight: 600;
+	line-height: 32px;
 	color: #FFF;
 	border:none;
 }
@@ -302,6 +302,61 @@ line-height: 32px; /* 160% */
 	background: #e88f00 !important;
 	color: #FFF;
 }
+
+.select-input-inf option:disabled {
+	color: var(--Neutral-3, #959AA4) !important; 
+	font-family: "SF Pro Display" !important;
+	font-size: 16px !important;
+	font-style: normal !important;
+	font-weight: 400 !important;
+	line-height: 24px !important;
+}
+
+.input_txttravel {
+	display: flex;
+	width: 785px;
+	padding: 12px 10px 12px 12px;
+	align-items: flex-start;
+	gap: 10px;
+	flex-shrink: 0;
+	border-radius: 4px;
+	border: 1px solid var(--Neutral-4, #D3DCE1);
+}
+
+.input-group {
+	position: relative; 
+}
+
+.input-group i {
+	position: absolute;
+	left: 10px;        
+	top: 50%;
+	transform: translateY(-50%);
+	pointer-events: none; 
+	z-index: 1;
+}
+
+.input-group input {
+	padding-left: 35px;
+	height: 48px;
+	
+}
+
+.input_informationtrip .error {
+  font-size: 14px;
+  color: red;
+  margin: 5px 0 0;
+}
+
+.ui-datepicker { /* Hoặc class tương ứng của overlay datepicker */
+    z-index: 4; 
+}
+
+.input-group i {
+    z-index: 4; /* Đảm bảo lớn hơn z-index của overlay */
+}
+
+
 
 
 

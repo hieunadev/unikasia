@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css">
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /><div class="unika_booking">
 	<div class="head_booking">
 		<div class="head d-flex justify-content-between align-items-center flex-wrap">
@@ -30,8 +31,8 @@
 						<div class="div_img">
 							<img src="{$URL_IMAGES}/booking/choose_booking.svg" alt="Icon">
 						</div>
-						<span class=" text_booking">
-                                Choose booking
+						<span class="text_booking">
+							<a href="#" onclick="window.history.back(); return false;">Choose booking</a>
 						</span>
 					</div>
 					<div class="line1_booking"></div>
@@ -52,6 +53,7 @@
 			</div>
 		</div>
 	</div>
+	{if $cartSessionService}
 	{foreach from=$cartSessionService item=item name=item}
 		{assign var=tour_id value=$item.tour_id_z}
 		{if $tour_id}
@@ -97,8 +99,8 @@
 											</div>
 											<span
 													class="d-flex align-items-center value value_travelers justify-content-center"
-													name="value_travelers" onpaste="return false" contenteditable="true"
-													data-price="1">{$number_adults_z}</span>
+													name="value_travelers" contenteditable="false" onpaste="return false" contenteditable="true"
+													data-price="{$item.price_adults_z}">{$number_adults_z}</span>
 											<div class="plus item_calc active cursor div_img">
 												<img src="{$URL_IMAGES}/booking/icon_plus.svg" alt="Icon">
 											</div>
@@ -115,7 +117,7 @@
 											</div>
 											<span
 													class="d-flex align-items-center value value_travelers justify-content-center"
-													name="value_travelers" onpaste="return false" contenteditable="true"
+													name="value_travelers" contenteditable="false" onpaste="return false" contenteditable="true"
 													data-price="2">{$number_child_z}</span>
 											<div class="plus item_calc active cursor div_img">
 												<img src="{$URL_IMAGES}/booking/icon_plus.svg" alt="Icon">
@@ -133,7 +135,7 @@
 											</div>
 											<span
 													class="d-flex align-items-center value value_travelers justify-content-center"
-													name="value_travelers" onpaste="return false" contenteditable="true"
+													name="value_travelers" contenteditable="false" onpaste="return false" contenteditable="true"
 													data-price="3">{$number_infants_z}</span>
 											<div class="plus item_calc active cursor div_img">
 												<img src="{$URL_IMAGES}/booking/icon_plus.svg" alt="Icon">
@@ -153,17 +155,18 @@
 											class="item_distribution item_content_booking d-flex justify-content-between align-items-start  flex-wrap">
 										<label class="item_checkbox">
 											<div class="d-flex flex-column">
-												<span class="item_checkbox_title title">{$lstRoom[i].title}</span>
-												<div class="item_checkbox_money">US <span>${$clsTourPriceGroup->getPrice($tour_id,$lstRoom[i].tour_property_id,0,0,0,'TourRoom')}</span></div>
+												<span class="item_checkbox_title title">{$clsTourProperty->getTitle($lstRoom[i].room_id)}</span>
+{*												<div class="item_checkbox_money">US <span>${$clsTourPriceGroup->getPrice($tour_id,$lstRoom[i].tour_property_id,0,0,0,'TourRoom')}</span></div>*}
+												<div class="item_checkbox_money">US <span>${$lstRoom[i].price_room}</span></div>
 											</div>
-											<input type="checkbox" name="checkbox_room" {if $clsISO->checkInArray($list_room_id,$lstRoom[i].tour_property_id)} checked {/if}>
+											<input type="checkbox" name="checkbox_room" {if $lstRoom[i].number_room} checked {/if}>
 											<span class="checkmark"></span>
 										</label>
-										<div class="calc_distribution number align-items-center "
+										<div class="calc_distribution number align-items-center active"
 											 data-class="amount_double_room">
 											<div class="minus item_calc_dis cursor"></div>
 											<span contenteditable="true" class="value value_distribution"
-												  name="value_distribution" onpaste="return false" data-price="4">0</span>
+												  name="value_distribution" onpaste="return false" data-price="{$lstRoom[i].price_room}">{$lstRoom[i].number_room}</span>
 											<div class="plus item_calc_dis cursor active"></div>
 										</div>
 									</div>
@@ -190,11 +193,11 @@
 										<input type="checkbox">
 										<span class="checkmark"></span>
 									</label>
-									<div class="calc_distribution number align-items-center "
+									<div class="calc_distribution number align-items-center active"
 										 data-class="amount_other_{$lstAddOnService[i].price}">
 										<div class="minus item_calc_dis cursor"></div>
 										<span contenteditable="true" class="value" onpaste="return false"
-											  data-price="{$lstAddOnService[i].price}">0</span>
+											  data-price="0">0</span>
 										<div class="plus item_calc_dis cursor active"></div>
 									</div>
 								</div>
@@ -211,7 +214,9 @@
 								<label for="title">Title*</label>
 								<select class="select2" name="title" id="title">
 									<option value="">-- Please Select --</option>
-									<option value="1">Option 1</option>
+									<option value="1">Mr.</option>
+									<option value="1">Mrs.</option>
+									<option value="1">Ms.</option>
 								</select>
 							</div>
 							<div class="d-flex flex-column information-7  box_validate">
@@ -220,9 +225,12 @@
 							</div>
 							<div class="d-flex flex-column information-3  box_validate">
 								<label for="nationality">Nationality*</label>
-								<select class="select2" name="nationality" id="nationality">
+								{*<select class="select2" name="nationality" id="nationality">
 									<option value="">-- Please Select --</option>
 									<option value="1">Option 1</option>
+								</select>*}
+								<select class="form-select country select2" name="nationality" id="nationality" aria-label="Default select example" onchange="loadStates()">
+									<option value="">-- Please Select --</option>
 								</select>
 							</div>
 							<div class="d-flex flex-column information-3  box_validate">
@@ -235,9 +243,12 @@
 							</div>
 							<div class="d-flex flex-column information-3 ">
 								<label for="city">City</label>
-								<select class="select2" name="city" id="city">
+								{*<select class="select2" name="city" id="city">
 									<option value="">-- Please Select --</option>
 									<option value="1">Option 1</option>
+								</select>*}
+								<select class="form-select state select2" name="city" id="city" aria-label="Default select example" onchange="loadCities()">
+									<option value="">-- Please Select --</option>
 								</select>
 							</div>
 							<div class="d-flex flex-column information-7 ">
@@ -257,48 +268,85 @@
 							Payment methods
 						</div>
 						<div class="content d-flex flex-column ">
+							{if $clsConfiguration->getValue('SitePay_CashStatus_Mode') eq '1'}
+								{assign var = SitePay_CashName value = SitePay_CashName_|cat:$_LANG_ID}
+								{assign var = SitePay_CashDesc value = SitePay_CashDesc_|cat:$_LANG_ID}
 							<div class="type_payment d-flex flex-column ">
-								<label class="item_radio">Onepay
+								<label class="item_radio">{$clsConfiguration->getValue($SitePay_CashName)}
 									<input type="radio" checked name="radio" class="radio">
 									<span class="checkmark"></span>
 								</label>
 								<div class="describe active">
                                         <span>
-                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                                            Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                                            unknown printer took a galley of type and scrambled it to make a type specimen book.
-                                            It has survived not only five centuries, but also the leap into electronic
-                                            typesetting, remaining essentially unchanged. It was popularised in the 1960s with
-                                            the release of Letraset sheets containing Lorem Ipsum passages, and more recently
-                                            with desktop publishing software like Aldus PageMaker including versions of Lorem
-                                            Ipsum
+                                            {$clsConfiguration->getValue($SitePay_CashDesc)}
                                         </span>
 								</div>
 							</div>
+							{/if}
+							{if $clsConfiguration->getValue('SitePay_Bank_Mode') eq '1'}
+								{assign var = SitePay_BankName value = SitePay_BankName_|cat:$_LANG_ID}
+								{assign var = SitePay_BankDesc value = SitePay_BankDesc_|cat:$_LANG_ID}
 							<div class="type_payment d-flex flex-column ">
-								<label class="item_radio">Visa/Napas
+								<label class="item_radio">{$clsConfiguration->getValue($SitePay_BankName)}
 									<input type="radio" name="radio" class="radio">
 									<span class="checkmark"></span>
 								</label>
 								<div class="describe">
                                         <span>
-                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                                            Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                                            unknown printer took a galley of type and scrambled it to make a type specimen book.
-                                            It has survived not only five centuries, but also the leap into electronic
-                                            typesetting, remaining essentially unchanged. It was popularised in the 1960s with
-                                            the release of Letraset sheets containing Lorem Ipsum passages, and more recently
-                                            with desktop publishing software like Aldus PageMaker including versions of Lorem
-                                            Ipsum
+                                            {$clsConfiguration->getValue($SitePay_BankDesc)}
                                         </span>
 								</div>
 							</div>
+							{/if}
+							{if $clsConfiguration->getValue('Paypal_Status_Mode') eq '1'}
+								{assign var = Paypal_Name value = Paypal_Name_|cat:$_LANG_ID}
+							<div class="type_payment d-flex flex-column ">
+								<label class="item_radio">{$clsConfiguration->getValue($Paypal_Name)}
+									<input type="radio" name="radio" class="radio">
+									<span class="checkmark"></span>
+								</label>
+								<div class="describe">
+                                        <span>
+
+                                        </span>
+								</div>
+							</div>
+							{/if}
+							{if $clsConfiguration->getValue('ONEPAY_Status_Mode') eq '1'}
+								{assign var = ONEPAY_Name value = ONEPAY_Name_|cat:$_LANG_ID}
+								<div class="type_payment d-flex flex-column ">
+									<label class="item_radio">{$clsConfiguration->getValue($ONEPAY_Name)}
+										<input type="radio" name="radio" class="radio">
+										<span class="checkmark"></span>
+									</label>
+									<div class="describe">
+                                        <span>
+                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
+                                            Ipsum has been the industry's standard dummy text ever since the 1500s, when an
+                                        </span>
+									</div>
+								</div>
+							{/if}
+							{if $clsConfiguration->getValue('ONEPAY_Visa_Status_Mode') eq '1'}
+								{assign var = ONEPAY_Visa_Name value = ONEPAY_Visa_Name_|cat:$_LANG_ID}
+							<div class="type_payment d-flex flex-column ">
+								<label class="item_radio">{$clsConfiguration->getValue($ONEPAY_Visa_Name)}
+									<input type="radio" name="radio" class="radio">
+									<span class="checkmark"></span>
+								</label>
+								<div class="describe">
+                                        <span>
+
+                                        </span>
+								</div>
+							</div>
+							{/if}
 						</div>
 					</div>
 					<button class="btn_payment false d-flex align-items-center justify-content-center " type="submit">
 						Payment
 						<div class="div_img">
-							<img src="images/btn_contact.svg" alt="Icon">
+							<img src="{$URL_IMAGES}/hotel/ArrowRight.svg" alt="Icon">
 						</div>
 					</button>
 				</div>
@@ -323,18 +371,26 @@
 								</div>
 								<div class="d-flex justify-content-between align-items-start ">
 									<span class=" span_title">Duration:</span>
-									<span class="span_content duration"></span>
+									<span class="span_content duration">{$clsTour->getTripDurationx($tour_id)}</span>
 								</div>
 							</div>
 							<div class="item_content d-flex flex-column ">
 								<div class="d-flex justify-content-between align-items-start ">
 									<span class=" span_title">Participants:</span>
 									<div class="participants span_content d-flex flex-column  align-items-end">
+										{if $number_adults_z}<span class="span_item"><span class="amount_adults">{$number_adults_z}</span> x Adults</span>{/if}
+										{if $number_child_z}<span class="span_item"><span class="amount_adults">{$number_child_z}</span> x Children</span>{/if}
+										{if $number_infants_z}<span class="span_item"><span class="amount_adults">{$number_infants_z}</span> x Infants</span>{/if}
 									</div>
 								</div>
 								<div class="d-flex justify-content-between align-items-start ">
 									<span class=" span_title">Room:</span>
 									<div class="room span_content d-flex flex-column  align-items-end">
+										{section name=i loop=$lstRoom}
+											{if $lstRoom[i].number_room}
+												<span class="span_item"><span class="amount_adults">{$lstRoom[i].number_room}</span> x {$clsTourProperty->getTitle($lstRoom[i].room_id)}</span>
+											{/if}
+										{/section}
 									</div>
 								</div>
 							</div>
@@ -348,7 +404,7 @@
 							<div class="d-flex flex-column ">
 								<div class="d-flex justify-content-between align-items-start ">
 									<span class=" span_title">Total:</span>
-									<span class="span_content total_booking"></span>
+									<span class="span_content total_booking">US ${$clsISO->formatPrice($totalGrand)}</span>
 								</div>
 							</div>
 						</div>
@@ -356,24 +412,43 @@
 					<div class="subtotal d-flex flex-column ">
 						<div class="d-flex flex-column ">
 							<div class="d-flex justify-content-between align-items-start ">
-								<span class=" span_title">Subtotal:</span>
-								<span class="span_content subtotal_booking"></span>
+								<span class=" span_title">Deposit:</span>
+								<span class="span_content subtotal_booking">US ${$clsISO->formatPrice($totalPriceDeposit)}</span>
+							</div>
+						</div>
+						<div class="d-flex flex-column">
+							<div class="d-flex justify-content-between align-items-start ">
+								<span class="span_title">Remaining:</span>
+								<span class="span_content payment_remaining">US ${$clsISO->formatPrice($totalRemaining)}</span>
 							</div>
 						</div>
 						<div class="d-flex flex-column ">
 							<div class="d-flex justify-content-between align-items-start ">
 								<span class="span_title">Payment amount:</span>
-								<span class="span_content  payment_amount"></span>
+								<p class="txt_monpr">US <span class="span_content payment_amount">${$clsISO->formatPrice($totalPriceDeposit)}</span></p>
 							</div>
 						</div>
 					</div>
 				</div>
+				<input type="hidden" id="total_price" value="{$clsISO->formatPrice($totalGrand)}">
+				<input type="hidden" id="price_deposit" value="{$clsISO->formatPrice($totalPriceDeposit)}">
+				<input type="hidden" id="price_deposit" value="{$clsISO->formatPrice($totalRemaining)}">
 			</form>
 		</div>
 
 	</div>
 		{/if}
 	{/foreach}
+		{else}
+		<div class="image_cart">
+			<img src="{$URL_IMAGES}/cart.png" class="img100">
+		</div>
+		<div class="text">
+			<h2 class="text-bold size35 mb30">{$core->get_Lang('Your cart is empty')}</h2>
+			<p>{$core->get_Lang("Looks like you haven't added anything to your cart yet")}.</p>
+			<a class="btn_main" href="{$DOMAIN_NAME}{$extLang}" title="{$core->get_Lang('start selection')}">{$core->get_Lang('start selection')}</a>
+		</div>
+	{/if}
 	<div class="unika_social">
 		<div class="unika_social_icons">
 			<a href="https://www.youtube.com/user/vietiso" class="unika_social_icon">
@@ -396,6 +471,105 @@
 		</div>
 	</div>
 </div>
+<select class="form-select city d-none" aria-label="Default select example" >
+	<option selected>Select City</option>
+</select>
+
 
 <script src="{$URL_JS}/cart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
+<script src="{$URL_JS}/jquery.validate.min.js"></script>
+{literal}
+<script>
+	var config = {
+		cUrl: 'https://api.countrystatecity.in/v1/countries',
+		ckey: 'NHhvOEcyWk50N2Vna3VFTE00bFp3MjFKR0ZEOUhkZlg4RTk1MlJlaA=='
+	}
+
+
+	var countrySelect = document.querySelector('.country'),
+			stateSelect = document.querySelector('.state'),
+			citySelect = document.querySelector('.city')
+
+
+	function loadCountries() {
+
+		let apiEndPoint = config.cUrl
+
+		fetch(apiEndPoint, {headers: {"X-CSCAPI-KEY": config.ckey}})
+				.then(Response => Response.json())
+				.then(data => {
+					// console.log(data);
+
+					data.forEach(country => {
+						const option = document.createElement('option')
+						option.value = country.iso2
+						option.textContent = country.name
+						countrySelect.appendChild(option)
+					})
+				})
+				.catch(error => console.error('Error loading countries:', error))
+
+		stateSelect.disabled = true
+		citySelect.disabled = true
+		stateSelect.style.pointerEvents = 'none'
+		citySelect.style.pointerEvents = 'none'
+	}
+
+
+	function loadStates() {
+		stateSelect.disabled = false
+		citySelect.disabled = true
+		stateSelect.style.pointerEvents = 'auto'
+		citySelect.style.pointerEvents = 'none'
+
+		const selectedCountryCode = countrySelect.value
+		// console.log(selectedCountryCode);
+		stateSelect.innerHTML = '<option value="">Select State</option>' // for clearing the existing states
+		citySelect.innerHTML = '<option value="">Select City</option>' // Clear existing city options
+
+		fetch(`${config.cUrl}/${selectedCountryCode}/states`, {headers: {"X-CSCAPI-KEY": config.ckey}})
+				.then(response => response.json())
+				.then(data => {
+					// console.log(data);
+
+					data.forEach(state => {
+						const option = document.createElement('option')
+						option.value = state.iso2
+						option.textContent = state.name
+						stateSelect.appendChild(option)
+					})
+				})
+				.catch(error => console.error('Error loading countries:', error))
+	}
+
+
+	function loadCities() {
+		citySelect.disabled = false
+		citySelect.style.pointerEvents = 'auto'
+
+		const selectedCountryCode = countrySelect.value
+		const selectedStateCode = stateSelect.value
+		// console.log(selectedCountryCode, selectedStateCode);
+
+		citySelect.innerHTML = '<option value="">Select City</option>' // Clear existing city options
+
+		fetch(`${config.cUrl}/${selectedCountryCode}/states/${selectedStateCode}/cities`, {headers: {"X-CSCAPI-KEY": config.ckey}})
+				.then(response => response.json())
+				.then(data => {
+					// console.log(data);
+
+					data.forEach(city => {
+						const option = document.createElement('option')
+						option.value = city.iso2
+						option.textContent = city.name
+						citySelect.appendChild(option)
+					})
+				})
+	}
+
+	window.onload = loadCountries
+
+</script>
+{/literal}

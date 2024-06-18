@@ -569,6 +569,10 @@ img {}
     height: 24px;
 }
 
+.minus.item_calc, .plus.item_calc.active {
+    pointer-events: none;
+}
+
 .calc_distribution .plus {
     background: url(../images/booking/plus1.svg) no-repeat;
     background-size: 100%;
@@ -598,7 +602,9 @@ img {}
     width: calc(66% - 9px);
     gap: 4px;
 }
-
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 100% !important;
+}
 .select2-container--default .select2-selection--single .select2-selection__arrow b {
     background: url(../images/booking/icon_select.svg) no-repeat;
     background-size: 100%;
@@ -616,11 +622,11 @@ img {}
 }
 
 .select2-container--default .select2-selection--single .select2-selection__rendered {
-    line-height: 48px;
+    line-height: 48px !important;
 }
 
 .select2-container .select2-selection--single {
-    height: 48px;
+    height: 48px !important;
     border: 1px solid #D3DCE1;
 }
 
@@ -767,7 +773,7 @@ img {}
 
 .span_content,
 .span_content span {
-    width: 65%;
+    /*width: 65%;*/
     text-align: right;
     font-size: 16px;
     font-style: normal;
@@ -776,6 +782,22 @@ img {}
     color: var(--Neutral-1, #111D37);
 }
 
+.total_booking, .payment_remaining, .subtotal_booking {
+    font-weight: 600;
+}
+
+.txt_monpr {
+    color: var(--Primary, #FFA718);
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 32px;
+}
+.txt_monpr .payment_amount {
+    color: var(--Primary, #FFA718);
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 36px;
+}
 .item_input {
     width: calc(49% - 15px);
     gap: 4px;
@@ -949,6 +971,37 @@ img {}
     font-weight: 400;
     line-height: 20px;
     color: var(--Neutral-2, #434B5C);
+}
+
+.image_cart {
+    width: 390px;
+    margin: 0 auto 40px;
+}
+.text {
+    width: 100%;
+    max-width: 520px;
+    margin: 0 auto;
+    text-align: center;
+}
+.text h2 {
+    font-size: 34px;
+    line-height: 40px;
+    margin: 0 0 15px;
+}
+ .text p {
+    font-size: 20px;
+    line-height: 24px;
+    margin: 0 0 40px;
+}
+.text a {
+    font-size: 18px;
+    display: block;
+    margin: 0 auto;
+    width: 220px;
+    line-height: 56px;
+    border-radius: 80px;
+    text-transform: uppercase;
+    font-weight: bold;
 }
 
 @media screen and (max-width: 1175px) {

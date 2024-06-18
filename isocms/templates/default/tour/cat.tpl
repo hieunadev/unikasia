@@ -153,7 +153,7 @@
             </div>
             <div class="trvs_list_blog_content">
                 <div class="row">
-                    <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-4">
                         {if $list_blog}
                         {foreach from=$list_blog key=key item=item}
                         {assign var="blog_id" value=$item.blog_id}
@@ -189,7 +189,7 @@
                         {/foreach}
                         {/if}
                     </div>
-                    <div class="col-12 col-sm-12 col-md-8 col-lg-8">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-8">
                         {if $list_blog}
                         {foreach from=$list_blog key=key item=item}
                         {assign var="blog_id" value=$item.blog_id}

@@ -215,8 +215,8 @@
 .unika_navbar-nav .nav-link::after,
 .unika_language .nav-link::after {
     display: none;
-}
-.navbar-nav {
+} 
+.unika_header .navbar-nav {
     gap: 40px;
 }
 .nav-link {
@@ -293,7 +293,10 @@
     object-fit: cover;
     transition: all 0.3s ease-in-out;
 }
-
+.unika_img_logo_1 {
+    width: 100%;
+    height: auto;
+}
 .unika_destination {
     display: flex;
     gap: 32px;
@@ -586,7 +589,7 @@
     .unika_header_text {
         display: none;
     }
-    ul.dropdown-menu.show {
+    .unika_header ul.dropdown-menu.show {
         background: #111d37;
         border: unset;
         padding: 0;

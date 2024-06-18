@@ -182,7 +182,7 @@ function default_default(){
 	$cartSessionHotel= vnSessionGetVar('BookingHotel_'.$_LANG_ID);
 	$cartSessionHotel = $cartSessionHotel[$_LANG_ID];
 	
-	//$clsISO->pre($cartSessionVoucher);die();
+//	$clsISO->pre($cartSessionVoucher);die();
 	$assign_list['time_now'] = time();
 	
 	$totalGrand = 0;
@@ -205,13 +205,13 @@ function default_default(){
 			$lstRoom = $clsTourProperty->getAll("is_trash=0 and is_online=1 and type='TOURROOM' and tour_property_id IN (".$list_tour_room_id.")",$clsTourProperty->pkey.',title');
 			$lstAddOnService = $clsAddOnService->getAll("is_trash = 0 and is_online=1 and addonservice_id IN ($list_service_id) order by order_no", "title, price");
 
-			$assign_list['lstRoom'] = $lstRoom;
+			$assign_list['lstRoom'] = unserialize(html_entity_decode($value['str_list_room']));
 			$assign_list['list_room_id'] = $value["list_room_id"];
 			$assign_list["lstAddOnService"] =$lstAddOnService;
 		}
 	}
 
-//	$clsISO->print_pre($cartSessionService); die();
+//	$clsISO->print_pre($assign_list['lstRoom']);
 
 	if(!empty($cartSessionVoucher)){
 		foreach($cartSessionVoucher as $key=>$value){

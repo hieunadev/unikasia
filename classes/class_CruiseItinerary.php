@@ -596,4 +596,16 @@ class CruiseItinerary extends dbBasic
 		// return	$clsISO->priceFormat($price_itinerary);
 		return	$price_itinerary;
 	}
+	function getMinPriceItinerary($cruise_id)
+	{
+		global $core, $clsISO;
+		#
+		$data	= 	$this->getAll("cruise_id = $cruise_id", 'MIN(price_itinerary) as minPrice');
+		#
+		if (!empty($data[0]['minPrice'])) {
+			return $data[0]['minPrice'];
+		} else {
+			return 0;
+		}
+	}
 }

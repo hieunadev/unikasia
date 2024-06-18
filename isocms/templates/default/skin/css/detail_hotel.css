@@ -1633,7 +1633,18 @@ img.img_big, img.img_small {
     font-size: 16px;
     font-weight: 400;
     line-height: 24px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    max-height: 72px;
+    transition: max-height 0.3s ease-out;
 }
+
+.expanded {
+    height: auto;
+}
+
 .list_reviews .stars_review i{
     color: var(--Primary) !important;
 }
@@ -1779,7 +1790,11 @@ p.price {
 .semi-donut .cirle_semi {
 	width: 198px;
 	height: 198px;
+	  border-radius: 50% 50% 0 0; /* Thay đổi giá trị border-radius */
+  overflow: hidden; /* Thêm thuộc tính này để cắt phần thừa */
 }
+
+#writeTourReview .
 
 
 

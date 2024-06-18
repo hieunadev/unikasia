@@ -42,7 +42,10 @@ function getFrame($cruise_id = null)
 				),
 				'childPolicy' => array(
 					'name' => $core->get_Lang('Child Policy')
-				)
+				),
+				'destination' => array(
+					'name' => $core->get_Lang('Destination')
+				),
 			)
 		),
 	);
@@ -307,6 +310,10 @@ function default_getMainFormStep()
 	$smarty->assign('clsCruiseItinerary', $clsCruiseItinerary);
 	$clsCruiseCabin = new CruiseCabin();
 	$smarty->assign('clsCruiseCabin', $clsCruiseCabin);
+	$clsCruiseDestination = new CruiseDestination();
+	$smarty->assign('clsCruiseDestination', $clsCruiseDestination);
+	$clsCountry = new Country();
+	$smarty->assign('clsCountry', $clsCountry);
 	#
 	$table_id = Input::post('table_id', 0);
 	$currentstep = Input::post('currentstep', '');
@@ -620,9 +627,11 @@ function default_ajSaveMainStep()
 	$msg = '_error';
 	$clsClassTable = new Cruise();
 	$clsReviewsCruise = new ReviewsCruise();
+	$clsCruiseDestination = new CruiseDestination();
+	#
 	$table_id = Input::post('table_id', 0);
 	$currentstep = Input::post('currentstep');
-
+	#
 	if ($currentstep == 'basic') {
 		$title = Input::post('title');
 		$title = html_entity_decode($title);
@@ -690,13 +699,13 @@ function default_ajSaveMainStep()
 				'terrible'			=>	$clsISO->processSmartNumber($terrible),
 				'is_show_reviews'	=>	$is_show_reviews,
 			];
-			//			$clsReviewsCruise->setDeBug(1);
 			$clsReviewsCruise->updateOne($reviews_cruise_id, $arr_reviews);
 		} else {
 			$fx = "$clsReviewsCruise->pkey,cruise_id,cruise_quality,food_drink,cabin_quality,staff_quality,entertainment,excellent,very_good,good,average,poor,terrible,is_show_reviews,worth_the_money";
 			$vx = "'" . $clsReviewsCruise->getMaxID() . "','$table_id','" . $clsISO->processSmartNumber($cruise_quality) . "','" . $clsISO->processSmartNumber($food_drink) . "','" . $clsISO->processSmartNumber($cabin_quality) . "','" . $clsISO->processSmartNumber($staff_quality) . "','" . $clsISO->processSmartNumber($entertainment) . "','" . $clsISO->processSmartNumber($excellent) . "','" . $clsISO->processSmartNumber($very_good) . "','" . $clsISO->processSmartNumber($good) . "','" . $clsISO->processSmartNumber($average) . "','" . $clsISO->processSmartNumber($poor) . "','" . $clsISO->processSmartNumber($terrible) . "','" . $is_show_reviews . "','" . $worth_the_money . "'";
 			$clsReviewsCruise->insertOne($fx, $vx);
 		}
+		#
 		foreach ($_POST as $key => $val) {
 			$tmp = explode('-', $key);
 			if ($tmp[0] == 'iso') {
@@ -1605,10 +1614,10 @@ function default_ajLoadCruiseExtension()
 			$html	.= 	'<tr style="cursor:move" id="order_' . $item[$clsCruiseExtension->pkey] . '" class="' . ($i % 2 == 0 ? 'row1' : 'row2') . '">';
 			$html	.= 	'<td class="index">' . ($i + 1) . '</td>';
 			$html	.= 	'<td>' . $arr_type_tour[$item['type']] . '</td>';
-			$html	.= 	'<td>' . $clsTour->getTitle($item['tour_id']) . '</td>';
-			$html	.= 	'<td>' . $clsTour->getNumberDayDuration($item['tour_id']) . '</td>';
+			$html	.= 	'<td>' . $clsTour->getTitle($item['cruise_id']) . '</td>';
+			$html	.= 	'<td>' . $clsTour->getNumberDayDuration($item['cruise_id']) . '</td>';
 			// if ($clsISO->getCheckActiveModulePackage($package_id, $mod, 'category', 'default') == 1) {
-			$html	.= 	'<td>' . $clsTour->getCatName($item['tour_id']) . '</td>';
+			$html	.= 	'<td>' . $clsTour->getCatName($item['cruise_id']) . '</td>';
 			// }
 			$html 	.= 	'
 				<td class="block_responsive text-center" style="white-space:nowrap;" data-title="' . $core->get_Lang('func') . '"">
@@ -1656,14 +1665,14 @@ function default_ajAddCruiseExtension()
 	#
 	$clsCruiseExtension	=	new CruiseExtension();
 	$cruise_id 			= 	$_POST['cruise_id'];
-	$tour_id 			= 	$_POST['tour_id'];
+	$cruise_id 			= 	$_POST['cruise_id'];
 	$cruise_tour_type 	= 	$_POST['cruise_tour_type'];
 
-	if (!$clsCruiseExtension->checkExist($cruise_id, $tour_id)) {
-		$f 			= 	"cruise_extension_id, cruise_id, tour_id, order_no, type, is_trash";
+	if (!$clsCruiseExtension->checkExist($cruise_id, $cruise_id)) {
+		$f 			= 	"cruise_extension_id, cruise_id, cruise_id, order_no, type, is_trash";
 		$res 		= 	$clsCruiseExtension->getAll("is_trash = 0 AND cruise_id = '$cruise_id' ORDER BY order_no DESC limit 0,1");
 		$order_no 	= 	intval($res[0]['order_no']) + 1;
-		$v 			= 	"'" . $clsCruiseExtension->getMaxId() . "', '$cruise_id', '$tour_id', '" . $order_no . "', '" . $cruise_tour_type . "', '0'";
+		$v 			= 	"'" . $clsCruiseExtension->getMaxId() . "', '$cruise_id', '$cruise_id', '" . $order_no . "', '" . $cruise_tour_type . "', '0'";
 		#
 		if ($clsCruiseExtension->insertOne($f, $v)) {
 			echo ('_SUCCESS');
@@ -1698,5 +1707,133 @@ function default_ajUpdPosCruiseExtension()
 	foreach ($order as $key => $val) {
 		$key	= 	$key + 1;
 		$clsCruiseExtension->updateOne($val, "order_no = '" . $key . "'");
+	}
+}
+
+
+// Danh sách cruise destination
+function default_ajaxLoadCruiseCountry()
+{
+	global $dbconn, $assign_list, $_CONFIG, $_SITE_ROOT, $mod, $_LANG_ID, $act, $core, $clsModule, $clsISO, $clsConfiguration, $package_id;
+	$clsCruiseDestination = new CruiseDestination();
+	$clsContinent = new Continent();
+	$clsCountry = new Country();
+	$clsRegion = new Region();
+	$clsCity = new City();
+	$clsGuide = new Guide();
+	$clsTour = new Tour();
+	#
+	$cruise_id = (int) Input::post('cruise_id', 0);
+	$openFrom = Input::post('openFrom', 'block');
+
+	$SiteModActive_continent = $clsISO->getCheckActiveModulePackage($package_id, 'continent', 'default', 'default');
+
+
+	#
+	$html = '';
+	$lstDestination = $clsCruiseDestination->getAll("is_trash=0 and cruise_id='{$cruise_id}' order by order_no asc");
+
+	if (!empty($lstDestination)) {
+		foreach ($lstDestination as $k => $v) {
+			$title = '';
+			if (intval($v['country_id']) > 0) {
+				$title .= ($SiteModActive_continent ? ' &raquo; ' : '') . $clsCountry->getTitle($v['country_id']);
+			}
+			$html .= '<li id="order_' . $v[$clsCruiseDestination->pkey] . '" style="cursor:move">
+				<a title="' . $core->get_Lang('Drag & drop change position') . '">' . $title . '</a>
+				<span class="remove removeDestination removeCruiseCountry" data="' . $v[$clsCruiseDestination->pkey] . '">x</span>
+			</li>';
+		}
+		if ($openFrom == 'block') {
+			$html .= '<li class="btn_remove removeAllCruiseCountry  ui-sortable-unhandle">
+				<i class="ico ico-remove"></i> ' . $core->get_Lang('removeall') . '
+			</li>';
+		}
+		$html .= '<script type="text/javascript">
+			$("#lstDestination").sortable({
+				opacity: 1,
+				cursor: \'move\',
+				start: function(){vietiso_loading(1);},
+				stop: function(){vietiso_loading(0);},
+				update: function(){
+					var order = $(this).sortable("serialize")+\'&update=update\';
+					$.post(path_ajax_script+"/index.php?mod=cruise&act=ajUpdPosCruiseDestination",order,function(html){
+						vietiso_loading(0);
+					});
+				}
+			}).disableSelection();
+			$("#lstDestination").sortable({ cancel: \'.ui-sortable-unhandle\' });
+		</script>';
+		unset($lstDestination);
+	}
+	echo $html;
+	die();
+}
+function default_ajUpdPosCruiseDestination()
+{
+	global $dbconn, $assign_list, $_CONFIG, $_SITE_ROOT, $mod, $_LANG_ID, $act, $core, $clsModule, $clsISO, $clsConfiguration;
+	$clsCruiseDestination = new CruiseDestination();
+	$orders = Input::post('order');
+	if (!empty($orders)) {
+		foreach ($orders as $key => $val) {
+			$key = $key + 1;
+			$clsCruiseDestination->updateOne($val, "order_no='{$key}'");
+		}
+	}
+	// Return
+	echo (1);
+	die();
+}
+function default_ajaxDeleteCruiseCountry()
+{
+	global $dbconn, $assign_list, $_CONFIG, $_SITE_ROOT, $mod, $_LANG_ID, $act, $core, $clsModule, $clsISO, $clsConfiguration;
+	$user_id = $core->_USER['user_id'];
+	#
+	$clsCruiseDestination = new CruiseDestination();
+	$cruise_destination_id = (int) Input::post('cruise_destination_id', 0);
+	#
+	$clsCruiseDestination->deleteOne($cruise_destination_id);
+	// Return
+	echo (1);
+	die();
+}
+function default_ajaxDeleteAllCruiseCountry()
+{
+	global $assign_list, $_CONFIG, $_SITE_ROOT, $mod, $act, $_LANG_ID;
+	global $core, $clsModule, $clsButtonNav, $oneSetting;
+	$user_id = $core->_USER['user_id'];
+	#
+	$clsCruiseDestination = new CruiseDestination();
+	$cruise_id = (int) Input::post('cruise_id', 0);
+	#
+	$clsCruiseDestination->deleteByCond("cruise_id='$cruise_id'");
+	// Return
+	echo (1);
+	die();
+}
+function default_ajaxAddMoreCruiseCountry()
+{
+	global $dbconn, $assign_list, $_CONFIG, $_SITE_ROOT, $mod, $_LANG_ID, $act, $core, $clsModule, $clsISO, $clsConfiguration;
+	#
+	$clsCruise = new Cruise();
+	$clsCruiseDestination = new CruiseDestination();
+	#
+	$cruise_id = (int) Input::post('cruise_id', 0);
+	$country_id = (int) Input::post('country_id', 0);
+	#
+	if ($clsCruiseDestination->checkExist($cruise_id, $country_id)) {
+		echo '_EXIST';
+		die();
+	}
+	$cond = "is_trash=0 and cruise_id='{$cruise_id}'";
+	$f = "{$clsCruiseDestination->pkey},cruise_id,country_id,order_no";
+	$v = "'" . $clsCruiseDestination->getMaxId() . "','{$cruise_id}','{$country_id}','" . $clsCruiseDestination->getMaxOrderNo($cruise_id) . "'";
+	#
+	if ($clsCruiseDestination->insertOne($f, $v)) {
+		echo '_SUCCESS';
+		die();
+	} else {
+		echo '_ERROR';
+		die();
 	}
 }

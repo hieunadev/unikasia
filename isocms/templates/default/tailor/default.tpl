@@ -1,6 +1,5 @@
     <link rel="stylesheet" href="{$URL_CSS}/tailor_made_tour.css?v={$upd_version}" />
-
-{$core->getBlock('des_header_short')}
+<link href="https://fonts.cdnfonts.com/css/nunito-sans" rel="stylesheet">
 
 <section class="listblogdetail_breadcrumb">
         <div class="breadcrumb_list">
@@ -20,10 +19,10 @@
                 <div class="txt_tripex">
                 <div class="container">
 
-                <h2 class="txt_plantrip">Plan your extraordinary trips with Unikasia!</h2>
-                <p class="txt_desplantrip">Please share your preferences for your trip to Vietnam, Cambodia, Laos...: dates, itinerary, type of stay, accommodations...</p>
+                <h2 class="txt_plantrip">{$core->get_Lang('Plan your extraordinary trips with Unikasia')}!</h2>
+                <p class="txt_desplantrip">{$core->get_Lang('Please share your preferences for your trip to Vietnam, Cambodia, Laos')}...: {$core->get_Lang('dates, itinerary, type of stay, accommodations')}...</p>
                     <p class="txt_desplantrip">
-                    One of our travel consultant will contact you within 24 hours to create a unique, tailor-made program with you.</p>
+                    {$core->get_Lang('One of our travel consultant will contact you within 24 hours to create a unique, tailor-made program with you')}.</p>
 
                 </div>
 
@@ -34,47 +33,69 @@
                 <div class="travelinf">
                     <div class="container">
                     <div class="txt_inftravel">
-                        <h3 class="txt_infotravel">Your Travel Information’s</h3>
+                        <h3 class="txt_infotravel">{$core->get_Lang('Your Travel Information’s')}</h3>
 
                         <div class="input_inf">
                             <div class="row">
                               <div class="col-md-4">
-                                <label for="title" class="txtlabel">Title*</label>
-                                <select class="form-select select-input-inf" id="title">
-                                  <option value="mr">Mr.</option>
-                                  <option value="ms">Ms.</option>
-                                  <option value="mrs">Mrs.</option>
-                                  <option value="dr">Dr.</option>
+                                <label for="title" class="txtlabel">{$core->get_Lang('Title')}<span style="color:red"> *</span>
+								</label>
+                                <select id="title" name="title" class="form-select select-input-inf required">
+								<option value="" disabled selected hidden>-- Please Select --</option> 
+                                {$clsISO->makeSelectTitle($title)}
                                 </select>
                               </div>
-                              <div class="col-md-8">
-                                <label for="fullName" class="txtlabel ">Full Name*</label>
-                                <input type="text" class="form-control select-input-inf" id="fullName">
+								
+                              	<div class="col-md-8">
+                                <label for="fullname" class="txtlabel">{$core->get_Lang('Full Name')}
+								<span style="color:red"> *</span>
+								  </label>
+                                <input id="fullname" name="fullname" type="text" class="form-control select-input-inf required" value="" placeholder="Enter your name">
+								  <div class="clearfix"></div>
+                            	<div id="error_fullname" class="error text-left"></div>
                               </div>
                             </div>
                           
                             <div class="row">
                               <div class="col-md-4">
-                                <label for="nationality" class="txtlabel">Nationality*</label>
-                                <select class="form-select select-input-inf" id="nationality">
-                                  <option value="vn">Vietnamese</option>
-                                  <option value="us">American</option>
+                                <label for="nationality" class="txtlabel">{$core->get_Lang('Nationality')} 
+									<span style="color:red"> *</span>
+								  </label>
+                                <select name ="country_id" id="nationality" class="form-select select-input-inf required">
+									<option value="" disabled selected hidden>-- {$core->get_Lang('Please Select')} --</option> 
+                                  {section name=i loop=$lstCountryRegion}
+								<option value="{$lstCountryRegion[i].country_id}">{$lstCountryRegion[i].title}</option>
+								{/section}
                                   </select>
+								 <div class="clearfix"></div>
+                            <div id="error_country_id" class="error text-left"></div> 
                               </div>
+								
                               <div class="col-md-4">
-                                <label for="email" class="txtlabel">Email*</label>
-                                <input type="email" class="form-control select-input-inf" id="email">
+                                <label for="email" class="txtlabel">{$core->get_Lang('Email')} 
+									<span style="color:red"> *</span>
+								  </label>
+								  
+                                <input id="email" name="email" type="text" class="form-control select-input-inf required" value="" placeholder="Enter your mail">
+								  <div class="clearfix"></div>
+                            <div id="error_email" class="error text-left"></div>
                               </div>
+								
                               <div class="col-md-4">
-                                <label for="phoneNumber" class="txtlabel">Phone Number*</label>
-                                <input type="tel" class="form-control select-input-inf" id="phoneNumber">
+                                <label for="phone" class="txtlabel">{$core->get_Lang('Phone Number')}
+									<span style="color:red"> *</span>
+								  </label>
+                                <input id="phone" name="phone" type="text" class="form-control select-input-inf required" value="" placeholder="Enter your phone">
+								  <div class="clearfix"></div>
+                            <div id="error_phone" class="error"></div>
                               </div>
+								
                             </div>
                           
                             <div class="row">
                               <div class="col-12">
-                                <label for="socialMedia" class="txtlabel">Social Media</label>
-                                <input type="text" class="form-control select-input-inf" id="socialMedia">
+                                <label for="socialMedia" class="txtlabel">{$core->get_Lang('Social Media')}</label>
+                                <input type="text" class="form-control select-input-inf" id="socialMedia" placeholder="Facebook, Whatsapp, Zalo,..">
                               </div>
                             </div>
                           </div>
@@ -94,12 +115,18 @@
 
                         <div class="input_inf">
                             <div class="row">
+								
                               <div class="col-md-4">
-                                <label for="traveldate" class="txtlabel">Travel Date</label>
-                                <p class="txt_smalltrip">approximately</p>
-                                <input type="date" id="traveldate" class="date_selecttour date_travel"> 
+								<label for="traveldate" class="txtlabel">{$core->get_Lang('Travel Date')}</label>
+								<p class="txt_smalltrip">approximately</p>
+								<div class="input-group"> 
+									<i class="fa-solid fa-calendar"></i>
+									<input type="text" class="form-control wpcf7-datepicker" autocomplete="off" name="arrival_date" id="arrival_date" placeholder="Apr 1, 2024" value='{$PostVal.arrival_date|date_format:"%b %e, %Y"}'/>
+								</div>
+								<div id="error_arrival_date" class="error"></div> 
+							</div>
 
-                              </div>
+								
                               <div class="col-md-4">
                                 <label for="duration" class="txtlabel">Duration</label>
                                 <p class="txt_smalltrip">in Days</p>
@@ -118,6 +145,7 @@
                                 <div class="col-md-6">
                                   <label for="arrival-airport" class="txtlabel">Arrival Airport</label>
                                   <select class="form-select select-input-inf" id="arrival-airport">
+									<option value="" disabled selected hidden>-- Please Select --</option>  
                                     <option value="mr">Mr.</option>
                                     <option value="ms">Ms.</option>
                                     <option value="mrs">Mrs.</option>
@@ -127,6 +155,7 @@
                                 <div class="col-md-6">
                                   <label for="tourguide" class="txtlabel ">Tour guide preference</label>
                                   <select class="form-select select-input-inf" id="tourguide">
+									<option value="" disabled selected hidden>-- Please Select --</option> 
                                     <option value="mr">Mr.</option>
                                     <option value="ms">Ms.</option>
                                     <option value="mrs">Mrs.</option>
@@ -148,6 +177,7 @@
                                 <div class="col-md-6">
                                   <label for="travelstyles" class="txtlabel ">Travel Styles & Activities</label>
                                   <select class="form-select select-input-inf" id="travelstyles">
+									<option value="" disabled selected hidden>-- Please Select --</option> 
                                     <option value="mr">Mr.</option>
                                     <option value="ms">Ms.</option>
                                     <option value="mrs">Mrs.</option>
@@ -160,6 +190,7 @@
                                 <div class="col-md-6">
                                   <label for="meals" class="txtlabel">Meals</label>
                                   <select class="form-select select-input-inf" id="meals">
+									<option value="" disabled selected hidden>-- Please Select --</option> 
                                     <option value="mr">Mr.</option>
                                     <option value="ms">Ms.</option>
                                     <option value="mrs">Mrs.</option>
@@ -180,14 +211,14 @@
                                     <div class="mt-3">
                                         <div class="accordion" id="accordionPanelsStayOpenExample">
 
-
+									
                                       <div class="accordion-item">
                                         <div class="accordion-header" id="panelsStayOpen-headingTwo">
                                           <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="true" aria-controls="panelsStayOpen-collapseTwo" id="accordion1btn">
                                             <input class="form-check-input chkAll me-2" type="checkbox" value="" id="chkAccordion1All">Vietnam</button>
                                         </div>
                                         <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingTwo">
-                                          <div class="accordion-body ms-3 d-flex flex-wrap">
+                                          <div class="accordion-body d-flex flex-wrap" style="gap:12px">
                                             <div class="form-check form-region me-3">
                                       <input class="form-check-region" type="checkbox" value="" id="chkAccordion2Child0">
                                               <label for="chkAccordion1Child0">Ba Be</label>
@@ -195,7 +226,7 @@
 
                                     <div class="form-check form-region me-3">
                                         <input class="form-check-region" type="checkbox" value="" id="chkAccordion2Child1">
-                                                <label for="chkAccordion1Child0">Bac Ha</label>
+                                           <label for="chkAccordion1Child0">Bac Ha</label>
                                       </div>
 
                                       <div class="form-check form-region me-3">
@@ -208,10 +239,7 @@
                                                 <label for="chkAccordion1Child0">Cao Bang</label>
                                       </div>
 
-
-
-                                    <input type="txt-input-other" class="form-control select-input-inf" id="input-other">
-
+                                    <input type="txt-input-other" class="form-control select-input-inf" id="input-other" placeholder="Other">
 
                                           </div>
                                         </div>
@@ -220,29 +248,34 @@
 
 
                                       <div class="accordion-item">
-                                        <h2 class="accordion-header" id="panelsStayOpen-headingThree">
-                                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-                                            <div class="form-check mt-1">
-                                      <input class="form-check-input chkAll" type="checkbox" value="" id="chkAccordion3All">
+                                        <div class="accordion-header" id="panelsStayOpen-headingTwo">
+                                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="true" aria-controls="panelsStayOpen-collapseTwo">
+                                            <input class="form-check-input chkAll me-2" type="checkbox" value="" id="chkAccordion1All">Vietnam</button>
+                                        </div>
+                                        <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingTwo">
+                                          <div class="accordion-body d-flex flex-wrap" style="gap:12px">
+                                            <div class="form-check form-region me-3">
+                                      <input class="form-check-region" type="checkbox" value="" id="chkAccordion2Child0">
+                                              <label for="chkAccordion1Child0">Ba Be</label>
                                     </div>
-                                            Cambodia
-                                          </button>
-                                        </h2>
-                                        <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
-                                          <div class="accordion-body ms-3">
-                                            <div class="form-check">
-                                      <input class="form-check-input" type="checkbox" value="" id="chkAccordion3Child0">
-                                              <label for="chkAccordion3Child0">Accordion 3 checkbox 1</label>
-                                    </div>
-                                            <div class="form-check">
-                                      <input class="form-check-input" type="checkbox" value="" id="chkAccordion3Child1">
-                                              <label for="chkAccordion3Child1">Accordion 3 checkbox 2</label>
-                                    </div>
-                                            <div class="form-check">
-                                      <input class="form-check-input" type="checkbox" value="" id="chkAccordion3Child2">
-                                              <label for="chkAccordion3Child2">Accordion 3 checkbox 3</label>
-                                    </div>
-                                    <input type="txt-input-other" class="form-control select-input-inf" id="input-other">
+
+                                    <div class="form-check form-region me-3">
+                                        <input class="form-check-region" type="checkbox" value="" id="chkAccordion2Child1">
+                                           <label for="chkAccordion1Child0">Bac Ha</label>
+                                      </div>
+
+                                      <div class="form-check form-region me-3">
+                                        <input class="form-check-region" type="checkbox" value="" id="chkAccordion2Child2">
+                                                <label for="chkAccordion1Child0">Ban Giuoc</label>
+                                      </div>
+
+                                      <div class="form-check form-region me-3">
+                                        <input class="form-check-region" type="checkbox" value="" id="chkAccordion2Child2">
+                                                <label for="chkAccordion1Child0">Cao Bang</label>
+                                      </div>
+
+                                    <input type="txt-input-other" class="form-control select-input-inf" id="input-other" placeholder="Other">
+
                                           </div>
                                         </div>
                                       </div>
@@ -318,9 +351,9 @@
                                         <h3 class="txt_destinations">Accommodations preference</h3>
                                         <div class="select-checkbox-prefer">
                                             
-                                            <label for="title" class="txtlabel">Accommodations</label>
-                                            <select class="form-select select-input-inf" id="title">
-                                              <option value="mr">Select</option>
+                                            <label for="accommodations" class="txtlabel">Accommodations</label>
+                                            <select class="form-select select-input-inf" id="accommodations">
+											  <option value="" disabled selected hidden>-- Please Select --</option> 
                                               <option value="ms">Ms.</option>
                                               <option value="mrs">Mrs.</option>
                                               <option value="dr">Dr.</option>
@@ -375,7 +408,6 @@
                           </div>
 
                     </div>
-                      
 
                 </div>
 
@@ -391,7 +423,7 @@
                         <div class="input_inf">
                             <div class="row">
                               <div class="col-12">
-                                <input type="text" class="form-control select-input-inf txt_require" id="txtRequirement" placeholder="Any must-see landmarks in your bucket list, desired accommodations, special food requirements, allergies…">
+                                <textarea class="form-control input_txttravel" cols="255" rows="5" placeholder="Any must-see landmarks in your bucket list, desired accommodations, special food requirements, allergies…" name="notes" style="height: 152px;"></textarea>
                               </div>
                             </div>
                           </div>
@@ -413,35 +445,163 @@
 						</p>
 						
 							<div class="g-recaptcha" data-sitekey="{$clsISO->getVar('reCAPTCHA_KEY')}"></div>
-											{if $errMsg ne ''}
-											<div id="error_recaptcha" class="error text_left">{$errMsg}</div>
-											{else}
-											<div id="error_recaptcha" class="error text_left"></div>
-											{/if}
+							{if $errMsg ne ''}
+							<div id="error_recaptcha" class="error text_left">{$errMsg}</div>
+							{else}
+							<div id="error_recaptcha" class="error text_left"></div>
+							{/if}
                     </div>
 						
 						<div class="btn_rqfQ text-center">
-							<button class="btn btnrq">Request for Quotation</button>
+							 <input type="hidden" name="plantrip" value="plantrip" />
+                        	 <input type="hidden" name="hidden_field" value="" />
+							<button type="submit" class="btn btnrq" id="SubmitEnquiry">{$core->get_Lang('Request for Quotation')}</button>
 						</div>
                  
                 </div>
 					</div>
             </section>
 					
-				
+					
+{literal}			
 <script>
-// Tự động đóng các accordion khác khi một accordion được mở
-const accordionButtons = document.querySelectorAll('.accordion-button');
-accordionButtons.forEach(button => {
-  button.addEventListener('click', () => {
-    accordionButtons.forEach(otherButton => {
-      if (otherButton !== button) {
-        const collapseElement = document.querySelector(otherButton.dataset.bsTarget);
-        bootstrap.Collapse.getInstance(collapseElement).hide();
-      }
-    });
-  });
-});
+			$(document).ready(function() {
+			  $('.unika_header').removeClass('unika_header_2');
+
+			  $(window).scroll(function() {
+				requestAnimationFrame(function() {
+				  $('.unika_header').removeClass('unika_header_2');
+				});
+			  });
+			});
+
+
+				if($('.wpcf7-datepicker').length){
+						$('.wpcf7-datepicker').datepicker({
+							dateFormat:"dd-mm-yy",
+							minDate: new Date()
+						});
+					}
+
+			const accordionButtons = document.querySelectorAll('.accordion-button');
+			accordionButtons.forEach(button => {
+			  button.addEventListener('click', () => {
+				accordionButtons.forEach(otherButton => {
+				  if (otherButton !== button) {
+					const collapseElement = document.querySelector(otherButton.dataset.bsTarget);
+					bootstrap.Collapse.getInstance(collapseElement).hide();
+				  }
+				});
+			  });
+			});
 
 </script>
+{/literal}
+					
+<script>
+	var msg_title_required ="{$core->get_Lang('Your title should not be empty')}";
+    var msg_fullname_required = "{$core->get_Lang('Your full name should not be empty')}!";
+    var msg_phone_required = "{$core->get_Lang('Your telephone should not be empty')}!";
+    var msg_email_required = "{$core->get_Lang('Your email should not be empty')}!";
+    var msg_email_not_valid = "{$core->get_Lang('Please enter a valid email address')}!";
+    var msg_country_id_not_valid = "{$core->get_Lang('Please select country')}!";
+    var msg_confirmemail_not_valid = "{$core->get_Lang('Email addresses do not match')}!";
+    var showInfo = "{$core->get_Lang('Show more information')}";
+    var hideInfo = "{$core->get_Lang('information hidden')}";
+	
+	var Cancel = '{$core->get_lang("Cancel")}';
+    var Confirm = '{$core->get_lang("Confirm")}';
+    var delete_text = '{$core->get_lang("Are you sure you want to delete?")}';
+    var remove_text = '{$core->get_lang("Are you sure you want to remove?")}';
+    var loading = '{$core->get_lang("loading")}';
+    var DateofBirth = '{$core->get_lang("Birthday")}';
+    var msg_recapcha = "{$core->get_Lang('You must check Recaptcha')}";
+</script>
+					
+<script src="{$URL_JS}/datepicker/jquery.date-dropdowns.js?v={$upd_version}"></script>
+<script src="{$URL_JS}/jquery.validate.js?ver={$upd_version}"></script>
+<script src="{$URL_JS}/jquery-confirm.min.js?ver={$upd_version}"></script>				
+					
+{literal}
+    <script>
+        $(function(){
+            $('#EnquiryForm').validate();
+            $("#SubmitEnquiry").click(function(ev){
+                var $fullname = $("#fullname").val();
+                var $country_id = $("#country_id").val();
+                var $email = $("#email").val();
+                var $phone = $("#phone").val();
+                if($("#fullname").val()==''){
+                    $('#error_fullname').html(msg_fullname_required).fadeIn().delay(3000).fadeOut();
+                    $("#fullname").focus();
+                    return false;
+                }
+                if($country_id == 0){
+                    $('#error_country_id').html(msg_country_id_not_valid).fadeIn().delay(3000).fadeOut();
+                    $("#country_id").focus();
+                    return false;
+                }
+                if($("#email").val()==''){
+                    $('#error_email').html(msg_email_required).fadeIn().delay(3000).fadeOut();
+                    $("#email").focus();
+                    return false;
+                }
 
+                if($("#phone").val()==''){
+                    $('#error_phone').html(msg_phone_required).fadeIn().delay(3000).fadeOut();
+                    $("#phone").focus();
+                    return false;
+                }
+                if(checkValidEmail($email)==false){
+                    $('#error_email').html(msg_email_not_valid).fadeIn().delay(3000).fadeOut();
+                    $("#email").focus();
+                    return false;
+                }
+                if(grecaptcha.getResponse() == "") {
+                    ev.preventDefault();
+                    $('#error_recaptcha').html(msg_recapcha).fadeIn().delay(3000).fadeOut();
+                    return false;
+                } else {
+                    $('#EnquiryForm').submit();
+                }
+            });
+			/*
+            $('.delete_service').click(function (){
+                 var type =$(this).data('type');
+                $.confirm({
+                    title: Confirm,
+                    content: remove_text,
+                    minHeight: 100,
+                    maxHeight: 200,
+                    buttons: {
+                        Confirm: {
+                            text: Confirm,
+                            action: function(){
+                                $.ajax({
+                                    type:'POST',
+                                    url: path_ajax_script+'/index.php?mod='+mod+'&act=deleteService&lang='+LANG_ID,
+                                    data:{type:type},
+                                    dataType:'json',
+                                    success: function (res){
+                                        if(res.msg == 'ok'){
+                                            window.location.reload();
+                                        }
+                                    }
+                                });
+                            }
+                        },
+                        Cancel: {
+                            text: Cancel
+                        }
+                    }
+                });
+
+            });
+			*/
+        });
+        function checkValidEmail(email){
+            var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            return regex.test(email);
+        }
+    </script>
+{/literal}

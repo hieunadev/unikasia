@@ -594,11 +594,14 @@ class Reviews extends dbBasic{
 
         return 1;
     }
-    function getReviews($id, $act='') {
+    function getReviews($id, $act='', $type='') {
         global $dbconn;
         $cond = " is_trash = 0 and is_online = 1 and";
         $txtReview = ['Bad', 'Average', 'Good', 'Excellent', 'Wonderful'];
 
+        if (!empty($type)) {
+            $cond   .=  ' AND type = "'.$type.'"';
+        }
         $countReview = $this->countItem("$cond table_id = $id");
         $sqlAverageRate = "SELECT AVG(rates) FROM $this->tbl WHERE $cond table_id = $id";
         $averageRate = round($dbconn->GetOne($sqlAverageRate), 1);

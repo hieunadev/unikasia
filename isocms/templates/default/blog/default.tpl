@@ -1,4 +1,3 @@
-
 <section class="page_container blog_des_destination">
 	    <div class="container bread_crumb">
 	<span class="breadcrumb-item txt_youarehere">You are here:</span>

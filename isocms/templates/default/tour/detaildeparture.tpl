@@ -304,7 +304,7 @@
                                 <input type="hidden" name="number_child" id="number_child" value="0" />
                                 <input type="hidden" name="number_infants" id="number_infants" value="0" />
                                 <input type="hidden" name="list_age_child" id="list_age_child" value="" />
-                                <input type="hidden" name="check_in_book" id="check_in_book" value="{$clsISO->converTimeToText6($str_first_start_date)}" />
+                                <input type="hidden" name="check_in_book" id="check_in_book" value="{$str_first_start_date}" />
                                 <input type="hidden" name="hidFind" value="hidAvaiable" />
                                 <button id="check_avaiable" class="check-btnn btn-hover-home btn_book_tour">Check Availability</button>
                             </div>

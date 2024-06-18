@@ -308,6 +308,10 @@ function default_detaildeparture() {
     $date_range_js_update = '<script> var date_range = [\'' . implode('\',\'', $list_date_array) . '\'];</script>';
     $assign_list["date_range_js_update"] = $date_range_js_update;
 
+    $currentDate = new DateTime();
+    $currentDate->modify('+1 day');
+    $assign_list["str_first_start_date"] = $currentDate->format('d/m/Y');
+
     if(isset($_POST['BookingTour']) &&  $_POST['BookingTour']=='BookingTour'){
         $cartSessionService = vnSessionGetVar('BookingTour_'.$_LANG_ID);
         if(empty($cartSessionService)){
@@ -318,6 +322,7 @@ function default_detaildeparture() {
         $link=$clsISO->getLink('cart');
 //        $cartSessionService[$_LANG_ID][$tour_id] = array();
         $cartSessionService[$_LANG_ID] = array();
+//        $clsISO->pre($_POST); die();
         foreach($_POST as $k=>$v){
             if(!empty($v)){
                 if($k=='number_addon'){
@@ -329,12 +334,9 @@ function default_detaildeparture() {
                 }else{
                     $cartSessionService[$_LANG_ID][$tour_id][$k] = $v;
                 }
-                if ($k=="list_room_id") {
-                    $cartSessionService[$_LANG_ID][$tour_id][$k] = $v;
-                }
             }
         }
-        ///$clsISO->print_pre($cartSessionService);die();
+//        $clsISO->print_pre($cartSessionService);die();
         vnSessionDelVar('BookingVoucher_'.$_LANG_ID);
         vnSessionSetVar('BookingTour_'.$_LANG_ID,$cartSessionService);
         header('location:'.$link);
@@ -534,9 +536,7 @@ function default_loadSelectAgeChild(){
 }
 
 function default_loadTablePrice(){
-    global $assign_list, $_CONFIG, $core,$extLang, $dbconn, $mod, $act, $_LANG_ID,$title_page,$description_page,$keyword_page,$extLang,$adult,$child,$infant;
-    global $clsISO,$clsConfiguration,$profile_id,$loggedIn,$agent_id,$adult_type_id,$child_type_id,$infant_type_id,$is_agent,$package_id,$now_day;
-
+    global $assign_list, $core, $clsISO,$package_id,$now_day;
 
     $clsProperty = new Property();$assign_list["clsProperty"] = $clsProperty;
     $clsAddOnService = new AddOnService();$assign_list["clsAddOnService"] = $clsAddOnService;
@@ -562,7 +562,6 @@ function default_loadTablePrice(){
     $number_pick_travellers = $number_adults + $number_child + $number_infants;
 
     $check_in_book= $_POST['check_in_book'];
-
     $tour_visitor_adult_id= $_POST['tour_visitor_adult_id'];
     $tour_visitor_child_id= $_POST['tour_visitor_child_id'];
     $tour_visitor_infant_id= $_POST['tour_visitor_infant_id'];
@@ -877,7 +876,6 @@ function default_loadTablePrice(){
         $price_child = $price_adults>0?$clsTourPriceGroup->getPriceBooking($tour_id,$tour_class_id,$tour_number_child_id,$tour_visitor_child_id,0):0;
         $price_infants = $price_adults>0?$clsTourPriceGroup->getPriceBooking($tour_id,$tour_class_id,$tour_number_infants_id,$tour_visitor_infant_id,0):0;
 
-
         $oneTour = $clsTour->getOne($tour_id,'visitorage_child,visitorheight_child,visitorage_infant,visitorheight_infant');
 
         if($oneTour['visitorage_child'] != ''){
@@ -980,15 +978,19 @@ function default_loadTablePrice(){
             $lstPriceRoom[$value['tour_room_id']] = $value['price'];
         }
 
-        foreach($room_id as $key => $id_room){
+        foreach($room_id as $key => $id_room) {
+            $price_room = ($lstPriceRoom[$id_room] && $lstPriceRoom[$id_room] != 0) ? $lstPriceRoom[$id_room] : 0;
+            $lst_room[] = [
+                'room_id' => $id_room,
+                'number_room' => $number_room[$key],
+                'price_room' => $price_room,
+                'total_price_room' => (int)$lstPriceRoom[$id_room] * (int)$number_room[$key]
+            ];
             if ($number_room[$key]) {
-                $price_room += (int)$lstPriceRoom[$id_room] * (int)$number_room[$key];
-                $lst_room[] = [
-                    'room_id' => $id_room,
-                    'number_room' => $number_room[$key],
-                    'price_room' => ($lstPriceRoom[$id_room] && $lstPriceRoom[$id_room] != 0) ? $lstPriceRoom[$id_room] : 0,
-                    'total_price_room' => (int)$lstPriceRoom[$id_room] * (int)$number_room[$key]
-                ];
+                if ($price_room == 0) {
+                    $check_contact = 1;
+                }
+                unset($price_room);
             }
         }
     }
@@ -1026,6 +1028,7 @@ function default_loadTablePrice(){
     $assign_list["arr_price_infant"] = $arr_price_infant;
     $assign_list["str_price_child"] = serialize($arr_price_child);
     $assign_list["str_price_infant"] = serialize($arr_price_infant);
+    $assign_list["str_list_room"] = serialize($lst_room);
     $assign_list["price_infants"] = $price_infants;
     $assign_list["total_price_adults"] = $total_price_adults;
     $assign_list["total_price_child"] = $total_price_child;

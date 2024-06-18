@@ -756,6 +756,34 @@
 						<div class="inpt_tour">
 							<textarea style="width:100%" table_id="{$pvalTable}" name="iso-child_policy" class="textarea_intro_editor" data-column="iso-child_policy" id="textarea_intro_editor_overview_{$now}" cols="255" rows="2">{$oneItem.child_policy}</textarea>
 						</div>
+						{elseif $currentstep=='destination'}
+						<div class="inpt_tour">
+							<label>
+								{$core->get_Lang('destination')}
+								<span class="required_red">*</span>
+							</label>
+							<div class="form-inline select_location_map d-flex">
+								<div class="form-group">
+									<select class="required form-control slb_Country_Id" name="cruise_country_id" style="width: 300px;height: 100%;margin-right: 5px;">
+										{$clsCountry->makeSelectboxOption()}
+									</select>
+								</div>
+								<div class="form-group">
+									<button class="btn btn-50 btn-main ajQuickAddDestination" type="button">
+										{$core->get_Lang('adddestination')}
+									</button>
+								</div>
+							</div>
+							<hr class="clearfix" />
+							<div class="mt-half">
+								<ul class="list-group" id="lstDestination">
+									<li>{$core->get_Lang('Loading')}...</li>
+								</ul>
+								<div class="clearfix mt-half"></div>
+								<span class="help-block text-blue">(<span class="requiredMask">*</span>) {$core->get_Lang('infoless1destination')}</span>
+							</div>
+						</div>
+
 						{elseif $currentstep eq 'itineraryday-'|cat:$step_id}
 						<div class="service_left" style="margin-top:0px">
 							<h3 class="title_box mb10">{$core->get_Lang('Config Price')}: {$clsCruiseItinerary->getDuration($step_id)}
@@ -851,6 +879,9 @@
 			}
 		});
 		loadCruiseExtension(table_id);
+
+		loadListCruiseCountry(table_id);
+
 	});
 </script>
 {/literal}

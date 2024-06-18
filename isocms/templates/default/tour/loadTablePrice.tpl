@@ -140,6 +140,7 @@
             <input type="hidden" name="price_child_z" id="price_child_z" value="{$price_child}" />
             <input type="hidden" name="str_price_child" id="str_price_child" value='{$str_price_child}' />
             <input type="hidden" name="str_price_infant" id="str_price_infant" value='{$str_price_infant}' />
+            <input type="hidden" name="str_list_room" id="str_list_room" value='{$str_list_room}' />
             <input type="hidden" name="price_infants_z" id="price_infants_z" value="{$price_infants}" />
             <input type="hidden" name="total_price_adults" id="total_price_adults" value="{$total_price_adults}" />
             <input type="hidden" name="total_price_child" id="total_price_child" value="{$total_price_child}" />

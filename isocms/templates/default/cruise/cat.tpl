@@ -25,222 +25,223 @@
             <div class="cruise-content  d-flex justify-content-between  align-items-start">
                 <div class="sort_filter d-flex flex-column ">
                     <div class="title  d-flex justify-content-between align-items-center ">
-                        <h2>Sort & filter</h2>
+                        <h2>{$core->get_Lang('Sort & filter')}</h2>
                     </div>
                     <div class="list_sort_filter">
                         <div class="d-flex flex-column div_sort_filter">
                             <div class="sort_filter_mobile justify-content-between align-items-center">
-                                <h2 class="title_filter ">Sort & filter</h2>
+                                <h2 class="title_filter ">{$core->get_Lang('Sort & filter')}</h2>
                                 <button class="unika_filter_mobile_close div_img">
-                                    <img src="{URL_IMAGES}/uni_van/images/cruises/Close.svg" alt="Icon">
+                                    <i class="fa-sharp fa-light fa-xmark"></i>
                                 </button>
                             </div>
-                            <div class="item_sort_filter destinations d-flex flex-column  justify-content-start">
-                                <div class="title_filter ">Destinations</div>
-                                <div class="list_item">
-                                    <label class="item_radio">Laos
-                                        <input type="radio" name="radio" />
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <label class="item_radio">Vietnam
-                                        <input type="radio" name="radio" />
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <label class="item_radio">Cambodia
-                                        <input type="radio" name="radio" />
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <label class="item_radio">Thailand
-                                        <input type="radio" name="radio" />
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <label class="item_radio">Myanmar
-                                        <input type="radio" name="radio" />
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="item_sort_filter duration d-flex justify-content-start flex-column ">
-                                <div class="title_filter">Duration</div>
-                                <div class="list_item">
-                                    <label class="item_checkbox">2 days
-                                        <input type="checkbox" />
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <label class="item_checkbox">3 days
-                                        <input type="checkbox" />
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="item_sort_filter price d-flex flex-column  justify-content-start">
-                                <div class="title_filter">Price</div>
-                                <div class="d-flex align-items-center justify-content-between flex-column filter_price">
-                                    <div class="value_ranges d-flex justify-content-between flex-wrap align-items-center  width-100">
-                                        <div class="item_value">
-                                            <input type="number" id="min" value="10" />
-                                        </div>
-                                        <div class="item_value">
-                                            <input type="number" id="max" value="100" />
-                                        </div>
-                                    </div>
-                                    <div class="range-slide">
-                                        <div class="slide">
-                                            <div class="line" id="line" style="left: 0%; right: 0%"></div>
-                                            <span class="thumb" id="thumbMin" style="left: 0%"></span>
-                                            <span class="thumb" id="thumbMax" style="left: 100%"></span>
-                                        </div>
-                                        <input id="rangeMin" type="range" max="100" min="10" step="5" value="0" />
-                                        <input id="rangeMax" type="range" max="100" min="10" step="5" value="100" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item_sort_filter property_rating d-flex flex-column  justify-content-start">
-                                <div class="title_filter">Property rating</div>
-                                <div class="list_item list_rank_star">
-                                    <label class="item_checkbox">Unrated
-                                        <input type="checkbox" />
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <label class="item_checkbox">
-                                        <div class="d-flex align-items-center justify-content-start ">
-                                            <span>3</span>
-                                            <div class="div_img">
-                                                <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Image" />
-                                            </div>
-                                        </div>
-                                        <input type="checkbox" />
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <label class="item_checkbox">
-                                        <div class="d-flex align-items-center justify-content-start ">
-                                            <span>4</span>
-                                            <div class="div_img">
-                                                <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Image" />
-                                            </div>
-                                        </div>
-                                        <input type="checkbox" />
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <label class="item_checkbox">
-                                        <div class="d-flex align-items-center justify-content-start ">
-                                            <span>5</span>
-                                            <div class="div_img">
-                                                <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Image" />
-                                            </div>
-                                        </div>
-                                        <input type="checkbox" />
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <label class="item_checkbox">
-                                        <div class="d-flex align-items-center justify-content-start ">
-                                            <span>6</span>
-                                            <div class="div_img">
-                                                <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Image" />
-                                            </div>
-                                        </div>
-                                        <input type="checkbox" />
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="item_sort_filter cruises_type d-flex flex-column  justify-content-start">
-                                <div class="title_filter">Cruises type</div>
-                                <div class="d-flex flex-column  justify-content-start">
+                            <form action="" id="filters_form" method="post">
+                                <div class="item_sort_filter destinations d-flex flex-column  justify-content-start">
+                                    <div class="title_filter">{$core->get_Lang('Destinations')}</div>
                                     <div class="list_item">
-                                        <label class="item_checkbox">Bai Tu Long Bay Cruises
+                                        {if $list_country}
+                                        {foreach from=$list_country key=key item=item}
+                                        {assign var="CountryID" value=$item.country_id}
+                                        {assign var="CountryTitle" value=$clsCountry->getTitle($CountryID)}
+                                        <label class="item_radio">{$CountryTitle}
+                                            <input type="radio" class="typeSearch" name="country_id" id="radio-{$CountryTitle}" value="{$CountryID}" {if $CountryID==$country_id} checked{/if} />
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        {/foreach}
+                                        {/if}
+                                    </div>
+                                </div>
+                                <div class="item_sort_filter duration d-flex justify-content-start flex-column ">
+                                    <div class="title_filter">Duration</div>
+                                    <div class="list_item">
+                                        {if $list_duration}
+                                        {foreach from=$list_duration key=key item=item}
+                                        <label class="item_checkbox">
+                                            {if $item eq 1}
+                                            {$item} day
+                                            {else}
+                                            {$item} days
+                                            {/if}
+                                            <input type="checkbox" class="typeSearch" name="duration_filter_id[]" value="{$item}" {*{if $clsISO->checkInArray($duration_filter_id, $item)}checked{/if}*}
+                                            />
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        {/foreach}
+                                        {/if}
+                                    </div>
+                                </div>
+                                <div class="item_sort_filter price d-flex flex-column  justify-content-start">
+                                    <div class="title_filter">Price</div>
+                                    <div
+                                        class="d-flex align-items-center justify-content-between flex-column filter_price">
+                                        <div
+                                            class="value_ranges d-flex justify-content-between flex-wrap align-items-center  width-100">
+                                            <div class="item_value">
+                                                <span>$</span>
+                                                <input type="number" id="min" value="0">
+                                            </div>
+                                            <div class="item_value">
+                                                <span>$</span>
+                                                <input type="number" id="max" value="100" />
+                                            </div>
+                                        </div>
+                                        <input type="text" id="price"
+                                            style="border:0; color:#b9cd6d; font-weight:bold;">
+                                        <div id="slider-3" style="width: 100%;"></div>
+                                    </div>
+                                </div>
+                                <div class="item_sort_filter property_rating d-flex flex-column  justify-content-start">
+                                    <div class="title_filter">Property rating</div>
+                                    <div class="list_item list_rank_star">
+                                        <label class="item_checkbox">Unrated
+                                            <input type="checkbox" class="typeSearch" name="rating_filter_id[]" value="" {* {if $clsISO->checkInArray($city_filter_id,$listCityTourByRegion[j].city_id)}checked{/if} *}/>
+                                            <span class="checkmark"></span>
+                                        </label>
+
+                                        <label class="item_checkbox">
+                                            <div class="d-flex align-items-center justify-content-start ">
+                                                <span>3</span>
+                                                <div class="div_img">
+                                                    <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Image" />
+                                                </div>
+                                            </div>
                                             <input type="checkbox" />
                                             <span class="checkmark"></span>
                                         </label>
-                                        <label class="item_checkbox">Lan Ha Bay Cruises
+                                        <label class="item_checkbox">
+                                            <div class="d-flex align-items-center justify-content-start ">
+                                                <span>4</span>
+                                                <div class="div_img">
+                                                    <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Image" />
+                                                </div>
+                                            </div>
                                             <input type="checkbox" />
                                             <span class="checkmark"></span>
                                         </label>
-                                        <label class="item_checkbox">Luxury Cruises Halong
+                                        <label class="item_checkbox">
+                                            <div class="d-flex align-items-center justify-content-start ">
+                                                <span>5</span>
+                                                <div class="div_img">
+                                                    <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Image" />
+                                                </div>
+                                            </div>
                                             <input type="checkbox" />
                                             <span class="checkmark"></span>
                                         </label>
-                                        <label class="item_checkbox">Halong Bay Classic Cruises
-                                            <input type="checkbox" />
-                                            <span class="checkmark"></span>
-                                        </label>
-                                        <label class="item_checkbox">Private Cruises
+                                        <label class="item_checkbox">
+                                            <div class="d-flex align-items-center justify-content-start ">
+                                                <span>6</span>
+                                                <div class="div_img">
+                                                    <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Image" />
+                                                </div>
+                                            </div>
                                             <input type="checkbox" />
                                             <span class="checkmark"></span>
                                         </label>
                                     </div>
-                                    <button class="view_more_type">
-                                        View more
-                                    </button>
                                 </div>
-                            </div>
-                            <div class="item_sort_filter cabins d-flex flex-column  justify-content-start">
-                                <div class="title_filter">Number of cabins</div>
-                                <div class="list_item">
-                                    <label class="item_checkbox">1 - 5 cabins
-                                        <input type="checkbox" />
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <label class="item_checkbox">6 - 10 cabins
-                                        <input type="checkbox" />
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <label class="item_checkbox">11 - 20 cabins
-                                        <input type="checkbox" />
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <label class="item_checkbox">21 - 30 cabins
-                                        <input type="checkbox" />
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <label class="item_checkbox">31+ cabins
-                                        <input type="checkbox" />
-                                        <span class="checkmark"></span>
-                                    </label>
+                                <div class="item_sort_filter cruises_type d-flex flex-column  justify-content-start">
+                                    <div class="title_filter">Cruises type</div>
+                                    <div class="d-flex flex-column  justify-content-start">
+                                        <div class="list_item">
+                                            <label class="item_checkbox">Bai Tu Long Bay Cruises
+                                                <input type="checkbox" class="typeSearch" name="type_filter_id[]" value="" {* {if $clsISO->checkInArray($city_filter_id,$listCityTourByRegion[j].city_id)}checked{/if} *}/>
+                                                <span class="checkmark"></span>
+                                            </label>
+
+                                            <label class="item_checkbox">Lan Ha Bay Cruises
+                                                <input type="checkbox" />
+                                                <span class="checkmark"></span>
+                                            </label>
+                                            <label class="item_checkbox">Luxury Cruises Halong
+                                                <input type="checkbox" />
+                                                <span class="checkmark"></span>
+                                            </label>
+                                            <label class="item_checkbox">Halong Bay Classic Cruises
+                                                <input type="checkbox" />
+                                                <span class="checkmark"></span>
+                                            </label>
+                                            <label class="item_checkbox">Private Cruises
+                                                <input type="checkbox" />
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </div>
+                                        <button class="view_more_type">
+                                            View more
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
+                                <div class="item_sort_filter cabins d-flex flex-column  justify-content-start">
+                                    <div class="title_filter">Number of cabins</div>
+                                    <div class="list_item">
+                                        <label class="item_checkbox">1 - 5 cabins
+                                            <input type="checkbox" class="typeSearch" name="cabin_filter_id[]" value="" {* {if $clsISO->checkInArray($city_filter_id,$listCityTourByRegion[j].city_id)}checked{/if} *}/>
+                                            <span class="checkmark"></span>
+                                        </label>
+
+                                        <label class="item_checkbox">6 - 10 cabins
+                                            <input type="checkbox" />
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <label class="item_checkbox">11 - 20 cabins
+                                            <input type="checkbox" />
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <label class="item_checkbox">21 - 30 cabins
+                                            <input type="checkbox" />
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <label class="item_checkbox">31+ cabins
+                                            <input type="checkbox" />
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
+
                 <div class="cruises">
                     <div class="cruises_title d-flex flex-column ">
-                        <h2>Halong Bay Cruises: 595 cruises found</h2>
+                        <h2>{$clsCruiseCat->getTitle($cruise_cat_id)}: {$totalRecord} cruises found</h2>
                         <span>
-                            100% customizable Halong Bay Cruises. Idea to compose your trip
+                            100% customizable {$clsCruiseCat->getTitle($cruise_cat_id)}. Idea to compose your trip
                             as you wish
                         </span>
                     </div>
                     <div class="list_cruises d-flex flex-column ">
+                        {if $listCruise}
+                        {foreach from=$listCruise key=key item=item}
+                        {assign var="CruiseID" value=$item.cruise_id}
+                        {assign var="CruiseTitle" value=$clsCruise->getTitle($CruiseID)}
+                        {assign var="CruiseLink" value=$clsCruise->getLink($CruiseID)}
+
                         <div class="item_cruises d-flex  justify-content-between align-items-start">
-                            <a href="" class="div_img img_cruises">
-                                <img src="{URL_IMAGES}/uni_van/images/cruises/img_cruise.png" alt="Image" />
+                            <a href="{$CruiseLink}" title="{$CruiseTitle}" class="div_img img_cruises">
+                                <img src="{$clsCruise->getImage($CruiseID, 353, 244)}" alt="{$CruiseTitle}" width="353" height="244" />
                             </a>
                             <div class="content_cruise d-flex ">
                                 <div class="content d-flex flex-column ">
                                     <div class="d-flex flex-column unika_title_star">
                                         <h3>
-                                            <a href="cruise_detail.html" class="title  ellipsis_2">
-                                                Scarlet Pearl Boat Cruise Halong Bay
+                                            <a href="{$CruiseLink}" class="title ellipsis_2" title="{$CruiseTitle}">
+                                                {$CruiseTitle}
                                             </a>
                                         </h3>
                                         <div class="rating d-flex justify-content-start  align-items-center">
+                                            {if $item.star_number}
+                                            {section name=i loop=$item.star_number}
                                             <div class="div_img">
-                                                <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Icon" />
+                                                <i class="fa-sharp fa-solid fa-star"></i>
                                             </div>
-                                            <div class="div_img">
-                                                <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Icon" />
-                                            </div>
-                                            <div class="div_img">
-                                                <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Icon" />
-                                            </div>
-                                            <div class="div_img">
-                                                <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Icon" />
-                                            </div>
+                                            {/section}
+                                            {/if}
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-start align-items-start ">
                                         <div class="div_img img_icon_content">
-                                            <img src="{URL_IMAGES}/uni_van/images/cruises/location.svg" alt="Icon" />
+                                            <i class="fa-sharp fa-solid fa-location-dot"></i>
                                         </div>
                                         <div class="d-flex  ellipsis_3 txt_content">
                                             <span>Place to visit:</span> Hanoi
@@ -250,10 +251,10 @@
                                     </div>
                                     <div class="d-flex justify-content-start align-items-center ">
                                         <div class="div_img img_icon_content">
-                                            <img src="{URL_IMAGES}/uni_van/images/cruises/cabin.svg" alt="Icon" />
+                                            <i class="fa-light fa-door-open"></i>
                                         </div>
                                         <div class="d-flex  justify-content-start ellipsis_1 txt_content">
-                                            <span>Cabin:</span> 23
+                                            <span>Cabin:</span> {$item.total_cabin}
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-start align-items-center ">
@@ -261,57 +262,34 @@
                                             <img src="{URL_IMAGES}/uni_van/images/cruises/material.svg" alt="Icon" />
                                         </div>
                                         <div class="d-flex  justify-content-start ellipsis_1 txt_content">
-                                            <span>Material:</span> Wooden junk
+                                            <span>Material:</span> {$clsCruiseProperty->getTitle($item.material)}
                                         </div>
                                     </div>
                                     <div class="other d-flex flex-column">
                                         <div class="d-flex justify-content-start align-items-center ">
-                                            <div class="div_img img_icon_content">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/true.svg" alt="icon" />
+                                            <div class="box_inclusion">
+                                                {$clsCruise->getInclusion($CruiseID)}
                                             </div>
-                                            <span class="ellipsis_1 span_txt">Breakfast included</span>
-                                        </div>
-                                        <div class="d-flex justify-content-start align-items-center ">
-                                            <div class="div_img img_icon_content">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/true.svg" alt="icon" />
-                                            </div>
-                                            <span class="ellipsis_1 span_txt">No prepayment needed – pay at the
-                                                property</span>
                                         </div>
                                     </div>
                                     <div class="highlights d-flex justify-content-start align-items-center flex-wrap">
                                         <span>Highlights</span>
                                         <div class="list_icon d-flex justify-content-start align-items-center  flex-wrap">
+                                            {if $lstCruiseFa}
+                                            {foreach from=$lstCruiseFa key=k item=i}
+                                            {assign var="CruiseFaImg" value=$clsCruiseProperty->getImage($i.cruise_property_id)}
+                                            {assign var="CruiseFaTxt" value=$clsCruiseProperty->getTitle($i.cruise_property_id)}
+
+                                            {if $clsISO->checkInArray($item.listCruiseFacilities, $i.cruise_property_id)}
                                             <div class="div_img img_highlight">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/icon1.svg" alt="Icon" />
+                                                <img src="{$CruiseFaImg}" alt="Icon" />
                                                 <span class="txt_icon ">
-                                                    2 large double beds 
+                                                    {$CruiseFaTxt}
                                                 </span>
                                             </div>
-                                            <div class="div_img img_highlight">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/icon2.svg" alt="Icon" />
-                                                <span class="txt_icon ">
-                                                    2 large double beds 
-                                                </span>
-                                            </div>
-                                            <div class="div_img img_highlight">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/icon3.svg" alt="Icon" />
-                                                <span class="txt_icon ">
-                                                    2 large double beds 
-                                                </span>
-                                            </div>
-                                            <div class="div_img img_highlight">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/icon4.svg" alt="Icon" />
-                                                <span class="txt_icon ">
-                                                    2 large double beds 
-                                                </span>
-                                            </div>
-                                            <div class="div_img img_highlight">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/icon5.svg" alt="Icon" />
-                                                <span class="txt_icon ">
-                                                    2 large double beds 
-                                                </span>
-                                            </div>
+                                            {/if}
+                                            {/foreach}
+                                            {/if}
                                             <div class="icon_other ">+6</div>
                                         </div>
                                     </div>
@@ -320,962 +298,46 @@
                                     <div class="reviews d-flex justify-content-end align-items-end flex-column">
                                         <div class="d-flex justify-content-end align-items-center item_evaluate">
                                             <div class="d-flex flex-column justify-content-end ">
-                                                <span class="span_review">Very good</span>
-                                                <span class="span_quantity">(9 reviews)</span>
+                                                <span class="span_review">
+                                                    {$clsReviews->getReviews($CruiseID, 'txt_review', 'cruise')}
+                                                </span>
+                                                <span class="span_quantity">
+                                                    ({$clsReviews->getReviews($CruiseID, '', 'cruise')} reviews)
+                                                </span>
                                             </div>
                                             <div class="average_reviews d-flex align-items-center justify-content-center">
-                                                4.5
+                                                {$clsReviews->getReviews($CruiseID, 'avg_point', 'cruise')}
                                             </div>
                                         </div>
                                         <div class="price d-flex flex-column">
                                             <span class="txt_money">Price per person from</span>
                                             <div class="txt_money_cruise d-flex justify-content-end align-items-end">
                                                 US
-                                                <span>$1250</span>
+                                                <span>
+                                                    $ {$clsCruiseItinerary->getMinPriceItinerary($CruiseID)}
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
-                                    <a href="#" class="btn_explore d-flex justify-content-center align-items-center">
+                                    <a href="{$CruiseLink}" class="btn_explore d-flex justify-content-center align-items-center" title="{$CruiseTitle}">
                                         Explore
                                         <div class="div_img">
-                                            <img src="{URL_IMAGES}/uni_van/images/btn_contact.svg" alt="Icon" />
+                                            <i class="fa-sharp fa-light fa-arrow-right"></i>
                                         </div>
                                     </a>
                                 </div>
                             </div>
                         </div>
-                        <div class="item_cruises d-flex  justify-content-between align-items-start">
-                            <a href="" class="div_img img_cruises">
-                                <img src="{URL_IMAGES}/uni_van/images/cruises/img_cruise.png" alt="Image" />
-                            </a>
-                            <div class="content_cruise d-flex ">
-                                <div class="content d-flex flex-column ">
-                                    <div class="d-flex flex-column unika_title_star">
-                                        <h3>
-                                            <a href="cruise_detail.html" class="title  ellipsis_2">
-                                                Scarlet Pearl Boat Cruise Halong Bay
-                                            </a>
-                                        </h3>
-                                        <div class="rating d-flex justify-content-start  align-items-center">
-                                            <div class="div_img">
-                                                <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Icon" />
-                                            </div>
-                                            <div class="div_img">
-                                                <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Icon" />
-                                            </div>
-                                            <div class="div_img">
-                                                <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Icon" />
-                                            </div>
-                                            <div class="div_img">
-                                                <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Icon" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-start align-items-start ">
-                                        <div class="div_img img_icon_content">
-                                            <img src="{URL_IMAGES}/uni_van/images/cruises/location.svg" alt="Icon" />
-                                        </div>
-                                        <div class="d-flex  ellipsis_3 txt_content">
-                                            <span>Place to visit:</span> Hanoi
-                                            - Lan Ha Bay - Dark & Light Cave - Ao Ech Area - Halong
-                                            International Cruise Port - Hanoi
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-start align-items-center ">
-                                        <div class="div_img img_icon_content">
-                                            <img src="{URL_IMAGES}/uni_van/images/cruises/cabin.svg" alt="Icon" />
-                                        </div>
-                                        <div class="d-flex  justify-content-start ellipsis_1 txt_content">
-                                            <span>Cabin:</span> 23
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-start align-items-center ">
-                                        <div class="div_img img_icon_content">
-                                            <img src="{URL_IMAGES}/uni_van/images/cruises/material.svg" alt="Icon" />
-                                        </div>
-                                        <div class="d-flex  justify-content-start ellipsis_1 txt_content">
-                                            <span>Material:</span> Wooden junk
-                                        </div>
-                                    </div>
-                                    <div class="other d-flex flex-column">
-                                        <div class="d-flex justify-content-start align-items-center ">
-                                            <div class="div_img img_icon_content">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/true.svg" alt="icon" />
-                                            </div>
-                                            <span class="ellipsis_1 span_txt">Breakfast included</span>
-                                        </div>
-                                        <div class="d-flex justify-content-start align-items-center ">
-                                            <div class="div_img img_icon_content">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/true.svg" alt="icon" />
-                                            </div>
-                                            <span class="ellipsis_1 span_txt">No prepayment needed – pay at the
-                                                property</span>
-                                        </div>
-                                    </div>
-                                    <div class="highlights d-flex justify-content-start align-items-center flex-wrap">
-                                        <span>Highlights</span>
-                                        <div class="list_icon d-flex justify-content-start align-items-center  flex-wrap">
-                                            <div class="div_img img_highlight">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/icon1.svg" alt="Icon" />
-                                                <span class="txt_icon ">
-                                                    2 large double beds 
-                                                </span>
-                                            </div>
-                                            <div class="div_img img_highlight">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/icon2.svg" alt="Icon" />
-                                                <span class="txt_icon ">
-                                                    2 large double beds 
-                                                </span>
-                                            </div>
-                                            <div class="div_img img_highlight">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/icon3.svg" alt="Icon" />
-                                                <span class="txt_icon ">
-                                                    2 large double beds 
-                                                </span>
-                                            </div>
-                                            <div class="div_img img_highlight">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/icon4.svg" alt="Icon" />
-                                                <span class="txt_icon ">
-                                                    2 large double beds 
-                                                </span>
-                                            </div>
-                                            <div class="div_img img_highlight">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/icon5.svg" alt="Icon" />
-                                                <span class="txt_icon ">
-                                                    2 large double beds 
-                                                </span>
-                                            </div>
-                                            <div class="icon_other ">+6</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="money_cruise d-flex flex-column align-items-end justify-content-between">
-                                    <div class="reviews d-flex justify-content-end align-items-end flex-column">
-                                        <div class="d-flex justify-content-end align-items-center item_evaluate">
-                                            <div class="d-flex flex-column justify-content-end ">
-                                                <span class="span_review">Very good</span>
-                                                <span class="span_quantity">(9 reviews)</span>
-                                            </div>
-                                            <div class="average_reviews d-flex align-items-center justify-content-center">
-                                                4.5
-                                            </div>
-                                        </div>
-                                        <div class="price d-flex flex-column">
-                                            <span class="txt_money">Price per person from</span>
-                                            <div class="txt_money_cruise d-flex justify-content-end align-items-end">
-                                                US
-                                                <span>$1250</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <a href="#" class="btn_explore d-flex justify-content-center align-items-center">
-                                        Explore
-                                        <div class="div_img">
-                                            <img src="{URL_IMAGES}/uni_van/images/btn_contact.svg" alt="Icon" />
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item_cruises d-flex  justify-content-between align-items-start">
-                            <a href="" class="div_img img_cruises">
-                                <img src="{URL_IMAGES}/uni_van/images/cruises/img_cruise.png" alt="Image" />
-                            </a>
-                            <div class="content_cruise d-flex ">
-                                <div class="content d-flex flex-column ">
-                                    <div class="d-flex flex-column unika_title_star">
-                                        <h3>
-                                            <a href="cruise_detail.html" class="title  ellipsis_2">
-                                                Scarlet Pearl Boat Cruise Halong Bay
-                                            </a>
-                                        </h3>
-                                        <div class="rating d-flex justify-content-start  align-items-center">
-                                            <div class="div_img">
-                                                <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Icon" />
-                                            </div>
-                                            <div class="div_img">
-                                                <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Icon" />
-                                            </div>
-                                            <div class="div_img">
-                                                <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Icon" />
-                                            </div>
-                                            <div class="div_img">
-                                                <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Icon" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-start align-items-start ">
-                                        <div class="div_img img_icon_content">
-                                            <img src="{URL_IMAGES}/uni_van/images/cruises/location.svg" alt="Icon" />
-                                        </div>
-                                        <div class="d-flex  ellipsis_3 txt_content">
-                                            <span>Place to visit:</span> Hanoi
-                                            - Lan Ha Bay - Dark & Light Cave - Ao Ech Area - Halong
-                                            International Cruise Port - Hanoi
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-start align-items-center ">
-                                        <div class="div_img img_icon_content">
-                                            <img src="{URL_IMAGES}/uni_van/images/cruises/cabin.svg" alt="Icon" />
-                                        </div>
-                                        <div class="d-flex  justify-content-start ellipsis_1 txt_content">
-                                            <span>Cabin:</span> 23
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-start align-items-center ">
-                                        <div class="div_img img_icon_content">
-                                            <img src="{URL_IMAGES}/uni_van/images/cruises/material.svg" alt="Icon" />
-                                        </div>
-                                        <div class="d-flex  justify-content-start ellipsis_1 txt_content">
-                                            <span>Material:</span> Wooden junk
-                                        </div>
-                                    </div>
-                                    <div class="other d-flex flex-column">
-                                        <div class="d-flex justify-content-start align-items-center ">
-                                            <div class="div_img img_icon_content">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/true.svg" alt="icon" />
-                                            </div>
-                                            <span class="ellipsis_1 span_txt">Breakfast included</span>
-                                        </div>
-                                        <div class="d-flex justify-content-start align-items-center ">
-                                            <div class="div_img img_icon_content">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/true.svg" alt="icon" />
-                                            </div>
-                                            <span class="ellipsis_1 span_txt">No prepayment needed – pay at the
-                                                property</span>
-                                        </div>
-                                    </div>
-                                    <div class="highlights d-flex justify-content-start align-items-center flex-wrap">
-                                        <span>Highlights</span>
-                                        <div class="list_icon d-flex justify-content-start align-items-center  flex-wrap">
-                                            <div class="div_img img_highlight">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/icon1.svg" alt="Icon" />
-                                                <span class="txt_icon ">
-                                                    2 large double beds 
-                                                </span>
-                                            </div>
-                                            <div class="div_img img_highlight">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/icon2.svg" alt="Icon" />
-                                                <span class="txt_icon ">
-                                                    2 large double beds 
-                                                </span>
-                                            </div>
-                                            <div class="div_img img_highlight">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/icon3.svg" alt="Icon" />
-                                                <span class="txt_icon ">
-                                                    2 large double beds 
-                                                </span>
-                                            </div>
-                                            <div class="div_img img_highlight">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/icon4.svg" alt="Icon" />
-                                                <span class="txt_icon ">
-                                                    2 large double beds 
-                                                </span>
-                                            </div>
-                                            <div class="div_img img_highlight">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/icon5.svg" alt="Icon" />
-                                                <span class="txt_icon ">
-                                                    2 large double beds 
-                                                </span>
-                                            </div>
-                                            <div class="icon_other ">+6</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="money_cruise d-flex flex-column align-items-end justify-content-between">
-                                    <div class="reviews d-flex justify-content-end align-items-end flex-column">
-                                        <div class="d-flex justify-content-end align-items-center item_evaluate">
-                                            <div class="d-flex flex-column justify-content-end ">
-                                                <span class="span_review">Very good</span>
-                                                <span class="span_quantity">(9 reviews)</span>
-                                            </div>
-                                            <div class="average_reviews d-flex align-items-center justify-content-center">
-                                                4.5
-                                            </div>
-                                        </div>
-                                        <div class="price d-flex flex-column">
-                                            <span class="txt_money">Price per person from</span>
-                                            <div class="txt_money_cruise d-flex justify-content-end align-items-end">
-                                                US
-                                                <span>$1250</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <a href="#" class="btn_explore d-flex justify-content-center align-items-center">
-                                        Explore
-                                        <div class="div_img">
-                                            <img src="{URL_IMAGES}/uni_van/images/btn_contact.svg" alt="Icon" />
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item_cruises d-flex  justify-content-between align-items-start">
-                            <a href="" class="div_img img_cruises">
-                                <img src="{URL_IMAGES}/uni_van/images/cruises/img_cruise.png" alt="Image" />
-                            </a>
-                            <div class="content_cruise d-flex ">
-                                <div class="content d-flex flex-column ">
-                                    <div class="d-flex flex-column unika_title_star">
-                                        <h3>
-                                            <a href="cruise_detail.html" class="title  ellipsis_2">
-                                                Scarlet Pearl Boat Cruise Halong Bay
-                                            </a>
-                                        </h3>
-                                        <div class="rating d-flex justify-content-start  align-items-center">
-                                            <div class="div_img">
-                                                <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Icon" />
-                                            </div>
-                                            <div class="div_img">
-                                                <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Icon" />
-                                            </div>
-                                            <div class="div_img">
-                                                <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Icon" />
-                                            </div>
-                                            <div class="div_img">
-                                                <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Icon" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-start align-items-start ">
-                                        <div class="div_img img_icon_content">
-                                            <img src="{URL_IMAGES}/uni_van/images/cruises/location.svg" alt="Icon" />
-                                        </div>
-                                        <div class="d-flex  ellipsis_3 txt_content">
-                                            <span>Place to visit:</span> Hanoi
-                                            - Lan Ha Bay - Dark & Light Cave - Ao Ech Area - Halong
-                                            International Cruise Port - Hanoi
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-start align-items-center ">
-                                        <div class="div_img img_icon_content">
-                                            <img src="{URL_IMAGES}/uni_van/images/cruises/cabin.svg" alt="Icon" />
-                                        </div>
-                                        <div class="d-flex  justify-content-start ellipsis_1 txt_content">
-                                            <span>Cabin:</span> 23
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-start align-items-center ">
-                                        <div class="div_img img_icon_content">
-                                            <img src="{URL_IMAGES}/uni_van/images/cruises/material.svg" alt="Icon" />
-                                        </div>
-                                        <div class="d-flex  justify-content-start ellipsis_1 txt_content">
-                                            <span>Material:</span> Wooden junk
-                                        </div>
-                                    </div>
-                                    <div class="other d-flex flex-column">
-                                        <div class="d-flex justify-content-start align-items-center ">
-                                            <div class="div_img img_icon_content">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/true.svg" alt="icon" />
-                                            </div>
-                                            <span class="ellipsis_1 span_txt">Breakfast included</span>
-                                        </div>
-                                        <div class="d-flex justify-content-start align-items-center ">
-                                            <div class="div_img img_icon_content">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/true.svg" alt="icon" />
-                                            </div>
-                                            <span class="ellipsis_1 span_txt">No prepayment needed – pay at the
-                                                property</span>
-                                        </div>
-                                    </div>
-                                    <div class="highlights d-flex justify-content-start align-items-center flex-wrap">
-                                        <span>Highlights</span>
-                                        <div class="list_icon d-flex justify-content-start align-items-center  flex-wrap">
-                                            <div class="div_img img_highlight">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/icon1.svg" alt="Icon" />
-                                                <span class="txt_icon ">
-                                                    2 large double beds 
-                                                </span>
-                                            </div>
-                                            <div class="div_img img_highlight">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/icon2.svg" alt="Icon" />
-                                                <span class="txt_icon ">
-                                                    2 large double beds 
-                                                </span>
-                                            </div>
-                                            <div class="div_img img_highlight">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/icon3.svg" alt="Icon" />
-                                                <span class="txt_icon ">
-                                                    2 large double beds 
-                                                </span>
-                                            </div>
-                                            <div class="div_img img_highlight">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/icon4.svg" alt="Icon" />
-                                                <span class="txt_icon ">
-                                                    2 large double beds 
-                                                </span>
-                                            </div>
-                                            <div class="div_img img_highlight">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/icon5.svg" alt="Icon" />
-                                                <span class="txt_icon ">
-                                                    2 large double beds 
-                                                </span>
-                                            </div>
-                                            <div class="icon_other ">+6</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="money_cruise d-flex flex-column align-items-end justify-content-between">
-                                    <div class="reviews d-flex justify-content-end align-items-end flex-column">
-                                        <div class="d-flex justify-content-end align-items-center item_evaluate">
-                                            <div class="d-flex flex-column justify-content-end ">
-                                                <span class="span_review">Very good</span>
-                                                <span class="span_quantity">(9 reviews)</span>
-                                            </div>
-                                            <div class="average_reviews d-flex align-items-center justify-content-center">
-                                                4.5
-                                            </div>
-                                        </div>
-                                        <div class="price d-flex flex-column">
-                                            <span class="txt_money">Price per person from</span>
-                                            <div class="txt_money_cruise d-flex justify-content-end align-items-end">
-                                                US
-                                                <span>$1250</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <a href="#" class="btn_explore d-flex justify-content-center align-items-center">
-                                        Explore
-                                        <div class="div_img">
-                                            <img src="{URL_IMAGES}/uni_van/images/btn_contact.svg" alt="Icon" />
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item_cruises d-flex  justify-content-between align-items-start">
-                            <a href="" class="div_img img_cruises">
-                                <img src="{URL_IMAGES}/uni_van/images/cruises/img_cruise.png" alt="Image" />
-                            </a>
-                            <div class="content_cruise d-flex ">
-                                <div class="content d-flex flex-column ">
-                                    <div class="d-flex flex-column unika_title_star">
-                                        <h3>
-                                            <a href="cruise_detail.html" class="title  ellipsis_2">
-                                                Scarlet Pearl Boat Cruise Halong Bay
-                                            </a>
-                                        </h3>
-                                        <div class="rating d-flex justify-content-start  align-items-center">
-                                            <div class="div_img">
-                                                <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Icon" />
-                                            </div>
-                                            <div class="div_img">
-                                                <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Icon" />
-                                            </div>
-                                            <div class="div_img">
-                                                <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Icon" />
-                                            </div>
-                                            <div class="div_img">
-                                                <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Icon" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-start align-items-start ">
-                                        <div class="div_img img_icon_content">
-                                            <img src="{URL_IMAGES}/uni_van/images/cruises/location.svg" alt="Icon" />
-                                        </div>
-                                        <div class="d-flex  ellipsis_3 txt_content">
-                                            <span>Place to visit:</span> Hanoi
-                                            - Lan Ha Bay - Dark & Light Cave - Ao Ech Area - Halong
-                                            International Cruise Port - Hanoi
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-start align-items-center ">
-                                        <div class="div_img img_icon_content">
-                                            <img src="{URL_IMAGES}/uni_van/images/cruises/cabin.svg" alt="Icon" />
-                                        </div>
-                                        <div class="d-flex  justify-content-start ellipsis_1 txt_content">
-                                            <span>Cabin:</span> 23
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-start align-items-center ">
-                                        <div class="div_img img_icon_content">
-                                            <img src="{URL_IMAGES}/uni_van/images/cruises/material.svg" alt="Icon" />
-                                        </div>
-                                        <div class="d-flex  justify-content-start ellipsis_1 txt_content">
-                                            <span>Material:</span> Wooden junk
-                                        </div>
-                                    </div>
-                                    <div class="other d-flex flex-column">
-                                        <div class="d-flex justify-content-start align-items-center ">
-                                            <div class="div_img img_icon_content">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/true.svg" alt="icon" />
-                                            </div>
-                                            <span class="ellipsis_1 span_txt">Breakfast included</span>
-                                        </div>
-                                        <div class="d-flex justify-content-start align-items-center ">
-                                            <div class="div_img img_icon_content">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/true.svg" alt="icon" />
-                                            </div>
-                                            <span class="ellipsis_1 span_txt">No prepayment needed – pay at the
-                                                property</span>
-                                        </div>
-                                    </div>
-                                    <div class="highlights d-flex justify-content-start align-items-center flex-wrap">
-                                        <span>Highlights</span>
-                                        <div class="list_icon d-flex justify-content-start align-items-center  flex-wrap">
-                                            <div class="div_img img_highlight">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/icon1.svg" alt="Icon" />
-                                                <span class="txt_icon ">
-                                                    2 large double beds 
-                                                </span>
-                                            </div>
-                                            <div class="div_img img_highlight">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/icon2.svg" alt="Icon" />
-                                                <span class="txt_icon ">
-                                                    2 large double beds 
-                                                </span>
-                                            </div>
-                                            <div class="div_img img_highlight">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/icon3.svg" alt="Icon" />
-                                                <span class="txt_icon ">
-                                                    2 large double beds 
-                                                </span>
-                                            </div>
-                                            <div class="div_img img_highlight">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/icon4.svg" alt="Icon" />
-                                                <span class="txt_icon ">
-                                                    2 large double beds 
-                                                </span>
-                                            </div>
-                                            <div class="div_img img_highlight">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/icon5.svg" alt="Icon" />
-                                                <span class="txt_icon ">
-                                                    2 large double beds 
-                                                </span>
-                                            </div>
-                                            <div class="icon_other ">+6</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="money_cruise d-flex flex-column align-items-end justify-content-between">
-                                    <div class="reviews d-flex justify-content-end align-items-end flex-column">
-                                        <div class="d-flex justify-content-end align-items-center item_evaluate">
-                                            <div class="d-flex flex-column justify-content-end ">
-                                                <span class="span_review">Very good</span>
-                                                <span class="span_quantity">(9 reviews)</span>
-                                            </div>
-                                            <div class="average_reviews d-flex align-items-center justify-content-center">
-                                                4.5
-                                            </div>
-                                        </div>
-                                        <div class="price d-flex flex-column">
-                                            <span class="txt_money">Price per person from</span>
-                                            <div class="txt_money_cruise d-flex justify-content-end align-items-end">
-                                                US
-                                                <span>$1250</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <a href="#" class="btn_explore d-flex justify-content-center align-items-center">
-                                        Explore
-                                        <div class="div_img">
-                                            <img src="{URL_IMAGES}/uni_van/images/btn_contact.svg" alt="Icon" />
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item_cruises d-flex  justify-content-between align-items-start">
-                            <a href="" class="div_img img_cruises">
-                                <img src="{URL_IMAGES}/uni_van/images/cruises/img_cruise.png" alt="Image" />
-                            </a>
-                            <div class="content_cruise d-flex ">
-                                <div class="content d-flex flex-column ">
-                                    <div class="d-flex flex-column unika_title_star">
-                                        <h3>
-                                            <a href="cruise_detail.html" class="title  ellipsis_2">
-                                                Scarlet Pearl Boat Cruise Halong Bay
-                                            </a>
-                                        </h3>
-                                        <div class="rating d-flex justify-content-start  align-items-center">
-                                            <div class="div_img">
-                                                <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Icon" />
-                                            </div>
-                                            <div class="div_img">
-                                                <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Icon" />
-                                            </div>
-                                            <div class="div_img">
-                                                <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Icon" />
-                                            </div>
-                                            <div class="div_img">
-                                                <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Icon" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-start align-items-start ">
-                                        <div class="div_img img_icon_content">
-                                            <img src="{URL_IMAGES}/uni_van/images/cruises/location.svg" alt="Icon" />
-                                        </div>
-                                        <div class="d-flex  ellipsis_3 txt_content">
-                                            <span>Place to visit:</span> Hanoi
-                                            - Lan Ha Bay - Dark & Light Cave - Ao Ech Area - Halong
-                                            International Cruise Port - Hanoi
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-start align-items-center ">
-                                        <div class="div_img img_icon_content">
-                                            <img src="{URL_IMAGES}/uni_van/images/cruises/cabin.svg" alt="Icon" />
-                                        </div>
-                                        <div class="d-flex  justify-content-start ellipsis_1 txt_content">
-                                            <span>Cabin:</span> 23
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-start align-items-center ">
-                                        <div class="div_img img_icon_content">
-                                            <img src="{URL_IMAGES}/uni_van/images/cruises/material.svg" alt="Icon" />
-                                        </div>
-                                        <div class="d-flex  justify-content-start ellipsis_1 txt_content">
-                                            <span>Material:</span> Wooden junk
-                                        </div>
-                                    </div>
-                                    <div class="other d-flex flex-column">
-                                        <div class="d-flex justify-content-start align-items-center ">
-                                            <div class="div_img img_icon_content">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/true.svg" alt="icon" />
-                                            </div>
-                                            <span class="ellipsis_1 span_txt">Breakfast included</span>
-                                        </div>
-                                        <div class="d-flex justify-content-start align-items-center ">
-                                            <div class="div_img img_icon_content">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/true.svg" alt="icon" />
-                                            </div>
-                                            <span class="ellipsis_1 span_txt">No prepayment needed – pay at the
-                                                property</span>
-                                        </div>
-                                    </div>
-                                    <div class="highlights d-flex justify-content-start align-items-center flex-wrap">
-                                        <span>Highlights</span>
-                                        <div class="list_icon d-flex justify-content-start align-items-center  flex-wrap">
-                                            <div class="div_img img_highlight">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/icon1.svg" alt="Icon" />
-                                                <span class="txt_icon ">
-                                                    2 large double beds 
-                                                </span>
-                                            </div>
-                                            <div class="div_img img_highlight">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/icon2.svg" alt="Icon" />
-                                                <span class="txt_icon ">
-                                                    2 large double beds 
-                                                </span>
-                                            </div>
-                                            <div class="div_img img_highlight">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/icon3.svg" alt="Icon" />
-                                                <span class="txt_icon ">
-                                                    2 large double beds 
-                                                </span>
-                                            </div>
-                                            <div class="div_img img_highlight">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/icon4.svg" alt="Icon" />
-                                                <span class="txt_icon ">
-                                                    2 large double beds 
-                                                </span>
-                                            </div>
-                                            <div class="div_img img_highlight">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/icon5.svg" alt="Icon" />
-                                                <span class="txt_icon ">
-                                                    2 large double beds 
-                                                </span>
-                                            </div>
-                                            <div class="icon_other ">+6</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="money_cruise d-flex flex-column align-items-end justify-content-between">
-                                    <div class="reviews d-flex justify-content-end align-items-end flex-column">
-                                        <div class="d-flex justify-content-end align-items-center item_evaluate">
-                                            <div class="d-flex flex-column justify-content-end ">
-                                                <span class="span_review">Very good</span>
-                                                <span class="span_quantity">(9 reviews)</span>
-                                            </div>
-                                            <div class="average_reviews d-flex align-items-center justify-content-center">
-                                                4.5
-                                            </div>
-                                        </div>
-                                        <div class="price d-flex flex-column">
-                                            <span class="txt_money">Price per person from</span>
-                                            <div class="txt_money_cruise d-flex justify-content-end align-items-end">
-                                                US
-                                                <span>$1250</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <a href="#" class="btn_explore d-flex justify-content-center align-items-center">
-                                        Explore
-                                        <div class="div_img">
-                                            <img src="{URL_IMAGES}/uni_van/images/btn_contact.svg" alt="Icon" />
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item_cruises d-flex  justify-content-between align-items-start">
-                            <a href="" class="div_img img_cruises">
-                                <img src="{URL_IMAGES}/uni_van/images/cruises/img_cruise.png" alt="Image" />
-                            </a>
-                            <div class="content_cruise d-flex ">
-                                <div class="content d-flex flex-column ">
-                                    <div class="d-flex flex-column unika_title_star">
-                                        <h3>
-                                            <a href="cruise_detail.html" class="title  ellipsis_2">
-                                                Scarlet Pearl Boat Cruise Halong Bay
-                                            </a>
-                                        </h3>
-                                        <div class="rating d-flex justify-content-start  align-items-center">
-                                            <div class="div_img">
-                                                <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Icon" />
-                                            </div>
-                                            <div class="div_img">
-                                                <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Icon" />
-                                            </div>
-                                            <div class="div_img">
-                                                <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Icon" />
-                                            </div>
-                                            <div class="div_img">
-                                                <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Icon" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-start align-items-start ">
-                                        <div class="div_img img_icon_content">
-                                            <img src="{URL_IMAGES}/uni_van/images/cruises/location.svg" alt="Icon" />
-                                        </div>
-                                        <div class="d-flex  ellipsis_3 txt_content">
-                                            <span>Place to visit:</span> Hanoi
-                                            - Lan Ha Bay - Dark & Light Cave - Ao Ech Area - Halong
-                                            International Cruise Port - Hanoi
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-start align-items-center ">
-                                        <div class="div_img img_icon_content">
-                                            <img src="{URL_IMAGES}/uni_van/images/cruises/cabin.svg" alt="Icon" />
-                                        </div>
-                                        <div class="d-flex  justify-content-start ellipsis_1 txt_content">
-                                            <span>Cabin:</span> 23
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-start align-items-center ">
-                                        <div class="div_img img_icon_content">
-                                            <img src="{URL_IMAGES}/uni_van/images/cruises/material.svg" alt="Icon" />
-                                        </div>
-                                        <div class="d-flex  justify-content-start ellipsis_1 txt_content">
-                                            <span>Material:</span> Wooden junk
-                                        </div>
-                                    </div>
-                                    <div class="other d-flex flex-column">
-                                        <div class="d-flex justify-content-start align-items-center ">
-                                            <div class="div_img img_icon_content">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/true.svg" alt="icon" />
-                                            </div>
-                                            <span class="ellipsis_1 span_txt">Breakfast included</span>
-                                        </div>
-                                        <div class="d-flex justify-content-start align-items-center ">
-                                            <div class="div_img img_icon_content">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/true.svg" alt="icon" />
-                                            </div>
-                                            <span class="ellipsis_1 span_txt">No prepayment needed – pay at the
-                                                property</span>
-                                        </div>
-                                    </div>
-                                    <div class="highlights d-flex justify-content-start align-items-center flex-wrap">
-                                        <span>Highlights</span>
-                                        <div class="list_icon d-flex justify-content-start align-items-center  flex-wrap">
-                                            <div class="div_img img_highlight">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/icon1.svg" alt="Icon" />
-                                                <span class="txt_icon ">
-                                                    2 large double beds 
-                                                </span>
-                                            </div>
-                                            <div class="div_img img_highlight">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/icon2.svg" alt="Icon" />
-                                                <span class="txt_icon ">
-                                                    2 large double beds 
-                                                </span>
-                                            </div>
-                                            <div class="div_img img_highlight">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/icon3.svg" alt="Icon" />
-                                                <span class="txt_icon ">
-                                                    2 large double beds 
-                                                </span>
-                                            </div>
-                                            <div class="div_img img_highlight">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/icon4.svg" alt="Icon" />
-                                                <span class="txt_icon ">
-                                                    2 large double beds 
-                                                </span>
-                                            </div>
-                                            <div class="div_img img_highlight">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/icon5.svg" alt="Icon" />
-                                                <span class="txt_icon ">
-                                                    2 large double beds 
-                                                </span>
-                                            </div>
-                                            <div class="icon_other ">+6</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="money_cruise d-flex flex-column align-items-end justify-content-between">
-                                    <div class="reviews d-flex justify-content-end align-items-end flex-column">
-                                        <div class="d-flex justify-content-end align-items-center item_evaluate">
-                                            <div class="d-flex flex-column justify-content-end ">
-                                                <span class="span_review">Very good</span>
-                                                <span class="span_quantity">(9 reviews)</span>
-                                            </div>
-                                            <div class="average_reviews d-flex align-items-center justify-content-center">
-                                                4.5
-                                            </div>
-                                        </div>
-                                        <div class="price d-flex flex-column">
-                                            <span class="txt_money">Price per person from</span>
-                                            <div class="txt_money_cruise d-flex justify-content-end align-items-end">
-                                                US
-                                                <span>$1250</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <a href="#" class="btn_explore d-flex justify-content-center align-items-center">
-                                        Explore
-                                        <div class="div_img">
-                                            <img src="{URL_IMAGES}/uni_van/images/btn_contact.svg" alt="Icon" />
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item_cruises d-flex  justify-content-between align-items-start">
-                            <a href="" class="div_img img_cruises">
-                                <img src="{URL_IMAGES}/uni_van/images/cruises/img_cruise.png" alt="Image" />
-                            </a>
-                            <div class="content_cruise d-flex ">
-                                <div class="content d-flex flex-column ">
-                                    <div class="d-flex flex-column unika_title_star">
-                                        <h3>
-                                            <a href="cruise_detail.html" class="title  ellipsis_2">
-                                                Scarlet Pearl Boat Cruise Halong Bay
-                                            </a>
-                                        </h3>
-                                        <div class="rating d-flex justify-content-start  align-items-center">
-                                            <div class="div_img">
-                                                <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Icon" />
-                                            </div>
-                                            <div class="div_img">
-                                                <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Icon" />
-                                            </div>
-                                            <div class="div_img">
-                                                <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Icon" />
-                                            </div>
-                                            <div class="div_img">
-                                                <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Icon" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-start align-items-start ">
-                                        <div class="div_img img_icon_content">
-                                            <img src="{URL_IMAGES}/uni_van/images/cruises/location.svg" alt="Icon" />
-                                        </div>
-                                        <div class="d-flex  ellipsis_3 txt_content">
-                                            <span>Place to visit:</span> Hanoi
-                                            - Lan Ha Bay - Dark & Light Cave - Ao Ech Area - Halong
-                                            International Cruise Port - Hanoi
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-start align-items-center ">
-                                        <div class="div_img img_icon_content">
-                                            <img src="{URL_IMAGES}/uni_van/images/cruises/cabin.svg" alt="Icon" />
-                                        </div>
-                                        <div class="d-flex  justify-content-start ellipsis_1 txt_content">
-                                            <span>Cabin:</span> 23
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-start align-items-center ">
-                                        <div class="div_img img_icon_content">
-                                            <img src="{URL_IMAGES}/uni_van/images/cruises/material.svg" alt="Icon" />
-                                        </div>
-                                        <div class="d-flex  justify-content-start ellipsis_1 txt_content">
-                                            <span>Material:</span> Wooden junk
-                                        </div>
-                                    </div>
-                                    <div class="other d-flex flex-column">
-                                        <div class="d-flex justify-content-start align-items-center ">
-                                            <div class="div_img img_icon_content">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/true.svg" alt="icon" />
-                                            </div>
-                                            <span class="ellipsis_1 span_txt">Breakfast included</span>
-                                        </div>
-                                        <div class="d-flex justify-content-start align-items-center ">
-                                            <div class="div_img img_icon_content">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/true.svg" alt="icon" />
-                                            </div>
-                                            <span class="ellipsis_1 span_txt">No prepayment needed – pay at the
-                                                property</span>
-                                        </div>
-                                    </div>
-                                    <div class="highlights d-flex justify-content-start align-items-center flex-wrap">
-                                        <span>Highlights</span>
-                                        <div class="list_icon d-flex justify-content-start align-items-center  flex-wrap">
-                                            <div class="div_img img_highlight">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/icon1.svg" alt="Icon" />
-                                                <span class="txt_icon ">
-                                                    2 large double beds 
-                                                </span>
-                                            </div>
-                                            <div class="div_img img_highlight">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/icon2.svg" alt="Icon" />
-                                                <span class="txt_icon ">
-                                                    2 large double beds 
-                                                </span>
-                                            </div>
-                                            <div class="div_img img_highlight">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/icon3.svg" alt="Icon" />
-                                                <span class="txt_icon ">
-                                                    2 large double beds 
-                                                </span>
-                                            </div>
-                                            <div class="div_img img_highlight">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/icon4.svg" alt="Icon" />
-                                                <span class="txt_icon ">
-                                                    2 large double beds 
-                                                </span>
-                                            </div>
-                                            <div class="div_img img_highlight">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/icon5.svg" alt="Icon" />
-                                                <span class="txt_icon ">
-                                                    2 large double beds 
-                                                </span>
-                                            </div>
-                                            <div class="icon_other ">+6</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="money_cruise d-flex flex-column align-items-end justify-content-between">
-                                    <div class="reviews d-flex justify-content-end align-items-end flex-column">
-                                        <div class="d-flex justify-content-end align-items-center item_evaluate">
-                                            <div class="d-flex flex-column justify-content-end ">
-                                                <span class="span_review">Very good</span>
-                                                <span class="span_quantity">(9 reviews)</span>
-                                            </div>
-                                            <div class="average_reviews d-flex align-items-center justify-content-center">
-                                                4.5
-                                            </div>
-                                        </div>
-                                        <div class="price d-flex flex-column">
-                                            <span class="txt_money">Price per person from</span>
-                                            <div class="txt_money_cruise d-flex justify-content-end align-items-end">
-                                                US
-                                                <span>$1250</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <a href="#" class="btn_explore d-flex justify-content-center align-items-center">
-                                        Explore
-                                        <div class="div_img">
-                                            <img src="{URL_IMAGES}/uni_van/images/btn_contact.svg" alt="Icon" />
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
+                        {/foreach}
+                        {/if}
+
+
                     </div>
+                    {if $page_view}
+                    <div class="des_travel_guide_paginate">
+                        {$page_view}
+                    </div>
+                    {/if}
                     <div class="recently-viewed d-flex flex-column justify-content-start align-items-start ">
                         <h3 class="title_recently">
                             Recently viewed
@@ -1672,7 +734,7 @@
 
 {literal}
 <style>
-    .cru_header{
+    .cru_header {
         padding-top: 127px;
         padding-bottom: 182px;
     }
@@ -1948,13 +1010,13 @@
 
     .txt_icon {
         display: none;
-        background: #111D37;
+        background: #ffa718;
         width: max-content;
         position: absolute;
         top: -30px;
         padding: 2px 8px;
         border-radius: 3px;
-        color: #FFFFFF;
+        color: #fff !important;
         font-size: 12px;
         font-weight: 400;
         line-height: 16px;
@@ -2013,8 +1075,18 @@
     }
 
     .img_cruises {
-        max-width: 353px;
         border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .img_cruises img {
+        width: 100%;
+        border-radius: 8px;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .img_cruises img:hover {
+        scale: 1.2;
     }
 
     .content_cruise {
@@ -2761,6 +1833,91 @@
         gap: 50px;
     }
 
+    .unika_footer {
+        float: left;
+        width: 100%;
+    }
+
+    .cru_header_background_image {
+        position: relative;
+    }
+
+    .cru_header {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .unika_header_2 {
+        position: fixed;
+    }
+
+    .div_img .fa-star {
+        color: #ffa718;
+    }
+
+    .img_icon_content .fa-check {
+        color: #13B97D;
+    }
+
+    .box_inclusion ul {
+        list-style-type: none;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        color: #13B97D;
+    }
+
+    .box_inclusion ul li {
+        position: relative;
+    }
+
+    .box_inclusion ul li::before {
+        content: "\f00c";
+        font-family: 'Font Awesome 6 Pro';
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        top: -10px;
+        left: -40px;
+        padding: 12px;
+        border-radius: 50%;
+    }
+
+    .div_img .fa-xmark {
+        font-size: 20px;
+    }
+
+    .ui-slider-range.ui-widget-header.ui-corner-all {
+        height: 2px;
+        border-radius: 26px;
+        background: var(--Primary, #FFA718);
+    }
+
+    #slider-3 {
+        width: 100%;
+        height: 2px;
+        border-radius: 26px;
+        background: var(--Neutral-4, #D3DCE1);
+    }
+
+    .item_value {
+        display: flex;
+        align-items: center;
+        padding-left: 9px;
+    }
+
+    #slider-3 .ui-slider-handle.ui-state-default.ui-corner-all {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: #FFA718;
+        border: 4px solid #FFFFFF;
+        top: -10px;
+    }
+
+
     @media screen and (min-width: 1920px) {
         .img_cruises {
             width: 100%;
@@ -3130,6 +2287,31 @@
             .on('click', '.unika_filter_mobile_close', function() {
                 $('.list_sort_filter').hide();
             })
+
+        // Show 2 phần tử đầu của inclutions
+        $(".box_inclusion").each(function() {
+            $(this).find("li:lt(2)").show();
+            $(this).find("li:gt(1)").hide();
+        });
+        // 
+        $('#filters_form .typeSearch').change(function() {
+            $(this).closest('form').submit();
+        });
+
+        $("#slider-3").slider({
+            range: true,
+            min: 0,
+            max: 500,
+            step: 5,
+            values: [35, 200],
+            slide: function (event, ui) {
+                $('#min').val(ui.values[0])
+                $('#max').val(ui.values[1])
+            }
+        });
+
+        $('#min').val($("#slider-3").slider("values", 0))
+        $('#max').val($("#slider-3").slider("values", 1))
     })
 </script>
 {/literal}

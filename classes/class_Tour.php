@@ -4227,17 +4227,22 @@ class Tour extends dbBasic
 	function getPriceAfterDiscount($tour_id)
 	{
 		global $clsISO;
-		$more_infomation = $clsISO->getPromotion($tour_id, 'Tour', time(), time(), 'info_promotion');
-		$discount_value = $more_infomation["discount_value"];
+        $clsDiscount = new Discount();
+        $discount = $clsDiscount->getAll("is_trash=0 and is_online=1 and " . time() . " between booking_date_from and booking_date_to order by travel_date_from ASC limit 0,1", 'more_information');
+        $more_infomation = json_decode($discount[0]['more_information'], true);
         $origin_price = $this->getOne($tour_id, 'min_price')[0];
-//		$price = $origin_price * (100 - $discount_value) / 100;
-		$price = $origin_price * (100 - 20) / 100;
+        $discount_value = $more_infomation["discount_value"] ?? '0';
+		$price = $origin_price * (100 - $discount_value) / 100;
 		return $price;
 	}
 
     function getDiscount($tour_id) {
         global $clsISO;
-        $more_infomation = $clsISO->getPromotion($tour_id, 'Tour', time(), time(), 'info_promotion');
+
+        $clsDiscount = new Discount();
+//        $more_infomation = $clsISO->getPromotion($tour_id, 'Tour', time(), time(), 'info_promotion');
+        $discount = $clsDiscount->getAll("is_trash=0 and is_online=1 and " . time() . " between booking_date_from and booking_date_to order by travel_date_from ASC limit 0,1", 'more_information');
+        $more_infomation = json_decode($discount[0]['more_information'], true);
         $discount_value = "-". ($more_infomation["discount_value"] ?? '0') ."%";
         return $discount_value;
     }

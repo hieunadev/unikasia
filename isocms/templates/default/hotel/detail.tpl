@@ -718,6 +718,7 @@
                                     </div>
                                 </div>
                             </div>
+							
                             <div class="col-lg-7 measure-evaluation-txt">
 								{section name=i loop=$reviewProgress}
                                 <div class="box_rate_score">
@@ -812,6 +813,9 @@
             {/if}
 
         </div>
+					
+					<div class="pagination"></div>
+					
                 </div>
             </div>
 
@@ -1167,7 +1171,7 @@ $(window).scroll(function() {
   prevScrollpos = currentScrollPos;
 });
 			
-			   $('.list_reviews').each(function() {
+            $('.review').each(function() {
 
                 var moreText = $(this).find('.content_review');
 
@@ -1208,6 +1212,7 @@ $(window).scroll(function() {
                 }
 
             });
+
 
 			
 			window.addEventListener('load', function() {

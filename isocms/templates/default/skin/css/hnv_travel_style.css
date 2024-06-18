@@ -206,7 +206,7 @@ body {
     line-height: 28px;
 }
 .trvs_when_vn .tab_month {
-    width: 752px;
+    max-width: 752px;
     margin: 0 auto;
     display: flex;
     padding: 24px;
@@ -319,6 +319,7 @@ body {
 .trvs_when_vn .tab_destination .des_item .des_item_image {
     border-radius: 8px;
     overflow: hidden;
+    width: 100%; /*van code new*/
 }
 .trvs_when_vn .tab_destination .des_item .des_item_image:hover img {
     scale: 1.2;
@@ -437,6 +438,7 @@ body {
 .trvs_item_blog img {
     border-radius: 8px;
     transition: all 0.3s ease-in-out;
+    width: 100%; /*van css new*/
 }
 .trvs_list_blog {
     padding-top: 80px;
@@ -811,6 +813,18 @@ body {
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
+/* van css new */
+.des_tailor_travel_style_image, .trvs_header_background_image{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+.des_tailor_travel_style_image img, .trvs_header_background_image img{
+    max-width: 100%;
+    max-height: 100%;
+}
+/* van css new */
 @media screen and (max-width: 1170px) {
 }
 @media screen and (max-width: 1024px) {
@@ -832,7 +846,10 @@ body {
         right: -25px;
     }
 }
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 991px) {
+    .trvs_item_blog{
+        margin-bottom: 38px;
+    }
 }
 @media screen and (max-width: 600px) {
 }

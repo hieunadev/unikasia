@@ -6,6 +6,11 @@ class CruiseCatCountry extends dbBasic
         $this->pkey = "cruise_cat_country_id";
         $this->tbl = DB_PREFIX . "cruise_category_country";
     }
+    function getID($cat_id, $country_id)
+    {
+        $all = $this->getAll("is_trash = 0 AND is_online = 1 AND cat_id = '$cat_id' AND country_id = '$country_id' limit 0,1");
+        return $all[0][$this->pkey];
+    }
     function getBannerTitle($pvalTable, $one = null)
     {
         if (!isset($one['banner_title'])) {
@@ -76,7 +81,7 @@ class CruiseCatCountry extends dbBasic
             $country_slug   =   $clsCountry->getSlug($oneTable['country_id']);
             $guide_cat_slug =   $clsCruiseCat->getSlug($oneTable['cat_id']);
             #
-            $link   .=  '/' . $_LANG_ID . '/cruise/' . $country_slug . '/' . $guide_cat_slug . '.html';
+            $link   .=  '/' . $_LANG_ID . '/cruise/' . $country_slug . '/' . $guide_cat_slug;
         }
         return $link;
     }
