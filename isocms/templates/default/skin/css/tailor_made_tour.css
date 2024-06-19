@@ -12,6 +12,7 @@
     display: flex;
     align-items: center;
     margin-top: 32px;
+	margin-bottom: 31px;
   }
 
 .txt_youarehere {
@@ -19,7 +20,7 @@
     font-size: 16px;
     font-style: normal;
     font-weight: 600;
-    margin-right: 12px;
+    margin-right: 24px;
     margin-bottom: 0; 
     line-height: 24px;  
   }
@@ -78,6 +79,7 @@
     font-weight: 600;
     line-height: 52px; /* 162.5% */
     position: sticky;
+	margin-bottom: 20px;
 }
 
   
@@ -100,6 +102,10 @@
     font-style: normal;
     font-weight: 400;
     line-height: 24px; /* 150% */
+}
+
+.txt_desplantrip {
+	margin-bottom: 48px;
 }
 
 .travelinf {
@@ -127,7 +133,7 @@
     font-style: normal;
     font-weight: 600;
     line-height: 36px; /* 150% */
-    padding: 24px 16px 16px 28px;
+    padding: 24px 0px 16px 28px;
 }
 
 .input_inf {
@@ -139,8 +145,19 @@
 
     /* Shadow/1 */
     box-shadow: 0px 12px 32px 0px rgba(125, 135, 158, 0.09);
-    padding: 24px;
+    padding: 32px 27px 40px 28px;
     gap: 26px;
+}
+
+.input_inf2 {
+	    display: flex;
+    flex-direction: column;
+    /* border-radius: 8px; */
+    border: 1px solid var(--Neutral-5, #F0F0F0);
+    background: #FFF;
+    box-shadow: 0px 12px 32px 0px rgba(125, 135, 158, 0.09);
+	padding: 20px 27px 40px 28px;
+
 }
 
 .txtlabel {
@@ -170,7 +187,8 @@
     font-size: 12px;
     font-style: normal;
     font-weight: 400;
-    line-height: 21px; /* 175% */
+    line-height: 21px;
+	margin-bottom: 4px;
 }
 
 .txt_destinations {
@@ -183,19 +201,26 @@
 }
 
 .accordion-item{
-    margin-bottom:20px;
-    border-radius:0px !important;
-    box-shadow:0px 1px 4px 0px #bfbfbf;
+    margin-bottom: 16px;
+    border-radius: 0px !important;
+/*    box-shadow:0px 1px 4px 0px #bfbfbf;*/
+	border: none;
   }
   
   .accordion-button[aria-expanded="true"]{
-    background-color:#fcfcfc;
+    background-color: transparent;
     color:#404040;
   /*   box-shadow:0px 1px 2px 2px #fffff7; */
+	  z-index: 1;
   }
 
+.accordion {
+	--bs-accordion-border-width: 0px;
+}
+
   .accordion-button:after{
-    color:#404040;
+    color:#404040 !important;
+	background-image: var(--bs-accordion-btn-icon) !important;
   }
 
   /* Đổi màu nền của accordion item khi active */
@@ -203,16 +228,16 @@
     background-color: #f0f0f0;
   }
   
-  /* Đổi màu chữ của accordion button */
   .accordion-button {
     color: #333;
+	  padding: 0;
   }
 
 .form-region {
     display: flex;
     padding: 9px 10px;
     align-items: center;
-    gap: 8px;
+/*    gap: 8px;*/
     border-radius: 4px;
     border: 1px solid #CCC;
     background: #FBFBFB;
@@ -314,17 +339,47 @@ input::placeholder {
 
 .input_txttravel {
 	display: flex;
-	width: 785px;
+	max-width: 785px;
 	padding: 12px 10px 12px 12px;
 	align-items: flex-start;
 	gap: 10px;
 	flex-shrink: 0;
 	border-radius: 4px;
 	border: 1px solid var(--Neutral-4, #D3DCE1);
+	width: 100%;
 }
 
+.accordion-button {
+	border: none; /* This removes the border around the accordion button */
+}
+
+.accordion-button {
+  display: flex; /* Enables flexbox layout */
+  align-items: center; /* Aligns content vertically within the button */
+}
+
+.form-check-label {
+  display: flex; /* Enables flexbox layout for the label */
+  align-items: center; /* Aligns content vertically within the label */
+  margin-right: 0; /* Removes default margin from the label */
+}
+
+.form-check-input.chkAll {  /* Targets the specific checkbox class */
+  margin-top: 0; /* Adjust margin as needed for fine-tuning */
+}
+
+
+.accordion-body {
+	padding: 0;
+	margin-top: 16px;
+}
 .input-group {
 	position: relative; 
+}
+
+
+#input-other {
+	margin-bottom: 24px;
 }
 
 .input-group i {
@@ -335,6 +390,27 @@ input::placeholder {
 	pointer-events: none; 
 	z-index: 1;
 }
+
+#ui-datepicker-div {
+	z-index: 1 !important;
+}
+
+#arrival_date {
+	z-index: auto;
+}
+.input-group input::after {
+  content: "\f133"; /* Unicode của icon lịch trong Font Awesome 6 Pro */
+  font-family: "Font Awesome 6 Pro"; /* Thay đổi font-family */
+  font-weight: 900;
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  z-index: 100 !important; /* Tăng z-index và thêm !important */
+}
+
+
 
 .input-group input {
 	padding-left: 35px;
@@ -348,13 +424,6 @@ input::placeholder {
   margin: 5px 0 0;
 }
 
-.ui-datepicker { /* Hoặc class tương ứng của overlay datepicker */
-    z-index: 4; 
-}
-
-.input-group i {
-    z-index: 4; /* Đảm bảo lớn hơn z-index của overlay */
-}
 
 
 

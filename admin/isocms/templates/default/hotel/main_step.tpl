@@ -38,6 +38,10 @@
 									{$clsISO->getSelectPropertyType('TypeHotel',$oneItem.list_TypeHotel)}
 								</select>
 							</div>
+							<div class="inpt_tour">
+								<label>{$core->get_Lang('Price from')}</label>
+								<input type="number" name="price_avg" min="0" step="1" value="{$oneItem.price_avg}"> <span>USD / 1 room</span>
+							</div>
 <!--
 							<div class="inpt_tour">
 							<label for="title">{$core->get_Lang('reviewhotel')}

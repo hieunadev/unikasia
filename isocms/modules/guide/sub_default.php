@@ -92,6 +92,7 @@ function default_cat()
 	$smarty->assign('clsGuide', $clsGuide);
 	$clsPagination	= 	new Pagination();
 	$smarty->assign('_LANG_ID', $_LANG_ID);
+	$smarty->assign('deviceType', $deviceType);
 	#
 	$trvg_intro	=	'';
 	$show		=	isset($_GET['show']) ? $_GET['show'] : '';

@@ -181,7 +181,8 @@
 				'title'				: $('#title').val(),
 				'image'	  		: 	$image.val(),
 				'type'				: type,
-				'property_id'		: _this.attr('property_id')
+				'property_id'		: _this.attr('property_id'),
+				'cat_id'		: $('#cat_id').val(),
 			};
 			$.ajax({
 				type : "POST",

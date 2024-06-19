@@ -81,7 +81,7 @@
                         {assign var="month_country_id" value=$item.month_country_id}
                         {assign var="month_id" value=$item.month_id}
 
-                        <div class="col-4 col-md-4 col-lg-2 month" data-monthid="{$month_id}">
+                        <div class="col-3 col-md-4 col-lg-2 month" data-monthid="{$month_id}">
                             <a href="javascript:void(0);" title="{$item.title}">
                                 {$item.alias} <img src="{$URL_IMAGES}/destination/when_full.png" alt="{$item.title}" width="32" height="6" loading="lazy" />
                             </a>
@@ -335,7 +335,7 @@
         <div class="container">
             <div class="content_trvs_faq">
                 <div class="row">
-                    <div class="col-12 col-md-6">
+                    <div class="col-12 col-sm-12 col-md-6">
                         <div class="trvs_faq_list">
                             <div class="header_trvs_faq">
                                 <h2 class="title_trvs_faq">
@@ -366,7 +366,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 col-md-6">
+                    <div class="col-12 col-sm-12 col-md-6">
                         <div class="trvs_faq_img">
                             <img src="{$clsCountry->getImageWhy($country_id, 456, 447)}" alt="FAQ Image" width="456" height="447" loading="lazy" />
                         </div>

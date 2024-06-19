@@ -1104,6 +1104,8 @@
 
         line-height: 52px !important;
 
+        margin-bottom: 40px;
+
     }
 
 

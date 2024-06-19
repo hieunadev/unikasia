@@ -64,9 +64,13 @@
 		{assign var=number_adults_z value=$item.number_adults_z|default:0}
 		{assign var=number_child_z value=$item.number_child_z|default:0}
 		{assign var=number_infants_z value=$item.number_infants_z|default:0}
+		{assign var=number_infants_z value=$item.number_infants_z|default:0}
+		{assign var=average_price_per_infant value=$item.total_price_infants / $number_infants_z}
+		{assign var=average_price_per_child value=$item.total_price_child / $number_child_z}
+		{assign var=average_price_per_adult value=$item.total_price_adults / $number_adults_z}
 	<div class="container">
 		<div class="d-flex justify-content-center main-container">
-			<form class="booking_content d-flex  justify-content-between" method="POST" id="formBooking">
+			<form action="/en/shopping-cart/booking.html" class="booking_content d-flex  justify-content-between" method="POST" id="formBooking">
 				<div class="booking_left d-flex flex-column align-items-center ">
 					<div class="information_services item_booking_content">
 						<div class="title_booking ">
@@ -100,7 +104,7 @@
 											<span
 													class="d-flex align-items-center value value_travelers justify-content-center"
 													name="value_travelers" contenteditable="false" onpaste="return false" contenteditable="true"
-													data-price="{$item.price_adults_z}">{$number_adults_z}</span>
+													data-price="{$average_price_per_adult}">{$number_adults_z}</span>
 											<div class="plus item_calc active cursor div_img">
 												<img src="{$URL_IMAGES}/booking/icon_plus.svg" alt="Icon">
 											</div>
@@ -118,7 +122,7 @@
 											<span
 													class="d-flex align-items-center value value_travelers justify-content-center"
 													name="value_travelers" contenteditable="false" onpaste="return false" contenteditable="true"
-													data-price="2">{$number_child_z}</span>
+													data-price="{$average_price_per_child}">{$number_child_z}</span>
 											<div class="plus item_calc active cursor div_img">
 												<img src="{$URL_IMAGES}/booking/icon_plus.svg" alt="Icon">
 											</div>
@@ -136,7 +140,7 @@
 											<span
 													class="d-flex align-items-center value value_travelers justify-content-center"
 													name="value_travelers" contenteditable="false" onpaste="return false" contenteditable="true"
-													data-price="3">{$number_infants_z}</span>
+													data-price="{$average_price_per_infant}">{$number_infants_z}</span>
 											<div class="plus item_calc active cursor div_img">
 												<img src="{$URL_IMAGES}/booking/icon_plus.svg" alt="Icon">
 											</div>
@@ -156,14 +160,13 @@
 										<label class="item_checkbox">
 											<div class="d-flex flex-column">
 												<span class="item_checkbox_title title">{$clsTourProperty->getTitle($lstRoom[i].room_id)}</span>
-{*												<div class="item_checkbox_money">US <span>${$clsTourPriceGroup->getPrice($tour_id,$lstRoom[i].tour_property_id,0,0,0,'TourRoom')}</span></div>*}
 												<div class="item_checkbox_money">US <span>${$lstRoom[i].price_room}</span></div>
 											</div>
 											<input type="checkbox" name="checkbox_room" {if $lstRoom[i].number_room} checked {/if}>
 											<span class="checkmark"></span>
 										</label>
-										<div class="calc_distribution number align-items-center active"
-											 data-class="amount_double_room">
+										<div class="calc_distribution lst_room number align-items-center {if $lstRoom[i].number_room}active{/if}"
+											 data-class="amount_double_room_{$lstRoom[i].room_id}">
 											<div class="minus item_calc_dis cursor"></div>
 											<span contenteditable="true" class="value value_distribution"
 												  name="value_distribution" onpaste="return false" data-price="{$lstRoom[i].price_room}">{$lstRoom[i].number_room}</span>
@@ -193,11 +196,11 @@
 										<input type="checkbox">
 										<span class="checkmark"></span>
 									</label>
-									<div class="calc_distribution number align-items-center active"
+									<div class="calc_distribution number align-items-center"
 										 data-class="amount_other_{$lstAddOnService[i].price}">
 										<div class="minus item_calc_dis cursor"></div>
 										<span contenteditable="true" class="value" onpaste="return false"
-											  data-price="0">0</span>
+											  data-price="{if $lstAddOnService[i].extra gt 0} {$lstAddOnService[i].price} {else} 0 {/if}">0</span>
 										<div class="plus item_calc_dis cursor active"></div>
 									</div>
 								</div>
@@ -225,10 +228,6 @@
 							</div>
 							<div class="d-flex flex-column information-3  box_validate">
 								<label for="nationality">Nationality*</label>
-								{*<select class="select2" name="nationality" id="nationality">
-									<option value="">-- Please Select --</option>
-									<option value="1">Option 1</option>
-								</select>*}
 								<select class="form-select country select2" name="nationality" id="nationality" aria-label="Default select example" onchange="loadStates()">
 									<option value="">-- Please Select --</option>
 								</select>
@@ -243,10 +242,6 @@
 							</div>
 							<div class="d-flex flex-column information-3 ">
 								<label for="city">City</label>
-								{*<select class="select2" name="city" id="city">
-									<option value="">-- Please Select --</option>
-									<option value="1">Option 1</option>
-								</select>*}
 								<select class="form-select state select2" name="city" id="city" aria-label="Default select example" onchange="loadCities()">
 									<option value="">-- Please Select --</option>
 								</select>
@@ -386,11 +381,11 @@
 								<div class="d-flex justify-content-between align-items-start ">
 									<span class=" span_title">Room:</span>
 									<div class="room span_content d-flex flex-column  align-items-end">
-										{section name=i loop=$lstRoom}
-											{if $lstRoom[i].number_room}
-												<span class="span_item"><span class="amount_adults">{$lstRoom[i].number_room}</span> x {$clsTourProperty->getTitle($lstRoom[i].room_id)}</span>
-											{/if}
-										{/section}
+{*										{section name=i loop=$lstRoom}*}
+{*											{if $lstRoom[i].number_room}*}
+{*												<span class="span_item"><span class="amount_adults">{$lstRoom[i].number_room}</span> x {$clsTourProperty->getTitle($lstRoom[i].room_id)}</span>*}
+{*											{/if}*}
+{*										{/section}*}
 									</div>
 								</div>
 							</div>
@@ -404,7 +399,7 @@
 							<div class="d-flex flex-column ">
 								<div class="d-flex justify-content-between align-items-start ">
 									<span class=" span_title">Total:</span>
-									<span class="span_content total_booking">US ${$clsISO->formatPrice($totalGrand)}</span>
+									<span class="span_content total_booking">US ${$totalGrand}</span>
 								</div>
 							</div>
 						</div>
@@ -413,26 +408,28 @@
 						<div class="d-flex flex-column ">
 							<div class="d-flex justify-content-between align-items-start ">
 								<span class=" span_title">Deposit:</span>
-								<span class="span_content subtotal_booking">US ${$clsISO->formatPrice($totalPriceDeposit)}</span>
+								<span class="span_content deposit_booking">US ${$totalPriceDeposit}</span>
 							</div>
 						</div>
 						<div class="d-flex flex-column">
 							<div class="d-flex justify-content-between align-items-start ">
 								<span class="span_title">Remaining:</span>
-								<span class="span_content payment_remaining">US ${$clsISO->formatPrice($totalRemaining)}</span>
+								<span class="span_content remaining_booking">US ${$totalRemaining}</span>
 							</div>
 						</div>
 						<div class="d-flex flex-column ">
 							<div class="d-flex justify-content-between align-items-start ">
 								<span class="span_title">Payment amount:</span>
-								<p class="txt_monpr">US <span class="span_content payment_amount">${$clsISO->formatPrice($totalPriceDeposit)}</span></p>
+								<p class="txt_monpr">US <span class="span_content payment_amount">${$totalPriceDeposit}</span></p>
 							</div>
 						</div>
 					</div>
 				</div>
+				<input type="hidden" name="booking" value="booking">
 				<input type="hidden" id="total_price" value="{$clsISO->formatPrice($totalGrand)}">
 				<input type="hidden" id="price_deposit" value="{$clsISO->formatPrice($totalPriceDeposit)}">
 				<input type="hidden" id="price_deposit" value="{$clsISO->formatPrice($totalRemaining)}">
+				<input type="hidden" id="deposit" value="{$item.deposit}">
 			</form>
 		</div>
 
@@ -449,6 +446,7 @@
 			<a class="btn_main" href="{$DOMAIN_NAME}{$extLang}" title="{$core->get_Lang('start selection')}">{$core->get_Lang('start selection')}</a>
 		</div>
 	{/if}
+
 	<div class="unika_social">
 		<div class="unika_social_icons">
 			<a href="https://www.youtube.com/user/vietiso" class="unika_social_icon">
@@ -487,16 +485,12 @@
 		ckey: 'NHhvOEcyWk50N2Vna3VFTE00bFp3MjFKR0ZEOUhkZlg4RTk1MlJlaA=='
 	}
 
-
 	var countrySelect = document.querySelector('.country'),
 			stateSelect = document.querySelector('.state'),
 			citySelect = document.querySelector('.city')
 
-
 	function loadCountries() {
-
 		let apiEndPoint = config.cUrl
-
 		fetch(apiEndPoint, {headers: {"X-CSCAPI-KEY": config.ckey}})
 				.then(Response => Response.json())
 				.then(data => {
@@ -510,14 +504,11 @@
 					})
 				})
 				.catch(error => console.error('Error loading countries:', error))
-
 		stateSelect.disabled = true
 		citySelect.disabled = true
 		stateSelect.style.pointerEvents = 'none'
 		citySelect.style.pointerEvents = 'none'
 	}
-
-
 	function loadStates() {
 		stateSelect.disabled = false
 		citySelect.disabled = true
@@ -525,7 +516,6 @@
 		citySelect.style.pointerEvents = 'none'
 
 		const selectedCountryCode = countrySelect.value
-		// console.log(selectedCountryCode);
 		stateSelect.innerHTML = '<option value="">Select State</option>' // for clearing the existing states
 		citySelect.innerHTML = '<option value="">Select City</option>' // Clear existing city options
 
@@ -551,15 +541,11 @@
 
 		const selectedCountryCode = countrySelect.value
 		const selectedStateCode = stateSelect.value
-		// console.log(selectedCountryCode, selectedStateCode);
 
 		citySelect.innerHTML = '<option value="">Select City</option>' // Clear existing city options
-
 		fetch(`${config.cUrl}/${selectedCountryCode}/states/${selectedStateCode}/cities`, {headers: {"X-CSCAPI-KEY": config.ckey}})
 				.then(response => response.json())
 				.then(data => {
-					// console.log(data);
-
 					data.forEach(city => {
 						const option = document.createElement('option')
 						option.value = city.iso2

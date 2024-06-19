@@ -1,41 +1,45 @@
+
 <div class="des_travel_guide_side">
-    <form action="" method="GET" class="form_search_guide">
-        <div class="des_travel_guide_search">
-            <button class="btn_search_guide"><i class="fa-light fa-magnifying-glass"></i></button>
-            <input type="text" name="keyword" class="keyword_search_guide" placeholder="Search">
-            <input type="hidden" value="search_guide">
-        </div>
-    </form>
-    <div class="des_travel_guide_category">
-        {if ($mod eq 'destination' && $act eq 'travel_guide') || ($mod eq 'destination' && $act eq 'travel_guide_detail') || ($mod eq 'guide' && $act eq 'cat') || ($mod eq 'guide' && $act eq 'search') || ($mod eq 'guide' && $act eq 'detail')}
-        <div class="des_travel_guide_category_title">
-            <h2>{$country_title}</h2>
-        </div>
-        <div class="des_travel_guide_category_list">
-            {if ($mod eq 'guide' && $act eq 'detail')}
-            <a href="{$clsGuide->getLinkGuideCat($country_slug)}" title="All">All</a>
+    {if $deviceType eq 'computer'}
+        <form action="" method="GET" class="form_search_guide">
+            <div class="des_travel_guide_search">
+                <button class="btn_search_guide"><i class="fa-light fa-magnifying-glass"></i></button>
+                <input type="text" name="keyword" class="keyword_search_guide" placeholder="Search">
+                <input type="hidden" value="search_guide">
+            </div>
+        </form>
+        <div class="des_travel_guide_category">
+            {if ($mod eq 'destination' && $act eq 'travel_guide') || ($mod eq 'destination' && $act eq 'travel_guide_detail') || ($mod eq 'guide' && $act eq 'cat') || ($mod eq 'guide' && $act eq 'search') || ($mod eq 'guide' && $act eq 'detail')}
+            <div class="des_travel_guide_category_title">
+                <h2>{$country_title}</h2>
+            </div>
+            <div class="des_travel_guide_category_list">
+                {if ($mod eq 'guide' && $act eq 'detail')}
+                <a href="{$clsGuide->getLinkGuideCat($country_slug)}" title="All">All</a>
+                {/if}
+                {if $arr_guide_cat}
+                {foreach from=$arr_guide_cat key=key item=item}
+                {assign var="guideCatID" value=$item.guidecat_id}
+                {assign var="guideCatSlug" value=$item.slug}
+                <a href="{$clsGuide->getLinkGuideCat($country_slug, $guideCatSlug, $guideCatID)}" title="{$clsGuideCat->getTitle($guideCatID)}" {if $guideCatID eq $guidecat_id} class="active" {/if}>{$clsGuideCat->getTitle($guideCatID)}</a>
+                {/foreach}
+                {/if}
+            </div>
+            {elseif ($mod eq 'destination' && $act eq 'attraction')}
+            <div class="des_travel_guide_category_title">
+                <h2>Hanoi</h2>
+            </div>
+            <div class="des_travel_guide_category_list">
+                <a href="#" title="Exciting trip">Exciting trip</a>
+                <a href="#" title="Hotel">Hotel</a>
+                <a href="#" title="Place to go">Place to go</a>
+                <a href="#" title="Cusine">Cusine</a>
+                <a href="#" title="Culture Hanoi">Culture Hanoi</a>
+            </div>
             {/if}
-            {if $arr_guide_cat}
-            {foreach from=$arr_guide_cat key=key item=item}
-            {assign var="guideCatID" value=$item.guidecat_id}
-            {assign var="guideCatSlug" value=$item.slug}
-            <a href="{$clsGuide->getLinkGuideCat($country_slug, $guideCatSlug, $guideCatID)}" title="{$clsGuideCat->getTitle($guideCatID)}" {if $guideCatID eq $guidecat_id} class="active" {/if}>{$clsGuideCat->getTitle($guideCatID)}</a>
-            {/foreach}
-            {/if}
         </div>
-        {elseif ($mod eq 'destination' && $act eq 'attraction')}
-        <div class="des_travel_guide_category_title">
-            <h2>Hanoi</h2>
-        </div>
-        <div class="des_travel_guide_category_list">
-            <a href="#" title="Exciting trip">Exciting trip</a>
-            <a href="#" title="Hotel">Hotel</a>
-            <a href="#" title="Place to go">Place to go</a>
-            <a href="#" title="Cusine">Cusine</a>
-            <a href="#" title="Culture Hanoi">Culture Hanoi</a>
-        </div>
-        {/if}
-    </div>
+    {/if}
+
     {if ($mod eq 'guide' && $act eq 'detail')}
     <div class="des_travel_guide_country_tour">
         <div class="des_travel_guide_category_title">
@@ -200,6 +204,8 @@
     </div>
     {/if}
 </div>
+
+
 
 
 

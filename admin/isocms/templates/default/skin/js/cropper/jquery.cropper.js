@@ -68,7 +68,12 @@ function upload_file_picker(file, params) {
             } else if (params.clsTable == "News") {
                 var aspectRatio = 850 / 547;
             } else if (params.clsTable == "Hotel") {
-                var aspectRatio = 858 / 395;
+                console.log(params.openFrom)
+                if (params.openFrom == "image") {
+                    var aspectRatio = 841 / 420;
+                } else {
+                    var aspectRatio = 858 / 395;
+                }
             } else if (params.clsTable == "Cruise") {
                 var aspectRatio = 743 / 489;
             } else if (params.clsTable == "Service") {
@@ -79,6 +84,8 @@ function upload_file_picker(file, params) {
                 var aspectRatio = 297 / 194;
             } else if (params.clsTableGal == "Voucher") {
                 var aspectRatio = 714 / 467;
+            } else if (params.clsTableGal == "HotelImage") {
+                var aspectRatio = 1;
             } else if (params.clsTable == "Category_Country") {
                 if (params.openFrom == "banner") {
                     var aspectRatio = 1920 / 480;
@@ -368,7 +375,6 @@ function upload_file_picker(file, params) {
     );
 }
 function isoman_callback(options) {
-    console.log(options);
     var $_adata = options || {},
         $_file_images = isoman_selected_files();
 

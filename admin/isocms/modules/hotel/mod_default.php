@@ -215,7 +215,6 @@ function default_getMainFormStep(){
 	$smarty->assign('oneItem',$oneItem);
 	$smarty->assign('clsTable','Hotel');
 	$smarty->assign('clsTableGal','HotelImage');
-	
 	$frames = getFrame();
 	#Step follow index
 	$ii = 0; $arrStep = array();
@@ -366,18 +365,19 @@ error_reporting(E_ALL);*/
 	$clsClassTable= new Hotel();
 	$table_id = Input::post('table_id',0);
 	$currentstep = Input::post('currentstep');
-
 	if($currentstep=='name'){
 		$title = Input::post('title');
         $title=html_entity_decode($title);
 		$star_id = Input::post('star_id');
+        $price_avg = Input::post('price_avg');
         $type_hotel_id = Input::post('type_hotel_id');
 		$clsClassTable->updateOne($table_id, array(
 			'title' => $title,
 			'slug' => $clsISO->replaceSpace2($title),
 			'star_id' => $star_id,
 			'list_TypeHotel' => $type_hotel_id,
-			'upd_date' => time()
+			'upd_date' => time(),
+			'price_avg' => $price_avg,
 		));
 		
         $staff = Input::post('staff');
@@ -441,9 +441,12 @@ error_reporting(E_ALL);*/
 		));
 	} else if($currentstep=='hotel_facilities'){
 		$list_HotelFacilities = Input::post('list_HotelFacilities','');
+        $list_HotelAccommodation = Input::post('list_HotelAccommodation','');
 		$list_HotelFacilities = $clsISO->makeSlashListFromArray($list_HotelFacilities);
+        $list_HotelAccommodation = $clsISO->makeSlashListFromArray($list_HotelAccommodation);
 		$clsClassTable->updateOne($table_id, array(
-			'list_HotelFacilities' => $list_HotelFacilities
+			'list_HotelFacilities' => $list_HotelFacilities,
+			'list_HotelAccommodation' => $list_HotelAccommodation,
 		));
 	} else if(in_array($currentstep,array(
 			'overview',
@@ -478,8 +481,6 @@ error_reporting(E_ALL);*/
 				'upd_date' => time()
 			));
 		}
-
-		var_dump($a); die();
 	}
 	$msg = '_success';
 	// Output

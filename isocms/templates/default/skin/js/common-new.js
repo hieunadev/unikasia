@@ -232,7 +232,7 @@ $(document).ready(function () {
 
         if ((mod === 'guide' && act === 'detail') || (mod === 'guide' && act === 'tag') || (mod === 'hotel' && act === 'detail') || (mod === 'blog' && act === 'detail')
 
-        || (mod === 'tour' && act === 'detaildeparture')) {
+        || (mod === 'tour' && act === 'detaildeparture') || (mod === 'about' && act === 'success')) {
 
             if ($('.unika_header').hasClass('unika_header_2')) {
 

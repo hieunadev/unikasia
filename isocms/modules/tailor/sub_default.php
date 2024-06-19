@@ -34,6 +34,34 @@ function default_default(){
 	$assign_list["clsCountry"] = $clsCountry;
 	#
 	$assign_list["lstCountryRegion"] = $clsCountry->getAll("1=1 and is_trash=0 order by order_no ASC",$clsCountry->pkey.",title");
+	
+	$clsCountryEx = new Country();
+	$assign_list["clsCountryEx"] = $clsCountryEx;
+	$lstCountry = $clsCountryEx->getAll($cond);
+	$assign_list['lstCountry'] = $lstCountry;
+	
+	$clsTourDestination = new TourDestination();
+    $assign_list["clsTourDestination"] = $clsTourDestination;
+	
+	$tour_id = !empty($_GET['tour_id']) ? $_GET['tour_id'] : '0';
+    $cond = " is_trash = 0 and";
+    $order = " order by order_no";
+    $country_id = $clsTourDestination->getAll("$cond tour_id = $tour_id limit 1", "country_id")[0]["country_id"];
+	$assign_list["tour_id"] = $tour_id;
+	$assign_list["country_id"] = $country_id;
+	
+	$clsTourItinerary = new TourItinerary();
+    $assign_list["clsTourItinerary"] = $clsTourItinerary;
+	$lstTourItinerary = $clsTourItinerary->getAll("$cond tour_id = $tour_id order by day");
+	$assign_list["lstTourItinerary"] = $lstTourItinerary;
+
+
+	
+//	var_dump($country_id); die();
+
+
+
+
 
     #
 	

@@ -667,6 +667,8 @@ function default_ajSaveMainStep()
 		$arr_update['listTravelAs'] = $clsISO->makeSlashListFromArrayComma($total_cabin);
 		$cruise_type = Input::post('cruise_type', 1);
 		$arr_update['cruise_type'] = $cruise_type;
+		$place_visit = Input::post('place_visit', 1);
+		$arr_update['place_visit'] = $place_visit;
 
 		$cruise_quality = input::post('cruise_quality');
 		$food_drink = input::post('food_drink');

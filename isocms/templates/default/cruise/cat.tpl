@@ -1,28 +1,9 @@
 <div class="page_container cru_page_container">
-    {* {$core->getBlock('des_nav_breadcrumb')} *}
-    <div class="container">
-        {*code new*}
-        <div class="backcrump d-flex justify-content-start flex-wrap">
-            <div class="backcrump-first">You are here:</div>
-            <div class="content_backcrump d-flex align-items-center flex-wrap">
-                <a class="item-bacruump" href="#">Home</a>
-                <div class="div_img">
-                    <img src="{URL_IMAGES}/uni_van/images/backcrump.svg" alt="Icon" />
-                </div>
-                <a class="item-bacruump" href="#">Cruise</a>
-                <div class="div_img">
-                    <img src="{URL_IMAGES}/uni_van/images/backcrump.svg" alt="Icon" />
-                </div>
-                <a class="item-bacruump" href="#">Vietnam</a>
-                <div class="div_img">
-                    <img src="{URL_IMAGES}/uni_van/images/backcrump.svg" alt="Icon" />
-                </div>
-                <span>Halong Bay cruises</span>
-            </div>
-        </div>
-        {*code new*}
+    {$core->getBlock('des_nav_breadcrumb')}
+    <div class="container unika_cruises_container">
         <div class="d-flex justify-content-center">
             <div class="cruise-content  d-flex justify-content-between  align-items-start">
+                <!-- Cruise Filter -->
                 <div class="sort_filter d-flex flex-column ">
                     <div class="title  d-flex justify-content-between align-items-center ">
                         <h2>{$core->get_Lang('Sort & filter')}</h2>
@@ -30,21 +11,28 @@
                     <div class="list_sort_filter">
                         <div class="d-flex flex-column div_sort_filter">
                             <div class="sort_filter_mobile justify-content-between align-items-center">
-                                <h2 class="title_filter ">{$core->get_Lang('Sort & filter')}</h2>
+                                <h2 class="title_filter ">
+                                    {$core->get_Lang('Sort & filter')}
+                                </h2>
                                 <button class="unika_filter_mobile_close div_img">
                                     <i class="fa-sharp fa-light fa-xmark"></i>
                                 </button>
                             </div>
-                            <form action="" id="filters_form" method="post">
+                            <form action="" id="filters_form_cruise" method="post">
+                                <input type="hidden" name="action" value="filters_form_cruise" />
                                 <div class="item_sort_filter destinations d-flex flex-column  justify-content-start">
-                                    <div class="title_filter">{$core->get_Lang('Destinations')}</div>
+                                    <div class="title_filter">
+                                        {$core->get_Lang('Destinations')}
+                                    </div>
                                     <div class="list_item">
                                         {if $list_country}
                                         {foreach from=$list_country key=key item=item}
                                         {assign var="CountryID" value=$item.country_id}
                                         {assign var="CountryTitle" value=$clsCountry->getTitle($CountryID)}
+                                        {assign var="CountryLink" value=$clsCountry->getLink($CountryID, 'Cruise')}
+
                                         <label class="item_radio">{$CountryTitle}
-                                            <input type="radio" class="typeSearch" name="country_id" id="radio-{$CountryTitle}" value="{$CountryID}" {if $CountryID==$country_id} checked{/if} />
+                                            <input type="radio" class="typeSearch" name="country_id" id="radio-{$CountryTitle}" value="{$CountryID}" {if $CountryID==$country_id} checked{/if} data-link="{$CountryLink}" />
                                             <span class="checkmark"></span>
                                         </label>
                                         {/foreach}
@@ -52,7 +40,9 @@
                                     </div>
                                 </div>
                                 <div class="item_sort_filter duration d-flex justify-content-start flex-column ">
-                                    <div class="title_filter">Duration</div>
+                                    <div class="title_filter">
+                                        {$core->get_Lang('Duration')}
+                                    </div>
                                     <div class="list_item">
                                         {if $list_duration}
                                         {foreach from=$list_duration key=key item=item}
@@ -62,8 +52,7 @@
                                             {else}
                                             {$item} days
                                             {/if}
-                                            <input type="checkbox" class="typeSearch" name="duration_filter_id[]" value="{$item}" {*{if $clsISO->checkInArray($duration_filter_id, $item)}checked{/if}*}
-                                            />
+                                            <input type="checkbox" class="typeSearch" name="duration_filter_id[]" value="{$item}" {if $clsISO->checkInArray($duration_filter_id, $item)}checked{/if}/>
                                             <span class="checkmark"></span>
                                         </label>
                                         {/foreach}
@@ -71,128 +60,95 @@
                                     </div>
                                 </div>
                                 <div class="item_sort_filter price d-flex flex-column  justify-content-start">
-                                    <div class="title_filter">Price</div>
-                                    <div
-                                        class="d-flex align-items-center justify-content-between flex-column filter_price">
-                                        <div
-                                            class="value_ranges d-flex justify-content-between flex-wrap align-items-center  width-100">
+                                    <div class="title_filter">
+                                        {$core->get_Lang('Price')}
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-between flex-column filter_price">
+                                        <div class="value_ranges d-flex justify-content-between flex-wrap align-items-center  width-100">
                                             <div class="item_value">
                                                 <span>$</span>
-                                                <input type="number" id="min" value="0">
+                                                <input type="number" id="min_price" name="min_price" value="{$min_price}">
                                             </div>
                                             <div class="item_value">
                                                 <span>$</span>
-                                                <input type="number" id="max" value="100" />
+                                                <input type="number" id="max_price" name="max_price" value="{$max_price}" />
                                             </div>
                                         </div>
-                                        <input type="text" id="price"
-                                            style="border:0; color:#b9cd6d; font-weight:bold;">
-                                        <div id="slider-3" style="width: 100%;"></div>
+                                        <input type="text" id="price">
+                                        <div id="cru_slider"></div>
                                     </div>
                                 </div>
                                 <div class="item_sort_filter property_rating d-flex flex-column  justify-content-start">
-                                    <div class="title_filter">Property rating</div>
+                                    <div class="title_filter">
+                                        {$core->get_Lang('Property rating')}
+                                    </div>
                                     <div class="list_item list_rank_star">
-                                        <label class="item_checkbox">Unrated
-                                            <input type="checkbox" class="typeSearch" name="rating_filter_id[]" value="" {* {if $clsISO->checkInArray($city_filter_id,$listCityTourByRegion[j].city_id)}checked{/if} *}/>
-                                            <span class="checkmark"></span>
-                                        </label>
-
                                         <label class="item_checkbox">
-                                            <div class="d-flex align-items-center justify-content-start ">
-                                                <span>3</span>
-                                                <div class="div_img">
-                                                    <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Image" />
-                                                </div>
-                                            </div>
-                                            <input type="checkbox" />
+                                            {$core->get_Lang('Un Rated')}
+                                            <input type="checkbox" class="typeSearch" name="rating_filter_id[]" value="0" {if $clsISO->checkInArray($rating_filter_id, 0)}checked{/if}/>
                                             <span class="checkmark"></span>
                                         </label>
+                                        {section name=star start=1 loop=7 step=1}
                                         <label class="item_checkbox">
-                                            <div class="d-flex align-items-center justify-content-start ">
-                                                <span>4</span>
-                                                <div class="div_img">
-                                                    <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Image" />
-                                                </div>
-                                            </div>
-                                            <input type="checkbox" />
+                                            {$smarty.section.star.index} {$core->get_Lang('star')}
+                                            <input type="checkbox" class="typeSearch" name="rating_filter_id[]" value="{$smarty.section.star.index}" {if $clsISO->checkInArray($rating_filter_id, $smarty.section.star.index)}checked{/if}/>
                                             <span class="checkmark"></span>
                                         </label>
-                                        <label class="item_checkbox">
-                                            <div class="d-flex align-items-center justify-content-start ">
-                                                <span>5</span>
-                                                <div class="div_img">
-                                                    <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Image" />
-                                                </div>
-                                            </div>
-                                            <input type="checkbox" />
-                                            <span class="checkmark"></span>
-                                        </label>
-                                        <label class="item_checkbox">
-                                            <div class="d-flex align-items-center justify-content-start ">
-                                                <span>6</span>
-                                                <div class="div_img">
-                                                    <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Image" />
-                                                </div>
-                                            </div>
-                                            <input type="checkbox" />
-                                            <span class="checkmark"></span>
-                                        </label>
+                                        {/section}
                                     </div>
                                 </div>
                                 <div class="item_sort_filter cruises_type d-flex flex-column  justify-content-start">
-                                    <div class="title_filter">Cruises type</div>
-                                    <div class="d-flex flex-column  justify-content-start">
+                                    <div class="title_filter">
+                                        {$core->get_Lang('Cruises type')}
+                                    </div>
+                                    <div class="d-flex flex-column justify-content-start">
                                         <div class="list_item">
-                                            <label class="item_checkbox">Bai Tu Long Bay Cruises
-                                                <input type="checkbox" class="typeSearch" name="type_filter_id[]" value="" {* {if $clsISO->checkInArray($city_filter_id,$listCityTourByRegion[j].city_id)}checked{/if} *}/>
+                                            {if $arr_cruise_cat_county}
+                                            {foreach from=$arr_cruise_cat_county key=key item=item}
+                                            {assign var="CatID" value=$item.cat_id}
+                                            {assign var="CatTitle" value=$clsCruiseCat->getTitle($CatID)}
+                                            <label class="item_checkbox checkSizeFilter">
+                                                {$CatTitle}
+                                                <input type="checkbox" class="typeSearch" name="type_filter_id[]" value="{$CatID}" {if $cruise_cat_id ne '' && $cruise_cat_id eq $CatID} checked {else} {if $clsISO->checkInArray($type_filter_id, $CatID)}
+                                                checked
+                                                {/if}
+                                                {/if}
+                                                />
                                                 <span class="checkmark"></span>
                                             </label>
-
-                                            <label class="item_checkbox">Lan Ha Bay Cruises
-                                                <input type="checkbox" />
-                                                <span class="checkmark"></span>
-                                            </label>
-                                            <label class="item_checkbox">Luxury Cruises Halong
-                                                <input type="checkbox" />
-                                                <span class="checkmark"></span>
-                                            </label>
-                                            <label class="item_checkbox">Halong Bay Classic Cruises
-                                                <input type="checkbox" />
-                                                <span class="checkmark"></span>
-                                            </label>
-                                            <label class="item_checkbox">Private Cruises
-                                                <input type="checkbox" />
-                                                <span class="checkmark"></span>
-                                            </label>
+                                            {/foreach}
+                                            {/if}
                                         </div>
-                                        <button class="view_more_type">
-                                            View more
-                                        </button>
                                     </div>
                                 </div>
                                 <div class="item_sort_filter cabins d-flex flex-column  justify-content-start">
-                                    <div class="title_filter">Number of cabins</div>
+                                    <div class="title_filter">
+                                        {$core->get_Lang('Number of cabins')}
+                                    </div>
                                     <div class="list_item">
-                                        <label class="item_checkbox">1 - 5 cabins
-                                            <input type="checkbox" class="typeSearch" name="cabin_filter_id[]" value="" {* {if $clsISO->checkInArray($city_filter_id,$listCityTourByRegion[j].city_id)}checked{/if} *}/>
+                                        <label class="item_checkbox">
+                                            {$core->get_Lang('1 - 5 cabins')}
+                                            <input type="checkbox" class="typeSearch" name="cabin_filter_id[]" value="1" {if $clsISO->checkInArray($cabin_filter_id, 1)}checked{/if}/>
                                             <span class="checkmark"></span>
                                         </label>
-
-                                        <label class="item_checkbox">6 - 10 cabins
-                                            <input type="checkbox" />
+                                        <label class="item_checkbox">
+                                            {$core->get_Lang('6 - 10 cabins')}
+                                            <input type="checkbox" class="typeSearch" name="cabin_filter_id[]" value="2" {if $clsISO->checkInArray($cabin_filter_id, 2)}checked{/if}/>
                                             <span class="checkmark"></span>
                                         </label>
-                                        <label class="item_checkbox">11 - 20 cabins
-                                            <input type="checkbox" />
+                                        <label class="item_checkbox">
+                                            {$core->get_Lang('11 - 20 cabins')}
+                                            <input type="checkbox" class="typeSearch" name="cabin_filter_id[]" value="3" {if $clsISO->checkInArray($cabin_filter_id, 3)}checked{/if}/>
                                             <span class="checkmark"></span>
                                         </label>
-                                        <label class="item_checkbox">21 - 30 cabins
-                                            <input type="checkbox" />
+                                        <label class="item_checkbox">
+                                            {$core->get_Lang('21 - 30 cabins')}
+                                            <input type="checkbox" class="typeSearch" name="cabin_filter_id[]" value="4" {if $clsISO->checkInArray($cabin_filter_id, 4)}checked{/if}/>
                                             <span class="checkmark"></span>
                                         </label>
-                                        <label class="item_checkbox">31+ cabins
-                                            <input type="checkbox" />
+                                        <label class="item_checkbox">
+                                            {$core->get_Lang('31+ cabins')}
+                                            <input type="checkbox" class="typeSearch" name="cabin_filter_id[]" value="5" {if $clsISO->checkInArray($cabin_filter_id, 5)}checked{/if}/>
                                             <span class="checkmark"></span>
                                         </label>
                                     </div>
@@ -201,146 +157,153 @@
                         </div>
                     </div>
                 </div>
-
+                <!-- Cruise Content -->
                 <div class="cruises">
-                    <div class="cruises_title d-flex flex-column ">
-                        <h2>{$clsCruiseCat->getTitle($cruise_cat_id)}: {$totalRecord} cruises found</h2>
-                        <span>
-                            100% customizable {$clsCruiseCat->getTitle($cruise_cat_id)}. Idea to compose your trip
-                            as you wish
-                        </span>
-                    </div>
-                    <div class="list_cruises d-flex flex-column ">
-                        {if $listCruise}
-                        {foreach from=$listCruise key=key item=item}
-                        {assign var="CruiseID" value=$item.cruise_id}
-                        {assign var="CruiseTitle" value=$clsCruise->getTitle($CruiseID)}
-                        {assign var="CruiseLink" value=$clsCruise->getLink($CruiseID)}
-
-                        <div class="item_cruises d-flex  justify-content-between align-items-start">
-                            <a href="{$CruiseLink}" title="{$CruiseTitle}" class="div_img img_cruises">
-                                <img src="{$clsCruise->getImage($CruiseID, 353, 244)}" alt="{$CruiseTitle}" width="353" height="244" />
-                            </a>
-                            <div class="content_cruise d-flex ">
-                                <div class="content d-flex flex-column ">
-                                    <div class="d-flex flex-column unika_title_star">
-                                        <h3>
-                                            <a href="{$CruiseLink}" class="title ellipsis_2" title="{$CruiseTitle}">
-                                                {$CruiseTitle}
-                                            </a>
-                                        </h3>
-                                        <div class="rating d-flex justify-content-start  align-items-center">
-                                            {if $item.star_number}
-                                            {section name=i loop=$item.star_number}
-                                            <div class="div_img">
-                                                <i class="fa-sharp fa-solid fa-star"></i>
+                    <!-- Cruise List -->
+                    <div class="uni_cruise_list">
+                        {if $cruise_cat_id ne ''}
+                        <div class="cruises_title d-flex flex-column ">
+                            <h2>{$clsCruiseCat->getTitle($cruise_cat_id)}: {$totalRecord} cruises found</h2>
+                            <span>
+                                100% customizable {$clsCruiseCat->getTitle($cruise_cat_id)}. Idea to compose your trip as you wish
+                            </span>
+                        </div>
+                        {else}
+                        <div class="cruises_title d-flex flex-column ">
+                            <h2>Total: {$totalRecord} cruises found</h2>
+                            <span>
+                                100% customizable. Idea to compose your trip as you wish
+                            </span>
+                        </div>
+                        {/if}
+                        <div class="list_cruises d-flex flex-column ">
+                            {if $listCruise}
+                            {foreach from=$listCruise key=key item=item}
+                            {assign var="CruiseID" value=$item.cruise_id}
+                            {assign var="CruiseTitle" value=$clsCruise->getTitle($CruiseID)}
+                            {assign var="CruiseLink" value=$clsCruise->getLink($CruiseID)}
+                            <div class="item_cruises d-flex  justify-content-between align-items-start">
+                                <a href="{$CruiseLink}" title="{$CruiseTitle}" class="div_img img_cruises">
+                                    <img src="{$clsCruise->getImage($CruiseID, 353, 244)}" alt="{$CruiseTitle}" width="353" height="244" />
+                                </a>
+                                <div class="content_cruise d-flex ">
+                                    <div class="content d-flex flex-column ">
+                                        <div class="d-flex flex-column unika_title_star">
+                                            <h3>
+                                                <a href="{$CruiseLink}" class="title ellipsis_2" title="{$CruiseTitle}">
+                                                    {$CruiseTitle}
+                                                </a>
+                                            </h3>
+                                            <div class="rating d-flex justify-content-start  align-items-center">
+                                                {if $item.star_number}
+                                                {section name=i loop=$item.star_number}
+                                                <div class="div_img">
+                                                    <i class="fa-sharp fa-solid fa-star"></i>
+                                                </div>
+                                                {/section}
+                                                {/if}
                                             </div>
-                                            {/section}
-                                            {/if}
                                         </div>
-                                    </div>
-                                    <div class="d-flex justify-content-start align-items-start ">
-                                        <div class="div_img img_icon_content">
-                                            <i class="fa-sharp fa-solid fa-location-dot"></i>
+                                        <div class="d-flex justify-content-start align-items-start ">
+                                            <div class="div_img img_icon_content">
+                                                <i class="fa-sharp fa-solid fa-location-dot"></i>
+                                            </div>
+                                            <div class="d-flex  ellipsis_3 txt_content">
+                                                <span>Place to visit:</span>
+                                                {$item.place_visit}
+                                            </div>
                                         </div>
-                                        <div class="d-flex  ellipsis_3 txt_content">
-                                            <span>Place to visit:</span> Hanoi
-                                            - Lan Ha Bay - Dark & Light Cave - Ao Ech Area - Halong
-                                            International Cruise Port - Hanoi
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-start align-items-center ">
-                                        <div class="div_img img_icon_content">
-                                            <i class="fa-light fa-door-open"></i>
-                                        </div>
-                                        <div class="d-flex  justify-content-start ellipsis_1 txt_content">
-                                            <span>Cabin:</span> {$item.total_cabin}
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-start align-items-center ">
-                                        <div class="div_img img_icon_content">
-                                            <img src="{URL_IMAGES}/uni_van/images/cruises/material.svg" alt="Icon" />
-                                        </div>
-                                        <div class="d-flex  justify-content-start ellipsis_1 txt_content">
-                                            <span>Material:</span> {$clsCruiseProperty->getTitle($item.material)}
-                                        </div>
-                                    </div>
-                                    <div class="other d-flex flex-column">
                                         <div class="d-flex justify-content-start align-items-center ">
-                                            <div class="box_inclusion">
-                                                {$clsCruise->getInclusion($CruiseID)}
+                                            <div class="div_img img_icon_content">
+                                                <i class="fa-light fa-door-open"></i>
+                                            </div>
+                                            <div class="d-flex  justify-content-start ellipsis_1 txt_content">
+                                                <span>Cabin:</span> {$item.total_cabin}
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-start align-items-center ">
+                                            <div class="div_img img_icon_content">
+                                                <img src="{URL_IMAGES}/uni_van/images/cruises/material.svg" alt="Icon" />
+                                            </div>
+                                            <div class="d-flex  justify-content-start ellipsis_1 txt_content">
+                                                <span>Material:</span> {$clsCruiseProperty->getTitle($item.material)}
+                                            </div>
+                                        </div>
+                                        <div class="other d-flex flex-column">
+                                            <div class="d-flex justify-content-start align-items-center ">
+                                                <div class="box_inclusion">
+                                                    {$clsCruise->getInclusion($CruiseID)}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="highlights d-flex justify-content-start align-items-center flex-wrap">
+                                            <span>Highlights</span>
+                                            <div class="list_icon d-flex justify-content-start align-items-center  flex-wrap">
+                                                {if $lstCruiseFa}
+                                                {foreach from=$lstCruiseFa key=k item=i}
+                                                {assign var="CruiseFaImg" value=$clsCruiseProperty->getImage($i.cruise_property_id)}
+                                                {assign var="CruiseFaTxt" value=$clsCruiseProperty->getTitle($i.cruise_property_id)}
+                                                {if $clsISO->checkInArray($item.listCruiseFacilities, $i.cruise_property_id)}
+                                                <div class="div_img img_highlight">
+                                                    <img src="{$CruiseFaImg}" alt="Icon" />
+                                                    <span class="txt_icon ">
+                                                        {$CruiseFaTxt}
+                                                    </span>
+                                                </div>
+                                                {/if}
+                                                {/foreach}
+                                                {/if}
+                                                <div class="icon_other ">+6</div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="highlights d-flex justify-content-start align-items-center flex-wrap">
-                                        <span>Highlights</span>
-                                        <div class="list_icon d-flex justify-content-start align-items-center  flex-wrap">
-                                            {if $lstCruiseFa}
-                                            {foreach from=$lstCruiseFa key=k item=i}
-                                            {assign var="CruiseFaImg" value=$clsCruiseProperty->getImage($i.cruise_property_id)}
-                                            {assign var="CruiseFaTxt" value=$clsCruiseProperty->getTitle($i.cruise_property_id)}
-
-                                            {if $clsISO->checkInArray($item.listCruiseFacilities, $i.cruise_property_id)}
-                                            <div class="div_img img_highlight">
-                                                <img src="{$CruiseFaImg}" alt="Icon" />
-                                                <span class="txt_icon ">
-                                                    {$CruiseFaTxt}
-                                                </span>
+                                    <div class="money_cruise d-flex flex-column align-items-end justify-content-between">
+                                        <div class="reviews d-flex justify-content-end align-items-end flex-column">
+                                            <div class="d-flex justify-content-end align-items-center item_evaluate">
+                                                <div class="d-flex flex-column justify-content-end ">
+                                                    <span class="span_review">
+                                                        {$clsReviews->getReviews($CruiseID, 'txt_review', 'cruise')}
+                                                    </span>
+                                                    <span class="span_quantity">
+                                                        ({$clsReviews->getReviews($CruiseID, '', 'cruise')} reviews)
+                                                    </span>
+                                                </div>
+                                                <div class="average_reviews d-flex align-items-center justify-content-center">
+                                                    {$clsReviews->getReviews($CruiseID, 'avg_point', 'cruise')}
+                                                </div>
                                             </div>
-                                            {/if}
-                                            {/foreach}
-                                            {/if}
-                                            <div class="icon_other ">+6</div>
+                                            <div class="price d-flex flex-column">
+                                                <span class="txt_money">Price per person from</span>
+                                                <div class="txt_money_cruise d-flex justify-content-end align-items-end">
+                                                    US
+                                                    <span>
+                                                        $ {$clsCruiseItinerary->getMinPriceItinerary($CruiseID)}
+                                                    </span>
+                                                </div>
+                                            </div>
                                         </div>
+                                        <a href="{$CruiseLink}" class="btn_explore d-flex justify-content-center align-items-center" title="{$CruiseTitle}">
+                                            Explore
+                                            <div class="div_img">
+                                                <i class="fa-sharp fa-light fa-arrow-right"></i>
+                                            </div>
+                                        </a>
                                     </div>
-                                </div>
-                                <div class="money_cruise d-flex flex-column align-items-end justify-content-between">
-                                    <div class="reviews d-flex justify-content-end align-items-end flex-column">
-                                        <div class="d-flex justify-content-end align-items-center item_evaluate">
-                                            <div class="d-flex flex-column justify-content-end ">
-                                                <span class="span_review">
-                                                    {$clsReviews->getReviews($CruiseID, 'txt_review', 'cruise')}
-                                                </span>
-                                                <span class="span_quantity">
-                                                    ({$clsReviews->getReviews($CruiseID, '', 'cruise')} reviews)
-                                                </span>
-                                            </div>
-                                            <div class="average_reviews d-flex align-items-center justify-content-center">
-                                                {$clsReviews->getReviews($CruiseID, 'avg_point', 'cruise')}
-                                            </div>
-                                        </div>
-                                        <div class="price d-flex flex-column">
-                                            <span class="txt_money">Price per person from</span>
-                                            <div class="txt_money_cruise d-flex justify-content-end align-items-end">
-                                                US
-                                                <span>
-                                                    $ {$clsCruiseItinerary->getMinPriceItinerary($CruiseID)}
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <a href="{$CruiseLink}" class="btn_explore d-flex justify-content-center align-items-center" title="{$CruiseTitle}">
-                                        Explore
-                                        <div class="div_img">
-                                            <i class="fa-sharp fa-light fa-arrow-right"></i>
-                                        </div>
-                                    </a>
                                 </div>
                             </div>
+                            {/foreach}
+                            {/if}
                         </div>
-                        {/foreach}
+                        {if $page_view}
+                        <div class="des_travel_guide_paginate">
+                            {$page_view}
+                        </div>
                         {/if}
-
-
                     </div>
-                    {if $page_view}
-                    <div class="des_travel_guide_paginate">
-                        {$page_view}
-                    </div>
-                    {/if}
+                    <!-- Cruise Recently -->
                     <div class="recently-viewed d-flex flex-column justify-content-start align-items-start ">
                         <h3 class="title_recently">
-                            Recently viewed
+                            {$core->get_Lang('Recently viewed')}
                         </h3>
                         <div class="recently_viewed swiper">
                             <div class="swiper-wrapper">
@@ -396,6 +359,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="item_recently_viewed swiper-slide">
                                     <div class="item-recently_viewed d-flex flex-column ">
                                         <a class="div_img img_item">
@@ -559,186 +523,21 @@
             </div>
         </div>
     </div>
-    <div class="d-flex justify-content-center unika_blogs">
-        <div class="container">
-            <div class="blogs d-flex justify-content-center  flex-column align-items-center">
-                <h2 class="title_2">Re<span>views</span></h2>
-                <div class="reviews2 swiper">
-                    <div class="swiper-wrapper">
-                        <div class="item_review d-flex flex-column swiper-slide">
-                            <div class="div_img img_review">
-                                <img src="{URL_IMAGES}/uni_van/images/review1.png" alt="Image" />
-                            </div>
-                            <div class="content_review d-flex flex-column ">
-                                <div class="rating_reviews d-flex align-items-center ">
-                                    <div class="div_img">
-                                        <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Icon" />
-                                    </div>
-                                    <div class="div_img">
-                                        <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Icon" />
-                                    </div>
-                                    <div class="div_img">
-                                        <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Icon" />
-                                    </div>
-                                    <div class="div_img">
-                                        <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Icon" />
-                                    </div>
-                                </div>
-                                <h3>
-                                    <a class=" ellipsis_2  title_reviews" href="#">Waldschenke 10 Days
-                                        Vietnam
-                                    </a>
-                                </h3>
-                                <div class="ellipsis_5 unika_blog_content">
-                                    Right from the start, I must commend this travel agency for
-                                    their exceptional attention to detail. We embarked to a 10-day
-                                    trip to Cambodia and every single request and preference we
-                                    provided was meticulously considered and incorporated...
-                                </div>
-                                <div class="unika_author_blog d-flex align-items-center justify-content-start ">
-                                    <div class="div_img img_review_author">
-                                        <img src="{URL_IMAGES}/uni_van/images/review_user.png" alt="Image" />
-                                    </div>
-                                    <div class="content_author d-flex flex-column align-items-start justify-content-center ">
-                                        <div class=" ellipsis_1">Fritz</div>
-                                        <span class=" ">
-                                            10 Feb, 2024
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item_review d-flex flex-column swiper-slide">
-                            <div class="div_img img_review">
-                                <img src="{URL_IMAGES}/uni_van/images/review1.png" alt="Image" />
-                            </div>
-                            <div class="content_review d-flex flex-column ">
-                                <div class="rating_reviews d-flex align-items-center ">
-                                    <div class="div_img">
-                                        <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Icon" />
-                                    </div>
-                                    <div class="div_img">
-                                        <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Icon" />
-                                    </div>
-                                    <div class="div_img">
-                                        <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Icon" />
-                                    </div>
-                                    <div class="div_img">
-                                        <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Icon" />
-                                    </div>
-                                </div>
-                                <h3>
-                                    <a class=" ellipsis_2  title_reviews" href="#">Waldschenke 10 Days Vietnam
-                                    </a>
-                                </h3>
-                                <div class="ellipsis_5 unika_blog_content">
-                                    Right from the start, I must commend this travel agency for
-                                    their exceptional attention to detail. We embarked to a 10-day
-                                    trip to Cambodia and every single request and preference we
-                                    provided was meticulously considered and incorporated...
-                                </div>
-                                <div class="unika_author_blog d-flex align-items-center justify-content-start ">
-                                    <div class="div_img img_review_author">
-                                        <img src="{URL_IMAGES}/uni_van/images/review_user.png" alt="Image" />
-                                    </div>
-                                    <div class="content_author d-flex flex-column align-items-start justify-content-center ">
-                                        <div class=" ellipsis_1">Fritz</div>
-                                        <span class=" ">
-                                            10 Feb, 2024
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item_review d-flex flex-column swiper-slide">
-                            <div class="div_img img_review">
-                                <img src="{URL_IMAGES}/uni_van/images/review1.png" alt="Image" />
-                            </div>
-                            <div class="content_review d-flex flex-column ">
-                                <div class="rating_reviews d-flex align-items-center ">
-                                    <div class="div_img">
-                                        <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Icon" />
-                                    </div>
-                                    <div class="div_img">
-                                        <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Icon" />
-                                    </div>
-                                    <div class="div_img">
-                                        <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Icon" />
-                                    </div>
-                                    <div class="div_img">
-                                        <img src="{URL_IMAGES}/uni_van/images/star.svg" alt="Icon" />
-                                    </div>
-                                </div>
-                                <h3>
-                                    <a class=" ellipsis_2  title_reviews" href="#">Waldschenke 10 Days
-                                        Vietnam
-                                    </a>
-                                </h3>
-                                <div class="ellipsis_5 unika_blog_content">
-                                    Right from the start, I must commend this travel agency for
-                                    their exceptional attention to detail. We embarked to a 10-day
-                                    trip to Cambodia and every single request and preference we
-                                    provided was meticulously considered and incorporated...
-                                </div>
-                                <div class="unika_author_blog d-flex align-items-center justify-content-start ">
-                                    <div class="div_img img_review_author">
-                                        <img src="{URL_IMAGES}/uni_van/images/review_user.png" alt="Image" />
-                                    </div>
-                                    <div class="content_author d-flex flex-column align-items-start justify-content-center ">
-                                        <div class=" ellipsis_1">Fritz</div>
-                                        <span class=" ">
-                                            10 Feb, 2024
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="unika_ready_start">
-        <div class="unika_start">
-            <div class="unika_title_ready">
-                SO, READY TO START? 
-            </div>
-            <div class="unika_content_ready">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Arcu, bibendum purus scelerisque ipsum id. Fringilla ipsum elementum aliquam aliquam sed duis feugiat molestie nisl. Sed sit cursus vulputate dignissim.
-            </div>
-            <a href="" class="unika_link_ready">
-                LET’S PLAN YOUR TRIP
-                <div class="div_img">
-                    <img src="{URL_IMAGES}/uni_van/images/btn_contact.svg" alt="Icon">
-                </div>
-            </a>
-        </div>
-    </div>
-    <div class="unika_social">
-        <div class="unika_social_icons">
-            <a href="https://www.youtube.com/user/vietiso" class="unika_social_icon">
-                <i class="fa-brands fa-youtube" aria-hidden="true"></i>
-            </a>
-            <a href="https://x.com/vietiso" class="unika_social_icon">
-                <i class="fa-brands fa-twitter"></i>
-            </a>
-            <a href="https://www.instagram.com/unikaisa" class="unika_social_icon">
-                <i class="fa-brands fa-instagram" aria-hidden="true"></i>
-            </a>
-            <a href="https://www.facebook.com/unikasia" class="unika_social_icon">
-                <i class="fa-brands fa-facebook-f" aria-hidden="true"></i>
-            </a>
-        </div>
-    </div>
+    {$core->getBlock('customer_review')}
+    {$core->getBlock('also_like')}
 </div>
 
 {literal}
 <style>
+    #nah_also_like .alsoLike{
+        display: none;
+    }
+
     .cru_header {
         padding-top: 127px;
         padding-bottom: 182px;
     }
-
+    
     .value_ranges {
         width: 100%;
     }
@@ -754,6 +553,10 @@
         justify-content: center;
         overflow: hidden;
         border-radius: 8px;
+    }
+
+    .unika_cruises_container {
+        padding-top: 40px;
     }
 
     img {
@@ -818,6 +621,7 @@
         z-index: 1;
         position: relative;
         background: #FFFFFF;
+        padding-top: 32px;
     }
 
     /* custom css radio */
@@ -947,10 +751,6 @@
         transform: rotate(45deg);
     }
 
-    .backcrump {
-        padding: 40px 0;
-    }
-
     .sort_filter {
         max-width: 296px;
         width: 100%;
@@ -1075,6 +875,7 @@
     }
 
     .img_cruises {
+        width: 41%;
         border-radius: 8px;
         overflow: hidden;
     }
@@ -1085,17 +886,17 @@
         transition: all 0.3s ease-in-out;
     }
 
-    .img_cruises img:hover {
-        scale: 1.2;
+    .img_cruises img{
+        width: 100%;
     }
 
     .content_cruise {
-        width: 100%;
+        width: 65%;
         gap: 20px;
     }
 
     .list_cruises {
-        padding: 32px 0;
+        padding: 32px 0 44px 0;
         gap: 32px;
     }
 
@@ -1137,36 +938,57 @@
         color: #D3DCE1;
     }
 
-    .link_pagination.active {
-        color: #434B5C;
-        padding: 2px 9px;
-        background: #ffedd1;
-        border-radius: 3px;
+    .customersay {
+        background: unset;
+    }
+
+    .txt_reviews {
+        color: var(--Neutral-1, #111D37);
+        text-align: center;
+        font-family: "SF Pro Display";
+        font-size: 32px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 52px;
+        margin-bottom: 32px;
+        position: relative;
+        z-index: 0;
+    }
+
+    h2.txt_reviews::after {
+        content: '';
+        background: #FFA718;
+        position: absolute;
+        height: 8px;
+        width: 78px;
+        bottom: 12px;
+        right: 0;
+        z-index: -1;
     }
 
     .img_item {
-        position: relative;
         width: 100%;
+        border-radius: 8px;
+        transition: transform 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        border-radius: 8px;
+    }
+
+    .div_img.img_item img:hover {
+        object-fit: cover;
+        -moz-transform: scale(1.1);
+        -webkit-transform: scale(1.1);
+        transform: scale(1.1);
+        transition: all .3s ease-in-out;
         border-radius: 8px;
     }
 
     .list_rank_star {
         flex-direction: column;
         display: flex;
-    }
-
-    .btn_love {
-        position: absolute;
-        right: 16px;
-        top: 10px;
-        width: 36px;
-        height: 30px;
-        overflow: hidden;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: url(../images/wishlist.png) no-repeat;
-        background-size: 100% 100%;
     }
 
     .title_recently_viewed {
@@ -1270,7 +1092,8 @@
     .item_value {
         border-radius: 4px;
         border: 1px solid #F0F0F0;
-        width: 90px;
+        min-width: 90px;
+        max-width: 100px;
     }
 
     /* end custom two range */
@@ -1278,7 +1101,7 @@
     .item_value input {
         border: unset;
         width: 100%;
-        padding: 4px 12px;
+        padding: 4px;
         text-align: center;
     }
 
@@ -1290,7 +1113,7 @@
     }
 
     .recently-viewed {
-        padding: 80px 0px;
+        padding: 0px 0px 60px 0px;
     }
 
     .title_recently_viewed {
@@ -1299,10 +1122,6 @@
         font-weight: 600;
         color: #111D37;
         transition: all .3s ease-in-out;
-    }
-
-    .blogs {
-        gap: 32px;
     }
 
     .slick-next {
@@ -1319,44 +1138,6 @@
         width: 100%;
         max-width: 1312px;
         padding-bottom: 80px;
-    }
-
-    .item_review {
-        width: 405px;
-        position: relative;
-    }
-
-    .img_review {
-        position: relative;
-        width: 100%;
-    }
-
-    .content_review {
-        padding: 24px;
-        border-radius: 20px 20px 8px 8px;
-        position: relative;
-        margin-top: -24px;
-        background: #FFFFFF;
-        gap: 20px;
-    }
-
-    .img_review_author {
-        width: 48px;
-        height: 48px;
-        border-radius: 50% !important;
-    }
-
-    .content_author {
-        width: calc(100% - 48px - 11px);
-    }
-
-    .title_2,
-    .title_2 span {
-        font-size: 32px;
-        font-style: normal;
-        font-weight: 600;
-        line-height: 52px;
-        color: #111D37;
     }
 
     .txt_content span {
@@ -1418,6 +1199,7 @@
         color: #FFA718;
         font-size: 16px;
         line-height: 24px;
+        cursor: pointer;
     }
 
     .highlights {
@@ -1493,26 +1275,6 @@
         transform: scale(1.1);
         transition: all .3s ease-in-out;
         border-radius: 8px;
-    }
-
-    .backcrump-first {
-        font-size: 16px;
-        font-weight: 600;
-        line-height: 24px;
-        text-align: left;
-        margin-right: 24px;
-    }
-
-    .item-bacruump {
-        font-size: 16px;
-        font-weight: 400;
-        line-height: 24px;
-        text-align: left;
-        color: #FFA718;
-    }
-
-    .content_backcrump {
-        gap: 8px;
     }
 
     .swiper {
@@ -1895,7 +1657,7 @@
         background: var(--Primary, #FFA718);
     }
 
-    #slider-3 {
+    #cru_slider {
         width: 100%;
         height: 2px;
         border-radius: 26px;
@@ -1908,7 +1670,7 @@
         padding-left: 9px;
     }
 
-    #slider-3 .ui-slider-handle.ui-state-default.ui-corner-all {
+    #cru_slider .ui-slider-handle.ui-state-default.ui-corner-all {
         width: 20px;
         height: 20px;
         border-radius: 50%;
@@ -1917,6 +1679,27 @@
         top: -10px;
     }
 
+    #price {
+        border: 0;
+        color: #b9cd6d;
+        font-weight: bold;
+    }
+
+    #filters_form_cruise {
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+    }
+
+    .ellipsis_3 {
+        display: -webkit-box !important;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: left;
+        height: 60px;
+    }
 
     @media screen and (min-width: 1920px) {
         .img_cruises {
@@ -1932,15 +1715,17 @@
         }
     }
 
-    @media screen and (max-width: 1199px) {
+    @media screen and (max-width: 991px) {
         .item_cruises {
             flex-direction: column;
             width: calc(50% - 16px);
             align-items: center !important;
+            justify-content: start !important;
         }
 
         .content_cruise {
             flex-direction: column;
+            width: 100%;
         }
 
         .list_cruises {
@@ -1961,9 +1746,7 @@
             align-items: start !important;
             flex-wrap: wrap;
         }
-    }
 
-    @media screen and (max-width: 999px) {
         .sort_filter_mobile {
             display: flex;
         }
@@ -2033,6 +1816,10 @@
     }
 
     @media screen and (max-width: 768px) {
+        .unika_cruises_container{
+            padding-top: 0;
+        }
+
         .list_cruises {
             flex-direction: column !important;
         }
@@ -2047,6 +1834,20 @@
     }
 
     @media screen and (max-width: 500px) {
+        .txt_reviews {
+            color: var(--Neutral-1, #111D37);
+            font-size: 24px;
+            font-weight: 600;
+            line-height: 36px;
+        }
+
+         h2.txt_reviews::after {
+            height: 4px;
+            width: 63px;
+            bottom: 10px;
+            right: 0;
+        }
+
         .money_cruise .reviews {
             gap: 15px;
         }
@@ -2166,32 +1967,14 @@
 </style>
 {/literal}
 
+<script>
+    var cru_max_price = '{$price_range_max}';
+    var min_price = '{$min_price}';
+    var max_price = '{$max_price}';
+</script>
 {literal}
 <script>
     $(function() {
-        let unika_banner_txt = $('.unika_banner_txt');
-        let height_old = unika_banner_txt.height();
-        // Temporarily remove -webkit-line-clamp
-
-        unika_banner_txt.css({
-            '-webkit-line-clamp': 'unset',
-            'display': 'block'
-        });
-
-        // Get the height of the element without line clamping
-        var height_new = unika_banner_txt.height();
-
-        let img_banner = unika_banner_txt.parents('.unika_banner').find('.unika_banner_img img');
-        let height_img = img_banner.height();
-        let height_img_new = height_img - height_old + height_new;
-        let widthScreen = $(window).width();
-
-        if (widthScreen > 500) {
-            img_banner.css({
-                "min-height": `${height_img_new}px`
-            });
-        }
-
         new Swiper(".recently_viewed", {
             slidesPerView: 3,
             spaceBetween: 32,
@@ -2199,7 +1982,6 @@
             //     delay: 3000,
             //     disableOnInteraction: false
             // },
-            // Responsive breakpoints
             breakpoints: {
                 769: {
                     slidesPerView: 3,
@@ -2214,67 +1996,6 @@
                     slidesPerView: 1,
                 },
             }
-        });
-
-        new Swiper(".reviews2", {
-            slidesPerView: 3,
-            spaceBetween: 32,
-            navigation: {
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
-            },
-            // autoplay: {
-            //     delay: 3000,
-            //     disableOnInteraction: false
-            // },
-            // Responsive breakpoints
-            breakpoints: {
-                0: {
-                    slidesPerView: 1,
-                },
-                768: {
-                    slidesPerView: 2,
-                },
-                991: {
-                    slidesPerView: 3,
-                }
-            }
-        });
-
-        //js custom to range
-        let min = 0;
-        let max = 100;
-
-        const calcLeftPosition = value => {
-            value = 100 / (100 - 10) * (value - 10);
-            if (value < 0) {
-                value = 0;
-            }
-            return value;
-        };
-
-        $('#rangeMin').on('input', function(e) {
-            const newValue = parseInt(e.target.value);
-            if (newValue > max) return;
-            min = newValue;
-            $('#thumbMin').css('left', calcLeftPosition(newValue) + '%');
-            $('#min').val(newValue);
-            $('#line').css({
-                'left': calcLeftPosition(newValue) + '%',
-                'right': (100 - calcLeftPosition(max)) + '%'
-            });
-        });
-
-        $('#rangeMax').on('input', function(e) {
-            const newValue = parseInt(e.target.value);
-            if (newValue < min) return;
-            max = newValue;
-            $('#thumbMax').css('left', calcLeftPosition(newValue) + '%');
-            $('#max').val(newValue);
-            $('#line').css({
-                'left': calcLeftPosition(min) + '%',
-                'right': (100 - calcLeftPosition(newValue)) + '%'
-            });
         });
 
         $(document)
@@ -2293,25 +2014,56 @@
             $(this).find("li:lt(2)").show();
             $(this).find("li:gt(1)").hide();
         });
-        // 
-        $('#filters_form .typeSearch').change(function() {
-            $(this).closest('form').submit();
+
+        // View more/less
+        var items = $('.cruises_type .item_checkbox');
+        if (items.length > 5) {
+            items.slice(5).hide();
+            var toggleButton = $('<span/>', {
+                text: 'View more',
+                class: 'view_more_type',
+                click: function() {
+                    var hiddenItems = $('.cruises_type .item_checkbox:hidden');
+                    if (hiddenItems.length > 0) {
+                        hiddenItems.show();
+                        $(this).text('View less');
+                    } else {
+                        items.slice(5).hide();
+                        $(this).text('View more');
+                    }
+                }
+            });
+            $('.cruises_type').append(toggleButton);
+        }
+
+        // Redirect trang theo country
+        $('input[name="country_id"]').on('click', function(e) {
+            e.preventDefault();
+            window.location.href = $(this).data('link');
         });
 
-        $("#slider-3").slider({
+        // Slider price
+        $("#cru_slider").slider({
             range: true,
             min: 0,
-            max: 500,
+            max: cru_max_price,
             step: 5,
-            values: [35, 200],
-            slide: function (event, ui) {
-                $('#min').val(ui.values[0])
-                $('#max').val(ui.values[1])
+            values: [min_price, max_price],
+            slide: function(event, ui) {
+                $('#min_price').val(ui.values[0])
+                $('#max_price').val(ui.values[1])
+            },
+            stop: function(event, ui) {
+                var min_price1 = $("#min_price").val($("#cru_slider").slider("values", 0));
+                var max_price1 = $("#max_price").val($("#cru_slider").slider("values", 1));
+                $('#filters_form_cruise').submit();
             }
         });
 
-        $('#min').val($("#slider-3").slider("values", 0))
-        $('#max').val($("#slider-3").slider("values", 1))
+        // Data trong thay đổi thì kích hoạt event click
+        $('#filters_form_cruise .typeSearch').change(function() {
+            $(this).closest('form').submit();
+        });
     })
 </script>
 {/literal}

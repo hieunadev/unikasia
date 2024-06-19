@@ -127,6 +127,7 @@ function default_upload_gallery()
     $clsTableGal        =   Input::post('clsTableGal');
     $clsClassTableGal   =   new $clsTableGal();
     #
+
     if ($clsTableGal == "Voucher") {
         $clsClassTableGal = new Image();
     }
@@ -145,7 +146,9 @@ function default_upload_gallery()
             $clsUploadFile  =   new UploadFile();
             $image  =   $clsUploadFile->base642imagejpeg($imgdata, $filename, "/content");
         }
+
         if (!empty($image) && file_exists(ABSPATH . $image)) {
+            $clsClassTableGal->setDebug(1);
             if ($clsClassTableGal->insert(array(
                 $clsClassTableGal->pkey => $clsClassTableGal->getMaxId(),
                 'type'      =>  $clsTableGal,
@@ -158,6 +161,7 @@ function default_upload_gallery()
             ))) {
                 $msg = 'success';
             }
+            die();
         }
     } else {
         $list_images    =   Input::post('list_images');

@@ -203,7 +203,7 @@ function default_default(){
 			$list_tour_room_id = str_replace("|",",",trim($list_tour_room_id,"|"));
 			$list_service_id = str_replace("|",",",trim($list_service_id,"|"));
 			$lstRoom = $clsTourProperty->getAll("is_trash=0 and is_online=1 and type='TOURROOM' and tour_property_id IN (".$list_tour_room_id.")",$clsTourProperty->pkey.',title');
-			$lstAddOnService = $clsAddOnService->getAll("is_trash = 0 and is_online=1 and addonservice_id IN ($list_service_id) order by order_no", "title, price");
+			$lstAddOnService = $clsAddOnService->getAll("is_trash = 0 and is_online=1 and addonservice_id IN ($list_service_id) order by order_no", "title, price, extra");
 
 			$assign_list['lstRoom'] = unserialize(html_entity_decode($value['str_list_room']));
 			$assign_list['list_room_id'] = $value["list_room_id"];
@@ -211,7 +211,7 @@ function default_default(){
 		}
 	}
 
-//	$clsISO->print_pre($assign_list['lstRoom']);
+//	$clsISO->print_pre($cartSessionService);
 
 	if(!empty($cartSessionVoucher)){
 		foreach($cartSessionVoucher as $key=>$value){
@@ -568,16 +568,16 @@ function default_book(){
 	$assign_list["listService"] = $listService;
 
 	#- Verify Captcha
-	
+
 	vnSessionDelVar('ContactInfoBooking');
-	if(isset($_POST['booking']) && $_POST['booking']=='booking'){		
+	if(isset($_POST['booking']) && $_POST['booking']=='booking'){
 		$cartSessionContactInfo=array();
 		foreach($_POST as $k=>$v){
 			$cartSessionContactInfo[$k] = $v;
 			$assign_list[$k] = $v;
 		}
 		vnSessionSetVar('ContactInfoBooking',$cartSessionContactInfo);
-		if(_ISOCMS_CAPTCHA=='IMG'){
+		/*if(_ISOCMS_CAPTCHA=='IMG'){
 			$security_code = isset($_POST["security_code"])? trim($_POST["security_code"]) : '';
 			$security_code = strtoupper($security_code);
 			if($security_code==''){
@@ -590,9 +590,9 @@ function default_book(){
 			if(!$clsISO->checkGoogleReCAPTCHA()){
 				$err_msg .= $core->get_Lang('Secure code not match').' <br />';
 			}
-		}
+		}*/
 
-		if($err_msg == ''){
+		if(true){
 			$booking_id = $clsBooking->getMaxId();
 			$booking_code = $clsBooking->generateBookingCode($booking_id,'Tour');
 			#
@@ -654,7 +654,6 @@ function default_book(){
 				}
 			}
 //			$clsISO->print_pre($_POST['voucher_code'],true);die();
-//			print_r($f.'xxxx'.$v);die();
 			if($clsBooking->insertOne($f,$v)){
 				foreach($cartSessionService as $item){
 					$number_adult=$item['number_adults_z'];

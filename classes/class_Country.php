@@ -363,6 +363,9 @@ class Country extends dbBasic
             case 'Guide':
                 return $extLang . '/' . $slug . '-travel-guide';
                 break;
+            case 'Cruise':
+                return '/' . $_LANG_ID . '/cruise/' . $slug . '/';
+                break;
             default:
                 if ($_LANG_ID == 'vn')
                     return $this->getLinkOutbound($country_id, $oneTable);

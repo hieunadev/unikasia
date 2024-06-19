@@ -923,6 +923,11 @@ ul.timeline .accordion-item{
     border: unset;
 }
 
+ul.timeline .accordion-item .accordion-body img{
+    max-width: 100%;
+    object-fit: cover;
+}
+
 .accordion-button:not(.collapsed) {
     background-color: unset;
 }

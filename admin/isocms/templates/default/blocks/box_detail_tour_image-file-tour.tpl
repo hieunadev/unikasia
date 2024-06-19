@@ -28,7 +28,7 @@
 							</div>
 						</div>
 						<div class="col-xs-12 col-md-5">
-							<img class="img-responsive radius-3" id="isoman_show_image" src="{$oneItem.image}" onerror="this.src='{$URL_IMAGES}/none_image.png'" alt="{$core->get_Lang('images')}" style="width:450px; height:285px"  />
+							<img class="img-responsive radius-3" id="isoman_show_image" src="{$clsTour->getImage($oneItem.tour_id,80,59)}" onerror="this.src='{$URL_IMAGES}/none_image.png'" alt="{$core->get_Lang('images')}" style="width:450px; height:285px"  />
 						</div>
 					</div>
 				</div>

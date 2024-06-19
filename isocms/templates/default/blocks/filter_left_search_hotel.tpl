@@ -1,8 +1,4 @@
 <div class="filter_left_search">
-    {* <div class="filter_left_title">
-        {$core->get_Lang('Filter')}
-    </div> *}
-
     <form action="" method="post" id="search_hotel_left">
         <input type="hidden" name="search_hotel_left" value="search_hotel_left" />
 
@@ -77,38 +73,10 @@
             </div>
             <div class="box_filter_body">
                 <div class="filter_list_item nsdt_filter-price-hotel">
-                    {*<div class="nsdt_checkPriceHotel">
-                        {section name=i loop=$lstPriceRange}
-                        {assign var=check value=$clsISO->checkInArray($price_range,$lstPriceRange[i].hotel_price_range_id)}
-                        {assign var=checkPriceRange value={$queryString}}
-                        {assign var=starIdArray value=explode(',', $starIds)}
-
-                        <div class="check_ipt">
-                            <input type="checkbox" name="price_range[]" class="input_item typeSearch" value="{$lstPriceRange[i].hotel_price_range_id}" id="priceRange{$smarty.section.i.iteration}">
-                            <label for="priceRange{$smarty.section.i.iteration}" class="labelCheck">{$lstPriceRange[i].max_rate}</label>
-                        </div>
-                        {/section}
-                    </div>
-
-                    {assign var=price_range_min value=$lstPriceRange[0].hotel_price_range_id}
-                    {assign var=price_range_max value=$lstPriceRange[count($lstPriceRange)-1].hotel_price_range_id}
-                    {section name=i loop=$lstPriceRange}
-                    <div class="nsdt_getPriceHotel">
-                        {$lstPriceRange[i].hotel_price_range_id}
-                    </div>
-                    {/section}
-                    {section name=i loop=$PriceRange_title}
-                    <div class="nsdt_getPriceHotelTitle" data-id="{$lstPriceRange[i].hotel_price_range_id}">
-                        {$PriceRange_title[i]}
-                    </div>
-                    {/section}*}
                     <div class="price-hotel-items">
                         <input type="text" id="price_0" class="price-hotel-itemMin" name="min_price" value="${$min_price}">
                         <input type="text" id="price_1" class="price-hotel-itemMax" name="max_price" value="${$max_price}">
-                        {* <div id="price_0" class="price-hotel-itemMin">$0</div>*}
-                        {* <div id="price_1" class="price-hotel-itemMax">$500</div>*}
                     </div>
-                    {* <div id="slider-price2" class="mb10"></div>*}
                     <div id="slider-3"></div>
                 </div>
             </div>
@@ -163,11 +131,6 @@
 </div>
 <script>
     var max_price_value = '{$price_range_max}';
-    /* var min_price_value = '{$price_range_min}';
-      var min_price_search = '{$min_price_search}';
-    var max_price_search = '{$max_price_search}';
-    var price_range_title_min = '{$lstPriceRange[0].title}';
-    var price_range_title_max = '{$lstPriceRange[count($lstPriceRange)-1].title}';*/
     var price_range = [];
     var PriceRange_title = {};
 
@@ -234,68 +197,6 @@
     $('input[name="country[]"]').on('click', function() {
         window.location.href = $(this).siblings('label').find('a.filter_link').attr('href');
     });
-    /*        $(function() {
-                var minPrice = Math.min.apply(null, price_range);
-                var maxPrice = Math.max.apply(null, price_range);
-
-                function updateSliderTitles(ui) {
-                    var id0 = ui.values[0];
-                    var id1 = ui.values[1];
-                    $("#price_0").html("$" + PriceRange_title[id0]);
-                    $("#price_1").html("$" + PriceRange_title[id1]);
-                }
-
-                $("#slider-price2").slider({
-                    range: true,
-                    min: parseInt(min_price_value),
-                    max: parseInt(max_price_value),
-                    values: [parseInt(min_price_value), parseInt(max_price_value)],
-                    slide: function(event, ui) {
-                        updateSliderTitles(ui);
-                    },
-                    stop: function(event, ui) {
-                        minPrice = ui.values[0];
-                        maxPrice = ui.values[1];
-                        if (minPrice >= maxPrice) {
-                            minPrice = maxPrice - 1;
-                            $("#slider-price2").slider("values", [minPrice, maxPrice]);
-                        }
-
-                        if (maxPrice <= minPrice) {
-                            maxPrice = minPrice + 1;
-                            $("#slider-price2").slider("values", [minPrice, maxPrice]);
-                        }
-
-                        $("#price_0").text("$" + PriceRange_title[minPrice]);
-                        $("#price_1").text("$" + PriceRange_title[maxPrice]);
-
-                        $("input[name='price_range[]']").each(function() {
-                            var price = parseInt($(this).val());
-                            if (price >= minPrice && price <= maxPrice) {
-                                $(this).prop("checked", true);
-                            } else {
-                                $(this).prop("checked", false);
-                            }
-                        });
-                        $('#search_hotel_left').submit();
-                    }
-                });
-
-                function updatePriceElements() {
-                    let minPrice = (min_price_search.length !== 0) ? min_price_search : Math.min.apply(null, price_range);
-                    let maxPrice = (max_price_search.length !== 0) ? max_price_search : Math.max.apply(null, price_range);
-                    $("#slider-price2").slider("values", [minPrice, maxPrice]);
-
-                    $("#price_0").html("$" + ((PriceRange_title[minPrice] > 0) ? PriceRange_title[minPrice] : "0"));
-                    $("#price_1").html("$" + PriceRange_title[maxPrice]);
-                }
-
-                updateSliderTitles({ values: [0, 1] });
-                updatePriceElements();
-            });
-            $("#price_0").text($("#slider-price2").slider("values", 0));
-            $("#price_1").text($("#price-range2").slider("values", 1));*/
-
 
     $(function() {
         var valueMin = $('#value_min').text();

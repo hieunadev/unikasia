@@ -99,8 +99,8 @@
             <div class="box_price">
                 <div class="price_from_text">{$core->get_Lang('Avg price per night')}</div>
                 <div class="div_price text-end">{$core->get_Lang('US')}
-                    <span>{if $clsHotel->getPriceOnPromotion($hotel_id,'detail')}
-                            {$clsHotel->getPriceOnPromotion($hotel_id)}
+                    <span class="ms-1">{if $clsHotel->getPriceAvg($hotel_id)}
+                            ${$clsHotel->getPriceAvg($hotel_id)}
                         {else}
                             {$core->get_Lang('Contact us')}
                         {/if}</span>

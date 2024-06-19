@@ -44,6 +44,18 @@ class HotelProperty extends dbBasic {
         }
         return $html;
     }
+    function getSelectByHotelCat($selected = '') {
+        global $core;
+        #
+        $lstType = $this->getAll("type = 'HotelCategory'");
+        $html = '<option value="">-- ' . $core->get_Lang('select') . ' --</option>';
+
+        foreach ($lstType as $key => $val) {
+            $selected_index = ($selected == $val["hotel_property_id"]) ? 'selected="selected"' : '';
+            $html .= '<option value="' . $val["hotel_property_id"] . '" ' . $selected_index . '>' . $val["title"] . '</option>';
+        }
+        return $html;
+    }
     function getImage($hotel_property_id) {
         global $_LANG_ID;
         $one = $this->getOne($hotel_property_id,'image');

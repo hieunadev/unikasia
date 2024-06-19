@@ -18,8 +18,8 @@ function default_default()
 	$assign_list["clsTourDestination"] = $clsTourDestination;
 	$clsMonth = new Month();
 	$assign_list['clsMonth'] = $clsMonth;
-    $clsReviews = new Reviews();
-    $assign_list["clsReviews"] = $clsReviews;
+	$clsReviews = new Reviews();
+	$assign_list["clsReviews"] = $clsReviews;
 
 	$where = "is_trash = 0 and is_online = 1";
 	$order_by = " order by order_no";
@@ -41,6 +41,8 @@ function default_default()
 	$city_id = $_GET["city_id"];
 
 	if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST["filter"])) {
+		$clsISO->dump($destination);
+
 		$link = isset($destination) ? $clsCountry->getLink($destination ?? 1, 'tour') : $clsCountry->getLink($countryId, 'tour');
 
 		if ($destination) {
@@ -182,877 +184,898 @@ function default_default()
 	$assign_list['page_view'] = $page_view;
 }
 
-function default_detaildeparture() {
-    global $assign_list, $clsISO, $core, $dbconn, $mod, $act, $_LANG_ID, $title_page, $description_page, $global_image_seo_page, $tour_id,
-          $child_type_id,$infant_type_id,$age_type_id,$height_type_id;
+function default_detaildeparture()
+{
+	global $assign_list, $clsISO, $core, $dbconn, $mod, $act, $_LANG_ID, $title_page, $description_page, $global_image_seo_page, $tour_id,
+		$child_type_id, $infant_type_id, $age_type_id, $height_type_id;
 
-    $clsTour = new Tour();
-    $assign_list["clsTour"] = $clsTour;
-    $clsTourDestination = new TourDestination();
-    $assign_list["clsTourDestination"] = $clsTourDestination;
-    $clsTourItinerary = new TourItinerary();
-    $assign_list["clsTourItinerary"] = $clsTourItinerary;
-    $clsTourImage = new TourImage();
-    $assign_list["clsTourImage"] = $clsTourImage;
-    $clsReviews = new Reviews();
-    $assign_list["clsReviews"] = $clsReviews;
-    $clsTourExtension = new TourExtension();
-    $assign_list["clsTourExtension"] = $clsTourExtension;
-    $clsTourCategory = new TourCategory();
-    $assign_list["clsTourCategory"] = $clsTourCategory;
-    $clsDiscount = new Discount();
-    $assign_list["clsDiscount"] = $clsDiscount;
-    $clsCountry = new Country();
-    $assign_list["clsCountry"] = $clsCountry;
-    $clsTourCat = new TourCategory();
-    $assign_list["clsTourCat"] = $clsTourCat;
-    $clsTourProperty = new TourProperty();
-    $assign_list["clsTourProperty"] = $clsTourProperty;
-    $clsTourOption = new TourOption();
-    $assign_list["clsTourOption"] = $clsTourOption;
+	$clsTour = new Tour();
+	$assign_list["clsTour"] = $clsTour;
+	$clsTourDestination = new TourDestination();
+	$assign_list["clsTourDestination"] = $clsTourDestination;
+	$clsTourItinerary = new TourItinerary();
+	$assign_list["clsTourItinerary"] = $clsTourItinerary;
+	$clsTourImage = new TourImage();
+	$assign_list["clsTourImage"] = $clsTourImage;
+	$clsReviews = new Reviews();
+	$assign_list["clsReviews"] = $clsReviews;
+	$clsTourExtension = new TourExtension();
+	$assign_list["clsTourExtension"] = $clsTourExtension;
+	$clsTourCategory = new TourCategory();
+	$assign_list["clsTourCategory"] = $clsTourCategory;
+	$clsDiscount = new Discount();
+	$assign_list["clsDiscount"] = $clsDiscount;
+	$clsCountry = new Country();
+	$assign_list["clsCountry"] = $clsCountry;
+	$clsTourCat = new TourCategory();
+	$assign_list["clsTourCat"] = $clsTourCat;
+	$clsTourProperty = new TourProperty();
+	$assign_list["clsTourProperty"] = $clsTourProperty;
+	$clsTourOption = new TourOption();
+	$assign_list["clsTourOption"] = $clsTourOption;
 
-    $tour_id = !empty($_GET['tour_id']) ? $_GET['tour_id'] : '0';
-    $cond = " is_trash = 0 and";
-    $order = " order by order_no";
+	$tour_id = !empty($_GET['tour_id']) ? $_GET['tour_id'] : '0';
+	$cond = " is_trash = 0 and";
+	$order = " order by order_no";
 
-    $lstReviews = $clsReviews->getAll("$cond is_online = 1 and table_id = $tour_id $order");
-    $countReview = $clsReviews->countItem("$cond is_online = 1 and table_id = $tour_id $order");
-    $lstTourImage = $clsTourImage->getAll("$cond table_id = $tour_id $order", "tour_image_id, image");
-    $lstTourItinerary = $clsTourItinerary->getAll("$cond tour_id = $tour_id order by day");
-    $oneItem = $clsTour->getOne($tour_id);
-    $travel_style_id = explode('|', $oneItem[8])[1];
-    $lstRelateTour = $clsTour->getAll("$cond tour_id IN (select tour_2_id from default_tour_extension where tour_1_id = $tour_id)");
-    $country_id = $clsTourDestination->getAll("$cond tour_id = $tour_id limit 1", "country_id")[0]["country_id"];
+	$lstReviews = $clsReviews->getAll("$cond is_online = 1 and table_id = $tour_id $order");
+	$countReview = $clsReviews->countItem("$cond is_online = 1 and table_id = $tour_id $order");
+	$lstTourImage = $clsTourImage->getAll("$cond table_id = $tour_id $order", "tour_image_id, image");
+	$lstTourItinerary = $clsTourItinerary->getAll("$cond tour_id = $tour_id order by day");
+	$oneItem = $clsTour->getOne($tour_id);
+	$travel_style_id = explode('|', $oneItem[8])[1];
+	$lstRelateTour = $clsTour->getAll("$cond tour_id IN (select tour_2_id from default_tour_extension where tour_1_id = $tour_id)");
+	$country_id = $clsTourDestination->getAll("$cond tour_id = $tour_id limit 1", "country_id")[0]["country_id"];
 
-//    Form Book Tour
-    $lstVisitorType = $clsTourProperty->getAll("is_trash=0 and type='VISITORTYPE' order by order_no asc",$clsTourProperty->pkey);
-    $assign_list["lstVisitorType"] = $lstVisitorType;
-    $list_age_child = $clsTourOption->getAll(" tour_property_height='0' AND tour_property_id='".$age_type_id."' AND tour_property_age='".$child_type_id."'",$clsTourOption->pkey.',title');
-    $assign_list['list_age_child'] = $list_age_child;
-    $getSelectChild = $getSelectInfant = "";
-    $child_visitor_type = $infant_visitor_type = "";
-    if($oneItem['visitorage_child'] != ''){
-        $getSelectChild = $clsTourOption->getSelectBySizeGroup($child_type_id,"VISITORAGETYPE");
-        $textSizeGroupChild = $clsTourOption->getTextSelectBySizeGroup($child_type_id,"VISITORAGETYPE");
-        $child_visitor_type = $age_type_id;
-    }elseif($oneItem['visitorheight_child'] != ''){
-        $getSelectChild = $clsTourOption->getSelectBySizeGroup($child_type_id,"VISITORHEIGHTTYPE");
-        $textSizeGroupChild = $clsTourOption->getTextSelectBySizeGroup($child_type_id,"VISITORHEIGHTTYPE");
-        $child_visitor_type = $height_type_id;
-    }
-    if($oneItem['visitorage_infant'] != ''){
-        $getSelectInfant = $clsTourOption->getSelectBySizeGroup($infant_type_id,"VISITORAGETYPE");
-        $infant_visitor_type = $age_type_id;
-    }elseif($oneItem['visitorheight_infant'] != ''){
-        $getSelectInfant = $clsTourOption->getSelectBySizeGroup($infant_type_id,"VISITORHEIGHTTYPE");
-        $infant_visitor_type = $height_type_id;
-    }
-    $assign_list['child_visitor_type'] = $child_visitor_type;
-    $assign_list['infant_visitor_type'] = $infant_visitor_type;
-    $assign_list['getSelectChild'] = $getSelectChild;
-    $assign_list['getSelectInfant'] = $getSelectInfant;
-    $lstAdultSizeGroup = $oneItem['adult_group_size'];
-    $lstAdultSize = array();
-    if($lstAdultSizeGroup != '' && $lstAdultSizeGroup != '0'){
-        $TMP = explode(',',$lstAdultSizeGroup);
-        for($i=0; $i<count($TMP); $i++){
-            if(!in_array($TMP[$i],$lstAdultSize)){
-                $lstAdultSize[] = $TMP[$i];
-            }
-        }
-    }
-    $lastAdultSize=end($lstAdultSize);
-    $max_adult=$clsTourOption->getOneField('number_to',$lastAdultSize);
-    $assign_list["max_adult"] = $max_adult ?? 1;
-    $lstChildSizeGroup = $oneItem['child_group_size'];
-    $lstChildSize = array();
-    if($lstChildSizeGroup != '' && $lstChildSizeGroup != '0'){
-        $TMP = $clsISO->getArrayByTextSlash($lstChildSizeGroup);
-//        $TMP = explode(',',$lstChildSizeGroup);
-        for($i=0; $i<count($TMP); $i++){
-            if(!in_array($TMP[$i],$lstChildSize)){
-                $lstChildSize[] = $TMP[$i];
-            }
-        }
-    }
-    $max_child=$clsTourOption->getAll('tour_option_id IN ('.implode(',',$lstChildSize).')',"max(number_to) as max");
-    $max_child = (isset($max_child[0]))?$max_child[0]['max']:0;
-    $max_child = !empty($max_child)?$max_child:0;
-    $assign_list["max_child"] = $max_child;
-    $tourcat_id = $oneItem['cat_id'];
-    $assign_list["tourcat_id"] = $tourcat_id;
-    $oneCat = $clsTourCategory->getOne($tourcat_id,'parent_id');
-    $oneParent = $clsTourCategory->getOne($oneCat['parent_id'],$clsTourCategory->pkey.',title,slug');
-    $assign_list["oneParent"] = $oneParent;
+	//    Form Book Tour
+	$lstVisitorType = $clsTourProperty->getAll("is_trash=0 and type='VISITORTYPE' order by order_no asc", $clsTourProperty->pkey);
+	$assign_list["lstVisitorType"] = $lstVisitorType;
+	$list_age_child = $clsTourOption->getAll(" tour_property_height='0' AND tour_property_id='" . $age_type_id . "' AND tour_property_age='" . $child_type_id . "'", $clsTourOption->pkey . ',title');
+	$assign_list['list_age_child'] = $list_age_child;
+	$getSelectChild = $getSelectInfant = "";
+	$child_visitor_type = $infant_visitor_type = "";
+	if ($oneItem['visitorage_child'] != '') {
+		$getSelectChild = $clsTourOption->getSelectBySizeGroup($child_type_id, "VISITORAGETYPE");
+		$textSizeGroupChild = $clsTourOption->getTextSelectBySizeGroup($child_type_id, "VISITORAGETYPE");
+		$child_visitor_type = $age_type_id;
+	} elseif ($oneItem['visitorheight_child'] != '') {
+		$getSelectChild = $clsTourOption->getSelectBySizeGroup($child_type_id, "VISITORHEIGHTTYPE");
+		$textSizeGroupChild = $clsTourOption->getTextSelectBySizeGroup($child_type_id, "VISITORHEIGHTTYPE");
+		$child_visitor_type = $height_type_id;
+	}
+	if ($oneItem['visitorage_infant'] != '') {
+		$getSelectInfant = $clsTourOption->getSelectBySizeGroup($infant_type_id, "VISITORAGETYPE");
+		$infant_visitor_type = $age_type_id;
+	} elseif ($oneItem['visitorheight_infant'] != '') {
+		$getSelectInfant = $clsTourOption->getSelectBySizeGroup($infant_type_id, "VISITORHEIGHTTYPE");
+		$infant_visitor_type = $height_type_id;
+	}
+	$assign_list['child_visitor_type'] = $child_visitor_type;
+	$assign_list['infant_visitor_type'] = $infant_visitor_type;
+	$assign_list['getSelectChild'] = $getSelectChild;
+	$assign_list['getSelectInfant'] = $getSelectInfant;
+	$lstAdultSizeGroup = $oneItem['adult_group_size'];
+	$lstAdultSize = array();
+	if ($lstAdultSizeGroup != '' && $lstAdultSizeGroup != '0') {
+		$TMP = explode(',', $lstAdultSizeGroup);
+		for ($i = 0; $i < count($TMP); $i++) {
+			if (!in_array($TMP[$i], $lstAdultSize)) {
+				$lstAdultSize[] = $TMP[$i];
+			}
+		}
+	}
+	$lastAdultSize = end($lstAdultSize);
+	$max_adult = $clsTourOption->getOneField('number_to', $lastAdultSize);
+	$assign_list["max_adult"] = $max_adult ?? 1;
+	$lstChildSizeGroup = $oneItem['child_group_size'];
+	$lstChildSize = array();
+	if ($lstChildSizeGroup != '' && $lstChildSizeGroup != '0') {
+		$TMP = $clsISO->getArrayByTextSlash($lstChildSizeGroup);
+		//        $TMP = explode(',',$lstChildSizeGroup);
+		for ($i = 0; $i < count($TMP); $i++) {
+			if (!in_array($TMP[$i], $lstChildSize)) {
+				$lstChildSize[] = $TMP[$i];
+			}
+		}
+	}
+	$max_child = $clsTourOption->getAll('tour_option_id IN (' . implode(',', $lstChildSize) . ')', "max(number_to) as max");
+	$max_child = (isset($max_child[0])) ? $max_child[0]['max'] : 0;
+	$max_child = !empty($max_child) ? $max_child : 0;
+	$assign_list["max_child"] = $max_child;
+	$tourcat_id = $oneItem['cat_id'];
+	$assign_list["tourcat_id"] = $tourcat_id;
+	$oneCat = $clsTourCategory->getOne($tourcat_id, 'parent_id');
+	$oneParent = $clsTourCategory->getOne($oneCat['parent_id'], $clsTourCategory->pkey . ',title,slug');
+	$assign_list["oneParent"] = $oneParent;
 
-    #list room
-    $list_tour_room_id = $oneItem['list_tour_room_id'];
-    $list_tour_room_id = str_replace("|",",",trim($list_tour_room_id,"|"));
-    $lstRoom = $clsTourProperty->getAll("is_trash=0 and is_online=1 and type='TOURROOM' and tour_property_id IN (".$list_tour_room_id.")",$clsTourProperty->pkey.',title');
-    $assign_list['lstRoom'] = $lstRoom;
+	#list room
+	$list_tour_room_id = $oneItem['list_tour_room_id'];
+	$list_tour_room_id = str_replace("|", ",", trim($list_tour_room_id, "|"));
+	$lstRoom = $clsTourProperty->getAll("is_trash=0 and is_online=1 and type='TOURROOM' and tour_property_id IN (" . $list_tour_room_id . ")", $clsTourProperty->pkey . ',title');
+	$assign_list['lstRoom'] = $lstRoom;
 
-    $lstInfantSizeGroup = $oneItem['infant_group_size'];
-    $lstInfantSize = array();
-    if($lstInfantSizeGroup != '' && $lstInfantSizeGroup != '0'){
-        $TMP = $clsISO->getArrayByTextSlash($lstInfantSizeGroup);
-        for($i=0; $i<count($TMP); $i++){
-            if(!in_array($TMP[$i],$lstInfantSize)){
-                $lstInfantSize[] = $TMP[$i];
-            }
-        }
-    }
-    $max_infant=$clsTourOption->getAll('tour_option_id IN ('.implode(',',$lstInfantSize).')',"max(number_to) as max");
-    $max_infant = (isset($max_infant[0]))?$max_infant[0]['max']:0;
-    $assign_list["max_infant"] = $max_infant;
+	$lstInfantSizeGroup = $oneItem['infant_group_size'];
+	$lstInfantSize = array();
+	if ($lstInfantSizeGroup != '' && $lstInfantSizeGroup != '0') {
+		$TMP = $clsISO->getArrayByTextSlash($lstInfantSizeGroup);
+		for ($i = 0; $i < count($TMP); $i++) {
+			if (!in_array($TMP[$i], $lstInfantSize)) {
+				$lstInfantSize[] = $TMP[$i];
+			}
+		}
+	}
+	$max_infant = $clsTourOption->getAll('tour_option_id IN (' . implode(',', $lstInfantSize) . ')', "max(number_to) as max");
+	$max_infant = (isset($max_infant[0])) ? $max_infant[0]['max'] : 0;
+	$assign_list["max_infant"] = $max_infant;
 
-    $date_range_js_update = '<script> var date_range = [\'' . implode('\',\'', $list_date_array) . '\'];</script>';
-    $assign_list["date_range_js_update"] = $date_range_js_update;
+	$date_range_js_update = '<script> var date_range = [\'' . implode('\',\'', $list_date_array) . '\'];</script>';
+	$assign_list["date_range_js_update"] = $date_range_js_update;
 
-    $currentDate = new DateTime();
-    $currentDate->modify('+1 day');
-    $assign_list["str_first_start_date"] = $currentDate->format('d/m/Y');
+	$currentDate = new DateTime();
+	$currentDate->modify('+1 day');
+	$assign_list["str_first_start_date"] = $currentDate->format('d/m/Y');
 
-    if(isset($_POST['BookingTour']) &&  $_POST['BookingTour']=='BookingTour'){
-        $cartSessionService = vnSessionGetVar('BookingTour_'.$_LANG_ID);
-        if(empty($cartSessionService)){
-            $cartSessionService = array();
-        }
-        $assign_list["cartSessionService"] = $cartSessionService;
+	if (isset($_POST['BookingTour']) &&  $_POST['BookingTour'] == 'BookingTour') {
+		$cartSessionService = vnSessionGetVar('BookingTour_' . $_LANG_ID);
+		if (empty($cartSessionService)) {
+			$cartSessionService = array();
+		}
+		$assign_list["cartSessionService"] = $cartSessionService;
 
-        $link=$clsISO->getLink('cart');
-//        $cartSessionService[$_LANG_ID][$tour_id] = array();
-        $cartSessionService[$_LANG_ID] = array();
-//        $clsISO->pre($_POST); die();
-        foreach($_POST as $k=>$v){
-            if(!empty($v)){
-                if($k=='number_addon'){
-                    foreach($v as $k_addon=>$v_addon){
-                        if(!empty($v_addon)){
-                            $cartSessionService[$_LANG_ID][$tour_id][$k][$k_addon] = $v_addon;
-                        }
-                    }
-                }else{
-                    $cartSessionService[$_LANG_ID][$tour_id][$k] = $v;
-                }
-            }
-        }
-//        $clsISO->print_pre($cartSessionService);die();
-        vnSessionDelVar('BookingVoucher_'.$_LANG_ID);
-        vnSessionSetVar('BookingTour_'.$_LANG_ID,$cartSessionService);
-        header('location:'.$link);
-        exit();
-    }
+		$link = $clsISO->getLink('cart');
+		//        $cartSessionService[$_LANG_ID][$tour_id] = array();
+		$cartSessionService[$_LANG_ID] = array();
+		//        $clsISO->pre($_POST); die();
+		foreach ($_POST as $k => $v) {
+			if (!empty($v)) {
+				if ($k == 'number_addon') {
+					foreach ($v as $k_addon => $v_addon) {
+						if (!empty($v_addon)) {
+							$cartSessionService[$_LANG_ID][$tour_id][$k][$k_addon] = $v_addon;
+						}
+					}
+				} else {
+					$cartSessionService[$_LANG_ID][$tour_id][$k] = $v;
+				}
+			}
+		}
+		//        $clsISO->print_pre($cartSessionService);die();
+		vnSessionDelVar('BookingVoucher_' . $_LANG_ID);
+		vnSessionSetVar('BookingTour_' . $_LANG_ID, $cartSessionService);
+		header('location:' . $link);
+		exit();
+	}
 
-//    End Form Box Tour
+	//    End Form Box Tour
 
-    if (!empty($_GET['tour_id'])) {
-        $post_id = intval($_GET['tour_id']);
-        if (isset($_COOKIE['recent_view_tour'])) {
-            $recent_view_tour = json_decode($_COOKIE['recent_view_tour'], true);
-        } else {
-            $recent_view_tour = array();
-        }
-        if (!in_array($post_id, $recent_view_tour)) {
-            $recent_view_tour[] = $post_id;
-        }
+	if (!empty($_GET['tour_id'])) {
+		$post_id = intval($_GET['tour_id']);
+		if (isset($_COOKIE['recent_view_tour'])) {
+			$recent_view_tour = json_decode($_COOKIE['recent_view_tour'], true);
+		} else {
+			$recent_view_tour = array();
+		}
+		if (!in_array($post_id, $recent_view_tour)) {
+			$recent_view_tour[] = $post_id;
+		}
 
-        setcookie('recent_view_tour', json_encode($recent_view_tour), time() + (86400), "/");
-    }
+		setcookie('recent_view_tour', json_encode($recent_view_tour), time() + (86400), "/");
+	}
 
-    if (isset($_COOKIE['recent_view_tour'])) {
-        $recent_view_tour = json_decode($_COOKIE['recent_view_tour'], true);
-        if (!empty($recent_view_tour)) {
-            $ids = implode(',', array_map('intval', $recent_view_tour));
-            $lstTourRecent = $clsTour->getAll("tour_id IN ($ids)");
-            $assign_list["lstTourRecent"] = $lstTourRecent;
-        }
-    }
+	if (isset($_COOKIE['recent_view_tour'])) {
+		$recent_view_tour = json_decode($_COOKIE['recent_view_tour'], true);
+		if (!empty($recent_view_tour)) {
+			$ids = implode(',', array_map('intval', $recent_view_tour));
+			$lstTourRecent = $clsTour->getAll("tour_id IN ($ids)");
+			$assign_list["lstTourRecent"] = $lstTourRecent;
+		}
+	}
 
-    $sqlCountRate = "SELECT rates, ROUND(COUNT(rates) / $countReview * 100) AS count_percent, COUNT(rates) as count FROM default_reviews WHERE $cond is_online = 1 and table_id = $tour_id GROUP BY rates;";
+	$sqlCountRate = "SELECT rates, ROUND(COUNT(rates) / $countReview * 100) AS count_percent, COUNT(rates) as count FROM default_reviews WHERE $cond is_online = 1 and table_id = $tour_id GROUP BY rates;";
 
-    $countRate = $dbconn->GetAll($sqlCountRate);
+	$countRate = $dbconn->GetAll($sqlCountRate);
 
-    $txtReview = ['Bad', 'Average', 'Good', 'Excellent', 'Wonderful'];
-    $validRates = [5, 4, 3, 2, 1];
-    $result = [];
-    $rateMap = array_column($countRate, null, 'rates');
+	$txtReview = ['Bad', 'Average', 'Good', 'Excellent', 'Wonderful'];
+	$validRates = [5, 4, 3, 2, 1];
+	$result = [];
+	$rateMap = array_column($countRate, null, 'rates');
 
-    foreach ($validRates as $rates) {
-        if (isset($rateMap[$rates])) {
-            $entry = $rateMap[$rates];
-            $count_percent = $entry['count_percent'];
-            $count = $entry['count'];
-        } else {
-            $count_percent = $count = 0;
-        }
-        $reviewName = $txtReview[$rates - 1];
-        $result[] = [
-            'rates' => $rates,
-            'count' => $count,
-            'count_percent' => $count_percent,
-            'reviews' => $reviewName
-        ];
-    }
+	foreach ($validRates as $rates) {
+		if (isset($rateMap[$rates])) {
+			$entry = $rateMap[$rates];
+			$count_percent = $entry['count_percent'];
+			$count = $entry['count'];
+		} else {
+			$count_percent = $count = 0;
+		}
+		$reviewName = $txtReview[$rates - 1];
+		$result[] = [
+			'rates' => $rates,
+			'count' => $count,
+			'count_percent' => $count_percent,
+			'reviews' => $reviewName
+		];
+	}
 
-    if ($oneItem['is_online'] == 0) header('location:' . PCMS_URL);
-    $assign_list["oneItem"] = $oneItem;
-    $assign_list["tour_id"] = $tour_id;
-    $assign_list["table_id"] = $tour_id;
-    $assign_list["lstTourItinerary"] = $lstTourItinerary;
-    $assign_list["lstTourImage"] = $lstTourImage;
-    $assign_list["lstReviews"] = $lstReviews;
-    $assign_list["lstRelateTour"] = $lstRelateTour;
-    $assign_list["countReview"] = $countReview;
-    $assign_list["reviewProgress"] = $result;
-    $assign_list["travel_style_id"] = $travel_style_id;
-    $assign_list["country_id"] = $country_id;
-    $format_time_now = date('M d, Y', strtotime('+1 day')); $assign_list['format_time_now'] = $format_time_now;
+	if ($oneItem['is_online'] == 0) header('location:' . PCMS_URL);
+	$assign_list["oneItem"] = $oneItem;
+	$assign_list["tour_id"] = $tour_id;
+	$assign_list["table_id"] = $tour_id;
+	$assign_list["lstTourItinerary"] = $lstTourItinerary;
+	$assign_list["lstTourImage"] = $lstTourImage;
+	$assign_list["lstReviews"] = $lstReviews;
+	$assign_list["lstRelateTour"] = $lstRelateTour;
+	$assign_list["countReview"] = $countReview;
+	$assign_list["reviewProgress"] = $result;
+	$assign_list["travel_style_id"] = $travel_style_id;
+	$assign_list["country_id"] = $country_id;
+	$format_time_now = date('M d, Y', strtotime('+1 day'));
+	$assign_list['format_time_now'] = $format_time_now;
 
-    /*=============Title & Description Page==================*/
-    $title_page = $clsTour->getTitle($tour_id);
-    $assign_list["title_page"] = $title_page;
-    $description_page = $clsISO->getMetaDescription($tour_id, 'Tour');
-    $assign_list["description_page"] = $description_page;
-    $global_image_seo_page = $clsISO->getPageImageShare($tour_id, 'Tour');
-    $assign_list["global_image_seo_page"] = $global_image_seo_page;
+	/*=============Title & Description Page==================*/
+	$title_page = $clsTour->getTitle($tour_id);
+	$assign_list["title_page"] = $title_page;
+	$description_page = $clsISO->getMetaDescription($tour_id, 'Tour');
+	$assign_list["description_page"] = $description_page;
+	$global_image_seo_page = $clsISO->getPageImageShare($tour_id, 'Tour');
+	$assign_list["global_image_seo_page"] = $global_image_seo_page;
 }
 
-function default_sendMail() {
-    global  $clsISO, $clsConfiguration,$_LANG_ID,$email_template_download_brochure;
+function default_sendMail()
+{
+	global  $clsISO, $clsConfiguration, $_LANG_ID, $email_template_download_brochure;
 
-    $clsTour = new Tour();
-    $clsEmailTemplate = new EmailTemplate();
-    #
+	$clsTour = new Tour();
+	$clsEmailTemplate = new EmailTemplate();
+	#
 
-    $email = $_POST['email'];
-    $tour_id = $_POST['tour_id'] ?? 0;
-    #
-    $oneItem = $clsTour->getOne($tour_id);
-    $email_template_id = 133;
-    $src_img = "https://".$_SERVER["HTTP_HOST"].$oneItem["image"];
-//    print_r($src_img); die();
-    #
-    header('Content-Type: text/html; charset=utf-8');
+	$email = $_POST['email'];
+	$tour_id = $_POST['tour_id'] ?? 0;
+	#
+	$oneItem = $clsTour->getOne($tour_id);
+	$email_template_id = 133;
+	$src_img = "https://" . $_SERVER["HTTP_HOST"] . $oneItem["image"];
+	//    print_r($src_img); die();
+	#
+	header('Content-Type: text/html; charset=utf-8');
 
-    $message = $clsEmailTemplate->getContent($email_template_id);
-    $message = str_replace('[%PAGE_NAME%]',PAGE_NAME,$message);
-    $message = str_replace('{URL}','http://'.$_SERVER['HTTP_HOST'],$message);
-    $message = str_replace('[%CUSTOMER_EMAIL%]',$email,$message);
-    
-    $message = str_replace('[%COMPANY_HOTLINE%]',$clsConfiguration->getValue('CompanyHotline'),$message);
-    $message = str_replace('[%COMPANY_EMAIL%]',$clsConfiguration->getValue('CompanyEmail'),$message);
-    $message = str_replace('[%COMPANY_NAME%]',$clsConfiguration->getValue('CompanyName_'.$_LANG_ID),$message);
-    $message = str_replace('[%COMPANY_ADDRESS%]',$clsConfiguration->getValue('CompanyAddress_'.$_LANG_ID),$message);
-    $message = str_replace('[%COMPANY_PHONE%]',$clsConfiguration->getValue('CompanyPhone'),$message);
-    $message = str_replace('[%DATETIME%]',date('Y',time()),$message);
+	$message = $clsEmailTemplate->getContent($email_template_id);
+	$message = str_replace('[%PAGE_NAME%]', PAGE_NAME, $message);
+	$message = str_replace('{URL}', 'http://' . $_SERVER['HTTP_HOST'], $message);
+	$message = str_replace('[%CUSTOMER_EMAIL%]', $email, $message);
 
-    $message = str_replace('[%TOUR_IMAGE%]', '<img style="display: block; margin-left: auto; margin-right: auto;" src="'.$src_img.'" alt=""/>', $message);
-    $message = str_replace('[%TOUR_TITLE%]', $oneItem["title"],$message);
-    $message = str_replace('[%DOWNLOAD_BROCHURE%]', '<a style="text-decoration: none; color: #000; font-size: 16px; background-color: #ffa718; font-weight: 600;padding: 20px; border-radius: 8px;" href="'.$oneItem["file_programme"].'">Download Brochure</a>',$message);
+	$message = str_replace('[%COMPANY_HOTLINE%]', $clsConfiguration->getValue('CompanyHotline'), $message);
+	$message = str_replace('[%COMPANY_EMAIL%]', $clsConfiguration->getValue('CompanyEmail'), $message);
+	$message = str_replace('[%COMPANY_NAME%]', $clsConfiguration->getValue('CompanyName_' . $_LANG_ID), $message);
+	$message = str_replace('[%COMPANY_ADDRESS%]', $clsConfiguration->getValue('CompanyAddress_' . $_LANG_ID), $message);
+	$message = str_replace('[%COMPANY_PHONE%]', $clsConfiguration->getValue('CompanyPhone'), $message);
+	$message = str_replace('[%DATETIME%]', date('Y', time()), $message);
 
-    #
-    $from = $clsEmailTemplate->getFromEmail($email_template_id);
+	$message = str_replace('[%TOUR_IMAGE%]', '<img style="display: block; margin-left: auto; margin-right: auto;" src="' . $src_img . '" alt=""/>', $message);
+	$message = str_replace('[%TOUR_TITLE%]', $oneItem["title"], $message);
+	$message = str_replace('[%DOWNLOAD_BROCHURE%]', '<a style="text-decoration: none; color: #000; font-size: 16px; background-color: #ffa718; font-weight: 600;padding: 20px; border-radius: 8px;" href="' . $oneItem["file_programme"] . '">Download Brochure</a>', $message);
 
-    $owner = $clsEmailTemplate->getFromName($email_template_id);
-    $to = $email;
-    $subject = $clsEmailTemplate->getSubject($email_template_id). ' '.PAGE_NAME;
-    $subject = str_replace('[%PAGE_NAME%]','',$subject);
+	#
+	$from = $clsEmailTemplate->getFromEmail($email_template_id);
 
-    $clsISO->sendEmail($from,$to,$subject,$message,$owner);
-    $clsEmailTemplate->getCopyTo($email_template_id);
-    return 1;
+	$owner = $clsEmailTemplate->getFromName($email_template_id);
+	$to = $email;
+	$subject = $clsEmailTemplate->getSubject($email_template_id) . ' ' . PAGE_NAME;
+	$subject = str_replace('[%PAGE_NAME%]', '', $subject);
+
+	$clsISO->sendEmail($from, $to, $subject, $message, $owner);
+	$clsEmailTemplate->getCopyTo($email_template_id);
+	return 1;
 }
-function default_loadTextDay(){
-    global $core,$mod,$act,$clsISO,$_LANG_ID,$clsConfiguration,$adult_type_id,$child_type_id,$infant_type_id;
-    $date = isset($_POST['date']) && !empty($_POST['date'])? $_POST['date']:'';
-    $date = str_replace('/', '-', $date);
-    $date=strtotime($date);
-    $text_day=$clsISO->getDayOfWeek($date);
-    echo $text_day.', '.date("d/m/Y",$date); die();
+function default_loadTextDay()
+{
+	global $core, $mod, $act, $clsISO, $_LANG_ID, $clsConfiguration, $adult_type_id, $child_type_id, $infant_type_id;
+	$date = isset($_POST['date']) && !empty($_POST['date']) ? $_POST['date'] : '';
+	$date = str_replace('/', '-', $date);
+	$date = strtotime($date);
+	$text_day = $clsISO->getDayOfWeek($date);
+	echo $text_day . ', ' . date("d/m/Y", $date);
+	die();
 }
-function default_loadTextDayItinerary(){
-    global $core,$mod,$act,$clsISO,$_LANG_ID;
-    $clsTour = new Tour(); $assign_list["clsTour"] = $clsTour;
-    $clsTourItinerary=new TourItinerary(); $assign_list['clsTourItinerary']=$clsTourItinerary;
-    $date = isset($_POST['date']) && !empty($_POST['date'])? $_POST['date']:'';
-    $tour_id = $_POST['tour_id'];
-    $date = str_replace('/', '-', $date);
-    //$date=strtotime($date);
-    $text_day=$clsISO->getDayOfWeek($date);
-    #- Itinerary
-    $lstItineraryTour = $clsTourItinerary->getAll("is_trash=0 and tour_id='$tour_id' and title_contingency='' order by order_no asc", $clsTourItinerary->pkey.',image,content,tour_itinerary_id,transport,is_show_image,day,day2');
-    $assign_list['lstItineraryTour'] = $lstItineraryTour;
-    $list_itinerary=[];
-    //var_dump($first_start_date1);die();
-    foreach ($lstItineraryTour as $k =>$v){
-        $list_itinerary[$v[$clsTourItinerary->pkey]] = $clsISO->converTimeToText5(strtotime($date .' + '. $k .' day'));
-    }
-    echo json_encode(array(
-        "list_itinerary"	=> $list_itinerary,
-    ));die();
-}
-
-function default_ajGetMaxChildInfant(){
-    global $assign_list, $_CONFIG, $core,$extLang, $dbconn, $mod, $act, $_LANG_ID,$title_page,$description_page,$keyword_page,$extLang,$adult,$child,$infant;
-    global $clsISO,$clsConfiguration,$profile_id,$loggedIn,$agent_id,$adult_type_id,$child_type_id,$infant_type_id,$is_agent,$package_id,$now_day;
-    if(Input::exists('lang_id','GET')){
-        $_LANG_ID = Input::get('lang_id');
-        vnSessionSetVar("_LANG_ID", $_LANG_ID);
-    }
-    else if(vnSessionExist("_LANG_ID")){
-        $_LANG_ID = vnSessionGetVar("_LANG_ID");
-    }
-    $clsTourOption = new TourOption();
-    $clsTour = new Tour();
-    $clsSettingChildPolicy = new SettingChildPolicy();
-    $tour_id = (int)Input::post('tour_id',0);
-    $number_adults = (int)Input::post('number_adults',0);
-    $tour_property_id = (int)Input::post('tour_property_id',0);
-    $oneItem = $clsTour->getOne($tour_id,'adult_group_size'); $assign_list["oneItem"] = $oneItem;
-    $tour_option = $clsTourOption->getAll("is_trash=0 AND tour_property_id = '".$tour_property_id."' AND type='SIZEGROUP' AND tour_option_id IN (".$oneItem['adult_group_size'].") AND ".$number_adults." BETWEEN number_from AND number_to LIMIT 0,1",$clsTourOption->pkey);
-    $max_child = $max_infant = 0;
-
-    if($tour_option){
-        $max_child = $clsSettingChildPolicy->getNumberChild($tour_option[0][$clsTourOption->pkey],$number_adults);
-        $max_infant = $clsSettingChildPolicy->getNumberInfant($tour_option[0][$clsTourOption->pkey],$number_adults);
-    }
-
-    $data = [
-        'max_child'		=>	$max_child,
-        'max_infant'	=>	$max_infant,
-    ];
-    echo json_encode($data);die;
-
+function default_loadTextDayItinerary()
+{
+	global $core, $mod, $act, $clsISO, $_LANG_ID;
+	$clsTour = new Tour();
+	$assign_list["clsTour"] = $clsTour;
+	$clsTourItinerary = new TourItinerary();
+	$assign_list['clsTourItinerary'] = $clsTourItinerary;
+	$date = isset($_POST['date']) && !empty($_POST['date']) ? $_POST['date'] : '';
+	$tour_id = $_POST['tour_id'];
+	$date = str_replace('/', '-', $date);
+	//$date=strtotime($date);
+	$text_day = $clsISO->getDayOfWeek($date);
+	#- Itinerary
+	$lstItineraryTour = $clsTourItinerary->getAll("is_trash=0 and tour_id='$tour_id' and title_contingency='' order by order_no asc", $clsTourItinerary->pkey . ',image,content,tour_itinerary_id,transport,is_show_image,day,day2');
+	$assign_list['lstItineraryTour'] = $lstItineraryTour;
+	$list_itinerary = [];
+	//var_dump($first_start_date1);die();
+	foreach ($lstItineraryTour as $k => $v) {
+		$list_itinerary[$v[$clsTourItinerary->pkey]] = $clsISO->converTimeToText5(strtotime($date . ' + ' . $k . ' day'));
+	}
+	echo json_encode(array(
+		"list_itinerary"	=> $list_itinerary,
+	));
+	die();
 }
 
-function default_loadSelectAgeChild(){
-    $clsTourOption = new TourOption();
-    $tour_option_id = Input::post("visitor_age_id",0);
-    $html = '';
-    if($tour_option_id > 0){
-        $html = $clsTourOption->getSelectAgeChild('',0,$tour_option_id);
-    }
-    echo $html;
+function default_ajGetMaxChildInfant()
+{
+	global $assign_list, $_CONFIG, $core, $extLang, $dbconn, $mod, $act, $_LANG_ID, $title_page, $description_page, $keyword_page, $extLang, $adult, $child, $infant;
+	global $clsISO, $clsConfiguration, $profile_id, $loggedIn, $agent_id, $adult_type_id, $child_type_id, $infant_type_id, $is_agent, $package_id, $now_day;
+	if (Input::exists('lang_id', 'GET')) {
+		$_LANG_ID = Input::get('lang_id');
+		vnSessionSetVar("_LANG_ID", $_LANG_ID);
+	} else if (vnSessionExist("_LANG_ID")) {
+		$_LANG_ID = vnSessionGetVar("_LANG_ID");
+	}
+	$clsTourOption = new TourOption();
+	$clsTour = new Tour();
+	$clsSettingChildPolicy = new SettingChildPolicy();
+	$tour_id = (int)Input::post('tour_id', 0);
+	$number_adults = (int)Input::post('number_adults', 0);
+	$tour_property_id = (int)Input::post('tour_property_id', 0);
+	$oneItem = $clsTour->getOne($tour_id, 'adult_group_size');
+	$assign_list["oneItem"] = $oneItem;
+	$tour_option = $clsTourOption->getAll("is_trash=0 AND tour_property_id = '" . $tour_property_id . "' AND type='SIZEGROUP' AND tour_option_id IN (" . $oneItem['adult_group_size'] . ") AND " . $number_adults . " BETWEEN number_from AND number_to LIMIT 0,1", $clsTourOption->pkey);
+	$max_child = $max_infant = 0;
+
+	if ($tour_option) {
+		$max_child = $clsSettingChildPolicy->getNumberChild($tour_option[0][$clsTourOption->pkey], $number_adults);
+		$max_infant = $clsSettingChildPolicy->getNumberInfant($tour_option[0][$clsTourOption->pkey], $number_adults);
+	}
+
+	$data = [
+		'max_child'		=>	$max_child,
+		'max_infant'	=>	$max_infant,
+	];
+	echo json_encode($data);
+	die;
 }
 
-function default_loadTablePrice(){
-    global $assign_list, $core, $clsISO,$package_id,$now_day;
+function default_loadSelectAgeChild()
+{
+	$clsTourOption = new TourOption();
+	$tour_option_id = Input::post("visitor_age_id", 0);
+	$html = '';
+	if ($tour_option_id > 0) {
+		$html = $clsTourOption->getSelectAgeChild('', 0, $tour_option_id);
+	}
+	echo $html;
+}
 
-    $clsProperty = new Property();$assign_list["clsProperty"] = $clsProperty;
-    $clsAddOnService = new AddOnService();$assign_list["clsAddOnService"] = $clsAddOnService;
-    $clsTourProperty = new TourProperty();$assign_list["clsTourProperty"] = $clsTourProperty;
-    $clsTourService = new TourService();$assign_list["clsTourService"] = $clsTourService;
-    $clsTour = new Tour(); $assign_list["clsTour"] = $clsTour;
-    $clsTourStore = new TourStore(); $assign_list["clsTourStore"] = $clsTourStore;
-    $clsTourStartDate = new TourStartDate(); $assign_list["clsTourStartDate"] = $clsTourStartDate;
-    $clsBooking = new Booking(); $assign_list["clsBooking"] = $clsBooking;
-    $clsProfile = new Profile(); $assign_list['clsProfile']=$clsProfile;
-    $clsVoucher = new Voucher(); $assign_list['clsVoucher']=$clsVoucher;
-    $clsPromotion = new Promotion(); $assign_list['clsPromotionr']=$clsPromotion;
-    $clsTourPriceGroup = new TourPriceGroup(); $assign_list['clsTourPriceGroup']=$clsTourPriceGroup;
-    $clsTourOption = new TourOption(); $assign_list['clsTourOption']=$clsTourOption;
+function default_loadTablePrice()
+{
+	global $assign_list, $core, $clsISO, $package_id, $now_day;
 
-    $tour_id= $_POST['tour_id'];
-    $is_last_hour= $_POST['is_last_hour'];
-    $tour_start_date= $_POST['tour_start_date'];
-    $number_adults= intval($_POST['number_adults']);
-    $number_child= intval($_POST['number_child']);
-    $number_infants= intval($_POST['number_infants']);
+	$clsProperty = new Property();
+	$assign_list["clsProperty"] = $clsProperty;
+	$clsAddOnService = new AddOnService();
+	$assign_list["clsAddOnService"] = $clsAddOnService;
+	$clsTourProperty = new TourProperty();
+	$assign_list["clsTourProperty"] = $clsTourProperty;
+	$clsTourService = new TourService();
+	$assign_list["clsTourService"] = $clsTourService;
+	$clsTour = new Tour();
+	$assign_list["clsTour"] = $clsTour;
+	$clsTourStore = new TourStore();
+	$assign_list["clsTourStore"] = $clsTourStore;
+	$clsTourStartDate = new TourStartDate();
+	$assign_list["clsTourStartDate"] = $clsTourStartDate;
+	$clsBooking = new Booking();
+	$assign_list["clsBooking"] = $clsBooking;
+	$clsProfile = new Profile();
+	$assign_list['clsProfile'] = $clsProfile;
+	$clsVoucher = new Voucher();
+	$assign_list['clsVoucher'] = $clsVoucher;
+	$clsPromotion = new Promotion();
+	$assign_list['clsPromotionr'] = $clsPromotion;
+	$clsTourPriceGroup = new TourPriceGroup();
+	$assign_list['clsTourPriceGroup'] = $clsTourPriceGroup;
+	$clsTourOption = new TourOption();
+	$assign_list['clsTourOption'] = $clsTourOption;
 
-    $number_pick_travellers = $number_adults + $number_child + $number_infants;
+	$tour_id = $_POST['tour_id'];
+	$is_last_hour = $_POST['is_last_hour'];
+	$tour_start_date = $_POST['tour_start_date'];
+	$number_adults = intval($_POST['number_adults']);
+	$number_child = intval($_POST['number_child']);
+	$number_infants = intval($_POST['number_infants']);
 
-    $check_in_book= $_POST['check_in_book'];
-    $tour_visitor_adult_id= $_POST['tour_visitor_adult_id'];
-    $tour_visitor_child_id= $_POST['tour_visitor_child_id'];
-    $tour_visitor_infant_id= $_POST['tour_visitor_infant_id'];
-    $number_room	= Input::post('number_room',[]);
-    $room_id		= Input::post('room_id',[]);
-    $check_in_book= str_replace('/','-',$check_in_book);
-    $str_check_in_book= 0 ;
-    $promotion= 0 ;
-    $discount_type= 0 ;
+	$number_pick_travellers = $number_adults + $number_child + $number_infants;
 
-    $str_check_in_book=strtotime($check_in_book);
-    if(_IS_PROMOTION==1){
-        $discount=$clsISO->getPromotion($tour_id,'Tour',$now_day,$str_check_in_book,$type_check='get_more_info');
-        $promotion=$discount['discount_value'];
-        $discount_type = $discount['discount_type'];
-        $promotion = !empty($promotion)?$promotion:0;
-        $promotion = str_replace('.','',$promotion);
-    }
+	$check_in_book = $_POST['check_in_book'];
+	$tour_visitor_adult_id = $_POST['tour_visitor_adult_id'];
+	$tour_visitor_child_id = $_POST['tour_visitor_child_id'];
+	$tour_visitor_infant_id = $_POST['tour_visitor_infant_id'];
+	$number_room	= Input::post('number_room', []);
+	$room_id		= Input::post('room_id', []);
+	$check_in_book = str_replace('/', '-', $check_in_book);
+	$str_check_in_book = 0;
+	$promotion = 0;
+	$discount_type = 0;
 
-    if(_IS_DEPARTURE==1){
-        $str_check_in_book=strtotime($check_in_book);
-        $checkExistTourStartDate= $clsTourStore->checkExist($tour_id,'DEPARTURE');
-        $str_check_in_book = !empty($checkExistTourStartDate)?$str_check_in_book:0;
+	$str_check_in_book = strtotime($check_in_book);
+	if (_IS_PROMOTION == 1) {
+		$discount = $clsISO->getPromotion($tour_id, 'Tour', $now_day, $str_check_in_book, $type_check = 'get_more_info');
+		$promotion = $discount['discount_value'];
+		$discount_type = $discount['discount_type'];
+		$promotion = !empty($promotion) ? $promotion : 0;
+		$promotion = str_replace('.', '', $promotion);
+	}
 
-        $listTourStartDateClose=$clsTourStartDate->getAll("is_trash=0 and tour_id='$tour_id' and start_date='$str_check_in_book' and open_sale_date <= '$now_day' and close_sale_date <'$now_day' and is_last_hour=1 order by start_date ASC");
+	if (_IS_DEPARTURE == 1) {
+		$str_check_in_book = strtotime($check_in_book);
+		$checkExistTourStartDate = $clsTourStore->checkExist($tour_id, 'DEPARTURE');
+		$str_check_in_book = !empty($checkExistTourStartDate) ? $str_check_in_book : 0;
 
-        foreach ($listTourStartDateClose as $key => $value) {
-            $list_tour_start_date_id[]=$value['tour_start_date_id'];
-        }
-        $list_tour_start_date_id = implode(',', $list_tour_start_date_id);
+		$listTourStartDateClose = $clsTourStartDate->getAll("is_trash=0 and tour_id='$tour_id' and start_date='$str_check_in_book' and open_sale_date <= '$now_day' and close_sale_date <'$now_day' and is_last_hour=1 order by start_date ASC");
 
-        $condd="is_trash=0 ";
-        if(!empty($list_tour_start_date_id)){
-            $condd.=" and tour_start_date_id NOT IN ($list_tour_start_date_id)";
-        }
-        $condd.=" and '".$str_check_in_book."' BETWEEN start_date AND end_date and tour_id ='$tour_id' order by start_date ASC limit 0,1";
+		foreach ($listTourStartDateClose as $key => $value) {
+			$list_tour_start_date_id[] = $value['tour_start_date_id'];
+		}
+		$list_tour_start_date_id = implode(',', $list_tour_start_date_id);
 
-
-        if(!empty($checkExistTourStartDate)){
-            if (!empty($checkExistTourStartDate) && !empty($tour_start_date)){
-                $lstTourStartDate = $clsTourStartDate->getAll($condd);
-
-            }
-            if($lstTourStartDate){
-                $seat_available=$lstTourStartDate[0]['allotment'];
-                $deposit=$lstTourStartDate[0]['deposit'];
-                if($seat_available != '' && $number_pick_travellers > $seat_available) {
-                    $exceeded_seat = 1;
-                }else{
-                    $exceeded_seat = 0;
-                }
-                if ($seat_available == 1) {
-                    $seat = $core->get_Lang('seat');
-                }else{
-                    $seat = $core->get_Lang('seats');
-                }
-                if($seat_available =='' || !empty($seat_available)) {
-                    if($seat_available ==''){
-                        $title_seat = $core->get_Lang('Still enough spaces left for you');
-                    }else{
-                        $title_seat = $core->get_Lang('Empty') . ' ' . $seat_available . ' ' . $seat;
-                    }
-
-                }else{
-                    $title_seat = $seat = $core->get_Lang('Full');
-                }
-            }else{
-                $title_seat = '';
-            }
-        }else{
-            $deposit = $clsTour->getDeposit($tour_id);
-        }
-    }else{
-        $deposit = $clsTour->getDeposit($tour_id);
-    }
+		$condd = "is_trash=0 ";
+		if (!empty($list_tour_start_date_id)) {
+			$condd .= " and tour_start_date_id NOT IN ($list_tour_start_date_id)";
+		}
+		$condd .= " and '" . $str_check_in_book . "' BETWEEN start_date AND end_date and tour_id ='$tour_id' order by start_date ASC limit 0,1";
 
 
-    $assign_list["title_seat"] = $title_seat;
-    $assign_list["exceeded_seat"] = $exceeded_seat;
-
-    #
-    if($clsISO->getCheckActiveModulePackage($package_id,'property','service','default')){
-        $lstServiceID=$clsTour->getListService($tour_id);
-        $lstService = $clsAddOnService->getAll("is_trash=0 and is_online=1 and addonservice_id IN($lstServiceID) order by order_no asc",$clsAddOnService->pkey);
-        $assign_list["lstService"] = $lstService;
-    }
-
-    $lstTourOption = $clsTour->getOneField('tour_option',$tour_id);
-    $lstOption = array();
-    if($lstTourOption != '' && $lstTourOption != '0'){
-        $TMP = explode(',',$lstTourOption);
-        for($i=0; $i<count($TMP); $i++){
-            if(!in_array($TMP[$i],$lstOption)){
-                $lstOption[] = $TMP[$i];
-            }
-        }
-    }
-    $tour_class_id= $_POST['tour__class_check'];
-    $tour_class_id= $tour_class_id?$tour_class_id:$lstOption[0];
-    $tour_number_adults_id=$clsTourPriceGroup->getTourNumberGroup($tour_visitor_adult_id,$number_adults,$tour_id);
-    $tour_number_child_id=$clsTourPriceGroup->getTourNumberGroup($tour_visitor_child_id,$number_child,$tour_id);
-    $tour_number_infants_id=$clsTourPriceGroup->getTourNumberGroup($tour_visitor_infant_id,$number_infants,$tour_id);
-    $check_contact = $check_contact_child = $check_contact_infant = 0;
-    if(!empty($checkExistTourStartDate)){//TH có departure date
-        if(!empty($lstTourStartDate)){
-            if($lstTourStartDate[0]['price_type']==1){//TH set giá trong departure date
-                $price = $lstTourStartDate[0]['price'];
-                $price= json_decode($price,'true');
-                $price_type_rate = $lstTourStartDate[0]['price_type_rate'];
-                $price_type_rate= json_decode($price_type_rate,'true');
-
-                $price_adults = $price[$tour_visitor_adult_id][$tour_class_id][$tour_number_adults_id];
-
-                $oneTour = $clsTour->getOne($tour_id,'visitorage_child,visitorheight_child,visitorage_infant,visitorheight_infant');
-
-                if($oneTour['visitorage_child'] != ''){
-                    $array_visitor_child = Input::post("visitorAge_child",array());
-                    $type_child = "AGE";
-                }elseif($oneTour['visitorheight_child'] != ''){
-                    $array_visitor_child = Input::post("visitorHeight_child",array());
-                    $type_child = "HEIGHT";
-                }
-
-                if($oneTour['visitorage_infant'] != ''){
-                    $array_visitor_infant = Input::post("visitorAge_infant",array());
-                    $type_infant = "AGE";
-                }elseif($oneTour['visitorheight_infant'] != ''){
-                    $array_visitor_infant = Input::post("visitorHeight_infant",array());
-                    $type_infant = "HEIGHT";
-                }
-                $arr_price_child = $arr_price_infant = [];
-                $total_price_child = $total_price_infants = 0;
-
-                //list nhóm giá trẻ em
-                $array_visitor_child = array_count_values($array_visitor_child);
-                foreach($array_visitor_child as $key => $value){
-                    $tour_number_child_id=$clsTourPriceGroup->getTourNumberGroup($tour_visitor_child_id,$value,$tour_id);
-                    if($type_child == "AGE"){
-                        $visitor_age_type = $key;
-
-                        $price_value = $price_adults>0?$price[$tour_visitor_child_id][$tour_class_id][$visitor_age_type][$tour_number_child_id]:0;
-
-                        $price_type = $price_value>0?$price_type_rate[$tour_class_id][$visitor_age_type][$tour_number_child_id]:0;
-                    }else{
-                        $visitor_height_type = $key;
-
-                        $price_value = $price_adults>0?$price[$tour_visitor_child_id][$tour_class_id][$visitor_height_type][$tour_number_child_id]:0;
-
-                        $price_type = $price_value>0?$price_type_rate[$tour_class_id][$visitor_height_type][$tour_number_child_id]:0;
-                    }
-
-                    if($price_type == 0){
-                        $price_child = $price_value;
-                    }else{
-                        $price_child = round($price_value*$price_adults/100);
-                    }
-
-                    $price_child = ($price_child>0)?$price_child:0;
-                    $total_price_child += $price_child*$value;
-
-                    $arr_price_child[] = [
-                        'text'	=>	$clsTourOption->getTitle($key),
-                        'number'	=>	$value,
-                        'price'		=>	$price_child,
-                        'total_price'		=>	$price_child*$value,
-                    ];
-                    if($price_child == 0){
-                        $check_contact = 1;
-                        $check_contact_child = 1;
-                    }
-                    unset($price_child);
-                }
-
-                //list nhóm giá em bé
-                $array_visitor_infant = array_count_values($array_visitor_infant);
-                foreach($array_visitor_infant as $key => $value){
-                    $tour_number_infant_id=$clsTourPriceGroup->getTourNumberGroup($tour_visitor_infant_id,$value,$tour_id);
-                    if($type_infant == "AGE"){
-                        $visitor_age_type = $key;
-
-                        $price_value = $price_adults>0?$price[$tour_visitor_infant_id][$tour_class_id][$visitor_age_type][$tour_number_infant_id]:0;
-
-                        $price_type = $price_value>0?$price_type_rate[$tour_class_id][$visitor_age_type][$tour_number_infant_id]:0;
-                    }else{
-                        $visitor_height_type = $key;
-
-                        $price_value = $price_adults>0?$price[$tour_visitor_infant_id][$tour_class_id][$visitor_height_type][$tour_number_infant_id]:0;
-
-                        $price_type = $price_value>0?$price_type_rate[$tour_class_id][$visitor_height_type][$tour_number_infant_id]:0;
-                    }
-
-                    if($price_type == 0){
-                        $price_infant = $price_value;
-                    }else{
-                        $price_infant = round($price_value*$price_adults/100);
-                    }
-
-                    $price_infant = ($price_infant>0)?$price_infant:0;
-                    $total_price_infants += $price_infant*$value;
-
-                    $arr_price_infant[] = [
-                        'text'	=>	$clsTourOption->getTitle($key),
-                        'number'	=>	$value,
-                        'price'		=>	$price_infant,
-                        'total_price'		=>	$price_infant*$value,
-                    ];
-                    if($price_infant == 0){
-                        $check_contact = 1;
-                        $check_contact_infant = 1;
-                    }
-                    unset($price_infant);
-                }
-
-            }elseif($lstTourStartDate[0]['price_type']==0){//TH không set giá trong departure date, lấy giá trong mục bảng giá
-                $price_adults = $clsTourPriceGroup->getPriceBooking($tour_id,$tour_class_id,$tour_number_adults_id,$tour_visitor_adult_id,0);
-                $oneTour = $clsTour->getOne($tour_id,'visitorage_child,visitorheight_child,visitorage_infant,visitorheight_infant');
-                if($oneTour['visitorage_child'] != ''){
-                    $array_visitor_child = Input::post("visitorAge_child",array());
-                    $type_child = "AGE";
-                }elseif($oneTour['visitorheight_child'] != ''){
-                    $array_visitor_child = Input::post("visitorHeight_child",array());
-                    $type_child = "HEIGHT";
-                }
-
-                if($oneTour['visitorage_infant'] != ''){
-                    $array_visitor_infant = Input::post("visitorAge_infant",array());
-                    $type_infant = "AGE";
-                }elseif($oneTour['visitorheight_infant'] != ''){
-                    $array_visitor_infant = Input::post("visitorHeight_infant",array());
-                    $type_infant = "HEIGHT";
-                }
-                $arr_price_child = $arr_price_infant = [];
-                $total_price_child = $total_price_infants = 0;
-                $array_visitor_child = array_count_values($array_visitor_child);
-                //list nhóm giá trẻ em
-                foreach($array_visitor_child as $key => $value){
-                    $tour_number_child_id=$clsTourPriceGroup->getTourNumberGroup($tour_visitor_child_id,$value,$tour_id);
-
-                    if($type_child == "AGE"){
-                        $visitor_age_type = $key;
-                        $visitor_height_type = 0;
-                    }else{
-                        $visitor_age_type = 0;
-                        $visitor_height_type = $key;
-                    }
-                    $list_price_child = $price_adults>0?$clsTourPriceGroup->getPriceBookingChildInfant($tour_id,$tour_class_id,$tour_number_child_id,$tour_visitor_child_id,$visitor_age_type,$visitor_height_type,0):0;
-
-                    $price_type = $list_price_child['price_type'];
-                    $price_value = $list_price_child['price'];
-                    if($price_type == 0){
-                        $price_child = $price_value;
-                    }else{
-                        $price_child = round($price_value*$price_adults/100);
-                    }
-                    $price_child = ($price_child>0)?$price_child:0;
-                    $total_price_child += $price_child*$value;
-                    $arr_price_child[] = [
-                        'text'	=>	$clsTourOption->getTitle($key),
-                        'number'	=>	$value,
-                        'price'		=>	$price_child,
-                        'total_price'		=>	$price_child*$value,
-                    ];
-                    if($price_child == 0){
-                        $check_contact = 1;
-                        $check_contact_child = 1;
-                    }
-                    unset($price_child);
-                }
-                $array_visitor_infant = array_count_values($array_visitor_infant);
-                //list nhóm giá em bé
-                foreach($array_visitor_infant as $key => $value){
-                    $tour_number_infant_id=$clsTourPriceGroup->getTourNumberGroup($tour_visitor_infant_id,$value,$tour_id);
-                    if($type_infant == "AGE"){
-                        $visitor_age_type = $key;
-                        $visitor_height_type = 0;
-                    }else{
-                        $visitor_age_type = 0;
-                        $visitor_height_type = $key;
-                    }
-
-                    $list_price_infant = $price_adults>0?$clsTourPriceGroup->getPriceBookingChildInfant($tour_id,$tour_class_id,$tour_number_infant_id,$tour_visitor_infant_id,$visitor_age_type,$visitor_height_type,0):0;
-                    $price_type = $list_price_infant['price_type'];
-                    $price_value = $list_price_infant['price'];
-                    if($price_type == 0){
-                        $price_infant = $price_value;
-                    }else{
-                        $price_infant = round($price_value*$price_adults/100);
-                    }
-                    $price_infant = ($price_infant>0)?$price_infant:0;
-                    $total_price_infants += $price_infant*$value;
-                    $arr_price_infant[] = [
-                        'text'	=>	$clsTourOption->getTitle($key),
-                        'number'	=>	$value,
-                        'price'		=>	$price_infant,
-                        'total_price'		=>	$price_infant*$value,
-                    ];
-                    if($price_infant == 0){
-                        $check_contact = 1;
-                        $check_contact_infant = 1;
-                    }
-                    unset($price_infant);
-                }
-            }
-        }else{
-            $price_adults = 0;
-            $price_child = 0;
-            $price_infants = 0;
-
-        }
-    }else{
-        $price_adults = $clsTourPriceGroup->getPriceBooking($tour_id,$tour_class_id,$tour_number_adults_id,$tour_visitor_adult_id,0);
-        $price_child = $price_adults>0?$clsTourPriceGroup->getPriceBooking($tour_id,$tour_class_id,$tour_number_child_id,$tour_visitor_child_id,0):0;
-        $price_infants = $price_adults>0?$clsTourPriceGroup->getPriceBooking($tour_id,$tour_class_id,$tour_number_infants_id,$tour_visitor_infant_id,0):0;
-
-        $oneTour = $clsTour->getOne($tour_id,'visitorage_child,visitorheight_child,visitorage_infant,visitorheight_infant');
-
-        if($oneTour['visitorage_child'] != ''){
-
-            $array_visitor_child = Input::post("visitorAge_child",array());
-            $type_child = "AGE";
-        }elseif($oneTour['visitorheight_child'] != ''){
-            $array_visitor_child = Input::post("visitorHeight_child",array());
-            $type_child = "HEIGHT";
-        }
-
-        if($oneTour['visitorage_infant'] != ''){
-            $array_visitor_infant = Input::post("visitorAge_infant",array());
-            $type_infant = "AGE";
-        }elseif($oneTour['visitorheight_infant'] != ''){
-            $array_visitor_infant = Input::post("visitorHeight_infant",array());
-            $type_infant = "HEIGHT";
-        }
-        $arr_price_child = $arr_price_infant = [];
-        $total_price_child = $total_price_infants = 0;
-        $array_visitor_child = array_count_values($array_visitor_child);
-        //list nhóm giá trẻ em
-        foreach($array_visitor_child as $key => $value){
-            $tour_number_child_id=$clsTourPriceGroup->getTourNumberGroup($tour_visitor_child_id,$value,$tour_id);
-
-            if($type_child == "AGE"){
-                $visitor_age_type = $key;
-                $visitor_height_type = 0;
-            }else{
-                $visitor_age_type = 0;
-                $visitor_height_type = $key;
-            }
-            $list_price_child = $price_adults>0?$clsTourPriceGroup->getPriceBookingChildInfant($tour_id,$tour_class_id,$tour_number_child_id,$tour_visitor_child_id,$visitor_age_type,$visitor_height_type,0):0;
+		if (!empty($checkExistTourStartDate)) {
+			if (!empty($checkExistTourStartDate) && !empty($tour_start_date)) {
+				$lstTourStartDate = $clsTourStartDate->getAll($condd);
+			}
+			if ($lstTourStartDate) {
+				$seat_available = $lstTourStartDate[0]['allotment'];
+				$deposit = $lstTourStartDate[0]['deposit'];
+				if ($seat_available != '' && $number_pick_travellers > $seat_available) {
+					$exceeded_seat = 1;
+				} else {
+					$exceeded_seat = 0;
+				}
+				if ($seat_available == 1) {
+					$seat = $core->get_Lang('seat');
+				} else {
+					$seat = $core->get_Lang('seats');
+				}
+				if ($seat_available == '' || !empty($seat_available)) {
+					if ($seat_available == '') {
+						$title_seat = $core->get_Lang('Still enough spaces left for you');
+					} else {
+						$title_seat = $core->get_Lang('Empty') . ' ' . $seat_available . ' ' . $seat;
+					}
+				} else {
+					$title_seat = $seat = $core->get_Lang('Full');
+				}
+			} else {
+				$title_seat = '';
+			}
+		} else {
+			$deposit = $clsTour->getDeposit($tour_id);
+		}
+	} else {
+		$deposit = $clsTour->getDeposit($tour_id);
+	}
 
 
-            $price_type = $list_price_child['price_type'];
-            $price_value = $list_price_child['price'];
-            if($price_type == 0){
-                $price_child = $price_value;
-            }else{
-                $price_child = round($price_value*$price_adults/100);
-            }
-            $price_child = ($price_child>0)?$price_child:0;
-            $total_price_child += $price_child*$value;
-            $arr_price_child[] = [
-                'text'	=>	$clsTourOption->getTitle($key),
-                'number'	=>	$value,
-                'price'		=>	$price_child,
-                'total_price'		=>	$price_child*$value,
-            ];
-            if($price_child == 0){
-                $check_contact = 1;
-                $check_contact_child = 1;
-            }
-            unset($price_child);
-        }
-        $array_visitor_infant = array_count_values($array_visitor_infant);
-        //list nhóm giá em bé
-        foreach($array_visitor_infant as $key => $value){
-            $tour_number_infant_id=$clsTourPriceGroup->getTourNumberGroup($tour_visitor_infant_id,$value,$tour_id);
-            if($type_infant == "AGE"){
-                $visitor_age_type = $key;
-                $visitor_height_type = 0;
-            }else{
-                $visitor_age_type = 0;
-                $visitor_height_type = $key;
-            }
-            $list_price_infant = $price_adults>0?$clsTourPriceGroup->getPriceBookingChildInfant($tour_id,$tour_class_id,$tour_number_infant_id,$tour_visitor_infant_id,$visitor_age_type,$visitor_height_type,0):0;
+	$assign_list["title_seat"] = $title_seat;
+	$assign_list["exceeded_seat"] = $exceeded_seat;
+
+	#
+	if ($clsISO->getCheckActiveModulePackage($package_id, 'property', 'service', 'default')) {
+		$lstServiceID = $clsTour->getListService($tour_id);
+		$lstService = $clsAddOnService->getAll("is_trash=0 and is_online=1 and addonservice_id IN($lstServiceID) order by order_no asc", $clsAddOnService->pkey);
+		$assign_list["lstService"] = $lstService;
+	}
+
+	$lstTourOption = $clsTour->getOneField('tour_option', $tour_id);
+	$lstOption = array();
+	if ($lstTourOption != '' && $lstTourOption != '0') {
+		$TMP = explode(',', $lstTourOption);
+		for ($i = 0; $i < count($TMP); $i++) {
+			if (!in_array($TMP[$i], $lstOption)) {
+				$lstOption[] = $TMP[$i];
+			}
+		}
+	}
+	$tour_class_id = $_POST['tour__class_check'];
+	$tour_class_id = $tour_class_id ? $tour_class_id : $lstOption[0];
+	$tour_number_adults_id = $clsTourPriceGroup->getTourNumberGroup($tour_visitor_adult_id, $number_adults, $tour_id);
+	$tour_number_child_id = $clsTourPriceGroup->getTourNumberGroup($tour_visitor_child_id, $number_child, $tour_id);
+	$tour_number_infants_id = $clsTourPriceGroup->getTourNumberGroup($tour_visitor_infant_id, $number_infants, $tour_id);
+	$check_contact = $check_contact_child = $check_contact_infant = 0;
+	if (!empty($checkExistTourStartDate)) { //TH có departure date
+		if (!empty($lstTourStartDate)) {
+			if ($lstTourStartDate[0]['price_type'] == 1) { //TH set giá trong departure date
+				$price = $lstTourStartDate[0]['price'];
+				$price = json_decode($price, 'true');
+				$price_type_rate = $lstTourStartDate[0]['price_type_rate'];
+				$price_type_rate = json_decode($price_type_rate, 'true');
+
+				$price_adults = $price[$tour_visitor_adult_id][$tour_class_id][$tour_number_adults_id];
+
+				$oneTour = $clsTour->getOne($tour_id, 'visitorage_child,visitorheight_child,visitorage_infant,visitorheight_infant');
+
+				if ($oneTour['visitorage_child'] != '') {
+					$array_visitor_child = Input::post("visitorAge_child", array());
+					$type_child = "AGE";
+				} elseif ($oneTour['visitorheight_child'] != '') {
+					$array_visitor_child = Input::post("visitorHeight_child", array());
+					$type_child = "HEIGHT";
+				}
+
+				if ($oneTour['visitorage_infant'] != '') {
+					$array_visitor_infant = Input::post("visitorAge_infant", array());
+					$type_infant = "AGE";
+				} elseif ($oneTour['visitorheight_infant'] != '') {
+					$array_visitor_infant = Input::post("visitorHeight_infant", array());
+					$type_infant = "HEIGHT";
+				}
+				$arr_price_child = $arr_price_infant = [];
+				$total_price_child = $total_price_infants = 0;
+
+				//list nhóm giá trẻ em
+				$array_visitor_child = array_count_values($array_visitor_child);
+				foreach ($array_visitor_child as $key => $value) {
+					$tour_number_child_id = $clsTourPriceGroup->getTourNumberGroup($tour_visitor_child_id, $value, $tour_id);
+					if ($type_child == "AGE") {
+						$visitor_age_type = $key;
+
+						$price_value = $price_adults > 0 ? $price[$tour_visitor_child_id][$tour_class_id][$visitor_age_type][$tour_number_child_id] : 0;
+
+						$price_type = $price_value > 0 ? $price_type_rate[$tour_class_id][$visitor_age_type][$tour_number_child_id] : 0;
+					} else {
+						$visitor_height_type = $key;
+
+						$price_value = $price_adults > 0 ? $price[$tour_visitor_child_id][$tour_class_id][$visitor_height_type][$tour_number_child_id] : 0;
+
+						$price_type = $price_value > 0 ? $price_type_rate[$tour_class_id][$visitor_height_type][$tour_number_child_id] : 0;
+					}
+
+					if ($price_type == 0) {
+						$price_child = $price_value;
+					} else {
+						$price_child = round($price_value * $price_adults / 100);
+					}
+
+					$price_child = ($price_child > 0) ? $price_child : 0;
+					$total_price_child += $price_child * $value;
+
+					$arr_price_child[] = [
+						'text'	=>	$clsTourOption->getTitle($key),
+						'number'	=>	$value,
+						'price'		=>	$price_child,
+						'total_price'		=>	$price_child * $value,
+					];
+					if ($price_child == 0) {
+						$check_contact = 1;
+						$check_contact_child = 1;
+					}
+					unset($price_child);
+				}
+
+				//list nhóm giá em bé
+				$array_visitor_infant = array_count_values($array_visitor_infant);
+				foreach ($array_visitor_infant as $key => $value) {
+					$tour_number_infant_id = $clsTourPriceGroup->getTourNumberGroup($tour_visitor_infant_id, $value, $tour_id);
+					if ($type_infant == "AGE") {
+						$visitor_age_type = $key;
+
+						$price_value = $price_adults > 0 ? $price[$tour_visitor_infant_id][$tour_class_id][$visitor_age_type][$tour_number_infant_id] : 0;
+
+						$price_type = $price_value > 0 ? $price_type_rate[$tour_class_id][$visitor_age_type][$tour_number_infant_id] : 0;
+					} else {
+						$visitor_height_type = $key;
+
+						$price_value = $price_adults > 0 ? $price[$tour_visitor_infant_id][$tour_class_id][$visitor_height_type][$tour_number_infant_id] : 0;
+
+						$price_type = $price_value > 0 ? $price_type_rate[$tour_class_id][$visitor_height_type][$tour_number_infant_id] : 0;
+					}
+
+					if ($price_type == 0) {
+						$price_infant = $price_value;
+					} else {
+						$price_infant = round($price_value * $price_adults / 100);
+					}
+
+					$price_infant = ($price_infant > 0) ? $price_infant : 0;
+					$total_price_infants += $price_infant * $value;
+
+					$arr_price_infant[] = [
+						'text'	=>	$clsTourOption->getTitle($key),
+						'number'	=>	$value,
+						'price'		=>	$price_infant,
+						'total_price'		=>	$price_infant * $value,
+					];
+					if ($price_infant == 0) {
+						$check_contact = 1;
+						$check_contact_infant = 1;
+					}
+					unset($price_infant);
+				}
+			} elseif ($lstTourStartDate[0]['price_type'] == 0) { //TH không set giá trong departure date, lấy giá trong mục bảng giá
+				$price_adults = $clsTourPriceGroup->getPriceBooking($tour_id, $tour_class_id, $tour_number_adults_id, $tour_visitor_adult_id, 0);
+				$oneTour = $clsTour->getOne($tour_id, 'visitorage_child,visitorheight_child,visitorage_infant,visitorheight_infant');
+				if ($oneTour['visitorage_child'] != '') {
+					$array_visitor_child = Input::post("visitorAge_child", array());
+					$type_child = "AGE";
+				} elseif ($oneTour['visitorheight_child'] != '') {
+					$array_visitor_child = Input::post("visitorHeight_child", array());
+					$type_child = "HEIGHT";
+				}
+
+				if ($oneTour['visitorage_infant'] != '') {
+					$array_visitor_infant = Input::post("visitorAge_infant", array());
+					$type_infant = "AGE";
+				} elseif ($oneTour['visitorheight_infant'] != '') {
+					$array_visitor_infant = Input::post("visitorHeight_infant", array());
+					$type_infant = "HEIGHT";
+				}
+				$arr_price_child = $arr_price_infant = [];
+				$total_price_child = $total_price_infants = 0;
+				$array_visitor_child = array_count_values($array_visitor_child);
+				//list nhóm giá trẻ em
+				foreach ($array_visitor_child as $key => $value) {
+					$tour_number_child_id = $clsTourPriceGroup->getTourNumberGroup($tour_visitor_child_id, $value, $tour_id);
+
+					if ($type_child == "AGE") {
+						$visitor_age_type = $key;
+						$visitor_height_type = 0;
+					} else {
+						$visitor_age_type = 0;
+						$visitor_height_type = $key;
+					}
+					$list_price_child = $price_adults > 0 ? $clsTourPriceGroup->getPriceBookingChildInfant($tour_id, $tour_class_id, $tour_number_child_id, $tour_visitor_child_id, $visitor_age_type, $visitor_height_type, 0) : 0;
+
+					$price_type = $list_price_child['price_type'];
+					$price_value = $list_price_child['price'];
+					if ($price_type == 0) {
+						$price_child = $price_value;
+					} else {
+						$price_child = round($price_value * $price_adults / 100);
+					}
+					$price_child = ($price_child > 0) ? $price_child : 0;
+					$total_price_child += $price_child * $value;
+					$arr_price_child[] = [
+						'text'	=>	$clsTourOption->getTitle($key),
+						'number'	=>	$value,
+						'price'		=>	$price_child,
+						'total_price'		=>	$price_child * $value,
+					];
+					if ($price_child == 0) {
+						$check_contact = 1;
+						$check_contact_child = 1;
+					}
+					unset($price_child);
+				}
+				$array_visitor_infant = array_count_values($array_visitor_infant);
+				//list nhóm giá em bé
+				foreach ($array_visitor_infant as $key => $value) {
+					$tour_number_infant_id = $clsTourPriceGroup->getTourNumberGroup($tour_visitor_infant_id, $value, $tour_id);
+					if ($type_infant == "AGE") {
+						$visitor_age_type = $key;
+						$visitor_height_type = 0;
+					} else {
+						$visitor_age_type = 0;
+						$visitor_height_type = $key;
+					}
+
+					$list_price_infant = $price_adults > 0 ? $clsTourPriceGroup->getPriceBookingChildInfant($tour_id, $tour_class_id, $tour_number_infant_id, $tour_visitor_infant_id, $visitor_age_type, $visitor_height_type, 0) : 0;
+					$price_type = $list_price_infant['price_type'];
+					$price_value = $list_price_infant['price'];
+					if ($price_type == 0) {
+						$price_infant = $price_value;
+					} else {
+						$price_infant = round($price_value * $price_adults / 100);
+					}
+					$price_infant = ($price_infant > 0) ? $price_infant : 0;
+					$total_price_infants += $price_infant * $value;
+					$arr_price_infant[] = [
+						'text'	=>	$clsTourOption->getTitle($key),
+						'number'	=>	$value,
+						'price'		=>	$price_infant,
+						'total_price'		=>	$price_infant * $value,
+					];
+					if ($price_infant == 0) {
+						$check_contact = 1;
+						$check_contact_infant = 1;
+					}
+					unset($price_infant);
+				}
+			}
+		} else {
+			$price_adults = 0;
+			$price_child = 0;
+			$price_infants = 0;
+		}
+	} else {
+		$price_adults = $clsTourPriceGroup->getPriceBooking($tour_id, $tour_class_id, $tour_number_adults_id, $tour_visitor_adult_id, 0);
+		$price_child = $price_adults > 0 ? $clsTourPriceGroup->getPriceBooking($tour_id, $tour_class_id, $tour_number_child_id, $tour_visitor_child_id, 0) : 0;
+		$price_infants = $price_adults > 0 ? $clsTourPriceGroup->getPriceBooking($tour_id, $tour_class_id, $tour_number_infants_id, $tour_visitor_infant_id, 0) : 0;
+
+		$oneTour = $clsTour->getOne($tour_id, 'visitorage_child,visitorheight_child,visitorage_infant,visitorheight_infant');
+
+		if ($oneTour['visitorage_child'] != '') {
+
+			$array_visitor_child = Input::post("visitorAge_child", array());
+			$type_child = "AGE";
+		} elseif ($oneTour['visitorheight_child'] != '') {
+			$array_visitor_child = Input::post("visitorHeight_child", array());
+			$type_child = "HEIGHT";
+		}
+
+		if ($oneTour['visitorage_infant'] != '') {
+			$array_visitor_infant = Input::post("visitorAge_infant", array());
+			$type_infant = "AGE";
+		} elseif ($oneTour['visitorheight_infant'] != '') {
+			$array_visitor_infant = Input::post("visitorHeight_infant", array());
+			$type_infant = "HEIGHT";
+		}
+		$arr_price_child = $arr_price_infant = [];
+		$total_price_child = $total_price_infants = 0;
+		$array_visitor_child = array_count_values($array_visitor_child);
+		//list nhóm giá trẻ em
+		foreach ($array_visitor_child as $key => $value) {
+			$tour_number_child_id = $clsTourPriceGroup->getTourNumberGroup($tour_visitor_child_id, $value, $tour_id);
+
+			if ($type_child == "AGE") {
+				$visitor_age_type = $key;
+				$visitor_height_type = 0;
+			} else {
+				$visitor_age_type = 0;
+				$visitor_height_type = $key;
+			}
+			$list_price_child = $price_adults > 0 ? $clsTourPriceGroup->getPriceBookingChildInfant($tour_id, $tour_class_id, $tour_number_child_id, $tour_visitor_child_id, $visitor_age_type, $visitor_height_type, 0) : 0;
 
 
-            $price_type = $list_price_infant['price_type'];
-            $price_value = $list_price_infant['price'];
-            if($price_type == 0){
-                $price_infant = $price_value;
-            }else{
-                $price_infant = round($price_value*$price_adults/100);
-            }
-            $price_infant = ($price_infant>0)?$price_infant:0;
-            $total_price_infants += $price_infant*$value;
-            $arr_price_infant[] = [
-                'text'	=>	$clsTourOption->getTitle($key),
-                'number'	=>	$value,
-                'price'		=>	$price_infant,
-                'total_price'		=>	$price_infant*$value,
-            ];
-            if($price_infant == 0){
-                $check_contact = 1;
-                $check_contact_infant = 1;
-            }
-            unset($price_infant);
-        }
-    }
-    #
+			$price_type = $list_price_child['price_type'];
+			$price_value = $list_price_child['price'];
+			if ($price_type == 0) {
+				$price_child = $price_value;
+			} else {
+				$price_child = round($price_value * $price_adults / 100);
+			}
+			$price_child = ($price_child > 0) ? $price_child : 0;
+			$total_price_child += $price_child * $value;
+			$arr_price_child[] = [
+				'text'	=>	$clsTourOption->getTitle($key),
+				'number'	=>	$value,
+				'price'		=>	$price_child,
+				'total_price'		=>	$price_child * $value,
+			];
+			if ($price_child == 0) {
+				$check_contact = 1;
+				$check_contact_child = 1;
+			}
+			unset($price_child);
+		}
+		$array_visitor_infant = array_count_values($array_visitor_infant);
+		//list nhóm giá em bé
+		foreach ($array_visitor_infant as $key => $value) {
+			$tour_number_infant_id = $clsTourPriceGroup->getTourNumberGroup($tour_visitor_infant_id, $value, $tour_id);
+			if ($type_infant == "AGE") {
+				$visitor_age_type = $key;
+				$visitor_height_type = 0;
+			} else {
+				$visitor_age_type = 0;
+				$visitor_height_type = $key;
+			}
+			$list_price_infant = $price_adults > 0 ? $clsTourPriceGroup->getPriceBookingChildInfant($tour_id, $tour_class_id, $tour_number_infant_id, $tour_visitor_infant_id, $visitor_age_type, $visitor_height_type, 0) : 0;
 
-    $price_room = 0;
-    $lstPriceRoom = $lst_room = [];
-    if(count($room_id) > 0){
-        $listPriceRoom = $clsTourPriceGroup->getAll("is_trash=0 and tour_id='".$tour_id."' and tour_room_id IN (".implode(',',$room_id).")","price,tour_room_id");
-        foreach($listPriceRoom as $key => $value){
-            $lstPriceRoom[$value['tour_room_id']] = $value['price'];
-        }
 
-        foreach($room_id as $key => $id_room) {
-            $price_room = ($lstPriceRoom[$id_room] && $lstPriceRoom[$id_room] != 0) ? $lstPriceRoom[$id_room] : 0;
-            $lst_room[] = [
-                'room_id' => $id_room,
-                'number_room' => $number_room[$key],
-                'price_room' => $price_room,
-                'total_price_room' => (int)$lstPriceRoom[$id_room] * (int)$number_room[$key]
-            ];
-            if ($number_room[$key]) {
-                if ($price_room == 0) {
-                    $check_contact = 1;
-                }
-                unset($price_room);
-            }
-        }
-    }
+			$price_type = $list_price_infant['price_type'];
+			$price_value = $list_price_infant['price'];
+			if ($price_type == 0) {
+				$price_infant = $price_value;
+			} else {
+				$price_infant = round($price_value * $price_adults / 100);
+			}
+			$price_infant = ($price_infant > 0) ? $price_infant : 0;
+			$total_price_infants += $price_infant * $value;
+			$arr_price_infant[] = [
+				'text'	=>	$clsTourOption->getTitle($key),
+				'number'	=>	$value,
+				'price'		=>	$price_infant,
+				'total_price'		=>	$price_infant * $value,
+			];
+			if ($price_infant == 0) {
+				$check_contact = 1;
+				$check_contact_infant = 1;
+			}
+			unset($price_infant);
+		}
+	}
+	#
 
-    $assign_list['lstPriceRoom'] = $lstPriceRoom;
-    $assign_list['lst_room'] = $lst_room;
+	$price_room = 0;
+	$lstPriceRoom = $lst_room = [];
+	if (count($room_id) > 0) {
+		$listPriceRoom = $clsTourPriceGroup->getAll("is_trash=0 and tour_id='" . $tour_id . "' and tour_room_id IN (" . implode(',', $room_id) . ")", "price,tour_room_id");
+		foreach ($listPriceRoom as $key => $value) {
+			$lstPriceRoom[$value['tour_room_id']] = $value['price'];
+		}
 
-    $total_price_adults=$price_adults*$number_adults;
-    #
-    $total_price=$total_price_adults + $total_price_child + $total_price_infants + array_sum(array_column($lst_room, "total_price_room"));
-    if($discount_type ==2){
-        $price_promotion = $total_price / 100 * $promotion;
-    }else{
-        $price_promotion = $promotion;
-    }
+		foreach ($room_id as $key => $id_room) {
+			$price_room = ($lstPriceRoom[$id_room] && $lstPriceRoom[$id_room] != 0) ? $lstPriceRoom[$id_room] : 0;
+			$lst_room[] = [
+				'room_id' => $id_room,
+				'number_room' => $number_room[$key],
+				'price_room' => $price_room,
+				'total_price_room' => (int)$lstPriceRoom[$id_room] * (int)$number_room[$key]
+			];
+			if ($number_room[$key]) {
+				if ($price_room == 0) {
+					$check_contact = 1;
+				}
+				unset($price_room);
+			}
+		}
+	}
 
-    $total_price_promotion = $total_price - $price_promotion;
-    $price_deposit = $total_price_promotion / 100 * $deposit;
+	$assign_list['lstPriceRoom'] = $lstPriceRoom;
+	$assign_list['lst_room'] = $lst_room;
 
-    $assign_list["lstOption"] = $lstOption;
-    $assign_list["str_check_in_book"] = $str_check_in_book;
-    $assign_list["check_contact"] = $check_contact;
-    $assign_list["check_contact_child"] = $check_contact_child;
-    $assign_list["check_contact_infant"] = $check_contact_infant;
-    $assign_list["check_in_book"] = $check_in_book;
-    $assign_list["is_last_hour"] = $is_last_hour;
-    $assign_list["tour_id"] = $tour_id;
-    $assign_list["tour_class_id"] = $tour_class_id;
-    $assign_list["number_adults"] = $number_adults;
-    $assign_list["number_child"] = $number_child;
-    $assign_list["number_infants"] = $number_infants;
-    $assign_list["price_adults"] = $price_adults;
-    $assign_list["price_child"] = $price_child;
-    $assign_list["arr_price_child"] = $arr_price_child;
-    $assign_list["arr_price_infant"] = $arr_price_infant;
-    $assign_list["str_price_child"] = serialize($arr_price_child);
-    $assign_list["str_price_infant"] = serialize($arr_price_infant);
-    $assign_list["str_list_room"] = serialize($lst_room);
-    $assign_list["price_infants"] = $price_infants;
-    $assign_list["total_price_adults"] = $total_price_adults;
-    $assign_list["total_price_child"] = $total_price_child;
-    $assign_list["total_price_infants"] = $total_price_infants;
-    $assign_list["total_price"] = $total_price;
-    $assign_list["promotion"] = $promotion;
-    $assign_list["discount_type"] = $discount_type;
-    $assign_list["price_promotion"] = $price_promotion;
-    $assign_list["deposit"] = $deposit;
-    $assign_list["price_deposit"] = $price_deposit;
-    $assign_list["total_price_promotion"] = $total_price_promotion;
-    $assign_list["number_room"] = array_sum($number_room);
-    $assign_list["list_number_room"] = implode(',',$number_room);
-//    $assign_list["room_id"] = implode(',',$room_id);
-    $assign_list["list_room_id"] = implode(',', array_column($lst_room, 'room_id'));
-    $assign_list["total_price_room"] =  array_sum(array_column($lst_room, "total_price_room"));
+	$total_price_adults = $price_adults * $number_adults;
+	#
+	$total_price = $total_price_adults + $total_price_child + $total_price_infants + array_sum(array_column($lst_room, "total_price_room"));
+	if ($discount_type == 2) {
+		$price_promotion = $total_price / 100 * $promotion;
+	} else {
+		$price_promotion = $promotion;
+	}
 
-    if($clsISO->getCheckActiveModulePackage($package_id,'booking','booking_tour','default')){
-        $html = $core->build('loadTablePrice.tpl');
-    }else{
-        $html = $core->build('loadTableContactPrice.tpl');
-    }
-    echo $html; die();
+	$total_price_promotion = $total_price - $price_promotion;
+	$price_deposit = $total_price_promotion / 100 * $deposit;
 
+	$assign_list["lstOption"] = $lstOption;
+	$assign_list["str_check_in_book"] = $str_check_in_book;
+	$assign_list["check_contact"] = $check_contact;
+	$assign_list["check_contact_child"] = $check_contact_child;
+	$assign_list["check_contact_infant"] = $check_contact_infant;
+	$assign_list["check_in_book"] = $check_in_book;
+	$assign_list["is_last_hour"] = $is_last_hour;
+	$assign_list["tour_id"] = $tour_id;
+	$assign_list["tour_class_id"] = $tour_class_id;
+	$assign_list["number_adults"] = $number_adults;
+	$assign_list["number_child"] = $number_child;
+	$assign_list["number_infants"] = $number_infants;
+	$assign_list["price_adults"] = $price_adults;
+	$assign_list["price_child"] = $price_child;
+	$assign_list["arr_price_child"] = $arr_price_child;
+	$assign_list["arr_price_infant"] = $arr_price_infant;
+	$assign_list["str_price_child"] = serialize($arr_price_child);
+	$assign_list["str_price_infant"] = serialize($arr_price_infant);
+	$assign_list["str_list_room"] = serialize($lst_room);
+	$assign_list["price_infants"] = $price_infants;
+	$assign_list["total_price_adults"] = $total_price_adults;
+	$assign_list["total_price_child"] = $total_price_child;
+	$assign_list["total_price_infants"] = $total_price_infants;
+	$assign_list["total_price"] = $total_price;
+	$assign_list["promotion"] = $promotion;
+	$assign_list["discount_type"] = $discount_type;
+	$assign_list["price_promotion"] = $price_promotion;
+	$assign_list["deposit"] = $deposit;
+	$assign_list["price_deposit"] = $price_deposit;
+	$assign_list["total_price_promotion"] = $total_price_promotion;
+	$assign_list["number_room"] = array_sum($number_room);
+	$assign_list["list_number_room"] = implode(',', $number_room);
+	//    $assign_list["room_id"] = implode(',',$room_id);
+	$assign_list["list_room_id"] = implode(',', array_column($lst_room, 'room_id'));
+	$assign_list["total_price_room"] =  array_sum(array_column($lst_room, "total_price_room"));
+
+	if ($clsISO->getCheckActiveModulePackage($package_id, 'booking', 'booking_tour', 'default')) {
+		$html = $core->build('loadTablePrice.tpl');
+	} else {
+		$html = $core->build('loadTableContactPrice.tpl');
+	}
+	echo $html;
+	die();
 }
 
 function default_tag()

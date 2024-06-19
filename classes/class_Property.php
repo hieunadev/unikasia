@@ -41,7 +41,7 @@ class Property extends dbBasic{
 		$listType = array();
         $listType['HotelFacilities'] = $core->get_Lang('HotelFacilities');
         $listType['TypeHotel'] = $core->get_Lang('Hotel Type');
-		$listType['TypeRoom'] = $core->get_Lang('Room Type');
+//		$listType['TypeRoom'] = $core->get_Lang('Room Type');
 //		$listType['TypeBed'] = $core->get_Lang('Bed Type');
 		$listType['RoomFacilities'] = $core->get_Lang('RoomFacilities');
 		return $listType;
@@ -183,5 +183,24 @@ class Property extends dbBasic{
 		$this->deleteOne($pvalTable);
 		return 1;
 	}
+
+    function getTitleByCatId($cat_id, $hotel_id, $type=""){
+        $lstTitle = $this->getAll("cat_id='$cat_id' and type='HotelFacilities'");
+        $content = '';
+        $clsHotel = new Hotel();
+        if ($type == "FE") {
+            foreach ($lstTitle as $item) {
+                $content .= ' <div class="item"><img src="'.$item['image'].'" alt=""> '.$item['title'].'</div>';
+            }
+            return $content;
+        }
+
+        foreach ($lstTitle as $item) {
+            $check = $clsHotel->checkProperty('HotelFacilities', $hotel_id,$item["property_id"]) ? "checked" : '';
+            $content .= '<div class="facilities_item" style="padding-right: 20px"><input type="checkbox" name="list_HotelAccommodation[]" '.$check.' value="'.$item["property_id"].'"> <span class="text">'.$item["title"].'</span></div>';
+        }
+
+        return $content;
+    }
 }
 ?>

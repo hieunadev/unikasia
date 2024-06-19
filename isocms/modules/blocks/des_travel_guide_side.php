@@ -2,9 +2,10 @@
 // ini_set('display_errors', '1');
 // ini_set('display_startup_errors', '1');
 // error_reporting(E_ALL);
-global $core, $smarty, $clsISO, $assign_list;
+global $core, $smarty, $clsISO, $assign_list, $deviceType;
 #
 $smarty->assign('clsISO', $clsISO);
+$smarty->assign('deviceType', $deviceType);
 #
 $clsCountry =   new Country();
 $smarty->assign('clsCountry', $clsCountry);

@@ -194,9 +194,9 @@
 					<div class="txt_numbt">
 						<div class="txt_numbfromus">
 						<p class="txt_fromnum">{$core->get_Lang('from')}</p>
-						<p class="txt_txtus">{$core->get_Lang('US')} <span class="txt_numbus">{$clsHotel->getPriceOnPromotion($hotel_id)}</span></p>
+						<p class="txt_txtus">{$core->get_Lang('US')} <span class="txt_numbus ms-1">${$clsHotel->getPriceAvg($hotel_id)}</span></p>
 						</div>
-													
+
 
 						<div class="btn_contactus">
 							<a href="{$PCMS_URL}contact-us" alt="contactus" title="contactus">
@@ -206,7 +206,7 @@
                                         </a>
 							</div>
 					</div>
-                       
+
                   </div>
 </div>
                 </div>
@@ -225,7 +225,7 @@
                                     src="{$clsHotelImage->getImage($listImage[i].hotel_image_id,841,420)}" />
                             </div>
 							{/section}
-							                               
+
 
                         </div>
                         <div class="col-lg-4">
@@ -235,7 +235,7 @@
                                         <img class="img_small"
                                             alt="{$clsHotelImage->getTitle($listImage[i].hotel_image_id,$listImage[i])}"
                                             src="{$clsHotelImage->getImage($listImage[i].hotel_image_id,202,202)}" />
-								
+
 										{if $countlistImage > 5}
 									<div class="view_all">
 										+{$remaining}
@@ -244,8 +244,8 @@
 								{/if}
                                     </div>
                                 {/section}
-								
-								
+
+
 
                             </div>
                         </div>
@@ -263,11 +263,11 @@
                                     <li><a class="nav-link" data-target=".scroll_inclusion">{$core->get_Lang('Inclusion')}</a></li>
                                     <li><a class="nav-link" data-target=".scroll_thing">{$core->get_Lang('Things to know')}</a></li>
                                     <li><a class="nav-link" data-target=".scroll_reviews">{$core->get_Lang('Reviews')}</a></li>
-									
+
 									<div class="txt_numbt">
 						<div class="txt_numbfromus">
 						<p class="txt_fromnum">{$core->get_Lang('from')}</p>
-						<p class="txt_txtus">{$core->get_Lang('US')} <span class="txt_numbus">{$clsHotel->getPriceOnPromotion($hotel_id)}</span></p>
+						<p class="txt_txtus">{$core->get_Lang('US')} <span class="txt_numbus">${$clsHotel->getPriceAvg($hotel_id)}</span></p>
 						</div>
 						<div class="btn_contactus">
 							<a href="{$PCMS_URL}contact-us" alt="contactus" title="contactus">
@@ -278,25 +278,25 @@
 							</div>
 					</div>
                                 </ul>
-								
-								
+
+
                             </div>
                             <div id="Overview" class="scroll_overview">
                                 {if !isset($overview_hotel) || !$overview_hotel}
                                 {else}
                                     <div class="nav-content">
                                         <h2 class="nav-content-title title_overview">{$core->get_Lang('Overview')}</h2>
-										
+
                                 <div class="list_facilities">
 
                                     {section name=i loop=$listHotelFacilitiesFavorite}
 
-									
+
                                     <div class="facilities_item align-items-center">
 
                                         <img width="16" height="16" src="{$listHotelFacilitiesFavorite[i].image}"/>
 
-                                 
+
 
                                         <div class="facilities_name">
 
@@ -307,14 +307,14 @@
                                     </div>
 
                                     {/section}
-											
+
 										</div>
-										
+
 										 <div class="overview-content">{$overview_hotel|html_entity_decode}</div>
 										<div class="btn_viewmoreless">{$core->get_Lang('View more')}</div>
                                     </div>
 
- 
+
 										</div>
 																				{/if}
 
@@ -410,8 +410,8 @@
                                             {$core->get_Lang('Avg price package')}
                                         </div>
                                         <div class="val_price">
-                                           <p class="txt_prival">US <h3 class="numb_prival">{if $clsHotel->getPriceOnPromotion($hotel_id,'detail')}
-                            {$clsHotel->getPriceOnPromotion($hotel_id)}
+                                           <p class="txt_prival">US <h3 class="numb_prival">{if $clsHotel->getPriceAvg($hotel_id)}
+                            ${$clsHotel->getPriceAvg($hotel_id)}
                         {else}
                             {$core->get_Lang('Contact us')}
                         {/if}</h3></p>
@@ -447,15 +447,17 @@
 <div class="border-accomm">
     <div class="row">
         <div class="col-md-4">
+            {section name=i loop=$lstHotelProperty max=1}
+                <h4>{$lstHotelProperty[i].title}</h4>
             <div class="column-content">
-                <h4>Bathroom</h4>
                 <div class="item"><i class="fa-thin fa-toilet-paper-blank-under fa-xl" style="color: #434b5c;"></i> Toilet paper</div>
                 <div class="item"><img src="{$URL_IMAGES}/hotel/detail/bath-towel.png"/> Towel</div>
                 <div class="item"><i class="fa-thin fa-circle-check fa-xl" style="color: #434b5c;"></i> Bath or Shower</div>
 				<div class="item"><i class="fa-thin fa-circle-check fa-xl" style="color: #434b5c;"></i> Private bathroom</div>
 				<div class="item"><i class="fa-thin fa-circle-check fa-xl" style="color: #434b5c;"></i> Free toiletries</div>
-            </div> 
-			
+{*                {$clsProperty->getTitleByCatId($lstHotelProperty[i].hotel_property_id, $hotel_id, "FE")}*}
+            </div>
+			{/section}
 			<div class="column-content" style="margin-top: 24px">
 				<h4>Bedroom</h4>
 				<div class="item"><i class="fa-thin fa-circle-check fa-xl" style="color: #434b5c;"></i> Bedspread</div>

@@ -274,6 +274,7 @@ function default_ajLoadFormEditProperty(){
 	global $core, $_LANG_ID;
 	#
 	$clsProperty =new Property();
+	$clsHotelProperty =new HotelProperty();
 	$property_id = $_POST['property_id'];
 	$type = $_POST['type'];
 	$oneItem = $clsProperty->getOne($property_id);
@@ -294,6 +295,14 @@ function default_ajLoadFormEditProperty(){
 			<td class="fieldarea">
 				<select class="slb" id="type">
 					'.$clsProperty->getSelectByType($clsProperty->getOneField('type',$property_id)).'
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td class="fieldarea span15" style="text-align:right"><strong>'.$core->get_Lang('Category').'</strong></td>
+			<td class="fieldarea">
+				<select class="slb" id="cat_id" name="cat_id">
+					'.$clsHotelProperty->getSelectByHotelCat($oneItem["cat_id"]).'
 				</select>
 			</td>
 		</tr>
@@ -340,6 +349,7 @@ function default_ajSubmitProperty(){
 	$titlePost = addslashes($_POST['title']);
 	$introPost = addslashes($_POST['intro']);
 	$slugPost = $core->replaceSpace($titlePost);
+	$cat_id = $_POST['cat_id'] ?? 0;
 	$type = $_POST['type'];
 	#
 	if(intval($property_id)==0){
@@ -362,7 +372,8 @@ function default_ajSubmitProperty(){
 			}
 		}
 	}else{
-		$set = "title='$titlePost',slug='$slugPost',image='$image'";
+		$set = "title='$titlePost',slug='$slugPost',image='$image', cat_id=$cat_id";
+        $clsProperty->setDebug(1);
 		if($clsProperty->updateOne($property_id,$set)){
 			echo('UP_SUCCESS'); die();
 		}else{
@@ -1069,7 +1080,7 @@ function default_ajSiteAddOnService(){
 					<a class="closeEv close_pop" data-dismiss="modal" aria-hidden="true">&nbsp;</a> 
 					<h3>'.($addonservice_id>0?$core->get_Lang('edit'):$core->get_Lang('add')).' '.$core->get_Lang('AddOn Service').'</h3> 
 				</div>';
-		$html.='
+		$html.= '
 		<form method="post" action="" id="form-post" class="frmform formborder" enctype="multipart/form-data">
 			<div class="wrap">
 				<div>

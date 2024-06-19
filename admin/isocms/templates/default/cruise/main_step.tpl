@@ -154,7 +154,7 @@
 						</div>
 
 						<div class="row">
-							<div class="col-md-6">
+							<div class="col-md-12">
 								<div class="inpt_tour">
 									<label for="title">{$core->get_Lang('Departure Port')}
 										{assign var= departure_port_cruise value='departure_port_cruise'}
@@ -168,6 +168,10 @@
 									</div>
 								</div>
 							</div>
+						</div>
+						<div class="inpt_tour">
+							<label for="title">{$core->get_Lang('Place to visit')} <span class="required_red">*</span></label>
+							<textarea class="required full-width" data-table_id="{$pvalTable}" name="place_visit" rows="5">{$clsClassTable->getOneField('place_visit',$pvalTable)}</textarea>
 						</div>
 						<div class="inpt_tour pdt30" style="border-top:1px dashed #0000004d">
 							<label for="title">{$core->get_Lang('reviewcruise')}

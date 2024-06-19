@@ -915,98 +915,224 @@ function default_cat()
 	$smarty->assign('show', $show);
 	#
 	if ($show === 'CruiseCatCountry') {
-		$country_slug       =   isset($_GET['slug_country']) ? $_GET['slug_country'] : '';
-		$country_id         =   $clsCountry->getBySlug($country_slug);
+		$country_slug	=   isset($_GET['slug_country']) ? $_GET['slug_country'] : '';
+		$country_id  	=   $clsCountry->getBySlug($country_slug);
 		#
-		$min_price = isset($_GET['min_price']) ? $_GET['min_price'] : "";
-		$max_price = isset($_GET['max_price']) ? $_GET['max_price'] : "";
+		$cruise_cat_slug	=   isset($_GET['slug_cat']) ? $_GET['slug_cat'] : '';
+		$cruise_cat_id  	=   $clsCruiseCat->getBySlug($cruise_cat_slug);
 		#
-		$cruise_cat_slug    =   isset($_GET['slug_cat']) ? $_GET['slug_cat'] : '';
-		$cruise_cat_id      =   $clsCruiseCat->getBySlug($cruise_cat_slug);
-		#
-		if (!empty($country_id) && !empty($cruise_cat_id)) {
-			$smarty->assign('country_id', $country_id);
-			$smarty->assign('cruise_cat_id', $cruise_cat_id);
-			#
-			$cruise_cat_country_id	= 	$clsCruiseCatCountry->getID($cruise_cat_id, $country_id);
-			#
-			/** --- Phân trang --- **/
-			$currentPage	= 	isset($_GET['page']) ? $_GET['page'] : 1;
-			$assign_list['currentPage']	= 	$currentPage;
-			#
-			if ($deviceType == 'phone') {
-				$recordPerPage 	= 	4;
-			} else {
-				$recordPerPage 	= 	8;
-			}
-			$assign_list['recordPerPage']	= 	$recordPerPage;
-			#
-			$cond	= 	"is_trash = 0 AND is_online = 1";
-			if ($country_id > 0) {
-				$cond	.=	" AND cruise_id IN (SELECT cruise_id FROM default_cruise_destination WHERE country_id = '$country_id')";
-			}
-			if ($cruise_cat_id > 0) {
-				$cond	.= 	" AND cruise_cat_id = '$cruise_cat_id'";
-			}
-			$order_by		= 	" ORDER BY order_no ASC";
-			$totalRecord 	= 	$clsCruise->getAll($cond) ? count($clsCruise->getAll($cond)) : 0;
-			$smarty->assign('totalRecord', $totalRecord);
-			#
-			$link_page	= 	$clsCruiseCatCountry->getLink($cruise_cat_country_id);
-			#
-			$config	= 	[
-				'total'				=> $totalRecord,
-				'number_per_page'	=> $recordPerPage,
-				'current_page'		=> $currentPage,
-				'link'				=> str_replace('.html', '/', $link_page),
-				'link_page'			=> $link_page
-			];
-			$clsPagination->initianize($config);
-			$page_view	= 	$clsPagination->create_links(false);
-			$offset 	= 	($currentPage - 1) * $recordPerPage;
-			$limit 		= 	" LIMIT $offset,$recordPerPage";
-			$listCruise = 	$clsCruise->getAll($cond . $order_by . $limit);
-			$assign_list['listCruise']	= 	$listCruise;
-			// unset($listCruise);
-			$assign_list['page_view']	= 	$page_view;
-			// unset($page_view);
-			$assign_list['totalPage']	= 	$clsPagination->getTotalPage();
-			/** --- End of Phân trang --- **/
-			#
-			// List tiện nghi cruise
-			$lstCruiseFa	= 	$clsCruiseProperty->getAll("is_trash=0 and type = 'CruiseFacilities' " . $order_by);
-			$assign_list['lstCruiseFa']	= 	$lstCruiseFa;
-			#
-			$cond2	= 	"is_trash = 0 AND is_online = 1";
-			// List quốc gia
-			$list_country	=	$clsCountry->getAll($cond2 . $order_by, $clsCountry->pkey);
-			$assign_list['list_country']	= 	$list_country;
-			#
-			// list duration
-			$list_duration	=	[];
-			$arr_duration	=	$clsCruiseItinerary->getAll($cond2 . " ORDER BY number_day ASC", 'cruise_itinerary_id, number_day');
-			foreach ($arr_duration as $row) {
-				$number_day = 	$row['number_day'];
-				if (!in_array($number_day, $list_duration)) {
-					$list_duration[]	= 	$number_day;
-				}
-			}
-			$assign_list['list_duration']	= 	$list_duration;
-			#
-			// Max price
-			$max_price_value	= 	$clsCruiseItinerary->maxItem("price_itinerary", "lang_id='' and is_trash=0 and is_online=1");
-			$assign_list['price_range_max']	= 	$max_price_value - 1;
-			if (!empty($max_price)) {
-				$cond .= " AND price_itinerary <= $max_price";
-				$assign_list["max_price"] = $max_price;
-			} else {
-				$assign_list["max_price"] = $max_price_value - 1;
-			}
-		} else {
+		if (empty($country_id)) {
 			header('location:' . PCMS_URL);
 			exit();
 		}
+	} else {
+		header('location:' . PCMS_URL);
+		exit();
 	}
+	#
+	$smarty->assign('country_id', $country_id);
+	if (!empty($cruise_cat_id)) {
+		$smarty->assign('cruise_cat_id', $cruise_cat_id);
+	}
+	#
+	$cond	= 	"is_trash = 0 AND is_online = 1";
+	if ($country_id > 0) {
+		$cond	.=	" AND cruise_id IN (SELECT cruise_id FROM default_cruise_destination WHERE country_id = '$country_id')";
+	}
+	#
+	if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'filters_form_cruise') {
+		$duration_filter_id =	isset($_POST['duration_filter_id']) ? $_POST['duration_filter_id'] : [];
+		$rating_filter_id 	=	isset($_POST['rating_filter_id']) ? $_POST['rating_filter_id'] : [];
+		$type_filter_id 	=	isset($_POST['type_filter_id']) ? $_POST['type_filter_id'] : [];
+		$cabin_filter_id 	=	isset($_POST['cabin_filter_id']) ? $_POST['cabin_filter_id'] : [];
+		$min_price 			=	isset($_POST['min_price']) ? $_POST['min_price'] : 0;
+		$max_price 			=	isset($_POST['max_price']) ? $_POST['max_price'] : 0;
+		#
+		$filter_link	=	$clsCountry->getLink($country_id, 'Cruise');
+		$params = 	[
+			'min_price' 			=>	$min_price,
+			'max_price' 			=>	$max_price,
+			'duration_filter_id'	=>	$duration_filter_id,
+			'rating_filter_id' 		=>	$rating_filter_id,
+			'type_filter_id' 		=>	$type_filter_id,
+			'cabin_filter_id' 		=>	$cabin_filter_id,
+		];
+		foreach ($params as $key => $value) {
+			if ($value) {
+				if ($key === 'min_price' || $key === 'max_price') {
+					$filter_link	.= 	'&' . $key . '=' . $value;
+				} else {
+					$filter_link 	.= 	'&' . $key . '=' . $clsISO->makeSlashListFromArrayComma($value);
+				}
+			}
+		}
+		header('Location: ' . trim($filter_link));
+	}
+	#
+	$duration_filter_id =	isset($_GET['duration_filter_id']) ? $_GET['duration_filter_id'] : '';
+	$rating_filter_id 	=	isset($_GET['rating_filter_id']) ? $_GET['rating_filter_id'] : '';
+	$type_filter_id 	=	isset($_GET['type_filter_id']) ? $_GET['type_filter_id'] : '';
+	$cabin_filter_id 	=	isset($_GET['cabin_filter_id']) ? $_GET['cabin_filter_id'] : '';
+	$min_price 			=	isset($_GET['min_price']) ? $_GET['min_price'] : 0;
+	$max_price 			=	isset($_GET['max_price']) ? $_GET['max_price'] : 0;
+	#
+	// Query duration
+	if (!empty($duration_filter_id)) {
+		$cond	.=	" AND cruise_id IN (SELECT cruise_id FROM default_cruise_itinerary WHERE number_day IN ($duration_filter_id))";
+		$assign_list["duration_filter_id"]	=	$duration_filter_id;
+	}
+	// Query rating
+	if (!empty($rating_filter_id)) {
+		$rating_conditions	=	[];
+		foreach (explode(",", $rating_filter_id) as $v) {
+			$rating_conditions[]	=	" star_number = '$v' ";
+		}
+		if (!empty($rating_conditions)) {
+			$cond	.=	" AND (" . implode(" OR ", $rating_conditions) . ")";
+		}
+		$assign_list["rating_filter_id"]	= 	$rating_filter_id;
+	}
+	// Query type
+	if (!empty($type_filter_id)) {
+		$cat_id_conditions	=	[];
+		foreach (explode(",", $type_filter_id) as $v) {
+			$cat_id_conditions[]	=	" list_cat_id LIKE '%|$v|%' ";
+		}
+		if (!empty($cat_id_conditions)) {
+			$cond	.=	" AND (" . implode(" OR ", $cat_id_conditions) . ")";
+		}
+		#
+		$cat_id_conditions2	=	[];
+		foreach (explode(",", $type_filter_id) as $v) {
+			$cat_id_conditions2[]	= 	" cruise_cat_id = '$v' ";
+		}
+		if (!empty($cat_id_conditions2)) {
+			$cond	.= 	" AND (" . implode(" OR ", $cat_id_conditions2) . ")";
+		}
+		$assign_list["type_filter_id"]	= 	$type_filter_id;
+	}
+	// Query cabin
+	if (!empty($cabin_filter_id)) {
+		$cond		.=	" AND (";
+		$conditions = 	[];
+		#
+		foreach (explode(",", $cabin_filter_id) as $v) {
+			if ($v == 1) {
+				$conditions[]	= 	"(total_cabin >= '1' AND total_cabin <= '5')";
+			}
+			if ($v == 2) {
+				$conditions[]	= 	"(total_cabin >= '6' AND total_cabin <= '10')";
+			}
+			if ($v == 3) {
+				$conditions[]	= 	"(total_cabin >= '11' AND total_cabin <= '20')";
+			}
+			if ($v == 4) {
+				$conditions[]	= 	"(total_cabin >= '21' AND total_cabin <= '30')";
+			}
+			if ($v == 5) {
+				$conditions[]	= 	"(total_cabin > '31')";
+			}
+		}
+		$cond	.= 	implode(" OR ", $conditions);
+		$cond 	.= 	")";
+		$assign_list["cabin_filter_id"]	=	$cabin_filter_id;
+	}
+	// Query min price
+	if (!empty($min_price)) {
+		$cond	.=	" AND cruise_id IN (SELECT cruise_id FROM default_cruise_itinerary WHERE price_itinerary >= '$min_price')";
+		$assign_list["min_price"]	=	$min_price;
+	} elseif (empty($min_price)) {
+		$assign_list["min_price"]	=	$min_price;
+	}
+	#
+	// Query max price
+	$max_price_value	= 	$clsCruiseItinerary->maxItem("price_itinerary", "lang_id='' and is_trash=0 and is_online=1");
+	$assign_list['price_range_max']	= 	$max_price_value - 1;
+	if (!empty($max_price)) {
+		$cond	.=	" AND cruise_id IN (SELECT cruise_id FROM default_cruise_itinerary WHERE price_itinerary <= '$max_price')";
+		$assign_list["max_price"] 	= 	$max_price;
+	} else {
+		$assign_list["max_price"] 	= 	$max_price_value - 1;
+	}
+	#
+	/** --- Phân trang --- **/
+	$currentPage	= 	isset($_GET['page']) ? $_GET['page'] : 1;
+	$assign_list['currentPage']	= 	$currentPage;
+	#
+	if ($deviceType == 'phone') {
+		$recordPerPage 	= 	4;
+	} else {
+		$recordPerPage 	= 	8;
+	}
+	$assign_list['recordPerPage']	= 	$recordPerPage;
+	#
+	$order_by		= 	" ORDER BY order_no ASC";
+	$totalRecord 	= 	$clsCruise->getAll($cond) ? count($clsCruise->getAll($cond)) : 0;
+	$smarty->assign('totalRecord', $totalRecord);
+	#
+	$lnk	= 	$_SERVER['REQUEST_URI'];
+	if (isset($_GET['page'])) {
+		$tmp 		= 	explode('&', $lnk);
+		$n 			= 	count($tmp) - 1;
+		$la_it 		= 	'&' . $tmp[$n];
+		$str_len 	= 	-strlen($la_it);
+		$link_page 	= 	substr($lnk, 0, $str_len);
+	} else {
+		$link_page 	= 	$lnk;
+	}
+	#
+	$config	= 	[
+		'total'				=> 	$totalRecord,
+		'number_per_page'	=> 	$recordPerPage,
+		'current_page'		=> 	$currentPage,
+		'link'				=> 	str_replace('.html', '/', $link_page),
+		'link_page'			=> 	$link_page
+	];
+	$clsPagination->initianize($config);
+	$page_view	= 	$clsPagination->create_links(false);
+	$offset 	= 	($currentPage - 1) * $recordPerPage;
+	$limit 		= 	" LIMIT $offset,$recordPerPage";
+	$listCruise = 	$clsCruise->getAll($cond . $order_by . $limit);
+	$assign_list['listCruise']	= 	$listCruise;
+	$assign_list['page_view']	= 	$page_view;
+	$assign_list['totalPage']	= 	$clsPagination->getTotalPage();
+	/** --- End of Phân trang --- **/
+	#
+	// List tiện nghi cruise
+	$lstCruiseFa	= 	$clsCruiseProperty->getAll("is_trash=0 and type = 'CruiseFacilities' " . $order_by);
+	$assign_list['lstCruiseFa']	= 	$lstCruiseFa;
+	#
+	$cond2	= 	"is_trash = 0 AND is_online = 1";
+	// List quốc gia
+	$list_country	=	$clsCountry->getAll($cond2 . $order_by, $clsCountry->pkey);
+	$assign_list['list_country']	= 	$list_country;
+	#
+	// list duration
+	$list_duration	=	[];
+	$arr_duration	=	$clsCruiseItinerary->getAll($cond2 . " ORDER BY number_day ASC", 'cruise_itinerary_id, number_day');
+	foreach ($arr_duration as $row) {
+		$number_day = 	$row['number_day'];
+		if (!in_array($number_day, $list_duration)) {
+			$list_duration[]	= 	$number_day;
+		}
+	}
+	$assign_list['list_duration']	= 	$list_duration;
+	#
+	// List cruise by country
+	$arr_cruise_cat_county	=	$clsCruiseCatCountry->getAll("$cond2 AND country_id =  $country_id $order_by", "$clsCruiseCatCountry->pkey, cat_id");
+	$assign_list['arr_cruise_cat_county']	= 	$arr_cruise_cat_county;
+	#
+	$title_cat	= 	$clsCruiseCat->getTitle($cruise_cat_id);
+	$assign_list['title_cat']	= 	$title_cat;
+	#
+	/*=============Title & Description Page==================*/
+	$title_page	=	$title_cat . ' | ' . $core->get_Lang('Cruise') . ' | ' . PAGE_NAME;
+	$assign_list["title_page"]	=	$title_page;
+	$description_page	=	$clsCruiseCat->getMetaDescription($cat_id);
+	$assign_list["description_page"]	=	$description_page;
+	$global_image_seo_page	=	$clsISO->getPageImageShare($cat_id, 'CruiseCat');
+	$assign_list["global_image_seo_page"]	=	$global_image_seo_page;
+	/*=============Content Page==================*/
 }
 function _default_cat()
 {

@@ -89,7 +89,7 @@
                                 <div class="d-flex flex-column align-items-center">
                                     <div class="d-flex flex-column flex-sm-row justify-content-center" style="gap: 16px; width: 100%">
                                         <button class="btn btn-request-book btn-hover-home">Request a quote</button>
-                                        <button class="btn btn-request-book btn-hover-home">Book it now</button>
+                                        <button class="btn btn-request-book btn-hover-home nav-link" data-target=".section_price">Book it now</button>
                                     </div>
                                     {if $oneItem.file_programme}
                                     <button type="button" class="btn btn-download" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -121,7 +121,7 @@
                         <div class="txt_numbpricetour">
                             <p class="txt_numbtour">From US <span class="under_numbprice">${$oneItem.min_price}</span> <span
                                         class="number_pricetour">${$clsTour->getPriceAfterDiscount($tour_id)}</span> /pax </p>
-                            <button class="btn btn-inquirenow btn-hover-home">Book Now</button>
+                            <button class="btn btn-inquirenow btn-hover-home nav-link" data-target=".section_price">Book Now</button>
                         </div>
                     </div>
                 </div>

@@ -60,7 +60,6 @@ $(function () {
     $('.value_end_date').text(newDateText);
 
     function eventParticipants(self, value) {
-
         let class_number = $(self).parents(".number");
         let number_travelers = $(self).parents(".number_travelers");
         class_number.find(".value").text(value);
@@ -85,6 +84,27 @@ $(function () {
         calculateTotalAmount();
     }
 
+    $(".lst_room").each(function() {
+        let value = parseInt($(this).find(".value").text());
+        let self = $(this).find('.plus');
+
+        if(value > 0 ) {
+            let class_number = $(self).parents(".number");
+            let number_travelers = $(self).parents(".number_travelers");
+            class_number.find(".value").text(value);
+
+            let data_class = class_number.attr("data-class");
+            let class_parent = number_travelers.attr("data-class");
+            let title = $(self)
+                .parents(".item_content_booking")
+                .find(".title")
+                .text();
+            let text = `<span class="span_item"><span class="${data_class}">${value}</span> x ${title}</span>`;
+            $(`.${class_parent}`).append(text);
+        }
+        // eventParticipants(self, value);
+    });
+
     function placeCaretAtEnd(el) {
         var range = document.createRange();
         var sel = window.getSelection();
@@ -96,17 +116,20 @@ $(function () {
     }
 
     function calculateTotalAmount(){
-        total_booking = parseInt($('#total_price').val());
+        const total_booking = parseInt($('#total_price').val());
+        const deposit = parseInt($('#deposit').val());
         let total = 0;
         $('.value').each(function(){
             let quantity = parseInt($(this).text());
             let price = parseFloat($(this).attr('data-price'));
             total += quantity * price;
         })
-
-        $('.total_booking').text(`US $${total_booking + total}`);
-        $('.subtotal_booking').text(`${total}`);
-        // $('.payment_amount').text(`${total}`);
+        let deposit_booking = Math.round(total*deposit/100)
+        let remaining_booking = Math.round(total - deposit_booking)
+        $('.total_booking').text(`US $${total}`);
+        $('.deposit_booking').text(`US $${deposit_booking}`);
+        $('.remaining_booking').text(`US $${remaining_booking}`);
+        $('.payment_amount').text(`${deposit_booking}`);
     }
 
     $(document)
@@ -152,6 +175,7 @@ $(function () {
                 let data_class = calc_distribution.attr("data-class");
                 $(`.${data_class}`).parents(".span_item").remove();
             }
+            calculateTotalAmount()
         })
         .on('click', '.item_radio', function(){
             let describe = $(this).parents('.type_payment').find('.describe');
@@ -265,6 +289,7 @@ $(function () {
         },
         submitHandler: function () {
             alert('Success');
+            return true;
         }
     });
 });

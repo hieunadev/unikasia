@@ -38,7 +38,7 @@ body {
     text-transform: uppercase;
 }
 .trvs_goood_reason .trvs_goood_reason_intro .stt {
-    width: 106px;
+    max-width: 106px;
     margin-right: 16px;
     margin-left: 73px;
 }
@@ -554,13 +554,14 @@ body {
     color: #fff;
 }
 .trvs_list_blog .box_right .trvs_item_blog {
-    padding: 16px;
+    padding: 16px 8px; /*van css new*/
     border-radius: 8px;
     border: 2px solid rgba(211, 220, 225, 0.3);
     background: #fff9f1;
     display: flex;
 }
 .trvs_list_blog .box_right .trvs_item_blog_intro {
+    padding: 0 8px; /*van css new*/
     max-width: 333px;
 }
 .trvs_list_blog .box_right .trvs_item_blog_link {
@@ -571,9 +572,10 @@ body {
 }
 .trvs_list_blog .box_right_top .trvs_item_blog_image {
     margin-left: auto;
+    padding: 0 8px; /*van css new*/
 }
 .trvs_list_blog .box_right_bot .trvs_item_blog_intro {
-    margin-left: 24px;
+    margin-left: 8px;
 }
 .trvs_list_blog .box_right_bot {
     margin-top: 38px;
@@ -821,8 +823,11 @@ body {
     overflow: hidden;
 }
 .des_tailor_travel_style_image img, .trvs_header_background_image img{
-    max-width: 100%;
+    /* max-width: 100%; */
     max-height: 100%;
+}
+.linkbooktour img{
+    margin-left: 0 !important;
 }
 /* van css new */
 @media screen and (max-width: 1170px) {
@@ -846,11 +851,88 @@ body {
         right: -25px;
     }
 }
+/* van css new */
 @media screen and (max-width: 991px) {
     .trvs_item_blog{
         margin-bottom: 38px;
     }
+    .trvs_faq_img {
+        width: 100%;
+    }
+    .trvs_faq_img img {
+        width: 100%;
+    }
+    .trvs_faq .title_trvs_faq{
+        display: inline-flex;
+        flex-wrap: wrap;
+        width: 100%;
+        justify-content: center;
+        gap: 6px;
+    }
+    .trvs_faq .title_trvs_faq span::after{
+        bottom: 15px;
+    }
+    .trvs_list_blog_content .box_left .trvs_item_blog {
+        display: flex;
+        gap: 24px;
+    }
+    .trvs_list_blog .box_left .trvs_item_blog_intro {
+        max-width: 333px;
+    }
+    .trvs_list_blog .trvs_item_blog_link{
+        margin-top: 44px;
+    }
+    .trvs_list_blog .box_left .trvs_item_blog_intro{
+        margin-top: 0;
+    }
 }
+@media screen and (max-width: 768px) {
+    .des_breadcrumb_title, .des_breadcrumb {
+        display: none;
+    }
+    .tour_cat_body .exploretrip h2.txtourtrip{
+        display: inline-flex;
+        flex-wrap: wrap;
+        width: 100%;
+        justify-content: center;
+    }
+    .des_travel_style_title h2,
+    .des_travel_style_title h2 p{
+        text-align: left !important;
+    }
+    .tour_cat_body .txt_underline span::after{
+        bottom: 8px;
+    }
+    .card_text{
+        max-width: 100%;
+    }
+    .card_text h3 .title_card_explore_trip{
+        height: 150%;
+    }
+    .trvs_travel_file_title h2{
+        display: inline-flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+    }
+    .trvs_list_blog .box_right .trvs_item_blog {
+        flex-direction: column;
+        gap: 24px;
+    } 
+    .trvs_list_blog .box_right .trvs_item_blog_intro {
+        max-width: 100%;
+    }
+    .trvs_list_blog .box_right_top .trvs_item_blog_image {
+        width: 100%;
+    }
+    .trvs_list_blog .box_right_top .trvs_item_blog_image{
+        padding: 0;
+    }
+    .trvs_list_blog_content .box_left .trvs_item_blog {
+        flex-direction: column;
+    }
+}
+/* van css new */
 @media screen and (max-width: 600px) {
 }
 @media screen and (max-width: 414px) {
@@ -858,10 +940,235 @@ body {
         flex-direction: column;
     }
     .trvs_list_blog .box_right_top {
-        margin-top: 32px;
+        margin-top: 24px;
     }
     .trvs_list_blog .box_right_bot .trvs_item_blog_intro {
         margin: unset;
+    }
+    .trvs_header_background_image img {
+        max-width: unset;
+    }
+    .des_tailor_top{
+        margin-bottom: 40px;
+    }
+    .des_tailor_travel_style_image {
+        margin-bottom: 50px !important;
+    }
+    .details{
+        margin-left: 0;
+    }
+    .trvs_goood_reason .trvs_goood_reason_intro{
+        padding: 32px 16px;
+    }
+    .trvs_goood_reason .trvs_goood_reason_intro .stt{
+        max-width: 64px;
+        margin: 0;
+    }
+    .trvs_goood_reason .trvs_goood_reason_intro .header_home_box{
+        gap: 16px;
+        align-items: center;
+        justify-content: center;
+    }
+    .trvs_goood_reason .trvs_goood_reason_intro .header_home_box p,
+    .trvs_goood_reason .trvs_goood_reason_intro .header_home_box .title_home_box_data{
+        color: var(--Neutral-1, #111D37);
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 30px;
+    }
+    .trvs_goood_reason .trvs_goood_reason_intro .square{
+        width: 64px;
+        height: 64px;
+        color: var(--Accent-2, #004EA8);
+        font-size: 32px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 64px;
+    }
+    .trvs_goood_reason .trvs_goood_reason_intro .title_home_box{
+        margin-bottom: 0;
+    }
+    .trvs_when_vn .title_home_box,
+    .trvs_list_blog_title h2{
+        color: var(--Neutral-1, #111D37);
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 36px; 
+    }
+    .trvs_when_vn .title_home_box p span::after {
+        height: 4px;
+        bottom: 5px;
+    }
+    .trvs_list_blog_title h2 p span::after  {
+        height: 4px;
+        bottom: 6px;
+    }
+    .trvs_when_vn .header_home_box .description p{
+        color: var(--Neutral-2, #434B5C);
+        text-align: center;
+        font-size: 16px;
+        font-style: italic;
+        font-weight: 400;
+        line-height: 24px;
+    }
+    .trvs_when_vn .tab_month {
+        padding: 0 12px;
+        background: unset;
+    }
+    .trvs_when_vn .tab_month img {
+        display: none;
+    }
+    .trvs_when_vn .tab_month .month a {
+        height: 48px;
+    }
+    .trvs_when_vn .tab_month .month {
+        padding: 0 2px;
+    }
+    .trvs_when_vn .tab_content{
+        margin: 24px 0;
+    }
+    .trvs_when_vn .tab_destination {
+        padding-bottom: 48px;
+    }
+    .trvs_list_blog_title h2 {
+        margin-bottom: 40px;
+    }
+    .trvs_list_blog .trvs_item_blog_title h3{
+        height: fit-content;
+    }
+    .trvs_list_blog .trvs_item_blog_link{
+        display: none;
+    }
+    .trvs_item_blog {
+        margin-bottom: 0px;
+    }
+    .trvs_list_blog .box_right_bot {
+        margin-top: 24px;
+    }
+    .trvs_list_blog_content{
+        border: unset;
+        padding-bottom: 40px;
+    }
+    .trvs_travel_file {
+        padding: 40px 12px;
+    }
+    .reasonsbook{
+        color: var(--Neutral-2, #434B5C);
+        text-align: center;
+        font-size: 24px;
+        font-weight: 600;
+        line-height: 36px;
+    }
+    .trvs_when_vn .tab_destination .des_item .map{
+        margin: 8px 0;
+    }
+    .trvs_when_vn .tab_destination .des_item .btn_link_act{
+        display: none;
+    }
+    .trvs_list_blog{
+        padding: 40px 12px 0 12px;
+    }
+    .trvs_list_blog .trvs_item_blog_title h3{
+        color: var(--Neutral-1, #111D37);
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 28px; 
+    }
+    .trvs_list_blog .trvs_item_blog_info {
+        color: var(--Neutral-2, #434B5C);
+        font-family: "SF Pro Display";
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 20px;
+    }
+    .trvs_travel_file_title h2{
+        color: var(--Neutral-1, #111D37);
+        font-size: 24px;
+        font-weight: 600;
+        line-height: 36px; /* 150% */
+    }
+    .trvs_travel_file_title h2 span::after {
+        height: 4px;
+        bottom: 10px;
+    }
+    .reasonandrecom{
+        padding: 40px 12px;
+    }
+    .txtfamous{
+        color: var(--Neutral-2, #434B5C);
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 28px;
+    }
+    .customersay{
+        padding: 40px 12px 0 12px;
+    }
+    .txt_reviews{
+        color: var(--Neutral-1, #111D37);
+        font-size: 24px;
+        font-weight: 600;
+        line-height: 36px; 
+    }
+    .txt_reviews::after {
+        height: 4px;
+        bottom: 8px;
+    }
+    .customersay .content{
+        color: var(--Neutral-1, #111D37);
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 20px; /* 142.857% */
+    }
+    .customersay .more_review {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 20px; 
+    }
+    .trvs_faq_list{
+        margin-top: 40px;
+    }
+    .trvs_faq .title_trvs_faq{
+        font-size: 24px;
+        font-weight: 600;
+        line-height: 36px; 
+    }
+    .trvs_faq .title_trvs_faq span::after{
+        display: none;
+    }
+    .trvs_faq{
+        padding: 0 12px 40px 12px;
+    }
+    .trvs_faq_img{
+        margin-top: 24px;
+    }
+    #nah_also_like .alsoLike{
+        margin-top: 40px;
+    }
+    .content_trvs_faq {
+        padding-bottom: 0px;
+        border-bottom: unset;
+    }
+    .tour_cat_body .alsoLike-title span::after{
+        height: 4px;
+        bottom: 6px;
+    }
+    .tour_cat_body .des_list_travel_style {
+        padding: 40px 0px 92px 0px;
+    }
+    .des_travel_style_title{
+        padding: 0 12px;
+    }
+    .tour_cat_body .exploretrip{
+        padding: 0 12px;
+    }
+    .trvs_when_vn{
+        padding-top: 48px;
+    }
+    #nah_also_like .alsoLike-title-parent{
+        padding: 0 24px;
     }
 }
 @media screen and (max-width: 375px) {

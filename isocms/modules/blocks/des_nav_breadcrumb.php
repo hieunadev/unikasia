@@ -11,6 +11,8 @@ $clsGuideCat        =   new GuideCat();
 $smarty->assign('clsGuideCat', $clsGuideCat);
 $clsGuide           =   new Guide();
 $smarty->assign('clsGuide', $clsGuide);
+$clsCruiseCat       =   new CruiseCat();
+$smarty->assign('clsCruiseCat', $clsCruiseCat);
 #
 $show   =   isset($_GET['show']) ? $_GET['show'] : '';
 $smarty->assign('show', $show);
@@ -49,3 +51,12 @@ $smarty->assign('keyword', $keyword);
 #
 $guidetag   =   isset($_GET['slug']) ? $_GET['slug'] : '';
 $smarty->assign('guidetag', $guidetag);
+#
+if ($show === 'CruiseCatCountry') {
+    $cruise_cat_slug    =   isset($_GET['slug_cat']) ? $_GET['slug_cat'] : '';
+    $cruise_cat_id      =   $clsCruiseCat->getBySlug($cruise_cat_slug);
+    #
+    if (!empty($cruise_cat_id)) {
+        $smarty->assign('cruise_cat_id', $cruise_cat_id);
+    }
+}
