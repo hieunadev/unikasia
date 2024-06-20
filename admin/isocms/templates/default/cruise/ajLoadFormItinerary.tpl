@@ -10,6 +10,12 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="inpt_tour">
+					<label>{$core->get_Lang('Title Itinerary')}</label>
+					<div class="input-group" style="width: 100%;">
+						<input class="form-control title_itinerary" name="title_itinerary" value="{$oneCruiseItinerary.title_itinerary}" type="text">
+					</div>
+				</div>
+				<div class="inpt_tour">
 					<label for="title">{$core->get_Lang('Number day')}</label>
 					<div class="d-flex flex-wrap">
 						<div class="d-flex align-items-center number_duration_days number_duration_days_new mr-5">
@@ -38,7 +44,7 @@
 						<span class="input-group-addon">USD</span>
 					</div>
 				</div>
-				<div class="form-group inpt_tour">
+				<!-- <div class="form-group inpt_tour">
 					<label for="title">{$core->get_Lang('Destinations')}</label>
 					{*<div class="row-span">
 						{if $clsISO->getCheckActiveModulePackage($package_id,'continent','default ','default')}
@@ -157,7 +163,7 @@
 							<div class="clearfix mt10"></div>
 						</div>
 					</div>
-				</div>
+				</div> -->
 				{/if}
 			</div>
 			{if $cruise_itinerary_id}
@@ -176,7 +182,6 @@
 									<tr>
 										<th class="gridheader hiden_responsive" style="text-align:left; width:80px"><strong>{$core->get_Lang('Day')}</strong></th>
 										<th class="gridheader name_responsive name_responsive4" colspan="2" style="text-align:left"><strong>{$core->get_Lang('Title')}</strong></th>
-
 										<th class="gridheader hiden_responsive" style="text-align:center; width:100px"></th>
 									</tr>
 								</thead>
@@ -189,7 +194,7 @@
 			</div>
 			{/if}
 		</div>
-		{if $cruise_itinerary_id}
+		{*{if $cruise_itinerary_id}
 		{if $clsISO->getCheckActiveModulePackage($package_id,'cruise','service','default')}
 		<div class="form-group inpt_tour">
 			<label for="title">{$core->get_Lang('servicecruises')}</label>
@@ -224,7 +229,7 @@
 			</div>
 		</div>
 		{/if}
-		{/if}
+		{/if}*}
 	</div>
 	<div class="box_footer_cabin">
 		<button type="button" class="btn_back_cabin">{$core->get_Lang('Back')}</button>

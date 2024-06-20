@@ -1,60 +1,74 @@
 <?php
-class CruiseProperty extends dbBasic {
-    function __construct() {
+class CruiseProperty extends dbBasic
+{
+    function __construct()
+    {
         $this->pkey = "cruise_property_id";
-        $this->tbl = DB_PREFIX."cruise_property";
+        $this->tbl = DB_PREFIX . "cruise_property";
     }
-    function getTitle($pval) {
+    function getTitle($pval)
+    {
         return $this->getOneField('title', $pval);
     }
-    function getOrder($pval) {
+    function getOrder($pval)
+    {
         return $this->getOneField('order_no', $pval);
     }
-    function getContent($pval) {
+    function getContent($pval)
+    {
         return $this->getOneField('content', $pval);
     }
-    function getIntro($pval) {
+    function getIntro($pval)
+    {
         return $this->getOneField('intro', $pval);
     }
-	function getClassIcon($pval) {
+    function getClassIcon($pval)
+    {
         return $this->getOneField('class_icon', $pval);
     }
-	 function getNumberAdult($pval) {
+    function getNumberAdult($pval)
+    {
         return $this->getOneField('number_adult', $pval);
     }
-	 function getNumberChild($pval) {
+    function getNumberChild($pval)
+    {
         return $this->getOneField('number_child', $pval);
     }
-    function getBySlug($slug, $type) {
+    function getBySlug($slug, $type)
+    {
         $res = $this->getAll("is_trash=0 and type='$type' and slug='$slug'");
         return $res[0]['cruise_property_id'];
     }
-	function getSymbol($tour_property_id){
-		$one = $this->getOne($tour_property_id,'symbol');
-		return $one['symbol'];
-	}
-    function getListType() {
-		global $core;
+    function getSymbol($tour_property_id)
+    {
+        $one = $this->getOne($tour_property_id, 'symbol');
+        return $one['symbol'];
+    }
+    function getListType()
+    {
+        global $core, $clsISO;
         $listType = array();
-		$listType['CruiseFaActivities'] = $core->get_Lang('Activities on Board');
-		//$listType['RestFacilities'] = $core->get_Lang('restfacilities');
-		$listType['CruiseFacilities'] = $core->get_Lang('cruisefacilities');
-        $listType['CabinFacilities'] = $core->get_Lang('cabinfacilities');
-		$listType['CruiseServices'] = $core->get_Lang('Cruise Services');
-		$listType['TravelAs'] = $core->get_Lang('Great for groups');
-//		$listType['ThingAbout'] = $core->get_Lang('Things about');
-		$listType['GroupSize'] = $core->get_Lang('Group size');
-		$listType['HighLow'] = $core->get_Lang('High/Low season');
-		$listType['Conditions'] = $core->get_Lang('Conditions');
-		$listType['CruiseMaterial'] = $core->get_Lang('Cruise Material');
-		$listType['MEAL'] = $core->get_Lang('Meal');
+        // $listType['CruiseFaActivities'] = $core->get_Lang('Activities on Board');
+        // $listType['RestFacilities'] = $core->get_Lang('restfacilities');
+        $listType['CruiseFacilities'] = $core->get_Lang('cruisefacilities');
+        // $listType['CabinFacilities'] = $core->get_Lang('cabinfacilities');
+        // $listType['CruiseServices'] = $core->get_Lang('Cruise Services');
+        // $listType['TravelAs'] = $core->get_Lang('Great for groups');
+        // $listType['ThingAbout'] = $core->get_Lang('Things about');
+        // $listType['GroupSize'] = $core->get_Lang('Group size');
+        // $listType['HighLow'] = $core->get_Lang('High/Low season');
+        // $listType['Conditions'] = $core->get_Lang('Conditions');
+        $listType['CruiseMaterial'] = $core->get_Lang('Cruise Material');
+        $listType['MEAL'] = $core->get_Lang('Meal');
         return $listType;
     }
-    function getTextByType($selected = '') {
+    function getTextByType($selected = '')
+    {
         $lstType = $this->getListType();
         return $lstType[$selected];
     }
-    function getSelectByType($selected = '') {
+    function getSelectByType($selected = '')
+    {
         global $core;
         #
         $lstType = $this->getListType();
@@ -65,55 +79,59 @@ class CruiseProperty extends dbBasic {
         }
         return $html;
     }
-    function getImage($pval) {
+    function getImage($pval)
+    {
         global $_LANG_ID;
-        $one = $this->getOne($pval,'image');
+        $one = $this->getOne($pval, 'image');
         if ($one['image'] != '')
             return $one['image'];
     }
-    function getSelectByProperty($type, $selected = '',$is_multi=0) {
-        global $core,$clsISO;
+    function getSelectByProperty($type, $selected = '', $is_multi = 0)
+    {
+        global $core, $clsISO;
         #
         $all = $this->getAll("is_trash=0 and type='$type' order by order_no asc");
-        
+
         if (!empty($all)) {
             $i = 0;
             foreach ($all as $item) {
-				if(!empty($is_multi)){
-					$selected_index = ($clsISO->checkContainer($selected,$item[$this->pkey])) ? 'selected="selected"' : '';
-				}else{
-					$selected_index = ($selected == $item[$this->pkey]) ? 'selected="selected"' : '';
-				}                
-                $html.='<option value="' . $item[$this->pkey] . '" ' . $selected_index . '>' . $this->getTitle($item[$this->pkey]) . '</option>';
+                if (!empty($is_multi)) {
+                    $selected_index = ($clsISO->checkContainer($selected, $item[$this->pkey])) ? 'selected="selected"' : '';
+                } else {
+                    $selected_index = ($selected == $item[$this->pkey]) ? 'selected="selected"' : '';
+                }
+                $html .= '<option value="' . $item[$this->pkey] . '" ' . $selected_index . '>' . $this->getTitle($item[$this->pkey]) . '</option>';
                 ++$i;
             }
         }
         return $html;
     }
-    function getSelectByProperty2($type, $selected = '',$is_multi=0,$cruise_type='') {
-        global $core,$clsISO;
+    function getSelectByProperty2($type, $selected = '', $is_multi = 0, $cruise_type = '')
+    {
+        global $core, $clsISO;
         #
-        if($cruise_type==0){
-          $all = $this->getAll("is_trash=0 and type='$type' and is_private=1 order by order_no asc");  
-        }elseif($cruise_type==1){
-          $all = $this->getAll("is_trash=0 and type='$type' and is_private=0 order by order_no asc");  
+        if ($cruise_type == 0) {
+            $all = $this->getAll("is_trash=0 and type='$type' and is_private=1 order by order_no asc");
+        } elseif ($cruise_type == 1) {
+            $all = $this->getAll("is_trash=0 and type='$type' and is_private=0 order by order_no asc");
         }
-        
+
         if (!empty($all)) {
             $i = 0;
             foreach ($all as $item) {
-				if(!empty($is_multi)){
-					$selected_index = ($clsISO->checkContainer($selected,$item[$this->pkey])) ? 'selected="selected"' : '';
-				}else{
-					$selected_index = ($selected == $item[$this->pkey]) ? 'selected="selected"' : '';
-				}                
-                $html.='<option value="' . $item[$this->pkey] . '" ' . $selected_index . '>' . $this->getTitle($item[$this->pkey]) . '</option>';
+                if (!empty($is_multi)) {
+                    $selected_index = ($clsISO->checkContainer($selected, $item[$this->pkey])) ? 'selected="selected"' : '';
+                } else {
+                    $selected_index = ($selected == $item[$this->pkey]) ? 'selected="selected"' : '';
+                }
+                $html .= '<option value="' . $item[$this->pkey] . '" ' . $selected_index . '>' . $this->getTitle($item[$this->pkey]) . '</option>';
                 ++$i;
             }
         }
         return $html;
     }
-    function makeOption($cat_id = 0, $type = '', $selectedid = "", $level = 0, &$arrHtml) {
+    function makeOption($cat_id = 0, $type = '', $selectedid = "", $level = 0, &$arrHtml)
+    {
         global $dbconn;
         $cond = "is_trash=0 and parent_id='" . $cat_id . "'";
         if ($type != '') {
@@ -133,7 +151,8 @@ class CruiseProperty extends dbBasic {
             return "";
         }
     }
-    function getListOption($selected = '') {
+    function getListOption($selected = '')
+    {
         global $core;
         #
         $arrOptionsCategory = array();
@@ -146,7 +165,8 @@ class CruiseProperty extends dbBasic {
         }
         return $html;
     }
-    function checkContain($haystack, $needle) {
+    function checkContain($haystack, $needle)
+    {
         $pos = strpos($haystack, $needle);
 
         if ($pos === false) {
@@ -155,17 +175,17 @@ class CruiseProperty extends dbBasic {
             return 1;
         }
     }
-	function doDelete($pvalTable){
-		$clsISO = new ISO();
-        $type=$this->getOneField('type',$pvalTable);
-        if($type=='GroupSize'){
+    function doDelete($pvalTable)
+    {
+        $clsISO = new ISO();
+        $type = $this->getOneField('type', $pvalTable);
+        if ($type == 'GroupSize') {
             $clsCruiseSeasonPrice = new CruiseSeasonPrice();
             $clsCruiseSeasonPrice->deleteByCond("group_size_id='$pvalTable'");
         }
-        
-		#
-		$this->deleteOne($pvalTable);
-		return 1;
-	}
+
+        #
+        $this->deleteOne($pvalTable);
+        return 1;
+    }
 }
-?>

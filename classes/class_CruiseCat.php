@@ -345,7 +345,7 @@ class CruiseCat extends dbBasic
             $html   =   '<option value="">-- Cruise Category --</option>';
             foreach ($lstCat as $k => $v) {
                 $_array = $this->getArray($selected);
-                $html .= '<option value="' . $v['cruise_cat_id'] . '" ' . ($clsISO->checkItemInArray($v[$this->pkey], $_array) ? 'selected="selected"' : '') . '>-- ' . $v['title'] . '</option>';
+                $html .= '<option value="' . $v['cruise_cat_id'] . '" ' . ($clsISO->checkItemInArray($v[$this->pkey], $_array) ? 'selected="selected"' : '') . '> ' . $v['title'] . '</option>';
             }
             unset($lstCat);
         }

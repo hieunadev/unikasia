@@ -1291,26 +1291,26 @@ function default_ajLoadTourExtension(){
 			$html.='<td class="index">'.($i+1).'</td>';
 			$html.='<td><strong>'.$clsTour->getTitle($item['tour_id']).'</strong></td>';
 			$html.='<td><strong>'.$clsTour->getTripDuration($item['tour_id']).'</strong></td>';
-			if($clsConfiguration->getValue('SiteHasCat_Tours')) {
-				$html.='<td><strong>'.$clsTour->getCatName($item['tour_id']).'</strong></td>';
-			}
-			$html.='<td style="text-align:right; white-space:nowrap">
-						<strong class="format_price">
-							'.$clsProperty->getOneField('property_code',$clsConfiguration->getValue('Currency')).' '.$clsISO->formatNumberToEasyRead($clsTour->getOneField('min_price',$item['tour_id'])).'
-						</strong>
-					</td>';
-			$html.='<td style="vertical-align: middle;text-align:center">
-					'.($i==0?'':'<a title="'.$core->get_Lang('movetop').'"  direct="movetop" class="moveTourExtension" data="'.$item[$clsBlogExtension->pkey].'" href="javascript:void();" onClick="moveTourExtension(this)"><i class="icon-circle-arrow-up"></i></a>').'
-                </td>
-                <td style="vertical-align: middle;text-align:center">
-                    '.($i==count($lstItem)-1?'':'<a title="'.$core->get_Lang('movebottom').'" class="moveTourExtension" direct="movebottom" data="'.$item[$clsBlogExtension->pkey].'" href="javascript:void();" onClick="moveTourExtension(this)"><i class="icon-circle-arrow-down"></i></a>').'
-                </td>
-                <td style="vertical-align: middle;text-align:center">
-                    '.($i==0?'':'<a title="'.$core->get_Lang('moveup').'" class="moveTourExtension" direct="moveup" data="'.$item[$clsBlogExtension->pkey].'" href="javascript:void();" onClick="moveTourExtension(this)"><i class="icon-arrow-up"></i></a>').'
-                </td>
-                <td style="vertical-align: middle;text-align:center">
-                    '.($i==count($lstItem)-1 ? '' : '<a title="'.$core->get_Lang('movedown').'" class="moveTourExtension" direct="movedown" data="'.$item[$clsBlogExtension->pkey].'" href="javascript:void();" onClick="moveTourExtension(this)"><i class="icon-arrow-down"></i></a>').'
-                </td>';
+//			if($clsConfiguration->getValue('SiteHasCat_Tours')) {
+//				$html.='<td><strong>'.$clsTour->getCatName($item['tour_id']).'</strong></td>';
+//			}
+//			$html.='<td style="text-align:right; white-space:nowrap">
+//						<strong class="format_price">
+//							'.$clsProperty->getOneField('property_code',$clsConfiguration->getValue('Currency')).' '.$clsISO->formatNumberToEasyRead($clsTour->getOneField('min_price',$item['tour_id'])).'
+//						</strong>
+//					</td>';
+//			$html.='<td style="vertical-align: middle;text-align:center">
+//					'.($i==0?'':'<a title="'.$core->get_Lang('movetop').'"  direct="movetop" class="moveTourExtension" data="'.$item[$clsBlogExtension->pkey].'" href="javascript:void();" onClick="moveTourExtension(this)"><i class="icon-circle-arrow-up"></i></a>').'
+//                </td>
+//                <td style="vertical-align: middle;text-align:center">
+//                    '.($i==count($lstItem)-1?'':'<a title="'.$core->get_Lang('movebottom').'" class="moveTourExtension" direct="movebottom" data="'.$item[$clsBlogExtension->pkey].'" href="javascript:void();" onClick="moveTourExtension(this)"><i class="icon-circle-arrow-down"></i></a>').'
+//                </td>
+//                <td style="vertical-align: middle;text-align:center">
+//                    '.($i==0?'':'<a title="'.$core->get_Lang('moveup').'" class="moveTourExtension" direct="moveup" data="'.$item[$clsBlogExtension->pkey].'" href="javascript:void();" onClick="moveTourExtension(this)"><i class="icon-arrow-up"></i></a>').'
+//                </td>
+//                <td style="vertical-align: middle;text-align:center">
+//                    '.($i==count($lstItem)-1 ? '' : '<a title="'.$core->get_Lang('movedown').'" class="moveTourExtension" direct="movedown" data="'.$item[$clsBlogExtension->pkey].'" href="javascript:void();" onClick="moveTourExtension(this)"><i class="icon-arrow-down"></i></a>').'
+//                </td>';
 			$html.='<td style="text-align:center">
 						<a title="'.$core->get_Lang('delete').'" class="btn clickDeleteBlogExtension btn-danger fileinput-button" data="'.$item[$clsBlogExtension->pkey].'" href="javascript:void();" tp="tour" onclick="deleteBlogExtension(this)">
 							<i class="icon-remove icon-white"></i>

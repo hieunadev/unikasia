@@ -407,7 +407,7 @@ img {}
 .item_travelers .number {
     padding: 3px;
     border: 1px solid #D3DCE1;
-    border-radius: 18px;
+    border-radius: 8px;
     height: fit-content;
     gap: 10px;
 }
@@ -782,7 +782,7 @@ img {}
     color: var(--Neutral-1, #111D37);
 }
 
-.total_booking, .payment_remaining, .subtotal_booking {
+.total_booking, .deposit_booking, .remaining_booking {
     font-weight: 600;
 }
 

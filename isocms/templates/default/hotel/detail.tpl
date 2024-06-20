@@ -100,8 +100,8 @@
                 {if $oneItem.country_id}
                     {assign var=title_country value=$clsCountryEx->getTitle($oneItem.country_id)}
                     <h1 class="navbarHeads-li">
-                        <a href="{$curl}" title="{$title_hotel}">
-                            <span itemprop="name" class="reb navbarHeads-nav">{$title_hotel}</span></a>
+                        
+                            <span itemprop="name" class="reb navbarHeads-nav">{$title_hotel}</span>
 						<div class="border-icoshare submitted">
 						 <div class="share_box">
 							<i class="fa-regular fa-share-nodes fa-2xs"></i>                                
@@ -191,6 +191,7 @@
 							
 					
 					</div>
+					
 					<div class="txt_numbt">
 						<div class="txt_numbfromus">
 						<p class="txt_fromnum">{$core->get_Lang('from')}</p>
@@ -447,65 +448,28 @@
 <div class="border-accomm">
     <div class="row">
         <div class="col-md-4">
-            {section name=i loop=$lstHotelProperty max=1}
-                <h4>{$lstHotelProperty[i].title}</h4>
+            {section name=i loop=$lstHotelProperty max=3}
             <div class="column-content">
-                <div class="item"><i class="fa-thin fa-toilet-paper-blank-under fa-xl" style="color: #434b5c;"></i> Toilet paper</div>
-                <div class="item"><img src="{$URL_IMAGES}/hotel/detail/bath-towel.png"/> Towel</div>
-                <div class="item"><i class="fa-thin fa-circle-check fa-xl" style="color: #434b5c;"></i> Bath or Shower</div>
-				<div class="item"><i class="fa-thin fa-circle-check fa-xl" style="color: #434b5c;"></i> Private bathroom</div>
-				<div class="item"><i class="fa-thin fa-circle-check fa-xl" style="color: #434b5c;"></i> Free toiletries</div>
-{*                {$clsProperty->getTitleByCatId($lstHotelProperty[i].hotel_property_id, $hotel_id, "FE")}*}
+                <h4>{$lstHotelProperty[i].title}</h4>
+                {$clsProperty->getTitleByCatId($lstHotelProperty[i].hotel_property_id, $hotel_id, "FE")}
             </div>
 			{/section}
-			<div class="column-content" style="margin-top: 24px">
-				<h4>Bedroom</h4>
-				<div class="item"><i class="fa-thin fa-circle-check fa-xl" style="color: #434b5c;"></i> Bedspread</div>
-				<div class="item"><i class="fa-thin fa-circle-check fa-xl" style="color: #434b5c;"></i> Closet or closet</div>
-				<div class="item"><i class="fa-thin fa-circle-check fa-xl" style="color: #434b5c;"></i> Alarm clock</div>
-				
-			</div>
         </div>
         <div class="col-md-4">
+            {section name=i loop=$lstHotelProperty start=3 max=2}
             <div class="column-content">
-                <h4>Outside</h4>
-                <div class="item"><i class="fa-thin fa-circle-check fa-xl" style="color: #434b5c;"></i> Outdoor tables and chairs</div>
-                <div class="item"><i class="fa-thin fa-circle-check fa-xl" style="color: #434b5c;"></i> Sun terrace</div>
-                <div class="item"><i class="fa-thin fa-circle-check fa-xl" style="color: #434b5c;"></i> Terrace/patio</div>
+                <h4>{$lstHotelProperty[i].title}</h4>
+                {$clsProperty->getTitleByCatId($lstHotelProperty[i].hotel_property_id, $hotel_id, "FE")}
             </div>
-			
-			<div class="column-content" style="margin-top: 24px">
-                <h4>Kitchen</h4>
-                <div class="item"><i class="fa-thin fa-circle-check fa-xl" style="color: #434b5c;"></i> Electric kettle</div>
-                <div class="item"><i class="fa-light fa-refrigerator fa-xl" style="color: #434b5c;"></i>  Fridge</div>
-            </div>
-			
-			<div class="column-content" style="margin-top: 24px">
-                <h4>Work</h4>
-                 <div class="item"><i class="fa-thin fa-circle-check fa-xl" style="color: #434b5c;"></i> Bicycle rental</div>
-                <div class="item"><i class="fa-thin fa-circle-check fa-xl" style="color: #434b5c;"></i> Cycling tour</div>
-            </div>
-			
+			{/section}
         </div>
         <div class="col-md-4">
-            <div class="column-content">
-                <h4>Reception service</h4>
-                <div class="item"><i class="fa-thin fa-circle-check fa-xl" style="color: #434b5c;"></i> Lockers</div>
-                <div class="item"><i class="fa-thin fa-circle-check fa-xl" style="color: #434b5c;"></i> Private check-in/check-out</div>
-                <div class="item"><i class="fa-thin fa-circle-check fa-xl" style="color: #434b5c;"></i>Concierge service</div>
-				<div class="item"><i class="fa-thin fa-circle-check fa-xl" style="color: #434b5c;"></i>Keep your luggage</div>
-				<div class="item"><i class="fa-thin fa-circle-check fa-xl" style="color: #434b5c;"></i>Tour desk</div>
-				
-				<div class="item"><i class="fa-thin fa-circle-check fa-xl" style="color: #434b5c;"></i>Currency exchange</div>
-            </div>
-			
-			<div class="column-content" style="margin-top: 24px">
-                <h4>Cleaning service</h4>
-                <div class="item"><i class="fa-thin fa-circle-check fa-xl" style="color: #434b5c;"></i> Clean the room every day</div>
-                <div class="item"><i class="fa-thin fa-circle-check fa-xl" style="color: #434b5c;"></i> Trouser ironing board</div>
-			</div>
-			
-			
+            {section name=i loop=$lstHotelProperty start=5}
+                <div class="column-content">
+                    <h4>{$lstHotelProperty[i].title}</h4>
+                    {$clsProperty->getTitleByCatId($lstHotelProperty[i].hotel_property_id, $hotel_id, "FE")}
+                </div>
+            {/section}
         </div>
     </div>
 </div>
@@ -542,15 +506,20 @@
                                     <div class="money">
                                         <span class="txt_money_from">{$core->get_Lang('Form')}</span>
                                         <span class="txt_money_text">{$core->get_Lang('US')}</span>
-                                        <span class="txt_money_number">{$clsTour->getPriceAfterDiscount($lstTour[i].tour_id)}</span>
+										<span class="under_numbprice">${$lstTour[i].min_price}</span>
+                                        <span class="txt_money_number">${$clsTour->getPriceAfterDiscount($lstTour[i].tour_id)}</span>
                                     </div>
                                 </div>
                             </div>
 								</div>
 							</div>
 							{/section}
-
+							
+							<button class="view-more-btn" style="display: none;">{$core->get_Lang('View more')}</button> 
+    						<button class="view-less-btn" style="display: none;">{$core->get_Lang('View less')}</button>
 							</div>
+
+						 
 
 						</div>
                    </section>
@@ -807,6 +776,12 @@
                 </div>
 
             {/section}
+						 
+
+
+
+
+		 
 
             {else}
 
@@ -816,7 +791,6 @@
 
         </div>
 					
-					<div class="pagination"></div>
 					
                 </div>
             </div>
@@ -939,6 +913,35 @@ var otherPolicy = '{$oneItem.other_policy|unescape}';
         $('.Inclusion-txt span').prepend('<img class="Inclusion-icon" src="/isocms/templates/default/skin/images/hotel/checkInclus.svg" alt="error">');
     }
 
+		document.addEventListener('DOMContentLoaded', function () {
+    const topRow = document.querySelector('.top-row');
+    const items = topRow.querySelectorAll('.item_content');
+    const viewMoreBtn = topRow.querySelector('.view-more-btn');
+    const viewLessBtn = topRow.querySelector('.view-less-btn');
+    const itemsToShow = 4;
+
+    function toggleItems() {
+        for (let i = itemsToShow; i < items.length; i++) {
+            items[i].style.display = items[i].style.display === 'none' ? 'block' : 'none';
+        }
+
+        viewMoreBtn.style.display = viewMoreBtn.style.display === 'none' ? 'block' : 'none';
+        viewLessBtn.style.display = viewLessBtn.style.display === 'none' ? 'block' : 'none';
+    }
+
+    if (items.length > itemsToShow) {
+        viewMoreBtn.style.display = 'block'; 
+
+        for (let i = itemsToShow; i < items.length; i++) {
+            items[i].style.display = 'none';
+        }
+    }
+
+    viewMoreBtn.addEventListener('click', toggleItems);
+    viewLessBtn.addEventListener('click', toggleItems);
+});
+
+		
     </script>
 
 
@@ -1224,13 +1227,13 @@ $(window).scroll(function() {
   const lineHeight = parseFloat(getComputedStyle(overviewContent).lineHeight);
   const maxLines = 6;
 
-  // Khởi tạo trạng thái ban đầu là ẩn bớt
+
   overviewContent.style.maxHeight = (lineHeight * maxLines) + 'px';
   viewMoreLessBtn.textContent = 'View more';
-  viewMoreLessBtn.style.display = 'block'; // Luôn hiển thị nút
+  viewMoreLessBtn.style.display = 'block';
 
   viewMoreLessBtn.addEventListener('click', function() {
-    if (overviewContent.style.maxHeight !== 'none') { // Kiểm tra xem có đang ẩn bớt không
+    if (overviewContent.style.maxHeight !== 'none') { 
       overviewContent.style.maxHeight = 'none';
       viewMoreLessBtn.textContent = 'View less';
     } else {

@@ -105,20 +105,19 @@
 
                             </div>
                         </div>
-                        <div class="rating-and-votes">
-							
-							{assign var=fileAj value='saveRating'}
-                            {assign var=typeAj value='blog'}
-                            {assign var=table_id value=$blog_id}
-							
-							{if $percentRateAVG}
-                                {assign var=percentAVG value=$percentRateAVG}
-                            {else}
-                                {assign var=percentAVG value='0'}
-                            {/if}
-                            {$core->getBlock('rate_star')}
+                            <div class="rating-and-votes">
+                                {assign var=fileAj value='saveRating'}
+                                {assign var=typeAj value='blog'}
+                                {assign var=table_id value=$blog_id}
 
-                        </div>
+                                {if $percentRateAVG}
+                                {assign var=percentAVG value=$percentRateAVG}
+                                {else}
+                                {assign var=percentAVG value='0'}
+                                {/if}
+                                {include file='../blocks/rate_star.tpl'}
+                                <!-- {$core->getBlock('rate_star')} -->
+                            </div>
                     </div>
 
 					{if $listTag ne ''}
@@ -212,39 +211,41 @@
 
                         <div class="related_tours">
                             <h2 class="txt_featureblog">{$core->get_Lang('RELATED TOURS')}</h2>
-							 {section name=i loop=$lstRelatedTour}
+									{section name=i loop=$lstTourExtension max=3}
+							
                             <div class="list_viewtour">
                                 <div class="img_toursrelated">
 									<div class="bloglastest">
-                                    <a href="{$clsTour->getLink($lstRelatedTour[i].tour_id)}" alt="tour" title="tour">
+                                    <a href="{$clsTour->getLink($lstTourExtension[i].tour_id)}" alt="tour" title="tour">
 										<div class="img_relatedtour">
-                                        <img src="{$clsTour->getImage($lstRelatedTour[i].tour_id, 296, 200)}" alt="Pic_relatedtour">
+                                        <img src="{$clsTour->getImage($lstTourExtension[i].tour_id, 296, 200)}" alt="Pic_relatedtour">
 										</div>
                                 </div>
 									</div>
                                 <div class="txt_des_tour">
-                                    <h3 class="txth_relatedtour">{$clsTour->getTitle($lstRelatedTour[i].tour_id)}</h3>
+                                    <h3 class="txth_relatedtour">{$clsTour->getTitle($lstTourExtension[i].tour_id)}</h3>
                                     </a>
                                     <div class="d-flex align-items-center score_reviewtour">
-                                        <span class="border_score">{$clsReviews->getReviews($tour_id, 'avg_point')}</span>
-                                        <span class="txt_score">{$clsReviews->getReviews($tour_id, 'txt_review')} </span> 
-										<span class="txt_reviewstour">- {$clsReviews->getReviews($tour_id)} reviews</span>
+                                        <span class="border_score">{$clsReviews->getReviews($lstTourExtension[i].tour_id, 'avg_point')}</span>
+                                        <span class="txt_score">{$clsReviews->getReviews($lstTourExtension[i].tour_id, 'txt_review')} </span> 
+										<span class="txt_reviewstour">- {$clsReviews->getReviews($lstTourExtension[i].tour_id)} reviews</span>
                                     </div>
                                     <div class="d-flex align-items-center">
                                         <i class="fa-light fa-location-dot" style="color: #43485c;"></i> <span
-                                                class="txt_placetours">Place: Hanoi – Halong – Hue – Hoian</span> <span class="border_place">+2</span>
+                                                class="txt_placetours">Place: {$clsTourDestination->getByCountry($lstTourExtension[i].tour_id, 'city')}</span> 
+<!--										<span class="border_place">+2</span>-->
                                     </div>
 
-                                    <p>{$clsTour->getIntro($lstRelatedTour[i].tour_id)}</p>
+                                    <p>{$clsTour->getIntro($lstTourExtension[i].tour_id)}</p>
                                     <div class="d-flex justify-content-between align-items-center" style="margin-bottom: 24px">
                                         <div class="from_price">
                                             <p class="from_txtp">From</p>
                                             <span class="txt_price">US
-												<h3 class="txt_numbprice">${$clsTour->getPriceAfterDiscount($tour_id)}</h3>
+												<h3 class="txt_numbprice">${$clsTour->getPriceAfterDiscount($lstTourExtension[i].tour_id)}</h3>
 												</span>
                                         </div>
 
-                                        <a href="{$clsTour->getLink($lstRelatedTour[i].tour_id)}" alt="tour" title="tour">
+                                        <a href="{$clsTour->getLink($lstTourExtension[i].tour_id)}" alt="tour" title="tour">
                                             <button class="btn btn_viewtour">View Tour <i
                                                         class="fa-regular fa-arrow-right" style="color: #ffffff;"></i>
                                             </button>
@@ -414,23 +415,23 @@ $(document).ready(function() {
   function updateViewMore() {
     const visibleCheckboxes = cityCheckboxes.length;
 
-    if (visibleCheckboxes > maxVisibleCheckboxes) { // Kiểm tra xem có nhiều hơn 5 checkbox
-      viewMoreLink.style.display = 'block';         // Hiển thị nút nếu có nhiều hơn 5
+    if (visibleCheckboxes > maxVisibleCheckboxes) { 
+      viewMoreLink.style.display = 'block';
       viewMoreLink.textContent = isExpanded ? "View less" : "View more";
       viewMoreLink.classList.remove('disabled');
     } else {
-      viewMoreLink.style.display = 'none';          // Ẩn nút nếu có 5 hoặc ít hơn
-      isExpanded = false;                           // Đặt lại trạng thái isExpanded 
-      cityCheckboxes.forEach(checkbox => {         // Đảm bảo tất cả checkbox được hiển thị
+      viewMoreLink.style.display = 'none';        
+      isExpanded = false;                            
+      cityCheckboxes.forEach(checkbox => {
         checkbox.style.display = 'block';
       });
     }
   }
-			cityCheckboxes.forEach((checkbox, index) => {
+		cityCheckboxes.forEach((checkbox, index) => {
       if (index >= maxVisibleCheckboxes) {
         checkbox.style.display = isExpanded ? 'block' : 'none';
       } else {
-        checkbox.style.display = 'block'; // Hiển thị 5 checkbox đầu tiên
+        checkbox.style.display = 'block';
       }
     });
   

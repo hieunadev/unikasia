@@ -598,7 +598,12 @@ function default_detail()
 
 	$clsTour = new Tour();
 	$assign_list['clsTour'] = $clsTour;
+	
 	$assign_list['lstRelatedTour'] = $clsTour->getAll(" is_trash=0 and is_online=1 order by order_no DESC LIMIT 3");
+	
+	$assign_list["lstTour"] = $clsTour->getAll($cond_lstCountry . $order_by . $limit);
+
+	
 
 	$keyword = isset($_GET['keyword']) ? $_GET['keyword'] : '';
 	$assign_list['keyword'] = $keyword;
@@ -675,22 +680,30 @@ function default_detail()
 		header('location:' . $link);
 		exit();
 	}
+	
+	#
 
 	$totalRate = $blogItem['rate'];
 	$rateAVG = $blogItem['rate_avg'];
 	$percentRateAVG = ($rateAVG / 5) * 100;
 	$assign_list['percentRateAVG'] = $percentRateAVG;
 	$assign_list['totalRate'] = $totalRate;
-
-	$datePublished = date('Y-m-d H:i:s', $blogItem['reg_date']);
-	$dateModified = date('Y-m-d H:i:s', $blogItem['upd_date']);
 	$rateavg = round($blogItem['rate_avg'], 1);
-
-	$assign_list["datePublished"] = $datePublished;
-	$assign_list["dateModified"] = $dateModified;
 	$assign_list["rateavg"] = $rateavg;
+	
+	$clsReviews = new Reviews();
+    $assign_list["clsReviews"] = $clsReviews;
+	
+	$clsTourDestination = new TourDestination();
+	$assign_list["clsTourDestination"] = $clsTourDestination;
+	
+	$clsBlogExtension = new BlogExtension(); 
+	$assign_list["clsBlogExtension"]=$clsBlogExtension;
 
 	
+	$lstTourExtension = $clsBlogExtension->getAll("blog_id = '$blog_id' and table_name='tour' and tour_id IN (SELECT tour_id FROM ".DB_PREFIX."tour WHERE is_trash=0 and is_online=1) order by order_no ASC",$clsBlogExtension->pkey.',tour_id');
+	$assign_list["lstTourExtension"]=$lstTourExtension;
+
 
 
 

@@ -83,4 +83,14 @@
     $('.lastblog').css('border-bottom', 'none');
   }
 });
+		
+					$(document).ready(function() {
+			  $('.unika_header').removeClass('unika_header_2');
+
+			  $(window).scroll(function() {
+				requestAnimationFrame(function() {
+				  $('.unika_header').removeClass('unika_header_2');
+				});
+			  });
+			});
 	</script>

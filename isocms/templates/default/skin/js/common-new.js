@@ -108,27 +108,27 @@ $(document).ready(function () {
 
     $('#tour_alsoLike_owl').owlCarousel({
 
-        loop:true,
+        loop: true,
 
         margin: 0,
 
-        nav:false,
+        nav: false,
 
         dots: false,
 
-        items:4
+        items: 4
 
     })
 
     //  JS New Header
 
-    $(function(){
+    $(function () {
 
         let hoverTimeout;
 
         $('.unika_destination_hover').hover(
 
-            function(){
+            function () {
 
                 // Clear any existing timeout to prevent unexpected behavior
 
@@ -148,7 +148,7 @@ $(document).ready(function () {
 
             },
 
-            function() {
+            function () {
 
                 // Clear the timeout if the user stops hovering before the delay is over
 
@@ -160,7 +160,7 @@ $(document).ready(function () {
 
         $('.unika_dropdown_cruises').hover(
 
-            function() {
+            function () {
 
                 // Clear any existing timeout to prevent unexpected behavior
 
@@ -170,7 +170,7 @@ $(document).ready(function () {
 
                 hoverTimeout = setTimeout(() => {
 
-                    $('.unika_dropdown_cruises').removeClass('active');
+                    $('.unika_dropdown_cruises, .unika_hover_item').removeClass('active');
 
                     $(this).addClass('active');
 
@@ -186,7 +186,7 @@ $(document).ready(function () {
 
             },
 
-            function() {
+            function () {
 
                 // Clear the timeout if the user stops hovering before the delay is over
 
@@ -198,7 +198,7 @@ $(document).ready(function () {
 
         $('.unika_hover_item').hover(
 
-            function() {
+            function () {
 
                 // Clear any existing timeout to prevent unexpected behavior
 
@@ -218,7 +218,7 @@ $(document).ready(function () {
 
             },
 
-            function() {
+            function () {
 
                 // Clear the timeout if the user stops hovering before the delay is over
 
@@ -232,7 +232,7 @@ $(document).ready(function () {
 
         if ((mod === 'guide' && act === 'detail') || (mod === 'guide' && act === 'tag') || (mod === 'hotel' && act === 'detail') || (mod === 'blog' && act === 'detail')
 
-        || (mod === 'tour' && act === 'detaildeparture') || (mod === 'about' && act === 'success')) {
+            || (mod === 'tour' && act === 'detaildeparture') || (mod === 'about' && act === 'success') || (mod === 'tour_new' && act === 'contact')) {
 
             if ($('.unika_header').hasClass('unika_header_2')) {
 
@@ -242,13 +242,13 @@ $(document).ready(function () {
 
         }
 
-        $(window).scroll(function(){
+        $(window).scroll(function () {
 
             let isScrolled = $(this).scrollTop() > 0;
 
             let unika_header = $('.unika_header');
 
-            if(unika_header.hasClass('unika_true')){
+            if (unika_header.hasClass('unika_true')) {
 
                 if ((mod === 'guide' && act === 'detail') || (mod === 'guide' && act === 'tag') || (mod === 'destination' && act === 'place') || (mod === 'tour' && act === 'cat') || (mod === 'guide' && act === 'cat') || (mod === 'tour' && act === 'detaildeparture')) {
 
@@ -256,11 +256,11 @@ $(document).ready(function () {
 
                 } else {
 
-                    if(isScrolled){
+                    if (isScrolled) {
 
                         unika_header.removeClass('unika_header_2');
 
-                    }else{
+                    } else {
 
                         unika_header.addClass('unika_header_2');
 
@@ -304,11 +304,11 @@ $(document).ready(function () {
 
             } else {
 
-                if(isScrolled){
+                if (isScrolled) {
 
                     unika_header.addClass('fixed');
 
-                }else{
+                } else {
 
                     unika_header.removeClass('fixed');
 
@@ -330,19 +330,19 @@ $(document).ready(function () {
 
     // JS New Footer
 
-    $(document).on('click', '.unika_footer_title', function(){
+    $(document).on('click', '.unika_footer_title', function () {
 
         let screenWidth = $(window).width();
 
-        if(screenWidth <= 991){
+        if (screenWidth <= 991) {
 
             let list_link = $(this).parents('.unika_footer_item').find('.unika_footer_list_link');
 
-            if(list_link.hasClass('active')){
+            if (list_link.hasClass('active')) {
 
                 list_link.removeClass('active');
 
-            }else{
+            } else {
 
                 list_link.addClass('active');
 
@@ -376,7 +376,7 @@ $(document).ready(function () {
 
         }
 
-        $.each(reversedClickedDetails.slice(0, maxItemsToShow), function(index, detail) {
+        $.each(reversedClickedDetails.slice(0, maxItemsToShow), function (index, detail) {
 
             var detailElement = $(detail);
 
@@ -390,11 +390,11 @@ $(document).ready(function () {
 
     }
 
-    $(".box_hotel_item").click(function() {
+    $(".box_hotel_item").click(function () {
 
         var clickedDetail = $(this).html();
 
-        if(clickedDetails.indexOf(clickedDetail) === -1) {
+        if (clickedDetails.indexOf(clickedDetail) === -1) {
 
             clickedDetails.push(clickedDetail);
 
@@ -404,15 +404,15 @@ $(document).ready(function () {
 
             // Kiểm tra và hiển thị nút "Xem thêm" khi có hơn 3 phần tử
 
-            if(clickedDetails.length > 4) {
+            if (clickedDetails.length > 4) {
 
                 $(".btnShowViewed").show();
 
-                $('.clicked-details').toggleClass("mbReviews",false);
+                $('.clicked-details').toggleClass("mbReviews", false);
 
-            }else {
+            } else {
 
-                $('.clicked-details').toggleClass("mbReviews",true);
+                $('.clicked-details').toggleClass("mbReviews", true);
 
             }
 
@@ -420,7 +420,7 @@ $(document).ready(function () {
 
     });
 
-    $(".btnShowViewed").click(function() {
+    $(".btnShowViewed").click(function () {
 
         maxItemsToShow = clickedDetails.length;
 
@@ -430,7 +430,7 @@ $(document).ready(function () {
 
     });
 
-    $(".btnNoneViewed").click(function() {
+    $(".btnNoneViewed").click(function () {
 
         maxItemsToShow = 3;
 

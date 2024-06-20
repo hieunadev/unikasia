@@ -111,7 +111,7 @@
 						{/if}
                 	</div>
 				</div>
-				<div class="overview_box_2 tour_itinerary" id="tour_itinerary">
+				<!-- <div class="overview_box_2 tour_itinerary" id="tour_itinerary">
 					<h2 class="headeing d-flex justify-content-between align-items-center">
 						<span>{$core->get_Lang('reviewcruise')}</span> 
 						<a class="link_open" data-step="basic" data-panel="overview" data-route="{$PCMS}/admin/cruise/insert/{$pvalTable}/overview/basic"><i class="ico ico-view_link ico-view_link_head"></i></a>
@@ -160,7 +160,7 @@
 							</div> 
                			</div>
                 	</div>
-				</div>
+				</div> -->
 			</div>
 			<div class="col-md-6">
 				<div class="overview_box_2 tour_info_re" id="tour_info_re">
@@ -183,7 +183,7 @@
 							<p class="text">{$core->get_Lang('Cannot display images')}</p>
 							{/if}
 						</div>
-						<div class="box-item">
+						<!-- <div class="box-item">
 							<h3 class="box-title d-flex justify-content-between align-items-center">
 								<span>{$core->get_Lang('File cruise')}</span>
 								<a class="link_open" data-panel="overview" data-step="image" data-route="{$PCMS}/admin/cruise/insert/{$pvalTable}/overview/image">
@@ -197,7 +197,7 @@
 							{else}
 							<p class="text">{$core->get_Lang('No File selected')}</p>
 							{/if}
-						</div>
+						</div> -->
 						<div class="box-item">
 							<h3 class="box-title d-flex justify-content-between align-items-center">
 								<span>{$core->get_Lang('Gallery')}</span>
@@ -207,7 +207,7 @@
 							</h3>
 							<div id="holder_gallery" class="list-unstyled gallery"></div>
 						</div>
-                        <div class="box-item">
+                        <!-- <div class="box-item">
 							<h3 class="box-title d-flex justify-content-between align-items-center">
 								<span>{$core->get_Lang('Videos')}</span>
 								<a class="link_open" data-panel="video" data-step="video" data-route="{$PCMS}/admin/cruise/insert/{$pvalTable}/video/video">
@@ -215,7 +215,7 @@
 								</a>
 							</h3>
 							<p class="text">{$core->get_Lang('Cannot display video')}</p>
-						</div>
+						</div> -->
 					</div>
 				</div>
 			</div>

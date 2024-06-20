@@ -262,11 +262,13 @@
                                             <th class="gridheader"><strong>{$core->get_Lang('index')}</strong></th>
                                             <th class="gridheader" style="text-align:left"><strong>{$core->get_Lang('nameoftrips')}</strong></th>
                                             <th class="gridheader" style="text-align:left"><strong>{$core->get_Lang('duration')}</strong></th>
+<!--
                                             {if $clsConfiguration->getValue('SiteHasCat_Tours')}
                                             <th class="gridheader" style="text-align:left; width:12%"><strong>{$core->get_Lang('travelstyles')}</strong></th>
                                             {/if}
                                             <th class="gridheader" style="text-align:left"><strong>{$core->get_Lang('pricefrom')}</strong></th>
                                             <th class="gridheader" colspan="4" style="width:4%"><strong>{$core->get_Lang('move')}</strong></th>
+-->
                                             <th class="gridheader" style="width:2%"><strong>{$core->get_Lang('delete')}</strong></th>
                                         </tr>
                                     </thead>
@@ -401,5 +403,7 @@ if($('.textarea_intro_editor').length > 0){
 			$('#step_'+val.key).closest('li').removeAttr('class').addClass("check_caution");
 		}
 	});
+	
+	
 </script>
 {/literal}

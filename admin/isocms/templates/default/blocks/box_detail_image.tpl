@@ -25,7 +25,7 @@
 							{elseif $mod=='hotel'}
 						<p>{$core->get_Lang('Image size')} (WxH=353x244px)<br />
 							{elseif $mod=='cruise'}
-						<p>{$core->get_Lang('Image size')} (WxH=733x486px)<br />
+						<p>{$core->get_Lang('Image size')} (WxH=353x244px)<br />
 							{elseif $mod=='service'}
 						<p>{$core->get_Lang('Image size')} (WxH=280x255px)<br />
 							{elseif $mod=='city'}

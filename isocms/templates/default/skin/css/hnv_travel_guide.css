@@ -226,7 +226,11 @@ body {
     font-weight: 400;
     line-height: 20px; 
 }
+.unika_mobile_travel_guide {
+    display: none;
+}
 @media screen and (max-width: 991px) {
+
     .unika_sort_filter{
         display: block;
     }
@@ -255,7 +259,7 @@ body {
     }
 
     .des_travel_guide_exciting_trip_detail{
-        margin-top: 0;
+        margin-top: 0 !important;
     }
 
     .des_travel_guide_tour_more{
@@ -286,11 +290,10 @@ body {
         display: none;
     }
     .unika_mobile_travel_guide_content {
-        
         background: #FFFFFF;
         max-width: 400px;
         width: 100%;
-        padding: 70px 24px;
+        padding: 24px;
         height: 100%;
     }
 
@@ -385,6 +388,14 @@ body {
 
     .des_travel_guide_paginate{
         margin-bottom: 0;
+    }
+
+    .reasonsbook {
+        margin-bottom: 32px;
+    }
+
+    .txtfamous{
+        margin-top: 40px;
     }
 }
 /* van css new */

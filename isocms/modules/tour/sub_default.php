@@ -346,6 +346,24 @@ function default_detaildeparture()
 		exit();
 	}
 
+    if(isset($_POST['ContactTour']) &&  $_POST['ContactTour']=='ContactTour'){
+        vnSessionDelVar('ContactTour');
+        $cartSessionService= vnSessionGetVar('ContactTour');
+        if(empty($cartSessionService)){
+            $cartSessionService = array();
+        }
+        $assign_list["cartSessionService"] = $cartSessionService;
+        $link=$clsISO->getLink('contact');
+        $cartSessionService['TOUR'][$tour_id] = array();
+        foreach($_POST as $k=>$v){
+            $cartSessionService['TOUR'][$tour_id][$k] = $v;
+        }
+        //$clsISO->print_pre($cartSessionService);die();
+        vnSessionSetVar('ContactTour',$cartSessionService);
+        header('location:'.$link);
+        exit();
+    }
+
 	//    End Form Box Tour
 
 	if (!empty($_GET['tour_id'])) {

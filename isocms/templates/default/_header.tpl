@@ -106,18 +106,18 @@
                                                             {assign var="CountryID" value=$item.info[0]}
                                                             {assign var="Child" value=$item.child}
                                                             <li>
-                                                                <div class="unika_dropdown_cruises">
+                                                                <div class="unika_dropdown_cruises {if $key eq 0}active{/if}">
                                                                     <a class="dropdown-item">
                                                                         {$clsCountryEx->getTitle($CountryID)}
                                                                         <i class="fas fa-angle-right ms-1" aria-hidden="true"></i>
                                                                     </a>
-                                                                    <div class="unika_cruises_hover active">
-                                                                        <div class="unika_hover_content active">
+                                                                    <div class="unika_cruises_hover {if $key eq 0}active{/if}">
+                                                                        <div class="unika_hover_content {if $key eq 0}active{/if}">
                                                                             {if $Child ne ''}
                                                                             {foreach from=$Child key=k item=i}
                                                                             {assign var="CatCountryID" value=$i.cruise_cat_country_id}
                                                                             {assign var="CatID" value=$i.cat_id}
-                                                                            <a class="unika_hover_item" href="{$clsCruiseCatCountry->getLink($CatCountryID)}" data-img="{$clsCruiseCatCountry->getBannerImageVertical($CatCountryID, 344, 434)}">
+                                                                            <a class="unika_hover_item {if $k eq 0}active{/if}" href="{$clsCruiseCatCountry->getLink($CatCountryID)}" data-img="{$clsCruiseCatCountry->getBannerImageVertical($CatCountryID, 344, 434)}">
                                                                                 {$clsCruiseCat->getTitle($CatID)}
                                                                             </a>
                                                                             {/foreach}

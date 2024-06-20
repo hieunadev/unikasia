@@ -1139,7 +1139,6 @@ $().ready(function(){
 				return false;
 			});
 			$(document).on('click', '.btnCreateCruiseCategoryCountry', function(ev){
-				console.log(123);
 				vietiso_loading(1);
 				$.ajax({
 					type:'POST',
@@ -1194,9 +1193,9 @@ $().ready(function(){
 				var $_form = $_this.closest('.frmPop');
 				
 				var $title = $_form.find('input[name=title]');
-				var $parent_id = $_form.find('select[name=parent_id]');
-				var $intro = tinyMCE.get($('.textarea_intro_editor').attr('id')).getContent();
-				var $image = $_form.find('#isoman_url_image');
+				// var $parent_id = $_form.find('select[name=parent_id]');
+				// var $intro = tinyMCE.get($('.textarea_intro_editor').attr('id')).getContent();
+				// var $image = $_form.find('#isoman_url_image');
 				var $image_banner = $_form.find('#isoman_url_image_banner');
 				if($.trim($title.val())=='') {
 					$title.addClass('error').focus();
@@ -1205,10 +1204,10 @@ $().ready(function(){
 				}
 				var adata = {
 					'title' 		: 	$title.val(),
-					'parent_id' 	: 	$parent_id.val(),
-					'intro'	  		: 	$intro,
-					'image'	  		: 	$image.val(),
-					'image_banner'	  		: 	$image_banner.val(),
+					// 'parent_id' 	: 	$parent_id.val(),
+					// 'intro'	  		: 	$intro,
+					// 'image'	  		: 	$image.val(),
+					// 'image_banner'	: 	$image_banner.val(),
 					'cruise_cat_id' : 	$_this.attr('cruise_cat_id'),
 					'tp'			:	'S'
 				};
@@ -1247,8 +1246,28 @@ $().ready(function(){
 				var $intro = tinyMCE.get($('.textarea_intro_editor').attr('id')).getContent();
 				var $banner_image_vertical = $_form.find('#isoman_url_banner_image_vertical');
 				var $banner_image_horizontal = $_form.find('#isoman_url_banner_image_horizontal');
+				if($country_id.val() == 0) {
+					$country_id.addClass('error').focus();
+					alertify.error(field_required);
+					return false;
+				}
+				if($cat_id.val() == 0) {
+					$cat_id.addClass('error').focus();
+					alertify.error(field_required);
+					return false;
+				}
 				if($.trim($title.val())=='') {
 					$title.addClass('error').focus();
+					alertify.error(field_required);
+					return false;
+				}
+				if($.trim($banner_image_vertical.val())=='') {
+					$banner_image_vertical.addClass('error').focus();
+					alertify.error(field_required);
+					return false;
+				}
+				if($.trim($banner_image_horizontal.val())=='') {
+					$banner_image_horizontal.addClass('error').focus();
 					alertify.error(field_required);
 					return false;
 				}

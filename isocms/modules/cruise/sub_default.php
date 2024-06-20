@@ -925,22 +925,19 @@ function default_cat()
 			header('location:' . PCMS_URL);
 			exit();
 		}
-	} else {
-		header('location:' . PCMS_URL);
-		exit();
-	}
-	#
-	$smarty->assign('country_id', $country_id);
-	if (!empty($cruise_cat_id)) {
-		$smarty->assign('cruise_cat_id', $cruise_cat_id);
 	}
 	#
 	$cond	= 	"is_trash = 0 AND is_online = 1";
 	if ($country_id > 0) {
 		$cond	.=	" AND cruise_id IN (SELECT cruise_id FROM default_cruise_destination WHERE country_id = '$country_id')";
+		$smarty->assign('country_id', $country_id);
+	}
+	if (!empty($cruise_cat_id)) {
+		$cond	.=	" AND cruise_cat_id = $cruise_cat_id";
+		$smarty->assign('cruise_cat_id', $cruise_cat_id);
 	}
 	#
-	if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'filters_form_cruise') {
+	if (!empty($_POST) && $_POST['action'] === 'filters_form_cruise') {
 		$duration_filter_id =	isset($_POST['duration_filter_id']) ? $_POST['duration_filter_id'] : [];
 		$rating_filter_id 	=	isset($_POST['rating_filter_id']) ? $_POST['rating_filter_id'] : [];
 		$type_filter_id 	=	isset($_POST['type_filter_id']) ? $_POST['type_filter_id'] : [];

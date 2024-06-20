@@ -1036,9 +1036,6 @@ function default_search()
 	/*=============Content Page==================*/
 	unset($clsHotel);
 }
-function default_detail3()
-{
-}
 function default_detail()
 {
 	global $assign_list, $_CONFIG, $core, $dbconn, $mod, $act, $_LANG_ID, $title_page, $description_page, $global_image_seo_page, $curl;
@@ -1069,6 +1066,7 @@ function default_detail()
 	$assign_list['clsHotelRoom'] = $clsHotelRoom;
 	$clsTour = new Tour();
 	$assign_list['clsTour'] = $clsTour;
+	
 	$clsHotelPriceCol = new HotelPriceCol();
 	$assign_list['clsHotelPriceCol'] = $clsHotelPriceCol;
 	$clsHotelPriceVal = new HotelPriceVal();
@@ -1088,12 +1086,13 @@ function default_detail()
 
 	$assign_list['hotel_id'] = $hotel_id;
 	$assign_list["table_id"] = $hotel_id;
+	$oneItem = $clsTour->getOne($tour_id);
 
 	////$abc= $clsHotel->getImageMapStatic($hotel_id,400,400);print_r($abc);die();
 
 	$order = " order by order_no";
 
-	$lstTour = $clsTour->getAll("$cond is_online = 1 and is_trash = 0 LIMIT 4");
+	$lstTour = $dbconn->getAll("SELECT * FROM `default_tour` WHERE tour_id IN (SELECT tour_id from default_hotel_extension where hotel_id = '$hotel_id')");
 
 	$assign_list['lstTour'] = $lstTour;
 
@@ -1102,6 +1101,11 @@ function default_detail()
 	$assign_list['clsReviews'] = $clsReviews;
 	$lstReviews = $clsReviews->getAll("$cond is_online = 1 and table_id = '$hotel_id' $order");
 	$countReview = $clsReviews->countItem("$cond is_online = 1 and table_id = $hotel_id $order");
+	
+	
+	
+
+
 
 	//	$lstHotelItinerary = $clsHotelItinerary->getAll("$cond hotel_id = $hotel_id order by day");
 

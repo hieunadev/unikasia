@@ -16,8 +16,11 @@ function getFrame($cruise_id = null)
 				'basic' => array(
 					'name' => $core->get_Lang('Basic')
 				),
+				// 'image' => array(
+				// 	'name' => $core->get_Lang('Image cover') . ", " . $core->get_Lang('File cruise')
+				// ),
 				'image' => array(
-					'name' => $core->get_Lang('Image cover') . ", " . $core->get_Lang('File cruise')
+					'name' => $core->get_Lang('Image cover')
 				),
 				'about' => array(
 					'name' => $core->get_Lang('About')
@@ -331,7 +334,7 @@ function default_getMainFormStep()
 	#
 	$frames = getFrame();
 	#
-	$lstCruiseItinerary = $clsCruiseItinerary->getAll("1=1 and cruise_id='$table_id' order by order_no asc", $clsCruiseItinerary->pkey);
+	$lstCruiseItinerary = $clsCruiseItinerary->getAll("1=1 and cruise_id='$table_id' order by order_no asc", "$clsCruiseItinerary->pkey, title_itinerary");
 	$assign_list['listCruiseItinerary'] = $lstCruiseItinerary;
 	$numberCabin = $clsCruiseCabin->countItem("1=1 and cruise_id='$table_id'", $clsCruiseCabin->pkey);
 	$arr_CruiseItinerary = [];
@@ -1354,7 +1357,10 @@ function default_ajLoadFormItinerary()
 		$listService 			=	$clsISO->makeSlashListFromArray($listService);
 		$intro 					=	Input::post('intro', '');
 		$cruise_itinerary_id	=	Input::post('cruise_itinerary_id', 0);
+		$title_itinerary 		=	Input::post('title_itinerary', '');
+		// Loại bỏ dấu . để lưu DB
 		$price_itinerary 		=	Input::post('price_itinerary', 0);
+		$price_itinerary 		= 	preg_replace('/\./', '', $price_itinerary);
 		#
 		if ($cruise_id > 0) {
 			$oneCruise	= 	$clsCruise->getOne($cruise_id, $clsCruise->pkey);
@@ -1362,7 +1368,7 @@ function default_ajLoadFormItinerary()
 				if ($cruise_itinerary_id > 0) {
 					$oneCruiseItinerary	= 	$clsCruiseItinerary->getOne($cruise_itinerary_id, $clsCruiseItinerary->pkey);
 					if (!empty($oneCruiseItinerary)) {
-						$value	= 	"user_id_update='" . addslashes($core->_SESS->user_id) . "', upd_date='" . time() . "', listService='" . $listService . "', number_day='" . addslashes($number_day) . "', number_night='" . addslashes($number_night) . "', intro='" . addslashes($intro) . "', price_itinerary='" . $price_itinerary . "'";
+						$value	= 	"user_id_update='" . addslashes($core->_SESS->user_id) . "', upd_date='" . time() . "', listService='" . $listService . "', number_day='" . addslashes($number_day) . "', number_night='" . addslashes($number_night) . "', intro='" . addslashes($intro) . "', price_itinerary='" . $price_itinerary . "', title_itinerary='" . $title_itinerary . "'";
 						#
 						if ($clsCruiseItinerary->updateOne($cruise_itinerary_id, $value)) {
 							$data	= 	['result' => true, 'message' => $core->get_Lang('updateSuccess')];
@@ -1607,6 +1613,7 @@ function default_ajLoadCruiseExtension()
 	];
 	#
 	$cruise_id	= 	(int) Input::post('cruise_id', 0);
+	$tour_id	= 	(int) Input::post('tour_id', 0);
 	$html 		= 	'';
 	$lstItem 	= 	$clsCruiseExtension->getAll("is_trash=0 and cruise_id='{$cruise_id}' order by order_no asc");
 	#
@@ -1616,7 +1623,7 @@ function default_ajLoadCruiseExtension()
 			$html	.= 	'<tr style="cursor:move" id="order_' . $item[$clsCruiseExtension->pkey] . '" class="' . ($i % 2 == 0 ? 'row1' : 'row2') . '">';
 			$html	.= 	'<td class="index">' . ($i + 1) . '</td>';
 			$html	.= 	'<td>' . $arr_type_tour[$item['type']] . '</td>';
-			$html	.= 	'<td>' . $clsTour->getTitle($item['cruise_id']) . '</td>';
+			$html	.= 	'<td>' . $clsTour->getTitle($item['tour_id']) . '</td>';
 			$html	.= 	'<td>' . $clsTour->getNumberDayDuration($item['cruise_id']) . '</td>';
 			// if ($clsISO->getCheckActiveModulePackage($package_id, $mod, 'category', 'default') == 1) {
 			$html	.= 	'<td>' . $clsTour->getCatName($item['cruise_id']) . '</td>';
@@ -1667,14 +1674,14 @@ function default_ajAddCruiseExtension()
 	#
 	$clsCruiseExtension	=	new CruiseExtension();
 	$cruise_id 			= 	$_POST['cruise_id'];
-	$cruise_id 			= 	$_POST['cruise_id'];
+	$tour_id 			= 	$_POST['tour_id'];
 	$cruise_tour_type 	= 	$_POST['cruise_tour_type'];
-
-	if (!$clsCruiseExtension->checkExist($cruise_id, $cruise_id)) {
-		$f 			= 	"cruise_extension_id, cruise_id, cruise_id, order_no, type, is_trash";
+	#
+	if (!$clsCruiseExtension->checkExist($cruise_id, $tour_id, $cruise_tour_type)) {
+		$f 			= 	"cruise_extension_id, cruise_id, tour_id, order_no, type, is_trash";
 		$res 		= 	$clsCruiseExtension->getAll("is_trash = 0 AND cruise_id = '$cruise_id' ORDER BY order_no DESC limit 0,1");
 		$order_no 	= 	intval($res[0]['order_no']) + 1;
-		$v 			= 	"'" . $clsCruiseExtension->getMaxId() . "', '$cruise_id', '$cruise_id', '" . $order_no . "', '" . $cruise_tour_type . "', '0'";
+		$v 			= 	"'" . $clsCruiseExtension->getMaxId() . "', '$cruise_id', '$tour_id', '" . $order_no . "', '" . $cruise_tour_type . "', '0'";
 		#
 		if ($clsCruiseExtension->insertOne($f, $v)) {
 			echo ('_SUCCESS');

@@ -44,6 +44,7 @@ function default_default(){
     $assign_list["clsTourDestination"] = $clsTourDestination;
 	
 	$tour_id = !empty($_GET['tour_id']) ? $_GET['tour_id'] : '0';
+//	var_dump($tour_id); die();
     $cond = " is_trash = 0 and";
     $order = " order by order_no";
     $country_id = $clsTourDestination->getAll("$cond tour_id = $tour_id limit 1", "country_id")[0]["country_id"];
@@ -59,13 +60,7 @@ function default_default(){
 	
 //	var_dump($country_id); die();
 
-
-
-
-
     #
-	
-	$tour_id = !empty($_GET['tour_id']) ? $_GET['tour_id'] : '0';
 	$cond = " is_trash = 0 and";
 	$order = " order by order_no";
 	$oneItem = $clsTour->getOne($tour_id);

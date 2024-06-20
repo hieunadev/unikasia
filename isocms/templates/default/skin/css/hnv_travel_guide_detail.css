@@ -4,6 +4,9 @@
 .trvgd_main {
     margin-top: 40px;
 }
+.trvgd_main img {
+    width: 100%;
+}
 .trvgd_similar {
     margin-top: 92px;
     margin-bottom: 80px;

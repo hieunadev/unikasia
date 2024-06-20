@@ -35,7 +35,7 @@ $(function () {
 
     $(".travel_input").datepicker({
         dateFormat: "M d, yy", // Định dạng ngày là "Apr 1, 2024"
-        minDate: new Date(),
+        minDate: new Date(travel_date),
         onSelect: function (dateText) {
             $(this).val(dateText); // Hiển thị ngày đã chọn
             let data_class = $(this).attr("data-class");
@@ -116,14 +116,17 @@ $(function () {
     }
 
     function calculateTotalAmount(){
-        const total_booking = parseInt($('#total_price').val());
+        const total_price_people = parseInt(total_price_adults) + parseInt(total_price_child) + parseInt(total_price_infants)
         const deposit = parseInt($('#deposit').val());
         let total = 0;
         $('.value').each(function(){
             let quantity = parseInt($(this).text());
-            let price = parseFloat($(this).attr('data-price'));
+            let price = parseInt($(this).attr('data-price'));
             total += quantity * price;
+
         })
+        total = total + total_price_people
+
         let deposit_booking = Math.round(total*deposit/100)
         let remaining_booking = Math.round(total - deposit_booking)
         $('.total_booking').text(`US $${total}`);
@@ -169,6 +172,7 @@ $(function () {
                 .find(".calc_distribution");
             if ($(this).find("input").prop("checked")) {
                 calc_distribution.addClass("active");
+                calc_distribution.find(".value").text(1);
             } else {
                 calc_distribution.removeClass("active");
                 calc_distribution.find(".value").text(0);
@@ -176,6 +180,9 @@ $(function () {
                 $(`.${data_class}`).parents(".span_item").remove();
             }
             calculateTotalAmount()
+            let plus = $(this).next().find(".plus")
+            let value =  parseInt(plus.parents(".number").find(".value").text())
+            eventParticipants(plus, value);
         })
         .on('click', '.item_radio', function(){
             let describe = $(this).parents('.type_payment').find('.describe');
@@ -258,7 +265,7 @@ $(function () {
             title: {
                 "select2-required": true
             },
-            full_name: "required",
+            fullname: "required",
             nationality: {
                 "select2-required": true
             },
@@ -279,7 +286,7 @@ $(function () {
             title: {
                 "select2-required": "Please select a title!"
             },
-            full_name: "Please enter your full name!",
+            fullname: "Please enter your full name!",
             nationality: "Please select nationality!",
             email: "Please enter your email!",
             phone: {
@@ -288,7 +295,6 @@ $(function () {
             }
         },
         submitHandler: function () {
-            alert('Success');
             return true;
         }
     });

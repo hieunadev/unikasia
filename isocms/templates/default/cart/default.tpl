@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css">
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /><div class="unika_booking">
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<div class="unika_booking">
 	<div class="head_booking">
 		<div class="head d-flex justify-content-between align-items-center flex-wrap">
 			<div class="container">
@@ -68,7 +69,8 @@
 		{assign var=average_price_per_infant value=$item.total_price_infants / $number_infants_z}
 		{assign var=average_price_per_child value=$item.total_price_child / $number_child_z}
 		{assign var=average_price_per_adult value=$item.total_price_adults / $number_adults_z}
-	<div class="container">
+
+			<div class="container">
 		<div class="d-flex justify-content-center main-container">
 			<form action="/en/shopping-cart/booking.html" class="booking_content d-flex  justify-content-between" method="POST" id="formBooking">
 				<div class="booking_left d-flex flex-column align-items-center ">
@@ -98,52 +100,34 @@
 									<div class="item_travelers item_content_booking d-flex  align-items-center">
 										<span class="title">Adults</span>
 										<div class="number d-flex " data-class="amount_adults">
-											<div class="minus item_calc cursor div_img">
-												<img src="{$URL_IMAGES}/booking/icon_minus.svg" alt="Icon">
-											</div>
 											<span
-													class="d-flex align-items-center value value_travelers justify-content-center"
+													class="d-flex align-items-center value_travelers justify-content-center"
 													name="value_travelers" contenteditable="false" onpaste="return false" contenteditable="true"
-													data-price="{$average_price_per_adult}">{$number_adults_z}</span>
-											<div class="plus item_calc active cursor div_img">
-												<img src="{$URL_IMAGES}/booking/icon_plus.svg" alt="Icon">
-											</div>
+													>{$number_adults_z}</span>
+
 										</div>
 									</div>
 									<div class="item_travelers item_content_booking d-flex ">
 										<div class="title d-flex flex-column">
 											<span>Children</span>
-											<span class="unika_travel_span">(5-10 age)</span>
 										</div>
 										<div class="number d-flex " data-class="amount_children">
-											<div class="minus item_calc cursor div_img">
-												<img src="{$URL_IMAGES}/booking/icon_minus.svg" alt="Icon">
-											</div>
 											<span
-													class="d-flex align-items-center value value_travelers justify-content-center"
+													class="d-flex align-items-center value_travelers justify-content-center"
 													name="value_travelers" contenteditable="false" onpaste="return false" contenteditable="true"
-													data-price="{$average_price_per_child}">{$number_child_z}</span>
-											<div class="plus item_calc active cursor div_img">
-												<img src="{$URL_IMAGES}/booking/icon_plus.svg" alt="Icon">
-											</div>
+													>{$number_child_z}</span>
+
 										</div>
 									</div>
 									<div class="item_travelers item_content_booking d-flex ">
 										<div class="title d-flex flex-column">
 											<span>Infants</span>
-											<span class="unika_travel_span">(0-4 age)</span>
 										</div>
 										<div class="number d-flex " data-class="amount_infants">
-											<div class="minus item_calc cursor div_img">
-												<img src="{$URL_IMAGES}/booking/icon_minus.svg" alt="Icon">
-											</div>
 											<span
-													class="d-flex align-items-center value value_travelers justify-content-center"
+													class="d-flex align-items-center  value_travelers justify-content-center"
 													name="value_travelers" contenteditable="false" onpaste="return false" contenteditable="true"
-													data-price="{$average_price_per_infant}">{$number_infants_z}</span>
-											<div class="plus item_calc active cursor div_img">
-												<img src="{$URL_IMAGES}/booking/icon_plus.svg" alt="Icon">
-											</div>
+													>{$number_infants_z}</span>
 										</div>
 									</div>
 								</div>
@@ -169,7 +153,7 @@
 											 data-class="amount_double_room_{$lstRoom[i].room_id}">
 											<div class="minus item_calc_dis cursor"></div>
 											<span contenteditable="true" class="value value_distribution"
-												  name="value_distribution" onpaste="return false" data-price="{$lstRoom[i].price_room}">{$lstRoom[i].number_room}</span>
+												  name="value_distribution" onpaste="return false" data-price="{$lstRoom[i].price_room}">{if $lstRoom[i].number_room}{$lstRoom[i].number_room}{else}1{/if}</span>
 											<div class="plus item_calc_dis cursor active"></div>
 										</div>
 									</div>
@@ -179,6 +163,7 @@
 							{/if}
 						</div>
 					</div>
+					{if $lstAddOnService}
 					<div class="other_services item_booking_content number_travelers" data-class="other-services">
 						<div class="title_booking ">
 							Other Services
@@ -208,6 +193,7 @@
 							</div>
 						</div>
 					</div>
+					{/if}
 					<div class="contact_information item_booking_content">
 						<div class="title_booking ">
 							Contact information
@@ -271,11 +257,13 @@
 									<input type="radio" checked name="radio" class="radio">
 									<span class="checkmark"></span>
 								</label>
+								{if $clsConfiguration->getValue($SitePay_CashDesc)}
 								<div class="describe active">
                                         <span>
                                             {$clsConfiguration->getValue($SitePay_CashDesc)}
                                         </span>
 								</div>
+								{/if}
 							</div>
 							{/if}
 							{if $clsConfiguration->getValue('SitePay_Bank_Mode') eq '1'}
@@ -286,11 +274,13 @@
 									<input type="radio" name="radio" class="radio">
 									<span class="checkmark"></span>
 								</label>
+								{if $clsConfiguration->getValue($SitePay_BankDesc)}
 								<div class="describe">
                                         <span>
                                             {$clsConfiguration->getValue($SitePay_BankDesc)}
                                         </span>
 								</div>
+								{/if}
 							</div>
 							{/if}
 							{if $clsConfiguration->getValue('Paypal_Status_Mode') eq '1'}
@@ -300,11 +290,6 @@
 									<input type="radio" name="radio" class="radio">
 									<span class="checkmark"></span>
 								</label>
-								<div class="describe">
-                                        <span>
-
-                                        </span>
-								</div>
 							</div>
 							{/if}
 							{if $clsConfiguration->getValue('ONEPAY_Status_Mode') eq '1'}
@@ -314,12 +299,6 @@
 										<input type="radio" name="radio" class="radio">
 										<span class="checkmark"></span>
 									</label>
-									<div class="describe">
-                                        <span>
-                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                                            Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                                        </span>
-									</div>
 								</div>
 							{/if}
 							{if $clsConfiguration->getValue('ONEPAY_Visa_Status_Mode') eq '1'}
@@ -329,11 +308,6 @@
 									<input type="radio" name="radio" class="radio">
 									<span class="checkmark"></span>
 								</label>
-								<div class="describe">
-                                        <span>
-
-                                        </span>
-								</div>
 							</div>
 							{/if}
 						</div>
@@ -381,11 +355,6 @@
 								<div class="d-flex justify-content-between align-items-start ">
 									<span class=" span_title">Room:</span>
 									<div class="room span_content d-flex flex-column  align-items-end">
-{*										{section name=i loop=$lstRoom}*}
-{*											{if $lstRoom[i].number_room}*}
-{*												<span class="span_item"><span class="amount_adults">{$lstRoom[i].number_room}</span> x {$clsTourProperty->getTitle($lstRoom[i].room_id)}</span>*}
-{*											{/if}*}
-{*										{/section}*}
 									</div>
 								</div>
 							</div>
@@ -430,6 +399,9 @@
 				<input type="hidden" id="price_deposit" value="{$clsISO->formatPrice($totalPriceDeposit)}">
 				<input type="hidden" id="price_deposit" value="{$clsISO->formatPrice($totalRemaining)}">
 				<input type="hidden" id="deposit" value="{$item.deposit}">
+				<input type="hidden" id="total_price_adults" value="{$item.total_price_adults}">
+				<input type="hidden" id="total_price_child" value="{if $item.total_price_child}{$item.total_price_child}{else}0{/if}">
+				<input type="hidden" id="total_price_infants" value="{if $item.total_price_infants}{$item.total_price_infants}{else}0{/if}">
 			</form>
 		</div>
 
@@ -473,19 +445,25 @@
 	<option selected>Select City</option>
 </select>
 
-
+<script>
+	var travel_date = $('#travel_date').val();
+	var total_price_adults  = $('#total_price_adults').val();
+	var total_price_child  = $('#total_price_child').val();
+	var total_price_infants  = $('#total_price_infants ').val();
+</script>
 <script src="{$URL_JS}/cart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
 <script src="{$URL_JS}/jquery.validate.min.js"></script>
+
 {literal}
 <script>
-	var config = {
+	const config = {
 		cUrl: 'https://api.countrystatecity.in/v1/countries',
 		ckey: 'NHhvOEcyWk50N2Vna3VFTE00bFp3MjFKR0ZEOUhkZlg4RTk1MlJlaA=='
 	}
 
-	var countrySelect = document.querySelector('.country'),
+	const countrySelect = document.querySelector('.country'),
 			stateSelect = document.querySelector('.state'),
 			citySelect = document.querySelector('.city')
 

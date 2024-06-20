@@ -63,7 +63,7 @@
 		<div class="facilities_box">
 			<div class="row" onClick="loadHelp(this)">
 				{section name=i loop=$listHotelProperty}
-					<div class="col-12 ml-3 mr-5">{$listHotelProperty[i].title}
+					<div class="col-12 ml-3 mr-5"><span class="fw-bold">{$listHotelProperty[i].title}</span>
 						<div>{$clsProperty->getTitleByCatId($listHotelProperty[i].hotel_property_id, $pvalTable)}</div>
 					</div>
 				{/section}

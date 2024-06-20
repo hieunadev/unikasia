@@ -1,11 +1,30 @@
+<!-- Không format code để tránh hiển thị lỗi -->
 <div class="cru_header">
-    <h1 class="cru_header_title">{$clsCruiseCatCountry->getBannerTitle($cruise_cat_country_id)}</h1>
+    <h1 class="cru_header_title">
+        {if $show eq 'CruiseCatCountry'}
+            {if $cruise_cat_country_id ne ''}
+                {$clsCruiseCatCountry->getBannerTitle($cruise_cat_country_id)}
+            {else}
+                {$clsCountry->getTitle($country_id)} Cruise
+            {/if}
+        {else}
+            Cruise
+        {/if}
+    </h1>
     <div class="cru_header_description">
         {$clsCruiseCatCountry->getBannerIntro($cruise_cat_country_id)}
     </div>
 </div>
 <div class="cru_header_background_image">
-    <img src="{$clsCruiseCatCountry->getBannerImageHorizontal($cruise_cat_country_id, 1920, 600)}" width="1920" height="600" alt="{$clsCruiseCatCountry->getBannerTitle($cruise_cat_country_id)}">
+    {if $show eq 'CruiseCatCountry'}
+        {if $cruise_cat_country_id ne ''}
+            <img src="{$clsCruiseCatCountry->getBannerImageHorizontal($cruise_cat_country_id, 1920, 600)}" width="1920" height="600" alt="{$clsCruiseCatCountry->getBannerTitle($cruise_cat_country_id)}">
+        {else}
+            <img src="{$clsCountry->getCruiseBannerImage($country_id, 1920, 600)}" width="1920" height="600" alt="{$clsCountry->getTitle($country_id)}">
+        {/if}
+    {elseif $show eq 'CruiseCat'}
+        <img src="{$URL_IMAGES}/destination/bg_cruise.png" width="1920" height="600" alt="Cruise">
+    {/if}
 </div>
 {literal}
 <style>
@@ -43,17 +62,22 @@
         line-height: 28px;
         margin-top: 22px;
         margin-bottom: 40px;
-    }
-
-    .cru_header_description p {
-        margin-bottom: 0;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
 
     .cru_header {
-        padding-top: 127px;
-        padding-bottom: 182px;
-        position: relative;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -15%);
         z-index: 1;
+    }
+
+    .cruise_cat_body .bground_header {
+        position: relative;
     }
 </style>
 {/literal}

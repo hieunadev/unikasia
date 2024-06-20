@@ -532,11 +532,6 @@
     #nah_also_like .alsoLike{
         display: none;
     }
-
-    .cru_header {
-        padding-top: 127px;
-        padding-bottom: 182px;
-    }
     
     .value_ranges {
         width: 100%;
@@ -1604,13 +1599,6 @@
         position: relative;
     }
 
-    .cru_header {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-
     .unika_header_2 {
         position: fixed;
     }
@@ -1828,7 +1816,7 @@
             width: 100%;
         }
 
-        img {
+        .content_page .div_img img {
             width: 100% !important;
         }
     }

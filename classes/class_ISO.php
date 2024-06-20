@@ -4258,11 +4258,6 @@ class ISO
 					return $extLang . '/lien-he.html';
 				return $extLang . '/contact-us.html';
 				break;
-			case 'contact1':
-				if ($_LANG_ID == 'vn')
-					return $extLang . '/lien-he.html';
-				return $extLang . '/contact-us.html';
-				break;
 			case 'contacts':
 				vnSessionDelVar('cruise_itinerary_contact_id');
 				vnSessionDelVar('hotel_contact_id');
@@ -5062,13 +5057,14 @@ AND COLUMN_NAME = '" . $name . "'";
 		if ($package_id == 4) {
 			return 1;
 		}
-		$clsFeaturePackage = new FeaturePackage();
-		$oneFeaturePackage = $clsFeaturePackage->getAll("mod_page='" . $mod . "' and act_page='" . $act . "' and type='" . $type_function . "' and type_page='" . $type . "' order by order_no ASC limit 0,1");
-		//		print_r("mod_page='".$mod."' and act_page='".$act."' and type='".$type_function."' and type_page='".$type."' order by order_no ASC limit 0,1");die();
-		$feature_package_ckeck_id = $oneFeaturePackage[0][$clsFeaturePackage->pkey];
-		$clsPackage = new Package();
-		$list_feature_package_id = $clsPackage->getOneField('list_feature_package_id', $package_id);
-		$array_list_feature_package_id = unserialize($list_feature_package_id);
+		$clsFeaturePackage	= 	new FeaturePackage();
+		$oneFeaturePackage			= 	$clsFeaturePackage->getAll("mod_page='" . $mod . "' and act_page='" . $act . "' and type='" . $type_function . "' and type_page='" . $type . "' order by order_no ASC limit 0,1");
+		$feature_package_ckeck_id	= 	$oneFeaturePackage[0][$clsFeaturePackage->pkey];
+		#
+		$clsPackage	= 	new Package();
+		$list_feature_package_id		= 	$clsPackage->getOneField('list_feature_package_id', $package_id);
+		$array_list_feature_package_id 	= 	unserialize($list_feature_package_id);
+		#
 		if (in_array($feature_package_ckeck_id, $array_list_feature_package_id)) {
 			return 1;
 		} else {
@@ -5081,7 +5077,7 @@ AND COLUMN_NAME = '" . $name . "'";
 		if (_IS_PROMOTION) {
 			$clsDiscount = new Discount();
 			$sql = "SELECT discount_id FROM " . DB_PREFIX . "discount_item WHERE is_trash=0 and clsTable='$type' and item_id='$product_id'";
-//            print_r($sql);
+			//            print_r($sql);
 			$array_discount_id = $dbconn->getAll($sql);
 			if (!empty($array_discount_id)) {
 				$list_discount_id = array();

@@ -152,6 +152,19 @@ class Country extends dbBasic
         $noimage = URL_IMAGES . '/noimage.png';
         return '/files/thumb/' . $w . '/' . $h . '/' . $clsISO->parseImageURL($noimage);
     }
+    function getCruiseBannerImage($pvalTable, $w, $h)
+    {
+        global $clsISO;
+        $oneTable = $this->getOne($pvalTable, 'cruise_banner_image');
+        if ($oneTable['cruise_banner_image'] != '') {
+            $image = $oneTable['cruise_banner_image'];
+            return $clsISO->tripslashImage($image, $w, $h);
+            $noimage = URL_IMAGES . '/noimage.png';
+            return '/files/thumb/' . $w . '/' . $h . '/' . $clsISO->parseImageURL($noimage);
+        }
+        $noimage = URL_IMAGES . '/noimage.png';
+        return '/files/thumb/' . $w . '/' . $h . '/' . $clsISO->parseImageURL($noimage);
+    }
     function getImageBannerCommon($pvalTable, $w, $h)
     {
         global $clsISO;

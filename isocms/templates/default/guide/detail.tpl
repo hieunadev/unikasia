@@ -4,6 +4,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 col-sm-12 col-md-9">
+                    {$core->getBlock('des_travel_guide_side_mobile')}
                     <div class="trvgd_content">
                         {$clsGuide->getContent($guide_id)}
                     </div>

@@ -35,7 +35,7 @@ function getFrame($blog_id=null){
             )
         );
     }
-	if($clsISO->getCheckActiveModulePackage($package_id,$mod,'blog_tour_related','customize')){
+//	if($clsISO->getCheckActiveModulePackage($package_id,$mod,'blog_tour_related','customize')){
         $frames['tourRelated'] = array(
             'name'	=> $core->get_Lang('TourRelated'),
             'href_group'	=> 'tourRelated',
@@ -46,7 +46,7 @@ function getFrame($blog_id=null){
                     ),
             )
         );
-    }
+//    }
     if($clsISO->getCheckActiveModulePackage($package_id,$mod,'blog_hotel_related','customize')){
         $frames['hotelRelated'] = array(
             'name'	=> $core->get_Lang('HotelRelated'),

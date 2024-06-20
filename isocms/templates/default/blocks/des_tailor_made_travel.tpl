@@ -855,7 +855,8 @@
         border-radius: 8px;
 
         filter: brightness(0.7);
-
+        width: 100%;
+        height: auto;
     }
 
 
@@ -1255,7 +1256,6 @@
 
 
     @media screen and (max-width: 375px) {}
-
 </style>
 {/literal}
 

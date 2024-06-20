@@ -729,6 +729,7 @@ function default_success(){
 		$messageSuccess = html_entity_decode($messageSuccess);
 		$assign_list['SiteMsgServiceSuccess'] = $messageSuccess;
 	}else{
+
         $messageSuccess = $clsConfiguration->getValueAutoInfo('SiteMsg_TourSuccess_'.$_LANG_ID);
 		$messageSuccess = html_entity_decode($messageSuccess);
 		$messageSuccess = str_replace('[%CUSTOMER_EMAIL%]',$clsBooking->getEmailSuccess($booking_id),$messageSuccess);

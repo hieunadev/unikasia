@@ -2985,6 +2985,127 @@ function default_ajSiteFrmHotelPriceRange(){
 		echo(1); die();
 	}
 }
+
+function default_ajGetSearch() {
+    global $dbconn,$assign_list,$_CONFIG,$_SITE_ROOT,$mod,$_LANG_ID,$act,$menu_current,$current_page,$core,$clsModule;
+    $clsTour = new Tour();
+    $clsTourExtension = new TourExtension();
+    $tp = Input::post('tp', "");
+    $keyword = Input::post('keyword', "");
+    $cond = "is_trash=0 and is_online=1 ";
+    if(!empty($keyword)){
+        $slug = $core->replaceSpace($keyword);
+        $cond .= " and (
+			title like '%$keyword%' 
+			or slug like '%{$slug}%'
+		)";
+    }
+    if($tp=='_TOP'){}
+    if($tp=='_PROMOTION'){}
+    $limit = " limit 0,1000";
+    #
+    $html = '';
+    $lstItem = $clsTour->getAll($cond." order by order_no ASC".$limit);
+    if(!empty($lstItem)){
+        foreach($lstItem as $k=>$v){
+            $html.='<li class="clickChooiseTour" tp="'.$tp.'" data="'.$v[$clsTour->pkey].'" type="add">
+				<a href="javascript:void(0);" title="Click để chọn tin này">'.$clsTour->getTitle($v[$clsTour->pkey]).'</a>	
+			</li>';
+        }
+    }else{
+        $html .= '_EMPTY';
+    }
+    echo $html; die();
+}
+
+function default_ajLoadTourExtension(){
+    global $dbconn, $assign_list, $_CONFIG,  $_SITE_ROOT, $mod , $_LANG_ID, $act, $menu_current, $current_page, $core, $clsModule;
+    global $clsConfiguration, $clsISO,$package_id;
+    #
+    $clsTour = new Tour();
+    $clsHotelExtension = new HotelExtension();
+    $tour_1_id = (int) Input::post('tour_1_id', 0);
+    $html='';
+    $lstItem = $clsHotelExtension->getAll("hotel_id='{$tour_1_id}' order by order_no asc");
+    if(!empty($lstItem)){
+        $i=0;
+        foreach($lstItem as $item){
+            $html.='<tr style="cursor:move" id="order_'.$item[$clsHotelExtension->pkey].'" class="'.($i%2==0?'row1':'row2').'">';
+            $html.='<td class="index">'.($i+1).'</td>';
+            $html.='<td>'.$clsTour->getTitle($item['tour_id']).'</td>';
+            $html.='<td>'.$clsTour->getNumberDayDuration($item['tour_id']).'</td>';
+            $html.='<td>'.$clsTour->getCatName($item['tour_id']).'</td>';
+
+            $html.= '<td class="block_responsive text-center" data-title="'.$core->get_Lang('func').'"">
+                        <div><a class="clickDeleteTourExtension" title="'.$core->get_Lang('delete').'" href="javascript:void();" data="'.$item[$clsHotelExtension->pkey].'"><i class="icon-remove"></i></a></div>
+				</td>';
+            $html.='</tr>';
+            ++$i;
+        }
+        $html.='<script type="text/javascript">
+			$("#tblTourExtension").sortable({
+				opacity: 0.8,
+				cursor: \'move\',
+				start: function(){
+					vietiso_loading(1);
+				},
+				stop: function(){
+					vietiso_loading(0);
+				},
+				update: function(){
+					var order = $(this).sortable("serialize")+\'&update=update\';
+					$.post(path_ajax_script+"/index.php?mod=hotel&act=ajUpdPosTourExtension", order, function(html){
+						vietiso_loading(0);
+						loadTourExtension('.$tour_1_id.')
+					});
+				}
+			});
+		</script>';
+    }
+    // Return
+    echo $html; die();
+}
+
+function default_ajUpdPosTourExtension(){
+    global $dbconn, $assign_list, $_CONFIG,  $_SITE_ROOT, $mod , $_LANG_ID, $act, $menu_current, $current_page, $core, $clsModule;
+    global $clsConfiguration;
+    #
+    $clsTour = new Tour();
+    $clsHotelExtension = new HotelExtension();
+    $order = $_POST['order'];
+    foreach($order as $key=>$val){
+        $key = $key+1;
+        $clsHotelExtension->updateOne($val,"order_no='".$key."'");
+    }
+    //var_dump($order);die;
+}
+
+function default_ajAddTourExtension(){
+    global $dbconn, $assign_list, $_CONFIG,  $_SITE_ROOT, $mod , $_LANG_ID, $act, $menu_current, $current_page, $core, $clsModule;
+    #
+    $clsHotelExtension = new HotelExtension();
+    $hotel_id = $_POST['tour_1_id'];
+    $tour_id = $_POST['tour_2_id'];
+    if(!$clsHotelExtension->checkExist($hotel_id, $tour_id)){
+        $f="hotel_extension_id,hotel_id,tour_id,order_no";
+        $res = $clsHotelExtension->getAll("is_trash=0 and tour_1_id='$hotel_id' order by order_no desc limit 0,1");
+        $order_no = intval($res[0]['order_no'])+1;
+        $v="'".$clsHotelExtension->getMaxId()."','$hotel_id','$tour_id','".$order_no."'";
+        if($clsHotelExtension->insertOne($f,$v)){
+            echo('_SUCCESS'); die();
+        }
+    }else{
+        echo('_EXIST'); die();
+    }
+}
+function default_ajDeleteTourExtension(){
+    global $dbconn, $assign_list, $_CONFIG,  $_SITE_ROOT, $mod , $_LANG_ID, $act, $menu_current, $current_page, $core, $clsModule;
+    #
+    $clsHotelExtension = new HotelExtension();
+    $hotel_extension_id = $_POST['hotel_extension_id'];
+    $clsHotelExtension->deleteOne($hotel_extension_id);
+    echo(1); die();
+}
 /* START_CRUISE_CUSTOM_FIELD_MOD */
 function default_SiteHotelCustomField(){
 	global $dbconn, $assign_list, $_CONFIG,  $_SITE_ROOT, $mod , $_LANG_ID, $act, $menu_current, $current_page, $core, $clsModule;

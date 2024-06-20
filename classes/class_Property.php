@@ -185,22 +185,43 @@ class Property extends dbBasic{
 	}
 
     function getTitleByCatId($cat_id, $hotel_id, $type=""){
+        global $dbconn;
+
         $lstTitle = $this->getAll("cat_id='$cat_id' and type='HotelFacilities'");
         $content = '';
         $clsHotel = new Hotel();
+        $oneHotel = $clsHotel->getOne($hotel_id, "list_HotelAccommodation");
+        $lst_comma_accommodation = $this->getArray($oneHotel['list_HotelAccommodation']);
+        $sql = "SELECT * FROM `default_property` WHERE cat_id=$cat_id and type='HotelFacilities' and property_id IN (".implode(",",$lst_comma_accommodation).")";
+        $list_accommodation  = $dbconn->getAll($sql);
+
         if ($type == "FE") {
-            foreach ($lstTitle as $item) {
+            foreach ($list_accommodation as $item) {
                 $content .= ' <div class="item"><img src="'.$item['image'].'" alt=""> '.$item['title'].'</div>';
             }
             return $content;
         }
 
         foreach ($lstTitle as $item) {
-            $check = $clsHotel->checkProperty('HotelFacilities', $hotel_id,$item["property_id"]) ? "checked" : '';
+            $check = $clsHotel->checkProperty('HotelAccommodation', $hotel_id,$item["property_id"]) ? "checked" : '';
             $content .= '<div class="facilities_item" style="padding-right: 20px"><input type="checkbox" name="list_HotelAccommodation[]" '.$check.' value="'.$item["property_id"].'"> <span class="text">'.$item["title"].'</span></div>';
         }
 
         return $content;
+    }
+
+    function getArray($string)
+    {
+        if ($string == '' || $string == '|') {
+            return array();
+        }
+        $string = str_replace('||', '|', $string);
+        $string = str_replace(',', '|', $string);
+        $string = str_replace(':', '|', $string);
+        $string = str_replace(';', '|', $string);
+        $string = ltrim($string, '|');
+        $string = rtrim($string, '|');
+        return explode('|', $string);
     }
 }
 ?>

@@ -1,13 +1,3 @@
-<div class="booking_header_box">
-	<div class="container">
-		<div class="header-main">
-			<div class="logo_booking"><a href="{$DOMAIN_NAME}{$extLang}"  title ="{$PAGE_NAME}">  <img class="full-width height-auto" alt="{$PAGE_NAME}" src="{$clsConfiguration->getImageValue('HeaderLogo')}" /></a></div>
-			<div class="box_phone_booking">
-				<a class="phone_booking" href="tel:{$clsConfiguration->getValue('CompanyPhone')}" title="{$core->get_Lang('Call')}"><i class="fa fa-phone" aria-hidden="true"></i>{$core->get_Lang('Question Call')}: {$clsConfiguration->getValue('CompanyPhone')}</a>
-			</div>
-		</div>
-	</div>
-</div>	
 <div class=" mb100">
 {if $show ne 'bookTour'}
 	<nav class="breadcrumb-main breadcrumb-more bg_fff">
@@ -49,7 +39,7 @@
 				 </h1>*}
 				<div class="formatTextStandard"> 
 					
-					{assign var=SiteMsg_ResetPassSuccess value=SiteMsg_ResetPassSuccess_|cat:$_LANG_ID}
+					{assign var=SiteMsg_ResetPassSuccess value=SiteMsg_ResetPassSuccess_en}
 					{if $show eq 'bookTour'}
 						{$SiteMsgTourSuccess|html_entity_decode}
 					{/if}
@@ -74,13 +64,17 @@
 		</div>
 	</section>
 </div>
-<footer id="footer" class="footer text-center success" show="{$show}">
-	<div class="copy__right">
-		<div class="container">
-			<div class="copy__right--content">
-				{$clsConfiguration->getCopyRight()}
-				<a title="{$core->get_Lang('Travel website design')}" href="https://www.vietiso.com/thiet-ke-website-du-lich.html" class="">{$core->get_Lang('Travel website design')}</a>  {$core->get_Lang('by')} <a class="" href="https://www.vietiso.com" title="VIETISO">VIET<span class="color_f58220">ISO</span></a>
-			</div>
-		</div>
-	</div>
-</footer>
+
+{literal}
+	<script>
+		$(document).ready(function() {
+			$('.unika_header').removeClass('unika_header_2');
+
+			$(window).scroll(function() {
+				requestAnimationFrame(function() {
+					$('.unika_header').removeClass('unika_header_2');
+				});
+			});
+		});
+	</script>
+{/literal}

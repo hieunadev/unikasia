@@ -395,6 +395,23 @@
 								{$oneItem.common_intro}
 							</textarea>
 						</div>
+						{elseif $currentstep=='header_cruise'}
+						<div class="inpt_tour">
+							<label class="col-form-label" for="cruise_banner_image">
+								{$core->get_Lang('Common banner image')} ({$core->get_Lang('Size')}: 1920x600)
+							</label>
+							<div class="fieldarea">
+								<div class="row">
+									<div class="col-md-6 col-sm-12">
+										<input class="text_32 border_aaa bold" type="text" id="cruise_banner_image" name="iso-cruise_banner_image" value="{$oneItem.cruise_banner_image}" style="float: right;width: 85%;" onClick="loadHelp(this)" readonly>
+										<a style="float:left" href="#" class="ajOpenDialog" isoman_for_id="cruise_banner_image" isoman_name="iso-cruise_banner_image"><img src="{$URL_IMAGES}/general/folder-32.png" border="0" title="Open" alt="Open" /></a>
+									</div>
+									<div class="col-sm-12 col-md-6">
+										<img id="isoman_show_cruise_banner_image" class="float-left mr-3" src="{$oneItem.cruise_banner_image}" width="480" height="150" />
+									</div>
+								</div>
+							</div>
+						</div>
 						{if $lstContinent}
 						<div class="inpt_tour">
 							<label for="title">{$core->get_Lang('Continent')} <span class="required_red">*</span>

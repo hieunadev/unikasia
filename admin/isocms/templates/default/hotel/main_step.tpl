@@ -306,6 +306,11 @@
 							<div class="inpt_tour">
 								{$core->getBlock('box_detail_hotel_facilities')}
 							</div>
+						{elseif $currentstep=='add_on'}
+							<h3 class="title_box mb05">{$core->get_Lang('Add On')}</h3>
+							<div class="inpt_tour">
+								{$core->getBlock('box_detail_hote_add_on')}
+							</div>
 						{else}
 						{/if}
 

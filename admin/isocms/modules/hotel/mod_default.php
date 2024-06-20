@@ -39,6 +39,10 @@ function getFrame(){
 
 				'other_policy' => array(
 					'name' => $core->get_Lang('Inclusion')
+				),
+
+				'add_on' => array(
+					'name' => $core->get_Lang('Add on')
 				)
 			)
 		),
@@ -101,6 +105,8 @@ function getFrame(){
             )
         );
     }
+
+
 
 	$frames['seo'] = array(
 		'name'	=> $core->get_Lang('Seo tools'),

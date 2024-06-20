@@ -20,7 +20,7 @@
 				{/if}
 			</div>
 			<div class="action_tour btn_preview">
-				<a class="btn_preview_tour preview_tour_ex" {if $oneItem.is_trash eq 1}style="pointer-events: none;color: rgb(204, 204, 204);border-color: rgb(204, 204, 204);background-color: rgb(255, 255, 255);cursor: not-allowed;"{/if} href="{$clsClassTable->getLink($pvalTable)}" target="_blank" title="{$clsClassTable->getTitle($pvalTable)}">{$core->get_Lang('Preview')}</a>
+				<a {if $oneItem.is_trash eq 1}style="pointer-events: none;color: rgb(204, 204, 204);border-color: rgb(204, 204, 204);background-color: rgb(255, 255, 255);cursor: not-allowed;"{/if} href="{$clsClassTable->getLink($pvalTable)}" target="_blank" title="{$clsClassTable->getTitle($pvalTable)}">{$core->get_Lang('Preview')}</a>
 			</div>
 			<div class="action_tour btn_delete" id="is_delete_tour">
 				<a class="btn_preview_tour delete_tour_ex confirm_delete" type_btn="delete" href="{$PCMS_URL}/?mod={$mod}&act=delete&blog_id={$core->encryptID($pvalTable)}{$pUrl}&page={$currentPage}" title="{$clsClassTable->getTitle($pvalTable)}">{$core->get_Lang('Delete')}</a>

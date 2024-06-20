@@ -15,7 +15,7 @@
 					<div class="filedrop" onclick="file_explorer(this,event);" ondrop="file_drop(this,event)" toId="selectFile" data-options='{ldelim}"openFrom":"gallery","table_id":"{$pvalTable}","clsTableGal":"{$clsTableGal}"{rdelim}' ondragover="return false">
 						<h3>{$core->get_Lang('Drop files to upload')}</h3>
 						{if $mod eq 'hotel'}
-						<p>{$core->get_Lang('Image size')} (WxH=202x202)<br>
+						<p>{$core->get_Lang('Image size')} (WxH=841x420)<br>
 						{else}
 						<p>{$core->get_Lang('Image size')} (WxH=750x500)<br>
 						{/if}

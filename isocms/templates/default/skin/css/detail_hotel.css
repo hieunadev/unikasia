@@ -658,6 +658,10 @@ form .departure_day:hover {
     color: #111D37;
 }
 
+.overview-content p {
+	margin-bottom: 5px;
+}
+
 
 .tabs2-title {
 	font-size: 32px;
@@ -729,6 +733,7 @@ form .departure_day:hover {
 	display: flex;
 	flex-direction: column;
 	gap: 16px;
+	margin-bottom: 24px;
 }
 
 .border-accomm .item {
@@ -737,6 +742,9 @@ form .departure_day:hover {
     gap: 5px; /* Khoảng cách giữa icon và chữ */
 }
 
+.border-accomm .item img{
+	width: 24px;
+}
 .column-content h4 {
 	color: #111D37;
 	font-size: 16px;
@@ -1771,7 +1779,7 @@ p.price {
 
 .money {
 	display: flex;
-  	align-items: center; /* Căn giữa theo chiều dọc */
+  	align-items: center;
 }
 
 .txt_money_number .contactLink {
@@ -1790,11 +1798,48 @@ p.price {
 .semi-donut .cirle_semi {
 	width: 198px;
 	height: 198px;
-	  border-radius: 50% 50% 0 0; /* Thay đổi giá trị border-radius */
-  overflow: hidden; /* Thêm thuộc tính này để cắt phần thừa */
+	  border-radius: 50% 50% 0 0;
+  overflow: hidden;
 }
 
-#writeTourReview .
+.view-more-btn,
+.view-less-btn {
+    font-size: 14px;
+    padding: 5px 16px;
+    margin-top: 10px;
+    align-self: center;
+	border: none;
+	background: #FFA718 !important;
+	color: #FFF;
+	border-radius: 4px;
+}
+.view-more-btn:hover,
+.view-less-btn:hover {
+	background: #e88f00 !important;
+	
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination a {
+    padding: 5px 10px;
+    margin: 0 5px;
+    border: 1px solid #ccc;
+    text-decoration: none;
+    color: #333;
+}
+
+.pagination a.active {
+    background-color: #333;
+    color: #fff;
+}
+
+
+
 
 
 

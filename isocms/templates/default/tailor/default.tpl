@@ -1,6 +1,7 @@
 <link rel="stylesheet" href="{$URL_CSS}/tailor_made_tour.css?v={$upd_version}" />
 <link href="https://fonts.cdnfonts.com/css/nunito-sans" rel="stylesheet">
 
+
 <section class="listblogdetail_breadcrumb">
         <div class="breadcrumb_list">
             <div class="container">
@@ -18,7 +19,6 @@
             <section class="plantrip">
                 <div class="txt_tripex">
                 <div class="container">
-
                 <h2 class="txt_plantrip">{$core->get_Lang('Plan your extraordinary trips with Unikasia')}!</h2>
                 <p class="txt_desplantrip">{$core->get_Lang('Please share your preferences for your trip to Vietnam, Cambodia, Laos')}...: {$core->get_Lang('dates, itinerary, type of stay, accommodations')}...<br>
                     {$core->get_Lang('One of our travel consultant will contact you within 24 hours to create a unique, tailor-made program with you')}.</p>
@@ -110,14 +110,14 @@
                 <div class="travelinf">
                     <div class="container">
                     <div class="txt_inftravel">
-                        <h3 class="txt_infotravel">Your Travel’s Preferences</h3>
+                        <h3 class="txt_infotravel">{$core->get_Lang('Your Travel’s Preferences')}</h3>
 
                         <div class="input_inf">
                             <div class="row">
 								
                               <div class="col-md-4">
 								<label for="traveldate" class="txtlabel">{$core->get_Lang('Travel Date')}</label>
-								<p class="txt_smalltrip">approximately</p>
+								<p class="txt_smalltrip">{$core->get_Lang('approximately')}</p>
 								<div class="input-group"> 
 									<i class="fa-solid fa-calendar"></i>
 									<input type="text" class="form-control wpcf7-datepicker" autocomplete="off" name="arrival_date" id="arrival_date" placeholder="Apr 1, 2024" value='{$PostVal.arrival_date|date_format:"%b %e, %Y"}'/>
@@ -127,14 +127,14 @@
 
 								
                               <div class="col-md-4">
-                                <label for="duration" class="txtlabel">Duration</label>
-                                <p class="txt_smalltrip">in Days</p>
+                                <label for="duration" class="txtlabel">{$core->get_Lang('Duration')}</label>
+                                <p class="txt_smalltrip">{$core->get_Lang('in Days')}</p>
 
                                 <input type="duration" class="form-control select-input-inf" id="duration" placeholder="Example: 7 Days">
                               </div>
                               <div class="col-md-4">
-                                <label for="bugetperson" class="txtlabel">Budget per person</label>
-                                <p class="txt_smalltrip">excluding international flights</p>
+                                <label for="bugetperson" class="txtlabel">{$core->get_Lang('Budget per person')}</label>
+                                <p class="txt_smalltrip">{$core->get_Lang('excluding international flights')}</p>
 
                                 <input type="budget" class="form-control select-input-inf" id="bugetperson" placeholder="Example: 2.000$">
                               </div>
@@ -142,17 +142,17 @@
 
                             <div class="row">
                                 <div class="col-md-6">
-                                  <label for="arrival-airport" class="txtlabel">Arrival Airport</label>
+                                  <label for="arrival-airport" class="txtlabel">{$core->get_Lang('Arrival Airport')}</label>
                                   <select class="form-select select-input-inf" id="arrival-airport">
-									<option value="" disabled selected hidden>-- Please Select --</option>  
-                                    <option value="mr">Mr.</option>
+									<option value="" disabled selected hidden>-- {$core->get_Lang('Please Select')} --</option>  
+                                    <option value="mr">{$clsTourDestination->getByCountry($tour_id, "startFinish_detail")}</option>
                                     <option value="ms">Ms.</option>
                                     <option value="mrs">Mrs.</option>
                                     <option value="dr">Dr.</option>
                                   </select>
                                 </div>
                                 <div class="col-md-6">
-                                  <label for="tourguide" class="txtlabel ">Tour guide preference</label>
+                                  <label for="tourguide" class="txtlabel ">{$core->get_Lang('Tour guide preference')}</label>
                                   <select class="form-select select-input-inf" id="tourguide">
 									<option value="" disabled selected hidden>-- Please Select --</option> 
                                     <option value="mr">Mr.</option>
@@ -165,7 +165,7 @@
 
                               <div class="row">
                                 <div class="col-md-6">
-                                  <label for="participants" class="txtlabel">Participants</label>
+                                  <label for="participants" class="txtlabel">{$core->get_Lang('Participants')}</label>
                                   <select class="form-select select-input-inf" id="participants">
                                     <option value="mr">Mr.</option>
                                     <option value="ms">Ms.</option>
@@ -174,7 +174,7 @@
                                   </select>
                                 </div>
                                 <div class="col-md-6">
-                                  <label for="travelstyles" class="txtlabel ">Travel Styles & Activities</label>
+                                  <label for="travelstyles" class="txtlabel ">{$core->get_Lang('Travel Styles &amp; Activities')}</label>
                                   <select class="form-select select-input-inf" id="travelstyles">
 									<option value="" disabled selected hidden>-- Please Select --</option> 
                                     <option value="mr">Mr.</option>
@@ -216,19 +216,30 @@
 									 <div class="accordion-item">
                                         <div class="accordion-header" id="panelsStayOpen-heading{$lstCountry[i].country_id}">
                                           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse{$lstCountry[i].country_id}" aria-expanded="false" aria-controls="panelsStayOpen-collapse{$lstCountry[i].country_id}">
-                                            <input class="form-check-input chkAll me-2" type="checkbox" value="" id="chkAccordion{$lstCountry[i].country_id}All">{$lstCountry[i].title}</button>
+                                            <input class="form-check-input chkAll me-2" type="checkbox" value="" id="chkAccordion{$lstCountry[i].country_id}All" checked>
+											  <label class="form-check-label" for="chkAccordion{$lstCountry[i].country_id}All">{$lstCountry[i].title}</label>
+											</button>
                                         </div>
+										 
                                         <div id="panelsStayOpen-collapse{$lstCountry[i].country_id}" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-heading{$lstCountry[i].country_id}">
                                           <div class="accordion-body d-flex flex-wrap" style="gap:12px">
+											  
                                             <div class="form-check form-region me-3">
-                                      <input class="form-check-region" type="checkbox" value="" id="chkAccordion3Child0">
-                                              <label for="chkAccordion3Child0">Ba Be</label>
+                                      <input class="form-check-input form-check-region" type="checkbox" value="" id="chkAccordion3Child0">
+                                              <label class="form-check-label" for="chkAccordion3Child0">{$clsTourDestination->getByCountry($tour_id, 'all_city')}</label>
                                     </div>
 
                                     <div class="form-check form-region me-3">
                                         <input class="form-check-region" type="checkbox" value="" id="chkAccordion3Child1">
                                            <label for="chkAccordion3Child1">Bac Ha</label>
                                       </div>
+											  
+											  <label class="cbx">One
+												  <input type="checkbox" checked="checked">
+												  <span class="checkmark"></span>
+												</label>
+											  
+
 
                                       <div class="form-check form-region me-3">
                                         <input class="form-check-region" type="checkbox" value="" id="chkAccordion3Child2">
@@ -246,6 +257,9 @@
                                         </div>
                                       </div>
 									{/section}
+											
+											
+											
 
 
 <!--
@@ -447,6 +461,18 @@
 					}
 				  });
 				});
+	
+document.addEventListener('DOMContentLoaded', function () {
+  const checkboxes = document.querySelectorAll('.form-check-input');
+  checkboxes.forEach(checkbox => {
+    checkbox.addEventListener('click', () => {
+      checkbox.checked = !checkbox.checked;
+    });
+  });
+});
+
+
+
 
 
 </script>
@@ -465,8 +491,6 @@
 	
 	var Cancel = '{$core->get_lang("Cancel")}';
     var Confirm = '{$core->get_lang("Confirm")}';
-    var delete_text = '{$core->get_lang("Are you sure you want to delete?")}';
-    var remove_text = '{$core->get_lang("Are you sure you want to remove?")}';
     var loading = '{$core->get_lang("loading")}';
     var DateofBirth = '{$core->get_lang("Birthday")}';
     var msg_recapcha = "{$core->get_Lang('You must check Recaptcha')}";

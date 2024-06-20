@@ -1055,13 +1055,8 @@ error_reporting(E_ERROR & ~E_STRICT);//E_ALL
     $clsVoucher = new Voucher();$assign_list["clsVoucher"] = $clsVoucher;
     $clsCity = new City();$assign_list["clsCity"] = $clsCity;
     $clsCruiseService = new CruiseService();$assign_list["clsCruiseService"] = $clsCruiseService;
-
-
-
+    $clsTourProperty = new TourProperty();$assign_list["clsTourProperty"] = $clsTourProperty;
     $clsFeedback=new Feedback(); $assign_list['clsFeedback'] = $clsFeedback;
-    
-	
-	
 	$clsCountry = new _Country(); $assign_list["clsCountry"] = $clsCountry;
 	#
 	$assign_list["lstCountryRegion"] = $clsCountry->getAll("1=1 and is_trash=0 order by order_no ASC",$clsCountry->pkey.",title");
@@ -1078,10 +1073,15 @@ error_reporting(E_ERROR & ~E_STRICT);//E_ALL
    
     
     $cartSessionTour= vnSessionGetVar('ContactTour');
-    $assign_list["cartSessionTour"] = $cartSessionTour;
+    $oneItem = reset($cartSessionTour["TOUR"]);
+    $assign_list["cartSessionTour"] = $oneItem;
+    $str_list_room = unserialize(html_entity_decode($oneItem['str_list_room']));
+    $total_price_room = array_sum(array_column($str_list_room, 'total_price_room'));
+    $assign_list["lstRoom"] = $str_list_room;
+    $assign_list["total_price_room"] = $total_price_room;
     $cartSessionCruise= vnSessionGetVar('ContactCruise');
     $assign_list["cartSessionCruise"] = $cartSessionCruise;
-   //print_r($cartSessionCruise);die();
+//   print_r($total_price_room);die();
 	
 	$cartSessionVoucher= vnSessionGetVar('ContactVoucher');
     $assign_list["cartSessionVoucher"] = $cartSessionVoucher;

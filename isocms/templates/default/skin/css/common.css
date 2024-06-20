@@ -414,6 +414,7 @@
     font-size: 14px;
     font-weight: 500;
     line-height: 20px;
+    z-index: 1;
 }
 .unika_hover_content a:hover,
 .unika_hover_item.active {

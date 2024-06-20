@@ -1586,7 +1586,8 @@ function default_ajaxCreateQuickCruise()
 							</div>
 						</div>';
 		}
-		$html .= '
+		if (1 == 2) {
+			$html .= '
 						<div class="row-span">
 							<div class="fieldlabel">' . $core->get_Lang('Cruise Type') . '</div>
 							<div class="fieldarea">
@@ -1596,6 +1597,7 @@ function default_ajaxCreateQuickCruise()
 								</select>
 							</div>
 						</div>';
+		}
 		$html .= '<div class="clearfix" style="margin-bottom:10px"></div>
 						<input type="text" autocomplete="off" name="title" class="text full fontLarge required title_capitalize" id="NewCruiseTitle" placeholder="' . $core->get_Lang('ex') . ': ' . $clsISO->getExName('Cruise') . '" />
 						<br><br>
@@ -2347,8 +2349,8 @@ function default_ajSysCruiseCategory()
 							</div>
 						</div>';
 		}
-		//echo $cruise_cat_id;die('xxx');
-		$html .= '
+		if (1 == 2) {
+			$html 	.= 	'
 						<div class="row-span">
 							<div class="fieldlabel" style="text-align:right"><strong>' . $core->get_Lang('Short text') . '</strong> <span class="color_r">*</span></div>
 							<div class="fieldarea">
@@ -2362,16 +2364,24 @@ function default_ajSysCruiseCategory()
 								<input type="hidden" id="isoman_hidden_image" value="' . $clsCruiseCat->getOneField('image', $cruise_cat_id) . '">
 								<input style="width:70% !important;float:left;margin-left:4px;" type="text" id="isoman_url_image" name="image" value="' . $clsCruiseCat->getOneField('image', $cruise_cat_id) . '"><a style="float:left; margin-left:4px; margin-top:-4px;" href="#" class="ajOpenDialog" isoman_for_id="image" isoman_val="' . $clsCruiseCat->getOneField('image', $cruise_cat_id) . '" isoman_name="image"><img src="' . URL_IMAGES . '/general/folder-32.png" border="0" title="Open" alt="Open" /></a>
 							</div>
-						</div>
+						</div>';
+			$html	.=	'	
 						<div class="row-span">
-							<div class="fieldlabel" style="text-align:right"><strong>' . $core->get_Lang('Banner') . ' (WxH:1920x400)</strong> <span class="color_r">*</span></div>
+							<div class="fieldlabel" style="text-align:right;line-height: 15px;"><strong>' . $core->get_Lang('Banner horizontal') . '</br> (WxH:1920x600)</strong> <span class="color_r">*</span></div>
 							<div class="fieldarea">
-								<img class="isoman_img_pop" id="isoman_show_image_banner" src="' . $clsCruiseCat->getOneField('image_banner', $cruise_cat_id) . '" />
-								<input type="hidden" id="isoman_hidden_image_banner" value="' . $clsCruiseCat->getOneField('image_banner', $cruise_cat_id) . '">
-								<input style="width:70% !important;float:left;margin-left:4px;" type="text" id="isoman_url_image_banner" name="image_banner" value="' . $clsCruiseCat->getOneField('image_banner', $cruise_cat_id) . '"><a style="float:left; margin-left:4px; margin-top:-4px;" href="#" class="ajOpenDialog" isoman_for_id="image_banner" isoman_val="' . $clsCruiseCat->getOneField('image_banner', $cruise_cat_id) . '" isoman_name="image_banner"><img src="' . URL_IMAGES . '/general/folder-32.png" border="0" title="Open" alt="Open" /></a>
+								<div class="box_upload_image" style="max-width: 100%;display: flex;gap: 30px;">
+									<div class="box_upload">
+										<input type="hidden" id="isoman_hidden_image_banner" value="' . $clsCruiseCat->getOneField('image_banner', $cruise_cat_id) . '">
+										<input style="margin-left:4px;" type="text" id="isoman_url_image_banner" name="image_banner" value="' . $clsCruiseCat->getOneField('image_banner', $cruise_cat_id) . '"><a style="float:left; margin-left:4px; margin-top:-4px;" href="#" class="ajOpenDialog" isoman_for_id="image_banner" isoman_val="' . $clsCruiseCat->getOneField('image_banner', $cruise_cat_id) . '" isoman_name="image_banner"><img src="' . URL_IMAGES . '/general/folder-32.png" border="0" title="Open" alt="Open" /></a>
+									</div>
+									<div class="box_image">
+										<img class="" id="isoman_show_image_banner" src="' . $clsCruiseCat->getOneField('image_banner', $cruise_cat_id) . '" width="200"/>
+									</div>
+								</div>
 							</div>
-						</div>
-					</div>
+						</div>';
+		}
+		$html	.=	'	</div>
 				</div>
 			</form>
 			<div class="modal-footer">
@@ -2479,9 +2489,6 @@ function default_ajSysCruiseCategoryCountry()
 	global $clsISO, $clsConfiguration, $package_id;
 	$user_id = $core->_USER['user_id'];
 	#
-	// $clsISO->dump($_POST);
-	// $clsISO->dump($_GET);
-	#
 	// if (!$clsISO->getCheckActiveModulePackage($package_id, $mod, 'cat', 'default')) {
 	// 	header('location:' . PCMS_URL . '/index.php?admin&mod=' . $mod . '&message=NotPermission');
 	// 	exit();
@@ -2490,8 +2497,9 @@ function default_ajSysCruiseCategoryCountry()
 	$clsCountry 			= 	new Country();
 	$clsCruiseCat 			= 	new CruiseCat();
 	$clsCruiseCatCountry 	= 	new CruiseCatCountry();
-	$tp	= 	isset($_POST['tp']) ? $_POST['tp'] : '';
 	$cruise_cat_country_id 	= 	isset($_POST['cruise_cat_country_id']) ? intval($_POST['cruise_cat_country_id']) : 0;
+	$tp	= 	isset($_POST['tp']) ? $_POST['tp'] : '';
+	#
 	// if (!empty($cruise_cat_country_id)) {
 	// 	$cruise_cat_country_info	=	$clsCruiseCatCountry->getOne($cruise_cat_country_id);
 	// }
@@ -2563,10 +2571,7 @@ function default_ajSysCruiseCategoryCountry()
 	} elseif ($tp == 'F') {
 		$country_id = 	$clsCruiseCatCountry->getOneField('country_id', $cruise_cat_country_id);
 		$cat_id 	= 	$clsCruiseCatCountry->getOneField('cat_id', $cruise_cat_country_id);
-		// $clsISO->dump($clsCountry->makeSelectboxOption($country_id));
-		// $clsISO->dump($clsCruiseCat->makeSelectboxOptionValueName($cat_id));
-		// die;
-
+		#
 		$html 	= 	'';
 		$html 	.= 	'
 			<div class="headPop">
@@ -2587,7 +2592,7 @@ function default_ajSysCruiseCategoryCountry()
 					<div class="row-span">
 						<div class="fieldlabel" style="text-align:right"><strong >' . $core->get_Lang('Cruise category') . '</strong> <span class="color_r">*</span></div>
 						<div class="fieldarea">
-							<select name="cat_id" class="glSlBox required" id="slb_CruiseCat">
+							<select name="iso-cat_id" class="glSlBox required" id="slb_CruiseCat">
 								' . $clsCruiseCat->makeSelectboxOptionValueName($cat_id) . '
 							</select>
 						</div>
@@ -2646,52 +2651,58 @@ function default_ajSysCruiseCategoryCountry()
 		echo $html;
 		die();
 	} elseif ($tp == 'S') {
-		$country_id 				=	isset($_POST['country_id']) ? ($_POST['country_id']) : '';
-		$cat_id 					=	isset($_POST['cat_id']) ? ($_POST['cat_id']) : '';
+		$country_id 				=	!empty($_POST['country_id']) ? ($_POST['country_id']) : 0;
+		$cat_id 					=	!empty($_POST['cat_id']) ? ($_POST['cat_id']) : 0;
 		$banner_title 				=	trim(strip_tags($_POST['banner_title']));
-		$banner_intro 				=	isset($_POST['banner_intro']) ? ($_POST['banner_intro']) : '';
-		$banner_image_vertical 		=	isset($_POST['banner_image_vertical']) ? ($_POST['banner_image_vertical']) : '';
-		$banner_image_horizontal 	=	isset($_POST['banner_image_horizontal']) ? ($_POST['banner_image_horizontal']) : '';
+		$banner_intro 				=	!empty($_POST['banner_intro']) ? ($_POST['banner_intro']) : '';
+		$banner_image_vertical 		=	!empty($_POST['banner_image_vertical']) ? ($_POST['banner_image_vertical']) : '';
+		$banner_image_horizontal 	=	!empty($_POST['banner_image_horizontal']) ? ($_POST['banner_image_horizontal']) : '';
 		#
-		if ($cruise_cat_country_id == '0') {
-			// if ($clsCruiseCatCountry->getAll("parent_id='$parent_id' and slug='$slugPost'") != '') {
-			// 	echo '_EXIST';
-			// 	die();
-			// } else {
-			$listTable	= 	$clsCruiseCatCountry->getAll("1=1 ", $clsCruiseCatCountry->pkey . ", order_no");
-			for ($i = 0; $i <= count($listTable); $i++) {
-				$order_no = $listTable[$i]['order_no'] + 1;
-				$clsCruiseCatCountry->updateOne($listTable[$i][$clsCruiseCatCountry->pkey], "order_no='" . $order_no . "'");
-			}
-			$max_id	= 	$clsCruiseCatCountry->getMaxID();
-			$max_order = $clsCruiseCatCountry->getMaxOrderNo();
-			$f 	= 	"user_id, user_id_update, country_id, cat_id, banner_title, banner_intro, order_no, cruise_cat_country_id, reg_date, upd_date, banner_image_vertical, banner_image_horizontal, is_trash, is_online";
-			$v 	= 	"'$user_id', '$user_id', '$country_id', '$cat_id', '" . addslashes($banner_title) . "', '" . ($banner_intro) . "'";
-			$v 	.= 	", '$max_order', '$max_id', '" . time() . "', '" . time() . "', '$banner_image_vertical', '$banner_image_horizontal', '0', '1'";
-			#
-			if ($clsCruiseCatCountry->insertOne($f, $v)) {
-				echo '_SUCCESS';
-				die();
+		if (!empty($country_id) && !empty($cat_id) && !empty($banner_title) && !empty($banner_intro) && !empty($banner_image_vertical) && !empty($banner_image_horizontal)) {
+			if ($cruise_cat_country_id == '0') {
+				if ($clsCruiseCatCountry->getAll("country_id='$country_id' AND cat_id='$cat_id'") != '') {
+					echo '_EXIST';
+					die();
+				} else {
+					$listTable	= 	$clsCruiseCatCountry->getAll("1=1 ", $clsCruiseCatCountry->pkey . ", order_no");
+					for ($i = 0; $i <= count($listTable); $i++) {
+						$order_no	= 	$listTable[$i]['order_no'] + 1;
+						$clsCruiseCatCountry->updateOne($listTable[$i][$clsCruiseCatCountry->pkey], "order_no='" . $order_no . "'");
+					}
+					$max_id		= 	$clsCruiseCatCountry->getMaxID();
+					$max_order 	= 	$clsCruiseCatCountry->getMaxOrderNo();
+					$f 	= 	"user_id, user_id_update, country_id, cat_id, banner_title, banner_intro, order_no, cruise_cat_country_id, reg_date, upd_date, banner_image_vertical, banner_image_horizontal, is_trash, is_online";
+					$v 	= 	"'$user_id', '$user_id', '$country_id', '$cat_id', '" . addslashes($banner_title) . "', '" . ($banner_intro) . "'";
+					$v 	.= 	", '$max_order', '$max_id', '" . time() . "', '" . time() . "', '$banner_image_vertical', '$banner_image_horizontal', '0', '1'";
+					#
+					$query_insert	=	$clsCruiseCatCountry->insertOne($f, $v);
+					if ($query_insert) {
+						echo '_SUCCESS';
+						die();
+					} else {
+						echo '_ERROR';
+						die();
+					}
+				}
 			} else {
-				echo '_ERROR';
-				die();
+				// if ($clsCruiseCatCountry->getAll("cruise_cat_country_id <> '$cruise_cat_country_id'") != '') {
+				// 	echo '_EXIST';
+				// 	die();
+				// } else {
+				$v	= 	"banner_title='" . addslashes($banner_title) . "', country_id='" . addslashes($country_id) . "', cat_id='" . addslashes($cat_id) . "', banner_intro='$banner_intro'";
+				$v 	.= 	", banner_image_vertical='" . addslashes($banner_image_vertical) . "', banner_image_horizontal='" . addslashes($banner_image_horizontal) . "', upd_date='" . time() . "', user_id_update='$user_id'";
+				if ($clsCruiseCatCountry->updateOne($cruise_cat_country_id, $v)) {
+					echo '_UPDATESUCCESS';
+					die();
+				} else {
+					echo '_ERROR';
+					die();
+				}
+				// }
 			}
-			// }
 		} else {
-			// if ($clsCruiseCatCountry->getAll("cruise_cat_country_id <> '$cruise_cat_country_id'") != '') {
-			// 	echo '_EXIST';
-			// 	die();
-			// } else {
-			$v = "banner_title='" . addslashes($banner_title) . "', country_id='" . addslashes($country_id) . "', cat_id='" . addslashes($cat_id) . "', banner_intro='$banner_intro'";
-			$v .= ", banner_image_vertical='" . addslashes($banner_image_vertical) . "', banner_image_horizontal='" . addslashes($banner_image_horizontal) . "', upd_date='" . time() . "', user_id_update='$user_id'";
-			if ($clsCruiseCatCountry->updateOne($cruise_cat_country_id, $v)) {
-				echo '_UPDATESUCCESS';
-				die();
-			} else {
-				echo '_ERROR';
-				die();
-			}
-			// }
+			echo '_ERROR';
+			die();
 		}
 	} elseif ($tp == 'M') {
 		#
@@ -6693,7 +6704,7 @@ function default_SiteCruiseItineraryDay()
 				$html .= '<td>' . $clsClassTable->getTitle($item[$clsClassTable->pkey]) . '</td>';
 				$html .= '<td>' . $txt_meal . '</td>';
 				$html .= '<td align="center" style="vertical-align: middle; text-align:center; width: 40px; white-space: nowrap;">
-							<div class="btn-group-ico">
+							<div class="btn-group-ico d-flex">
 								<a title="' . $core->get_Lang('edit') . '" href="javascript:void()" data-cruise_itinerary_id="' . $cruise_itinerary_id . '" class="clickEditItineraryDay" data="' . $item[$clsClassTable->pkey] . '"><i class="ico ico-edit"></i></a>
 								<a title="' . $core->get_Lang('delete') . '" class="clickDeleteItinerary" data-cruise_itinerary_id="' . $cruise_itinerary_id . '" data="' . $item[$clsClassTable->pkey] . '" href="javascript:void();"><i class="ico ico-remove"></i></a>
 							</div>

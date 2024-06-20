@@ -7,7 +7,7 @@
 						{if $currentstep=='image'}
 						{assign var= image_detail value='image_cruise'}
 						{$clsISO->getBlock('box_detail_image',["image_detail"=>$image_detail])}
-						<div class="form-group">
+						<!-- <div class="form-group">
 							<label class="col-form-label" for="title">{$core->get_Lang('File download program cruise')}
 								{assign var= file_tour value='file_tour'}
 								{if $CHECKHELP eq 1}
@@ -20,10 +20,10 @@
 							<input class="text_32 border_aaa bold" type="text" id="isoman_url_file_programme" name="file_programme" value="{$oneItem.file_programme}" style="width:100%; max-width:300px; float:left" onClick="loadHelp(this)"><a style="float:left; margin-left:4px; margin-top:-4px;" href="#" class="ajOpenDialog" isoman_for_id="file_programme" isoman_val="{$oneItem.file_programme}" isoman_name="file_programme"><img src="{$URL_IMAGES}/general/folder-32.png" border="0" title="Open" alt="Open" /></a>
 							<em style="padding-left:10px; padding-top:3px; display:inline-block">File chương trình tour</em>
 							<div class="text_help" hidden="">{$clsConfiguration->getValue($file_tour)|html_entity_decode}</div>
-						</div>
+						</div> -->
 						{elseif $currentstep=='basic'}
 						<h3 class="title_box">{$core->get_Lang('Basic')}</h3>
-						<div class="inpt_tour">
+						<!-- <div class="inpt_tour">
 							<label for="title">{$core->get_Lang('Cruise Type')}</label>
 							<div class="box_cruise_type">
 								{if $oneItem.cruise_type eq 1}
@@ -38,7 +38,7 @@
 								</div>
 								{/if}
 							</div>
-						</div>
+						</div> -->
 						<div class="inpt_tour">
 							<label for="title">{$core->get_Lang('Name Of Cruise')} <span class="required_red">*</span>
 								{assign var= name_cruise value='name_cruise'}
@@ -173,7 +173,7 @@
 							<label for="title">{$core->get_Lang('Place to visit')} <span class="required_red">*</span></label>
 							<textarea class="required full-width" data-table_id="{$pvalTable}" name="place_visit" rows="5">{$clsClassTable->getOneField('place_visit',$pvalTable)}</textarea>
 						</div>
-						<div class="inpt_tour pdt30" style="border-top:1px dashed #0000004d">
+						<!-- <div class="inpt_tour pdt30" style="border-top:1px dashed #0000004d">
 							<label for="title">{$core->get_Lang('reviewcruise')}
 								{assign var= review_cruise value='review_cruise'}
 								{if $CHECKHELP eq 1}
@@ -218,7 +218,7 @@
 									</div>
 								</div>
 							</div>
-						</div>
+						</div> -->
 						{elseif $currentstep=='cabin'}
 						<div class="box_list_cabin">
 							<h3 class="title_box mb10">{$core->get_Lang('Cabin')}
@@ -335,7 +335,7 @@
 									<table class="tbl-grid table-striped table_responsive" cellspacing="0" width="100%">
 										<thead>
 											<tr>
-												<th class="gridheader name_responsive name_responsive1" style="text-align:left"><strong>{$core->get_Lang('Days')}</strong></th>
+												<th class="gridheader name_responsive name_responsive1" style="text-align:left"><strong>{$core->get_Lang('Title/Days')}</strong></th>
 												<th class="gridheader hiden_responsive" style="text-align:center; width:160px"><strong>{$core->get_Lang('Meals')}</strong></th>
 												<th class="gridheader hiden_responsive" style="text-align:center; width:100px"><strong>{$core->get_Lang('Price (USD)')}</strong></th>
 												<th class="gridheader hiden_responsive" style="text-align:center; width:60px"><strong>{$core->get_Lang('status')}</strong></th>
@@ -348,7 +348,15 @@
 												<td class="text-left name_service">
 													<div class="box_name_services">
 														<p class="txt_name_services">
-															<a title="{$core->get_Lang('edit')}" href="javascript:void()" class="edit_itinerary" data-cruise_itinerary_id="{$listCruiseItinerary[i].cruise_itinerary_id}" data-cruise_id="{$pvalTable}"><strong style="font-size:15px;">{$clsCruiseItinerary->getDuration($listCruiseItinerary[i].cruise_itinerary_id)}</strong></a>
+															<a title="{$core->get_Lang('edit')}" href="javascript:void()" class="edit_itinerary" data-cruise_itinerary_id="{$listCruiseItinerary[i].cruise_itinerary_id}" data-cruise_id="{$pvalTable}">
+																<strong style="font-size:15px;">
+																	{if $listCruiseItinerary[i].title_itinerary ne ''}
+																	{$listCruiseItinerary[i].title_itinerary}
+																	{else}
+																	{$clsCruiseItinerary->getDuration($listCruiseItinerary[i].cruise_itinerary_id)}
+																	{/if}
+																</strong>
+															</a>
 														</p>
 														<p class="txt_info">
 															{$clsCruiseItinerary->getAllCityAround($listCruiseItinerary[i].cruise_itinerary_id,0,", ")}
@@ -360,7 +368,7 @@
 													{$clsCruiseItinerary->getListMealItineraryDay($listCruiseItinerary[i].cruise_itinerary_id)}
 												</td>
 												<td class="block_responsive" data-title="{$core->get_Lang('Price')}" style="text-align:center">
-													{$clsCruiseItinerary->getPriceItinerary($listCruiseItinerary[i].cruise_itinerary_id)}
+													{$clsISO->formatPrice($clsCruiseItinerary->getPriceItinerary($listCruiseItinerary[i].cruise_itinerary_id))}
 												</td>
 												<td class="block_responsive" data-title="{$core->get_Lang('status')}" style="text-align:center">
 													<a href="javascript:void(0);" class="SiteClickPublic" clsTable="CruiseItinerary" pkey="cruise_itinerary_id" sourse_id="{$listCruiseItinerary[i].cruise_itinerary_id}" rel="{$clsCruiseItinerary->getOneField('is_online',$listCruiseItinerary[i].cruise_itinerary_id)}" title="{$core->get_Lang('Click to change status')}">
