@@ -199,6 +199,19 @@
     gap: 8px;
 }
 
+.txt_overviewtour {
+	display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+	color: #959AA4;
+	font-size: 14px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: 20px;
+}
+
 /* CSS Related Tour */
 
 .list_viewtour {
@@ -312,15 +325,8 @@
     margin-left: 5px;
 }
 
-.border_exploremore {
-    max-width: 296px;
-    height: 152px;
-    flex-shrink: 0;
-    position: relative;
-    z-index: 1;
-    border-radius: 8px;
-}
 
+/*
 .border_exploremore:after {
     content: "";
     position: absolute;
@@ -336,50 +342,62 @@
     z-index: 1;
     border-radius: 8px;
 }
+*/
+
+.border_exploremore img {
+	filter: brightness(70%);
+	width: 100%;
+}
+.txt_btnexploremore {
+	position: absolute;
+    top: 50%;
+    left: 28px;
+    right: 30px;
+    transform: translateY(-50%);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
 
 .tour_exploretxt {
-    position: absolute;
-    color: #fff;
-    text-align: center;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 24px;
-    bottom: 50%; /* Điều chỉnh khoảng cách từ dưới ảnh */
-    left: 16%;
-    z-index: 2;
+        color: #FFF;
+        text-align: center;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 24px;
+    	z-index: 2;
+	margin: 0;
+}
+
+.border_exploremore {
+    position: relative;
+
+    z-index: 1;
+
+    border-radius: 8px;
+
 }
 
 .btn_seealltour {
-    padding: 12px 20px;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    flex-shrink: 0;
-    fill: linear-gradient(
-        180deg,
-        rgba(24, 28, 26, 0.48) 0%,
-        rgba(24, 28, 26, 0) 100%
-    );
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    border-radius: 8px;
-    background: #ffa718;
-    color: #fff;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 24px;
-    border: none;
-    z-index: 2;
+        display: table;
+        margin: 0 auto;
+        padding: 12px 20px;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        border-radius: 8px;
+        background: var(--Primary, #FFA718);
+        color: #fff;
+		border: none;
+
 }
 
 .btn_seealltour:hover {
-    background: #e88f00;
+    background: #e88f00 !important;
     color: #fff !important;
-    border: none;
+    border: none !important;
 }
 
 /* CSS Related Tour End */

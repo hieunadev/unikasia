@@ -165,6 +165,20 @@ class Country extends dbBasic
         $noimage = URL_IMAGES . '/noimage.png';
         return '/files/thumb/' . $w . '/' . $h . '/' . $clsISO->parseImageURL($noimage);
     }
+    function getCruiseBannerTitle($country_id, $oDataTable = null)
+    {
+        if (!isset($oDataTable['cruise_banner_title'])) {
+            $oDataTable = $this->getOne($country_id, 'cruise_banner_title');
+        }
+        return $oDataTable['cruise_banner_title'];
+    }
+    function getCruiseBannerDescription($country_id, $one = null)
+    {
+        if (!isset($one['cruise_banner_description'])) {
+            $one = $this->getOne($country_id, 'cruise_banner_description');
+        }
+        return html_entity_decode($one['cruise_banner_description']);
+    }
     function getImageBannerCommon($pvalTable, $w, $h)
     {
         global $clsISO;

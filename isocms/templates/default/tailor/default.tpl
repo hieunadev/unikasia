@@ -144,8 +144,9 @@
                                 <div class="col-md-6">
                                   <label for="arrival-airport" class="txtlabel">{$core->get_Lang('Arrival Airport')}</label>
                                   <select class="form-select select-input-inf" id="arrival-airport">
-									<option value="" disabled selected hidden>-- {$core->get_Lang('Please Select')} --</option>  
-                                    <option value="mr">{$clsTourDestination->getByCountry($tour_id, "startFinish_detail")}</option>
+									<option value="" disabled selected hidden>-- {$core->get_Lang('Please Select')} --</option> 
+<!--									{$clsCruiseProperty->getSelectAirportTour(0,$airport_id)}-->
+                                    <option value="mr">Mr</option>
                                     <option value="ms">Ms.</option>
                                     <option value="mrs">Mrs.</option>
                                     <option value="dr">Dr.</option>
@@ -155,10 +156,11 @@
                                   <label for="tourguide" class="txtlabel ">{$core->get_Lang('Tour guide preference')}</label>
                                   <select class="form-select select-input-inf" id="tourguide">
 									<option value="" disabled selected hidden>-- Please Select --</option> 
-                                    <option value="mr">Mr.</option>
-                                    <option value="ms">Ms.</option>
-                                    <option value="mrs">Mrs.</option>
-                                    <option value="dr">Dr.</option>
+									{if $lstTourGuide}
+									{section name=i loop=$lstTourGuide}
+                                    <option value="{$lstTourGuide[i].tour_property_id}"{if $tour_guide_id eq $lstTourGuide[i].tour_property_id}selected{/if}>{$lstTourGuide[i].title}</option>
+									  {/section}
+									  {/if}
                                   </select>                                
                                 </div>
                               </div>
@@ -167,7 +169,8 @@
                                 <div class="col-md-6">
                                   <label for="participants" class="txtlabel">{$core->get_Lang('Participants')}</label>
                                   <select class="form-select select-input-inf" id="participants">
-                                    <option value="mr">Mr.</option>
+									<i class="fa-regular fa-user"></i>
+									<option value="mr">Mr.</option>
                                     <option value="ms">Ms.</option>
                                     <option value="mrs">Mrs.</option>
                                     <option value="dr">Dr.</option>
@@ -181,7 +184,8 @@
                                     <option value="ms">Ms.</option>
                                     <option value="mrs">Mrs.</option>
                                     <option value="dr">Dr.</option>
-                                  </select>                                
+                                  </select>
+
                                 </div>
                               </div>
 
@@ -223,21 +227,26 @@
 										 
                                         <div id="panelsStayOpen-collapse{$lstCountry[i].country_id}" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-heading{$lstCountry[i].country_id}">
                                           <div class="accordion-body d-flex flex-wrap" style="gap:12px">
-											  
+											 {section name=i loop=$lstCountryEx}
+
                                             <div class="form-check form-region me-3">
                                       <input class="form-check-input form-check-region" type="checkbox" value="" id="chkAccordion3Child0">
-                                              <label class="form-check-label" for="chkAccordion3Child0">{$clsTourDestination->getByCountry($tour_id, 'all_city')}</label>
+                                              <label class="form-check-label" for="chkAccordion3Child0">{$clsCountryEx->getTitle($lstCountryEx[i].country_id,$lstCountryEx[i])}</label>
+												
                                     </div>
+											  {/section}
 
                                     <div class="form-check form-region me-3">
                                         <input class="form-check-region" type="checkbox" value="" id="chkAccordion3Child1">
                                            <label for="chkAccordion3Child1">Bac Ha</label>
                                       </div>
 											  
+<!--
 											  <label class="cbx">One
 												  <input type="checkbox" checked="checked">
 												  <span class="checkmark"></span>
 												</label>
+-->
 											  
 
 

@@ -555,11 +555,14 @@ function default_setting()
 	global $core, $clsModule, $clsConfiguration, $oneSetting, $clsISO, $package_id;
 	$user_id = $core->_USER['user_id'];
 	#
+	$assign_list["clsConfiguration"] = $clsConfiguration;
 	$clsCruiseProperty = new CruiseProperty();
 	$assign_list["clsCruiseProperty"] = $clsCruiseProperty;
 	$clsCruiseStore = new CruiseStore();
 	$assign_list["clsCruiseStore"] = $clsCruiseStore;
 	#
+
+
 	if (isset($_POST['submit'])) {
 		foreach ($_POST as $key => $val) {
 			$tmp = explode('-', $key);
@@ -6030,14 +6033,14 @@ function default_ajSiteCruiseProperty()
 								<input class="text_32 border_aaa bold required full-width" name="class_icon" value="'.$clsCruiseProperty->getClassIcon($cruise_property_id).'" type="text"/>
 							</div>
 						</div>';*/
-			$html .= '<div class="row-span">
-							<div class="fieldlabel text-right bold"><strong>' . $core->get_Lang('Group') . '</strong> <font class="color_r">*</font></div>
-							<div class="fieldarea">
-								<select name="group_id" style="width:300px">
-									' . $clsCruiseProperty->getSelectByProperty('GroupCruiseFacilities', $clsCruiseProperty->getOneField('group_id', $cruise_property_id)) . '
-								</select>
-							</div>
-						</div>';
+			// $html .= '<div class="row-span">
+			// 				<div class="fieldlabel text-right bold"><strong>' . $core->get_Lang('Group') . '</strong> <font class="color_r">*</font></div>
+			// 				<div class="fieldarea">
+			// 					<select name="group_id" style="width:300px">
+			// 						' . $clsCruiseProperty->getSelectByProperty('GroupCruiseFacilities', $clsCruiseProperty->getOneField('group_id', $cruise_property_id)) . '
+			// 					</select>
+			// 				</div>
+			// 			</div>';
 			$html .= '<div class="row-span">
 								<div class="fieldlabel" style="text-align:right"><strong>' . $core->get_Lang('Icon') . '</strong></div>
 								<div class="fieldarea">

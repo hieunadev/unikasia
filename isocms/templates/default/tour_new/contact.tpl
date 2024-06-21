@@ -39,7 +39,7 @@
                     Highlights of Vietnam 10 days
                 </div>
                 <div class="contact_content d-flex justify-content-between ">
-                    <form id="formContact" method="POST" class="contact_left d-flex flex-column align-items-center ">
+                    <form action="" id="formContact" method="POST" class="contact_left d-flex flex-column align-items-center ">
                         <div class="contact_information item_contact_content">
                             <div class="title_booking">
                                 Contact information
@@ -56,7 +56,7 @@
                                 </div>
                                 <div class="d-flex flex-column information-7  box_validate">
                                     <label for="title">Full name*</label>
-                                    <input type="text" name="full_name" class="information_input" placeholder="Enter your name">
+                                    <input type="text" name="fullname" class="information_input" placeholder="Enter your name">
                                 </div>
                                 <div class="d-flex flex-column information-3  box_validate">
                                     <label for="nationality">Nationality*</label>
@@ -100,19 +100,22 @@
                                     If you don't receive ourconfirmation email after 1 working day, please check your spam email. It may go to your spam mailbox.
                                 </span>
                         </div>
+                        <input type="hidden" name="plantrip" value="plantrip" />
+                        <input type="hidden" name="hidden_field" value="" />
                         <button class="btn_request_quotation  " type="submit">
                             Request for Quotation
                         </button>
                     </form>
+                    {if $tour_id}
                     <div class="contact_right d-flex flex-column ">
                         <div class="summary d-flex flex-column  justify-content-start">
                             <div class="title ">Summary</div>
                             <div class="div_img">
                                 <img src="{$clsTour->getImage($tour_id,364,194)}" alt="Images">
                             </div>
-                            <div class="title_content ">
+                            <a href="{$clsTour->getLink($tour_id)}" class="title_content txt-hover-home">
                                 {$clsTour->getTitle($tour_id)}
-                            </div>
+                            </a>
                             <div class="content d-flex flex-column ">
                                 <div class="item_content d-flex flex-column ">
                                     <div class="d-flex justify-content-between align-items-start ">
@@ -121,7 +124,7 @@
                                     </div>
                                     <div class="d-flex justify-content-between align-items-start ">
                                         <span class=" span_title">End Date:</span>
-                                        <span class="span_content">Apr 3, 2024</span>
+                                        <span class="span_content">{$clsISO->converTimeToText5($clsTour->getDueDate($tour_id, $departure_date))}</span>
                                     </div>
                                     <div class="d-flex justify-content-between align-items-start ">
                                         <span class=" span_title">Duration:</span>
@@ -142,21 +145,24 @@
                                         <span class=" span_title">Room:</span>
                                         <span class="span_content d-flex flex-column  align-items-end">
                                             {section name=i loop=$lstRoom}
+                                                {if $lstRoom[i].number_room}
                                                 <span>{$lstRoom[i].number_room} x {$clsTourProperty->getTitle($lstRoom[i].room_id)}</span>
+                                                {/if}
                                             {/section}
                                         </span>
                                     </div>
                                     {/if}
                                 </div>
-                                <div class="d-flex flex-column ">
-                                    <div class="d-flex justify-content-between align-items-start ">
-                                        <span class="span_title span_total_price">Total price:</span>
-                                        <span class="span_content span_bold">US ${$total_price}</span>
-                                    </div>
+                            </div>
+                            <div class="d-flex flex-column total_price">
+                                <div class="d-flex justify-content-between align-items-start ">
+                                    <span class="span_title span_total_price">Total price:</span>
+                                    <span class="span_content span_bold">US ${$total_price}</span>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    {/if}
                 </div>
             </div>
         </div>
@@ -271,7 +277,7 @@
                     title: {
                         "select2-required": true
                     },
-                    full_name: "required",
+                    fullname: "required",
                     nationality: {
                         "select2-required": true
                     },
@@ -285,7 +291,7 @@
                     title: {
                         "select2-required": "Please select a start title!"
                     },
-                    full_name: "Please enter your full name!",
+                    fullname: "Please enter your full name!",
                     nationality: "Please select nationality!",
                     email: "Please enter your email!",
                     phone: {
@@ -294,7 +300,7 @@
                     }
                 },
                 submitHandler: function () {
-                    alert('Success');
+                    return true
                 }
             });
             $(window).scroll(function() {

@@ -487,7 +487,6 @@ $().ready(function(){
 						data: adata,
 						dataType: "html",
 						success: function(html){
-							// console.log(html); 
 							vietiso_loading(0);
 							$_this.removeClass('disabled');
 							if(html.indexOf('_IN_SUCCESS')>=0){
@@ -697,7 +696,6 @@ $().ready(function(){
 					data: adata,
 					dataType: "html",
 					success: function(html) {
-						// console.log(html);
 						vietiso_loading(0);
 						makepopupnotresize('30%', 'auto', html, 'box_CruiseProperty');
 						$('#box_CruiseProperty').css('top', 40 + 'px');
@@ -732,7 +730,6 @@ $().ready(function(){
 					dataType:'html',	
 					success:function(html){
 						vietiso_loading(0);
-						// console.log(html);
 						if(html.indexOf('_EMPTY')>=0){
 							alertify.error('You must choose property !');
 						} else {
@@ -1458,7 +1455,7 @@ $().ready(function(){
 					alertify.error(field_is_required);
 					return false;
 				}
-				console.log(1);return false;
+				return false;
 				/**/
 				var adata = {};
 				adata['title'] = $.trim($title.val());
@@ -1927,9 +1924,7 @@ function loadCruiseItineraryDay($cruise_itinerary_id){
 		success: function(html){
 			$('#tblCruiseItineraryDay').html(html);
 			var number_day = $('#tblCruiseItineraryDay').data('number_day');
-			console.log($('#tblCruiseItineraryDay').find('tr').length);
 			if($('#tblCruiseItineraryDay').find('tr').length == number_day){
-				console.log(1);
 				$('.clickToAddItineraryDay').hide();
 			}else{
 				$('.clickToAddItineraryDay').show();

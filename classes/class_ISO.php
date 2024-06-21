@@ -4393,9 +4393,7 @@ class ISO
 				return $extLang . '/du-lich-nuoc-ngoai/du-lich-';
 				break;
 			case 'cruise':
-				if ($_LANG_ID == 'vn')
-					return '/du-thuyen/';
-				return $extLang . '/cruise/';
+				return '/' . $_LANG_ID . '/cruise/';
 				break;
 			case 'hotel':
 				if ($_LANG_ID == 'en')

@@ -1102,6 +1102,9 @@ function default_detail()
 	$lstReviews = $clsReviews->getAll("$cond is_online = 1 and table_id = '$hotel_id' $order");
 	$countReview = $clsReviews->countItem("$cond is_online = 1 and table_id = $hotel_id $order");
 	
+	$has_data = count($lstHotelProperty) > 0;
+	$assign_list['has_data'] = $has_data;
+	
 	
 	
 

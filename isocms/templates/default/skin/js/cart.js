@@ -88,7 +88,7 @@ $(function () {
         let value = parseInt($(this).find(".value").text());
         let self = $(this).find('.plus');
 
-        if(value > 0 ) {
+        if(value > 0 && $(this).hasClass("active")) {
             let class_number = $(self).parents(".number");
             let number_travelers = $(self).parents(".number_travelers");
             class_number.find(".value").text(value);
@@ -102,7 +102,6 @@ $(function () {
             let text = `<span class="span_item"><span class="${data_class}">${value}</span> x ${title}</span>`;
             $(`.${class_parent}`).append(text);
         }
-        // eventParticipants(self, value);
     });
 
     function placeCaretAtEnd(el) {
@@ -116,16 +115,16 @@ $(function () {
     }
 
     function calculateTotalAmount(){
-        const total_price_people = parseInt(total_price_adults) + parseInt(total_price_child) + parseInt(total_price_infants)
+        // const total_price_people = parseInt(total_price_adults) + parseInt(total_price_child) + parseInt(total_price_infants)
         const deposit = parseInt($('#deposit').val());
-        let total = 0;
+        let total = parseInt(total_price_adults) + parseInt(total_price_child) + parseInt(total_price_infants);
         $('.value').each(function(){
-            let quantity = parseInt($(this).text());
-            let price = parseInt($(this).attr('data-price'));
-            total += quantity * price;
-
+            if($(this).parents(".number ").hasClass("active")) {
+                let quantity = parseInt($(this).text());
+                let price = parseInt($(this).attr('data-price'));
+                total += quantity * price;
+            }
         })
-        total = total + total_price_people
 
         let deposit_booking = Math.round(total*deposit/100)
         let remaining_booking = Math.round(total - deposit_booking)
@@ -133,6 +132,8 @@ $(function () {
         $('.deposit_booking').text(`US $${deposit_booking}`);
         $('.remaining_booking').text(`US $${remaining_booking}`);
         $('.payment_amount').text(`${deposit_booking}`);
+        $('.totalFinal').val(`${deposit_booking}`);
+        $('#totalgrand').val(`${deposit_booking}`);
     }
 
     $(document)
@@ -261,7 +262,6 @@ $(function () {
             value_travelers:{
                 "participants": true
             },
-            checkbox_room: 'required',
             title: {
                 "select2-required": true
             },
@@ -279,7 +279,6 @@ $(function () {
             travel_date: {
                 "date-required": "Please select a start date!"
             },
-            checkbox_room: 'Please select traveler distribution',
             value_infants:{
                 "participants": "Please add the number of travelers to get your trip price!"
             },

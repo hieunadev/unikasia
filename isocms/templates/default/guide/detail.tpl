@@ -3,7 +3,7 @@
     <div class="trvgd_main">
         <div class="container">
             <div class="row">
-                <div class="col-12 col-sm-12 col-md-9">
+                <div class="col-12 col-sm-12 col-lg-9">
                     {$core->getBlock('des_travel_guide_side_mobile')}
                     <div class="trvgd_content">
                         {$clsGuide->getContent($guide_id)}
@@ -47,7 +47,7 @@
                         {/if}
                     </div>
                 </div>
-                <div class="col-12 col-sm-12 col-md-3">
+                <div class="col-12 col-sm-12 col-lg-3">
                     {$core->getBlock('des_travel_guide_side')}
                 </div>
             </div>

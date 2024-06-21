@@ -397,8 +397,22 @@
 						</div>
 						{elseif $currentstep=='header_cruise'}
 						<div class="inpt_tour">
+							<label for="cruise_banner_title">
+								{$core->get_Lang('Cruise banner title')}
+							</label>
+							<input class="input_text_form" data-table_id="{$pvalTable}" name="iso-cruise_banner_title" value="{$oneItem.cruise_banner_title}" maxlength="255" type="text" />
+						</div>
+						<div class="inpt_tour">
+							<label for="cruise_banner_description">
+								{$core->get_Lang('Cruise banner description')}
+							</label>
+							<textarea style="width:100%" table_id="{$pvalTable}" name="cruise_banner_description" id="cruise_banner_description_{time()}" data-column="iso-cruise_banner_description" class="textarea_intro_editor_simple" cols="255" rows="2">
+								{$oneItem.cruise_banner_description}
+							</textarea>
+						</div>
+						<div class="inpt_tour">
 							<label class="col-form-label" for="cruise_banner_image">
-								{$core->get_Lang('Common banner image')} ({$core->get_Lang('Size')}: 1920x600)
+								{$core->get_Lang('Cruise banner image')} ({$core->get_Lang('Size')}: 1920x600)
 							</label>
 							<div class="fieldarea">
 								<div class="row">

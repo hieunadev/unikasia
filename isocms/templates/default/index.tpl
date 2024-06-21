@@ -99,7 +99,7 @@
     <link rel="preload" href="{$URL_CSS}/footer.css?v={$upd_version}" as="style" />
 
 
-	
+
     <link rel="stylesheet" href="{$URL_CSS}/compress/bootstrap5/bootstrap.min.css?v={$upd_version}" />
     {*
     <link rel="stylesheet" href="{$URL_CSS}/compress/font-awesome.min.css?v={$upd_version}" />*}
@@ -144,6 +144,9 @@
     <!-- Travel guide tag -->
     <link rel="stylesheet" href="{$URL_CSS}/hnv_travel_guide_tag.css?v={$upd_version}">
     <link rel="preload" href="{$URL_CSS}/hnv_travel_guide_tag.css?v={$upd_version}">
+    <!-- Cruise list -->
+    <link rel="stylesheet" href="{$URL_CSS}/hnv_cruise_list.css?v={$upd_version}">
+    <link rel="preload" href="{$URL_CSS}/hnv_cruise_list.css?v={$upd_version}">
     <!-- Attraction -->
     <link rel="stylesheet" href="{$URL_CSS}/hnv_attraction.css?v={$upd_version}">
     <link rel="preload" href="{$URL_CSS}/hnv_attraction.css?v={$upd_version}">
@@ -167,19 +170,19 @@
     <link rel="preload" href="{$URL_JS}/jquery.lockfixed.js?v={$upd_version}" as="script" />
     <link rel="preload" href="{$URL_JS}/swiper.min.js?v={$upd_version}" as="script" />
 
-	
 
 
-	<!-- JS CSS LINK WEB -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/umd/popper.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.js"></script>
-	<!--    {*<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>*}-->
+
+    <!-- JS CSS LINK WEB -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.js"></script>
+    <!--    {*<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>*}-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
-	<script src="https://kit.fontawesome.com/42aa736347.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/42aa736347.js" crossorigin="anonymous"></script>
 
 
-	<!--
+    <!--
 	
 	
 	{* <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>*}
@@ -203,8 +206,8 @@
     <script src="{$URL_JS}/swiper.min.js?v={$upd_version}"></script>
     <script src="{$URL_JS}/jquery.ui.touch-punch.min.js?v={$upd_version}"></script>
     {/if}
-	
-	
+
+
 
 
     <link rel="preload" href="{$URL_JS}/vietiso.js?v={$upd_version}" as="script" />

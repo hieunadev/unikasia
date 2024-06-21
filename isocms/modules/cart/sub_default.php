@@ -181,7 +181,7 @@ function default_default(){
 	
 	$cartSessionHotel= vnSessionGetVar('BookingHotel_'.$_LANG_ID);
 	$cartSessionHotel = $cartSessionHotel[$_LANG_ID];
-	
+
 //	$clsISO->pre($cartSessionVoucher);die();
 	$assign_list['time_now'] = time();
 	
@@ -286,6 +286,7 @@ function default_default(){
 	$assign_list["totalpriceRoom"] =$totalpriceRoom;
 	$assign_list["totalPricePromotionCruise"] =$totalPricePromotionCruise;
 	$assign_list["totalPricePromotionHotel"] =$totalPricePromotionHotel;
+	$assign_list["_EXCHANGE_RATE"] =_EXCHANGE_RATE;
 
 
 	if(isset($_POST['bookingCart']) && $_POST['bookingCart']=='bookingCart'){
@@ -606,6 +607,7 @@ function default_book(){
 			$cart_store=serialize($cartStore);
 
 			$cartSessionContactInfo= vnSessionGetVar('ContactInfoBooking');
+
 			$booking_store = serialize($cartSessionContactInfo);
 			$title=Input::post('title','');
 			$fullname=Input::post('fullname','');
@@ -615,7 +617,7 @@ function default_book(){
 			$email=Input::post('email','');
 			$totalFinal=Input::post('totalFinal',0);
 			$customer_note=Input::post('note','');
-			
+
 			$v="'$booking_id'
 			,'".$title."'
 			,'".$fullname."'
@@ -630,7 +632,7 @@ function default_book(){
 			,'Tour','".time()."'
 			,'".$_SERVER['REMOTE_ADDR']."'
 			,'".$totalGrand."'
-			,'".$totalPriceDeposit."' 
+			,'".$totalFinal."' 
 			,'".$totalRemaining."'
 			,'".$totalPricePromotion."'
 			,'".$customer_note."'";

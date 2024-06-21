@@ -3,8 +3,12 @@
 function default_default(){
 
 	global $assign_list, $_CONFIG, $core, $dbconn, $mod, $act, $title_page,$description_page,$keyword_page;
-	global $clsISO, $_LANG_ID, $_lang, $extLang, $_frontIsLoggedin_user_id,$lstCountryEx ;
+	global $clsISO, $_LANG_ID, $_lang, $extLang, $_frontIsLoggedin_user_id,$adult_type_id,$child_type_id;
 	
+	
+	$clsTailorProperty = new TailorProperty();
+	$assign_list["clsTailorProperty"] = $clsTailorProperty;
+
 	$clsTour = new Tour();
 	$assign_list["clsTour"] = $clsTour;
 	
@@ -27,9 +31,30 @@ function default_default(){
 	$clsCityStore = new CityStore();
 	$assign_list['clsCityStore'] = $clsCityStore;
 	
-	
+	$clsBooking = new Booking();
+	$assign_list['clsBooking'] = $clsBooking;
+
     $clsFeedback=new Feedback(); 
 	$assign_list['clsFeedback'] = $clsFeedback;
+	
+	$clsCruiseProperty = new CruiseProperty(); 
+	$assign_list["clsCruiseProperty"] = $clsCruiseProperty;
+	$clsTourProperty = new TourProperty(); 
+	$assign_list["clsTourProperty"] = $clsTourProperty;
+	
+	#
+	
+	$show = isset($_GET['show']) ? $_GET['show'] : '';
+    $assign_list['show'] = $show;
+	
+	$lstTourGuide = $clsTourProperty->getAll("is_trash=0 and type='TOURGUIDE'",$clsTourProperty->pkey.',title');
+	$assign_list['lstTourGuide'] = $lstTourGuide;
+    
+    $lstMeals = $clsTourProperty->getAll("is_trash=0 and is_online=1 and type='MEAL'",$clsTourProperty->pkey.',title');
+	$assign_list['lstMeals'] = $lstMeals;
+	
+	#
+	
 	$clsCountry = new _Country(); 
 	$assign_list["clsCountry"] = $clsCountry;
 	#
@@ -37,8 +62,6 @@ function default_default(){
 	
 	$clsCountryEx = new Country();
 	$assign_list["clsCountryEx"] = $clsCountryEx;
-	$lstCountry = $clsCountryEx->getAll($cond);
-	$assign_list['lstCountry'] = $lstCountry;
 	
 	$clsTourDestination = new TourDestination();
     $assign_list["clsTourDestination"] = $clsTourDestination;
@@ -61,8 +84,6 @@ function default_default(){
 //	var_dump($country_id); die();
 
     #
-	$cond = " is_trash = 0 and";
-	$order = " order by order_no";
 	$oneItem = $clsTour->getOne($tour_id);
 	
 	$lstTourItinerary = $clsTourItinerary->getAll("$cond tour_id = $tour_id order by");

@@ -5,14 +5,22 @@
             {if $cruise_cat_country_id ne ''}
                 {$clsCruiseCatCountry->getBannerTitle($cruise_cat_country_id)}
             {else}
-                {$clsCountry->getTitle($country_id)} Cruise
+                {$clsCountry->getCruiseBannerTitle($country_id)}
             {/if}
         {else}
-            Cruise
+            {$clsConfiguration->getValue('CruiseBannerTitle')}
         {/if}
     </h1>
     <div class="cru_header_description">
-        {$clsCruiseCatCountry->getBannerIntro($cruise_cat_country_id)}
+        {if $show eq 'CruiseCatCountry'}
+            {if $cruise_cat_country_id ne ''}
+                {$clsCruiseCatCountry->getBannerIntro($cruise_cat_country_id)}
+            {else}
+                {$clsCountry->getCruiseBannerDescription($country_id)}
+            {/if}
+        {else}
+            {$clsConfiguration->getValue('CruiseBannerDescription')|html_entity_decode}
+        {/if}   
     </div>
 </div>
 <div class="cru_header_background_image">
@@ -23,7 +31,7 @@
             <img src="{$clsCountry->getCruiseBannerImage($country_id, 1920, 600)}" width="1920" height="600" alt="{$clsCountry->getTitle($country_id)}">
         {/if}
     {elseif $show eq 'CruiseCat'}
-        <img src="{$URL_IMAGES}/destination/bg_cruise.png" width="1920" height="600" alt="Cruise">
+        <img src="{$clsConfiguration->getValue('CruiseBannerImage')}" width="1920" height="600" alt="Cruise">
     {/if}
 </div>
 {literal}
@@ -78,6 +86,19 @@
 
     .cruise_cat_body .bground_header {
         position: relative;
+    }
+
+    .cruise_cat_body .cru_header_background_image {
+        position: relative;
+    }
+
+    .cruise_cat_body .unika_header_2 {
+        position: fixed;
+    }
+    @media screen and (min-width: 1200px) {
+        .cru_header_description {
+            width: 1096px;
+        }
     }
 </style>
 {/literal}

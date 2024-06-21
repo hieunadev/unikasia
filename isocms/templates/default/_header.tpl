@@ -107,7 +107,7 @@
                                                             {assign var="Child" value=$item.child}
                                                             <li>
                                                                 <div class="unika_dropdown_cruises {if $key eq 0}active{/if}">
-                                                                    <a class="dropdown-item">
+                                                                    <a href="{$clsCruiseDestination->getLink($CountryID)}" class="dropdown-item">
                                                                         {$clsCountryEx->getTitle($CountryID)}
                                                                         <i class="fas fa-angle-right ms-1" aria-hidden="true"></i>
                                                                     </a>
@@ -246,7 +246,7 @@
         {$core->getBlock('des_header_cruise')}
         {/if}
         {if $mod eq 'blog' && $act eq 'detail'}
-            {$core->getBlock('des_header_blog_detail')}
+        {$core->getBlock('des_header_blog_detail')}
         {/if}
     </div>
 </header>

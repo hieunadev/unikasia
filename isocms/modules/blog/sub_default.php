@@ -701,7 +701,7 @@ function default_detail()
 	$assign_list["clsBlogExtension"]=$clsBlogExtension;
 
 	
-	$lstTourExtension = $clsBlogExtension->getAll("blog_id = '$blog_id' and table_name='tour' and tour_id IN (SELECT tour_id FROM ".DB_PREFIX."tour WHERE is_trash=0 and is_online=1) order by order_no ASC",$clsBlogExtension->pkey.',tour_id');
+	$lstTourExtension = $clsBlogExtension->getAll("blog_id = '$blog_id' and table_name='tour' and tour_id IN (SELECT tour_id FROM ".DB_PREFIX."tour WHERE is_trash=0 and is_online=1) order by order_no DESC",$clsBlogExtension->pkey.',tour_id');
 	$assign_list["lstTourExtension"]=$lstTourExtension;
 
 

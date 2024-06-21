@@ -1,6 +1,6 @@
 <?
 
-global $core, $smarty, $clsISO, $assign_list;
+global $core, $smarty, $clsISO, $assign_list, $clsConfiguration;
 #
 $smarty->assign('clsISO', $clsISO);
 #

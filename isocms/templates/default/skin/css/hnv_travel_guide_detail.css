@@ -1,5 +1,7 @@
 .guide_detail_body .trvgd_page_container {
-    padding-top: 20px;
+    padding: 20px 12px 0 12px;
+    margin: 0;
+    border-radius: unset;
 }
 .trvgd_main {
     margin-top: 40px;
@@ -153,6 +155,8 @@
     margin-top: 48px;
     padding-bottom: 20px;
     border-bottom: 1px solid #d3dce1;
+    flex-wrap: wrap;
+    gap: 20px;
 }
 .trvgd_action .share-content {
     display: flex;
@@ -206,3 +210,25 @@
 .trvgd_content h6 {
     margin-bottom: 24px;
 }
+
+/*van css new*/
+.guide_detail_body .unika_header {
+    position: fixed;
+    top: 0;
+    z-index: 3;
+    width: 100%;
+    float: left;
+}
+
+@media screen and (max-width: 991px) {
+    .guide_detail_body .des_travel_guide_side .form_search_guide,
+    .guide_detail_body .des_travel_guide_side .des_travel_guide_category,
+    .guide_detail_body .des_travel_guide_side .des_travel_guide_country_tour{
+        display: none;
+    }
+
+    .unika_mobile_travel_guide_content{
+        padding-top: 24px;
+    }
+}
+/*van css new*/

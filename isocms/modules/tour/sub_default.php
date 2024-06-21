@@ -2,7 +2,7 @@
 
 function default_default()
 {
-	global $assign_list, $clsISO;
+	global $assign_list, $clsISO, $core, $title_page,$description_page;
 
 	$clsCountry = new Country();
 	$assign_list["clsCountry"] = $clsCountry;
@@ -182,6 +182,14 @@ function default_default()
 	$assign_list["country_id"] = $country_id;
 	$assign_list["lstCountry"] = $lstCountry;
 	$assign_list['page_view'] = $page_view;
+
+    /*=============Title & Description Page==================*/
+    $title_page = ucwords($slug_country) . " " . $core->get_Lang('Tour Packages');
+    $assign_list["title_page"] = $title_page;
+    $description_page =$title_page;
+    $assign_list["description_page"] = $description_page;
+    $keyword_page =$title_page;
+    $assign_list["keyword_page"] = $keyword_page;
 }
 
 function default_detaildeparture()

@@ -1119,7 +1119,13 @@ function default_cat()
 	$arr_cruise_cat_county	=	$clsCruiseCatCountry->getAll("$cond2 AND country_id =  $country_id $order_by", "$clsCruiseCatCountry->pkey, cat_id");
 	$assign_list['arr_cruise_cat_county']	= 	$arr_cruise_cat_county;
 	#
-	$title_cat	= 	$clsCruiseCat->getTitle($cruise_cat_id);
+	// Code xử lý meta title
+	$title_cat	=	'';
+	if ($cruise_cat_id) {
+		$title_cat	.= 	$clsCruiseCat->getTitle($cruise_cat_id);
+	} elseif ($country_id) {
+		$title_cat	.= 	$clsCountry->getTitle($country_id);
+	}
 	$assign_list['title_cat']	= 	$title_cat;
 	#
 	/*=============Title & Description Page==================*/

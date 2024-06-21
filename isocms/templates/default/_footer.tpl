@@ -8,8 +8,8 @@
                     </a>
                 </div>
                 <form action="" class="unika_search">
-                    <input type="email" class="unika_input_search" name="" id="" placeholder="Enter your mail">
-                    <input type="submit" class="unika_btn_search" value="Submit">
+                    <input type="email" class="unika_input_search" name="email" id="email" placeholder="Enter your mail">
+                    <input type="button" class="unika_btn_search" value="Submit">
                 </form>
                 <div class="unika_1_left_link d-flex flex-column">
                     <a href="#" class="unikasia_travel">Unikasia Travel</a>
@@ -212,3 +212,18 @@
         {/if}
     </div>
 </div>
+<script>
+    var msg_success = "{$core->get_Lang('Send email successfully. Please check!')}"
+    var msg_fail = "{$core->get_Lang('Send email fail. Please sent again!')}"
+</script>
+{literal}
+    <script>
+        $(".unika_btn_search").click(function() {
+            let data = {email: $("#email").val()};
+            $.post(path_ajax_script+'/index.php?mod=home&act=ajSubmitSubscribe', data)
+                .done(function(res) {
+                    alert(res);
+                })
+        });
+    </script>
+{/literal}

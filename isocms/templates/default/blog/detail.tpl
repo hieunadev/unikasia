@@ -235,8 +235,10 @@
                                                 class="txt_placetours">Place: {$clsTourDestination->getByCountry($lstTourExtension[i].tour_id, 'city')}</span> 
 <!--										<span class="border_place">+2</span>-->
                                     </div>
+									<div class="txt_overviewtour">
 
-                                    <p>{$clsTour->getIntro($lstTourExtension[i].tour_id)}</p>
+                                    {$clsTour->getTripOverview($lstTourExtension[i].tour_id)}
+										</div>
                                     <div class="d-flex justify-content-between align-items-center" style="margin-bottom: 24px">
                                         <div class="from_price">
                                             <p class="from_txtp">From</p>
@@ -257,20 +259,24 @@
                             </div>
 
 
+							<div class="exploremore">
                             <div class="border_exploremore">
 									  {if !$country_id}
 									<img src="{$clsConfiguration->getImage('site_blog_banner', 296, 152)}" width="296" height="152" alt="{$clsCountryEx->getBlogTitle($country_id)}" style="border-radius: 8px">
 								{else}
 									<img src="{$clsCountryEx->getBlogImage($country_id, 296, 152)}" width="296" height="152" alt="{$clsCountryEx->getBlogTitle($country_id)}" style="border-radius: 8px">
 								{/if}
+								<div class="txt_btnexploremore">
                                 <div class="txt_exploremore">
-                                    <p class="tour_exploretxt">Explore more Vietnam tours</p></div>
+                                    <p class="tour_exploretxt">{$core->get_Lang('Explore more')} {$regionBlog} {$core->get_Lang('tours')}</p></div>
 								<div class="btn_exploremore">
                                 <a href="/tour/{$regionBlog}" alt="tour" title="tour">
 
                                     <button class="btn btn_seealltour">{$core->get_Lang('See all tours')} <i class="fa-regular fa-arrow-right" style="color: #ffffff;"></i></button>
                                 </a>
 									</div>
+									</div>
+								</div>
                             </div>
 
                         </div>

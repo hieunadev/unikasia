@@ -163,9 +163,10 @@
 							<p class="txt_location">{$clsHotel->getAddress($hotel_id,$arrHotel)}</p>
                             <a role="link" title="map" data-bs-toggle="modal" data-bs-target="#mapModal{$hotel_id}">{$core->get_Lang('Show map')}</a>
 
-                                    <div class="modal fade mapModal" id="mapModal{$hotel_id}" tabindex="-1" aria-labelledby="mapModalLabel" aria-hidden="true">
+<!--
+                              <div class="modal fade mapModal" id="mapModal{$hotel_id}" tabindex="-1" aria-labelledby="mapModalLabel" aria-hidden="true">
 
-                                        <div class="modal-dialog">
+                                   <div class="modal-dialog">
 
                                             <div class="modal-content">
 
@@ -186,6 +187,10 @@
                                         </div>
 
                                     </div>
+								
+-->
+								
+								
 
 								</div>
 							
@@ -200,7 +205,7 @@
 
 
 						<div class="btn_contactus">
-							<a href="{$PCMS_URL}contact-us" alt="contactus" title="contactus">
+							<a href="{$PCMS_URL}contact-us.html" alt="contactus" title="contactus">
                                <button class="btn btn_viewtour">{$core->get_Lang('Contact')} <i
                                                         class="fa-regular fa-arrow-right" style="color: #ffffff;"></i>
                                   </button>
@@ -271,7 +276,7 @@
 						<p class="txt_txtus">{$core->get_Lang('US')} <span class="txt_numbus">${$clsHotel->getPriceAvg($hotel_id)}</span></p>
 						</div>
 						<div class="btn_contactus">
-							<a href="{$PCMS_URL}contact-us" alt="contactus" title="contactus">
+							<a href="{$PCMS_URL}contact-us.html" alt="contactus" title="contactus">
                                <button class="btn btn_viewtour">{$core->get_Lang('Contact')} <i
                                                         class="fa-regular fa-arrow-right" style="color: #ffffff;"></i>
                                   </button>
@@ -295,7 +300,7 @@
 
                                     <div class="facilities_item align-items-center">
 
-                                        <img width="16" height="16" src="{$listHotelFacilitiesFavorite[i].image}"/>
+                                        <img width="16" height="16" src="{$listHotelFacilitiesFavorite[i].image}" onerror="this.src='{$URL_IMAGES}/hotel/detail/ico_nightclub.png'"/>
 
 
 
@@ -317,88 +322,7 @@
 
 
 										</div>
-																				{/if}
-
-
-                                {* <div class="info_review_top">
-                                <div class="info_review_top_left">
-                                    {if $clsProperty->getTitle($oneItem.list_TypeHotel)}
-                                        <div class="hotel_text_cat">
-                                            {$clsProperty->getTitle($oneItem.list_TypeHotel)}
-                                        </div>
-                                    {/if}
-                                    <div class="rank_level">
-                                        {$ratingValue|number_format:1}/5 - {$textRateAvg}
-                                    </div>
-                                    <div class="total_review">
-                                        {$ratingCount} {$core->get_Lang('reviews')}
-                                    </div>
-                                </div>
-                                <div class="icon_share">
-                                    <i class="ic ic_share"></i>
-                                    <div class="share_box">
-                                        <script type="text/javascript" src="{$URL_JS}/jquery.sharer.js?v={$up_version}">
-                                        </script>
-                                        {assign var=link_share value=$curl}
-                                        {assign var=title_share value=$title_hotel}
-                                        {$clsISO->getBlock('box_share',["link_share"=>$link_share,"title_share"=>$title_share])}
-                                    </div>
-                                </div>
-                            </div> *}
-                                {* <div class="box_sec_title">
-                                <h1 class="sec_title">
-                                    {$title_hotel}
-                                    {$clsHotel->getStarNew($hotel_id,$oneItem)}
-                                </h1>
-                                <div class="address">
-                                    <i class="fa fa-map-marker"></i>&nbsp;&nbsp;{$clsHotel->getAddress($hotel_id,$oneItem)}
-                                    -
-                                    <a role="link" title="map" data-bs-toggle="modal"
-                                        data-bs-target="#mapModal{$hotel__id}">{$core->get_Lang('Show map')}</a>
-                                    <div class="modal fade mapModal" id="mapModal{$hotel__id}" tabindex="-1"
-                                        aria-labelledby="mapModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <iframe
-                                                        src="https://maps.google.it/maps?q={$clsHotel->getAddressMapView($hotel_id,$oneItem)}&output=embed"
-                                                        width="600" height="450" style="border:0;" allowfullscreen=""
-                                                        loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="sec_intro">
-                                {$overview_hotel|html_entity_decode}
-                            </div>
-
-                            {if $lstHotelFacility}
-                                <div class="box_facilities">
-                                    <div class="box_facilities_title">
-                                        {$core->get_Lang('Most popular amenities')}
-                                    </div>
-                                    <div class="list_facilities">
-                                        {section name=i loop=$lstHotelFacility}
-                                            <div class="facilities_item align-items-center">
-                                                {if $clsProperty->getImage($lstHotelFacility[i])}
-                                                    <img width="16" height="16" src="{$clsProperty->getImage($lstHotelFacility[i])}"
-                                                        alt="{$clsProperty->getTitle($lstHotelFacility[i])}" />
-                                                {/if}
-                                                <div class="facilities_name">
-                                                    {$clsProperty->getTitle($lstHotelFacility[i])}
-                                                </div>
-                                            </div>
-                                        {/section}
-                                    </div>
-                                </div>
-                            {/if} *}
-
+								{/if}
                         </section>
 
                     </div>
@@ -422,7 +346,7 @@
 							<div class="btn_contactus">
 								 <input type="hidden" name="hotel_id" value="{$hotel_id}">
                                     <input type="hidden" name="ContactHotel" value="ContactHotel">
-							<a href="{$PCMS_URL}contact-us" alt="contactus" title="contactus">
+							<a href="{$PCMS_URL}contact-us.html" alt="contactus" title="contactus">
                                <button class="btn btn_contactprice">{$core->get_Lang('Contact')} <i
                                                         class="fa-regular fa-arrow-right" style="color: #ffffff;"></i>
                                   </button>
@@ -854,17 +778,7 @@
 
     {$core->getBlock('customer_review')}
     {$core->getBlock('also_like')}
-    <!-- Modal -->
-    <div class="modal fade" id="mdReview" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    <div class="box_content"></div>
-                </div>
-            </div>
-        </div>
-    </div>
+
 </section>
 
 
@@ -1242,13 +1156,20 @@ $(window).scroll(function() {
     }
   });
 });
-
-
-
-
 			
+			// Chờ cho đến khi tài liệu HTML được tải đầy đủ
+document.addEventListener('DOMContentLoaded', function() {
+  // Chọn tất cả các phần tử có lớp 'modal-backdrop'
+  const modalBackdrops = document.querySelectorAll('.modal-backdrop');
 
-			
+  // Nếu có nhiều hơn 1 phần tử, giữ lại phần tử đầu tiên và xóa các phần tử còn lại
+  if (modalBackdrops.length > 1) {
+    for (let i = 1; i < modalBackdrops.length; i++) {
+      modalBackdrops[i].remove();
+    }
+  }
+});
+
 
         </script>
     {/literal}

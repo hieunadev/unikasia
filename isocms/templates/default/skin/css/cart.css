@@ -706,6 +706,7 @@ img {}
     border-radius: 8px;
     border: unset;
     background: #FFA718;
+    gap: 8px;
 }
 
 .btn_payment.false {

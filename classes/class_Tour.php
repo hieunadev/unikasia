@@ -4233,7 +4233,7 @@ class Tour extends dbBasic
         $origin_price = $this->getOne($tour_id, 'min_price')[0];
         $discount_value = $more_infomation["discount_value"] ?? '0';
 		$price = $origin_price * (100 - $discount_value) / 100;
-		return $price;
+		return round($price);
 	}
 
     function getDiscount($tour_id) {

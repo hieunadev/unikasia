@@ -140,14 +140,8 @@
         </div>
     </div>
 </div>
-
-<div class="attractions">
-    {$core->getBlock('top_attraction')}
-</div>
-<div class="alsoLike">
-    {$core->getBlock('alsoLike_hotel')}
-</div>
-
+{$core->getBlock('top_attraction')}
+{$core->getBlock('also_like')}
 
 </div>
 <script type="text/javascript">

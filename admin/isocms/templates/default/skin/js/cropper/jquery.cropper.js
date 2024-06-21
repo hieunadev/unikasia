@@ -35,7 +35,6 @@ function upload_file_picker(file, params) {
     //$_adata['table_id'] = table_id;
     $_adata["imgdata"] = imgdata;
     //$_adata['openFrom'] = openFrom;
-    console.log(params)
     $.post(
         path_ajax_script + "/index.php?mod=cropper&act=open_cropper",
         $_adata,
@@ -68,9 +67,13 @@ function upload_file_picker(file, params) {
             } else if (params.clsTable == "News") {
                 var aspectRatio = 850 / 547;
             } else if (params.clsTable == "Hotel") {
-                var aspectRatio = (params.openFrom === "image") ? 353 / 244 : 858 / 395;
+                var aspectRatio = 858 / 395;
             } else if (params.clsTable == "Cruise") {
                 var aspectRatio = 353 / 244;
+            } else if (params.clsTable == "CruiseImage") {
+                if (params.openFrom == "gallery") {
+                    var aspectRatio = 742 / 491;
+                }
             } else if (params.clsTable == "Service") {
                 var aspectRatio = 280 / 255;
             } else if (params.clsTable == "Blog") {
@@ -79,8 +82,6 @@ function upload_file_picker(file, params) {
                 var aspectRatio = 297 / 194;
             } else if (params.clsTableGal == "Voucher") {
                 var aspectRatio = 714 / 467;
-            }  else if (params.clsTableGal == "HotelImage") {
-                var aspectRatio = 841 / 420;
             } else if (params.clsTable == "Category_Country") {
                 if (params.openFrom == "banner") {
                     var aspectRatio = 1920 / 480;

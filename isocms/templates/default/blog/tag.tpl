@@ -1,8 +1,12 @@
 <link rel="stylesheet" href="{$URL_CSS}/blog_tag.css?v={$upd_version}">
 
 {assign var=title_tag_blog value=$clsTag->getTitle($tag_id)}
-<div class="page_container">	
-	    <div class="container bread_crumb">
+	
+	    
+		
+    <section id="contentPage" class="blogPage pageBlogTag bg_f1f1f1">
+		<div class="container">
+			<div class="bread_crumb">
 	<span class="breadcrumb-item txt_youarehere">You are here:</span>
 
   <ol class="breadcrumb">
@@ -14,9 +18,7 @@
 
   </ol>
 	</div>
-		
-    <section id="contentPage" class="blogPage pageBlogTag bg_f1f1f1">
-		<div class="container">
+			
 			<div class="listtag_blog" style="display: flex">
 			<div class="last-blog-item col-sm-9">
 			<h1 class="title32 color_333 mb20">{$core->get_Lang('Blog listing by tag')} {$title_tag_blog} </h1>

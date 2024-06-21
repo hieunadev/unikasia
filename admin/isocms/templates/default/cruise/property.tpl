@@ -31,7 +31,7 @@
 					<div class="mt10" id="tblCruisePrice"></div>
 				</div>
 				<fieldset class="submit-buttons">
-					 {$saveBtn}
+					{$saveBtn}
 					<input value="Update" name="submit" type="hidden">
 				</fieldset>
 			</form>
@@ -39,38 +39,40 @@
 			<div class="clearfix"><br /></div>
 			<div class="filter_box">
 				<form id="forums" method="post" action="" class="filterForm">
-				<div class="ui-action">
-					<div class="wrap">
-						<div class="filterbox filterbox-border" style="width:100%">
-							<div class="wrap">
-								<div class="form-group form-keyword">
-									<input class="form-control" type="text" name="keyword" value="{$keyword}" placeholder="{$core->get_Lang('search')}..." />
+					<div class="ui-action">
+						<div class="wrap">
+							<div class="filterbox filterbox-border" style="width:100%">
+								<div class="wrap">
+									<div class="form-group form-keyword">
+										<input class="form-control" type="text" name="keyword" value="{$keyword}" placeholder="{$core->get_Lang('search')}..." />
+									</div>
+									<div class="form-group form-button">
+										<button type="submit" class="btn btn-main" id="findtBtn">Tìm kiếm</button>
+										<input type="hidden" name="filter" value="filter" />
+									</div>
+									<div class="form-group form-button">
+										<a class="btn btn-delete-all" id="btn_delete" clsTable="CruiseProperty" style="display:none">
+											{$core->get_Lang('Delete')}
+										</a>
+									</div>
+									{if $type eq 'UsefulInformation'}
+									<div class="group_buttons fr"> <a href="{$PCMS_URL}/index.php?mod=cruise&act=property&type=GroupUsefulInformation" class="btn btn-success btnNew" title="{$core->get_Lang('Group UsefulInformation')}"><i class="icon-list icon-white"></i> <span>{$core->get_Lang('Group UsefulInformation')}</span> </a></div>
+									{elseif $type eq 'NearestEssentials'}
+									<div class="group_buttons fr"> <a href="{$PCMS_URL}/index.php?mod=cruise&act=property&type=GroupNearestEssentials" class="btn btn-success btnNew" title="{$core->get_Lang('Group Nearest Essentials')}"><i class="icon-list icon-white"></i> <span>{$core->get_Lang('Group Nearest Essentials')}</span> </a></div>
+
+									{*{elseif $type eq 'CruiseFacilities'}
+									<div class="group_buttons fr"> <a href="{$PCMS_URL}/index.php?mod=cruise&act=property&type=GroupCruiseFacilities" class="btn btn-success btnNew" title="{$core->get_Lang('Group Cruise Facilities')}"><i class="icon-list icon-white"></i> <span>{$core->get_Lang('Group Cruise Facilities')}</span> </a></div>*}
+
+									{elseif $type eq 'Benefits'}
+									<div class="group_buttons fr"> <a href="{$PCMS_URL}/index.php?mod=cruise&act=property&type=GroupBenefits" class="btn btn-success btnNew" title="{$core->get_Lang('Group Benefits')}"><i class="icon-list icon-white"></i> <span>{$core->get_Lang('Group Benefits')}</span> </a></div>
+									{else}
+									{/if}
 								</div>
-								<div class="form-group form-button">
-									<button type="submit" class="btn btn-main" id="findtBtn">Tìm kiếm</button>
-									<input type="hidden" name="filter" value="filter" />
-								</div>
-								<div class="form-group form-button">
-									<a class="btn btn-delete-all" id="btn_delete" clsTable="CruiseProperty" style="display:none">
-										{$core->get_Lang('Delete')}
-									</a>
-								</div>
-								{if $type eq 'UsefulInformation'}
-								<div class="group_buttons fr"> <a href="{$PCMS_URL}/index.php?mod=cruise&act=property&type=GroupUsefulInformation" class="btn btn-success btnNew" title="{$core->get_Lang('Group UsefulInformation')}"><i class="icon-list icon-white"></i> <span>{$core->get_Lang('Group UsefulInformation')}</span> </a></div>
-								{elseif $type eq 'NearestEssentials'}
-								<div class="group_buttons fr"> <a href="{$PCMS_URL}/index.php?mod=cruise&act=property&type=GroupNearestEssentials" class="btn btn-success btnNew" title="{$core->get_Lang('Group Nearest Essentials')}"><i class="icon-list icon-white"></i> <span>{$core->get_Lang('Group Nearest Essentials')}</span> </a></div>
-								{elseif $type eq 'CruiseFacilities'}
-								<div class="group_buttons fr"> <a href="{$PCMS_URL}/index.php?mod=cruise&act=property&type=GroupCruiseFacilities" class="btn btn-success btnNew" title="{$core->get_Lang('Group Cruise Facilities')}"><i class="icon-list icon-white"></i> <span>{$core->get_Lang('Group Cruise Facilities')}</span> </a></div>
-								{elseif $type eq 'Benefits'}
-								<div class="group_buttons fr"> <a href="{$PCMS_URL}/index.php?mod=cruise&act=property&type=GroupBenefits" class="btn btn-success btnNew" title="{$core->get_Lang('Group Benefits')}"><i class="icon-list icon-white"></i> <span>{$core->get_Lang('Group Benefits')}</span> </a></div>
-								{else}
-								{/if}
 							</div>
 						</div>
 					</div>
-				</div>
-				<input type="hidden" name="filter" value="filter" />
-			</form>
+					<input type="hidden" name="filter" value="filter" />
+				</form>
 			</div>
 			<div class="statistical mb5">
 				<table width="100%" border="0" cellpadding="3" cellspacing="0">
@@ -129,7 +131,9 @@
 							</td>
 						</tr>
 						{/section}
-						{else}<tr><td colspan="15">{$core->get_Lang('nodata')}</td></tr>
+						{else}<tr>
+							<td colspan="15">{$core->get_Lang('nodata')}</td>
+						</tr>
 					</tbody>
 					{/if}
 				</table>
@@ -155,23 +159,23 @@
 	$("#SortAble").sortable({
 		opacity: 0.8,
 		cursor: 'move',
-		start: function(){
+		start: function() {
 			vietiso_loading(1);
 		},
-		stop: function(){
+		stop: function() {
 			vietiso_loading(0);
 		},
-		update: function(){
+		update: function() {
 			var recordPerPage = $recordPerPage;
 			var currentPage = $currentPage;
 			var type = $type;
-			var order = $(this).sortable("serialize")+'&update=update'+'&recordPerPage='+recordPerPage+'&currentPage='+currentPage+'&type='+type;
-			$.post(path_ajax_script+"/index.php?mod="+mod+"&act=ajUpdPosSortListCruiseProperty", order, 
-			
-			function(html){
-				vietiso_loading(0);
-				location.href = REQUEST_URI;
-			});
+			var order = $(this).sortable("serialize") + '&update=update' + '&recordPerPage=' + recordPerPage + '&currentPage=' + currentPage + '&type=' + type;
+			$.post(path_ajax_script + "/index.php?mod=" + mod + "&act=ajUpdPosSortListCruiseProperty", order,
+
+				function(html) {
+					vietiso_loading(0);
+					location.href = REQUEST_URI;
+				});
 		}
 	});
 </script>

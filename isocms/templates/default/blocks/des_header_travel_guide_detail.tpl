@@ -140,6 +140,11 @@
         padding: 0;
     }
 
+    .guide_detail_body .trvgd_header_intro{
+        padding-top: 138px;
+    }
+
+
     @media (min-width: 1440px) {
         .trvgd_header_intro {
             padding-right: calc((100vw - 1310px)/2);

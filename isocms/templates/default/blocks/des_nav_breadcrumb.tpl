@@ -18,11 +18,11 @@
                 <li class="breadcrumb-item active des_breadcrumb_active" aria-current="page">#{$guidetag}</li>
             {elseif $show eq 'CruiseCatCountry'}
                 <li class="breadcrumb-item des_breadcrumb_link">
-                    <a href="javascript:void(0);" class="cancel_link">{$core->get_Lang('Cruise')}</a>
+                    <a href="{$clsISO->getLink('cruise')}" title="{$core->get_Lang('Cruise')}">{$core->get_Lang('Cruise')}</a>
                 </li>
                 {if $cruise_cat_id ne ''}
                     <li class="breadcrumb-item des_breadcrumb_link">
-                        <a href="javascript:void(0);" class="cancel_link">{$core->get_Lang($clsCountry->getTitle($country_id))}</a>
+                        <a href="{$clsCruiseDestination->getLink($country_id)}" title="{$core->get_Lang($clsCountry->getTitle($country_id))} {$core->get_Lang('Cruise')}">{$core->get_Lang($clsCountry->getTitle($country_id))}</a>
                     </li>
                     <li class="breadcrumb-item active des_breadcrumb_active" aria-current="page">
                         {$core->get_Lang($clsCruiseCat->getTitle($cruise_cat_id))}
@@ -32,6 +32,10 @@
                         {$core->get_Lang($clsCountry->getTitle($country_id))}
                     </li>
                 {/if}
+            {elseif $show eq 'CruiseCat'}
+                <li class="breadcrumb-item active des_breadcrumb_active" aria-current="page">
+                    {$core->get_Lang('Cruise')}
+                </li>
             {else} 
                 <li class="breadcrumb-item des_breadcrumb_link">
                     <a href="javascript:void(0);" class="cancel_link">{$core->get_Lang('Destinations')}</a>

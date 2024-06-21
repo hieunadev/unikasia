@@ -38,4 +38,20 @@ class CruiseDestination extends dbBasic
 			return trim($des_text, ', ');
 		}
 	}
+	function getLink($country_id, $oneTable = null)
+	{
+		global $extLang, $_LANG_ID;
+		#
+		$clsCountry	= 	new Country();
+		#
+		$link	=	'';
+		if ((int)($country_id)) {
+			$country_slug	=	$clsCountry->getSlug($country_id);
+			#
+			if (!empty($country_slug)) {
+				$link	.=	 '/' . $_LANG_ID . '/cruise/' . $country_slug;
+			}
+		}
+		return $link;
+	}
 }

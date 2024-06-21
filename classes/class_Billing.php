@@ -19,7 +19,7 @@ class Billing extends dbBasic {
 		$totalgrand = $booking_data['totalgrand'];
 		$deposit = $booking_data['deposit'];
 		$balance = $booking_data['balance'];
-		
+
 		if($deposit==0){
 			$deposit =$booking_data['balance'];
 		}else{
@@ -49,6 +49,7 @@ class Billing extends dbBasic {
 			$balanceUSD = $balance;
             $chargesUSD = $charges;
 		}
+
 		#
 		$is_deposit = 0;
 		if(intval($booking_store['pay_deposit']) > 0 
@@ -80,7 +81,7 @@ class Billing extends dbBasic {
 			'ip_billing'	=> $_SERVER['REMOTE_ADDR'],
 			'vnp_TxnRef'	=> $billing_id
 		);
-		//print_r($insert);die('xxx');    
+//		print_r($insert);die('xxx');
 		if($this->insert($insert)){
 			#- Update column relationship to booking
 			$clsBooking->updateOne($booking_id,"billing_id='$billing_id'");
@@ -94,6 +95,7 @@ class Billing extends dbBasic {
 				return 1;
 			}
 		}
+
 	}
 	function getFormOnePayCredit($VPC_PAYMENT_ID,$VPC_URLPAYMENT,$VPC_MERCHANT,$VPC_ACCESSCODE,$vpc_MerchTxnRef,$vpc_OrderInfo,$vpc_Amount,$vpc_TicketNo){
 		$html = '

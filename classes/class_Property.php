@@ -197,7 +197,7 @@ class Property extends dbBasic{
 
         if ($type == "FE") {
             foreach ($list_accommodation as $item) {
-                $content .= ' <div class="item"><img src="'.$item['image'].'" alt=""> '.$item['title'].'</div>';
+                $content .= ' <div class="item"><img src="'.$item['image'].'" alt="" onerror="this.src=\'https://unikasia.vietiso.com/isocms/templates/default/skin/images/hotel/detail/circle-check-regular.svg\'"> '.$item['title'].'</div>';
             }
             return $content;
         }

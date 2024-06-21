@@ -10,6 +10,11 @@
 		</li>
 {*		{/if}*}
 		{/foreach}
+		<li class="{if $type=='HotelCategory'}current{/if}">
+			<a title="{$core->get_Lang('Hotel Category')}" href="{$PCMS_URL}/index.php?mod=hotel&act=property&type=HotelCategory" >
+				<span class="text">{$core->get_Lang('Hotel Category')}</span>
+			</a>
+		</li>
         {if $clsISO->getCheckActiveModulePackage($package_id,hotel,'price_range','default')}
 		<li class="{if $act=='price_range'}current{/if}">
 			<a href="{$PCMS_URL}/?mod=hotel&act=price_range">

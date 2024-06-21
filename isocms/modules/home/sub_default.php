@@ -374,6 +374,7 @@ function default_sendMail(){
 	$is_send_mail = @mail($to,$subject,$message,$headers);
 	die();
 }
+
 function default_ajMakeSelectboxCategory(){
 	global $core;
 	
@@ -577,7 +578,7 @@ function default_ajDeleteWishlist(){
 }
 
 function default_ajSubmitSubscribe() {
-    global $core,$mod,$act, $clsConfiguration;
+    global $core,$mod,$act, $clsConfiguration, $_LANG_ID;
 	$clsSubscribe =new Subscribe();
 	#
 	$email = isset($_POST['email'])?addslashes($_POST['email']):'';
@@ -594,13 +595,13 @@ function default_ajSubmitSubscribe() {
 			$vx = "'".$clsSubscribe->getMaxId()."','$name','$email','".$_SERVER['REMOTE_ADDR']."','".time()."','".$current_time."','1'";
 			if($clsSubscribe->insertOne($fx,$vx)) {
 					$clsSubscribe->sendMail($email);
-				echo '_SUCCESS|||'.html_entity_decode($clsConfiguration->getValue('SiteMsg_SubscribeSuccess')); die();
+				echo $core->get_Lang('Send email successfully. Please check!'); die();
 				}
 			} else {
-				echo '_EXIST|||'.$core->get_Lang('Email address already exists !'); die();
+				echo $core->get_Lang('Email address already exists !'); die();
 		}
 	}else{
-		echo '_ERROR|||'.$core->get_Lang('subscribe error'); die();
+		echo $core->get_Lang('subscribe error'); die();
 	}
 }
 function default_ajQuickBooking() {

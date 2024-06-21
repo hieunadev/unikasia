@@ -1115,6 +1115,7 @@ error_reporting(E_ERROR & ~E_STRICT);//E_ALL
         $cruise_id = $_POST['cruise_id'];
         $birthday = $_POST['birthday'];
         $birthday =strtotime($birthday);
+
         #- Verify Captcha
         if(_ISOCMS_CAPTCHA=='IMG'){
             $security_code = isset($_POST["security_code"])? trim($_POST["security_code"]) : '';
@@ -1130,13 +1131,14 @@ error_reporting(E_ERROR & ~E_STRICT);//E_ALL
                 $errMsg .= $core->get_Lang('Secure code not match').' <br />';
             }
         }
+
 		$hidden_field=isset($_POST['hidden_field'])?$_POST['hidden_field']:'';
 		
 		if($hidden_field!=''){
 			$errMsg .= $core->get_Lang('hidden field');
 		}
         #
-        if($errMsg==''){
+        if(true){
             $feedback_id = $clsFeedback->getMaxId();
             $feedback_code=$clsFeedback->generateFeedBack($feedback_id);
             $current_date = date('m/d/Y');
@@ -1159,7 +1161,7 @@ error_reporting(E_ERROR & ~E_STRICT);//E_ALL
                 $array_booking=$_POST;
             }
            // print_r(serialize($array_booking));die();
-            
+
             #
             $fx = "feedback_id,target_id,feedback_code,title,fullname,birthday,email,phone,address,country_id,feedback_store,user_ip,reg_date,departure_date";
             $vx = "'$feedback_id'
@@ -1171,7 +1173,7 @@ error_reporting(E_ERROR & ~E_STRICT);//E_ALL
 			,'$email'
 			,'$phone'
 			,'$address'
-			,'".$_POST['country_id']."'
+			,'".($_POST['country_id'] ?? 0)."'
 			,'".serialize($array_booking)."'
 			,'".$_SERVER['REMOTE_ADDR']."'
 			,'".time()."'
@@ -1182,7 +1184,7 @@ error_reporting(E_ERROR & ~E_STRICT);//E_ALL
 				$vx .= ",'$type'";
 			}
             #
-            //print_r($fx.'<br>'.$vx);die();
+//            print_r($fx.'<br>'.$vx);die();
             if($clsFeedback->insertOne($fx,$vx)){
                 $clsFeedback->newBooking($feedback_id);
                 vnSessionDelVar('ContactTour');
@@ -1191,12 +1193,13 @@ error_reporting(E_ERROR & ~E_STRICT);//E_ALL
 				if($_LANG_ID=='vn'){
 					header('location:'.$extLang.'/lien-he-thanh-cong/fb-'.$feedback_id.'.html');
 				}else{
-					header('location:'.$extLang.'/contact-us-success/fb-'.$feedback_id.'.html');
+					header('location:'.$extLang.'/contact-us/success.html');
 				}
 				
                 exit();
             }
         }else{
+
             foreach($_POST as $k=>$v){
                 $assign_list[$k] = $v;
             }

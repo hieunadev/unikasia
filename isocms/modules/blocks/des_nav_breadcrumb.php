@@ -1,8 +1,6 @@
 <?
 global $core, $smarty, $clsISO, $assign_list;
 #
-$smarty->assign('clsISO', $clsISO);
-#
 $clsCountry         =   new Country();
 $smarty->assign('clsCountry', $clsCountry);
 $clsTourCategory    =   new TourCategory();
@@ -13,6 +11,8 @@ $clsGuide           =   new Guide();
 $smarty->assign('clsGuide', $clsGuide);
 $clsCruiseCat       =   new CruiseCat();
 $smarty->assign('clsCruiseCat', $clsCruiseCat);
+$clsCruiseDestination   =   new CruiseDestination();
+$smarty->assign('clsCruiseDestination', $clsCruiseDestination);
 #
 $show   =   isset($_GET['show']) ? $_GET['show'] : '';
 $smarty->assign('show', $show);

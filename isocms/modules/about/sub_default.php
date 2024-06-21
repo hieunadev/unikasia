@@ -701,7 +701,7 @@ function default_success(){
 	
 	$booking_id = isset($_GET['booking_id'])? $_GET['booking_id']: 0;
 	$oneBooking=$clsBooking->getAll("booking_id='$booking_id' and clsTable='Tour'");
-	
+
 	if($show=='Feedback'){
 		$feedback_id = Input::get('feedback_id',0);
 		$oneFeedback = $clsFeedback->getOne($feedback_id,'email,fullname');

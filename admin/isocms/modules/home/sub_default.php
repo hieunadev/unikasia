@@ -991,7 +991,7 @@ function default_ajOpenGallery()
 			for ($i = 0; $i < count($lstItem); $i++) {
 				$table_image_id	= 	$lstItem[$i][$clsClassTable->pkey];
 				$html	.= 	'<div class="gallery-item bootstrap">';
-				$html 	.= 	'<a><img class="img-responsive mr-3 mb-2 preview-img" src="' . $ftp_abs_path_image . $clsClassTable->getImage($table_image_id, 140, 100, $lstItem[$i]) . '" alt="' . $lstItem[$i]['title'] . '" ></a>';
+				$html 	.= 	'<a><img class="img-responsive mr-3 mb-2 preview-img" src="' . $clsClassTable->getImage($table_image_id, 140, 100, $lstItem[$i]) . '" alt="' . $lstItem[$i]['title'] . '" ></a>';
 				$html 	.= 	'<div class="gallery-toolbar">
 						<a class="text-white" onClick="delete_gallery(this)" table_id="' . $table_id . '" table_image_id="' . $lstItem[$i][$clsClassTable->pkey] . '">' . $clsISO->makeIcon('times') . '</a>
 					</div>

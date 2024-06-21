@@ -30,6 +30,7 @@
 	</div>
 </div>
 
+<!--
 <div class="inpt_tour">
 	<label class="mb30">{$core->get_Lang('Other Facilities')}
 		{assign var= other_facilities_hotel value='other_facilities_hotel'}
@@ -52,6 +53,8 @@
 		</div>
 	</div>
 </div>
+-->
+
 <div class="inpt_tour">
 	<label class="mb30">{$core->get_Lang('Accommodation')}
 		{assign var= other_facilities_hotel value='other_facilities_hotel'}
@@ -59,12 +62,12 @@
 		<button data-key="{$other_facilities_hotel}" data-label="{$core->get_Lang('Other Facilities')}" type="button" title="Thêm mô tả" onclick="open_texthelp(this, event)" class="btn btn-xs btn-default"><i class="fa fa-plus-circle"></i></button>
 		{/if}
 	</label>
-	<div class="facilities_other_box">
+	<div class="facilities_other_box" style="padding: 0 5px">
 		<div class="facilities_box">
-			<div class="row" onClick="loadHelp(this)">
+			<div class="row d-flex flex-wrap" onClick="loadHelp(this)">
 				{section name=i loop=$listHotelProperty}
-					<div class="col-12 ml-3 mr-5"><span class="fw-bold">{$listHotelProperty[i].title}</span>
-						<div>{$clsProperty->getTitleByCatId($listHotelProperty[i].hotel_property_id, $pvalTable)}</div>
+					<div class="col-12 ml-3 mr-5"><span class="fw-bold" style="font-weight: bold">{$listHotelProperty[i].title}</span>
+						<div class="mt-30">{$clsProperty->getTitleByCatId($listHotelProperty[i].hotel_property_id, $pvalTable)}</div>
 					</div>
 				{/section}
 			</div>

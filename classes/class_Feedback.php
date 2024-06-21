@@ -261,8 +261,8 @@ class Feedback extends dbBasic{
 		$one = $this->getOne($feedback_id);
 		$feedback_store = unserialize($one['feedback_store']);
 		$birthday = date('d/m/Y',$one['birthday']);
-        
-        
+
+//        $feedback_store = reset($feedback_store["TOUR"]);
         $type_feedback=$one['type'];
         if($type_feedback=='Tour'){
             $clsTour=new Tour();

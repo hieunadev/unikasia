@@ -84,7 +84,7 @@
 							</div>
 							{/if}
 						
-                            <div class="form-group inpt_tour">
+                            <div class="inpt_tour">
 
                                 <label class="col-form-label">{$core->get_Lang('Tag')}
 
@@ -104,11 +104,11 @@
 
                                     <div id="slb_ContainerTourTag" onClick="loadHelp(this)">
 
-                                        <select name="list_tag_id[]" id="tag_id" class="full-width chosen-select required" multiple="multiple">
+                                        <select name="list_tag_id[]" id="tag_id" class="full-width chosen-select" multiple="multiple">
 
                                             {assign var = selected value = $oneItem.list_tag_id}
 
-                                            {$clsTag->makeSelectboxOption($selected)}
+                                            {$clsTag->makeSelectboxOption($selected, 'blog')}
 
                                             {$selected}
 

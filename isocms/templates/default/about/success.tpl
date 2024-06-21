@@ -7,7 +7,7 @@
 					<a itemtype="http://schema.org/Thing" itemprop="item" href="{$PCMS_URL}">
 						<span itemprop="name" class="reb">{$core->get_Lang('Home')}</span></a>
 					<meta itemprop="position" content="1" />
-				</li>
+				</li> <span class="mx-3">/</span>
 				<li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="hidden-xs"> 
 					<a itemtype="http://schema.org/Thing" itemprop="item" {if $show eq 'Feedback'}href="{$clsISO->getLink('contact')}"{/if}  title="{if $show eq 'registerAgent'}{$core->get_Lang('Register')} {$core->get_Lang('Travel Agent')}{/if}{if $show eq 'registerCTV'}{$core->get_Lang('Register')} {$core->get_Lang('Cộng tác viên')}{/if}{if $show eq 'ResetPassSuccess'}{$core->get_Lang('Password reset')}{/if}{if $show eq 'Feedback'}{$core->get_Lang('Contact Us')}{/if}{if $show eq 'bookTour' || $show eq 'bookHotel' || $show eq 'bookTailor' || $show eq 'bookCruise'}{$core->get_Lang('Booking')}{/if}"> 
 						<span itemprop="name" class="reb">{if $show eq 'Feedback'}{$core->get_Lang('Contact Us')}{/if}
@@ -16,7 +16,7 @@
 				{if $show eq 'ResetPassSuccess'}{$core->get_Lang('Password reset')}{/if}
 				{if $show eq 'bookTour' || $show eq 'bookHotel' || $show eq 'bookTailor' || $show eq 'bookCruise' || $show eq 'Bookingservices'}{$core->get_Lang('Booking')}{/if}</span> </a> 
 					<meta itemprop="position" content="2" />
-				</li>
+				</li><span class="mx-3">/</span>
 				<li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="active"> 
 					<a itemtype="http://schema.org/Thing" itemprop="item" title="{$core->get_Lang('Success')}"> 
 						<span itemprop="name" class="reb">{$core->get_Lang('Success')}</span> </a> 
@@ -29,7 +29,7 @@
 	<section id="contentPage" class="successPage pd20_0">
 		<div class="container">
 			<section class="bore-right bg_fff">
-				{*<h1 class="title"> 
+				{*<h1 class="title">
 				{if $show eq 'Feedback'}{$core->get_Lang('Contact Us')}{/if}
 				{if $show eq 'bookTour' || $show eq 'bookHotel' || $show eq 'bookTailor' || $show eq 'bookCruise'}{$core->get_Lang('Booking')}{/if}
 				{if $show eq 'registerAgent'}{$core->get_Lang('Register')} {$core->get_Lang('Travel Agent')}{/if}

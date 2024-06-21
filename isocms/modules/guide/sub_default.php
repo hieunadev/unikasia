@@ -91,6 +91,12 @@ function default_cat()
 	$clsGuide	= 	new Guide();
 	$smarty->assign('clsGuide', $clsGuide);
 	$clsPagination	= 	new Pagination();
+	$clsTour = new Tour();
+	$assign_list["clsTour"] = $clsTour;
+	$clsReviews = new Reviews();
+	$assign_list["clsReviews"] = $clsReviews;
+	$clsTourDestination = new TourDestination();
+	$assign_list["clsTourDestination"] = $clsTourDestination;
 	$smarty->assign('_LANG_ID', $_LANG_ID);
 	$smarty->assign('deviceType', $deviceType);
 	#
@@ -163,6 +169,15 @@ function default_cat()
 	$arr_recent_view	=	$clsISO->getRecentView('guide', 10);
 	$smarty->assign('arr_recent_view', $arr_recent_view);
 	#
+	// van code new exciting trip
+	// List tour liên quan trong quốc gia
+	$cond2   =   ' is_trash = 0 AND is_online = 1';
+	$order2 =   ' ORDER BY rand()';
+	$limit2  =   ' LIMIT 10';
+
+	$arr_tour_country   =   $clsTour->getAll($cond2 . " AND tour_id IN (SELECT tour_id FROM default_tour_destination WHERE country_id = " . $country_id . ")" . $order2 . $limit2, "tour_id, min_price");
+
+	$smarty->assign('arr_tour_country', $arr_tour_country);
 	/* =============Title & Description Page================== */
 	if ($show === 'GuideCat') {
 		$title_page = $clsGuideCat->getTitle($guidecat_id) . ' | ' . $clsCountry->getTitle($country_id) . ' | ' . PAGE_NAME;

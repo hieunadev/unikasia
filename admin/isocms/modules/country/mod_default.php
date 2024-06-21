@@ -416,6 +416,15 @@ function default_ajSaveMainStep()
             }
         }
         $clsClassTable->updateOne($table_id, $arr_update);
+    } elseif ($currentstep == 'header_cruise') {
+        #
+        foreach ($_POST as $key => $val) {
+            $tmp = explode('-', $key);
+            if ($tmp[0] == 'iso') {
+                $arr_update[$tmp[1]] = $val;
+            }
+        }
+        $clsClassTable->updateOne($table_id, $arr_update);
     } elseif ($currentstep == 'month_country') {
         #
         foreach ($_POST as $key => $val) {

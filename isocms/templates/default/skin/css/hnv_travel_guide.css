@@ -254,10 +254,6 @@ body {
         background: var(--Neutral-5, #F0F0F0);
     }
 
-    .des_travel_guide_exciting_trip_detail .box_left{
-        display: ruby;
-    }
-
     .des_travel_guide_exciting_trip_detail{
         margin-top: 0 !important;
     }
@@ -317,7 +313,7 @@ body {
     /* css fixed mobile */
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 576px) {
     .des_travel_guide_exciting_trip_item {
         width: 100%;
     }
@@ -363,7 +359,7 @@ body {
         line-height: 36px;
     }
 
-    .des_travel_guide_exciting_trip_detail .box_right{
+    .guide_cat_body .des_travel_guide_exciting_trip_detail .box_right{
         display: none;
     }
 

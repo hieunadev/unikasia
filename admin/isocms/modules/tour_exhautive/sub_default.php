@@ -1342,6 +1342,7 @@ function default_edit()
     $child_basic[] = 'image-file-tour';
     $child_basic[] = 'overview-tour';
     $child_basic[] = 'love-trip';
+    $child_basic[] = 'map-tour';
 
 
     //    if ($clsISO->getCheckActiveModulePackage($package_id, 'property', 'activities', 'default')) {
@@ -1504,6 +1505,11 @@ function default_edit()
             $list_check_target[] = array('result' => 'check_success', 'cat' => 'basic', 'target' => 'love-trip', 'name' => $core->get_Lang('Love Trip') . ($oneItem['yield_id'] ? $clsISO->makeIcon('compress', '', 'ml-2') : ''));
         } else {
             $list_check_target[] = array('result' => 'check_caution', 'cat' => 'basic', 'target' => 'love-trip', 'name' => $core->get_Lang('Love Trip'));
+        }
+        if ($oneItem['map-tour'] != '') {
+            $list_check_target[] = array('result' => 'check_success', 'cat' => 'basic', 'target' => 'map-tour', 'name' => $core->get_Lang('Map Tour') . ($oneItem['yield_id'] ? $clsISO->makeIcon('compress', '', 'ml-2') : ''));
+        } else {
+            $list_check_target[] = array('result' => 'check_caution', 'cat' => 'basic', 'target' => 'map-tour', 'name' => $core->get_Lang('Map Tour'));
         }
         if ($clsISO->getCheckActiveModulePackage($package_id, 'property', 'activities', 'default')) {
             if ($oneItem['list_activities_id'] != '' && $oneItem['list_activities_id'] != '||' && $oneItem['list_activities_id'] != '|0|') {
@@ -2144,6 +2150,7 @@ function default_ajSaveDataasdsad()
                     && $key != 'list_service_id'
                     && $key != 'type_post'
                     && $key != 'price_type'
+                    && $key != 'image'
                 ) {
                     if ($firstAdd == 0) {
                         if ($key == 'price_single_supply') {
@@ -2164,6 +2171,7 @@ function default_ajSaveDataasdsad()
                             $value .= "," . $key . "='" . addslashes($ak) . "'";
                         }
                     }
+
                 }
             }
             if ($type_post == 'title-tripcode') {
@@ -2195,6 +2203,7 @@ function default_ajSaveDataasdsad()
                     'caution' => 'skip'
                 );
             } else {
+
                 if ($clsTour->updateOne($pvalTable, $value)) {
                     $result = array(
                         'result' => 'success',

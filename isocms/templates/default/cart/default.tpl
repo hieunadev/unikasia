@@ -203,14 +203,14 @@
 								<label for="title">Title*</label>
 								<select class="select2" name="title" id="title">
 									<option value="">-- Please Select --</option>
-									<option value="1">Mr.</option>
-									<option value="1">Mrs.</option>
-									<option value="1">Ms.</option>
+									<option value="Mr.">Mr.</option>
+									<option value="Mrs.">Mrs.</option>
+									<option value="Ms.">Ms.</option>
 								</select>
 							</div>
 							<div class="d-flex flex-column information-7  box_validate">
 								<label for="title">Full name*</label>
-								<input type="text" name="full_name" class="information_input" placeholder="Enter your name">
+								<input type="text" name="fullname" class="information_input" placeholder="Enter your name">
 							</div>
 							<div class="d-flex flex-column information-3  box_validate">
 								<label for="nationality">Nationality*</label>
@@ -254,7 +254,7 @@
 								{assign var = SitePay_CashDesc value = SitePay_CashDesc_|cat:$_LANG_ID}
 							<div class="type_payment d-flex flex-column ">
 								<label class="item_radio">{$clsConfiguration->getValue($SitePay_CashName)}
-									<input type="radio" checked name="radio" class="radio">
+									<input type="radio" checked name="payment_method" class="radio" value="{$PAYMENT_CASH_ID}">
 									<span class="checkmark"></span>
 								</label>
 								{if $clsConfiguration->getValue($SitePay_CashDesc)}
@@ -271,7 +271,7 @@
 								{assign var = SitePay_BankDesc value = SitePay_BankDesc_|cat:$_LANG_ID}
 							<div class="type_payment d-flex flex-column ">
 								<label class="item_radio">{$clsConfiguration->getValue($SitePay_BankName)}
-									<input type="radio" name="radio" class="radio">
+									<input type="radio" name="payment_method" class="radio" value="{$PAYMENT_TRANSFER_ID}">
 									<span class="checkmark"></span>
 								</label>
 								{if $clsConfiguration->getValue($SitePay_BankDesc)}
@@ -287,7 +287,7 @@
 								{assign var = Paypal_Name value = Paypal_Name_|cat:$_LANG_ID}
 							<div class="type_payment d-flex flex-column ">
 								<label class="item_radio">{$clsConfiguration->getValue($Paypal_Name)}
-									<input type="radio" name="radio" class="radio">
+									<input type="radio" name="payment_method" class="radio" value="{$PAYMENT_PAYPAL_GATEWAY}">
 									<span class="checkmark"></span>
 								</label>
 							</div>
@@ -296,7 +296,7 @@
 								{assign var = ONEPAY_Name value = ONEPAY_Name_|cat:$_LANG_ID}
 								<div class="type_payment d-flex flex-column ">
 									<label class="item_radio">{$clsConfiguration->getValue($ONEPAY_Name)}
-										<input type="radio" name="radio" class="radio">
+										<input type="radio" name="payment_method" class="radio" value="{$PAYMENT_ONEPAY_ATM}">
 										<span class="checkmark"></span>
 									</label>
 								</div>
@@ -305,7 +305,7 @@
 								{assign var = ONEPAY_Visa_Name value = ONEPAY_Visa_Name_|cat:$_LANG_ID}
 							<div class="type_payment d-flex flex-column ">
 								<label class="item_radio">{$clsConfiguration->getValue($ONEPAY_Visa_Name)}
-									<input type="radio" name="radio" class="radio">
+									<input type="radio" name="payment_method" class="radio" value="{$PAYMENT_ONEPAY_VISA}">
 									<span class="checkmark"></span>
 								</label>
 							</div>
@@ -315,7 +315,7 @@
 					<button class="btn_payment false d-flex align-items-center justify-content-center " type="submit">
 						Payment
 						<div class="div_img">
-							<img src="{$URL_IMAGES}/hotel/ArrowRight.svg" alt="Icon">
+							<i class="fa-regular fa-arrow-right"></i>
 						</div>
 					</button>
 				</div>
@@ -354,7 +354,7 @@
 								</div>
 								<div class="d-flex justify-content-between align-items-start ">
 									<span class=" span_title">Room:</span>
-									<div class="room span_content d-flex flex-column  align-items-end">
+									<div class="room span_content d-flex flex-column align-items-end">
 									</div>
 								</div>
 							</div>
@@ -395,13 +395,15 @@
 					</div>
 				</div>
 				<input type="hidden" name="booking" value="booking">
-				<input type="hidden" id="total_price" value="{$clsISO->formatPrice($totalGrand)}">
-				<input type="hidden" id="price_deposit" value="{$clsISO->formatPrice($totalPriceDeposit)}">
+				<input type="hidden" name="totalgrand" id="totalgrand" value="{$clsISO->formatPrice($totalGrand)}">
+				<input type="hidden" name="deposit" id="price_deposit" value="{$clsISO->formatPrice($totalPriceDeposit)}">
 				<input type="hidden" id="price_deposit" value="{$clsISO->formatPrice($totalRemaining)}">
 				<input type="hidden" id="deposit" value="{$item.deposit}">
 				<input type="hidden" id="total_price_adults" value="{$item.total_price_adults}">
 				<input type="hidden" id="total_price_child" value="{if $item.total_price_child}{$item.total_price_child}{else}0{/if}">
 				<input type="hidden" id="total_price_infants" value="{if $item.total_price_infants}{$item.total_price_infants}{else}0{/if}">
+				<input type="hidden" name="totalFinal" class="totalFinal" value="{$totalPriceDeposit}">
+				<input type="hidden" name="exchange_rate" id="exchange_rate" value="{$_EXCHANGE_RATE}" />
 			</form>
 		</div>
 

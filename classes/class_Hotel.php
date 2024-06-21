@@ -371,15 +371,16 @@ class Hotel extends dbBasic
 		return URL_IMAGES . '/star/find-00' . $star_id . '-star.png';
 	}
 
-    function getStarNumber($hotel_id) {
-        $max_star = 6;
-        $text = '';
-        $oneTable = $this->getOne($hotel_id, "star_id");
-        for($i=0; $i<$oneTable["star_id"]; $i++) {
-            $text .= '<i class="fa-solid fa-star"></i>';
-        }
-        return $text;
-    }
+	function getStarNumber($hotel_id)
+	{
+		$max_star = 6;
+		$text = '';
+		$oneTable = $this->getOne($hotel_id, "star_id");
+		for ($i = 0; $i < $oneTable["star_id"]; $i++) {
+			$text .= '<i class="fa-solid fa-star"></i>';
+		}
+		return $text;
+	}
 
 	function getHotelStar($pvalTable, $one = null)
 	{
@@ -445,7 +446,7 @@ class Hotel extends dbBasic
 		$one = $this->getOne($hotel_id, "note");
 		return html_entity_decode($one['note']);
 	}
-	
+
 	function getHotelBookingPolicy($pvalTable, $one = null)
 	{
 		if (!isset($one['other_policy'])) {
@@ -453,7 +454,7 @@ class Hotel extends dbBasic
 		}
 		return html_entity_decode($one['other_policy']);
 	}
-	
+
 	function getOtherPolicy($pvalTable, $one = null)
 	{
 		if (!isset($one['other_policy'])) {
@@ -461,7 +462,7 @@ class Hotel extends dbBasic
 		}
 		return html_entity_decode($one['other_policy']);
 	}
-	
+
 	function getBookingPolicy($pvalTable, $one = null)
 	{
 		if (!isset($one['booking_policy'])) {
@@ -469,7 +470,7 @@ class Hotel extends dbBasic
 		}
 		return html_entity_decode($one['booking_policy']);
 	}
-	
+
 	function getChildPolicy($pvalTable, $one = null)
 	{
 		if (!isset($one['child_policy'])) {
@@ -484,7 +485,7 @@ class Hotel extends dbBasic
 		}
 		return html_entity_decode($one['cancellation_policy']);
 	}
-	
+
 	function getExcludesPolicy($pvalTable, $one = null)
 	{
 		if (!isset($one['exclude_policy'])) {
@@ -492,7 +493,7 @@ class Hotel extends dbBasic
 		}
 		return html_entity_decode($one['exclude_policy']);
 	}
-	
+
 	function getPrice($hotel_id, $addition = '', $is_has = false, $one = null)
 	{
 		global $core, $extLang, $_LANG_ID;
@@ -583,7 +584,6 @@ class Hotel extends dbBasic
 				$html .= '<span class="price">' . $clsISO->formatNumberToEasyRead($price_new) . ' ' . $clsISO->getShortRate() . '</span>';
 			} else {
 				$html .= '<p class="price">' . $clsISO->getShortRate() . $clsISO->formatNumberToEasyRead($price) . '</p>';
-
 			}
 
 			if ($page == 'detail') {
@@ -760,28 +760,27 @@ class Hotel extends dbBasic
 	function checkProperty($type, $pvalTable, $property_id)
 	{
 		global $clsISO;
-//		$clsISO->pre($type);
-//		$clsISO->pre($pvalTable);
-//		$clsISO->pre($property_id);
-//		die();
+		//		$clsISO->pre($type);
+		//		$clsISO->pre($pvalTable);
+		//		$clsISO->pre($property_id);
+		//		die();
 		$oneItem = $this->getOne($pvalTable);
-//				$clsISO->pre($oneItem);
-//		die();
+		//				$clsISO->pre($oneItem);
+		//		die();
 		$str = $oneItem['list_' . $type];
-//						$clsISO->pre($str);
-//		die();
+		//						$clsISO->pre($str);
+		//		die();
 		$str_array = explode('|', $str);
-//			$clsISO->pre($str_array);
-//		die();
+		//			$clsISO->pre($str_array);
+		//		die();
 		for ($i = 0; $i < count($str_array); $i++) {
 			if ($str_array[$i] == $property_id) {
 				return 1;
 			}
-			
 		}
 		return 0;
 	}
-	
+
 	function checkAttraction($pvalTable, $hotel_attraction_id)
 	{
 		$oneItem = $this->getOne($pvalTable, 'list_attraction');
@@ -840,7 +839,6 @@ class Hotel extends dbBasic
 		$clsHotel = new Hotel();
 		$one = $clsHotel->getOne($hotel_id, 'list_RoomFacilities');
 		return $one['list_RoomFacilities'];
-		
 	}
 	function getRuler($hotel_id)
 	{
@@ -856,9 +854,9 @@ class Hotel extends dbBasic
 		}
 		if (!empty($one['check_in_out_time'])) {
 			$time = json_decode($one['check_in_out_time'], true);
-			return $time['hour_in'] 
-//				. ':' . $time['minute_in']
-				;
+			return $time['hour_in']
+				//				. ':' . $time['minute_in']
+			;
 		}
 	}
 	function getCheckOutRoom($hotel_id, $one = null)
@@ -869,9 +867,9 @@ class Hotel extends dbBasic
 		}
 		if (!empty($one['check_in_out_time'])) {
 			$time = json_decode($one['check_in_out_time'], true);
-			return $time['hour_out'] 
-//				. ':' . $time['minute_out']
-				;
+			return $time['hour_out']
+				//				. ':' . $time['minute_out']
+			;
 		}
 	}
 	function getUrlVideo($hotel_id)
@@ -1002,7 +1000,7 @@ class Hotel extends dbBasic
 				foreach ($arr_data as $row) {
 					$list_hotel_type[$row['property_id']]	=	$row['title'];
 				}
-                
+
 				$list_hotel_type[$one['list_TypeHotel']];
 				return $list_hotel_type[$one['list_TypeHotel']];
 			}

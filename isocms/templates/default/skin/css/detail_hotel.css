@@ -657,9 +657,16 @@ form .departure_day:hover {
     line-height: 24px;
     color: #111D37;
 }
+/*
 
 .overview-content p {
 	margin-bottom: 5px;
+}
+*/
+
+.overview-content {
+    max-height: 6em; /* Hoặc giá trị khác tùy ý */
+    overflow: hidden;
 }
 
 
@@ -1837,6 +1844,25 @@ p.price {
     background-color: #333;
     color: #fff;
 }
+
+.facilities_item:not(:has(img)) {
+  background-image: url('https://unikasia.vietiso.com/isocms/templates/default/skin/images/hotel/detail/ico_nightclub.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  padding: 10px;
+}
+
+.money .under_numbprice {
+	color: #959AA4;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    text-decoration: line-through;
+
+}
+
+
 
 
 

@@ -228,8 +228,11 @@ function default_ajLoadFormAddProperty(){
 	global $core, $_LANG_ID;
 	#
 	$clsProperty = new Property();
+    $clsHotelProperty = new HotelProperty();
 	$parent_id = $_POST['parent_id'];
 	$type = $_POST['type'];
+    $style = '';
+    if ($type != "HotelFacilities") $style = 'style="display:none"';
 	$html = '
 		<div class="headPop headPop2">
 			<a href="javascript:void();" title="Đóng" class="closeEv close_pop">&nbsp;</a>
@@ -249,6 +252,14 @@ function default_ajLoadFormAddProperty(){
 					</select>
 				</td>
 			</tr>
+            <tr '.$style.'>
+                <td class="fieldarea span15" style="text-align:right"><strong>'.$core->get_Lang('Category').'</strong></td>
+                <td class="fieldarea">
+                    <select class="slb" id="cat_id" name="cat_id">
+                        '.$clsHotelProperty->getSelectByHotelCat().'
+                    </select>
+                </td>
+            </tr>
 			<tr>
 				<td class="fieldarea" style="text-align:right"><strong>'.$core->get_Lang('Image icon').'</strong></td>
 				<td class="fieldarea">
@@ -363,8 +374,8 @@ function default_ajSubmitProperty(){
 				$clsProperty->updateOne($listTable[$i][$clsProperty->pkey],"order_no='".$order_no."'");
 			}
 			$max_id=$clsProperty->getMaxId();
-			$f="property_id,title,slug,image,intro,order_no,type";
-			$v="'$max_id','$titlePost','$slugPost','$image','$introPost','1','$type'";
+			$f="property_id,title,slug,image,intro,order_no,type, cat_id";
+			$v="'$max_id','$titlePost','$slugPost','$image','$introPost','1','$type', '$cat_id'";
 			if($clsProperty->insertOne($f,$v)){
 				echo('IN_SUCCESS'); die();
 			}else{
@@ -373,7 +384,7 @@ function default_ajSubmitProperty(){
 		}
 	}else{
 		$set = "title='$titlePost',slug='$slugPost',image='$image', cat_id=$cat_id";
-        $clsProperty->setDebug(1);
+
 		if($clsProperty->updateOne($property_id,$set)){
 			echo('UP_SUCCESS'); die();
 		}else{
