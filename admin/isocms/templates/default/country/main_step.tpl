@@ -426,6 +426,37 @@
 								</div>
 							</div>
 						</div>
+						{elseif $currentstep=='header_topatt'}
+						<div class="inpt_tour">
+							<label for="topatt_banner_title">
+								{$core->get_Lang('Top attraction banner title')}
+							</label>
+							<input class="input_text_form" data-table_id="{$pvalTable}" name="iso-topatt_banner_title" value="{$oneItem.topatt_banner_title}" maxlength="255" type="text" />
+						</div>
+						<div class="inpt_tour">
+							<label class="col-form-label" for="topatt_banner_image">
+								{$core->get_Lang('Top attraction banner image')} ({$core->get_Lang('Size')}: 1920x600)
+							</label>
+							<div class="fieldarea">
+								<div class="row">
+									<div class="col-md-6 col-sm-12">
+										<input class="text_32 border_aaa bold" type="text" id="topatt_banner_image" name="iso-topatt_banner_image" value="{$oneItem.topatt_banner_image}" style="float: right;width: 85%;" onClick="loadHelp(this)" readonly>
+										<a style="float:left" href="#" class="ajOpenDialog" isoman_for_id="topatt_banner_image" isoman_name="iso-topatt_banner_image"><img src="{$URL_IMAGES}/general/folder-32.png" border="0" title="Open" alt="Open" /></a>
+									</div>
+									<div class="col-sm-12 col-md-6">
+										<img id="isoman_show_topatt_banner_image" class="float-left mr-3" src="{$oneItem.topatt_banner_image}" width="480" height="150" />
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="inpt_tour">
+							<label for="topatt_banner_description">
+								{$core->get_Lang('Top attraction description')}
+							</label>
+							<textarea style="width:100%" table_id="{$pvalTable}" name="topatt_banner_description" id="topatt_banner_description_{time()}" data-column="iso-topatt_banner_description" class="textarea_intro_editor_simple" cols="255" rows="2">
+								{$oneItem.topatt_banner_description}
+							</textarea>
+						</div>
 						{if $lstContinent}
 						<div class="inpt_tour">
 							<label for="title">{$core->get_Lang('Continent')} <span class="required_red">*</span>

@@ -2601,11 +2601,11 @@ function default_ajSysCruiseCategoryCountry()
 						</div>
 					</div>
 					<div class="row-span">
-						<div class="fieldlabel" style="text-align:right"><strong >' . $core->get_Lang('Banner title') . '</strong> <span class="color_r">*</span></div>
+						<div class="fieldlabel" style="text-align:right"><strong >' . $core->get_Lang('Banner title') . '</strong></div>
 						<div class="fieldarea"><input type="text" name="title" class="text_32 border_aaa full-width fontLarge" value="' . $clsCruiseCatCountry->getBannerTitle($cruise_cat_country_id) . '" style=" width:95%"/></div>
 					</div>
 					<div class="row-span">
-						<div class="fieldlabel" style="text-align:right"><strong>' . $core->get_Lang('Banner intro') . '</strong> <span class="color_r">*</span></div>
+						<div class="fieldlabel" style="text-align:right"><strong>' . $core->get_Lang('Banner intro') . '</strong></div>
 						<div class="fieldarea">
 							<textarea id="textarea_intro_editor' . time() . '" class="textarea_intro_editor" name="intro" style="width:100%">' . $clsCruiseCatCountry->getBannerIntro($cruise_cat_country_id) . '</textarea>
 						</div>
@@ -2661,7 +2661,7 @@ function default_ajSysCruiseCategoryCountry()
 		$banner_image_vertical 		=	!empty($_POST['banner_image_vertical']) ? ($_POST['banner_image_vertical']) : '';
 		$banner_image_horizontal 	=	!empty($_POST['banner_image_horizontal']) ? ($_POST['banner_image_horizontal']) : '';
 		#
-		if (!empty($country_id) && !empty($cat_id) && !empty($banner_title) && !empty($banner_intro) && !empty($banner_image_vertical) && !empty($banner_image_horizontal)) {
+		if (!empty($country_id) && !empty($cat_id)) {
 			if ($cruise_cat_country_id == '0') {
 				if ($clsCruiseCatCountry->getAll("country_id='$country_id' AND cat_id='$cat_id'") != '') {
 					echo '_EXIST';

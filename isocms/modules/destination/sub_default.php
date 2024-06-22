@@ -82,17 +82,98 @@ function default_place()
 }
 function default_topattraction()
 {
-    global $assign_list, $_CONFIG, $core, $dbconn, $mod, $act, $clsISO, $_LANG_ID, $title_page, $description_page, $keyword_page, $domain, $deviceType, $country_id, $package_id;
-    global $min_duration_value, $max_duration_value, $min_price_value, $max_price_value, $min_duration_search, $max_duration_search;
+    global $assign_list, $smarty, $_CONFIG, $core, $dbconn, $mod, $act, $_LANG_ID, $title_page, $description_page, $global_image_seo_page, $city_id;
+    global $clsISO, $deviceType;
     #
-    // $clsISO->dd('topattraction');
+    $clsCountry     =   new Country();
+    $smarty->assign('clsCountry', $clsCountry);
+    $clsCity        =   new City();
+    $smarty->assign('clsCity', $clsCity);
+    $clsCityStore   =   new CityStore();
+    $smarty->assign('clsCityStore', $clsCityStore);
+    $clsCity        =   new City();
+    $smarty->assign('clsCity', $clsCity);
+    $clsPagination  =   new Pagination();
+    #
+    $show   =   isset($_GET['show']) ? $_GET['show'] : '';
+    if ($show === 'topAttractionCountry') {
+        $country_slug   =   isset($_GET['slug_country']) ? $_GET['slug_country'] : '';
+        $country_id     =   $clsCountry->getBySlug($country_slug);
+        $country_title  =   $clsCountry->getTitle($country_id);
+        #
+        if (intval($country_id) == 0 && $clsCountry->checkExitsId($country_id) == '0') {
+            header('location:' . PCMS_URL);
+            exit();
+        }
+    }
+    $topatt_intro   =   $clsCountry->getTopAttBannerDescription($country_id);
+    $smarty->assign('topatt_intro', $topatt_intro);
+    $smarty->assign('country_id', $country_id);
+    $smarty->assign('country_title', $country_title);
+    #
+    /** --- Phân trang --- **/
+    $currentPage    =   isset($_GET['page']) ? $_GET['page'] : 1;
+    $assign_list['currentPage']    =    $currentPage;
+    #
+    if ($deviceType == 'phone') {
+        $recordPerPage  =   6;
+    } else {
+        $recordPerPage  =   12;
+    }
+    $assign_list['recordPerPage']   =  $recordPerPage;
+    #
+    $type           =   "TOP";
+    $cond           =   "is_trash = 0 AND country_id = '$country_id' AND type = '$type'";
+    // Thêm điều kiện check city_id
+    $cond           .=  " AND city_id IN (SELECT city_id FROM default_city WHERE lang_id = '' AND is_trash = 0 AND is_online = 1 AND country_id = '$country_id')";
+    $order_by       =   " ORDER BY order_no ASC";
+    $totalRecord    =   $clsCityStore->getAll($cond) ? count($clsCityStore->getAll($cond)) : 0;
+    $link_page      =   $clsCityStore->getLink($country_id);
+    #
+    $config =   [
+        'total'             =>  $totalRecord,
+        'number_per_page'   =>  $recordPerPage,
+        'current_page'      =>  $currentPage,
+        'link'              =>  str_replace('.html', '/', $link_page),
+        'link_page'         =>  $link_page
+    ];
+    $clsPagination->initianize($config);
+    $page_view  =   $clsPagination->create_links(false);
+    $offset     =   ($currentPage - 1) * $recordPerPage;
+    $limit      =   " LIMIT $offset,$recordPerPage";
+    // $clsCityStore->SetDebug(1);
+    $listTopAtt =   $clsCityStore->getAll($cond . $order_by . $limit, "$clsCityStore->pkey, city_id");
+    // die;
+    $assign_list['listTopAtt']  =   $listTopAtt;
+    // unset($listTopAtt);
+    $assign_list['page_view']   =   $page_view;
+    // unset($page_view);
+    $assign_list['totalPage']   =   $clsPagination->getTotalPage();
+    /** --- End of Phân trang --- **/
+    #
+    $title_page =   $country_title;
+    /* =============Title & Description Page================== */
+    $title_page =   $core->get_Lang('Top Attraction') . ' | ' . $title_page . ' | ' . PAGE_NAME;
+    $assign_list["title_page"] = $title_page;
+    $description_page = $clsISO->getMetaDescription($country_id, $clsCountry);
+    $assign_list["description_page"] = $description_page;
+    $global_image_seo_page = $clsISO->getPageImageShare($country_id, $clsCountry);
+    $assign_list["global_image_seo_page"] = $global_image_seo_page;
 }
 function default_attraction()
 {
     global $assign_list, $_CONFIG, $core, $dbconn, $mod, $act, $clsISO, $_LANG_ID, $title_page, $description_page, $keyword_page, $domain, $deviceType, $country_id, $package_id;
     global $min_duration_value, $max_duration_value, $min_price_value, $max_price_value, $min_duration_search, $max_duration_search;
     #
-    $clsISO->dd('attraction');
+    // $clsISO->dd($_GET);
+    #
+    // /* =============Title & Description Page================== */
+    // $title_page =   $core->get_Lang('Top Attraction') . ' | ' . $title_page . ' | ' . PAGE_NAME;
+    // $assign_list["title_page"] = $title_page;
+    // $description_page = $clsISO->getMetaDescription($country_id, $clsCountry);
+    // $assign_list["description_page"] = $description_page;
+    // $global_image_seo_page = $clsISO->getPageImageShare($country_id, $clsCountry);
+    // $assign_list["global_image_seo_page"] = $global_image_seo_page;
 }
 function default_region()
 {

@@ -798,8 +798,9 @@ function default_ajSaveMainStep()
 			'listThingAbout' => $listThingAbout
 		));
 	} else {
-		$val_post = input::post();
-		$arr_update = [];
+		$val_post 	= 	input::post();
+		$arr_update = 	[];
+		#
 		foreach ($val_post as $key => $val) {
 			$tmp = explode('-', $key);
 			if ($tmp[0] == 'iso') {
@@ -1624,9 +1625,9 @@ function default_ajLoadCruiseExtension()
 			$html	.= 	'<td class="index">' . ($i + 1) . '</td>';
 			$html	.= 	'<td>' . $arr_type_tour[$item['type']] . '</td>';
 			$html	.= 	'<td>' . $clsTour->getTitle($item['tour_id']) . '</td>';
-			$html	.= 	'<td>' . $clsTour->getNumberDayDuration($item['cruise_id']) . '</td>';
+			$html	.= 	'<td>' . $clsTour->getNumberDayDuration($item['tour_id']) . '</td>';
 			// if ($clsISO->getCheckActiveModulePackage($package_id, $mod, 'category', 'default') == 1) {
-			$html	.= 	'<td>' . $clsTour->getCatName($item['cruise_id']) . '</td>';
+			$html	.= 	'<td>' . $clsTour->getCatName($item['tour_id']) . '</td>';
 			// }
 			$html 	.= 	'
 				<td class="block_responsive text-center" style="white-space:nowrap;" data-title="' . $core->get_Lang('func') . '"">

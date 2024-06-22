@@ -153,7 +153,7 @@
                 <div class="detail_tours">
                     <div class="detail_mapitine">
                         <div class="img_maps_parent"><img class="img_maps"
-                             src="{$URL_IMAGES}/tour/img_maps.png"></div>
+                             src="{$clsTour->getMapTour($tour_id, 842,672)}" onerror="this.src='{$URL_IMAGES}/tour/img_maps.png'"></div>
                         <div class="daytour">
                             <div class="txtdaybyday">
                                 <h2 class="txt_daytours">Day by day itinerary</h2>
@@ -178,6 +178,7 @@
                                                      data-bs-parent="#accordionExample">
                                                     <div class="accordion-body">
                                                         {$lstTourItinerary[i].content|html_entity_decode}
+                                                        <div class="meal_stay">Meal: <span class="title_meal">{$clsTourItinerary->getTitleMeal($lstTourItinerary[i].tour_itinerary_id,'','only_title_meal')} </span>&#160; | &#160; Stay: <span class="title_stay">{$lstTourItinerary[i].title_stay}</span></div>
                                                     </div>
                                                 </div>
                                             </div>

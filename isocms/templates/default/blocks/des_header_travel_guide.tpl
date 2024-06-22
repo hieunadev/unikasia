@@ -22,12 +22,6 @@
 </div>
 {literal}
 <style>
-    /* .destination_travel_guide_body .bground_header {
-        background: linear-gradient(rgba(24, 28, 26, 0.4), rgba(24, 28, 26, 0.4)),
-            url("https://unikasia.vietiso.com/isocms/templates/default/skin/images/destination/bg_trvg.png");
-        background-repeat: no-repeat;
-        background-size: cover;
-    } */
     .trvg_header_background_image {
         position: absolute;
         top: 0;
@@ -35,6 +29,11 @@
         filter: brightness(65%);
         width: 100%;
         /* z-index: 1; */
+    }
+
+    .trvg_header_background_image img {
+        width: 100%;
+        object-fit: cover;
     }
 
     .trvg_header {

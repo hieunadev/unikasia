@@ -72,10 +72,13 @@
                         <a href="javascript:void(0);">{$core->get_Lang($guidecat_guidecat_title)}</a>
                     </li>
                     <li class="breadcrumb-item active des_breadcrumb_active" aria-current="page">{$core->get_Lang($guide_title)}</li>
-                {elseif $mod eq 'destination' && $act eq 'attraction'}
-                    <li class="breadcrumb-item des_breadcrumb_link"><a href="#" title="Vietnam">Vietnam</a></li>
-                    <li class="breadcrumb-item des_breadcrumb_link"><a href="#" title="Top attraction">Top attraction</a></li>
-                    <li class="breadcrumb-item active des_breadcrumb_active" aria-current="page">Hanoi, Vietnam</li>
+                {elseif $mod eq 'destination' && $act eq 'topattraction'}
+                    <li class="breadcrumb-item des_breadcrumb_link">
+                        <a href="javascript:void(0);" class="cancel_link">{$core->get_Lang($clsCountry->getTitle($country_id))}</a>
+                    </li>
+                    <li class="breadcrumb-item active des_breadcrumb_active" aria-current="page">
+                        {$core->get_Lang('Top attraction')}
+                    </li>
                 {/if}
             {/if}
         </ol>

@@ -16,6 +16,7 @@ $smarty->assign('show', $show);
 #
 if ($show === 'CruiseCatCountry') {
     $country_slug       =   isset($_GET['slug_country']) ? $_GET['slug_country'] : '';
+    $smarty->assign('country_slug', $country_slug);
     $country_id         =   $clsCountry->getBySlug($country_slug);
     $smarty->assign('country_id', $country_id);
     #

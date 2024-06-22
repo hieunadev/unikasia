@@ -1253,11 +1253,11 @@ $().ready(function(){
 					alertify.error(field_required);
 					return false;
 				}
-				if($.trim($title.val())=='') {
-					$title.addClass('error').focus();
-					alertify.error(field_required);
-					return false;
-				}
+				// if($.trim($title.val())=='') {
+				// 	$title.addClass('error').focus();
+				// 	alertify.error(field_required);
+				// 	return false;
+				// }
 				if($.trim($banner_image_vertical.val())=='') {
 					$banner_image_vertical.addClass('error').focus();
 					alertify.error(field_required);

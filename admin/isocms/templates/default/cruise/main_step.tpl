@@ -93,7 +93,7 @@
                             </label>
                             <div class="fieldarea" onClick="loadHelp(this)">
                                 <div class="boxCheckbox">
-                                    <input type="radio" class="check_box_itinerary" name="star_number" value="0" {if $oneItem.star_number eq 0}checked="checked" {/if}>
+                                    <input type="radio" class="check_box_itinerary" name="star_number" value="1" {if $oneItem.star_number eq 1}checked="checked" {/if}>
                                     <p class="text-itinerary checkmark">{$core->get_Lang('Un Rated')}</p>
                                 </div>
                                 {section name=star start=3 loop=7 step=1}
@@ -772,11 +772,10 @@
                         <div class="inpt_tour">
                             <label>
                                 {$core->get_Lang('destination')}
-                                <span class="required_red">*</span>
                             </label>
                             <div class="form-inline select_location_map d-flex">
                                 <div class="form-group">
-                                    <select class="required form-control slb_Country_Id" name="cruise_country_id" style="width: 300px;height: 100%;margin-right: 5px;">
+                                    <select class=" form-control slb_Country_Id" name="cruise_country_id" style="width: 300px;height: 100%;margin-right: 5px;">
                                         {$clsCountry->makeSelectboxOption()}
                                     </select>
                                 </div>

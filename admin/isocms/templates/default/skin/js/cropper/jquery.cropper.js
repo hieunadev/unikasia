@@ -28,6 +28,7 @@ function file_explorer(_this, ev) {
     return false;
 }
 function upload_file_picker(file, params) {
+    console.log(params)
     var $_adata = params,
         URL = window.URL || window.webkitURL,
         imgdata = URL.createObjectURL(file),
@@ -126,7 +127,13 @@ function upload_file_picker(file, params) {
                 params.clsTable == "Tour" ||
                 params.clsTableGal == "TourImage"
             ) {
-                var aspectRatio = 840 / 480;
+                if (params.openFrom == "image") {
+                    var aspectRatio = 313 / 216
+                } else if (params.openFrom == "map_tour") {
+                    var aspectRatio = 842/672
+                } else {
+                    var aspectRatio = 840 / 480
+                }
             } else {
                 var aspectRatio = 750 / 500;
             }

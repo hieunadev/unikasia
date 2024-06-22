@@ -1,39 +1,54 @@
 <!-- Không format code để tránh hiển thị lỗi -->
 <div class="cru_header">
-    <h1 class="cru_header_title">
-        {if $show eq 'CruiseCatCountry'}
-            {if $cruise_cat_country_id ne ''}
-                {$clsCruiseCatCountry->getBannerTitle($cruise_cat_country_id)}
+    <div class="container">
+        <h1 class="cru_header_title">
+            {if $show eq 'CruiseCatCountry'}
+                {if $country_slug eq ''}
+                    {$clsConfiguration->getValue('CruiseBannerTitle')} 
+                {else}
+                    {if $cruise_cat_country_id ne ''}
+                        {$clsCruiseCatCountry->getBannerTitle($cruise_cat_country_id)}
+                    {else}
+                        {$clsCountry->getCruiseBannerTitle($country_id)}
+                    {/if}
+                {/if}
             {else}
-                {$clsCountry->getCruiseBannerTitle($country_id)}
+                {$clsConfiguration->getValue('CruiseBannerTitle')}
             {/if}
-        {else}
-            {$clsConfiguration->getValue('CruiseBannerTitle')}
-        {/if}
-    </h1>
-    <div class="cru_header_description">
-        {if $show eq 'CruiseCatCountry'}
-            {if $cruise_cat_country_id ne ''}
-                {$clsCruiseCatCountry->getBannerIntro($cruise_cat_country_id)}
+        </h1>
+        <div class="cru_header_description">
+            {if $show eq 'CruiseCatCountry'}
+                {if $country_slug eq ''}
+                    {$clsConfiguration->getValue('CruiseBannerDescription')|html_entity_decode} 
+                {else}
+                    {if $cruise_cat_country_id ne ''}
+                        {$clsCruiseCatCountry->getBannerIntro($cruise_cat_country_id)}
+                    {else}
+                        {$clsCountry->getCruiseBannerDescription($country_id)}
+                    {/if}
+                {/if}
             {else}
-                {$clsCountry->getCruiseBannerDescription($country_id)}
+                {$clsConfiguration->getValue('CruiseBannerDescription')|html_entity_decode}
             {/if}
-        {else}
-            {$clsConfiguration->getValue('CruiseBannerDescription')|html_entity_decode}
-        {/if}   
+        </div>
     </div>
 </div>
 <div class="cru_header_background_image">
     {if $show eq 'CruiseCatCountry'}
-        {if $cruise_cat_country_id ne ''}
-            <img src="{$clsCruiseCatCountry->getBannerImageHorizontal($cruise_cat_country_id, 1920, 600)}" width="1920" height="600" alt="{$clsCruiseCatCountry->getBannerTitle($cruise_cat_country_id)}">
+        {if $country_slug eq ''}
+            <img src="{$clsConfiguration->getValue('CruiseBannerImage')}" width="1920" height="600" alt="Cruise">
         {else}
-            <img src="{$clsCountry->getCruiseBannerImage($country_id, 1920, 600)}" width="1920" height="600" alt="{$clsCountry->getTitle($country_id)}">
+            {if $cruise_cat_country_id ne ''}
+                <img src="{$clsCruiseCatCountry->getBannerImageHorizontal($cruise_cat_country_id, 1920, 600)}" width="1920" height="600" alt="{$clsCruiseCatCountry->getBannerTitle($cruise_cat_country_id)}">
+            {else}
+                <img src="{$clsCountry->getCruiseBannerImage($country_id, 1920, 600)}" width="1920" height="600" alt="{$clsCountry->getTitle($country_id)}">
+            {/if}
         {/if}
     {elseif $show eq 'CruiseCat'}
         <img src="{$clsConfiguration->getValue('CruiseBannerImage')}" width="1920" height="600" alt="Cruise">
     {/if}
 </div>
+
 {literal}
 <style>
     .cru_header_background_image {
@@ -80,7 +95,7 @@
         position: absolute;
         top: 50%;
         left: 50%;
-        transform: translate(-50%, -15%);
+        transform: translate(-50%, -50%);
         z-index: 1;
     }
 
@@ -95,9 +110,21 @@
     .cruise_cat_body .unika_header_2 {
         position: fixed;
     }
-    @media screen and (min-width: 1200px) {
-        .cru_header_description {
+
+    @media (min-width: 1200px) {
+        .cru_header {
             width: 1096px;
+        }
+    }
+
+    @media (max-width: 575px) {
+        .cru_header {
+            width: 327px;
+        }
+
+        .cru_header_title {
+            font-size: 24px;
+            line-height: 150%;
         }
     }
 </style>

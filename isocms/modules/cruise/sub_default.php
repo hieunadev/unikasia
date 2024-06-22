@@ -921,10 +921,10 @@ function default_cat()
 		$cruise_cat_slug	=   isset($_GET['slug_cat']) ? $_GET['slug_cat'] : '';
 		$cruise_cat_id  	=   $clsCruiseCat->getBySlug($cruise_cat_slug);
 		#
-		if (empty($country_id)) {
-			header('location:' . PCMS_URL);
-			exit();
-		}
+		// if (empty($country_id)) {
+		// 	header('location:' . PCMS_URL);
+		// 	exit();
+		// }
 	}
 	#
 	$cond	= 	"is_trash = 0 AND is_online = 1";

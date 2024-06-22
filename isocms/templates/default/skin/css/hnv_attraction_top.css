@@ -1,0 +1,14 @@
+.destination_topattraction_body .des_travel_guide_title {
+    height: unset;
+}
+.destination_topattraction_body .des_travel_guide_title h3 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.destination_topattraction_body .reasonandrecom {
+    margin-top: 50px;
+}
+.destination_topattraction_body .des_travel_guide_exciting_trip {
+    margin-top: unset;
+}

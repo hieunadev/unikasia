@@ -36,6 +36,9 @@ function getFrame($country_id = null)
                 'header_cruise' => array(
                     'name' => $core->get_Lang('Header cruise')
                 ),
+                'header_topatt' => array(
+                    'name' => $core->get_Lang('Header top attraction')
+                ),
                 'month_country' => array(
                     'name' => $core->get_Lang('Intro by month')
                 ),

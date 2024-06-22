@@ -50,8 +50,8 @@
                                                 </button>
                                             </li>
                                             <li class="nav-item dropdown">
-                                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    DESTINATIONS
+                                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" title="{$core->get_Lang('DESTINATIONS')}">
+                                                    {$core->get_Lang('DESTINATIONS')}
                                                     <i class="fas fa-angle-down ms-1" aria-hidden="true"></i>
                                                 </a>
                                                 <ul class="dropdown-menu">
@@ -75,7 +75,7 @@
                                             </li>
                                             <li class="nav-item dropdown">
                                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    STAY
+                                                    {$core->get_Lang('STAY')}
                                                     <i class="fas fa-angle-down ms-1" aria-hidden="true"></i>
                                                 </a>
                                                 <ul class="dropdown-menu unika_stay_dropdown-menu">
@@ -95,7 +95,7 @@
                                             </li>
                                             <li class="nav-item dropdown">
                                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    CRUISES
+                                                    {$core->get_Lang('CRUISES')}
                                                     <i class="fas fa-angle-down ms-1" aria-hidden="true"></i>
                                                 </a>
                                                 <ul class="dropdown-menu unika_cruises_dropdown-menu">
@@ -141,7 +141,7 @@
                                             </li>
                                             <li class="nav-item dropdown">
                                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    BLOG
+                                                    {$core->get_Lang('BLOG')}
                                                     <i class="fas fa-angle-down ms-1" aria-hidden="true"></i>
                                                 </a>
                                                 <ul class="dropdown-menu anika_blog">
@@ -151,7 +151,9 @@
                                                 </ul>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link" href="#">ABOUT US</a>
+                                                <a class="nav-link" href="#">
+                                                    {$core->get_Lang('ABOUT US')}
+                                                </a>
                                             </li>
                                         </div>
                                         <div class="nav-item unika_ul-language">
@@ -161,7 +163,7 @@
                                                         <div class="unika_div_img">
                                                             <img src="https://unikasia.vietiso.com/isocms/templates/default/skin/images/home/flag_us.png" alt="Icon">
                                                         </div>
-                                                        <span class="text-white">Change language</span>
+                                                        <span class="text-white">{$core->get_Lang('Change language')}</span>
                                                     </div>
                                                     <i class="fas fa-angle-down ms-1" aria-hidden="true"></i>
                                                 </a>
@@ -171,7 +173,7 @@
                                                             <div class="unika_div_img">
                                                                 <img src="https://unikasia.vietiso.com/isocms/templates/default/skin/images/home/flag_france.png" alt="Icon">
                                                             </div>
-                                                            <span class="text-white">France</span>
+                                                            <span class="text-white">{$core->get_Lang('France')}</span>
                                                         </a>
                                                     </li>
                                                 </ul>
@@ -213,8 +215,8 @@
                             </div>
                         </div>
                         <div class="tailor_made_travel">
-                            <a href="#">
-                                TAILOR-MADE TRAVEL
+                            <a href="{$clsTour->getLink2(0, 1)}">
+                                {$core->get_Lang('TAILOR-MADE TRAVEL')}
                             </a>
                         </div>
                     </div>
@@ -224,7 +226,7 @@
         {if ($mod eq 'destination' && $act eq 'place')}
         {$core->getBlock('des_header_destination')}
         {/if}
-        {if $mod eq 'destination' && $act eq 'travel_style' || $mod eq 'tour' && $act eq 'cat'}
+        {if ($mod eq 'destination' && $act eq 'topattraction') || ($mod eq 'tour' && $act eq 'cat')}
         {$core->getBlock('des_header_travel_style')}
         {/if}
         {if ($mod eq 'destination' && $act eq 'travel_guide') || ($mod eq 'guide' && $act eq 'cat') || ($mod eq 'guide' && $act eq 'search')}
@@ -247,6 +249,9 @@
         {/if}
         {if $mod eq 'blog' && $act eq 'detail'}
         {$core->getBlock('des_header_blog_detail')}
+        {/if}
+        {if $mod eq 'destination' && $act eq 'topattraction'}
+        {$core->getBlock('des_header_topattraction')}
         {/if}
     </div>
 </header>

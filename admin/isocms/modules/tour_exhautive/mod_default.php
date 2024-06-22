@@ -520,8 +520,9 @@ function default_SiteFrmTourItinerary(){
 						if($clsTour->getOneField('duration_type',$tour_id)==1){
 						$html .= '<div class="fieldlabel bold text-right text_left_767"><strong>'.$core->get_Lang('Itinerary name').'</strong> <span class="color_r">*</span></div>';
 						}else{
-						$html .= '<div class="fieldlabel bold text-right text_left_767"><strong>'.$core->get_Lang('day').'</strong> <span class="color_r">*</span></div>';	
+						$html .= '<div class="fieldlabel bold text-right text_left_767"><strong>'.$core->get_Lang('day').'</strong> <span class="color_r">*</span></div>';
 						}
+
 						$html .= '<div class="fieldarea">';
 							if($clsTour->getOneField('duration_type',$tour_id)==1){
 								$html .= '<input type="text" name="title" class="text_32 border_aaa fontLarge full-width title_capitalize" id="title" value="'.$clsTourItinerary->getOneField('title',$tour_itinerary_id).'"  />';
@@ -535,6 +536,10 @@ function default_SiteFrmTourItinerary(){
 					<div class="row-span" style="display:none">
 						<div class="fieldlabel bold text-right text_left_767"><span class="color_r">*'.$core->get_Lang('daytrip').'</span></div>
 						<div class="fieldarea"><input type="text" name="date_title" class="text full fontLarge " id="date_title" value="'.$clsTourItinerary->getOneField('date_title',$tour_itinerary_id).'" /></div>
+					</div>';
+                            $html .= '<div class="row-span">
+						<div class="fieldlabel bold text-right text_left_767">'.$core->get_Lang('Stay').'<span class="color_r"> *</span></div>
+						<input style="margin-left: 5px; width: 50%" class="text_32 full_width_767" type="text" name="title_stay" value="'.$clsTourItinerary->getOneField('title_stay',$tour_itinerary_id).'"/>
 					</div>';
 					if($clsConfiguration->getValue('SiteTourAPI')){
 						$html.='
@@ -587,7 +592,8 @@ function default_SiteFrmTourItinerary(){
 						</div>';
 						}
 					}*/
-					$html.='<div class="row-span">
+					$html.='
+                    <div class="row-span">
 						<div class="fieldlabel" style="text-align:right;font-weight:700">'.$core->get_Lang('Short text').'</div>
 						<div class="fieldarea">
 							<textarea rows="5" cols="255" id="textarea_itinerary_content_editor_'.time().'" class="textarea_itinerary_content_editor" style="width:100%">'.$clsTourItinerary->getContent($tour_itinerary_id).'</textarea>
@@ -623,7 +629,9 @@ function default_SiteFrmTourItinerary(){
 		$imagePost = isset($_POST['image']) ? $_POST['image']:'';
 		$dateTitlePost = isset($_POST['date_title']) ? $_POST['date_title']:'';
 		$is_show_image = isset($_POST['is_show_image']) ? intval($_POST['is_show_image']): 0;
+		$title_stay = $_POST['title_stay'] ?? '';
 		#
+
 		if($tour_itinerary_id > 0) {
 			$cond_check='';
             if($clsTour->getOneField('duration_type',$tour_id)==0){
@@ -642,7 +650,7 @@ function default_SiteFrmTourItinerary(){
                     echo 'title_invalid'; die();
                 }
             }
-			$v = "user_id_update='$user_id',day='$dayPost',day2='$dayPost2',title='$titlePost',slug='$slugPost',content='".addslashes($contentPost)."',transport='$transportPost',upd_date='".time()."',image='$imagePost',transport_id='$transport_id',date_title='$dateTitlePost',is_show_image='$is_show_image'";
+			$v = "user_id_update='$user_id',day='$dayPost',day2='$dayPost2',title='$titlePost',slug='$slugPost',content='".addslashes($contentPost)."',transport='$transportPost',upd_date='".time()."',image='$imagePost',transport_id='$transport_id',date_title='$dateTitlePost',is_show_image='$is_show_image', title_stay='$title_stay'";
 			if(!$clsConfiguration->getValue('SiteTourAPI')){
 				$v .= ",meals='$mealsPost'";
 			}

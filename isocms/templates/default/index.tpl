@@ -147,6 +147,9 @@
     <!-- Cruise list -->
     <link rel="stylesheet" href="{$URL_CSS}/hnv_cruise_list.css?v={$upd_version}">
     <link rel="preload" href="{$URL_CSS}/hnv_cruise_list.css?v={$upd_version}">
+    <!-- Top Attraction -->
+    <link rel="stylesheet" href="{$URL_CSS}/hnv_attraction_top.css?v={$upd_version}">
+    <link rel="preload" href="{$URL_CSS}/hnv_attraction_top.css?v={$upd_version}">
     <!-- Attraction -->
     <link rel="stylesheet" href="{$URL_CSS}/hnv_attraction.css?v={$upd_version}">
     <link rel="preload" href="{$URL_CSS}/hnv_attraction.css?v={$upd_version}">

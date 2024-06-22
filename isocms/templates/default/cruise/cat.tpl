@@ -69,11 +69,11 @@
                                         <div class="value_ranges d-flex justify-content-between flex-wrap align-items-center  width-100">
                                             <div class="item_value">
                                                 <span>$</span>
-                                                <input type="number" id="min_price" name="min_price" value="{$min_price}">
+                                                <input type="numeric" pattern="[0-9]*" id="min_price" name="min_price" value="{$min_price}">
                                             </div>
                                             <div class="item_value">
                                                 <span>$</span>
-                                                <input type="number" id="max_price" name="max_price" value="{$max_price}" />
+                                                <input type="numeric" pattern="[0-9]*" id="max_price" name="max_price" value="{$max_price}" />
                                             </div>
                                         </div>
                                         <input type="text" id="price">
@@ -87,7 +87,7 @@
                                     <div class="list_item list_rank_star">
                                         <label class="item_checkbox">
                                             {$core->get_Lang('Un Rated')}
-                                            <input type="checkbox" class="typeSearch" name="rating_filter_id[]" value="0" {if $clsISO->checkInArray($rating_filter_id, 0)}checked{/if}/>
+                                            <input type="checkbox" class="typeSearch" name="rating_filter_id[]" value="1" {if $clsISO->checkInArray($rating_filter_id, 1)}checked{/if}/>
                                             <span class="checkmark"></span>
                                         </label>
                                         {section name=star start=3 loop=7 step=1}
@@ -200,7 +200,7 @@
                                                 </a>
                                             </h3>
                                             <div class="rating d-flex justify-content-start  align-items-center">
-                                                {if $item.star_number}
+                                                {if $item.star_number >= 3}
                                                 {section name=i loop=$item.star_number}
                                                 <div class="div_img">
                                                     <i class="fa-sharp fa-solid fa-star"></i>
@@ -294,9 +294,12 @@
                                             <div class="price d-flex flex-column">
                                                 <span class="txt_money">Price per person from</span>
                                                 <div class="txt_money_cruise d-flex justify-content-end align-items-end">
-                                                    US
                                                     <span>
-                                                        $ {$clsCruiseItinerary->getMinPriceItinerary($CruiseID)}
+                                                        {if $clsCruiseItinerary->getMinPriceItinerary($CruiseID) eq 0}
+                                                        {$core->get_Lang('Contact')}
+                                                        {else}
+                                                        US $ {$clsCruiseItinerary->getMinPriceItinerary($CruiseID)}
+                                                        {/if}
                                                     </span>
                                                 </div>
                                             </div>

@@ -70,6 +70,6 @@
 {literal}
 <script>
 	loadTourItinerary($tour_id);
-	loadTourItineraryContingency(tour_id);
+	loadTourItineraryContingency($tour_id);
 </script>
 {/literal}

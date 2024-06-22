@@ -19,6 +19,8 @@ $clsTour    =   new Tour();
 $smarty->assign('clsTour', $clsTour);
 $clsGuide   =   new Guide();
 $smarty->assign('clsGuide', $clsGuide);
+$clsCityStore   =   new CityStore();
+$smarty->assign('clsCityStore', $clsCityStore);
 #
 // Slug của quốc gia
 $country_slug   =   isset($_GET['slug_country']) ? $_GET['slug_country'] : '';

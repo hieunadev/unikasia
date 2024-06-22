@@ -25,6 +25,7 @@ $clsReviews =   new Reviews();
 $smarty->assign('clsReviews', $clsReviews);
 #	
 $show   =   isset($_GET['show']) ? $_GET['show'] : '';
+$smarty->assign('show', $show);
 #
 $cond   =   ' is_trash = 0 AND is_online = 1';
 $order1 =   ' ORDER BY order_no ASC';
@@ -87,4 +88,11 @@ if ($show === 'GuideCat') {
         $arr_trvs_country   =   $clsCategory_Country->getAll("is_trash = 0 AND is_online = 1 AND country_id = $country_id ORDER BY order_no ASC", 'category_country_id, cat_id');
         $smarty->assign('arr_trvs_country', $arr_trvs_country);
     }
+} elseif ($show === 'topAttractionCountry') {
+    $country_slug   =   $_GET['slug_country'] ?? '';
+    $country_id     =   $clsCountry->getBySlug($country_slug);
+    $smarty->assign('country_id', $country_id);
+    // List tour liên quan trong quốc gia
+    $arr_tour_country   =   $clsTour->getAll($cond . " AND tour_id IN (SELECT tour_id FROM default_tour_destination WHERE country_id = " . $country_id . ")" . $order2 . $limit, "tour_id, min_price");
+    $smarty->assign('arr_tour_country', $arr_tour_country);
 }

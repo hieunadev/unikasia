@@ -8,19 +8,19 @@
 
             <img src="{$clsCity->getImageBannerHotel($city_id,1920,600,$oneItem)}" class="img100"
 
-                alt="{$core->get_Lang('Hotels in')} {$TD}" />
+                alt="{$core->get_Lang('Hotels in')} {$TD}" width="600"/>
 
         {else}
 
             {if !isset($clsCountryEx->getImageBannerHotel($country_id,1920,500,$oneItem)) || !$clsCountryEx->getImageBannerHotel($country_id,1920,500,$oneItem)}
 
-                <img src="{$URL_IMAGES}/hotel/no-image.png" alt="error" class="img100" />
+                <img src="{$URL_IMAGES}/hotel/no-image.png" alt="error" class="img100" width="600"/>
 
             {else}
 
                 <img src="{$clsCountryEx->getImageBannerHotel($country_id,1920,600)}" class="img100"
 
-                    alt="{$core->get_Lang('Hotels in')} {$TD}" />
+                    alt="{$core->get_Lang('Hotels in')} {$TD}" width="600" />
 
             {/if}
 
@@ -329,15 +329,12 @@
 
         });
 
-
-
         const textContainer = document.querySelector('.intro_top');
 
         const toggleBtn = document.querySelector('.toggle-btn');
 
-
-
-        if (textContainer.scrollHeight > textContainer.offsetHeight) {
+        console.log(textContainer.scrollHeight, textContainer.offsetHeight)
+        if (textContainer.scrollHeight > (textContainer.offsetHeight + 45)) {
 
             toggleBtn.style.display = 'block';
 

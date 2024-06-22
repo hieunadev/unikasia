@@ -66,8 +66,9 @@ class TourItinerary extends dbBasic{
 			return 0;
 		return 1;
 	}
-	function getTitleMeal($pvalTable,$one=null){
+	function getTitleMeal($pvalTable,$one=null, $type=''){
 		$meals = $this->getMeal($pvalTable,0,$one);
+        if ($type == "only_title_meal") return $meals;
 		if($meals){
 			return $this->getTitle($pvalTable,$one).' ('.$meals.')';
 		}else{

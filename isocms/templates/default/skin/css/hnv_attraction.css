@@ -193,7 +193,7 @@
 .att_exciting_trip_item_detail a:hover {
     background: #e88f00;
 }
-.att_exciting_trip_content .btn_more {
+.top_att_btn_viewmore {
     color: var(--Semantic-3, #ffba55);
     font-family: "SF Pro Display";
     font-size: 16px;
@@ -202,8 +202,20 @@
     line-height: 24px;
     display: table;
     margin: 0 auto;
+    padding: 12px 20px;
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
 }
-
+.top_att_btn_exploremore {
+    transition: all 0.3s ease-in-out;
+}
+.top_att_btn_viewmore:hover,
+.top_att_btn_exploremore:hover {
+    padding: 12px 20px;
+    background: #ffa718;
+    color: #fff;
+    border-radius: 8px;
+}
 .att_list_hotel {
     padding-bottom: 60px;
 }
@@ -467,7 +479,71 @@
 .att_list_cuisine {
     margin-bottom: 100px;
 }
-
+.att_exciting_trip_item_image img,
+.des_travel_guide_most_read_item_image img,
+.att_hotel_content_item_image img,
+.att_list_placetogo_item_image img,
+.att_cuisine_item_image img {
+    width: 100%;
+    object-fit: cover;
+    transition: all 0.3s ease-in-out;
+}
+.att_exciting_trip_item_image img:hover,
+.des_travel_guide_most_read_item_image img:hover,
+.att_hotel_content_item_image img:hover,
+.att_list_placetogo_item_image img:hover,
+.att_cuisine_item_image img:hover {
+    scale: 1.2;
+}
+.att_exciting_trip_item_image,
+.des_travel_guide_most_read_item_image,
+.att_hotel_content_item_image,
+.att_list_placetogo_item_image,
+.att_cuisine_item_image {
+    overflow: hidden;
+    border-radius: 8px;
+}
+.att_exciting_trip_item_title a,
+.att_hotel_content_item_title a,
+.att_list_placetogo_item_title a,
+.att_cuisine_item_title a {
+    transition: all 0.3s ease-in-out;
+}
+.att_exciting_trip_item_title a:hover,
+.att_hotel_content_item_title a:hover,
+.att_list_placetogo_item_title a:hover,
+.att_cuisine_item_title a:hover {
+    color: #ffa718;
+}
+.ellipsis_1_line {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.ellipsis_2_line {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.ellipsis_3_line {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.ellipsis_4_line {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.ellipsis_5_line {
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
 /* Reponsive */
 @media screen and (max-width: 1170px) {
 }

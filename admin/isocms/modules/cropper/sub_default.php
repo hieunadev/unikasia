@@ -26,10 +26,13 @@ function default_upload_image()
     $openFrom = Input::post('openFrom');
     $table_id = (int) Input::post('table_id', 0);
     $toField = ($openFrom == 'image_hotel_sub') ? Input::post('toField', 'image_hotel_sub') : Input::post('toField', 'image');
+
+    if ($openFrom == "map_tour") $toField = "map_tour";
     // print_r($toField);die();
     $imgdata = Input::post('imgdata');
     $filename = Input::post('filename', "");
     if (!$filename) $filename = $clsISO->getUniqid() . '.jpg';
+
     #
     $msg = '_error';
     if (!empty($clsTable) && $table_id > 0 && !empty($imgdata)) {

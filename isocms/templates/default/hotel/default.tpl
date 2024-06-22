@@ -144,6 +144,8 @@
 {$core->getBlock('also_like')}
 
 </div>
+
+
 <script type="text/javascript">
     var url = window.location.href;
     var $_View_more = '{$core->get_Lang("View more")}';

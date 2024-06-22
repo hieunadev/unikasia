@@ -1355,7 +1355,7 @@ function default_edit()
     //    $child_basic[] = 'refund-tour';
     $child_basic[] = 'confirmation-policy-tour';
     $list_basic_ar['child'] = $child_basic;
-
+//    $clsISO->pre($child_basic);die();
     $list_itinerary_ar = array('cat_menu' => 'itinerary', 'icon' => 'itinerary', 'child' => array('itinerary'));
     $list_destination_ar = array('cat_menu' => 'destination', 'icon' => 'destination', 'child' => array('destination'));
 
@@ -1506,11 +1506,12 @@ function default_edit()
         } else {
             $list_check_target[] = array('result' => 'check_caution', 'cat' => 'basic', 'target' => 'love-trip', 'name' => $core->get_Lang('Love Trip'));
         }
-        if ($oneItem['map-tour'] != '') {
+        if ($oneItem['map_tour'] != '') {
             $list_check_target[] = array('result' => 'check_success', 'cat' => 'basic', 'target' => 'map-tour', 'name' => $core->get_Lang('Map Tour') . ($oneItem['yield_id'] ? $clsISO->makeIcon('compress', '', 'ml-2') : ''));
         } else {
             $list_check_target[] = array('result' => 'check_caution', 'cat' => 'basic', 'target' => 'map-tour', 'name' => $core->get_Lang('Map Tour'));
         }
+
         if ($clsISO->getCheckActiveModulePackage($package_id, 'property', 'activities', 'default')) {
             if ($oneItem['list_activities_id'] != '' && $oneItem['list_activities_id'] != '||' && $oneItem['list_activities_id'] != '|0|') {
                 $list_check_target[] = array('result' => 'check_success', 'cat' => 'basic', 'target' => 'activities-tour', 'name' => $core->get_Lang('Activities Tour'));
@@ -2150,7 +2151,6 @@ function default_ajSaveDataasdsad()
                     && $key != 'list_service_id'
                     && $key != 'type_post'
                     && $key != 'price_type'
-                    && $key != 'image'
                 ) {
                     if ($firstAdd == 0) {
                         if ($key == 'price_single_supply') {
@@ -2173,6 +2173,9 @@ function default_ajSaveDataasdsad()
                     }
 
                 }
+            }
+            if ($type_post == 'image-gallery') {
+                $value = '';
             }
             if ($type_post == 'title-tripcode') {
                 $title = Input::post('title');

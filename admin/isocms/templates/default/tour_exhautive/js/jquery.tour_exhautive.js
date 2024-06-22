@@ -1140,6 +1140,7 @@ $_document.ready(function () {
         });
 
         $_document.on('click', '.btnSaveTourItinerary', function(ev) {
+			// ev.preventDefault()
             var $_this = $(this);
             var $_form = $_this.closest('.frmPop');
             var $day = $_form.find('input[name=day]');
@@ -1154,6 +1155,7 @@ $_document.ready(function () {
             var $image = $_form.find('input[name=isoman_url_image]');
             var $tour_itinerary_id = $_this.attr('tour_itinerary_id');
             var $is_show_image = $('input[name=is_show_image]:checked').val();
+            var $title_stay = $('input[name=title_stay]').val();
 
             if ($day.val() == '') {
                 $day.focus().addClass('error');
@@ -1172,6 +1174,7 @@ $_document.ready(function () {
             adata['tour_itinerary_id'] = $tour_itinerary_id;
             adata['is_show_image'] = $is_show_image;
             adata['tour_id'] = $tour_id;
+            adata['title_stay'] = $title_stay;
             adata['tp'] = 'S';
 
             vietiso_loading(1);

@@ -110,17 +110,17 @@
                                         </script>
                                         {/literal}
                                         {else}
-                                        <select class="slb" name="iso-country_id" id="slb_Country" style="font-size:14px;min-width:150px; height: 50px">
+                                        <select class="slb required" name="iso-country_id" id="slb_Country" style="font-size:14px;min-width:150px; height: 50px">
                                             {$clsCountry->makeSelectboxOption($oneItem.country_id)}
                                         </select>
                                         {/if}
                                         {if $clsISO->getCheckActiveModulePackage($package_id,'region','default','default')}
-                                        <select class="slb" name="iso-region_id" id="slb_Region" style="font-size:14px;min-width:150px; height: 50px">
+                                        <select class="slb required" name="iso-region_id" id="slb_Region" style="font-size:14px;min-width:150px; height: 50px">
                                             {$clsRegion->makeSelectboxOption($oneItem.country_id,$oneItem.region_id)}
                                         </select>
                                         {/if}
                                         <div id="slb_city_Id_Container" class="form-group">
-                                            <select class="slb required iso-selectbox" name="iso-city_id" id="slb_City" {$oneItem.country_id} style="font-size:14px;min-width:120px">
+                                            <select class="slb iso-selectbox required" name="iso-city_id" id="slb_City" {$oneItem.country_id} style="font-size:14px;min-width:120px">
                                                 {$clsCity->makeSelectboxOption($oneItem.city_id,$oneItem.country_id)}
                                             </select>
                                         </div>

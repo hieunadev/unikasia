@@ -179,6 +179,34 @@ class Country extends dbBasic
         }
         return html_entity_decode($one['cruise_banner_description']);
     }
+
+    function getTopAttBannerImage($pvalTable, $w, $h)
+    {
+        global $clsISO;
+        $oneTable = $this->getOne($pvalTable, 'topatt_banner_image');
+        if ($oneTable['topatt_banner_image'] != '') {
+            $image = $oneTable['topatt_banner_image'];
+            return $clsISO->tripslashImage($image, $w, $h);
+            $noimage = URL_IMAGES . '/noimage.png';
+            return '/files/thumb/' . $w . '/' . $h . '/' . $clsISO->parseImageURL($noimage);
+        }
+        $noimage = URL_IMAGES . '/noimage.png';
+        return '/files/thumb/' . $w . '/' . $h . '/' . $clsISO->parseImageURL($noimage);
+    }
+    function getTopAttBannerTitle($country_id, $oDataTable = null)
+    {
+        if (!isset($oDataTable['topatt_banner_title'])) {
+            $oDataTable = $this->getOne($country_id, 'topatt_banner_title');
+        }
+        return $oDataTable['topatt_banner_title'];
+    }
+    function getTopAttBannerDescription($country_id, $one = null)
+    {
+        if (!isset($one['topatt_banner_description'])) {
+            $one = $this->getOne($country_id, 'topatt_banner_description');
+        }
+        return html_entity_decode($one['topatt_banner_description']);
+    }
     function getImageBannerCommon($pvalTable, $w, $h)
     {
         global $clsISO;

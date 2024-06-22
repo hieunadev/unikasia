@@ -591,6 +591,17 @@
     max-width: 842px;
 }
 
+#itinerary .meal_stay {
+    margin-top: 24px;
+}
+
+#itinerary .title_meal,  #itinerary .title_stay{
+    color: var(--Accent-2, #004EA8);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+}
+
 .img_maps_parent {
     max-height: 672px;
 }

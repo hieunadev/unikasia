@@ -1,5 +1,5 @@
 .intro_top {
-    max-height: 100px;
+    max-height: 90px;
     overflow: hidden;
     position: relative;
 }
@@ -12,7 +12,7 @@
 
 .toggle-btn {
     position: absolute;
-    bottom: -14px;
+    bottom: -30px;
     left: 50%;
     transform: translateX(-50%);
     color: #FFA718;
@@ -192,6 +192,10 @@ padding: 12px 0;
     min-height: 250px;
     height: 100%;
     margin-top: -145px;
+}
+
+.hotel_place_body .banner .img100 {
+    height: 600px
 }
 .hotel_place_body .overlay_banner_hotel {
     position: absolute;

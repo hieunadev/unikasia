@@ -438,10 +438,14 @@
 								</div>
 							</div>
 							{/section}
+
+
+							</div>
+                            <div class="btn_viewlessmore">
 							
 							<button class="view-more-btn" style="display: none;">{$core->get_Lang('View more')}</button> 
     						<button class="view-less-btn" style="display: none;">{$core->get_Lang('View less')}</button>
-							</div>
+                            </div>
 
 						 
 
@@ -781,17 +785,23 @@
 
 </section>
 
+<style> 
+    .unika_header .navbar-nav {
+    gap: 40px !important; /* Sử dụng !important để tăng độ ưu tiên */
+}
+</style>
 
 
-    <script>
-		
-		if ($('.unika_header').hasClass('unika_header_2')) {
+<script>
+				if ($('.unika_header').hasClass('unika_header_2')) {
                 $('.unika_header').removeClass('unika_header_2');
             }
+
+            $('.unika_header .navbar-nav').css('gap', '40px');
 		
 		            window.onscroll = function() {
 
-                if (window.scrollY >= 630) {
+                if (window.scrollY >= 0) {
 
                     $('.class-tour').addClass('list_nav_fixed');
 
@@ -804,6 +814,9 @@
                 }
 
             }
+
+            
+
 
 var otherPolicy = '{$oneItem.other_policy|unescape}';
 
@@ -830,8 +843,8 @@ var otherPolicy = '{$oneItem.other_policy|unescape}';
 		document.addEventListener('DOMContentLoaded', function () {
     const topRow = document.querySelector('.top-row');
     const items = topRow.querySelectorAll('.item_content');
-    const viewMoreBtn = topRow.querySelector('.view-more-btn');
-    const viewLessBtn = topRow.querySelector('.view-less-btn');
+    const viewMoreBtn = document.querySelector('.view-more-btn');
+    const viewLessBtn = document.querySelector('.view-less-btn');
     const itemsToShow = 4;
 
     function toggleItems() {
@@ -843,23 +856,28 @@ var otherPolicy = '{$oneItem.other_policy|unescape}';
         viewLessBtn.style.display = viewLessBtn.style.display === 'none' ? 'block' : 'none';
     }
 
-    if (items.length > itemsToShow) {
-        viewMoreBtn.style.display = 'block'; 
-
-        for (let i = itemsToShow; i < items.length; i++) {
-            items[i].style.display = 'none';
-        }
+    if (items.length > itemsToShow) { // Show buttons for 5+ items
+    viewMoreBtn.style.display = 'block';
+    for (let i = itemsToShow; i < items.length; i++) {
+      items[i].style.display = 'none';
     }
+  } else {  // Hide buttons for 4 or fewer items
+    viewMoreBtn.style.display = 'none';
+    viewLessBtn.style.display = 'none'; 
+    for (let i = itemsToShow; i < items.length; i++) {
+      items[i].style.display = 'block'; // Show all items
+    }
+  }
 
-    viewMoreBtn.addEventListener('click', toggleItems);
-    viewLessBtn.addEventListener('click', toggleItems);
+  viewMoreBtn.addEventListener('click', toggleItems);
+  viewLessBtn.addEventListener('click', toggleItems);
 });
 
 		
     </script>
 
 
-    {literal}
+{literal}
         <script>
             $(".read_more_review").click(function() {
                 var item_review_clone = $(this).closest('.review_item').clone();
@@ -1134,43 +1152,47 @@ $(window).scroll(function() {
 
 
 			
-			window.addEventListener('load', function() {
-  const overviewContent = document.querySelector('.overview-content');
-  const viewMoreLessBtn = document.querySelector('.btn_viewmoreless');
+            window.addEventListener('load', function() {
+    const overviewContent = document.querySelector('.overview-content');
+    const viewMoreLessBtn = document.querySelector('.btn_viewmoreless');
+    const maxLines = 6;
+    const lineHeight = parseFloat(getComputedStyle(overviewContent).lineHeight);
+    let scrollPosition = 0; // Biến để lưu vị trí cuộn
 
-  const lineHeight = parseFloat(getComputedStyle(overviewContent).lineHeight);
-  const maxLines = 6;
 
+    function checkContentHeight() {
+        // Loại bỏ khoảng trắng thừa ở đầu và cuối nội dung
+        overviewContent.textContent = overviewContent.textContent.trim();
+        
+        // Tính toán số dòng thực tế của nội dung
+        const numLines = Math.ceil(overviewContent.scrollHeight / lineHeight);
+        
+        const isContentOverflowing = numLines > maxLines;
 
-  overviewContent.style.maxHeight = (lineHeight * maxLines) + 'px';
-  viewMoreLessBtn.textContent = 'View more';
-  viewMoreLessBtn.style.display = 'block';
-
-  viewMoreLessBtn.addEventListener('click', function() {
-    if (overviewContent.style.maxHeight !== 'none') { 
-      overviewContent.style.maxHeight = 'none';
-      viewMoreLessBtn.textContent = 'View less';
-    } else {
-      overviewContent.style.maxHeight = (lineHeight * maxLines) + 'px';
-      viewMoreLessBtn.textContent = 'View more';
+        overviewContent.style.maxHeight = isContentOverflowing ? lineHeight * maxLines + 'px' : 'none';
+        viewMoreLessBtn.style.display = isContentOverflowing ? 'block' : 'none'; 
     }
-  });
+
+viewMoreLessBtn.addEventListener('click', function() {
+    if (overviewContent.style.maxHeight === 'none') {
+        // Thu gọn: Khôi phục vị trí cuộn
+        overviewContent.style.maxHeight = lineHeight * maxLines + 'px';
+        overviewContent.scrollTop = scrollPosition; // Đặt lại vị trí cuộn
+    } else {
+        // Mở rộng: Lưu vị trí cuộn hiện tại
+        scrollPosition = overviewContent.scrollTop;
+        overviewContent.style.maxHeight = 'none';
+    }
+    viewMoreLessBtn.textContent = overviewContent.style.maxHeight === 'none' ? 'View less' : 'View more';
+});
+
+
+    // Kiểm tra ban đầu và khi thay đổi kích thước cửa sổ
+    checkContentHeight();
+    window.addEventListener('resize', checkContentHeight);
 });
 			
-			// Chờ cho đến khi tài liệu HTML được tải đầy đủ
-document.addEventListener('DOMContentLoaded', function() {
-  // Chọn tất cả các phần tử có lớp 'modal-backdrop'
-  const modalBackdrops = document.querySelectorAll('.modal-backdrop');
-
-  // Nếu có nhiều hơn 1 phần tử, giữ lại phần tử đầu tiên và xóa các phần tử còn lại
-  if (modalBackdrops.length > 1) {
-    for (let i = 1; i < modalBackdrops.length; i++) {
-      modalBackdrops[i].remove();
-    }
-  }
-});
 
 
         </script>
     {/literal}
-

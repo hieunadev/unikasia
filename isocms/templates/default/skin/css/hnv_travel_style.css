@@ -782,9 +782,11 @@ body {
 }
 
 .tour_cat_body .exploretrip h2.txtourtrip {
-    display: flex;
+    display: inline-flex;
+    flex-wrap: wrap;
     gap: 5px;
     justify-content: center;
+    width: 100%;
 }
 
 .tour_cat_body .exploretrip h2.txtourtrip p {
@@ -885,11 +887,12 @@ body {
     .trvs_list_blog .box_left .trvs_item_blog_intro{
         margin-top: 0;
     }
-}
-@media screen and (max-width: 768px) {
     .des_breadcrumb_title, .des_breadcrumb {
         display: none;
     }
+}
+@media screen and (max-width: 768px) {
+    
     .tour_cat_body .exploretrip h2.txtourtrip{
         display: inline-flex;
         flex-wrap: wrap;
@@ -899,9 +902,6 @@ body {
     .des_travel_style_title h2,
     .des_travel_style_title h2 p{
         text-align: left !important;
-    }
-    .tour_cat_body .txt_underline span::after{
-        bottom: 8px;
     }
     .card_text{
         max-width: 100%;

@@ -1246,6 +1246,13 @@ $().ready(function() {
 				options[column] = $Core.util.getTextAreaContent(editorId);
 			});
 		}
+		if($('.textarea_intro_editor_simple[table_id='+table_id+']').length){
+			$('.textarea_intro_editor_simple[table_id='+table_id+']').each(function(){
+				var column = $(this).data('column'),
+					editorId = $(this).attr('id');
+				options[column] = $Core.util.getTextAreaContent(editorId);
+			});
+		}
 		$('.stepbar-list>li>a.active').removeClass('active');
 		$('.loadYieldStep[data-step='+nextstep+']').addClass('active');
 		var currentpanel = $_this.data('panel'),

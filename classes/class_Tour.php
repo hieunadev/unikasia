@@ -2241,6 +2241,20 @@ class Tour extends dbBasic
 		$noimage = URL_IMAGES . '/noimage.png';
 		return '/files/thumb/' . $w . '/' . $h . '/' . $clsISO->parseImageURL($noimage);
 	}
+	function getMapTour($pvalTable, $w, $h, $oneTable = null)
+	{
+		global $clsISO;
+		#
+		if (!isset($oneTable['map_tour'])) {
+			$oneTable = $this->getOne($pvalTable, 'map_tour');
+		}
+		if ($oneTable['map_tour'] != '') {
+			$image = $oneTable['map_tour'];
+			return $clsISO->tripslashImage($image, $w, $h);
+		}
+		$noimage = URL_IMAGES . '/tour/img_maps.png';
+		return '/files/thumb/' . $w . '/' . $h . '/' . $clsISO->parseImageURL($noimage);
+	}
 	function getUrlImage($pvalTable)
 	{
 		global $clsISO;

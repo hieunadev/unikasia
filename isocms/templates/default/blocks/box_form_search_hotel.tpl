@@ -3,7 +3,7 @@
 		<div class="wrap_form_banner">
 			{assign var=site_hotel_intro value=site_hotel_intro_|cat:$_LANG_ID}
 			<h1>{$TD}</h1>
-			<div class="intro_top short_content wrap_form_banner-txt" data-height="150">
+			<div class="intro_top short_content wrap_form_banner-txt" data-height="100">
 				{$HOTEL_INTRO|html_entity_decode}
 			</div>
 			<button class="toggle-btn" style="display: none;">View More <i class="fa-solid fa-angle-down"></i></button>

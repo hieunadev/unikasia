@@ -3,306 +3,144 @@
     {$core->getBlock('des_tailor_made_travel')}
     <div class="des_tailor_detail_travel_guide">
         <div class="container">
-            <div class="row">
-                <div class="col-12 col-sm-12 col-md-9">
+            <div class="row unika_des_travel_guide">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-9">
                     <div class="des_travel_guide_list">
+                        {if $topatt_intro}
                         <div class="des_tailor_detail_travel_guide_description">
-                            Hanoi is an important cultural, political, commercial and tourist center of the country. With Hanoi's thousand-year history of civilization, this place has become a famous global destination. The city has more than 4,000 monuments and beautiful landscapes, including more than 900 nationally ranked monuments, along with a large-scale museum system along with unique and diverse architectural works. 
+                            {$topatt_intro}
                         </div>
+                        {/if}
                         <div class="row">
-                            <div class="col-12 col-sm-12 col-md-6 col-lg-4">
-                                <div class="des_travel_guide_item">
-                                    <div class="des_travel_guide_image">
-                                        <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fG5hdHVyZXxlbnwwfHwwfHx8MA%3D%3D" alt="Cau Vang, Da Nang" width="292" height="219">
-                                        <a href="#" class="des_travel_guide_link" title="Cau Vang, Da Nang">SEE DETAILS</a>
-                                    </div>
-                                    <div class="des_travel_guide_intro">
-                                        <div class="des_travel_guide_title">
-                                            <h3><a href="#" title="Cau Vang, Da Nang">Cau Vang, Da Nang</a></h3>
-                                        </div>
-                                        <div class="des_travel_guide_place">
-                                            <i class="fa-sharp fa-light fa-location-dot"></i> Da Nang, Vietnam
-                                        </div>
-                                        <div class="des_travel_guide_description">
-                                            Explore several breathtaking landscapes - Discover local daily lifestyles - Get closer to the...
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            {if $listTopAtt}
+                            {foreach from=$listTopAtt key=key item=item}
+                            {assign var="CityID" value=$item.city_id}
+                            {assign var="CityTitle" value=$clsCity->getTitle($CityID)}
+                            {assign var="CityLink" value=$clsCity->getLink2($CityID)}
 
                             <div class="col-12 col-sm-12 col-md-6 col-lg-4">
                                 <div class="des_travel_guide_item">
                                     <div class="des_travel_guide_image">
-                                        <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fG5hdHVyZXxlbnwwfHwwfHx8MA%3D%3D" alt="Cau Vang, Da Nang" width="292" height="219">
-                                        <a href="#" class="des_travel_guide_link" title="Cau Vang, Da Nang">SEE DETAILS</a>
+                                        <img src="{$clsCity->getImage($CityID, 292, 219)}" alt="{$CityTitle}" width="292" height="219">
+                                        <a href="{$CityLink}" class="des_travel_guide_link" title="{$CityTitle}">
+                                            {$core->get_Lang('SEE DETAILS')} <i class="fa-sharp fa-regular fa-arrow-right" aria-hidden="true"></i>
+                                        </a>
                                     </div>
                                     <div class="des_travel_guide_intro">
                                         <div class="des_travel_guide_title">
-                                            <h3><a href="#" title="Cau Vang, Da Nang">Cau Vang, Da Nang</a></h3>
+                                            <h3><a href="{$CityLink}" title="{$CityTitle}">{$CityTitle}</a>
+                                            </h3>
                                         </div>
                                         <div class="des_travel_guide_place">
-                                            <i class="fa-sharp fa-light fa-location-dot"></i> Da Nang, Vietnam
+                                            <i class="fa-sharp fa-light fa-location-dot"></i>
+                                            {$CityTitle}, {$country_title}
                                         </div>
                                         <div class="des_travel_guide_description">
-                                            Explore several breathtaking landscapes - Discover local daily lifestyles - Get closer to the...
+                                            {$clsCity->getIntro($CityID)}
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-sm-12 col-md-6 col-lg-4">
-                                <div class="des_travel_guide_item">
-                                    <div class="des_travel_guide_image">
-                                        <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fG5hdHVyZXxlbnwwfHwwfHx8MA%3D%3D" alt="Cau Vang, Da Nang" width="292" height="219">
-                                        <a href="#" class="des_travel_guide_link" title="Cau Vang, Da Nang">SEE DETAILS</a>
-                                    </div>
-                                    <div class="des_travel_guide_intro">
-                                        <div class="des_travel_guide_title">
-                                            <h3><a href="#" title="Cau Vang, Da Nang">Cau Vang, Da Nang</a></h3>
-                                        </div>
-                                        <div class="des_travel_guide_place">
-                                            <i class="fa-sharp fa-light fa-location-dot"></i> Da Nang, Vietnam
-                                        </div>
-                                        <div class="des_travel_guide_description">
-                                            Explore several breathtaking landscapes - Discover local daily lifestyles - Get closer to the...
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-12 col-md-6 col-lg-4">
-                                <div class="des_travel_guide_item">
-                                    <div class="des_travel_guide_image">
-                                        <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fG5hdHVyZXxlbnwwfHwwfHx8MA%3D%3D" alt="Cau Vang, Da Nang" width="292" height="219">
-                                        <a href="#" class="des_travel_guide_link" title="Cau Vang, Da Nang">SEE DETAILS</a>
-                                    </div>
-                                    <div class="des_travel_guide_intro">
-                                        <div class="des_travel_guide_title">
-                                            <h3><a href="#" title="Cau Vang, Da Nang">Cau Vang, Da Nang</a></h3>
-                                        </div>
-                                        <div class="des_travel_guide_place">
-                                            <i class="fa-sharp fa-light fa-location-dot"></i> Da Nang, Vietnam
-                                        </div>
-                                        <div class="des_travel_guide_description">
-                                            Explore several breathtaking landscapes - Discover local daily lifestyles - Get closer to the...
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-12 col-md-6 col-lg-4">
-                                <div class="des_travel_guide_item">
-                                    <div class="des_travel_guide_image">
-                                        <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fG5hdHVyZXxlbnwwfHwwfHx8MA%3D%3D" alt="Cau Vang, Da Nang" width="292" height="219">
-                                        <a href="#" class="des_travel_guide_link" title="Cau Vang, Da Nang">SEE DETAILS</a>
-                                    </div>
-                                    <div class="des_travel_guide_intro">
-                                        <div class="des_travel_guide_title">
-                                            <h3><a href="#" title="Cau Vang, Da Nang">Cau Vang, Da Nang</a></h3>
-                                        </div>
-                                        <div class="des_travel_guide_place">
-                                            <i class="fa-sharp fa-light fa-location-dot"></i> Da Nang, Vietnam
-                                        </div>
-                                        <div class="des_travel_guide_description">
-                                            Explore several breathtaking landscapes - Discover local daily lifestyles - Get closer to the...
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-12 col-md-6 col-lg-4">
-                                <div class="des_travel_guide_item">
-                                    <div class="des_travel_guide_image">
-                                        <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fG5hdHVyZXxlbnwwfHwwfHx8MA%3D%3D" alt="Cau Vang, Da Nang" width="292" height="219">
-                                        <a href="#" class="des_travel_guide_link" title="Cau Vang, Da Nang">SEE DETAILS</a>
-                                    </div>
-                                    <div class="des_travel_guide_intro">
-                                        <div class="des_travel_guide_title">
-                                            <h3><a href="#" title="Cau Vang, Da Nang">Cau Vang, Da Nang</a></h3>
-                                        </div>
-                                        <div class="des_travel_guide_place">
-                                            <i class="fa-sharp fa-light fa-location-dot"></i> Da Nang, Vietnam
-                                        </div>
-                                        <div class="des_travel_guide_description">
-                                            Explore several breathtaking landscapes - Discover local daily lifestyles - Get closer to the...
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-12 col-md-6 col-lg-4">
-                                <div class="des_travel_guide_item">
-                                    <div class="des_travel_guide_image">
-                                        <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fG5hdHVyZXxlbnwwfHwwfHx8MA%3D%3D" alt="Cau Vang, Da Nang" width="292" height="219">
-                                        <a href="#" class="des_travel_guide_link" title="Cau Vang, Da Nang">SEE DETAILS</a>
-                                    </div>
-                                    <div class="des_travel_guide_intro">
-                                        <div class="des_travel_guide_title">
-                                            <h3><a href="#" title="Cau Vang, Da Nang">Cau Vang, Da Nang</a></h3>
-                                        </div>
-                                        <div class="des_travel_guide_place">
-                                            <i class="fa-sharp fa-light fa-location-dot"></i> Da Nang, Vietnam
-                                        </div>
-                                        <div class="des_travel_guide_description">
-                                            Explore several breathtaking landscapes - Discover local daily lifestyles - Get closer to the...
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-12 col-md-6 col-lg-4">
-                                <div class="des_travel_guide_item">
-                                    <div class="des_travel_guide_image">
-                                        <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fG5hdHVyZXxlbnwwfHwwfHx8MA%3D%3D" alt="Cau Vang, Da Nang" width="292" height="219">
-                                        <a href="#" class="des_travel_guide_link" title="Cau Vang, Da Nang">SEE DETAILS</a>
-                                    </div>
-                                    <div class="des_travel_guide_intro">
-                                        <div class="des_travel_guide_title">
-                                            <h3><a href="#" title="Cau Vang, Da Nang">Cau Vang, Da Nang</a></h3>
-                                        </div>
-                                        <div class="des_travel_guide_place">
-                                            <i class="fa-sharp fa-light fa-location-dot"></i> Da Nang, Vietnam
-                                        </div>
-                                        <div class="des_travel_guide_description">
-                                            Explore several breathtaking landscapes - Discover local daily lifestyles - Get closer to the...
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-12 col-md-6 col-lg-4">
-                                <div class="des_travel_guide_item">
-                                    <div class="des_travel_guide_image">
-                                        <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fG5hdHVyZXxlbnwwfHwwfHx8MA%3D%3D" alt="Cau Vang, Da Nang" width="292" height="219">
-                                        <a href="#" class="des_travel_guide_link" title="Cau Vang, Da Nang">SEE DETAILS</a>
-                                    </div>
-                                    <div class="des_travel_guide_intro">
-                                        <div class="des_travel_guide_title">
-                                            <h3><a href="#" title="Cau Vang, Da Nang">Cau Vang, Da Nang</a></h3>
-                                        </div>
-                                        <div class="des_travel_guide_place">
-                                            <i class="fa-sharp fa-light fa-location-dot"></i> Da Nang, Vietnam
-                                        </div>
-                                        <div class="des_travel_guide_description">
-                                            Explore several breathtaking landscapes - Discover local daily lifestyles - Get closer to the...
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-12 col-md-6 col-lg-4">
-                                <div class="des_travel_guide_item">
-                                    <div class="des_travel_guide_image">
-                                        <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fG5hdHVyZXxlbnwwfHwwfHx8MA%3D%3D" alt="Cau Vang, Da Nang" width="292" height="219">
-                                        <a href="#" class="des_travel_guide_link" title="Cau Vang, Da Nang">SEE DETAILS</a>
-                                    </div>
-                                    <div class="des_travel_guide_intro">
-                                        <div class="des_travel_guide_title">
-                                            <h3><a href="#" title="Cau Vang, Da Nang">Cau Vang, Da Nang</a></h3>
-                                        </div>
-                                        <div class="des_travel_guide_place">
-                                            <i class="fa-sharp fa-light fa-location-dot"></i> Da Nang, Vietnam
-                                        </div>
-                                        <div class="des_travel_guide_description">
-                                            Explore several breathtaking landscapes - Discover local daily lifestyles - Get closer to the...
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-12 col-md-6 col-lg-4">
-                                <div class="des_travel_guide_item">
-                                    <div class="des_travel_guide_image">
-                                        <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fG5hdHVyZXxlbnwwfHwwfHx8MA%3D%3D" alt="Cau Vang, Da Nang" width="292" height="219">
-                                        <a href="#" class="des_travel_guide_link" title="Cau Vang, Da Nang">SEE DETAILS</a>
-                                    </div>
-                                    <div class="des_travel_guide_intro">
-                                        <div class="des_travel_guide_title">
-                                            <h3><a href="#" title="Cau Vang, Da Nang">Cau Vang, Da Nang</a></h3>
-                                        </div>
-                                        <div class="des_travel_guide_place">
-                                            <i class="fa-sharp fa-light fa-location-dot"></i> Da Nang, Vietnam
-                                        </div>
-                                        <div class="des_travel_guide_description">
-                                            Explore several breathtaking landscapes - Discover local daily lifestyles - Get closer to the...
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-12 col-md-6 col-lg-4">
-                                <div class="des_travel_guide_item">
-                                    <div class="des_travel_guide_image">
-                                        <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fG5hdHVyZXxlbnwwfHwwfHx8MA%3D%3D" alt="Cau Vang, Da Nang" width="292" height="219">
-                                        <a href="#" class="des_travel_guide_link" title="Cau Vang, Da Nang">SEE DETAILS</a>
-                                    </div>
-                                    <div class="des_travel_guide_intro">
-                                        <div class="des_travel_guide_title">
-                                            <h3><a href="#" title="Cau Vang, Da Nang">Cau Vang, Da Nang</a></h3>
-                                        </div>
-                                        <div class="des_travel_guide_place">
-                                            <i class="fa-sharp fa-light fa-location-dot"></i> Da Nang, Vietnam
-                                        </div>
-                                        <div class="des_travel_guide_description">
-                                            Explore several breathtaking landscapes - Discover local daily lifestyles - Get closer to the...
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            {/foreach}
+                            {/if}
                         </div>
                     </div>
+                    {if $page_view}
                     <div class="des_travel_guide_paginate">
-                        <a class="btn_link prev" title="Prev"><i class="fa-light fa-angle-left"></i></a>
-                        <a class="page_link active" title="Page 1">1</a>
-                        <a class="page_link" title="Page 2">2</a>
-                        <a class="page_link" title="Page 3">3</a>
-                        <span> ... </span>
-                        <a class="page_link" title="Page 9">9</a>
-                        <a class="btn_link next" title="Next"><i class="fa-light fa-angle-right"></i></a>
+                        {$page_view}
                     </div>
-                    <!-- Recently viewed -->
+                    {/if}
+
+                    {*{if $arr_recent_view}
                     <div class="des_travel_guide_recent_view">
                         <div class="des_travel_guide_recent_view_title">
-                            <h2>Recently viewed</h2>
+                            <h2>{$core->get_Lang('Recently viewed')}</h2>
                         </div>
                         <div class="des_travel_guide_recent_view_content">
-                            <div class="row">
-                                <div class="col-12 col-sm-12 col-md-6 col-lg-4">
-                                    <div class="des_travel_guide_item">
-                                        <div class="des_travel_guide_image">
-                                            <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fG5hdHVyZXxlbnwwfHwwfHx8MA%3D%3D" alt="Cau Vang, Da Nang" width="292" height="219">
-                                            <a href="#" class="des_travel_guide_link" title="Cau Vang, Da Nang">SEE DETAILS</a>
+                            <div class="owl-carousel owl-theme trvg_list_guidecat_carousel att_list_recent_carousel">
+                                {foreach from=$arr_recent_view key=key item=item}
+                                {assign var="guideID" value=$item}
+                                <div class="item des_travel_guide_item" data-merge="1">
+                                    <div class="des_travel_guide_image">
+                                        <img src="{$clsGuide->getImage($guideID, 292, 219)}" alt="{$clsGuide->getTitle($guideID)}" width="292" height="219">
+                                        <a href="{$clsGuide->getLink2($guideID)}" class="des_travel_guide_link" title="{$clsGuide->getTitle($guideID)}">
+                                            {$core->get_Lang('SEE DETAILS')} <i class="fa-sharp fa-regular fa-arrow-right" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
+                                    <div class="des_travel_guide_intro">
+                                        <div class="des_travel_guide_title">
+                                            <h3><a href="{$clsGuide->getLink2($guideID)}" title="{$clsGuide->getTitle($guideID)}">{$clsGuide->getTitle($guideID)}</a>
+                                            </h3>
                                         </div>
-                                        <div class="des_travel_guide_intro">
-                                            <div class="des_travel_guide_title">
-                                                <h3><a href="#" title="Cau Vang, Da Nang">Cau Vang, Da Nang</a></h3>
-                                            </div>
-                                            <div class="des_travel_guide_place">
-                                                <i class="fa-sharp fa-light fa-location-dot"></i> Da Nang, Vietnam
-                                            </div>
-                                            <div class="des_travel_guide_description">
-                                                Explore several breathtaking landscapes - Discover local daily lifestyles - Get closer to the...
-                                            </div>
+                                        <div class="des_travel_guide_place">
+                                            <i class="fa-sharp fa-light fa-location-dot"></i>
+                                            {$clsGuide->getPlaceGuide($guideID)}
+                                        </div>
+                                        <div class="des_travel_guide_description">
+                                            {$clsGuide->getIntro($guideID)}
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="col-12 col-sm-12 col-md-6 col-lg-4">
-                                    <div class="des_travel_guide_item">
-                                        <div class="des_travel_guide_image">
-                                            <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fG5hdHVyZXxlbnwwfHwwfHx8MA%3D%3D" alt="Cau Vang, Da Nang" width="292" height="219">
-                                            <a href="#" class="des_travel_guide_link" title="Cau Vang, Da Nang">SEE DETAILS</a>
-                                        </div>
-                                        <div class="des_travel_guide_intro">
-                                            <div class="des_travel_guide_title">
-                                                <h3><a href="#" title="Cau Vang, Da Nang">Cau Vang, Da Nang</a></h3>
-                                            </div>
-                                            <div class="des_travel_guide_place">
-                                                <i class="fa-sharp fa-light fa-location-dot"></i> Da Nang, Vietnam
-                                            </div>
-                                            <div class="des_travel_guide_description">
-                                                Explore several breathtaking landscapes - Discover local daily lifestyles - Get closer to the...
-                                            </div>
-                                        </div>
-                                    </div>
+                                {/foreach}
+                            </div>
+                        </div>
+                    </div>
+                    {/if}*}
+                </div>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-3">
+                    {$core->getBlock('des_travel_guide_side')}
+                </div>
+                {*{if $deviceType != "computer"}
+                <div class="owl-carousel owl-theme gui_exciting_trip">
+                    {if $arr_tour_country}
+                    {foreach from=$arr_tour_country key=key item=item}
+                    {assign var="tourID" value=$item.tour_id}
+                    <div class="des_travel_guide_exciting_trip_item">
+                        <div class="des_travel_guide_exciting_trip_image">
+                            <a href="{$clsTour->getLink($tourID)}" title="{$clsTour->getTitle($tourID)}">
+                                <img src="{$clsTour->getImage($tourID, 296, 200)}" alt="{$clsTour->getTitle($tourID)}" width="296" height="200">
+                            </a>
+                        </div>
+                        <div class="des_travel_guide_exciting_trip_item_title">
+                            <h3><a href="{$clsTour->getLink($tourID)}" title="{$clsTour->getTitle($tourID)}">{$clsTour->getTitle($tourID)}</a></h3>
+                        </div>
+                        <div class="des_travel_guide_exciting_trip_item_content">
+                            <div class="des_travel_guide_exciting_trip_rate">
+                                <div class="des_travel_guide_exciting_trip_rate_score">
+                                    {$clsReviews->getReviews($tourID, 'avg_point', 'tour')}
+                                </div>
+                                <div class="des_travel_guide_exciting_trip_rate_title">
+                                    {$clsReviews->getReviews($tourID, 'txt_review', 'tour')}
+                                </div>
+                                <div class="des_travel_guide_exciting_trip_rate_total">
+                                    - {$clsReviews->getReviews($tourID, '', 'tour')} reviews
+                                </div>
+                            </div>
+                            <div class="des_travel_guide_exciting_trip_place">
+                                <i class="fa-light fa-location-dot"></i>
+                                Place: {$clsTourDestination->getByCountry($tourID, 'city')}
+                                {if $clsTourDestination->getByCountry($tourID) > 0}
+                                <button type="button" class="tooltips_tour" data-bs-toggle="tooltip" title="{$clsTourDestination->getByCountry($tourID, 'other_city')}">+{$clsTourDestination->getByCountry($tourID)}</button>
+                                {/if}
+                            </div>
+                            <div class="des_travel_guide_exciting_trip_description">
+                                {$clsTour->getTripOverview($tourID)}
+                            </div>
+                            <div class="des_travel_guide_exciting_trip_detail">
+                                <div class="box_left">
+                                    <p>From</p>
+                                    <span class="price_type">US</span> <span class="price">${$item.min_price}</span>
+                                </div>
+                                <div class="box_right">
+                                    <a href="{$clsTour->getLink($tourID)}" title="{$clsTour->getTitle($tourID)}">View tour <i class="fa-light fa-arrow-right"></i></a>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    {/foreach}
+                    {/if}
                 </div>
-                <div class="col-12 col-sm-12 col-md-3">
-                    {$core->getBlock('des_travel_guide_side')}
-                </div>
+                {/if}*}
             </div>
         </div>
     </div>
@@ -310,3 +148,71 @@
     {$core->getBlock('customer_review')}
     {$core->getBlock('also_like')}
 </section>
+
+{literal}
+<script>
+    if ($('.att_list_recent_carousel').length > 0) {
+        var $owl = $('.att_list_recent_carousel');
+        $owl.owlCarousel({
+            lazyLoad: true,
+            loop: false,
+            margin: 37,
+            nav: false,
+            navText: ["<i class='fa-solid fa-angle-left'></i>", "<i class='fa-solid fa-angle-right'></i>"],
+            dots: false,
+            // autoplay: false,
+            // autoplayTimeout:3000,	
+            // animateOut: 'fadeOut',
+            // animateIn: 'fadeIn',
+            merge: true,
+            autoHeight: true,
+            responsiveClass: true,
+            responsive: {
+                0: {
+                    items: 1.3,
+                    nav: false,
+                },
+                600: {
+                    items: 3
+                },
+                1000: {
+                    items: 3
+                }
+            }
+        });
+    }
+    if ($('.gui_exciting_trip').length > 0) {
+        var $owl = $('.gui_exciting_trip');
+        $owl.owlCarousel({
+            lazyLoad: true,
+            loop: false,
+            margin: 30,
+            nav: true,
+            navText: ["<i class='fa-solid fa-angle-left'></i>", "<i class='fa-solid fa-angle-right'></i>"],
+            dots: false,
+            // autoplay: false,
+            // autoplayTimeout:3000,	
+            // animateOut: 'fadeOut',
+            // animateIn: 'fadeIn',
+            merge: true,
+            autoHeight: true,
+            responsiveClass: true,
+            responsive: {
+                0: {
+                    nav: false,
+                    items: 1.3,
+                    margin: 15,
+                },
+                600: {
+                    nav: false,
+                    items: 2.3
+                },
+                991: {
+                    nav: false,
+                    items: 2.3
+                }
+            }
+        });
+    }
+</script>
+{/literal}
