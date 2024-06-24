@@ -3,8 +3,8 @@ require_once(DIR_INCLUDES.'/isoman/php/index.php');
 function default_default(){
     global $assign_list, $_CONFIG, $core, $dbconn, $mod, $act, $_LANG_ID,$title_page,$description_page,$global_image_seo_page,$clsISO,$clsConfiguration;
     #
-    $clsTour = new Tour();
-    $clsPartner = new Partner();
+    $clsTour = new Tour(); $assign_list["clsTours"] = $clsTour;
+    $clsPartner = new Partner(); $assign_list["clsPartner"] = $clsPartner;
     $clsCountry = new Country(); $assign_list["clsCountry"] = $clsCountry;
 
     $listTour = $clsTour->getAll("", "title");

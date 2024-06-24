@@ -17,7 +17,6 @@
                             {assign var="CityID" value=$item.city_id}
                             {assign var="CityTitle" value=$clsCity->getTitle($CityID)}
                             {assign var="CityLink" value=$clsCity->getLink2($CityID)}
-
                             <div class="col-12 col-sm-12 col-md-6 col-lg-4">
                                 <div class="des_travel_guide_item">
                                     <div class="des_travel_guide_image">
@@ -33,7 +32,7 @@
                                         </div>
                                         <div class="des_travel_guide_place">
                                             <i class="fa-sharp fa-light fa-location-dot"></i>
-                                            {$CityTitle}, {$country_title}
+                                            {$country_title}
                                         </div>
                                         <div class="des_travel_guide_description">
                                             {$clsCity->getIntro($CityID)}
@@ -51,7 +50,7 @@
                     </div>
                     {/if}
 
-                    {*{if $arr_recent_view}
+                    {if $arr_recent_view}
                     <div class="des_travel_guide_recent_view">
                         <div class="des_travel_guide_recent_view_title">
                             <h2>{$core->get_Lang('Recently viewed')}</h2>
@@ -59,25 +58,27 @@
                         <div class="des_travel_guide_recent_view_content">
                             <div class="owl-carousel owl-theme trvg_list_guidecat_carousel att_list_recent_carousel">
                                 {foreach from=$arr_recent_view key=key item=item}
-                                {assign var="guideID" value=$item}
+                                {assign var="CityID" value=$item}
+                                {assign var="CityTitle" value=$clsCity->getTitle($CityID)}
+                                {assign var="CityLink" value=$clsCity->getLink2($CityID)}
                                 <div class="item des_travel_guide_item" data-merge="1">
                                     <div class="des_travel_guide_image">
-                                        <img src="{$clsGuide->getImage($guideID, 292, 219)}" alt="{$clsGuide->getTitle($guideID)}" width="292" height="219">
-                                        <a href="{$clsGuide->getLink2($guideID)}" class="des_travel_guide_link" title="{$clsGuide->getTitle($guideID)}">
+                                        <img src="{$clsCity->getImage($CityID, 292, 219)}" alt="{$CityTitle}" width="292" height="219">
+                                        <a href="{$CityLink}" class="des_travel_guide_link" title="{$CityTitle}">
                                             {$core->get_Lang('SEE DETAILS')} <i class="fa-sharp fa-regular fa-arrow-right" aria-hidden="true"></i>
                                         </a>
                                     </div>
                                     <div class="des_travel_guide_intro">
                                         <div class="des_travel_guide_title">
-                                            <h3><a href="{$clsGuide->getLink2($guideID)}" title="{$clsGuide->getTitle($guideID)}">{$clsGuide->getTitle($guideID)}</a>
+                                            <h3><a href="{$CityLink}" title="{$CityTitle}">{$CityTitle}</a>
                                             </h3>
                                         </div>
                                         <div class="des_travel_guide_place">
                                             <i class="fa-sharp fa-light fa-location-dot"></i>
-                                            {$clsGuide->getPlaceGuide($guideID)}
+                                            {$country_title}
                                         </div>
                                         <div class="des_travel_guide_description">
-                                            {$clsGuide->getIntro($guideID)}
+                                            {$clsCity->getIntro($CityID)}
                                         </div>
                                     </div>
                                 </div>
@@ -85,7 +86,7 @@
                             </div>
                         </div>
                     </div>
-                    {/if}*}
+                    {/if}
                 </div>
                 <div class="col-12 col-sm-12 col-md-12 col-lg-3">
                     {$core->getBlock('des_travel_guide_side')}

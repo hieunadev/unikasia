@@ -23,7 +23,7 @@
                 <div class="card img_sizecard">
                     <div class="card-img-wrapper">
                         <img src="{$clsTour->getImage($listTourExplore[i].tour_id, '405','350')}" width="405" height="350" class="card-img-top" alt="{$clsTour->getTitle($listTourExplore[i].tour_id)}">
-                        <div class="corner-badge">{$clsTour->getDiscount($listTourExplore[i].tour_id)}</div>
+                        {if $clsTour->getDiscount($listTourExplore[i].tour_id)}<div class="corner-badge">-{$clsTour->getDiscount($listTourExplore[i].tour_id)}%</div>{/if}
                         <div class="card-img-top card-img-top-view-detail">
                             <a href="{$clsTour->getLink($listTourExplore[i].tour_id)}" title="splendors of vietnam">
                                 <div class="card-img-top-view-detail-block">View details</div>

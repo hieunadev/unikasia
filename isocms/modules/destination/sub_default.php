@@ -91,8 +91,6 @@ function default_topattraction()
     $smarty->assign('clsCity', $clsCity);
     $clsCityStore   =   new CityStore();
     $smarty->assign('clsCityStore', $clsCityStore);
-    $clsCity        =   new City();
-    $smarty->assign('clsCity', $clsCity);
     $clsPagination  =   new Pagination();
     #
     $show   =   isset($_GET['show']) ? $_GET['show'] : '';
@@ -159,21 +157,107 @@ function default_topattraction()
     $assign_list["description_page"] = $description_page;
     $global_image_seo_page = $clsISO->getPageImageShare($country_id, $clsCountry);
     $assign_list["global_image_seo_page"] = $global_image_seo_page;
+    #
+    // Get recent view
+    $arr_recent_view    =    $clsISO->getRecentView('attraction', 10);
+    $smarty->assign('arr_recent_view', $arr_recent_view);
 }
 function default_attraction()
 {
-    global $assign_list, $_CONFIG, $core, $dbconn, $mod, $act, $clsISO, $_LANG_ID, $title_page, $description_page, $keyword_page, $domain, $deviceType, $country_id, $package_id;
-    global $min_duration_value, $max_duration_value, $min_price_value, $max_price_value, $min_duration_search, $max_duration_search;
+    global $assign_list, $_CONFIG, $core, $dbconn, $mod, $act, $clsISO, $_LANG_ID, $title_page, $description_page, $keyword_page, $domain, $deviceType, $country_id, $package_id, $smarty;
     #
-    // $clsISO->dd($_GET);
+    $clsCountry     =   new Country();
+    $smarty->assign('clsCountry', $clsCountry);
+    $clsCity        =   new City();
+    $smarty->assign('clsCity', $clsCity);
+    $clsTour        =   new Tour();
+    $smarty->assign('clsTour', $clsTour);
+    $clsTourDestination =   new TourDestination();
+    $smarty->assign('clsTourDestination', $clsTourDestination);
+    $clsReviews     =   new Reviews();
+    $smarty->assign('clsReviews', $clsReviews);
+    $clsHotel       =   new Hotel();
+    $smarty->assign('clsHotel', $clsHotel);
+    $clsBlog        =   new Blog();
+    $smarty->assign('clsBlog', $clsBlog);
+    $clsGuide       =   new Guide();
+    $smarty->assign('clsGuide', $clsGuide);
+    $clsGuideCat    =   new GuideCat();
+    $smarty->assign('clsGuideCat', $clsGuideCat);
     #
-    // /* =============Title & Description Page================== */
-    // $title_page =   $core->get_Lang('Top Attraction') . ' | ' . $title_page . ' | ' . PAGE_NAME;
-    // $assign_list["title_page"] = $title_page;
-    // $description_page = $clsISO->getMetaDescription($country_id, $clsCountry);
-    // $assign_list["description_page"] = $description_page;
-    // $global_image_seo_page = $clsISO->getPageImageShare($country_id, $clsCountry);
-    // $assign_list["global_image_seo_page"] = $global_image_seo_page;
+    $show   =   isset($_GET['show']) ? $_GET['show'] : '';
+    if ($show === 'attractionCountry') {
+        $country_slug   =   isset($_GET['slug_country']) ? $_GET['slug_country'] : '';
+        $country_id     =   $clsCountry->getBySlug($country_slug);
+        #
+        $city_slug  =   isset($_GET['slug_attraction']) ? $_GET['slug_attraction'] : '';
+        $city_id    =   $clsCity->getBySlug($city_slug);
+        #
+        if (intval($city_id) == 0 && $clsCity->checkExitsId($city_id) == '0') {
+            header('location:' . PCMS_URL);
+            exit();
+        }
+    }
+    $smarty->assign('country_id', $country_id);
+    $smarty->assign('city_id', $city_id);
+    #
+    $cond       =   "is_trash = 0 AND is_online = 1";
+    $order_by1  =   " ORDER BY order_no ASC";
+    $order_by2  =   " ORDER BY RAND()";
+    $limit      =   " LIMIT 3";
+    $limit2     =   " LIMIT 4";
+    $limit3     =   " LIMIT 10";
+    #
+    // List guide category
+    $arr_guide_cat  =   $clsGuideCat->getAll($cond . $order_by1, "guidecat_id, title");
+    $list_guide_cat =   [];
+    foreach ($arr_guide_cat as $item) {
+        $list_guide_cat[$item[0]] = $item[1];
+    }
+    $list_guide_cat =   array_flip($list_guide_cat);
+    #
+    if (!empty($country_id) && !empty($city_id)) {
+        $cond_tour  =   $cond;
+        $cond_tour  .=  " AND tour_id IN (SELECT tour_id FROM default_tour_destination WHERE country_id = $country_id AND city_id = $city_id)";
+        #
+        $cond_hotel =   $cond;
+        $cond_hotel .=  " AND country_id = $country_id AND city_id = $city_id";
+        #
+        $cond_blog  =   $cond;
+        $cond_blog  .=  " AND blog_id IN (SELECT blog_id FROM default_blog_destination WHERE country_id = $country_id AND city_id = $city_id)";
+        #
+        $cuisine_id     =   $list_guide_cat['Cuisine'];
+        $cond_cuisine   =   $cond;
+        $cond_cuisine   .=  " AND country_id = $country_id AND city_id = $city_id AND (cat_id = '$cuisine_id' OR list_cat_id LIKE '%|$cuisine_id|%')";
+        #
+        $culture_id     =   $list_guide_cat['Culture'];
+        $cond_culture   =   $cond;
+        $cond_culture   .=  " AND country_id = $country_id AND city_id = $city_id AND (cat_id = '$culture_id' OR list_cat_id LIKE '%|$culture_id|%')";
+    }
+    $list_tour  =   $clsTour->getAll($cond_tour . $order_by2);
+    $smarty->assign('list_tour', $list_tour);
+    #
+    $list_hotel =   $clsHotel->getAll($cond_hotel . $order_by2 . $limit, $clsHotel->pkey);
+    $smarty->assign('list_hotel', $list_hotel);
+    #
+    $list_blog  =   $clsBlog->getAll($cond_blog . $order_by2 . $limit2, $clsBlog->pkey);
+    $smarty->assign('list_blog', $list_blog);
+    #
+    $list_cuisine   =   $clsGuide->getAll($cond_cuisine . $order_by2 . $limit3, $clsGuide->pkey);
+    $smarty->assign('list_cuisine', $list_cuisine);
+    #
+    $list_culture   =   $clsGuide->getAll($cond_culture . $order_by2 . $limit3, $clsGuide->pkey);
+    $smarty->assign('list_culture', $list_culture);
+    #
+    $clsISO->setRecentView($city_id, 'attraction');
+    #
+    /* =============Title & Description Page================== */
+    $title_page =   $core->get_Lang('Attraction') . ' | ' . $clsCity->getTitle($city_id) . ' | ' . PAGE_NAME;
+    $assign_list["title_page"] = $title_page;
+    $description_page = $clsISO->getMetaDescription($city_id, $clsCity);
+    $assign_list["description_page"] = $description_page;
+    $global_image_seo_page = $clsISO->getPageImageShare($city_id, $clsCity);
+    $assign_list["global_image_seo_page"] = $global_image_seo_page;
 }
 function default_region()
 {

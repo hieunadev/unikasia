@@ -402,9 +402,9 @@ function default_SiteFrmTourItinerary(){
 	}
 	if($tp == 'L') {
 		if($clsTour->getOneField('duration_type',$tour_id) == 0){
-			$lstItem = $clsTourItinerary->getAll("is_trash=0 and tour_id='$tour_id'  and title_contingency='' order by order_no asc limit 0,$limit", $clsTourItinerary->pkey.',day,day2,reg_date,is_show_image');
+			$lstItem = $clsTourItinerary->getAll("is_trash=0 and tour_id='$tour_id'  and title_contingency='' order by order_no asc limit 0,$limit", $clsTourItinerary->pkey.',day,day2,reg_date,is_show_image, title_stay');
 		}else{
-			$lstItem = $clsTourItinerary->getAll("is_trash=0 and tour_id='$tour_id'  and title_contingency='' order by order_no asc", $clsTourItinerary->pkey.',day,day2,reg_date,is_show_image');
+			$lstItem = $clsTourItinerary->getAll("is_trash=0 and tour_id='$tour_id'  and title_contingency='' order by order_no asc", $clsTourItinerary->pkey.',day,day2,reg_date,is_show_image, title_stay');
 		}
 		$html='';
 //		$clsISO->print_pre($lstItem,true);
@@ -422,13 +422,17 @@ function default_SiteFrmTourItinerary(){
 						$html.='<th class="day index"><span>'.($i+1).'</span></th>';
 					}	
 				}
+                $title_stay = "";
+                if ($lstItem[$i]["title_stay"]) {
+                    $title_stay = '<strong class="color_r">'.$core->get_Lang('Stay').'</strong>: '.$lstItem[$i]["title_stay"];
+                }
 				$html.='
 				<td class="name_service">
                 <div class="d-flex">
                 '.(($lstItem[$i]['is_show_image'] =='1')?'<img src="'.$clsTourItinerary->getImage($lstItem[$i][$clsTourItinerary->pkey],60,40).'" style="margin-right:5px" />':"").$clsTourItinerary->getTitle($lstItem[$i][$clsTourItinerary->pkey]).'
                 </div>
 				<div class="clearfix mt5"></div>
-					'.($clsISO->getCheckActiveModulePackage($package_id,'tour','hotel','customize') && $clsISO->getCheckActiveModulePackage($package_id,'hotel','default','default') && $clsTourItinerary->getItineraryHotel($tour_id, $lstItem[$i][$clsTourItinerary->pkey],1) ? '<strong class="color_r">'.$core->get_Lang('hotels').'</strong>: '.$clsTourItinerary->getItineraryHotel($tour_id, $lstItem[$i][$clsTourItinerary->pkey]).'':'').'
+					'.$title_stay.'
 					<button type="button" class="toggle-row inline_block767" style="display:none"><i class="fa fa-caret fa-caret-down"></i></button>
 				</td>';
 				$html.='<td data-title="'.$core->get_Lang('Meals').'" class="text-left block_responsive border_top_responsive">'.$clsTourItinerary->getMeal($lstItem[$i][$clsTourItinerary->pkey],1).'</td>';
@@ -599,12 +603,6 @@ function default_SiteFrmTourItinerary(){
 							<textarea rows="5" cols="255" id="textarea_itinerary_content_editor_'.time().'" class="textarea_itinerary_content_editor" style="width:100%">'.$clsTourItinerary->getContent($tour_itinerary_id).'</textarea>
 						</div>
 					</div>
-					'.($tour_itinerary_id > 0 && $clsISO->getCheckActiveModulePackage($package_id,'tour','hotel','customize')  && $clsISO->getCheckActiveModulePackage($package_id,'hotel','default','default') ? '
-					<div class="row-span" style="border:1px dashed #c00000; padding:1%; width:100%;">
-						<div class="fieldlabel" style="font-weight:700">'.$core->get_Lang('Accommodation').' <button type="button" tour_id="'.$tour_id.'" tour_itinerary_id="'.$tour_itinerary_id.'" tour_hotel_id="0" class="iso-button-small ajaxOpenChoiceHotel">...</button></div>
-						<div class="fieldarea"><div id="lstHotel"></div></div>
-					</div>
-					':'').'
 				</div>
 			</div>
 		</form>

@@ -44,7 +44,7 @@
                             </div>
                         </form>
                         <div class="fr group_buttons">
-                            <a href="{$PCMS_URL}/?mod={$mod}" class="btn btn-warning btnNew" style="color:#fff"> <i class="icon-folder-open icon-white"></i> <span>{$core->get_Lang('all')} ({$number_all})</span> </a>
+                            <a href="{$PCMS_URL}/?mod={$mod}&act=faqs" class="btn btn-warning btnNew" style="color:#fff"> <i class="icon-folder-open icon-white"></i> <span>{$core->get_Lang('all')} ({$number_all})</span> </a>
                         </div>
                     </div>
 
@@ -55,7 +55,7 @@
                                 <td width="50%" align="left">&nbsp;</td>
                                 <td width="50%" align="right">
                                     {$core->get_Lang('Record/page')}:
-                                    {$clsISO->getRecordPerPage($recordPerPage,$totalRecord,$mod)}
+                                    {$clsISO->getRecordPerPage($recordPerPage,$totalRecord,$mod, 'faqs')}
                                 </td>
                             </tr>
                         </table>
@@ -80,7 +80,7 @@
                                 <td class="name_service">
                                     <strong class="title" title="{if $clsClassTable->getOneField('is_online',$allItem[i].faq_id) eq 0}{$core->get_Lang('Faqs PRIVATE')}{/if}">{$clsClassTable->getTitle($allItem[i].faq_id)}</strong>
                                     {if $clsClassTable->getOneField('is_online',$allItem[i].faq_id) eq 0}<span style="color:red;" title="{$core->get_Lang('Faqs PRIVATE')}">[P]</span>{/if}
-                                    {if $allItem[i].is_trash eq '1'}<span class="fr" style="color:#CCC">{$core->get_Lang('intrash')}</span>{/if}
+{*                                    {if $allItem[i].is_trash eq '1'}<span class="fr" style="color:#CCC">{$core->get_Lang('intrash')}</span>{/if}*}
                                     <button type="button" class="toggle-row inline_block767" style="display:none"><i class="fa fa-caret fa-caret-down"></i></button>
                                 </td>
                                 <td data-title="{$core->get_Lang('status')}" class="block_responsive border_top_responsive" style="text-align:center">
@@ -149,34 +149,3 @@
         {/literal}
     </div>
 </div>
-<script type="text/javascript">
-    var country_id = "{$country_id}";
-    var $recordPerPage = '{$recordPerPage}';
-    var $currentPage = '{$currentPage}';
-</script>
-<script type="text/javascript" src="{$URL_THEMES}/tour_exhautive/js/jquery.category_country.js?v={$upd_version}"></script>
-{literal}
-    <script type="text/javascript">
-        $("#SortAble").sortable({
-            opacity: 0.8,
-            cursor: 'move',
-            start: function() {
-                vietiso_loading(1);
-            },
-            stop: function() {
-                vietiso_loading(0);
-            },
-            update: function() {
-                var recordPerPage = $recordPerPage;
-                var currentPage = $currentPage;
-                var order = $(this).sortable("serialize") + '&update=update' + '&recordPerPage=' + recordPerPage + '&currentPage=' + currentPage;
-                $.post(path_ajax_script + "/index.php?mod=tour&act=ajUpdPosSortTravelStylebyCountry", order,
-
-                    function(html) {
-                        vietiso_loading(0);
-                        location.href = REQUEST_URI;
-                    });
-            }
-        });
-    </script>
-{/literal}

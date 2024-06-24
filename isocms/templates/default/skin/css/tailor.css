@@ -10,9 +10,9 @@
 .listDes .listCountry{border-bottom: 1px solid #ccc;padding-bottom: 25px}
 .listDes .checkbox{padding-top: 5px!important}
 input[type=checkbox],input[type=radio]{position: relative!important;width: 21px;height: 21px;margin-right: 15px;vertical-align: middle;}
-input[type=checkbox]:after{position: absolute;content: '';width: 21px;height: 21px;background: #fff;border-radius: 2px;border: 1px solid #D7D7D7;}
+input[type=checkbox]:after{position: absolute;content: '';width: 21px;height: 21px;border-radius: 2px;border: 1px solid #D7D7D7;}
 input[type=radio]:after{position: absolute;content: '';width: 15px;height: 15px;border: 1px solid #ccc;border-radius: 100%;background: #fff}
-input[type=checkbox]:checked:after{position: absolute;content: '';width: 21px;height: 21px;background: #fff;border-radius: 2px;border: 1px solid #FDD835;}
+input[type=checkbox]:checked:after{position: absolute;content: '';width: 21px;height: 21px;border-radius: 2px;border: 1px solid #FDD835;}
 input[type=radio]:checked:before{position: absolute;content: "";border: 1px solid var(--main-bg-color);width: 15px;height: 15px;border-radius: 100%;background: #fff}
 input[type=radio]:checked:after{position: absolute;content: '';width: 9px;height: 9px;background: var(--main-bg-color);top: 2px;left: 1px}
 .listDes .control-label{padding: 40px 0 5px!important}

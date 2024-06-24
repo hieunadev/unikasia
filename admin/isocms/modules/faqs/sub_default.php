@@ -48,6 +48,10 @@ function default_default()
 		$cond .= " and faqcat_id = '" . $faqcat_id . "'";
 		$pUrl .= '&faqcat_id=' . $faqcat_id;
 	}
+
+    if (!$_GET["type"]) {
+        $cond .= " and (type != 'tour' OR type IS NULL)";
+    }
 	$assign_list["pUrl"] = $pUrl;
 	$cond2 = $cond;
 	if ($type_list == 'Active') {
@@ -56,6 +60,7 @@ function default_default()
 	if ($type_list == 'Trash') {
 		$cond .= " and is_trash=1";
 	}
+
 	$orderBy = " order_no asc";
 	#-------Page Divide---------------------------------------------------------------
 	$recordPerPage = isset($_GET["recordperpage"]) ? $_GET["recordperpage"] : 20;

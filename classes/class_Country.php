@@ -768,6 +768,7 @@ class Country extends dbBasic
         $limit = " order by order_no ASC";
         $html = '';
         $lstCountry = $this->getAll($where . $limit, $this->pkey . ",title,slug");
+
         if (is_array($lstCountry) && count($lstCountry) > 0) {
             $i = 0;
             foreach ($lstCountry as $k => $v) {

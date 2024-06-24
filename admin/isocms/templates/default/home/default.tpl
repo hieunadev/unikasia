@@ -45,7 +45,6 @@
 			</div>
 		</div>
 	</div>
-	hello
 	{*
 	{if $clsISO->getCheckActiveModulePackage($package_id,'booking','booking_tour','default')}
 	<div class="home_box performance_box">
@@ -143,7 +142,7 @@
 	</div>
 	{/if}
 	*}
-	<div class="home_box actions_required_box">
+	{*<div class="home_box actions_required_box">
 		<div class="header_box">
 			<h2 class="title_box">{$core->get_Lang('Actions Required')}</h2>
 		</div>
@@ -157,7 +156,7 @@
 					</td>
 					<td class="customer_booking">
 						<p class="text1">{$clsBooking->getContactName($lstBooking[i].booking_id)}</p>
-						{* <p class="text2">{$clsBooking->getHTMLService($lstBooking[i].booking_id)}</p>*}
+						*}{* <p class="text2">{$clsBooking->getHTMLService($lstBooking[i].booking_id)}</p>*}{*
 						<span class="booking_code">{$lstBooking[i].booking_code}</span>
 					</td>
 					<td class="pay_booking">
@@ -168,7 +167,7 @@
 				{/section}
 			</tbody>
 		</table>
-	</div>
+	</div>*}
 </div>
 {literal}
 <script type="text/javascript">

@@ -233,14 +233,13 @@
 										</button>
 										<ul class="dropdown-menu" style="right:0px !important">
 											<li><a class="btndelete_tourProperty" tp="F" type="{$type}" title="{$core->get_Lang('edit')}" href="javascript:void();" data="{$allItem[i].tour_property_id}"><i class="icon-edit"></i> {$core->get_Lang('edit')}</a></li>
-										<li><a title="{$core->get_Lang('delete')}" class="confirm_delete" href="{$PCMS_URL}/?mod={$mod}&act=deleteTourProperty&type=MEAL&tour_property_id={$core->encryptID($allItem[i].$pkeyTable)}"><i class="icon-remove"></i> {$core->get_Lang('delete')}</a></li>
+										<li><a title="{$core->get_Lang('delete')}" class="confirm_delete" href="{$PCMS_URL}/?mod={$mod}&act=deleteTourProperty&type={$type}&tour_property_id={$core->encryptID($allItem[i].$pkeyTable)}"><i class="icon-remove"></i> {$core->get_Lang('delete')}</a></li>
 										</ul>
 									</div>
 								</td>
 							</tr>
 							{/section}
 						</tbody>
-						
 					</table>
 					<div class="statistical mt5">
 						<table width="100%" border="0" cellpadding="3" cellspacing="0">

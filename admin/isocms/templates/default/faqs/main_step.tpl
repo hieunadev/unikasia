@@ -22,7 +22,7 @@
 						</div>
 						{/if}
 						{if $type == 'tour'}
-							<input type="hidden" name="iso-country_id" value="0">
+							<input type="hidden" name="iso-type" value="tour">
 						{/if}
 						<div class="inpt_tour">
 							<label for="title">{$core->get_Lang('question')} <span class="required_red">*</span>
@@ -37,13 +37,13 @@
 						</div>
 						<div class="inpt_tour">
 							<div onClick="loadHelp(this)">
-								<label for="title">{$core->get_Lang('Answers')} <span class="required_red">*</span>
+								<label for="title">{$core->get_Lang('Answers')}
 									{assign var= answers_faq value='answers_faq'}
 									{if $CHECKHELP eq 1}
 									<button data-key="{$answers_faq}" data-label="{$core->get_Lang('Answers')}" type="button" title="Thêm mô tả" onclick="open_texthelp(this, event)" class="btn btn-xs btn-default"><i class="fa fa-plus-circle"></i></button>
 									{/if}
 								</label>
-								<textarea style="width:100%" table_id="{$pvalTable}" class="textarea_intro_editor" data-column="iso-content" id="textarea_intro_editor_overview_{$now}" cols="255" rows="2">{$oneItem.content}</textarea>
+								<textarea style="width:100%" table_id="{$pvalTable}" class="textarea_intro_editor required" data-column="iso-content" id="textarea_intro_editor_overview_{$now}" cols="255" rows="2">{$oneItem.content}</textarea>
 								<div class="text_help" hidden="">{$clsConfiguration->getValue($answers_faq)|html_entity_decode}</div>
 							</div>
 						</div>

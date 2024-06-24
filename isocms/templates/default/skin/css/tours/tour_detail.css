@@ -139,6 +139,7 @@
     margin-bottom: 0;
     font-weight: 400;
     line-height: 24px;
+    width: 220px;
 }
 
 .under_numbprice {
@@ -369,8 +370,8 @@
 }
 
 .price_button {
-    width: 100%;
     max-width: 337px;
+    margin-left: auto;
 }
 
 .price-box {
@@ -385,13 +386,14 @@
 
 .btn-inquirenow {
     width: 100%;
-    max-width: 103px;
+    max-width: 120px;
     height: 36px;
     border-radius: 4px;
     background: #FFA718 !important;
     color: #FFF !important;
     border: none;
     margin-left: 12px;
+    padding: 0 12px !important;
 }
 
 .top-section {
@@ -593,6 +595,7 @@
 
 #itinerary .meal_stay {
     margin-top: 24px;
+    margin-bottom: 32px;
 }
 
 #itinerary .title_meal,  #itinerary .title_stay{
@@ -601,7 +604,20 @@
     font-weight: 500;
     line-height: 24px;
 }
-
+#itinerary .itinerary_img {
+    max-width: 807px;
+    max-height: 557px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+#itinerary .itinerary_img img{
+    width: 100%;
+    height: 100%;
+    transition: transform 0.3s ease;
+}
+#itinerary .itinerary_img img:hover{
+    transform: scale(1.2);
+}
 .img_maps_parent {
     max-height: 672px;
 }
@@ -612,7 +628,7 @@
 }
 
 .daytour {
-
+    width: 842px;
     margin-top: 32px;
 }
 
@@ -918,10 +934,11 @@ ul.timeline > li:before {
     z-index: 400;
 }
 
-ul.timeline .accordion-button:not(.collapsed) {
+ul.timeline .accordion-button {
+    font-family: "SF Pro Display Bold";
     color: var(--Neutral-1, #111D37);
     font-size: 18px;
-    font-weight: 600;
+    font-weight: 500;
     line-height: 28px;
     box-shadow: none;
 }
@@ -1483,6 +1500,7 @@ ul.timeline .accordion-item .accordion-body img{
     display: flex;
     gap: 12px;
     flex-direction: column;
+    padding: 32px 0;
 }
 
 .list_reviews .person_review{
@@ -1543,8 +1561,7 @@ ul.timeline .accordion-item .accordion-body img{
 .list_reviews .stars_review i{
     color: var(--Primary) !important;
 }
-.list_reviews .review {
-    padding: 32px 0;
+.list_reviews .review:not(:last-child) {
     border-bottom: 1px solid #D3DCE1
 }
 
@@ -1556,7 +1573,15 @@ ul.timeline .accordion-item .accordion-body img{
     border: none;
     cursor: pointer;
 }
+
+.list_reviews .prev.disabled, .list_reviews .next.disabled {
+    pointer-events: none;
+}
 /* FAQs */
+
+.tour_detaildeparture_body .des_list_faq_title h2 {
+    margin-top: 40px;
+}
 
 #faqs_detail_tour {
     margin-bottom: 100px;

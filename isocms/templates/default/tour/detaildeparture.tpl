@@ -1,5 +1,5 @@
 <script src="{$URL_JS}/jquery-confirm.min.js"></script>
-{assign var=maxStars value=5}
+
 <main>
     <section class="listtourdetail_breadcrumb">
         <div class="breadcrumb_list">
@@ -29,8 +29,12 @@
             <div class="txt-share-detailtour">
                 <h2 class="txt_detailhotel">{$clsTour->getTitle($tour_id)}</h2>
                 <div class="txt_numbpricetour">
+                    {if $oneItem.min_price}
                     <p class="txt_numbtour">From US <span class="under_numbprice">${$oneItem.min_price}</span> <span
                                 class="number_pricetour">${$clsTour->getPriceAfterDiscount($tour_id)}</span> /pax </p>
+                    {else}
+                        <span class="number_pricetour">Contact</span>
+                    {/if}
                 </div>
             </div>
 
@@ -119,9 +123,13 @@
 
                     <div class="price_button">
                         <div class="txt_numbpricetour">
+                            {if $oneItem.min_price}
                             <p class="txt_numbtour">From US <span class="under_numbprice">${$oneItem.min_price}</span> <span
                                         class="number_pricetour">${$clsTour->getPriceAfterDiscount($tour_id)}</span> /pax </p>
-                            <button class="btn btn-inquirenow btn-hover-home nav-link" data-target=".section_price">Book Now</button>
+                            {else}
+                                <span class="number_pricetour">Contact</span>
+                            {/if}
+                            <button class="btn btn-inquirenow btn-hover-home nav-link" data-target=".section_price">{$core->get_Lang('Book now')}</button>
                         </div>
                     </div>
                 </div>
@@ -147,13 +155,16 @@
             </div>
 
         </div>
+
         <div class="tab-pane section_itinerary" id="itinerary">
             <div class="container">
-                <h2 class="txt_mapiti">Trip map &amp itinerary</h2>
+                {if $oneItem.map_tour}<h2 class="txt_mapiti">Trip map &amp itinerary</h2>{/if}
                 <div class="detail_tours">
                     <div class="detail_mapitine">
+                        {if $oneItem.map_tour}
                         <div class="img_maps_parent"><img class="img_maps"
                              src="{$clsTour->getMapTour($tour_id, 842,672)}" onerror="this.src='{$URL_IMAGES}/tour/img_maps.png'"></div>
+                        {/if}
                         <div class="daytour">
                             <div class="txtdaybyday">
                                 <h2 class="txt_daytours">Day by day itinerary</h2>
@@ -178,7 +189,8 @@
                                                      data-bs-parent="#accordionExample">
                                                     <div class="accordion-body">
                                                         {$lstTourItinerary[i].content|html_entity_decode}
-                                                        <div class="meal_stay">Meal: <span class="title_meal">{$clsTourItinerary->getTitleMeal($lstTourItinerary[i].tour_itinerary_id,'','only_title_meal')} </span>&#160; | &#160; Stay: <span class="title_stay">{$lstTourItinerary[i].title_stay}</span></div>
+                                                        <div class="meal_stay">Meal: <span class="title_meal">{$clsTourItinerary->getTitleMeal($lstTourItinerary[i].tour_itinerary_id,'','only_title_meal')} </span>&#160; {if $lstTourItinerary[i].title_stay}| &#160; Stay: <span class="title_stay">{$lstTourItinerary[i].title_stay}</span>{/if}</div>
+                                                        {if $lstTourItinerary[i].image}<div class="itinerary_img"><img src="{$clsTourItinerary->getImage($lstTourItinerary[i].tour_itinerary_id,807,557)}" alt=""></div>{/if}
                                                     </div>
                                                 </div>
                                             </div>
@@ -207,7 +219,7 @@
                             <div class="select_pricetour">
                                 <div class="box_input">
                                     <i class="fa-regular fa-clock icon"></i>
-                                    <input type="text" id="departure_date" class="number_travellers" value="{$format_time_now}">
+                                    <input type="text" id="departure_date" class="number_travellers" value="{$format_time_now}" readonly>
                                 </div>
                                 
                                 <div class="box_input">
@@ -371,6 +383,8 @@
                     </div>
                 </div>
             </div>
+        </div>
+
     </section>
 
     <section class="bg_inclusion section_inclusion" id="inclusion">
@@ -435,12 +449,7 @@
             {section name=i loop=$lstReviews}
                 <div class="review">
                     <div class="person_review">
-                        {assign var=numStars value=$lstReviews[i].rates}
-                        <div class="avatar_custom" style="background-color:
-                        {php}
-                                $bg_colors = ['#F5F5F5', '#E0F7FA', '#FFF8E1', '#E8F5E9', '#FCE4EC', '#FFFDE7', '#F3E5F5'];
-                                echo $bg_colors[array_rand($bg_colors)];
-                        {/php}">{strtoupper(substr($lstReviews[i].fullname, 0, 2))}</div>
+                        <div class="avatar_custom" style="background-color: {$lstReviews[i].bg_color}">{strtoupper(substr($lstReviews[i].fullname, 0, 2))}</div>
                         <div class="name_reviewer">
                             <p class="name">{$lstReviews[i].fullname}</p>
                             <p class="time_review">{$lstReviews[i].review_date|date_format:"%d %b, %Y"}</p>
@@ -448,7 +457,7 @@
                     </div>
                     <div class="stars_review">
                         {assign var=numStars value=$lstReviews[i].rates}
-                        {assign var=remainingStars value=$maxStars - $numStars}
+                        {assign var=remainingStars value = 5 - $numStars}
                         {section name=j loop=$numStars}
                             <i class="fa-solid fa-star"></i>
                         {/section}
@@ -463,6 +472,15 @@
             {/section}
             {else}
                 <div>Not reviews yet</div>
+            {/if}
+            {if $page_view}
+            <div class="tour-pagination d-flex justify-content-center mt-5">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        {$page_view}
+                    </ul>
+                </nav>
+            </div>
             {/if}
         </div>
     </section>
@@ -650,6 +668,13 @@
 </script>
 {$date_range_js_update}
 {literal}
+<script>
+    $(document).ready(function() {
+
+    });
+</script>
+{/literal}
+{literal}
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const links = document.querySelectorAll('.nav-link');
@@ -674,6 +699,7 @@
                     $(".unika_true").removeClass('unika_header');
                 } else {
                     $('.class-tour').removeClass('list_nav_fixed');
+                    $(".unika_true").addClass('unika_header');
                 }
             }
 
@@ -692,6 +718,7 @@
             });
         });
         $(document).ready(function() {
+            $('.unika_header .navbar-nav').css('gap', '40px');
             Fancybox.bind('#gallery_detail_tour .img_tourdetail', {
                 groupAll: true,
             });
@@ -830,14 +857,14 @@
                 });
             });
             $('.review').each(function() {
-                var moreText = $(this).find('.content_review');
-                var toggleButton = $(this).find('.view_more_review');
+                let moreText = $(this).find('.content_review');
+                let toggleButton = $(this).find('.view_more_review');
 
                 if (moreText[0].scrollHeight <= 72) {
                     toggleButton.hide();
                 }
             });
-            $('.view_more_review').click(function() {
+            $(document).on('click', '.view_more_review', function() {
                 var moreText = $(this).prev('.content_review');
 
                 if (moreText.hasClass('expanded')) {
@@ -849,6 +876,32 @@
                     $(this).text('View Less');
                     moreText.css({'max-height': moreText[0].scrollHeight + 'px', '-webkit-line-clamp': 'unset'});
                 }
+            });
+
+            $(document).on('click', '.page', function(e) {
+                e.preventDefault();
+                $('.list_reviews').html('<div class="lazy_loading text-center"><img src="path/to/lazy_load_100.svg" alt="Loading..."></div>');
+                let $page = $(this).text()
+                if ($(this).hasClass('next') || $(this).hasClass('prev')) {
+                    $page = $(this).attr('title')
+                }
+                let data = {
+                    page: $page,
+                    table_id: $tour_id
+                };
+                $('html, body').scrollTop($(".list_reviews").offset().top - 200);
+                $.post(path_ajax_script + '/index.php?mod=tour&act=ajaxReviews', data)
+                    .done(function(res) {
+                        $('.list_reviews').html(res);
+                        $('.review').each(function() {
+                            let moreText = $(this).find('.content_review');
+                            let toggleButton = $(this).find('.view_more_review');
+
+                            if (moreText[0].scrollHeight <= 72) {
+                                toggleButton.hide();
+                            }
+                        });
+                    });
             });
         })
         $(function(){

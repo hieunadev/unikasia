@@ -322,6 +322,14 @@ function upload_file_picker(file, params) {
                                                 }
                                                 if (
                                                     params.toId ==
+                                                    "isoman_show_map_tour"
+                                                ) {
+                                                    $("#map_tour").val(
+                                                        $.trim(s[1])
+                                                    );
+                                                }
+                                                if (
+                                                    params.toId ==
                                                     "isoman_show_image_hotel"
                                                 ) {
                                                     $("#image_hotel").val(

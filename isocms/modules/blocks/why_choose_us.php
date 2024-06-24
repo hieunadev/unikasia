@@ -6,16 +6,15 @@ $clsWhy = new Why();
 $clsPartner = new Partner();
 
 switch ($mod) {
-    case "homepackage":
-    case "tour":
-    case "guide":
-        $type = "HOME";
-        break;
     case "destination":
         $type = "DESTINATION";
         break;
     default:
-        $type = "";
+        $type = "HOME";
+}
+
+if ($mod == "destination" && $act == "topattraction") {
+    $type = "HOME";
 }
 
 $listWhy = $clsWhy->getAll("is_trash = 0 and is_online = 1 and type = '$type' order by order_no ASC");

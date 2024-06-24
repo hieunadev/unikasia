@@ -1506,19 +1506,20 @@ function default_edit()
         } else {
             $list_check_target[] = array('result' => 'check_caution', 'cat' => 'basic', 'target' => 'love-trip', 'name' => $core->get_Lang('Love Trip'));
         }
+
         if ($oneItem['map_tour'] != '') {
             $list_check_target[] = array('result' => 'check_success', 'cat' => 'basic', 'target' => 'map-tour', 'name' => $core->get_Lang('Map Tour') . ($oneItem['yield_id'] ? $clsISO->makeIcon('compress', '', 'ml-2') : ''));
         } else {
             $list_check_target[] = array('result' => 'check_caution', 'cat' => 'basic', 'target' => 'map-tour', 'name' => $core->get_Lang('Map Tour'));
         }
-
-        if ($clsISO->getCheckActiveModulePackage($package_id, 'property', 'activities', 'default')) {
+        
+/*        if ($clsISO->getCheckActiveModulePackage($package_id, 'property', 'activities', 'default')) {
             if ($oneItem['list_activities_id'] != '' && $oneItem['list_activities_id'] != '||' && $oneItem['list_activities_id'] != '|0|') {
                 $list_check_target[] = array('result' => 'check_success', 'cat' => 'basic', 'target' => 'activities-tour', 'name' => $core->get_Lang('Activities Tour'));
             } else {
                 $list_check_target[] = array('result' => 'check_caution', 'cat' => 'basic', 'target' => 'activities-tour', 'name' => $core->get_Lang('Activities Tour'));
             }
-        }
+        }*/
         if ($oneItem['inclusion'] != '') {
             $list_check_target[] = array('result' => 'check_success', 'cat' => 'basic', 'target' => 'inclusion-tour', 'name' => $core->get_Lang('Inclusion Tour') . ($oneItem['yield_id'] ? $clsISO->makeIcon('compress', '', 'ml-2') : ''));
         } else {
@@ -1529,7 +1530,7 @@ function default_edit()
         } else {
             $list_check_target[] = array('result' => 'check_caution', 'cat' => 'basic', 'target' => 'exclusion-tour', 'name' => $core->get_Lang('Exclusion Tour'));
         }
-        if ($oneItem['thing_to_carry'] != '') {
+/*        if ($oneItem['thing_to_carry'] != '') {
             $list_check_target[] = array('result' => 'check_success', 'cat' => 'basic', 'target' => 'whatcarry-tour', 'name' => $core->get_Lang("Thing To Carry") . ($oneItem['yield_id'] ? $clsISO->makeIcon('compress', '', 'ml-2') : ''));
         } else {
             $list_check_target[] = array('result' => 'check_caution', 'cat' => 'basic', 'target' => 'whatcarry-tour', 'name' => $core->get_Lang("Thing To Carry"));
@@ -1544,7 +1545,7 @@ function default_edit()
             $list_check_target[] = array('result' => 'check_success', 'cat' => 'basic', 'target' => 'refund-tour', 'name' => $core->get_Lang('Refund Policy') . ($oneItem['yield_id'] ? $clsISO->makeIcon('compress', '', 'ml-2') : ''));
         } else {
             $list_check_target[] = array('result' => 'check_caution', 'cat' => 'basic', 'target' => 'refund-tour', 'name' => $core->get_Lang('Refund Policy'));
-        }
+        }*/
         if ($oneItem['confirmation_policy'] != '') {
             $list_check_target[] = array('result' => 'check_success', 'cat' => 'basic', 'target' => 'confirmation-policy-tour', 'name' => $core->get_Lang('Booking Policy') . ($oneItem['yield_id'] ? $clsISO->makeIcon('compress', '', 'ml-2') : ''));
         } else {
@@ -2206,7 +2207,6 @@ function default_ajSaveDataasdsad()
                     'caution' => 'skip'
                 );
             } else {
-
                 if ($clsTour->updateOne($pvalTable, $value)) {
                     $result = array(
                         'result' => 'success',
@@ -5301,7 +5301,7 @@ function default_faqs()
     $assign_list["clsClassTable"] = $clsClassTable;
     $assign_list["pkeyTable"] = $pkeyTable;
     /*List all item*/
-    $cond = "1='1'";
+    $cond = "type = 'tour'";
     #Filter By Keyword
     if (isset($_GET['keyword'])) {
         if ($_GET['keyword'] != '') {
@@ -5322,6 +5322,7 @@ function default_faqs()
     if ($type_list == 'Trash') {
         $cond .= " and is_trash=1";
     }
+
     $orderBy = " order_no asc";
     #-------Page Divide---------------------------------------------------------------
     $recordPerPage = isset($_GET["recordperpage"]) ? $_GET["recordperpage"] : 20;
@@ -5362,7 +5363,7 @@ function default_faqs()
     }
     $assign_list['link_page_current_2'] = $link_page_current_2;
     #-------End Page Divide-----------------------------------------------------------
-    $allItem = $clsClassTable->getAll($cond . " and country_id = 0 order by " . $orderBy . $limit); //print_r($cond." order by ".$orderBy.$limit);die();
+    $allItem = $clsClassTable->getAll($cond . " order by " . $orderBy . $limit); //print_r($cond." order by ".$orderBy.$limit);die();
     $assign_list["allItem"] = $allItem;
     #
     $allTrash =  $clsClassTable->getAll("is_trash=1 and " . $cond2);
@@ -5431,8 +5432,8 @@ function default_ajActionNewFaq()
     if ($tp = 'S') {
         $clsISO->UpdateOrderNo('FAQ');
 
-        $field = $clsFaqs->pkey . ",user_id,user_id_update,title,slug,order_no,reg_date,upd_date";
-        $value = "'" . $faq_id . "','" . $user_id . "','" . $user_id . "','" . $title_voucher_new . "','" . $core->replaceSpace($title_voucher_new) . "',1,'" . time() . "','" . time() . "'";
+        $field = $clsFaqs->pkey . ",user_id,user_id_update,title,slug,order_no,reg_date,upd_date, type";
+        $value = "'" . $faq_id . "','" . $user_id . "','" . $user_id . "','" . $title_voucher_new . "','" . $core->replaceSpace($title_voucher_new) . "',1,'" . time() . "','" . time() . "', 'tour'";
         //		$clsFaqs->setDeBug(1);
         $clsFaqs->insertOne($field, $value);
         $results = array('result' => 'success', 'link' => 'faqs/insert/' . $faq_id . '/overview?type=tour');

@@ -13,6 +13,8 @@ $clsCruiseCat       =   new CruiseCat();
 $smarty->assign('clsCruiseCat', $clsCruiseCat);
 $clsCruiseDestination   =   new CruiseDestination();
 $smarty->assign('clsCruiseDestination', $clsCruiseDestination);
+$clsCity            =   new City();
+$smarty->assign('clsCity', $clsCity);
 #
 $show   =   isset($_GET['show']) ? $_GET['show'] : '';
 $smarty->assign('show', $show);
@@ -59,4 +61,12 @@ if ($show === 'CruiseCatCountry') {
     if (!empty($cruise_cat_id)) {
         $smarty->assign('cruise_cat_id', $cruise_cat_id);
     }
+} elseif ($show === 'attractionCountry') {
+    $country_slug   =   isset($_GET['slug_country']) ? $_GET['slug_country'] : '';
+    $country_id     =   $clsCountry->getBySlug($country_slug);
+    $smarty->assign('country_id', $country_id);
+    #
+    $city_slug      =   isset($_GET['slug_attraction']) ? $_GET['slug_attraction'] : '';
+    $city_id        =   $clsCity->getBySlug($city_slug);
+    $smarty->assign('city_id', $city_id);
 }

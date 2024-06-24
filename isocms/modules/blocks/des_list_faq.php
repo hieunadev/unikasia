@@ -17,6 +17,6 @@ if (!empty($_GET['slug_country'])) {
 // List FAQ from country
     $list_faq_country   =   $clsFAQ->getAll("is_trash = 0 AND is_online = 1 AND country_id = $country_id ORDER BY order_no ASC LIMIT 12");
 } elseif ($mod = "tour" && $act == "detaildeparture") {
-    $list_faq_country   =   $clsFAQ->getAll("is_trash = 0 AND is_online = 1 AND country_id = 0 ORDER BY order_no ASC");
+    $list_faq_country   =   $clsFAQ->getAll("is_trash = 0 AND is_online = 1 AND type='tour' ORDER BY order_no ASC");
 }
 $smarty->assign('list_faq_country', $list_faq_country);

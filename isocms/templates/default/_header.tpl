@@ -215,7 +215,7 @@
                             </div>
                         </div>
                         <div class="tailor_made_travel">
-                            <a href="{$clsTour->getLink2(0, 1)}">
+                            <a href="/tailor-made-tour">
                                 {$core->get_Lang('TAILOR-MADE TRAVEL')}
                             </a>
                         </div>
@@ -232,7 +232,7 @@
         {if ($mod eq 'destination' && $act eq 'travel_guide') || ($mod eq 'guide' && $act eq 'cat') || ($mod eq 'guide' && $act eq 'search')}
         {$core->getBlock('des_header_travel_guide')}
         {/if}
-        {if ($mod eq 'destination' && $act eq 'travel_guide_detail') || ($mod eq 'destination' && $act eq 'attraction') || ($mod eq 'guide' && $act eq 'detail')}
+        {if ($mod eq 'destination' && $act eq 'attraction') || ($mod eq 'guide' && $act eq 'detail')}
         {$core->getBlock('des_header_travel_guide_detail')}
         {/if}
         {if $mod eq 'homepackage'}
@@ -255,6 +255,7 @@
         {/if}
     </div>
 </header>
+
 {literal}
 <script>
     $(document).ready(function() {

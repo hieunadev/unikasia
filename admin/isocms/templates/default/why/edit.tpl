@@ -24,12 +24,12 @@
                 </div>
                 <div class="fieldarea">
                     <select class="text full" name="iso-type" maxlength="255" style="width:200px">
-                        <option value="" {if $clsClassTable->getOneField('type',$pvalTable) eq ''}selected="selected"{/if}>Default</option>
+{*                        <option value="" {if $clsClassTable->getOneField('type',$pvalTable) eq ''}selected="selected"{/if}>Default</option>*}
                         <option value="HOME" {if $clsClassTable->getOneField('type',$pvalTable) eq 'HOME'}selected="selected"{/if}>Home</option>
-                        <option value="TOUR" {if $clsClassTable->getOneField('type',$pvalTable) eq 'TOUR'}selected="selected"{/if}>Tour</option>
+{*                        <option value="TOUR" {if $clsClassTable->getOneField('type',$pvalTable) eq 'TOUR'}selected="selected"{/if}>Tour</option>*}
                         <option value="DESTINATION" {if $clsClassTable->getOneField('type',$pvalTable) eq 'DESTINATION'}selected="selected"{/if}>Destination</option>
-                        <option value="CRUISE" {if $clsClassTable->getOneField('type',$pvalTable) eq 'CRUISE'}selected="selected"{/if}>Cruise</option>
-                        <option value="STAY" {if $clsClassTable->getOneField('type',$pvalTable) eq 'STAY'}selected="selected"{/if}>Stay</option>
+{*                        <option value="CRUISE" {if $clsClassTable->getOneField('type',$pvalTable) eq 'CRUISE'}selected="selected"{/if}>Cruise</option>*}
+{*                        <option value="STAY" {if $clsClassTable->getOneField('type',$pvalTable) eq 'STAY'}selected="selected"{/if}>Stay</option>*}
                     </select>
                 </div>
             </div>

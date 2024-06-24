@@ -75,8 +75,9 @@
 			</a>
             {if $listLang|@count >1}
 			<ul class="dropdown-menu" role="menu">
+				{assign var="excludedLangs" value=["$_LANG_ID", "vn", "es", "kr", "cn", "ru"]}
 				{section name=i loop=$listLang}
-				{if $listLang[i] ne $_LANG_ID}
+				{if !in_array($listLang[i], $excludedLangs)}
 				<li><a title="{$listLang[i]}" href="{if $listLang[i] ne $LANG_DEFAULT}{$PCMS_URL}/index.php?lang={$listLang[i]}{else}{$DOMAIN_NAME}{/if}">
 				<i class="flag flag-20 flag-20-{$listLang[i]}"></i> {$clsISO->getFullLanguage($listLang[i])}</span> </a> </li>
 				{/if}

@@ -29,20 +29,18 @@
     </div>
 </div>
 {elseif $mod eq 'destination' && $act eq 'attraction'}
-<div class="trvgd_header">
-    <div class="row">
-        <div class="col-md-7 col-lg-7">
-            <div class="trvgd_header_image">
-                <img src="https://images.unsplash.com/photo-1418065460487-3e41a6c84dc5?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Header Image" width="1034" height="861">
-            </div>
-        </div>
-        <div class="col-md-5 col-lg-5">
-            <div class="trvgd_header_intro">
-                <span class="trvgd_header_place">VIETNAM</span>
-                <h1 class="trvgd_header_title">Hanoi Holidays</h1>
-                <div class="trvgd_header_description">
-                    If you are traveling throughout the North and are looking for a destination that combines a rich exploration of Vietnamese history and culture with the opportunity to enjoy unique and delicious local cuisine, then don't hesitate to come to Hanoi and experience the top best things to do in Hanoi for 3 days.
-                </div>
+<div class="trvgd_header d-flex">
+    <div class="trvgd_header_image">
+        <img src="{$clsCity->getImage($city_id, 1035, 861)}" alt="{$clsCity->getTitle($city_id)}" width="1034" height="861">
+    </div>
+    <div class="trvgd_header_intro">
+        <div class="trvgd_header_txt">
+            <span class="trvgd_header_place">
+                {$clsCountry->getTitle($country_id)}
+            </span>
+            <h1 class="trvgd_header_title">{$clsCity->getTitle($city_id)}</h1>
+            <div class="trvgd_header_description ellipsis_5_line">
+                {$clsCity->getIntro($city_id)}
             </div>
         </div>
     </div>
@@ -80,7 +78,6 @@
         font-style: normal;
         font-weight: 600;
         line-height: 24px;
-        margin-bottom: 12px;
         text-transform: uppercase;
     }
 
@@ -100,6 +97,7 @@
         font-style: normal;
         font-weight: 600;
         line-height: 52px;
+        margin-top: 12px;
         margin-bottom: 26px;
     }
 
@@ -140,7 +138,7 @@
         padding: 0;
     }
 
-    .guide_detail_body .trvgd_header_intro{
+    .guide_detail_body .trvgd_header_intro {
         padding-top: 138px;
     }
 

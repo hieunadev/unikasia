@@ -21,7 +21,7 @@
 									<a class="unNum number_day">{$clsISO->makeIcon('angle-down')}</a>
 									<a class="upNum">{$clsISO->makeIcon('angle-up')}</a>
 								</div>
-								<label for="duration_days">{$core->get_Lang('days')}</label>
+								<span for="duration_days">{$core->get_Lang('days')}</span>
 							</div>
 							<div class="d-flex align-items-center number_duration_days">
 								<div class="box_duration_in">
@@ -29,7 +29,7 @@
 									<a class="unNumn">{$clsISO->makeIcon('angle-down')}</a>
 									<a class="upNumn">{$clsISO->makeIcon('angle-up')}</a>
 								</div>
-								<label for="duration_nights">{$core->get_Lang('nights')}</label>
+								<span for="duration_nights">{$core->get_Lang('nights')}</span>
 							</div>
 						</label>
 						<label class="d-flex align-items-center radio_type duration_type_opt{if $oneItem.duration_type eq '1'} c_selct{/if}" for="duration_type_opt">

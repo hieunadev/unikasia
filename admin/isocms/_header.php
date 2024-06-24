@@ -120,9 +120,10 @@
 
 	$listLang=$clsISO->getListLang();
 	$assign_list["listLang"] = $listLang;
+
 	if($clsISO->checkInArray($listLang, $_LANG_ID)==0){
 		header('Location:/admin/index.php?lang='.LANG_DEFAULT);
-		exit();	
+		exit();
 	}
 
 	vnSessionDelVar('BookingTourAdm_'.$_LANG_ID);

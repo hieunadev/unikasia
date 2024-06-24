@@ -2,7 +2,11 @@
 <div class="box_form_insert_tour_new">
 	<div class="box_info_tour_top box_top_opt_set">
 		<div class="info_tour">
-			<a href="{$PCMS}/admin/?mod=faqs" class="back_list" title="{$core->get_Lang('faqs_list')}"><i class="fa fa-angle-left"></i></a>
+			{if $type == 'tour'}
+				<a href="{$PCMS}/admin/?mod=tour_exhautive&act=faqs" class="back_list" title="{$core->get_Lang('faqs_list')}"><i class="fa fa-angle-left"></i></a>
+			{else}
+				<a href="{$PCMS}/admin/?mod=faqs" class="back_list" title="{$core->get_Lang('faqs_list')}"><i class="fa fa-angle-left"></i></a>
+			{/if}
 			<div class="body_tour">
 				<h3 class="table-title" table_id="{$pvalTable}">{$oneItem.title}</h3>
 			</div>

@@ -4113,9 +4113,9 @@ class ISO
 				while (($file = readdir($dh)) !== false) {
 					if (substr($file, -3) == 'php') {
 						$abc = str_replace('.php', '', $file);
-						if ($abc != LANG_DEFAULT) {
-							array_push($customClsArray, $abc);
-						}
+                        if ($abc != LANG_DEFAULT) {
+                            array_push($customClsArray, $abc);
+                        }
 					}
 				}
 				array_unshift($customClsArray, LANG_DEFAULT);

@@ -510,7 +510,6 @@ function default_place()
 	$limit = " LIMIT $offset,$recordPerPage";
 	#
 	$listHotelPlace = $clsHotel->getAll($cond . $order_by . $limit, $clsHotel->pkey . ',star_id,slug,title,address,intro,image');
-
 	$assign_list['listHotelPlace'] = $listHotelPlace;
 	$assign_list['page_view'] = $page_view;
 	unset($listHotelPlace);
@@ -1066,7 +1065,7 @@ function default_detail()
 	$assign_list['clsHotelRoom'] = $clsHotelRoom;
 	$clsTour = new Tour();
 	$assign_list['clsTour'] = $clsTour;
-	
+
 	$clsHotelPriceCol = new HotelPriceCol();
 	$assign_list['clsHotelPriceCol'] = $clsHotelPriceCol;
 	$clsHotelPriceVal = new HotelPriceVal();
@@ -1101,12 +1100,12 @@ function default_detail()
 	$assign_list['clsReviews'] = $clsReviews;
 	$lstReviews = $clsReviews->getAll("$cond is_online = 1 and table_id = '$hotel_id' $order");
 	$countReview = $clsReviews->countItem("$cond is_online = 1 and table_id = $hotel_id $order");
-	
+
 	$has_data = count($lstHotelProperty) > 0;
 	$assign_list['has_data'] = $has_data;
-	
-	
-	
+
+
+
 
 
 
@@ -1286,9 +1285,9 @@ function default_detail()
 	$listHotelFacilitiesOther = $clsProperty->getAll("is_trash=0 and type='HotelFacilities' and is_favorite=0 and property_id order by order_no ASC");
 	$assign_list["listHotelFacilitiesOther"] = $listHotelFacilitiesOther;
 
-    $lstHotelProperty = $clsHotelProperty->getAll("is_trash=0 and is_online=1 and type='HotelCategory' order by order_no ASC");
-    $assign_list["lstHotelProperty"] = $lstHotelProperty;
-//		var_dump($lstHotelProperty); die();
+	$lstHotelProperty = $clsHotelProperty->getAll("is_trash=0 and is_online=1 and type='HotelCategory' order by order_no ASC");
+	$assign_list["lstHotelProperty"] = $lstHotelProperty;
+	//		var_dump($lstHotelProperty); die();
 
 	$sqlCountRate = "SELECT rates, ROUND(COUNT(rates) / $countReview * 100) AS count_percent, COUNT(rates) as count FROM default_reviews WHERE $cond is_online = 1 and table_id = $hotel_id GROUP BY rates;";
 

@@ -718,10 +718,11 @@ function default_ajSaveReviewsNoLogin(){
 	$email = $_POST['email_reviews'] ?? $fullname;
 	$country_id = $_POST['country_id'] ?? 0;
 	$message = nl2br(rawurldecode($_POST['message']));
-    
 
+    $bg_colors = ['#F5F5F5', '#E0F7FA', '#FFF8E1', '#E8F5E9', '#FCE4EC', '#FFFDE7', '#F3E5F5'];
+    $bg_color =  $bg_colors[array_rand($bg_colors)];
 	#
-	$f="reviews_id,title, reg_date,review_date,upd_date,table_id,type,rates,fullname,email,country_id,content,order_no,is_trash,is_online";
+	$f="reviews_id,title, reg_date,review_date,upd_date,table_id,type,rates,fullname,email,country_id,content,order_no,is_trash,is_online,bg_color";
 	$reviews_id = $clsReviews->getMaxId();
 	$v ="'".$reviews_id."'
 	,'".$title."'
@@ -736,7 +737,7 @@ function default_ajSaveReviewsNoLogin(){
 	,'".$country_id."'
 	,'".$message."'
 	,'".$clsReviews->getMaxOrderNo()."'
-	,'0','0'";	
+	,'0','0','$bg_color'";
 
 	if($clsReviews->insertOne($f, $v)){
 	    $aaa = $clsReviews->sendMail($email,$message,$type);

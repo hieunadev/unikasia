@@ -11,8 +11,8 @@ $clsGuideCatStore   =   new GuideCatStore();
 $smarty->assign('clsGuideCatStore', $clsGuideCatStore);
 $clsCountry =   new Country();
 $smarty->assign('clsCountry', $clsCountry);
-$clsUser =  new User();
-$smarty->assign('clsUser', $clsUser);
+$clsCity    =  new City();
+$smarty->assign('clsCity', $clsCity);
 #
 $show   =   isset($_GET['show']) ? $_GET['show'] : '';
 $smarty->assign('show', $show);
@@ -39,4 +39,11 @@ if ($show === 'DetailGuide') {
         $guidecat_link  =   $clsGuide->getLinkGuideCat($country_slug, $guidecat_slug, $guidecat_id);
         $smarty->assign('guidecat_link', $guidecat_link);
     }
+} elseif ('attractionCountry') {
+    $slug_attraction    =   isset($_GET['slug_attraction']) ? $_GET['slug_attraction'] : '';
+    $city_id            =   $clsCity->getBySlug($slug_attraction);
+    $smarty->assign('city_id', $city_id);
+    $slug_country       =   isset($_GET['slug_country']) ? $_GET['slug_country'] : '';
+    $country_id         =   $clsCountry->getBySlug($slug_country);
+    $smarty->assign('country_id', $country_id);
 }

@@ -100,7 +100,7 @@
                 <div class="col-12 col-sm-12 col-md-12 col-lg-3">
                     {$core->getBlock('des_travel_guide_side')}
                 </div>
-                {if $deviceType != "computer"}
+                {if $deviceType ne "computer"}
                 <div class="owl-carousel owl-theme gui_exciting_trip">
                     {if $arr_tour_country}
                     {foreach from=$arr_tour_country key=key item=item}

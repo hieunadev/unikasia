@@ -59,14 +59,14 @@ body {
 .des_tailor_top_sticky {
     position: fixed;
     width: 100%;
-    top: 140px;
+    top: 138px;
     z-index: 8;
     box-shadow: 0px 12px 32px 0px #7d879e17;
     left: 0;
     background: #fff;
     padding: 0;
     border-top: 1px solid #ccc;
-    padding-top: 20px !important;
+    padding-top: 20px;
     border: none;
 }
 .des_tailor_top .navbar {
@@ -163,9 +163,7 @@ body {
     font-style: italic;
     font-weight: 400;
     line-height: 24px;
-    /* code new */
-    max-width: 839px;
-    /* code new */
+    width: 839px;
     margin: 0 auto;
     margin-bottom: 60px;
 }
@@ -237,7 +235,7 @@ body {
     line-height: 52px;
     margin-bottom: 6px;
     display: flex;
-    gap: 6px;
+    gap: 5px;
     text-transform: uppercase;
     justify-content: center;
 }
@@ -490,7 +488,6 @@ body {
     padding: 30px 0;
 }
 .des_gallery {
-    padding-top: 143px;
     margin-bottom: 80px;
 }
 .des_list_hotel {
@@ -770,39 +767,6 @@ footer a:hover {
     color: #ffa718;
 }
 /** --- End of CSS fix hộ các trang khác @@ --- **/
-
-/* van css new */
-.des_header_intro{
-    width: 100%;
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%) !important;
-}
-.hnv_item_image_holiday,
-.hnv_item_holiday img {
-    height: 100%;
-}
-.des_header_description{
-    min-height: 300px;
-}
-.txtfromprice{
-    display: inline-block;
-}
-@media screen and (max-width: 1200px) {
-    .des_header_bg {
-        font-size: 210px !important;
-    }
-
-    .des_tailor_menu{
-        gap: 30px;
-    }
-
-    .des_tailor_item{
-        min-height: 342px;
-    }
-}
-/* van css new */
-
 @media screen and (max-width: 1170px) {
     .des_header_bg {
         font-size: 210px !important;
@@ -813,51 +777,11 @@ footer a:hover {
         font-size: 165px !important;
     }
 }
-/* van css new */
-@media screen and (max-width: 991px) {
-    .des_tailor_top .collapse {
-        display: block;
-        width: 100%;
-    }
-
-    .des_tailor_top .des_tailor_menu{
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        width: 100%;
-        overflow-x: scroll;
-    }
-
-    .des_tailor_top .des_tailor_menu::-webkit-scrollbar {
-        height: 1px;
-    }
-
-    .des_tailor_top .des_tailor_menu::-webkit-scrollbar-thumb {
-        background-color: #ffa718 ;
-    }
-
-    .des_tailor_dropdown{
-        position: relative;
-    }
-
-    .des_tailor_dropdown_menu {
-        position: absolute !important;
-    }
-
-    .des_tailor_top .navbar{
-        width: 100%;
-    }
-
-    .des_tailor_top .nav-link {
-        width: max-content;
-    }
-}
-/* van css new */
 @media screen and (max-width: 800px) {
     /** --- CSS fix hộ các trang khác @@ --- **/
     .hnv_item_holiday img {
-        width: 100% !important; /*van css new */
-        height: 100% !important; /*van css new */
+        width: unset !important;
+        height: unset !important;
     }
     .hnv_item_holiday .col-12.col-sm-12.col-md-5.col-lg-5 {
         padding-right: 12px;
@@ -874,45 +798,6 @@ footer a:hover {
     }
     .des_header_bg {
         font-size: 120px !important;
-    }
-
-    /*van css new */
-    .des_header_intro h1 {
-        font-size: 40px !important;
-        line-height: 150% !important;
-    }
-    
-    .des_header_info {
-        padding: 0 24px;
-    }
-
-    .des_header_link{
-        display: none !important;
-    }
-
-    .card-img-wrapper{
-        width: 100%;
-        max-width: 100%;
-    }
-
-    .img_holiday{
-        width: 100%;
-        height: 100%;
-    }
-
-    .des_our_team_list .row{
-        gap: 24px;
-        justify-content: center;
-    }
-
-    .des_our_team_list .row .col-sm-12.col-md-4.col-lg-3 {
-        width: 48%;
-    }
-    /*van css new */
-}
-@media screen and (max-width: 768px) {
-    .des_our_team_list .row .col-sm-12.col-md-4.col-lg-3 {
-        width: 100%;
     }
 }
 @media screen and (max-width: 600px) {
@@ -942,136 +827,8 @@ footer a:hover {
     .des_header_bg {
         display: none;
     }
-
-     /*van css new */
-     .des_header_intro h1 {
-        font-size: 24px !important;
-        line-height: 150% !important;
-    }
-
-    .des_header_info p {
-        font-size: 14px;
-        font-weight: 500;
-        line-height: 20px;
-    }
-    /*van css new */
 }
- /*van css new */
 @media screen and (max-width: 414px) {
-    .des_breadcrumb_title,
-    .des_breadcrumb{
-        display: none;
-    }
-
-    .des_tailor_top{
-        padding-top: 0;
-    }
-
-    .des_tailor_title h2, 
-    .txtourtrip,
-    .des_travel_style_title h2,
-    .des_list_hotel .des_list_hotel_title h2,
-    .des_our_team_title h2,
-    .des_gallery_title h2,
-    .top-attractions .txt_title_attractions,
-    .des_list_faq_title h2,
-    #nah_also_like .alsoLike-title,
-    .newsupdate .txtupnews {
-        font-size: 24px;
-        font-weight: 600;
-        line-height: 36px;
-        margin-bottom: 20px;
-        z-index: 0;
-    }
-
-    .des_tailor_title span::after,
-    .txt_underline span::after,
-    .des_travel_style_title span::after,
-    .des_list_hotel_title span::after,
-    .des_our_team_title span::after,
-    .des_gallery_title span::after,
-    .txt_title_attractions span::after,
-    .des_list_faq_title span::after{
-        height: 4px;
-        bottom: 6px;
-    }
-
-    #nah_also_like .alsoLike-title:nth-last-child(-n+2)::after{
-        height: 4px;
-        bottom: 8px;
-    }
-
-    .des_tailor_item{
-        min-height: 276px;
-    }
-
-    .card_text h3 .title_card_explore_trip{
-        height: 150% !important;
-    }
-
-    .card_text{
-        gap: 8px;
-    }
-
-    .txtfrom{
-        font-size: 12px;
-        font-style: normal;
-        font-weight: 500;
-        line-height: 16px;
-    }
-
-    .txt_unit{
-        font-size: 16px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: 24px;
-    }
-    .numbprice{
-        font-size: 18px;
-        font-style: normal;
-        font-weight: 600;
-        line-height: 28px;
-    }
-
-    .des_travel_style_item_title a{
-        font-size: 20px;
-        font-style: normal;
-        font-weight: 600;
-        line-height: 32px;
-    }
-
-    .des_travel_style_item_description{
-        font-size: 14px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: 20px;
-    }
-
-    .des_list_hotel{
-        padding-top: 24px;
-    }
-
-    .des_gallery{
-        padding-top: 80px;
-    }
-
-    .btn_viewm{
-        display: none;
-    }
-
-    .destination_place_body .newsupdate{
-        padding: 80px 0;
-    }
-
-    .des_tailor_bot {
-        margin-bottom: 51px;
-    }
-
-    .des_list_faq_title h2{
-        margin-top: 80px;
-    }
 }
- /*van css new */
-
 @media screen and (max-width: 375px) {
 }

@@ -1,6 +1,16 @@
+.att_page_container {
+    padding-top: 20px;
+}
+.att_main {
+    margin-top: 40px;
+}
 .att_content {
     padding-bottom: 48px;
     border-bottom: 1px solid var(--Neutral-4, #d3dce1);
+    text-align: justify !important;
+}
+.att_content img {
+    width: 100%;
 }
 
 .att_exciting_trip {
@@ -194,7 +204,7 @@
     background: #e88f00;
 }
 .top_att_btn_viewmore {
-    color: var(--Semantic-3, #ffba55);
+    color: var(--Semantic-3, #ffba55) !important;
     font-family: "SF Pro Display";
     font-size: 16px;
     font-style: normal;
@@ -213,7 +223,7 @@
 .top_att_btn_exploremore:hover {
     padding: 12px 20px;
     background: #ffa718;
-    color: #fff;
+    color: #fff !important;
     border-radius: 8px;
 }
 .att_list_hotel {
@@ -283,6 +293,7 @@
     font-style: normal;
     font-weight: 600;
     line-height: 28px;
+    height: 56px;
 }
 
 .att_hotel_content_item_star {
@@ -327,7 +338,9 @@
     color: var(--Primary, #ffa718);
     font-size: 24px;
 }
-
+.att_list_placetogo {
+    margin-bottom: 33px;
+}
 .att_list_placetogo_title {
     display: flex;
     flex-direction: row;
@@ -356,7 +369,6 @@
 
 .att_list_placetogo_item img {
     border-radius: 8px;
-    margin-bottom: 12px;
 }
 
 .att_list_placetogo_item_title h3 {
@@ -376,10 +388,13 @@
     font-style: normal;
     font-weight: 400;
     line-height: 20px;
+    margin-bottom: 32px;
+}
+.att_list_placetogo_item_description p {
+    margin-bottom: unset;
 }
 
 .att_list_cuisine_title {
-    margin-top: 60px;
     margin-bottom: 24px;
     display: flex;
     flex-direction: row;
@@ -404,9 +419,17 @@
     font-weight: 500;
     line-height: 24px;
 }
+/* .att_cuisine_item {
+    margin: 15px;
+    transition: all 0.3s ease-in-out;
+}
+.att_cuisine_item:hover {
+    filter: drop-shadow(0px 12px 24px rgba(255, 167, 24, 0.36));
+} */
 
 .att_cuisine_item img {
     border-radius: 8px;
+    width: 100%;
 }
 
 .att_cuisine_item_intro {
@@ -429,6 +452,18 @@
     font-style: normal;
     font-weight: 600;
     line-height: 32px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.destination_attraction_body .att_cuisine_item_title h3{
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: unset;
 }
 
 .att_cuisine_item_description {
@@ -477,7 +512,7 @@
 }
 
 .att_list_cuisine {
-    margin-bottom: 100px;
+    margin-bottom: 46px;
 }
 .att_exciting_trip_item_image img,
 .des_travel_guide_most_read_item_image img,
@@ -544,11 +579,53 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
+.att_list_travel_guide {
+    margin-bottom: 100px;
+}
+.tooltips_tour {
+    color: var(--Primary, #ffa718);
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    padding: 2px 8px;
+    border-radius: 2px;
+    opacity: 1;
+    background: rgba(255, 167, 24, 0.2);
+    margin-left: 8px;
+    border: none;
+}
+.box_right .att_list_placetogo_item_title,
+.box_right .att_list_placetogo_item_description {
+    margin-left: -15px;
+}
+.att_list_placetogo_item_image {
+    margin-bottom: 12px;
+}
 /* Reponsive */
 @media screen and (max-width: 1170px) {
 }
 
 @media screen and (max-width: 1024px) {
+    .att_exciting_trip_item_intro {
+        margin: 12px 0;
+    }
+}
+
+@media screen and (max-width: 991px) {
+    .destination_attraction_body .unika_att_exciting {
+        display: flex;
+        flex-direction: row-reverse;
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .destination_attraction_body .unika_att_exciting_item {
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        align-items: start;
+    }
 }
 
 @media screen and (max-width: 800px) {
@@ -582,6 +659,10 @@
         height: unset;
         max-height: 340px;
         object-fit: cover;
+    }
+    .box_right .att_list_placetogo_item_title,
+    .box_right .att_list_placetogo_item_description {
+        margin-left: unset;
     }
 }
 

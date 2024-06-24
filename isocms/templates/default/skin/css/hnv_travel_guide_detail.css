@@ -212,7 +212,8 @@
 }
 
 /*van css new*/
-.guide_detail_body .unika_header {
+.guide_detail_body .unika_header,
+.destination_attraction_body .unika_header {
     position: fixed;
     top: 0;
     z-index: 3;

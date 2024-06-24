@@ -36,6 +36,21 @@
                 <li class="breadcrumb-item active des_breadcrumb_active" aria-current="page">
                     {$core->get_Lang('Cruise')}
                 </li>
+            {elseif $show eq 'attractionCountry'}
+                <li class="breadcrumb-item des_breadcrumb_link">
+                    <a href="javascript:void(0);" class="cancel_link">{$core->get_Lang('Destinations')}</a>
+                </li>
+                <li class="breadcrumb-item des_breadcrumb_link">
+                    <a href="javascript:void(0);" class="cancel_link">
+                        {$core->get_Lang($clsCountry->getTitle($country_id))}
+                    </a>
+                </li>
+                <li class="breadcrumb-item des_breadcrumb_link">
+                    <a href="javascript:void(0);" class="cancel_link">{$core->get_Lang('Top attraction')}</a>
+                </li>
+                <li class="breadcrumb-item active des_breadcrumb_active" aria-current="page">
+                    {$core->get_Lang($clsCity->getTitle($city_id))}
+                </li>
             {else} 
                 <li class="breadcrumb-item des_breadcrumb_link">
                     <a href="javascript:void(0);" class="cancel_link">{$core->get_Lang('Destinations')}</a>

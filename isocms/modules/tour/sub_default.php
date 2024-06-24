@@ -2,7 +2,7 @@
 
 function default_default()
 {
-	global $assign_list, $clsISO, $core, $title_page,$description_page;
+	global $assign_list, $clsISO, $core, $title_page, $description_page;
 
 	$clsCountry = new Country();
 	$assign_list["clsCountry"] = $clsCountry;
@@ -72,7 +72,6 @@ function default_default()
 	$get_travel_style = $_GET["travel_style"];
 	$get_departure_time = $_GET["departure_time"];
 	$duration = $_GET["duration"];
-
 
 	if (!empty($get_travel_style)) {
 		$travel_style_conditions = array();
@@ -183,13 +182,13 @@ function default_default()
 	$assign_list["lstCountry"] = $lstCountry;
 	$assign_list['page_view'] = $page_view;
 
-    /*=============Title & Description Page==================*/
-    $title_page = ucwords($slug_country) . " " . $core->get_Lang('Tour Packages');
-    $assign_list["title_page"] = $title_page;
-    $description_page =$title_page;
-    $assign_list["description_page"] = $description_page;
-    $keyword_page =$title_page;
-    $assign_list["keyword_page"] = $keyword_page;
+	/*=============Title & Description Page==================*/
+	$title_page = ucwords($slug_country) . " " . $core->get_Lang('Tour Packages');
+	$assign_list["title_page"] = $title_page;
+	$description_page = $title_page;
+	$assign_list["description_page"] = $description_page;
+	$keyword_page = $title_page;
+	$assign_list["keyword_page"] = $keyword_page;
 }
 
 function default_detaildeparture()
@@ -226,14 +225,51 @@ function default_detaildeparture()
 	$cond = " is_trash = 0 and";
 	$order = " order by order_no";
 
-	$lstReviews = $clsReviews->getAll("$cond is_online = 1 and table_id = $tour_id $order");
+	$lstReviews = $clsReviews->getAll("$cond type ='tour' and is_online = 1 and table_id = $tour_id $order LIMIT 3");
+
+	//    Paginatge
+	$clsPagination = new Pagination();
+	$assign_list["clsPagination"] = $clsPagination;
+
+	$lnk = $_SERVER['REQUEST_URI'];
+	if (isset($_GET['page'])) {
+		$tmp = explode('&', $lnk);
+		$n = count($tmp) - 1;
+		$la_it = '&' . $tmp[$n];
+		$str_len = -strlen($la_it);
+		$link_page = substr($lnk, 0, $str_len);
+	} else {
+		$link_page = $lnk;
+	}
+
+	$recordPerPage = 3;
+	$currentPage = isset($_GET['page']) ? intval($_GET['page']) : 1;
+	$totalItem = $clsReviews->getAll("$cond  type ='tour' and  is_online = 1 and table_id = $tour_id", $clsReviews->pkey);
+	$totalRecord = $totalItem ? count($totalItem) : 0;
+	$assign_list['totalRecord'] = $totalRecord;
+
+	$config = array(
+		'total'	=> $totalRecord,
+		'number_per_page'	=> $recordPerPage,
+		'current_page'	=> $currentPage,
+		'link'	=> str_replace('.html', '/', $link_page),
+		'link_page'	=> $link_page
+	);
+
+	$clsPagination->initianize($config);
+	$page_view = $clsPagination->create_links();
+	$assign_list["page_view"] = $page_view;
+	//    End Paginage
+
+    $oneItem = $clsTour->getOne($tour_id);
+    $travel_style_id = explode('|', $oneItem[8])[1];
+    $limit_day = $oneItem["number_day"];
+
 	$countReview = $clsReviews->countItem("$cond is_online = 1 and table_id = $tour_id $order");
 	$lstTourImage = $clsTourImage->getAll("$cond table_id = $tour_id $order", "tour_image_id, image");
-	$lstTourItinerary = $clsTourItinerary->getAll("$cond tour_id = $tour_id order by day");
-	$oneItem = $clsTour->getOne($tour_id);
-	$travel_style_id = explode('|', $oneItem[8])[1];
 	$lstRelateTour = $clsTour->getAll("$cond tour_id IN (select tour_2_id from default_tour_extension where tour_1_id = $tour_id)");
 	$country_id = $clsTourDestination->getAll("$cond tour_id = $tour_id limit 1", "country_id")[0]["country_id"];
+    $lstTourItinerary = $clsTourItinerary->getAll("$cond tour_id = $tour_id order by day LIMIT $limit_day");
 
 	//    Form Book Tour
 	$lstVisitorType = $clsTourProperty->getAll("is_trash=0 and type='VISITORTYPE' order by order_no asc", $clsTourProperty->pkey);
@@ -354,23 +390,23 @@ function default_detaildeparture()
 		exit();
 	}
 
-    if(isset($_POST['ContactTour']) &&  $_POST['ContactTour']=='ContactTour'){
-        vnSessionDelVar('ContactTour');
-        $cartSessionService= vnSessionGetVar('ContactTour');
-        if(empty($cartSessionService)){
-            $cartSessionService = array();
-        }
-        $assign_list["cartSessionService"] = $cartSessionService;
-        $link=$clsISO->getLink('contact');
-        $cartSessionService['TOUR'][$tour_id] = array();
-        foreach($_POST as $k=>$v){
-            $cartSessionService['TOUR'][$tour_id][$k] = $v;
-        }
-        //$clsISO->print_pre($cartSessionService);die();
-        vnSessionSetVar('ContactTour',$cartSessionService);
-        header('location:'.$link);
-        exit();
-    }
+	if (isset($_POST['ContactTour']) &&  $_POST['ContactTour'] == 'ContactTour') {
+		vnSessionDelVar('ContactTour');
+		$cartSessionService = vnSessionGetVar('ContactTour');
+		if (empty($cartSessionService)) {
+			$cartSessionService = array();
+		}
+		$assign_list["cartSessionService"] = $cartSessionService;
+		$link = $clsISO->getLink('contact');
+		$cartSessionService['TOUR'][$tour_id] = array();
+		foreach ($_POST as $k => $v) {
+			$cartSessionService['TOUR'][$tour_id][$k] = $v;
+		}
+		//$clsISO->print_pre($cartSessionService);die();
+		vnSessionSetVar('ContactTour', $cartSessionService);
+		header('location:' . $link);
+		exit();
+	}
 
 	//    End Form Box Tour
 
@@ -445,6 +481,82 @@ function default_detaildeparture()
 	$assign_list["description_page"] = $description_page;
 	$global_image_seo_page = $clsISO->getPageImageShare($tour_id, 'Tour');
 	$assign_list["global_image_seo_page"] = $global_image_seo_page;
+}
+
+function default_ajaxReviews()
+{
+	$clsReviews = new Reviews();
+	$table_id = $_POST['table_id'];
+
+	$cond = "is_trash = 0 and ";
+	$clsPagination = new Pagination();
+
+	$lnk = $_SERVER['REQUEST_URI'];
+	if (isset($_GET['page'])) {
+		$tmp = explode('&', $lnk);
+		$n = count($tmp) - 1;
+		$la_it = '&' . $tmp[$n];
+		$str_len = -strlen($la_it);
+		$link_page = substr($lnk, 0, $str_len);
+	} else {
+		$link_page = $lnk;
+	}
+
+	$recordPerPage = 3;
+	$currentPage = isset($_POST['page']) ? intval($_POST['page']) : 1;
+	$totalItem = $clsReviews->getAll("$cond  type ='tour' and  is_online = 1 and table_id = $table_id", $clsReviews->pkey);
+	$totalRecord = $totalItem ? count($totalItem) : 0;
+
+	$config = array(
+		'total'	=> $totalRecord,
+		'number_per_page'	=> $recordPerPage,
+		'current_page'	=> $currentPage,
+		'link'	=> str_replace('.html', '/', $link_page),
+		'link_page'	=> $link_page
+	);
+
+	$clsPagination->initianize($config);
+	$page_view = $clsPagination->create_links();
+	$offset = ($currentPage - 1) * $recordPerPage;
+	$limit = " LIMIT $offset,$recordPerPage";
+
+	$content = "";
+
+    $lstReviews = $clsReviews->getAll("$cond  type ='tour' and  is_online = 1 and table_id = $table_id $limit");
+    foreach ($lstReviews as $v) {
+        $stars = '';
+        for ($i = 0; $i < 5; $i++) {
+            if ($i < $v['rates']) {
+                $stars .= '<i class="fa-solid fa-star"></i>';
+            } else {
+                $stars .= '<i class="fa-regular fa-star"></i>';
+            }
+        }
+        $content .= '<div class="review">
+                        <div class="person_review">
+                            <div class="avatar_custom" style="background-color:'.$v['bg_color'].'">'.strtoupper(substr($v['fullname'], 0, 2)).'</div>
+                            <div class="name_reviewer">
+                                <p class="name">'.$v['fullname'].'</p>
+                                <p class="time_review">'.date('d M, Y', $v['review_date']).'</p>
+                            </div>
+                        </div>
+                        <div class="stars_review">
+                            '.$stars.'
+                        </div>
+                        <p class="title_review">'.$v['title'].'</p>
+                        <p class="content_review">'.$v['content'].'</p>
+                        <p class="view_more_review">View more</p>
+                    </div>';
+        }
+	$content .= '<div class="tour-pagination d-flex justify-content-center mt-5">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        ' . $page_view . '
+                    </ul>
+                </nav>
+            </div>';
+
+	echo $content;
 }
 
 function default_sendMail()

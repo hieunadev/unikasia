@@ -2252,7 +2252,7 @@ class Tour extends dbBasic
 			$image = $oneTable['map_tour'];
 			return $clsISO->tripslashImage($image, $w, $h);
 		}
-		$noimage = URL_IMAGES . '/tour/img_maps.png';
+		$noimage = URL_IMAGES . '/none_image.png';
 		return '/files/thumb/' . $w . '/' . $h . '/' . $clsISO->parseImageURL($noimage);
 	}
 	function getUrlImage($pvalTable)
@@ -3636,7 +3636,7 @@ class Tour extends dbBasic
 	}
 	function countTourGolobal($country_id = 0, $city_id = 0, $cat_id = 0, $tour_type_id = 0)
 	{
-		$where = "is_trash=0 and is_online=1";
+		$where = "lang_id = '' and is_trash=0 and is_online=1";
 		if (intval($country_id) > 0) {
 			$where .= " and tour_id IN (SELECT tour_id FROM " . DB_PREFIX . "tour_destination WHERE country_id='$country_id')";
 		}
@@ -4257,7 +4257,7 @@ class Tour extends dbBasic
 //        $more_infomation = $clsISO->getPromotion($tour_id, 'Tour', time(), time(), 'info_promotion');
         $discount = $clsDiscount->getAll("is_trash=0 and is_online=1 and " . time() . " between booking_date_from and booking_date_to order by travel_date_from ASC limit 0,1", 'more_information');
         $more_infomation = json_decode($discount[0]['more_information'], true);
-        $discount_value = "-". ($more_infomation["discount_value"] ?? '0') ."%";
+        $discount_value = $more_infomation["discount_value"] ?? '0';
         return $discount_value;
     }
 

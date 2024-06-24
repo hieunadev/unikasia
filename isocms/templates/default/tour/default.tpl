@@ -226,7 +226,7 @@
                                         </div>
                                         <div class="intro_recent_view_tour">{$lstTourRecent[i].overview|html_entity_decode}</div>
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <div class="from_price"><p class="from_txtp">From</p> <span
+                                            <div class="from_price"><p class="from_txtp">From <span class="text-decoration-line-through">${$lstTourRecent[i].min_price}</span></p> <span
                                                         class="txt_price">US
 												<h3 class="txt_numbprice"> ${$lstTourRecent[i].min_price}</h3> </span></div>
                                             <a href="{$clsTour->getLink($lstTourRecent[i].tour_id)}" alt="tour" title="tour">
