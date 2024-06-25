@@ -377,7 +377,7 @@ function default_bookservices()
 	$assign_list["global_image_seo_page"] = $global_image_seo_page;
 	/*=============Content Page==================*/
 }
-function default_detail()
+function _default_detail()
 {
 	global $assign_list, $_CONFIG, $core, $dbconn, $mod, $act, $_LANG_ID, $title_page, $description_page, $global_image_seo_page, $extLang, $oneCommon, $cruise_id, $show;
 	global $extLang, $clsConfiguration, $clsISO, $package_id, $now_month;
@@ -1136,6 +1136,422 @@ function default_cat()
 	$global_image_seo_page	=	$clsISO->getPageImageShare($cat_id, 'CruiseCat');
 	$assign_list["global_image_seo_page"]	=	$global_image_seo_page;
 	/*=============Content Page==================*/
+}
+function default_detail()
+{
+	global $assign_list, $_CONFIG, $core, $dbconn, $mod, $act, $_LANG_ID, $title_page, $description_page, $global_image_seo_page, $extLang, $oneCommon, $cruise_id, $show, $smarty;
+	global $extLang, $clsConfiguration, $clsISO, $package_id, $now_month;
+	#
+	$clsCountry =   new Country();
+	$smarty->assign('clsCountry', $clsCountry);
+	$clsCruise	=   new Cruise();
+	$smarty->assign('clsCruise', $clsCruise);
+	$clsCruiseItinerary	=   new CruiseItinerary();
+	$smarty->assign('clsCruiseItinerary', $clsCruiseItinerary);
+	$clsCruiseImage	=   new CruiseImage();
+	$smarty->assign('clsCruiseImage', $clsCruiseImage);
+	$clsCruiseProperty	=   new CruiseProperty();
+	$smarty->assign('clsCruiseProperty', $clsCruiseProperty);
+	$clsCruiseItinerary	=   new CruiseItinerary();
+	$smarty->assign('clsCruiseItinerary', $clsCruiseItinerary);
+	$clsCruiseItineraryDay	=   new CruiseItineraryDay();
+	$smarty->assign('clsCruiseItineraryDay', $clsCruiseItineraryDay);
+	$clsCruiseExtension	=   new CruiseExtension();
+	$smarty->assign('clsCruiseExtension', $clsCruiseExtension);
+	$clsTour	=   new Tour();
+	$smarty->assign('clsTour', $clsTour);
+	#
+	$show   =   isset($_GET['show']) ? $_GET['show'] : '';
+	$smarty->assign('show', $show);
+	#
+	if ($show === 'CruiseDetail') {
+		$cruise_id	=   isset($_GET['cruise_id']) ? $_GET['cruise_id'] : '';
+		#
+		if (empty($cruise_id)) {
+			header('location:' . PCMS_URL);
+			exit();
+		}
+	}
+	$smarty->assign('cruise_id', $cruise_id);
+	#
+	$cond		=	"is_trash = 0 AND is_online = 1";
+	$order_by	=	" ORDER BY order_no ASC";
+	#
+	// Tất cả thông tin cruise
+	$cruise_info	=	$clsCruise->getOne($cruise_id);
+	$smarty->assign('cruise_info', $cruise_info);
+	#
+	// Thư viện cruise
+	$cond_gallery		=	$cond;
+	$cond_gallery		.=	" AND table_id = $cruise_id";
+	$arr_cruise_gallery	=	$clsCruiseImage->getAll($cond_gallery . $order_by, $clsCruiseImage->pkey);
+	$smarty->assign('arr_cruise_gallery', $arr_cruise_gallery);
+	#
+	// List cruise material property 
+	$arr_material	=	$clsCruiseProperty->getAll("is_trash=0 and type='CruiseMaterial' order by order_no asc", "$clsCruiseProperty->pkey, title");
+	$list_material 	= 	[];
+	foreach ($arr_material as $row) {
+		$cruise_property_id = 	$row[0];
+		$title 				= 	$row[1];
+		$list_material[$cruise_property_id]	=	$title;
+	}
+	$smarty->assign('list_material', $list_material);
+	#
+	// List cruise itinerary
+	$arr_itinerary	=	$clsCruiseItinerary->getItinerary($cruise_id);
+	$smarty->assign('arr_itinerary', $arr_itinerary);
+	// List cruise itinerary day
+	$arr_itinerary_day	=	[];
+	foreach ($arr_itinerary as $row) {
+		$list_itinerary	=	$clsCruiseItineraryDay->getAll("is_trash = 0 AND cruise_itinerary_id = " . $row['cruise_itinerary_id'] . " ORDER BY order_no ASC", "cruise_itinerary_day_id, cruise_itinerary_id");
+		#
+		$arr_child  =   [];
+		foreach ($list_itinerary as $c) {
+			$arr_child[]	=	$c;
+		}
+		$arr_itinerary_day[]	=   [
+			'info'	=> 	$row,
+			'child' =>  $arr_child
+		];
+	}
+	$smarty->assign('arr_itinerary_day', $arr_itinerary_day);
+	#
+	// List cruise facilities
+	$arr_facilities	=	$clsCruise->getCruiseFa($cruise_id, 'CruiseFacilities');
+	$smarty->assign('arr_facilities', $arr_facilities);
+	#
+	// List cruise pre extension
+	$arr_extension_pre	=	$clsCruiseExtension->getAll("is_trash = 0 AND cruise_id = $cruise_id AND type = '_PRE' $order_by", "tour_id");
+	$smarty->assign('arr_extension_pre', $arr_extension_pre);
+	// List cruise post extension
+	$arr_extension_post	=	$clsCruiseExtension->getAll("is_trash = 0 AND cruise_id = $cruise_id AND type = '_POST' $order_by", "tour_id");
+	$smarty->assign('arr_extension_post', $arr_extension_post);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	// $clsTransport = new Transport();
+	// $assign_list["clsTransport"] = $clsTransport;
+	// $clsCruise = new Cruise();
+	// $assign_list["clsCruise"] = $clsCruise;
+	// $clsCruiseCat = new CruiseCat();
+	// $assign_list["clsCruiseCat"] = $clsCruiseCat;
+	// $clsImage = new Image();
+	// $assign_list["clsImage"] = $clsImage;
+	// $clsCruiseImage = new CruiseImage();
+	// $assign_list["clsCruiseImage"] = $clsCruiseImage;
+	// $clsCruiseItinerary = new CruiseItinerary();
+	// $assign_list["clsCruiseItinerary"] = $clsCruiseItinerary;
+	// $clsCruiseCabin = new CruiseCabin();
+	// $assign_list["clsCruiseCabin"] = $clsCruiseCabin;
+	// $clsCruiseProperty = new CruiseProperty();
+	// $assign_list["clsCruiseProperty"] = $clsCruiseProperty;
+	// $clsCruiseVideo = new CruiseVideo();
+	// $assign_list["clsCruiseVideo"] = $clsCruiseVideo;
+	// $clsCruiseDestination = new CruiseDestination();
+	// $assign_list["clsCruiseDestination"] = $clsCruiseDestination;
+	// $clsCity = new City();
+	// $assign_list["clsCity"] = $clsCity;
+	// $clsProperty = new Property();
+	// $assign_list["clsProperty"] = $clsProperty;
+	// $clsCruisePriceTable = new CruisePriceTable();
+	// $assign_list["clsCruisePriceTable"] = $clsCruisePriceTable;
+	// $clsCruiseSeasonPrice = new CruiseSeasonPrice();
+	// $assign_list["clsCruiseSeasonPrice"] = $clsCruiseSeasonPrice;
+	// $clsCruiseMapImage = new CruiseMapImage();
+	// $assign_list["clsCruiseMapImage"] = $clsCruiseMapImage;
+	// $clsCruiseItineraryDay = new CruiseItineraryDay();
+	// $assign_list["clsCruiseItineraryDay"] = $clsCruiseItineraryDay;
+	// $clsCountryEx = new Country();
+	// $assign_list["clsCountry"] = $clsCountryEx;
+	// $clsPromotion = new Promotion();
+	// $assign_list["clsPromotion"] = $clsPromotion;
+	// $clsReviewsCruise = new ReviewsCruise();
+	// $assign_list["clsReviewsCruise"] = $clsReviewsCruise;
+	// $show = isset($_GET['show']) ? $_GET['show'] : '';
+	// $assign_list['show'] = $show;
+	// #
+	// $cruise_id = isset($_GET['cruise_id']) ? $_GET['cruise_id'] : 0;
+	// $slug = isset($_GET['slug']) ? $_GET['slug'] : '';
+
+	// if (empty($clsCruise->checkOnlineBySlug($cruise_id, $slug))) {
+	// 	header('location:' . DOMAIN_NAME . $extLang);
+	// 	exit();
+	// }
+	// /*viewed_cruise*/
+	// $sessionName = md5('VIEWDEDCRUISE');
+	// $VIEWDED_CRUISE = vnsessionGetVar($sessionName);
+	// if (empty($VIEWDED_CRUISE)) {
+	// 	$VIEWDED_CRUISE = $cruise_id;
+	// } else {
+	// 	$tmp = explode('|', $VIEWDED_CRUISE);
+	// 	if (!in_array($cruise_id, $tmp)) {
+	// 		$VIEWDED_CRUISE .= '|' . $cruise_id;
+	// 	}
+	// 	unset($tmp);
+	// }
+	// vnSessionSetVar($sessionName, $VIEWDED_CRUISE);
+
+	// $assign_list["cruise_id"] = $cruise_id;
+
+	// $table_id = $cruise_id;
+	// $assign_list["table_id"] = $table_id;
+
+	// $oneTable = $clsCruise->getOne($cruise_id, 'title,slug,about,inclusion,exclusion,cruise_policy,booking_policy,child_policy,departure_port,star_number,image,important_notes,listThingAbout,listCruiseBudget,listTravelAs,listRestFa,listCruiseFacilities,listCruiseFaActivities,listCruiseServices,cruise_cat_id,price_3day,price,build,total_cabin,material,cruise_code,file_programme,cruise_type');
+	// $assign_list["oneTable"] = $oneTable;
+
+	// $lstSeason = $clsConfiguration->getAll("setting='high_season_month' and value like '%" . $now_month . "%' limit 0,1", $clsConfiguration->pkey);
+	// if (!empty($lstSeason)) {
+	// 	$season = 'high';
+	// } else {
+	// 	$season = 'low';
+	// }
+	// $SQL = "SELECT MIN(price) FROM " . DB_PREFIX . "cruise_season_price WHERE price > 0 and cruise_id='$cruise_id' and season ='$season'";
+
+
+	// #
+	// $price_check = $dbconn->GetOne($SQL);
+
+	// $sql_cabin = "SELECT cruise_itinerary_id,cruise_cabin_id,group_size_id FROM " . DB_PREFIX . "cruise_season_price WHERE price = '$price_check' and cruise_id='$cruise_id' and season ='$season'";
+
+	// $cabin = $dbconn->GetAll($sql_cabin);
+	// $cruise_itinerary_check_id = $cabin[0]['cruise_itinerary_id'];
+	// $cruise_cabin_check_id = $cabin[0]['cruise_cabin_id'];
+	// $group_size_check_id = $cabin[0]['group_size_id'];
+	// $number_adult_check = $clsCruiseProperty->getNumberAdult($group_size_check_id);
+
+	// $assign_list['cruise_itinerary_check_id'] = $cruise_itinerary_check_id;
+	// $assign_list['cruise_cabin_check_id'] = $cruise_cabin_check_id;
+	// $assign_list['number_adult_check'] = $number_adult_check ? $number_adult_check : 2;
+
+	// if ($clsISO->getCheckActiveModulePackage($package_id, $mod, 'property', 'default', 'ThingAbout')) {
+	// 	$listThingAbout_id = $oneTable['listThingAbout'];
+
+	// 	$listThingAbout = $clsCruiseProperty->getAll("is_trash=0 and cruise_property_id IN ($listThingAbout_id)", $clsCruiseProperty->pkey);
+	// 	$assign_list['listThingAbout'] = $listThingAbout;
+	// }
+
+	// $number_day = isset($_GET['day']) ? $_GET['day'] : '0';
+	// $assign_list['number_day'] = $number_day;
+	// if ($show == 'Itinerary') {
+	// 	$lstCruiseItinerary = $clsCruiseItinerary->getAll("is_trash=0 and is_online=1 and cruise_id='$cruise_id' and number_day='$number_day' order by order_no asc limit 0,1", $clsCruiseItinerary->pkey);
+	// 	$cruise_itinerary_id = $lstCruiseItinerary[0]['cruise_itinerary_id'];
+	// 	$assign_list['cruise_itinerary_id'] = $cruise_itinerary_id;
+
+	// 	$lstPromotion = $clsPromotion->getAll("is_online=1 and clsTable='Cruise' and cruise_itinerary_id='$cruise_itinerary_id' and " . time() . " BETWEEN start_date and end_date order by order_no asc limit 0,1", $clsPromotion->pkey . ",target_id");
+	// 	$promotion_id = ($lstPromotion) ? $lstPromotion[0]['promotion_id'] : 0;
+	// 	$assign_list['promotion_id'] = $promotion_id;
+	// } else {
+	// 	$lstItinerary_cruise = $clsCruiseItinerary->getAll("is_trash=0 and is_online=1 and cruise_id='$cruise_id' order by order_no asc", $clsCruiseItinerary->pkey);
+
+	// 	$cruise_itinerary_id = $lstItinerary_cruise[0][$clsCruiseItinerary->pkey];
+	// 	$assign_list['cruise_itinerary_id'] = $cruise_itinerary_id;
+
+	// 	$lstPromotion = $clsPromotion->getAll("is_online=1 and clsTable='Cruise' and cruise_itinerary_id='$cruise_itinerary_id' order by order_no asc limit 0,1", $clsPromotion->pkey . ",target_id");
+	// 	$promotion_id = ($lstPromotion) ? $lstPromotion[0]['promotion_id'] : 0;
+	// 	$assign_list['promotion_id'] = $promotion_id;
+	// }
+
+	// #
+	// $listCruiseBudget = explode('|', rtrim(ltrim($oneTable['listCruiseBudget'], '|'), '|'));
+	// $assign_list["listCruiseBudget"] = $listCruiseBudget;
+	// #
+	// if ($clsISO->getCheckActiveModulePackage($package_id, $mod, 'property', 'default', 'TravelAs')) {
+	// 	$listTravelAs = $clsCruiseProperty->getAll("is_trash=0 and type='TravelAs' and cruise_property_id IN (" . $oneTable['listTravelAs'] . ") order by order_no ASC", $clsCruiseProperty->pkey);
+	// 	$assign_list["listTravelAs"] = $listTravelAs;
+	// }
+
+	// #
+	// $cruise_cat_id = $oneTable['cruise_cat_id'];
+	// $assign_list["cruise_cat_id"] = $oneTable['cruise_cat_id'];
+
+
+	// #-- Cruise Images Maps
+	// $resMapImage = $clsCruiseMapImage->getAll("is_trash=0 and table_id='$cruise_id' and image <> '' order by order_no desc", $clsCruiseMapImage->pkey);
+	// $assign_list['resMapImage'] = $resMapImage;
+	// unset($resMapImage);
+
+	// if ($clsISO->getCheckActiveModulePackage($package_id, $mod, 'cruise_photo_gallery', 'customize')) {
+	// 	#-- Cruise Images
+	// 	$lstImage = $clsCruiseImage->getAll("is_trash=0 and table_id='$cruise_id' and image <> '' order by order_no desc", $clsCruiseImage->pkey . ',image,title');
+	// 	$assign_list['lstImage'] = $lstImage;
+	// 	unset($lstImage);
+	// 	unset($lstImage);
+	// }
+
+	// if ($clsISO->getCheckActiveModulePackage($package_id, $mod, 'itinerary', 'default')) {
+	// 	// List Cruise Itinerary
+	// 	$clsCruiseItinerary = new CruiseItinerary();
+	// 	$assign_list["clsCruiseItinerary"] = $clsCruiseItinerary;
+	// 	$lstItineraryCruise = $clsCruiseItinerary->getAll("is_trash=0 and is_online=1 and cruise_id='$cruise_id' order by order_no ASC", $clsCruiseItinerary->pkey . ',title,number_day');
+	// 	$assign_list["lstItineraryCruise"] = $lstItineraryCruise;
+	// 	unset($lstItineraryCruise);
+	// }
+
+	// if ($clsISO->getCheckActiveModulePackage($package_id, $mod, 'edit_cabin', 'default')) {
+	// 	#-- Cruise Rooms
+	// 	$lstCruiseCabin = $clsCruiseCabin->getAll("is_trash=0 and is_online=1 and cruise_id = '$cruise_id' order by order_no asc", $clsCruiseCabin->pkey);
+	// 	$assign_list['lstCruiseCabin'] = $lstCruiseCabin;
+	// 	unset($lstCruiseCabin);
+	// }
+
+
+	// $clsCruiseProperty = new CruiseProperty();
+	// $assign_list['clsCruiseProperty'] = $clsCruiseProperty;
+	// $listTypeRoom = $clsCruiseProperty->getAll("is_trash=0 and type='TypeRoom' order by order_no desc", $clsCruiseProperty->pkey);
+
+	// $assign_list['listTypeRoom'] = $listTypeRoom;
+	// unset($listTypeRoom);
+
+	// // List Cruise Other
+	// $lstCruiseOther = $clsCruise->getAll("is_trash=0 and is_online=1 and cruise_cat_id ='$cruise_cat_id' and cruise_id<>'$cruise_id' order by order_no ASC limit 0,6", $clsCruise->pkey . ',title,image,star_number,about,departure_port');
+	// $assign_list["lstCruiseOther"] = $lstCruiseOther;
+	// unset($lstCruiseOther);
+
+
+	// if ($clsISO->getCheckActiveModulePackage($package_id, $mod, 'cruise_video', 'customize')) {
+	// 	// List Video Cruise
+	// 	$lstVideoCruise = $clsCruiseVideo->getAll("is_trash=0 and table_id = '$cruise_id' order by order_no desc", $clsCruiseVideo->pkey . ',url');
+	// 	$assign_list["lstVideoCruise"] = $lstVideoCruise;
+	// 	unset($lstVideo);
+	// }
+	// if (vnSessionExist('duration_0')) {
+	// 	$num_day_price = vnSessionGetVar('duration_0');
+	// } else {
+	// 	//$num_day_price = 2;
+	// 	$num_day_price = '';
+	// }
+	// $assign_list["num_day_price"] = $num_day_price;
+
+	// #- Custom Field
+	// $clsCruiseCustomField = new CruiseCustomField();
+	// $assign_list["clsCruiseCustomField"] = $clsCruiseCustomField;
+	// $listCustomField = $clsCruiseCustomField->getAll("cruise_id='$cruise_id' and fieldtype='CUSTOM' order by order_no ASC", $clsCruiseCustomField->pkey . ',fieldname,fieldvalue');
+	// $assign_list["listCustomField"] = $listCustomField;
+	// unset($listCustomField);
+
+
+	// $ret = $clsCruiseItinerary->getLocationMap($cruise_itinerary_id);
+	// $map_la = $ret['map_la'];
+	// $map_lo = $ret['map_lo'];
+	// $assign_list["map_la"] = $map_la;
+	// $assign_list["map_lo"] = $map_lo;
+	// $script_location = $ret['jscode'];
+	// $assign_list["script_location"] = $script_location;
+
+
+
+
+	// #-- Review
+	// //ini_set("display_errors",1);
+	// $clsPagination = new Pagination();
+	// $clsReviews = new Reviews();
+	// $assign_list["clsReviews"] = $clsReviews;
+
+	// $page = isset($_POST['page']) ? intval($_POST['page']) : 1;
+	// $number_per_page = 3;
+	// #
+	// $cond = "is_trash=0 and is_online=1 and type='cruise' and table_id = '$cruise_id'";
+
+	// $allItem = $clsReviews->getAll($cond, $clsReviews->pkey);
+	// $totalRecord = $allItem ? count($allItem) : 0;
+	// $pageview = $clsPagination->pagination_ajax($totalRecord, $number_per_page, $page, '', '', false);
+
+	// #
+	// $clsCruiseReview = new CruiseReview();
+	// $assign_list['clsCruiseReview'] = $clsCruiseReview;
+	// $lstReviewCruise = $clsCruiseReview->getAll(" cruise_id = '" . $cruise_id . "' limit 0,1", $clsReviewsCruise->pkey . ',cruise_quality,food_drink,cabin_quality,staff_quality,entertainment,worth_the_money');
+	// $assign_list['lstReviewCruise'] = $lstReviewCruise[0];
+	// #
+
+	// $offset = ($page - 1) * $number_per_page;
+	// $LIMIT = " LIMIT $offset,$number_per_page";
+	// $lstReview = $clsReviews->getAll($cond . " order by order_no asc" . $LIMIT, $clsReviews->pkey . ',review_date,fullname,content,title,rates,reg_date,fullname,country_id');
+	// //echo $totalRecord;die('xxxx');
+	// $jsonReview = array();
+	// if (!empty($lstReview)) {
+	// 	foreach ($lstReview as $k => $v) {
+	// 		$jsonReview[] = array(
+	// 			"@type"				=> "Review",
+	// 			"author"			=> $v["fullname"],
+	// 			"datePublished"		=> $clsISO->converTimeToText($v['review_date']),
+	// 			"description"		=> addslashes($v["content"]),
+	// 			"name"				=> $v["title"],
+	// 			"reviewRating"		=> array(
+	// 				"@type"				=> "Rating",
+	// 				"bestRating"		=> "5",
+	// 				"ratingValue"		=> $v["rates"],
+	// 				"worstRating"		=> "1",
+	// 			),
+	// 		);
+	// 	}
+	// }
+	// $assign_list["jsonReview"] = json_encode($jsonReview);
+	// //print_r(json_encode($jsonReview));die;
+	// unset($jsonReview);
+	// $assign_list["lstReview"] = $lstReview;
+	// unset($lstReview);
+	// $assign_list["pageview"] = $pageview;
+	// $assign_list["currentPage"] = 1;
+	// $assign_list["totalRecord"] = $totalRecord;
+	// $assign_list["totalPage"] = ceil($totalRecord / $number_per_page);
+
+	// if (isset($_POST['BookingCabin']) &&  $_POST['BookingCabin'] == 'BookingCabin') {
+	// 	$link = $clsCruise->getLinkBook($cruise_id, $oneTable);
+
+	// 	$arraybookCabin = $_POST;
+	// 	vnSessionSetVar('arraybookCabin', $arraybookCabin);
+
+	// 	header('location:' . $link);
+	// 	exit();
+	// }
+
+
+	// if (isset($_POST['ContactCruise']) &&  $_POST['ContactCruise'] == 'ContactCruise') {
+	// 	vnSessionDelVar('ContactCruise');
+	// 	vnSessionDelVar('ContactTour');
+	// 	vnSessionDelVar('ContactHotel');
+	// 	vnSessionDelVar('ContactVoucher');
+	// 	$cartSessionCruise = vnSessionGetVar('ContactCruise');
+	// 	if (empty($cartSessionCruise)) {
+	// 		$cartSessionCruise = array();
+	// 	}
+	// 	$assign_list["cartSessionCruise"] = $cartSessionCruise;
+
+	// 	$link = $clsCruise->getLinkContact();
+	// 	$cartSessionCruise['CRUISE'][$cruise_id] = array();
+	// 	foreach ($_POST as $k => $v) {
+	// 		$cartSessionCruise['CRUISE'][$cruise_id][$k] = $v;
+	// 	}
+	// 	vnSessionSetVar('ContactCruise', $cartSessionCruise);
+	// 	header('location:' . $link);
+	// 	exit();
+	// }
+
+	// /*=============Title & Description Page==================*/
+	// if ($show == 'Itinerary') {
+	// 	$title_page = $clsCruiseItinerary->getTitleDay($cruise_itinerary_id) . ' | ' . $core->get_Lang('Cruise') . ' | ' . PAGE_NAME;
+	// } else {
+	// 	$title_page = $clsCruise->getTitle($cruise_id, $oneTable) . ' | ' . $core->get_Lang('Cruise') . ' | ' . PAGE_NAME;
+	// }
+
+	// $assign_list["title_page"] = $title_page;
+	// $description_page = $clsISO->getMetaDescription($cruise_id, 'Cruise', $oneTable);
+	// $assign_list["description_page"] = $description_page;
+	// $global_image_seo_page = $clsISO->getPageImageShare($cruise_id, 'Cruise', $oneTable);
+	// $assign_list["global_image_seo_page"] = $global_image_seo_page;
+	// /*=============Content Page==================*/
 }
 function _default_cat()
 {

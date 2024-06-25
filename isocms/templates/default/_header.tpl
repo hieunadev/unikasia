@@ -202,14 +202,24 @@
                         <div class="unika_language">
                             <div class="dropdown">
                                 <div class="nav-link dropdown-toggle unika_div_img" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="https://unikasia.vietiso.com/isocms/templates/default/skin/images/home/flag_us.png" alt="Icon">
+                                    {if $_LANG_ID == "en"}
+                                        <img src="https://unikasia.vietiso.com/isocms/templates/default/skin/images/home/flag_us.png" alt="Icon">
+                                    {else}
+                                        <img src="https://unikasia.vietiso.com/isocms/templates/default/skin/images/home/flag_france.png" alt="Icon">
+                                    {/if}
                                     <i class="fas fa-angle-down ms-1" aria-hidden="true"></i>
                                 </div>
                                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
                                     <li>
-                                        <a class="dropdown-item unika_div_img" href="#">
+                                        {if $_LANG_ID == "en"}
+                                        <a class="dropdown-item unika_div_img" href="/fr">
                                             <img src="https://unikasia.vietiso.com/isocms/templates/default/skin/images/home/flag_france.png" alt="Icon">
                                         </a>
+                                            {else}
+                                        <a class="dropdown-item unika_div_img" href="/">
+                                            <img src="https://unikasia.vietiso.com/isocms/templates/default/skin/images/home/flag_us.png" alt="Icon">
+                                        </a>
+                                        {/if}
                                     </li>
                                 </ul>
                             </div>

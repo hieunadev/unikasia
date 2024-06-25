@@ -2999,12 +2999,12 @@ error_reporting(E_ALL);*/
 				</span>
 			</div>';
 				if($number_child >0){
-					$arr_price_child = $item['arr_price_child'];
+					$arr_price_child = unserialize(html_entity_decode($item['str_price_child']));
 					$str_child = "";
 					foreach($arr_price_child as $k=>$v){
 						$str_child .= (($k > 0)?"; ":"").$v['text'].": ".$v['number']." x ".$clsISO->formatPrice($v['price']).$clsISO->getShortRate();
 					}
-					
+
 				$html.='<div style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-family: arial, sans-serif; font-size: 14px; color: #000000;" data-mce-style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-family: arial, sans-serif; font-size: 14px; color: #000000;">
 				<span style="color: #2e3543;" data-mce-style="color: #2e3543;">
 					<span style="font-size: 14px;" data-mce-style="font-size: 14px;">
@@ -3022,8 +3022,8 @@ error_reporting(E_ALL);*/
 				</span>
 			</div>';*/
 				}
-				if($number_infant >0){
-					$arr_price_infant = $item['arr_price_infant'];
+                if($number_infant >0){
+					$arr_price_infant = unserialize(html_entity_decode($item['str_price_infant']));
 					$str_infant = "";
 					foreach($arr_price_infant as $k=>$v){
 						$str_infant .= (($k > 0)?"; ":"").$v['text'].": ".$v['number']." x ".$clsISO->formatPrice($v['price']).$clsISO->getShortRate();

@@ -210,6 +210,7 @@
 	font-style: normal;
 	font-weight: 500;
 	line-height: 20px;
+    max-height: 62px;
 }
 
 /* CSS Related Tour */
@@ -721,9 +722,6 @@
 .tag-link {
     list-style-type: none;
     margin-left: 8px;
-}
-
-.tag-link a {
 }
 
 /*

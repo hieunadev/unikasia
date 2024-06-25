@@ -51,7 +51,7 @@ class Country extends dbBasic
     {
         global $_LANG_ID;
         $clsCity = new City();
-        $res = $clsCity->getAll("is_trash=0 and country_id = '$country_id' order by order_no desc limit 0,6", $clsCity->pkey);
+        $res = $clsCity->getAll("is_trash=0 and is_online=1 and country_id = '$country_id' order by order_no asc", $clsCity->pkey);
         return $res;
     }
     function getMetaDescription($pvalTable, $one = null)

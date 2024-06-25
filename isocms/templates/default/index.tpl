@@ -81,7 +81,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.css">
 -->
 
-
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     {if IS_COMPRESS_CSS eq 0}
     <link rel="preload" href="{$URL_CSS}/iso.core.css?v={$upd_version}" as="style" />
     <link rel="stylesheet" href="{$URL_CSS}/iso.core.css?v={$upd_version}" />
@@ -178,10 +178,10 @@
 
     <!-- JS CSS LINK WEB -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/umd/popper.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"></script>
+{*    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"></script>*}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.js"></script>
     <!--    {*<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>*}-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+{*    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>*}
     <script src="https://kit.fontawesome.com/42aa736347.js" crossorigin="anonymous"></script>
 
 
@@ -220,15 +220,17 @@
     <link rel="preload" href="{$URL_JS}/fancybox4/fancybox.umd.js?v={$upd_version}" as="script" />
     <link rel="stylesheet" href="{$URL_JS}/fancybox4/fancybox.css?v={$upd_version}" />
     <script src="{$URL_JS}/fancybox4/fancybox.umd.js?v={$upd_version}"></script>
-
+    
+    <script src="{$URL_JS}/jquery.validate.min.js?v={$upd_version}"></script>
 
     {if $mod eq 'member'}
     <link rel="preload" href="{$URL_JS}/jquery.member.validate.js?v={$upd_version}" as="script" />
     <link rel="preload" href="{$URL_JS}/jquery.form.js?v={$upd_version}" as="script" />
     <link rel="preload" href="{$URL_JS}/jquery.login.js?v={$upd_version}" as="script" />
     <script src="{$URL_JS}/jquery.member.validate.js?v={$upd_version}"></script>
+     <script src="{$URL_JS}/jquery.member.validate.js?v={$upd_version}"></script>
     <script src="{$URL_JS}/jquery.form.js?v={$upd_version}"></script>
-    <script src="{$URL_JS}/jquery.login.js?v={$upd_version}"></script>
+    
     {/if}
     <script src="{$URL_JS}/common-new.js"></script>
     {if $mod ne 'homepackage' and $mod ne 'home'}

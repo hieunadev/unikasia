@@ -4900,7 +4900,7 @@ function default_ajLoadTourPriceGroup(){
 		echo '0|||'.$clsISO->formatPrice($price_single); die();
 	}elseif($tp=='Save_Deposit'){
 		$_LANG_ID=isset($_GET['lang'])?$_GET['lang']:'';
-		$deposit = $_POST['deposit'];
+		$deposit = $_POST['deposit'] ?? 0;
 		$clsTour->updateOne($tour_id,"deposit='".$deposit."'");
 		echo '0|||'.$deposit; die();
 	}elseif($tp=='Save_PriceAds'){

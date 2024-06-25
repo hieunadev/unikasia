@@ -260,7 +260,7 @@
 								{if $clsConfiguration->getValue($SitePay_CashDesc)}
 								<div class="describe active">
                                         <span>
-                                            {$clsConfiguration->getValue($SitePay_CashDesc)}
+                                            {$clsConfiguration->getValue($SitePay_CashDesc)|html_entity_decode}
                                         </span>
 								</div>
 								{/if}
@@ -277,7 +277,7 @@
 								{if $clsConfiguration->getValue($SitePay_BankDesc)}
 								<div class="describe">
                                         <span>
-                                            {$clsConfiguration->getValue($SitePay_BankDesc)}
+                                            {$clsConfiguration->getValue($SitePay_BankDesc)|html_entity_decode}
                                         </span>
 								</div>
 								{/if}

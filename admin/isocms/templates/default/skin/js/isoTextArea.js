@@ -1,6 +1,7 @@
 (function($){
 	$.fn.isoTextArea = function() {
 		var $editorID = $(this).attr('id');
+
 		tinyMCE.init({
 			mode: "exact",
 			height : "300px",

@@ -1,3 +1,8 @@
+{assign var=Copyright value=Copyright_|cat:$_LANG_ID}
+{assign var=CompanyAddress value=CompanyAddress_|cat:$_LANG_ID}
+{assign var=CompanyName value=CompanyName_|cat:$_LANG_ID}
+{assign var=CompanyAddress1 value=CompanyAddress1_|cat:$_LANG_ID}
+{assign var = DescriptionZoneFooter value = DescriptionZoneFooter_|cat:$_LANG_ID}
 <div class="unika_footer">
     <div class="container">
         <div class="unika_footer_1 d-flex">
@@ -12,18 +17,18 @@
                     <input type="button" class="unika_btn_search" value="Submit">
                 </form>
                 <div class="unika_1_left_link d-flex flex-column">
-                    <a href="#" class="unikasia_travel">Unikasia Travel</a>
+                    <a href="#" class="unikasia_travel">{$clsConfiguration->getValue($CompanyName)}</a>
                     <a href="#" class="unikasia_footer_link">
-                        4-5 floors, 13 Kim Mã Thượng, Ba Đình dist, Hanoi, Vietnam
+                        {$clsConfiguration->getValue($CompanyAddress1)}
                     </a>
-                    <a href="#" class="unikasia_footer_link">
-                        www.hanoivoyage.com
+                    <a href="https://{$clsConfiguration->getValue('CompanyWebsite')}" class="unikasia_footer_link">
+                        {$clsConfiguration->getValue('CompanyWebsite')}
                     </a>
-                    <a href="#" class="unikasia_footer_link">
-                        info@hanoivoyage.com
+                    <a href="mailto:{$clsConfiguration->getValue('CompanyEmail')}" class="unikasia_footer_link">
+                        {$clsConfiguration->getValue('CompanyEmail')}
                     </a>
-                    <a href="#" class="unikasia_footer_link">
-                        +84 243 715 3012
+                    <a href="tel:{$clsConfiguration->getValue('CompanyPhone')}" class="unikasia_footer_link">
+                        {$clsConfiguration->getValue('CompanyPhone')}
                     </a>
                 </div>
             </div>
@@ -143,7 +148,7 @@
         <div class="unika_footer_2 d-flex justify-content-between">
             <div class="unika_footer_2_left d-flex align-items-center">
                 <a class="unika_logo_footer" href="/">
-                    <img src="https://unikasia.vietiso.com/uploads//Demo/image-6.png" alt="Logo" width="150" height="56">
+                    <img src="{$clsConfiguration->getValue('FooterLogo')}" alt="Logo" width="150" height="56">
                 </a>
                 <div class="unika_footer_2_txt d-flex flex-column">
                     <span>International tour operator approved by the National Tourism Administration in Vietnam.</span>

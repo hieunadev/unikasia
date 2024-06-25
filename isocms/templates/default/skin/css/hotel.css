@@ -1017,6 +1017,11 @@ padding: 12px 0;
 	line-height: 20px;
 }
 
+.revVier .address .box_body_adress img {
+    width: 16px;
+    height: 18px;
+}
+
 .revVier .box_body-hotel p {
     font-size: 14px;
     font-weight: 400;

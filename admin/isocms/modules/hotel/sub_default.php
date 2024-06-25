@@ -1719,7 +1719,9 @@ function default_property(){
 	$pkeyTable = $clsClassTable->pkey ;
 	$assign_list["clsClassTable"] = $clsClassTable;
 	$assign_list["pkeyTable"] = $pkeyTable;
-	
+    $clsHotelProperty = new HotelProperty();
+    $assign_list["clsHotelProperty"] = $clsHotelProperty;
+
 	$type_list = isset($_GET['type_list']) ? $_GET['type_list'] : '';
 	$assign_list["type_list"] = $type_list;
 	#
@@ -1840,6 +1842,12 @@ function default_property(){
 			header('location: '.PCMS_URL.'/?mod='.$mod.'&act='.$act.'&type='.$type.$pUrl.'&message=DeleteSuccess');
 		}
 	}
+
+    if ($type == "HotelCategory") {
+        $lstHotelProperty = $clsHotelProperty->getAll($cond." order by ".$orderBy.$limit);
+        $assign_list["lstHotelProperty"] = $lstHotelProperty;
+    }
+
 	#-------End Page Divide-----------------------------------------------------------
 	$allItem = $clsClassTable->getAll($cond." order by ".$orderBy.$limit);//print_r($cond." order by ".$orderBy.$limit);die();
 	$assign_list["allItem"] = $allItem;

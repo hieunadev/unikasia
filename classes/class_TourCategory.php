@@ -93,7 +93,7 @@ class TourCategory extends dbBasic
 		}
 		$slug = $oneTable['slug'];
 		if ($act == "home") {
-			return PCMS_URL . 'tour/&travel_style=' . $pvalTable;
+			return $extLang . '/tour/&travel_style=' . $pvalTable;
 		}
 		if (!empty($country_id)) {
 			$clsCountry	=	new Country();

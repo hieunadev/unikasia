@@ -4,7 +4,7 @@
             <h2 class="txthnvoyces txt_underline">{$clsConfiguration->getValue('TitleAgenceHyour_'|cat:$_LANG_ID)|html_entity_decode}</h2>
             <div class="txtdeschnvoyces">{$clsConfiguration->getValue('IntroAgenceHyour_'|cat:$_LANG_ID)|html_entity_decode}</div>
             <div class="btn_viewm text-center">
-                <a href="#" class="btn btn_startnow btn-hover-home">{$core->get_Lang("LET'S GO. START PLANNING NOW!")} <i class="fa-solid fa-right-long"
+                <a href="/tailor-made-tour" class="btn btn_startnow btn-hover-home">{$core->get_Lang("LET'S GO. START PLANNING NOW!")} <i class="fa-solid fa-right-long"
                                                                                       style="color: #ffffff; margin-left: 8px;"></i></a>
             </div>
         </div>
@@ -40,10 +40,10 @@
                             {section name=i loop=$lstTourCate}
                                 <div class="item">
                                     <a href="{$clsTourCat->getLink($lstTourCate[i].tourcat_id,'','home')}">
-                                        <div class="nah_explore_img"><img class="travel-style_img" src="{$lstTourCate[i].image}" alt=""></div>
+                                        <div class="nah_explore_img"><img class="travel-style_img" src="{$lstTourCate[i].image}" alt="{$lstTourCate[i].title}"></div>
                                         <div class="travel-style_content">
                                             <h3 class="txt-hover-home">{$lstTourCate[i].title}</h3>
-                                            <p class="txt_intro_travel_style">{$clsISO->limit_textIso($lstTourCate[i].intro|@html_entity_decode, 13)}</p>
+                                            <div class="txt_intro_travel_style">{$lstTourCate[i].intro|@html_entity_decode}</div>
                                         </div>
                                     </a>
                                 </div>
@@ -323,7 +323,7 @@
                 <div class="col-lg-6 d-flex flex-column justify-content-center txt_readylets">
                     <h2 class="txtready">{$clsConfiguration->getValue('TitleVideoPerfect_'|cat:$_LANG_ID)|html_entity_decode}</h2>
                     <div class="txtcomt">{$clsConfiguration->getValue('IntroVideoPerfect_'|cat:$_LANG_ID)|html_entity_decode}</div>
-                    <a href="/customised" class="btn readyToStart-btn">{$core->get_Lang('LET’S PLAN YOUR TRIP')}
+                    <a href="/tailor-made-tour" class="btn readyToStart-btn">{$core->get_Lang('LET’S PLAN YOUR TRIP')}
                         <img class="ms-2" src="https://unikasia.vietiso.com/isocms/templates/default/skin/images/hotel/ArrowRight.svg" alt="error">
                     </a>
                 </div>
@@ -332,6 +332,7 @@
 
     </section>
 </main>
+
 <link rel="stylesheet" href="{$URL_JS}/select/select.css"/>
 <script src="{$URL_JS}/select/select.js"></script>
 <script>

@@ -170,7 +170,7 @@
                                 <h2 class="txt_daytours">Day by day itinerary</h2>
                                 <button class="btn btn-expand">Expand all</button>
                             </div>
-                            <div class="accordion" id="accordionExample">
+                            <div class="accordion">
                                 <ul class="timeline">
                                     {section name=i loop=$lstTourItinerary}
                                         <li>
@@ -179,14 +179,13 @@
                                                     <button class="accordion-button collapsed" type="button"
                                                             data-bs-toggle="collapse"
                                                             data-bs-target="#collapse{$lstTourItinerary[i].tour_itinerary_id}"
-                                                            aria-expanded="true"
+                                                            aria-expanded="false"
                                                             aria-controls="collapse{$lstTourItinerary[i].tour_itinerary_id}">
                                                         Day {$lstTourItinerary[i].day}: {$lstTourItinerary[i].title}
                                                     </button>
                                                 </h2>
                                                 <div id="collapse{$lstTourItinerary[i].tour_itinerary_id}"
-                                                     class="accordion-collapse collapse"
-                                                     data-bs-parent="#accordionExample">
+                                                     class="accordion-collapse collapse">
                                                     <div class="accordion-body">
                                                         {$lstTourItinerary[i].content|html_entity_decode}
                                                         <div class="meal_stay">Meal: <span class="title_meal">{$clsTourItinerary->getTitleMeal($lstTourItinerary[i].tour_itinerary_id,'','only_title_meal')} </span>&#160; {if $lstTourItinerary[i].title_stay}| &#160; Stay: <span class="title_stay">{$lstTourItinerary[i].title_stay}</span>{/if}</div>
@@ -521,10 +520,14 @@
                                 </div>
                                 <div class="intro_recent_view_tour">{$lstRelateTour[i].overview|html_entity_decode}</div>
                                 <div class="d-flex justify-content-between align-items-center" style="margin-top: 20px">
+                                    {if $lstRelateTour[i].min_price}
                                     <div class="from_price"><p class="from_txtp">From <span class="text-decoration-line-through">${$lstRelateTour[i].min_price}</span></p> <span
                                                 class="txt_price">US
                                             <h3 class="txt_numbprice"> ${$clsTour->getPriceAfterDiscount($lstRelateTour[i].tour_id)}</h3> </span>
                                     </div>
+                                    {else}
+                                        <h3 class="txt_numbprice">Contact</h3>
+                                    {/if}
                                     <a href="{$clsTour->getLink($lstRelateTour[i].tour_id)}" alt="tour"
                                        title="tour">
                                         <button class="btn btn_viewtour btn-hover-home">View Tour <i
@@ -571,9 +574,13 @@
                                 </div>
                                 <div class="intro_recent_view_tour">{$lstTourRecent[i].overview|html_entity_decode}</div>
                                 <div class="d-flex justify-content-between align-items-center" style="margin-top: 40px">
+                                    {if $lstTourRecent[i].min_price}
                                     <div class="from_price"><p class="from_txtp">From <span class="text-decoration-line-through">${$lstTourRecent[i].min_price}</span></p> <span
                                                 class="txt_price">US
 												<h3 class="txt_numbprice"> ${$clsTour->getPriceAfterDiscount($lstTourRecent[i].tour_id)}</h3> </span></div>
+                                    {else}
+                                        <h3 class="txt_numbprice">Contact</h3>
+                                    {/if}
                                     <a href="{$clsTour->getLink($lstTourRecent[i].tour_id)}" alt="tour" title="tour">
                                         <button class="btn btn_viewtour btn-hover-home">View Tour <i
                                                     class="fa-regular fa-arrow-right" style="color: #ffffff;"
@@ -640,6 +647,7 @@
         </div>
     </div>
 </main>
+
 <script type="text/javascript">
     var $tour_id = '{$tour_id}';
     var $Loading = '{$core->get_Lang("Loading")}';
@@ -704,16 +712,16 @@
             }
 
             $('.btn-expand').click(function() {
-                const $accordionCollapse = $(".accordion-collapse.collapse");
-                $accordionCollapse.addClass('show');
+                const accordionCollapse = $(this).parents(".daytour").find(".accordion-collapse.collapse");
+                accordionCollapse.addClass('show');
                 if ($(this).hasClass('expand')) {
                     $(this).removeClass('expand').text('Expand all');
-                    $accordionCollapse.removeClass('show');
-                    $(".accordion-button").addClass('collapsed')
+                    accordionCollapse.removeClass('show');
+                    $(this).parents(".daytour").find(".accordion-button").addClass('collapsed')
                 } else {
                     $(this).addClass('expand').text('Collapse all');
-                    $accordionCollapse.addClass('show');
-                    $(".accordion-button").removeClass('collapsed')
+                    accordionCollapse.addClass('show');
+                    $(this).parents(".daytour").find(".accordion-button").removeClass('collapsed')
                 }
             });
         });

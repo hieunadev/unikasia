@@ -1,3 +1,10 @@
+{literal}
+    <style>
+        .fill_data_box {
+            min-height: unset;
+        }
+    </style>
+{/literal}
 <div class="box_title_trip_code">
     <div class="row d-flex full-height">
         <div class="fill_data_box">

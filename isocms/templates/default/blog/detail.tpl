@@ -241,7 +241,10 @@
 										</div>
                                     <div class="d-flex justify-content-between align-items-center" style="margin-bottom: 24px">
                                         <div class="from_price">
-                                            <p class="from_txtp">From</p>
+                                            
+                                            <p class="from_txtp">From 
+                                                <!-- <span class="text-decoration-line-through">${$lstTourExtension[i].min_price}</span> -->
+                                        </p>
                                             <span class="txt_price">US
 												<h3 class="txt_numbprice">${$clsTour->getPriceAfterDiscount($lstTourExtension[i].tour_id)}</h3>
 												</span>
@@ -464,6 +467,10 @@ $(document).ready(function() {
 		document.addEventListener('DOMContentLoaded', (event) => {
     const beachbreakLink = document.getElementById('beachbreak-link');
     beachbreakLink.textContent = '#' + beachbreakLink.textContent;
+});
+
+$(document).ready(function() {
+  $('.txt_overviewtour p:nth-child(2)').hide(); // Ẩn thẻ <p> thứ hai
 });
 		
 

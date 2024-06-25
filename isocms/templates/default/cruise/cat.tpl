@@ -27,16 +27,15 @@
                                     </div>
                                     <div class="list_item">
                                         {if $list_country}
-                                        {foreach from=$list_country key=key item=item}
-                                        {assign var="CountryID" value=$item.country_id}
-                                        {assign var="CountryTitle" value=$clsCountry->getTitle($CountryID)}
-                                        {assign var="CountryLink" value=$clsCountry->getLink($CountryID, 'Cruise')}
-
-                                        <label class="item_radio">{$CountryTitle}
-                                            <input type="radio" class="typeSearch" name="country_id" id="radio-{$CountryTitle}" value="{$CountryID}" {if $CountryID==$country_id} checked{/if} data-link="{$CountryLink}" />
-                                            <span class="checkmark"></span>
-                                        </label>
-                                        {/foreach}
+                                            {foreach from=$list_country key=key item=item}
+                                                {assign var="CountryID" value=$item.country_id}
+                                                {assign var="CountryTitle" value=$clsCountry->getTitle($CountryID)}
+                                                {assign var="CountryLink" value=$clsCountry->getLink($CountryID, 'Cruise')}
+                                                <label class="item_radio">{$CountryTitle}
+                                                    <input type="radio" class="typeSearch" name="country_id" id="radio-{$CountryTitle}" value="{$CountryID}" {if $CountryID==$country_id} checked{/if} data-link="{$CountryLink}" />
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            {/foreach}
                                         {/if}
                                     </div>
                                 </div>
@@ -46,18 +45,18 @@
                                     </div>
                                     <div class="list_item">
                                         {if $list_duration}
-                                        {foreach from=$list_duration key=key item=item}
-                                        <label class="item_checkbox">
-                                            {if $item eq 1}
-                                            {$item} day
-                                            {else}
-                                            {$item} days
-                                            {/if}
-                                            <input type="checkbox" class="typeSearch" name="duration_filter_id[]" value="{$item}" {if $clsISO->checkInArray($duration_filter_id,
-                                            $item)}checked{/if}/>
-                                            <span class="checkmark"></span>
-                                        </label>
-                                        {/foreach}
+                                            {foreach from=$list_duration key=key item=item}
+                                                <label class="item_checkbox">
+                                                {if $item eq 1}
+                                                    {$item} day
+                                                {else}
+                                                    {$item} days
+                                                {/if}
+                                                    <input type="checkbox" class="typeSearch" name="duration_filter_id[]" value="{$item}" {if $clsISO->checkInArray($duration_filter_id,
+                                                    $item)}checked{/if}/>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            {/foreach}
                                         {/if}
                                     </div>
                                 </div>
@@ -107,20 +106,15 @@
                                     <div class="d-flex flex-column justify-content-start">
                                         <div class="list_item">
                                             {if $arr_cruise_cat_county}
-                                            {foreach from=$arr_cruise_cat_county key=key item=item}
-                                            {assign var="CatID" value=$item.cat_id}
-                                            {assign var="CatTitle" value=$clsCruiseCat->getTitle($CatID)}
-                                            <label class="item_checkbox checkSizeFilter">
-                                                {$CatTitle}
-                                                <input type="checkbox" class="typeSearch" name="type_filter_id[]" value="{$CatID}" {if $cruise_cat_id ne '' && $cruise_cat_id eq $CatID} checked {else} {if $clsISO->checkInArray($type_filter_id,
-                                                $CatID)}
-                                                checked
-                                                {/if}
-                                                {/if}
-                                                />
-                                                <span class="checkmark"></span>
-                                            </label>
-                                            {/foreach}
+                                                {foreach from=$arr_cruise_cat_county key=key item=item}
+                                                    {assign var="CatID" value=$item.cat_id}
+                                                    {assign var="CatTitle" value=$clsCruiseCat->getTitle($CatID)}
+                                                    <label class="item_checkbox checkSizeFilter">
+                                                        {$CatTitle}
+                                                            <input type="checkbox" class="typeSearch" name="type_filter_id[]" value="{$CatID}" {if $cruise_cat_id ne '' && $cruise_cat_id eq $CatID} checked {else} {if $clsISO->checkInArray($type_filter_id, $CatID)}checked{/if}{/if} />
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                {/foreach}
                                             {/if}
                                         </div>
                                     </div>
@@ -183,137 +177,137 @@
                         {/if}
                         <div class="list_cruises d-flex flex-column ">
                             {if $listCruise}
-                            {foreach from=$listCruise key=key item=item}
-                            {assign var="CruiseID" value=$item.cruise_id}
-                            {assign var="CruiseTitle" value=$clsCruise->getTitle($CruiseID)}
-                            {assign var="CruiseLink" value=$clsCruise->getLink($CruiseID)}
-                            <div class="item_cruises d-flex  justify-content-between align-items-start">
-                                <a href="{$CruiseLink}" title="{$CruiseTitle}" class="div_img img_cruises">
-                                    <img src="{$clsCruise->getImage($CruiseID, 353, 244)}" alt="{$CruiseTitle}" width="353" height="244" />
-                                </a>
-                                <div class="content_cruise d-flex ">
-                                    <div class="content d-flex flex-column ">
-                                        <div class="d-flex flex-column unika_title_star">
-                                            <h3>
-                                                <a href="{$CruiseLink}" class="title ellipsis_2" title="{$CruiseTitle}">
-                                                    {$CruiseTitle}
-                                                </a>
-                                            </h3>
-                                            <div class="rating d-flex justify-content-start  align-items-center">
-                                                {if $item.star_number >= 3}
-                                                {section name=i loop=$item.star_number}
-                                                <div class="div_img">
-                                                    <i class="fa-sharp fa-solid fa-star"></i>
-                                                </div>
-                                                {/section}
-                                                {/if}
-                                            </div>
-                                        </div>
-                                        <div class="d-flex justify-content-start align-items-start ">
-                                            <div class="div_img img_icon_content">
-                                                <i class="fa-sharp fa-solid fa-location-dot"></i>
-                                            </div>
-                                            <div class="ellipsis_2 txt_content cru_place_content">
-                                                <span>Place to visit:</span>
-                                                {$item.place_visit}
-                                            </div>
-                                        </div>
-                                        <div class="d-flex justify-content-start align-items-center ">
-                                            <div class="div_img img_icon_content">
-                                                <i class="fa-light fa-door-open"></i>
-                                            </div>
-                                            <div class="d-flex  justify-content-start ellipsis_1 txt_content">
-                                                <span>Cabin:</span> {$item.total_cabin}
-                                            </div>
-                                        </div>
-                                        <div class="d-flex justify-content-start align-items-center ">
-                                            <div class="div_img img_icon_content">
-                                                <img src="{URL_IMAGES}/uni_van/images/cruises/material.svg" alt="Icon" />
-                                            </div>
-                                            <div class="d-flex justify-content-start ellipsis_1 txt_content">
-                                                <span>Material:</span> {$clsCruiseProperty->getTitle($item.material)}
-                                            </div>
-                                        </div>
-                                        <div class="other d-flex flex-column">
-                                            <div class="d-flex justify-content-start align-items-center ">
-                                                <div class="box_inclusion">
-                                                    {$clsCruise->getInclusion($CruiseID)}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="highlights d-flex justify-content-start align-items-end flex-wrap">
-                                            <span>Highlights</span>
-                                            <div class="list_icon d-flex justify-content-start align-items-end flex-wrap">
-                                                {assign var="arr_CruiseFa" value=$clsCruise->getCruiseFa($CruiseID, 'CruiseFacilities')}
-                                                {if $arr_CruiseFa}
-                                                {assign var="count" value=0}
-                                                {foreach from=$arr_CruiseFa key=k item=i}
-                                                <div class="div_img img_highlight img_highlight_1">
-                                                    <img src="{$i.image}" alt="Icon" />
-                                                    <span class="txt_icon">{$i.title}</span>
-                                                </div>
-                                                {assign var="count" value=$count+1}
-                                                {if $count >= 5}
-                                                {break}
-                                                {/if}
-                                                {/foreach}
-                                                {if $arr_CruiseFa|@count > 5}
-                                                <div class="icon_other">+{$arr_CruiseFa|@count-5}</div>
-                                                <div class="unika_icon_more">
-                                                    <div class="unika_icon_more_div">
-                                                        {foreach from=$arr_CruiseFa key=k1 item=i1 name=RemaingLoop}
-                                                        {if $smarty.foreach.RemaingLoop.index >= 5}
-                                                        <div class="div_img img_highlight">
-                                                            <img src="{$i1.image}" alt="Icon" />
-                                                            <span class="txt_icon">{$i1.title}</span>
+                                {foreach from=$listCruise key=key item=item}
+                                    {assign var="CruiseID" value=$item.cruise_id}
+                                    {assign var="CruiseTitle" value=$clsCruise->getTitle($CruiseID)}
+                                    {assign var="CruiseLink" value=$clsCruise->getLink2($CruiseID)}
+                                    <div class="item_cruises d-flex  justify-content-between align-items-start">
+                                        <a href="{$CruiseLink}" title="{$CruiseTitle}" class="div_img img_cruises">
+                                            <img src="{$clsCruise->getImage($CruiseID, 353, 244)}" alt="{$CruiseTitle}" width="353" height="244" />
+                                        </a>
+                                        <div class="content_cruise d-flex ">
+                                            <div class="content d-flex flex-column ">
+                                                <div class="d-flex flex-column unika_title_star">
+                                                    <h3>
+                                                        <a href="{$CruiseLink}" class="title ellipsis_2" title="{$CruiseTitle}">
+                                                            {$CruiseTitle}
+                                                        </a>
+                                                    </h3>
+                                                    <div class="rating d-flex justify-content-start  align-items-center">
+                                                        {if $item.star_number >= 3}
+                                                        {section name=i loop=$item.star_number}
+                                                        <div class="div_img">
+                                                            <i class="fa-sharp fa-solid fa-star"></i>
                                                         </div>
+                                                        {/section}
                                                         {/if}
-                                                        {/foreach}
                                                     </div>
                                                 </div>
-                                                {/if}
-                                                {/if}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="money_cruise d-flex flex-column align-items-end justify-content-between">
-                                        <div class="reviews d-flex justify-content-end align-items-end flex-column">
-                                            <div class="d-flex justify-content-end align-items-center item_evaluate">
-                                                <div class="d-flex flex-column justify-content-end ">
-                                                    <span class="span_review">
-                                                        {$clsReviews->getReviews($CruiseID, 'txt_review', 'cruise')}
-                                                    </span>
-                                                    <span class="span_quantity">
-                                                        ({$clsReviews->getReviews($CruiseID, '', 'cruise')} reviews)
-                                                    </span>
+                                                <div class="d-flex justify-content-start align-items-start ">
+                                                    <div class="div_img img_icon_content">
+                                                        <i class="fa-sharp fa-solid fa-location-dot"></i>
+                                                    </div>
+                                                    <div class="ellipsis_2 txt_content cru_place_content">
+                                                        <span>Place to visit:</span>
+                                                        {$item.place_visit}
+                                                    </div>
                                                 </div>
-                                                <div class="average_reviews d-flex align-items-center justify-content-center">
-                                                    {$clsReviews->getReviews($CruiseID, 'avg_point', 'cruise')}
+                                                <div class="d-flex justify-content-start align-items-center ">
+                                                    <div class="div_img img_icon_content">
+                                                        <i class="fa-light fa-door-open"></i>
+                                                    </div>
+                                                    <div class="d-flex  justify-content-start ellipsis_1 txt_content">
+                                                        <span>Cabin:</span> {$item.total_cabin}
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="price d-flex flex-column">
-                                                <span class="txt_money">Price per person from</span>
-                                                <div class="txt_money_cruise d-flex justify-content-end align-items-end">
-                                                    <span>
-                                                        {if $clsCruiseItinerary->getMinPriceItinerary($CruiseID) eq 0}
-                                                        {$core->get_Lang('Contact')}
-                                                        {else}
-                                                        US $ {$clsCruiseItinerary->getMinPriceItinerary($CruiseID)}
+                                                <div class="d-flex justify-content-start align-items-center ">
+                                                    <div class="div_img img_icon_content">
+                                                        <img src="{URL_IMAGES}/uni_van/images/cruises/material.svg" alt="Icon" />
+                                                    </div>
+                                                    <div class="d-flex justify-content-start ellipsis_1 txt_content">
+                                                        <span>Material:</span> {$clsCruiseProperty->getTitle($item.material)}
+                                                    </div>
+                                                </div>
+                                                <div class="other d-flex flex-column">
+                                                    <div class="d-flex justify-content-start align-items-center ">
+                                                        <div class="box_inclusion">
+                                                            {$clsCruise->getInclusion($CruiseID)}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="highlights d-flex justify-content-start align-items-end flex-wrap">
+                                                    <span>Highlights</span>
+                                                    <div class="list_icon d-flex justify-content-start align-items-end flex-wrap">
+                                                        {assign var="arr_CruiseFa" value=$clsCruise->getCruiseFa($CruiseID, 'CruiseFacilities')}
+                                                        {if $arr_CruiseFa}
+                                                        {assign var="count" value=0}
+                                                        {foreach from=$arr_CruiseFa key=k item=i}
+                                                        <div class="div_img img_highlight img_highlight_1">
+                                                            <img src="{$i.image}" alt="Icon" />
+                                                            <span class="txt_icon">{$i.title}</span>
+                                                        </div>
+                                                        {assign var="count" value=$count+1}
+                                                        {if $count >= 5}
+                                                        {break}
                                                         {/if}
-                                                    </span>
+                                                        {/foreach}
+                                                        {if $arr_CruiseFa|@count > 5}
+                                                        <div class="icon_other">+{$arr_CruiseFa|@count-5}</div>
+                                                        <div class="unika_icon_more">
+                                                            <div class="unika_icon_more_div">
+                                                                {foreach from=$arr_CruiseFa key=k1 item=i1 name=RemaingLoop}
+                                                                {if $smarty.foreach.RemaingLoop.index >= 5}
+                                                                <div class="div_img img_highlight">
+                                                                    <img src="{$i1.image}" alt="Icon" />
+                                                                    <span class="txt_icon">{$i1.title}</span>
+                                                                </div>
+                                                                {/if}
+                                                                {/foreach}
+                                                            </div>
+                                                        </div>
+                                                        {/if}
+                                                        {/if}
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <a href="{$CruiseLink}" class="btn_explore d-flex justify-content-center align-items-center" title="{$CruiseTitle}">
-                                            Explore
-                                            <div class="div_img">
-                                                <i class="fa-sharp fa-light fa-arrow-right"></i>
+                                            <div class="money_cruise d-flex flex-column align-items-end justify-content-between">
+                                                <div class="reviews d-flex justify-content-end align-items-end flex-column">
+                                                    <div class="d-flex justify-content-end align-items-center item_evaluate">
+                                                        <div class="d-flex flex-column justify-content-end ">
+                                                            <span class="span_review">
+                                                                {$clsReviews->getReviews($CruiseID, 'txt_review', 'cruise')}
+                                                            </span>
+                                                            <span class="span_quantity">
+                                                                ({$clsReviews->getReviews($CruiseID, '', 'cruise')} reviews)
+                                                            </span>
+                                                        </div>
+                                                        <div class="average_reviews d-flex align-items-center justify-content-center">
+                                                            {$clsReviews->getReviews($CruiseID, 'avg_point', 'cruise')}
+                                                        </div>
+                                                    </div>
+                                                    <div class="price d-flex flex-column">
+                                                        <span class="txt_money">Price per person from</span>
+                                                        <div class="txt_money_cruise d-flex justify-content-end align-items-end">
+                                                            <span>
+                                                                {if $clsCruiseItinerary->getMinPriceItinerary($CruiseID) eq 0}
+                                                                {$core->get_Lang('Contact')}
+                                                                {else}
+                                                                US $ {$clsCruiseItinerary->getMinPriceItinerary($CruiseID)}
+                                                                {/if}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <a href="{$CruiseLink}" class="btn_explore d-flex justify-content-center align-items-center" title="{$CruiseTitle}">
+                                                    Explore
+                                                    <div class="div_img">
+                                                        <i class="fa-sharp fa-light fa-arrow-right"></i>
+                                                    </div>
+                                                </a>
                                             </div>
-                                        </a>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            {/foreach}
+                                {/foreach}
                             {/if}
                         </div>
                         {if $page_view}
@@ -549,15 +543,12 @@
     {$core->getBlock('also_like')}
 </div>
 
-{literal}
-
-{/literal}
-
 <script>
     var cru_max_price = '{$price_range_max}';
     var min_price = '{$min_price}';
     var max_price = '{$max_price}';
 </script>
+
 {literal}
 <script>
     $(function() {
@@ -677,8 +668,6 @@
         $('#filters_form_cruise .typeSearch').change(function() {
             $(this).closest('form').submit();
         });
-
-
     })
 </script>
 {/literal}

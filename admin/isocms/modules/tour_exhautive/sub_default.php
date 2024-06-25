@@ -2207,6 +2207,7 @@ function default_ajSaveDataasdsad()
                     'caution' => 'skip'
                 );
             } else {
+
                 if ($clsTour->updateOne($pvalTable, $value)) {
                     $result = array(
                         'result' => 'success',

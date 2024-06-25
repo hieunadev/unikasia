@@ -80,7 +80,7 @@
 							<p class="text">{$core->get_Lang('No Departure point selected')}</p>
 							{/if}
 						</div>
-                        {if $clsISO->getCheckActiveModulePackage($package_id,'property','activities','default')}
+                        {*{if $clsISO->getCheckActiveModulePackage($package_id,'property','activities','default')}
 						<div class="box-item">
 							<h3 class="box-title d-flex justify-content-between align-items-center">
 								<span>{$core->get_Lang('Activities tour')}</span>
@@ -98,7 +98,7 @@
 							<p class="text">{$core->get_Lang('No Activities tour selected')}</p>
 							{/if}
 						</div>
-                        {/if}
+                        {/if}*}
 						<div class="box-item">
 							<h3 class="box-title d-flex justify-content-between align-items-center">
 								<span>{$core->get_Lang('Duration')}</span>

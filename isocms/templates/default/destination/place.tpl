@@ -35,17 +35,17 @@
                                 <div class="des_list_hotel_item_type">
                                     <i class="fa-light fa-house"></i> {$clsHotel->getTypeHotel($hotel_id)}
                                 </div>
-                                <div class="des_list_hotel_item_place">
+                                <div class="des_list_hotel_item_place ellipsis_1_line">
                                     <i class="fa-light fa-location-dot"></i> {$clsHotel->getAddress($hotel_id)}
                                 </div>
                                 <div class="des_list_hotel_item_rate">
-                                    <span class="des_rate_number">4.5</span>
-                                    <span class="des_rate_text">Very good</span>
-                                    <span class="des_rate_total">(9 reviews)</span>
+                                    <span class="des_rate_number">{$clsReviews->getReviews($hotel_id, 'avg_point', 'hotel')}</span>
+                                    <span class="des_rate_text">{$clsReviews->getReviews($hotel_id, 'txt_review', 'hotel')}</span>
+                                    <span class="des_rate_total">({$clsReviews->getReviews($hotel_id, '', 'hotel')} reviews)</span>
                                 </div>
                                 <div class="des_list_hotel_item_price">
-                                    <span class="des_price_title">Avg price per night</span>
-                                    <span class="des_price_show_text">US</span>
+                                    <span class="des_price_title">{$core->get_Lang('Avg price per night')}</span>
+                                    <span class="des_price_show_text">{$core->get_Lang('US')}</span>
                                     <span class="des_price_show_number">${$item.price_avg}</span>
                                 </div>
                             </div>

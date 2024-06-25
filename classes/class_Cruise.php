@@ -173,6 +173,12 @@ class Cruise extends dbBasic
 		$most_about = html_entity_decode($one['most_about']);
 		return $most_about;
 	}
+	function getPlaceVisit($pvalTable)
+	{
+		$one = $this->getOne($pvalTable, 'place_viste');
+		$place_viste = html_entity_decode($one['place_viste']);
+		return $place_viste;
+	}
 	function getImprotantNote($pvalTable, $one = null)
 	{
 		if (!isset($one['important_notes'])) {
@@ -334,7 +340,7 @@ class Cruise extends dbBasic
 	function getLink2($pvalTable)
 	{
 		global $_LANG_ID, $extLang;
-		return $_LANG_ID . '/c' . $pvalTable . '-' . $this->getSlug($pvalTable) . '.html';
+		return '/' . $_LANG_ID . '/c' . $pvalTable . '-' . $this->getSlug($pvalTable) . '.html';
 	}
 	function getLinkPromotion($pvalTable)
 	{
@@ -1178,10 +1184,10 @@ class Cruise extends dbBasic
 			}
 		}
 		#
-		//echo $list_facilities;die('xxxx');
 		$list_Facilities = $clsCruiseProperty->getAll("is_trash=0 and type='$type' and cruise_property_id IN ($list_facilities) order by order_no asc", $clsCruiseProperty->pkey . ',image,title');
-
+		#
 		return $list_Facilities;
+		#
 		if (!empty($list_Facilities)) {
 			$html .= '<ul>';
 			for ($i = 0; $i < count($list_Facilities); $i++) {

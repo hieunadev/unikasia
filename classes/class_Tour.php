@@ -4237,86 +4237,94 @@ class Tour extends dbBasic
 			return $clsISO->formatPrice($priceAdultAds);
 		}
 	}
-
+	function getMinPrice($tour_id)
+	{
+		global $clsISO;
+		#
+		$min_price	= 	$this->getOneField('min_price', $tour_id);
+		return $min_price;
+	}
 	function getPriceAfterDiscount($tour_id)
 	{
 		global $clsISO;
-        $clsDiscount = new Discount();
-        $discount = $clsDiscount->getAll("is_trash=0 and is_online=1 and " . time() . " between booking_date_from and booking_date_to order by travel_date_from ASC limit 0,1", 'more_information');
-        $more_infomation = json_decode($discount[0]['more_information'], true);
-        $origin_price = $this->getOne($tour_id, 'min_price')[0];
-        $discount_value = $more_infomation["discount_value"] ?? '0';
+		$clsDiscount = new Discount();
+		$discount = $clsDiscount->getAll("is_trash=0 and is_online=1 and " . time() . " between booking_date_from and booking_date_to order by travel_date_from ASC limit 0,1", 'more_information');
+		$more_infomation = json_decode($discount[0]['more_information'], true);
+		$origin_price = $this->getOne($tour_id, 'min_price')[0];
+		$discount_value = $more_infomation["discount_value"] ?? '0';
 		$price = $origin_price * (100 - $discount_value) / 100;
 		return round($price);
 	}
 
-    function getDiscount($tour_id) {
-        global $clsISO;
+	function getDiscount($tour_id)
+	{
+		global $clsISO;
 
-        $clsDiscount = new Discount();
-//        $more_infomation = $clsISO->getPromotion($tour_id, 'Tour', time(), time(), 'info_promotion');
-        $discount = $clsDiscount->getAll("is_trash=0 and is_online=1 and " . time() . " between booking_date_from and booking_date_to order by travel_date_from ASC limit 0,1", 'more_information');
-        $more_infomation = json_decode($discount[0]['more_information'], true);
-        $discount_value = $more_infomation["discount_value"] ?? '0';
-        return $discount_value;
-    }
+		$clsDiscount = new Discount();
+		//        $more_infomation = $clsISO->getPromotion($tour_id, 'Tour', time(), time(), 'info_promotion');
+		$discount = $clsDiscount->getAll("is_trash=0 and is_online=1 and " . time() . " between booking_date_from and booking_date_to order by travel_date_from ASC limit 0,1", 'more_information');
+		$more_infomation = json_decode($discount[0]['more_information'], true);
+		$discount_value = $more_infomation["discount_value"] ?? '0';
+		return $discount_value;
+	}
 
-    function sendMail($email,$mes){
-        global $core, $clsISO, $clsConfiguration,$_LANG_ID,$email_template_review_tour_id,$email_template_review_cruise_id;
-        #
-        $clsEmailTemplate = new EmailTemplate();
-        #
-        $email_template_id = 133;
-        #
-        header('Content-Type: text/html; charset=utf-8');
-        $message = $clsEmailTemplate->getContent($email_template_id);
-        $message = str_replace('[%PAGE_NAME%]',PAGE_NAME,$message);
-        $message = str_replace('{URL}','http://'.$_SERVER['HTTP_HOST'],$message);
-        $message = str_replace('[%CUSTOMER_EMAIL%]',$email,$message);
-        $message = str_replace('[%CUSTOMER_MES%]',$mes,$message);
-        $message = str_replace('[%CUSTOMER_FULLNAME%]',$email,$message);
-
-
-        $message = str_replace('[%COMPANY_HOTLINE%]',$clsConfiguration->getValue('CompanyHotline'),$message);
-        $message = str_replace('[%COMPANY_EMAIL%]',$clsConfiguration->getValue('CompanyEmail'),$message);
-        $message = str_replace('[%COMPANY_NAME%]',$clsConfiguration->getValue('CompanyName_'.$_LANG_ID),$message);
-        $message = str_replace('[%COMPANY_ADDRESS%]',$clsConfiguration->getValue('CompanyAddress_'.$_LANG_ID),$message);
-        $message = str_replace('[%COMPANY_PHONE%]',$clsConfiguration->getValue('CompanyPhone'),$message);
-        $message = str_replace('[%COMPANY_FAX%]',$clsConfiguration->getValue('CompanyFax'),$message);
-        $message = str_replace('[%COMPANY_WEBSITE%]',DOMAIN_NAME,$message);
-        $message = str_replace('[%info_social%]',$clsConfiguration->getHTMLSocial(),$message);
-        $message = str_replace('[%info_license%]',$clsConfiguration->getValue('GPKD'),$message);
-        $message = str_replace('[%DOMAIN_NAME%]',DOMAIN_NAME,$message);
-        $message = str_replace('[%DATETIME%]',date('Y',time()),$message);
-
-        #
-
-        $from = $clsEmailTemplate->getFromEmail($email_template_id);
-
-        $owner = $clsEmailTemplate->getFromName($email_template_id);
-        $to = $email;
-        $subject = $clsEmailTemplate->getSubject($email_template_id). ' '.PAGE_NAME;
-        $subject = str_replace('[%PAGE_NAME%]','',$subject);
+	function sendMail($email, $mes)
+	{
+		global $core, $clsISO, $clsConfiguration, $_LANG_ID, $email_template_review_tour_id, $email_template_review_cruise_id;
+		#
+		$clsEmailTemplate = new EmailTemplate();
+		#
+		$email_template_id = 133;
+		#
+		header('Content-Type: text/html; charset=utf-8');
+		$message = $clsEmailTemplate->getContent($email_template_id);
+		$message = str_replace('[%PAGE_NAME%]', PAGE_NAME, $message);
+		$message = str_replace('{URL}', 'http://' . $_SERVER['HTTP_HOST'], $message);
+		$message = str_replace('[%CUSTOMER_EMAIL%]', $email, $message);
+		$message = str_replace('[%CUSTOMER_MES%]', $mes, $message);
+		$message = str_replace('[%CUSTOMER_FULLNAME%]', $email, $message);
 
 
-        $is_send_email = $clsISO->sendEmail($from,$to,$subject,$message,$owner);
+		$message = str_replace('[%COMPANY_HOTLINE%]', $clsConfiguration->getValue('CompanyHotline'), $message);
+		$message = str_replace('[%COMPANY_EMAIL%]', $clsConfiguration->getValue('CompanyEmail'), $message);
+		$message = str_replace('[%COMPANY_NAME%]', $clsConfiguration->getValue('CompanyName_' . $_LANG_ID), $message);
+		$message = str_replace('[%COMPANY_ADDRESS%]', $clsConfiguration->getValue('CompanyAddress_' . $_LANG_ID), $message);
+		$message = str_replace('[%COMPANY_PHONE%]', $clsConfiguration->getValue('CompanyPhone'), $message);
+		$message = str_replace('[%COMPANY_FAX%]', $clsConfiguration->getValue('CompanyFax'), $message);
+		$message = str_replace('[%COMPANY_WEBSITE%]', DOMAIN_NAME, $message);
+		$message = str_replace('[%info_social%]', $clsConfiguration->getHTMLSocial(), $message);
+		$message = str_replace('[%info_license%]', $clsConfiguration->getValue('GPKD'), $message);
+		$message = str_replace('[%DOMAIN_NAME%]', DOMAIN_NAME, $message);
+		$message = str_replace('[%DATETIME%]', date('Y', time()), $message);
 
-        $to = $clsEmailTemplate->getCopyTo($email_template_id);
-        if(!empty($to)){
-            $owner = $clsEmailTemplate->getFromName($email_template_id);
-            $subject = $clsEmailTemplate->getSubject($email_template_id). ' '.PAGE_NAME;
-            $subject = str_replace('[%PAGE_NAME%]','',$subject);
-            //		$is_send_email = $clsISO->sendEmail($from,$to,$subject,$message,$owner);
-            $lstto = explode(',',$to);
-            foreach ($lstto as $it){
-                $multi_email = trim($it);
-                if($multi_email){
-                    $is_send_email = $clsISO->sendEmail($from,$multi_email,$subject,$message,$owner);
-                    continue;
-                }
-            }
-        }
+		#
 
-        return 1;
-    }
+		$from = $clsEmailTemplate->getFromEmail($email_template_id);
+
+		$owner = $clsEmailTemplate->getFromName($email_template_id);
+		$to = $email;
+		$subject = $clsEmailTemplate->getSubject($email_template_id) . ' ' . PAGE_NAME;
+		$subject = str_replace('[%PAGE_NAME%]', '', $subject);
+
+
+		$is_send_email = $clsISO->sendEmail($from, $to, $subject, $message, $owner);
+
+		$to = $clsEmailTemplate->getCopyTo($email_template_id);
+		if (!empty($to)) {
+			$owner = $clsEmailTemplate->getFromName($email_template_id);
+			$subject = $clsEmailTemplate->getSubject($email_template_id) . ' ' . PAGE_NAME;
+			$subject = str_replace('[%PAGE_NAME%]', '', $subject);
+			//		$is_send_email = $clsISO->sendEmail($from,$to,$subject,$message,$owner);
+			$lstto = explode(',', $to);
+			foreach ($lstto as $it) {
+				$multi_email = trim($it);
+				if ($multi_email) {
+					$is_send_email = $clsISO->sendEmail($from, $multi_email, $subject, $message, $owner);
+					continue;
+				}
+			}
+		}
+
+		return 1;
+	}
 }

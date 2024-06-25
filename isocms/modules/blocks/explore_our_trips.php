@@ -42,9 +42,10 @@ if ($mod === 'destination' || $mod === 'tour') {
 }
 #
 // ID của danh mục trvs từ quốc gia
-$cat_id =   isset($_GET['cat_id']) ? $_GET['cat_id'] : '';
-$cond   =   "is_trash = 0 AND is_online = 1";
-$cond2  =   "is_trash = 0 AND is_online = 1";
+$cat_id     =   isset($_GET['cat_id']) ? $_GET['cat_id'] : '';
+$cond       =   "is_trash = 0 AND is_online = 1";
+$cond2      =   "is_trash = 0 AND is_online = 1";
+$order_by   =   " ORDER BY order_no ASC";
 #
 // Lấy title và description tour theo trvs by country
 if (!empty($country_id) && !empty($cat_id)) {
@@ -75,13 +76,11 @@ if ($mod === 'tour') {
         $cond   .=  " AND (cat_id = '$cat_id' OR list_cat_id LIKE '%|$cat_id|%') ";
     }
     #
-    $order_by   =   " ORDER BY order_no ASC";
-    #
     $listTourExplore    =   $clsTour->getAll($cond . $order_by . $limit, $clsTour->pkey . ", tour_id");
     $smarty->assign('listTourExplore', $listTourExplore);
     /** --- End of Code show danh sách tour theo trvs by country --- **/
 } elseif ($mod === 'destination') {
-    $listTourExplore    =   $clsTour->getAll("is_trash=0 and is_online=1 and tour_id IN (select tour_id from default_tour_destination where country_id = $country_id)" . $limit);
+    $listTourExplore    =   $clsTour->getAll("is_trash=0 and is_online=1 and tour_id IN (select tour_id from default_tour_destination where country_id = $country_id)" . $order_by . $limit);
     $smarty->assign('listTourExplore', $listTourExplore);
 } else {
     $listTourExplore    =   $clsTourStore->getAll("is_trash=0 and _type = 'TOPTOUR'  order by order_no asc $limit");

@@ -169,7 +169,7 @@ function default_default(){
 	$clsTourOption=new TourOption();$assign_list["clsTourOption"] = $clsTourOption;
 	$clsTourProperty=new TourProperty(); $assign_list["clsTourProperty"] = $clsTourProperty;
 	$clsTourPriceGroup=new TourPriceGroup(); $assign_list["clsTourPriceGroup"] = $clsTourPriceGroup;
-
+	$clsBooking = new Booking(); $assign_list["clsBooking"] = $clsBooking;
 	$cartSessionService= vnSessionGetVar('BookingTour_'.$_LANG_ID);
 	$cartSessionService = $cartSessionService[$_LANG_ID];
 	$cartSessionVoucher= vnSessionGetVar('BookingVoucher_'.$_LANG_ID);
@@ -184,7 +184,6 @@ function default_default(){
 
 //	$clsISO->pre($cartSessionVoucher);die();
 	$assign_list['time_now'] = time();
-	
 	$totalGrand = 0;
 	$totalPriceDeposit = 0;
 	$totalPricePromotion = 0;
@@ -613,7 +612,7 @@ function default_book(){
 			$fullname=Input::post('fullname','');
 			$country_id=Input::post('country_id',0);
 			$country_id=$country_id?$country_id:0;
-			$telephone=Input::post('telephone','');
+			$telephone=Input::post('phone','');
 			$email=Input::post('email','');
 			$totalFinal=Input::post('totalFinal',0);
 			$customer_note=Input::post('note','');

@@ -180,8 +180,12 @@
                                                 {$lstTour[i].number_day} {if $lstTour[i].number_day lt 2}DAY {else} DAYS {/if}
                                             {/if}
                                         </p>
-                                        <p class="from">From <span class="text-decoration-line-through">${$lstTour[i].min_price}</span></p>
-                                        <p class="us">US ${$clsTour->getPriceAfterDiscount($lstTour[i].tour_id)}</p>
+                                        {if $lstTour[i].min_price}
+                                            <p class="from">From <span class="text-decoration-line-through">${$lstTour[i].min_price}</span></p>
+                                            <p class="us">US ${$clsTour->getPriceAfterDiscount($lstTour[i].tour_id)}</p>
+                                        {else}
+                                            <p class="us">Contact</p>
+                                        {/if}
                                     </div>
                                     <div class="btn-view-tour mt-auto">
                                         <a class="btn-hover-home" href="{$clsTour->getLink($lstTour[i].tour_id)}"><span>View tour</span><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
@@ -261,6 +265,7 @@
     {$core->getBlock("top_attraction")}
     {$core->getBlock('also_like')}
 </main>
+
 {literal}
 <script>
     $(document).ready(function(){

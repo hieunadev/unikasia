@@ -20,30 +20,27 @@ function getFrame(){
 				'overview'	=> array(
 					'name' => $core->get_Lang('Overview')
 				),
-				'checkin' => array(
-					'name' => $core->get_Lang('Check-in/ Check-out')
-				),
-				'booking_policy' => array(
-					'name' =>  $core->get_Lang('Accommodation')
-				),
-				'child_policy' => array(
-					'name' =>  $core->get_Lang('Children and bed')
-				),
-				'cancellation_policy' => array(
-					'name' =>  $core->get_Lang('Cancellation')
-				),
-				
-				'exclude_policy' => array(
-					'name' =>  $core->get_Lang('Excludes')
-				),
-
-				'other_policy' => array(
-					'name' => $core->get_Lang('Inclusion')
-				),
-
-				'add_on' => array(
-					'name' => $core->get_Lang('Add on')
-				)
+                'booking_policy' => array(
+                    'name' =>  $core->get_Lang('Accommodation')
+                ),
+                'add_on' => array(
+                    'name' => $core->get_Lang('Add on')
+                ),
+                'other_policy' => array(
+                    'name' => $core->get_Lang('Inclusion')
+                ),
+                'checkin' => array(
+                    'name' => $core->get_Lang('Check-in/ Check-out')
+                ),
+                'exclude_policy' => array(
+                    'name' =>  $core->get_Lang('Excludes')
+                ),
+                'cancellation_policy' => array(
+                    'name' =>  $core->get_Lang('Cancellation')
+                ),
+                'child_policy' => array(
+                    'name' =>  $core->get_Lang('Children and bed')
+                ),
 			)
 		),
 	);
@@ -202,6 +199,7 @@ function default_getMainFormStep(){
 	$clsCountry = new Country();
 	$clsContinent = new Continent();
 	$clsReviewsHotel = new ReviewsHotel();
+    $clsHotelExtension = new HotelExtension();
 	$clsHotel = new Hotel();
 	$smarty->assign('clsTag', $clsTag);
 	$smarty->assign('clsCity', $clsCity);
@@ -231,7 +229,7 @@ function default_getMainFormStep(){
 			if($key == 'name' && $oneItem['title'] !=''){
 				$status = 1;
 			}
-			if($key == 'location' && $oneItem['continent_id'] > 0 && $oneItem['country_id'] > 0 && $oneItem['city_id'] > 0 && $oneItem['address'] != ''){
+			if($key == 'location' && $oneItem['country_id'] > 0 && $oneItem['city_id'] > 0 && $oneItem['address'] != ''){
 				$status = 1;
 			}			
 			if($key == 'image' && $oneItem['image'] !=''){
@@ -259,6 +257,11 @@ function default_getMainFormStep(){
 				$status = 1;
 			}
 			if($key == 'other_policy' && $oneItem['other_policy'] !=''){
+				$status = 1;
+			}
+            $hotel_id = $oneItem["hotel_id"];
+            $lstItemRelateTourn = $clsHotelExtension->getAll("is_trash=0 and hotel_id='$hotel_id' order by order_no asc");
+            if($key == 'add_on' && !empty($lstItemRelateTourn)){
 				$status = 1;
 			}
 			if($key == 'room'){

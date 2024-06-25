@@ -64,6 +64,7 @@ class CruiseProperty extends dbBasic
     }
     function getTextByType($selected = '')
     {
+        global $clsISO;
         $lstType = $this->getListType();
         return $lstType[$selected];
     }
@@ -130,42 +131,42 @@ class CruiseProperty extends dbBasic
         }
         return $html;
     }
-	
-	function getSelectAirportTour($tour_id=0,$selected='') 
-	{
+
+    function getSelectAirportTour($tour_id = 0, $selected = '')
+    {
         global $core;
         #
-		$clsCountry = new Country();
-		$cond = '';
-		if($tour_id > 0){			
-			$cond = " AND country_id IN (SELECT country_id FROM default_tour_destination WHERE is_trash=0 and tour_id='$tour_id' group by country_id)";
-		}
-        $all = $this->getAll("is_trash=0 and type='AIRPORT' ".$cond." order by order_no desc",$this->pkey.',title,country_id');
-		$listCountry = [];
-		foreach($all as $k => $v){
-			if(!in_array($v['country_id'],$listCountry)){
-				$listCountry[] = $v['country_id'];
-			}			
-		}
-		$lstCountry = $clsCountry->getAll('is_trash=0 and country_id IN ('.implode(',',$listCountry).')',$clsCountry->pkey.',title');
+        $clsCountry = new Country();
+        $cond = '';
+        if ($tour_id > 0) {
+            $cond = " AND country_id IN (SELECT country_id FROM default_tour_destination WHERE is_trash=0 and tour_id='$tour_id' group by country_id)";
+        }
+        $all = $this->getAll("is_trash=0 and type='AIRPORT' " . $cond . " order by order_no desc", $this->pkey . ',title,country_id');
+        $listCountry = [];
+        foreach ($all as $k => $v) {
+            if (!in_array($v['country_id'], $listCountry)) {
+                $listCountry[] = $v['country_id'];
+            }
+        }
+        $lstCountry = $clsCountry->getAll('is_trash=0 and country_id IN (' . implode(',', $listCountry) . ')', $clsCountry->pkey . ',title');
         if (!empty($all) && !empty($lstCountry)) {
             $i = 0;
-			foreach($lstCountry as $key => $value){
-				$html .= '<optgroup label="'.$value['title'].'">';				
-				foreach ($all as $item) {
-					if($item['country_id'] == $value['country_id']){
-						$selected_index = ($selected == $item[$this->pkey]) ? 'selected="selected"' : '';
-						$html.='<option value="' . $item[$this->pkey] . '" ' . $selected_index . '>' . $item['title'] . '</option>';
-					}
-				}
-				$html .= '</optgroup>';				
-			}
-        }else{
-			$html.='<option value="" disabled>' . $core->get_Lang('Arrival airport list is empty') . '</option>';
-		}
+            foreach ($lstCountry as $key => $value) {
+                $html .= '<optgroup label="' . $value['title'] . '">';
+                foreach ($all as $item) {
+                    if ($item['country_id'] == $value['country_id']) {
+                        $selected_index = ($selected == $item[$this->pkey]) ? 'selected="selected"' : '';
+                        $html .= '<option value="' . $item[$this->pkey] . '" ' . $selected_index . '>' . $item['title'] . '</option>';
+                    }
+                }
+                $html .= '</optgroup>';
+            }
+        } else {
+            $html .= '<option value="" disabled>' . $core->get_Lang('Arrival airport list is empty') . '</option>';
+        }
         return $html;
     }
-	
+
     function makeOption($cat_id = 0, $type = '', $selectedid = "", $level = 0, &$arrHtml)
     {
         global $dbconn;

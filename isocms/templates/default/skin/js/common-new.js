@@ -114,7 +114,7 @@ $(document).ready(function () {
             }
         );
         // Các trang ko có menu trong
-        if ((mod === 'guide' && act === 'detail') || (mod === 'guide' && act === 'tag') || (mod === 'hotel' && act === 'detail') || (mod === 'blog' && act === 'detail') || (mod === 'tour' && act === 'detaildeparture') || (mod === 'about' && act === 'success') || (mod === 'tour_new' && act === 'contact') || (mod === 'destination' && act === 'attraction')) {
+        if ((mod === 'guide' && act === 'detail') || (mod === 'guide' && act === 'tag') || (mod === 'hotel' && act === 'detail') || (mod === 'blog' && act === 'detail') || (mod === 'tour' && act === 'detaildeparture') || (mod === 'about' && act === 'success') || (mod === 'tour_new' && act === 'contact') || (mod === 'destination' && act === 'attraction') || (mod === 'cruise' && act === 'detail')) {
             if ($('.unika_header').hasClass('unika_header_2')) {
                 $('.unika_header').removeClass('unika_header_2');
             }
@@ -123,7 +123,7 @@ $(document).ready(function () {
             let isScrolled = $(this).scrollTop() > 0;
             let unika_header = $('.unika_header');
             if (unika_header.hasClass('unika_true')) {
-                if ((mod === 'guide' && act === 'detail') || (mod === 'guide' && act === 'tag') || (mod === 'destination' && act === 'place') || (mod === 'tour' && act === 'cat') || (mod === 'guide' && act === 'cat') || (mod === 'tour' && act === 'detaildeparture') || (mod === 'destination' && act === 'attraction')) {
+                if ((mod === 'guide' && act === 'detail') || (mod === 'guide' && act === 'tag') || (mod === 'destination' && act === 'place') || (mod === 'tour' && act === 'cat') || (mod === 'guide' && act === 'cat') || (mod === 'tour' && act === 'detaildeparture') || (mod === 'destination' && act === 'attraction') || (mod === 'cruise' && act === 'detail')) {
                     //
                 } else {
                     if (isScrolled) {

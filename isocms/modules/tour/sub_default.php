@@ -261,15 +261,15 @@ function default_detaildeparture()
 	$assign_list["page_view"] = $page_view;
 	//    End Paginage
 
-    $oneItem = $clsTour->getOne($tour_id);
-    $travel_style_id = explode('|', $oneItem[8])[1];
-    $limit_day = $oneItem["number_day"];
+	$oneItem = $clsTour->getOne($tour_id);
+	$travel_style_id = explode('|', $oneItem[8])[1];
+	$limit_day = $oneItem["number_day"];
 
 	$countReview = $clsReviews->countItem("$cond is_online = 1 and table_id = $tour_id $order");
 	$lstTourImage = $clsTourImage->getAll("$cond table_id = $tour_id $order", "tour_image_id, image");
 	$lstRelateTour = $clsTour->getAll("$cond tour_id IN (select tour_2_id from default_tour_extension where tour_1_id = $tour_id)");
 	$country_id = $clsTourDestination->getAll("$cond tour_id = $tour_id limit 1", "country_id")[0]["country_id"];
-    $lstTourItinerary = $clsTourItinerary->getAll("$cond tour_id = $tour_id order by day LIMIT $limit_day");
+	$lstTourItinerary = $clsTourItinerary->getAll("$cond tour_id = $tour_id order by day LIMIT $limit_day");
 
 	//    Form Book Tour
 	$lstVisitorType = $clsTourProperty->getAll("is_trash=0 and type='VISITORTYPE' order by order_no asc", $clsTourProperty->pkey);
@@ -522,32 +522,32 @@ function default_ajaxReviews()
 
 	$content = "";
 
-    $lstReviews = $clsReviews->getAll("$cond  type ='tour' and  is_online = 1 and table_id = $table_id $limit");
-    foreach ($lstReviews as $v) {
-        $stars = '';
-        for ($i = 0; $i < 5; $i++) {
-            if ($i < $v['rates']) {
-                $stars .= '<i class="fa-solid fa-star"></i>';
-            } else {
-                $stars .= '<i class="fa-regular fa-star"></i>';
-            }
-        }
-        $content .= '<div class="review">
+	$lstReviews = $clsReviews->getAll("$cond  type ='tour' and  is_online = 1 and table_id = $table_id $limit");
+	foreach ($lstReviews as $v) {
+		$stars = '';
+		for ($i = 0; $i < 5; $i++) {
+			if ($i < $v['rates']) {
+				$stars .= '<i class="fa-solid fa-star"></i>';
+			} else {
+				$stars .= '<i class="fa-regular fa-star"></i>';
+			}
+		}
+		$content .= '<div class="review">
                         <div class="person_review">
-                            <div class="avatar_custom" style="background-color:'.$v['bg_color'].'">'.strtoupper(substr($v['fullname'], 0, 2)).'</div>
+                            <div class="avatar_custom" style="background-color:' . $v['bg_color'] . '">' . strtoupper(substr($v['fullname'], 0, 2)) . '</div>
                             <div class="name_reviewer">
-                                <p class="name">'.$v['fullname'].'</p>
-                                <p class="time_review">'.date('d M, Y', $v['review_date']).'</p>
+                                <p class="name">' . $v['fullname'] . '</p>
+                                <p class="time_review">' . date('d M, Y', $v['review_date']) . '</p>
                             </div>
                         </div>
                         <div class="stars_review">
-                            '.$stars.'
+                            ' . $stars . '
                         </div>
-                        <p class="title_review">'.$v['title'].'</p>
-                        <p class="content_review">'.$v['content'].'</p>
+                        <p class="title_review">' . $v['title'] . '</p>
+                        <p class="content_review">' . $v['content'] . '</p>
                         <p class="view_more_review">View more</p>
                     </div>';
-        }
+	}
 	$content .= '<div class="tour-pagination d-flex justify-content-center mt-5">
                 <nav aria-label="Page navigation">
                     <ul class="pagination">
@@ -2476,6 +2476,8 @@ function default_cat()
 	$assign_list['clsCity'] = $clsCity;
 	$clsMonthCountry = new MonthCountry();
 	$assign_list['clsMonthCountry'] = $clsMonthCountry;
+	$clsGuide = new Guide();
+	$assign_list['clsGuide'] = $clsGuide;
 	#
 	$show = isset($_GET['show']) ? $_GET['show'] : '';
 	$assign_list['show'] = $show;
@@ -2516,7 +2518,7 @@ function default_cat()
 	$smarty->assign('list_blog', $list_blog);
 	#
 	// List FAQ from country
-	$list_faq_country   =   $clsFAQ->getAll("is_trash = 0 AND is_online = 1 AND country_id = $country_id ORDER BY order_no ASC LIMIT 5");
+	$list_faq_country   =   $clsFAQ->getAll("is_trash = 0 AND is_online = 1 AND country_id = $country_id ORDER BY order_no ASC");
 	$smarty->assign('list_faq_country', $list_faq_country);
 	#
 	// Lấy data theo tháng và quốc gia
@@ -2554,6 +2556,12 @@ function default_cat()
 		$trvs_info    =   $clsCategory_Country->getAll($cond2 . $order_by, "trvs_why_description");
 		$smarty->assign('trvs_why_description', $trvs_info[0]['trvs_why_description']);
 	}
+	#
+	$cond3  =   'is_trash = 0 AND is_online = 1';
+	// Lấy list travel guide by country
+	$list_guide	=	$clsGuide->getAll($cond3 . " AND country_id = $country_id" . $order_by . " LIMIT 10", $clsGuide->pkey);
+	$smarty->assign('list_guide', $list_guide);
+	#
 	/* =============Title & Description Page================== */
 	$title_page = $title_cat . ' | ' . $core->get_Lang('Travelstyles') . ' | ' . PAGE_NAME;
 	$assign_list["title_page"] = $title_page;

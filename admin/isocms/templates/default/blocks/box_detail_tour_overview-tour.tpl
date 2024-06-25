@@ -14,7 +14,7 @@
 						{if $oneItem.yield_id}
 							{$oneItem.overview|html_entity_decode}
 						{else}
-							<textarea style="width:100%" class="isoTextArea" id="{$clsISO->getUniqid()}" data-name="overview" cols="255" rows="2">{$oneItem.overview}</textarea>
+							<textarea style="width:100%" class="textarea_intro_editor" id="{$clsISO->getUniqid()}" data-name="overview" cols="255" rows="2">{$oneItem.overview}</textarea>
 						{/if}
 
 					</div>

@@ -6,8 +6,9 @@
 		<div class="content_setting_box">
 			<div class="page_detail-title d-flex">
 				<div class="title">
-					<h2>{$clsClassTable->getTextByType($type)} </h2>
-					<p>Chức năng quản lý danh sách các {$clsClassTable->getTextByType($type)} trong hệ thống isoCMS</p>
+					{assign var=title_type value= ($type == "HotelCategory") ? "Hotel Category" : $clsClassTable->getTextByType($type)}
+					<h2>{$title_type}</h2>
+					<p>Chức năng quản lý danh sách các {$title_type} trong hệ thống isoCMS</p>
 				</div>
 				<div class="button_right">
 					<a class="btn btn-main btn-addnew clickToAddProperty" href="javascript:void(0);" title="{$core->get_Lang('Add new')}">{$core->get_Lang('Add new')}</a>
@@ -67,6 +68,30 @@
 						</tr>
 						{/section}
 					</tbody>
+					{elseif $lstHotelProperty}
+						{if $type == "HotelCategory"}
+							<tbody id="SortAble">
+							{section name=i loop=$lstHotelProperty}
+								<tr style="cursor:move" id="order_{$lstHotelProperty[i].hotel_property_id}" class="{cycle values="row1,row2"}">
+									<td class="text_left hiden767">{$lstHotelProperty[i].hotel_property_id}</td>
+									<td class="name_service"><span class="title">{$clsHotelProperty->getTitle($lstHotelProperty[i].hotel_property_id)}</span>
+										<button type="button" class="toggle-row inline_block767" style="display:none"><i class="fa fa-caret fa-caret-down"></i></button></td>
+									</td>
+									<td class="block_responsive text-center" data-title="{$core->get_Lang('func')}">
+										<div class="btn-group">
+											<button class="btn btn_dropdown dropdown-toggle" type="button" data-toggle="dropdown">
+												<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+											</button>
+											<ul class="dropdown-menu" style="right:0px !important">
+												<li><a class="clickToEditProperty item_left" title="{$core->get_Lang('Edit')}" href="javascript:void(0);" data="{$lstHotelProperty[i].hotel_property_id}"><i class="icon-edit"></i> <span>{$core->get_Lang('Edit')}</span></a></li>
+												<li><a class="clickToDeleteProperty item_right" title="{$core->get_Lang('Delete')}" href="javascript:void(0);" data="{$lstHotelProperty[i].hotel_property_id}" ><i class="icon-remove"></i> <span>{$core->get_Lang('Delete')}</span></a></li>
+											</ul>
+										</div>
+									</td>
+								</tr>
+							{/section}
+							</tbody>
+						{/if}
 					{else}
 					<tr><td colspan="7" style="text-align:center">{$core->get_Lang('No Data')}!</td></tr>
 					{/if}
@@ -134,7 +159,8 @@
 			if(confirm(text_delete_type)){
 				var $_this = $(this);
 				var adata = {
-					'property_id' : $_this.attr('data')
+					'property_id' : $_this.attr('data'),
+					'type' : type
 				};
 				vietiso_loading(1);
 				$.ajax({
@@ -187,6 +213,30 @@
 			$.ajax({
 				type : "POST",
 				url : path_ajax_script+'/index.php?mod=property&act=ajSubmitProperty',
+				data: adata,
+				dataType: 'html',
+				success : function(html){
+					window.location.reload();
+				}
+			});
+		});
+		$('#clickSubmitHotelProperty').live('click',function(e){
+			e.preventDefault();
+			var _this = $(this);
+			if($('#title').val()==''){
+				$('#title').addClass('errorInput').focus();
+				alertify.error(title_required);
+				return false;
+			}
+
+			var adata = {
+				'title'				: $('#title').val(),
+				'type'				: type,
+				'property_id'		: _this.attr('property_id'),
+			};
+			$.ajax({
+				type : "POST",
+				url : path_ajax_script+'/index.php?mod=property&act=ajSubmitHotelProperty',
 				data: adata,
 				dataType: 'html',
 				success : function(html){

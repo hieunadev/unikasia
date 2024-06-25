@@ -1,587 +1,3411 @@
-{assign var= title_cruise value= $clsCruise->getTitle($cruise_id,$oneTable)}
-{assign var= link_cruise value= $clsCruise->getLink($cruise_id,$oneTable)}
-
-{if $clsISO->getCheckActiveModulePackage($package_id,'member','default','default')}
-{assign var= ratingValue value= $clsReviews->getRateAvg($cruise_id,'cruise')}
-{assign var= bestRating value= $clsReviews->getBestRate($cruise_id,'cruise')}
-{assign var= ratingCount value= $clsReviews->getToTalReview($cruise_id,'cruise')}
-{else}
-{assign var= ratingValue value= $clsReviews->getRateAvgNoLogin($cruise_id,'cruise')}
-{assign var= bestRating value= $clsReviews->getBestRate($cruise_id,'cruise')}
-{assign var= ratingCount value= $clsReviews->getToTalReviewNoLogin($cruise_id,'cruise')}
-{/if}
-{assign var=textRateAvg value=$clsReviews->getTextRateAvg($cruise_id,'cruise',false)}
-{assign var=getAbout value=$clsCruise->getAbout($cruise_id,$oneTable)}
-{assign var=itemCruiseCat value=$clsCruiseCat->getOne($cruise_cat_id,' title,slug')}
-{assign var=title_cat value=$itemCruiseCat.title}
-{assign var=link_cat value=$clsCruiseCat->getLink($cruise_cat_id,$itemCruiseCat)}
-{assign var=CruiseFacilities value=$clsCruise->getCruiseFa($cruise_id,CruiseFacilities,$oneTable)}
-{assign var=CruiseServices value=$clsCruise->getCruiseFa($cruise_id,CruiseServices,$oneTable)}
-{assign var=CruiseFaActivities value=$clsCruise->getCruiseFa($cruise_id,CruiseFaActivities,$oneTable)}
-{assign var=Inclusion value=$clsCruise->getInclusion($cruise_id,$oneTable)}
-{assign var=Exclusion value=$clsCruise->getExclusion($cruise_id,$oneTable)}
-{assign var=CruisePolicy value=$clsCruise->getCruisePolicy($cruise_id,$oneTable)}
-{assign var=BookingPolicy value=$clsCruise->getCruiseBookingPolicy($cruise_id,$oneTable)}
-{assign var=getCruiseChildPolicy value=$clsCruise->getCruiseChildPolicy($cruise_id,$oneTable)} 
-
-{if $show eq 'Itinerary'}
-	{assign var=table_map_id value=$cruise_itinerary_id}
-	{assign var=checkPriceCruise value=$clsCruiseItinerary->getLTripPriceItinerary($cruise_itinerary_id,$now_month,'Value')}
-	{assign var=address value=$clsCruiseItinerary->getAllCityAround($cruise_itinerary_id)}
-{else}
-	{assign var=table_map_id value=$cruise_id}
-	{assign var=checkPriceCruise value=$clsCruise->getLTripPrice($cruise_id,$now_month,'Value')}
-	{assign var=address value=$core->get_Lang('Departure Port')|cat:': '|cat:$clsCruise->getDeparturePort($cruise_id,$oneTable)}
-{/if}
-{assign var=start_from value = $clsCruise->getStartCityAround($cruise_id,0,0)}
-{assign var=destination value = $clsCruise->getLCityAround2($cruise_id,0,0,' - ')}
-<div class="page_container bg_fff">
-	<nav class="breadcrumb-main breadcrumb_page mb0 hidden-xs">
-        <div class="container">
-			<ol class="breadcrumb mt0" itemscope itemtype="https://schema.org/BreadcrumbList">
-				<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-					<a itemprop="item" href="{$PCMS_URL}">
-						<span itemprop="name" class="reb">{$core->get_Lang('Home')}</span></a>
-					<meta itemprop="position" content="1" />
-				</li>
-				{assign var=position value=2}
-				{assign var=arr_parent value=$clsCruiseCat->getListParentLevel($cruise_cat_id)}
-				{if $arr_parent}
-					{foreach from=$arr_parent item=item}
-						{assign var=oneCatParent value=$clsCruiseCat->getOne($item,'title,slug')}
-						<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-							<a itemprop="item" href="{$clsCruiseCat->getLink($item,$oneCatParent)}" title="{$oneCatParent.title}">
-								<span itemprop="name" class="reb">{$oneCatParent.title}</span></a>
-							<meta itemprop="position" content="{$position}" />
-						</li>
-						{math equation = "x+1" x=$position assign="position"}
-					{/foreach}
-				{/if}
-				<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" class="active">
-					<a itemprop="item" href="{$link_cat}" title="{$title_cat}">
-						<span itemprop="name" class="reb">{$title_cat}</span>  
-					</a>
-					<meta itemprop="position" content="{$position}" />
-				</li>
-				<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" class="active">
-					<a itemprop="item" href="{$curl}" title="{$title_cruise}">
-						<span itemprop="name" class="reb">{$title_cruise}</span>  
-					</a>
-					<meta itemprop="position" content="{math equation = "x+1" x=$position}" />
-				</li>
-				
-			</ol>
-		</div>
-	</nav><!--end breadcrumb-main-->
-	<div id="content" class="pageCruiseDetail">
-		<section class="section_image">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-7">
-						<div class="big_image">
-							<img class="img100" alt="{$title_cruise}" src="{$clsCruise->getImage($cruise_id,733,486,$oneTable)}" width="733" height="486"/>
-							<p class="view_all" data-fancybox="gallery" href="{$oneTable.image}">
-							{$core->get_Lang('View All')}
-							<img src="{$oneTable.image}" alt="{$title_cruise}" hidden>
-							</p>
-						</div>
-					</div>
-					<div class="col-lg-5">
-						<div class="d-flex flex-wrap box_image_left">
-							{if $lstVideoCruise}
-                            {section name=i loop=$lstVideoCruise}
-                                {if $lstVideoCruise[i].url ne ''}
-                                    <div class="image_small" data-fancybox="gallery" href="{$lstVideoCruise[i].url}" hidden>
-                                        <img class="img100" alt="{$clsCruiseVideo->getTitle($lstVideoCruise[i].cruise_video_id,$lstVideoCruise[i])}" src="{$clsCruiseVideo->getImage($lstVideoCruise[i].cruise_video_id,264,238)}" width="264" height="238"/>
-                                    </div>
-                                {/if}
-                            {/section}
-							{/if}
-							{if $lstImage[0]}
-                            <div class="image_medium" data-fancybox="gallery" href="{$lstImage[0].image}">
-                                <img class="img100" alt="{$clsCruiseImage->getTitle($lstImage[0].cruise_image_id)}" src="{$clsCruiseImage->getImage($lstImage[0].cruise_image_id,537,238)}" width="537" height="238"/>
+<!-- Bắt buộc ko format code để tránh lỗi hiển thị -->
+<div class="page_container crde_page_container">
+    <div class="unika_cruise_detail">
+        {$core->getBlock('des_nav_breadcrumb')}
+        <div class="d-flex justify-content-center">
+            <div class="container">
+                <div class="d-flex justify-content-between align-items-center  flex-wrap">
+                    <h1 class="cruise_title ">
+                        {$clsCruise->getTitle($cruise_id)}
+                    </h1>
+                    <div class="list_btn d-flex ">
+                        <button class="div_img btn_content_1"><i class="fa-light fa-share-nodes"></i></button>
+                    </div>
+                </div>
+                <div class="cruise_information d-flex justify-content-between align-items-end flex-wrap">
+                    <div class="d-flex flex-column cruise_star_rating ">
+                        <div class="rating d-flex align-items-center ">
+                            {if $cruise_info.star_number >= 3}
+                            {section name=i loop=$cruise_info.star_number}
+                            <div class="div_img">
+                                <i class="fa-sharp fa-solid fa-star"></i>
                             </div>
-							{/if}
-							{if $lstImage|@count gt 1}
-                            <div class="box_image_small">
-                                {section name=i loop=$lstImage start=1 step=1}
-                                <div class="image_small" data-fancybox="gallery" href="{$lstImage[i].image}" {if $smarty.section.i.index gt 2}hidden{/if}>
-                                    <img class="img100" alt="{$clsCruiseImage->getTitle($lstImage[i].cruise_image_id)}" src="{$clsCruiseImage->getImage($lstImage[i].cruise_image_id,264,238)}" width="264" height="238"/>
+                            {/section}
+                            {/if}
+                        </div>
+                        <div class="cruise_medium d-flex  align-items-center flex-wrap">
+                            <div class="count_star">{$clsReviews->getReviews($CruiseID, 'avg_point', 'cruise')}</div>
+                            <p>{$clsReviews->getReviews($CruiseID, 'txt_review', 'cruise')}</p>
+                            <span class="view">({$clsReviews->getReviews($CruiseID, '', 'cruise')} reviews)</span>
+                            <a href="#reviews" class="show_all">Show all reviews</a>
+                        </div>
+                    </div>
+                    <div class="price_contact d-flex align-items-center justify-content-between ">
+                        <div class="d-flex justify-content-between flex-column ">
+                            <span class="cruise_price_1">from</span>
+                            <div class="cruise_price">
+                                {if $clsCruiseItinerary->getMinPriceItinerary($CruiseID) eq 0}
+                                {$core->get_Lang('Contact')}
+                                {else}
+                                US
+                                <span>$ {$clsCruiseItinerary->getMinPriceItinerary($CruiseID)}</span>
+                                {/if}
+                            </div>
+                        </div>
+                        <a href="https://unikasia.vietiso.com/contact-us" class="d-flex align-items-center justify-content-center button_contact">
+                            {$core->get_Lang('Contact')}
+                            <div class="div_img">
+                                <i class="fa-sharp fa-light fa-arrow-right"></i>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                {if $arr_cruise_gallery}
+                    <div class="cruise unika_list_img">
+                        {foreach from=$arr_cruise_gallery key=key item=item}
+                            {assign var="CruiseGalID" value=$item.cruise_image_id}
+                            {assign var="CruiseGalTitle" value=$clsCruiseImage->getTitle($CruiseGalID)}
+                            {assign var="CruiseGalImage" value=$clsCruiseImage->getImage($CruiseGalID, 742, 491)}
+                            <a href="{$CruiseGalImage}" data-fancybox="gallery" class="div_img cruise_img cruise_img_{$key+1}">
+                                <img src="{$CruiseGalImage}" alt="{$CruiseGalTitle}" width="742" height="491">
+                            </a>
+                        {/foreach}
+                        <!-- <a href="images/img2.png" data-fancybox="gallery" class="div_img cruise_img cruise_img_2">
+                            <img src="images/img2.png" alt="Image">
+                        </a>
+                        <a href="images/img3.png" data-fancybox="gallery" class="div_img cruise_img cruise_img_3">
+                            <img src="images/img3.png" alt="Image">
+                        </a>
+                        <a href="images/img4.png" data-fancybox="gallery" class="div_img cruise_img cruise_img_4">
+                            <img src="images/img4.png" alt="Image">
+                            <div class="cruise_shadow d-flex align-items-center justify-content-center ">
+                                <span class="">+40</span>
+                                <div class="div_img">
+                                    <i class="fa-sharp fa-light fa-images"></i>
                                 </div>
-                                {/section}
-                            </div>							
-							{/if}
-						</div>						
-					</div>
-				</div>
-			</div>
-		</section>
-		<div class="box_content_cruise">
-			{if $deviceType eq 'phone'}				
-            <div class="box_form_contact box_price_detail">
-                {$clsCruise->getLTripPrice1($cruise_id,$now_month,'')}
-                <form action="" method="post">
-                    <input type="hidden" name="cruise_id" value="{$cruise_id}">
-                    <input type="hidden" name="ContactCruise" value="ContactCruise">			
-                    <button class="btn_contact" type="submit">{$core->get_Lang('Contact')}</button>
-                </form>	
+                            </div>
+                        </a> -->
+                    </div>
+                {/if}
             </div>
-					
-			{/if}
-			<div class="container">
-				<div class="box_info_top">
-					<div class="box_info_top_left">
-						<a href="{$link_cat}" class="cruise_cat" title="{$title_cat}">{$title_cat}</a>
-						<div class="box_txt_reviews">
-							<span class="rate_cruise">{$ratingValue}/5 - {$textRateAvg}</span>
-							<span class="review_cruise">{$ratingCount} {$core->get_Lang('reviews')}</span>
-						</div>						
-						{if $oneTable.cruise_code ne ''}<span class="item_cruise_code">{$core->get_Lang('Code')}: <span class="cruise_code">{$oneTable.cruise_code}</span></span>{/if}
-					</div>
-					<div class="box_share">
-						<button class="share_socical collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#share_box" aria-expanded="false" aria-controls="share_box"></button>
-						<div class="share_box collapse" id="share_box">
-							<script type="text/javascript" src="{$URL_JS}/jquery.sharer.js?v={$up_version}"></script>
-							{assign var=link_share value=$curl}
-							{assign var=title_share value=$title_cat}
-							{$clsISO->getBlock('box_share',["link_share"=>$link_share,"title_share"=>$title_share])}
-						</div>
-					</div>
-				</div>
-				<h1 class="title_cruise">{$title_cruise} {$clsCruise->getStarNew($cruise_id,$oneTable)}</h1> 
-				<div id="tabsk" class="box__menu d-flex justify-content-between align-items-center tabskTour">
-					<ul class="clienttabs list_style_none d-flex">
-						{if $getAbout}<li><a id="overview--link" href="javascript:void(0);" class="current" data="0">{$core->get_Lang('Introduction')}</a></li>{/if}					
-						{if $lstItineraryCruise}<li><a id="itinerary--link" href="javascript:void(0);" data="2">{$core->get_Lang('Schedule')}</a></li>{/if}	
-						<li><a id="notes--link" href="javascript:void(0);" data="2">{$core->get_Lang('Things to know')}</a></li>							
-						<li><a id="review--link" href="javascript:void(0);" data="3">{$core->get_Lang('Reviews, Q&amp;A')}</a></li>
-					</ul>
-					{if $deviceType ne 'phone'}
-					<div class="box_form_contact box_price_detail">
-						{$clsCruise->getLTripPrice1($cruise_id,$now_month,'')}
-						<form action="" method="post">
-							<input type="hidden" name="cruise_id" value="{$cruise_id}">
-							<input type="hidden" name="ContactCruise" value="ContactCruise">			
-							<button class="btn_contact" type="submit">{$core->get_Lang('Contact')}</button>
-						</form>		
-					</div>		
-					{/if}
-				</div>
-				<div class="list_tab">
-					<section id="overview" class="overview_box section_box">
-						<h2 class="title_cruise_box_detail">{$core->get_Lang('About Cruise')}</h2>
-						<div class="row">
-							<div class="col-lg-4">
-								<div class="box_info_cruise">
-									{if $oneTable.build}
-									<div class="item_info_cruise item_info_cruise_build">
-										<label for="" class="lbl_item_info_cruise">{$core->get_Lang('Build')}</label>
-										<span class="value_item_info_cruise">{$oneTable.build}</span>
-									</div>
-									{/if}
-									{if $oneTable.material}
-									<div class="item_info_cruise item_info_cruise_material">
-										<label for="" class="lbl_item_info_cruise">{$core->get_Lang('Material')}</label>
-										<span class="value_item_info_cruise">{$clsCruiseProperty->getTitle($oneTable.material)}</span>
-									</div>
-									{/if}
-									{if $oneTable.total_cabin}
-									<div class="item_info_cruise item_info_cruise_total_cabin">
-										<label for="" class="lbl_item_info_cruise">{$core->get_Lang('Cabin')}</label>
-										<span class="value_item_info_cruise">{$oneTable.total_cabin}</span>
-									</div>
-									{/if}
-									{if $oneTable.departure_port}
-									<div class="item_info_cruise item_info_cruise_start">
-										<label for="" class="lbl_item_info_cruise">{$core->get_Lang('Departure Port')}</label>
-										<span class="value_item_info_cruise">{$oneTable.departure_port}</span>
-									</div>
-									{/if}
-									{if $destination}
-									<div class="item_info_cruise item_destination_cruise">
-										<label for="" class="lbl_item_info_cruise">{$core->get_Lang('Destinations')}</label>
-										<span class="value_item_info_cruise">{$destination}</span>
-									</div>
-									{/if}
-								</div>
-							</div>
-							{if $getAbout}
-								<div class="col-lg-8">
-									<div class="intro_about">
-										{$getAbout}
-									</div>
-								</div>
-							{/if}
-						</div>
-					</section>
-					{if $lstItineraryCruise}
-                    <section id="itinerary" class="itinerary_box section_box">
-                        <h2 class="title_cruise_box_detail">{$core->get_Lang('Schedule')}</h2>
-                        <div class="wapper_itinerary">
-                            {section name=i loop=$lstItineraryCruise}
-                                {assign var= _cruise_itinerary_id value= $lstItineraryCruise[i].cruise_itinerary_id}
-                                {assign var=lstDayItinerary value = $clsCruiseItineraryDay->getAll("is_trash=0 and cruise_itinerary_id='$_cruise_itinerary_id' order by day ASC")}
-                                {assign var=number_day value=$lstItineraryCruise[i].number_day}
-                                {assign var=des_itinerary value=$clsCruiseDestination->getDesIti($cruise_id,$_cruise_itinerary_id)}
-                                {assign var=meal_itinerary value=$clsCruiseItinerary->getListMealItineraryDay($lstItineraryCruise[i].cruise_itinerary_id)}
-                                {if $lstDayItinerary}
-                                    <div class="item-itinerary"> 
-                                        <div class="item_header_itinerary d-flex justify-content-between align-items-center {if $deviceType eq 'phone'}collapsed{/if}" {if $deviceType eq 'phone'}data-bs-toggle="collapse" href="#collapse{$smarty.section.i.index}"{/if}>
-                                            <div class="box_title_iti">
-                                                <div class="box_day">
-                                                    <span class="txt_day">{$number_day}</span>{$core->get_Lang('days')}
+        </div>
+        <div class="d-flex justify-content-center unika_overview">
+            <div class="container">
+                <div class="d-flex  justify-content-between overviews content_2_item">
+                    <div class="content_left">
+                        <div class="unika_detail_fixed">
+                            <div class="unika_detail_fixed_content">
+                                <div class="unika_detail_collapse d-flex  align-items-center flex-wrap">
+                                    <a class="item_collapse active" href="#overview">
+                                        {$core->get_Lang('Overview')}
+                                    </a>
+                                    <a class="item_collapse" href="#itineraries">
+                                        {$core->get_Lang('Itineraries')}
+                                    </a>
+                                    <a class="item_collapse" href="#things_to_know">
+                                        {$core->get_Lang('Things to know')}
+                                    </a>
+                                    <a class="item_collapse" href="#optional_extensions">
+                                        {$core->get_Lang('Optional extensions')}
+                                    </a>
+                                    <a class="item_collapse" href="#reviews">
+                                        {$core->get_Lang('Reviews')}
+                                    </a>
+                                </div>
+                                <div class="price_contact price_contact_fixed align-items-center justify-content-between ">
+                                    <div class="d-flex justify-content-between flex-column ">
+                                        <span class="cruise_price_1">from</span>
+                                        <div class="cruise_price">
+                                            US
+                                            <span>$1250</span>
+                                        </div>
+                                    </div>
+                                    <a href="https://unikasia.vietiso.com/contact-us" class="d-flex align-items-center justify-content-center button_contact">
+                                        Contact
+                                        <div class="div_img">
+                                            <img src="images/btn_contact.svg" alt="Icon">
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="unika_collapse_content overview" id="overview">
+                            <h2 class="title_2">
+                                O<span>verv</span>iew
+                            </h2>
+                            <div class="information d-flex flex-column ">
+                                <div class="d-flex justify-content-between  flex-wrap">
+                                    <div class="item d-flex  flex-column">
+                                        <div class="name d-flex  align-items-start">
+                                            <div class="div_img">
+                                                <i class="fa-light fa-calendar-days"></i>
+                                            </div>
+                                            <span>{$core->get_Lang('Year launched')}</span>
+                                        </div>
+                                        <div class="txt">
+                                            {$clsCruise->getBuild($cruise_id)}
+                                        </div>
+                                    </div>
+                                    <div class="item d-flex  flex-column">
+                                        <div class="name d-flex  align-items-start">
+                                            <div class="div_img">
+                                                <i class="fa-light fa-door-open"></i>
+                                            </div>
+                                            <span>{$core->get_Lang('Cabin')}</span>
+                                        </div>
+                                        <div class="txt">
+                                            {$clsCruise->getTotalCabin($cruise_id)}
+                                        </div>
+                                    </div>
+                                    <div class="item d-flex  flex-column">
+                                        <div class="name d-flex  align-items-start">
+                                            <div class="div_img">
+                                                <i class="fa-light fa-sign-posts-wrench"></i>
+                                            </div>
+                                            <span>{$core->get_Lang('Material')}</span>
+                                        </div>
+                                        <div class="txt">
+                                            {$list_material[$clsCruise->getMaterial($cruise_id)]}
+                                        </div>
+                                    </div>
+                                    <div class="item d-flex  flex-column">
+                                        <div class="name d-flex  align-items-start">
+                                            <div class="div_img">
+                                                <i class="fa-light fa-anchor-circle-check"></i>
+                                            </div>
+                                            <span>{$core->get_Lang('Port of departure')}</span>
+                                        </div>
+                                        <div class="txt">
+                                            {$clsCruise->getDeparturePort($cruise_id)}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="location">
+                                    <div class="name d-flex  align-items-start">
+                                        <div class="div_img">
+                                            <i class="fa-light fa-location-dot"></i>
+                                        </div>
+                                        <span>{$core->get_Lang('Place to visit')}: </span>
+                                    </div>
+                                    <div class="txt">
+                                        {$clsCruise->getPlaceVisit($cruise_id)}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="content">
+                                {$clsCruise->getAbout($cruise_id)}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content_right d-flex flex-column  align-items-center justify-content-center">
+                        <div class="title">{$core->get_Lang('Best price for you')}</div>
+                        <div class="content  d-flex flex-column">
+                            <p>{$core->get_Lang('Avg price per person')}</p>
+                            <div class="d-flex align-items-end">
+                                US
+                                <span>$1250</span>
+                            </div>
+                            <span>{$core->get_Lang('Price includes room for 2 pax')}</span>
+                        </div>
+                        <a href="https://unikasia.vietiso.com/contact-us" class="contact d-flex align-items-center justify-content-center">{$core->get_Lang('Contact')}</a>
+                    </div>
+                </div>
+                {if $arr_itinerary}
+                    <div class="collapse_content content_2_item" id="itineraries">
+                        <div class="title_2">{$core->get_Lang('Itineraries')}</div>
+                        <div class="btn_itineraries d-flex align-items-center flex-wrap">
+                            {foreach from=$arr_itinerary key=key item=item}
+                                {assign var="CruiseItineraryID" value=$item.cruise_itinerary_id}
+                                {if $item.title_itinerary ne ''}
+                                    <button class="item_btn_itineraries" data-list="list_new_{$CruiseItineraryID}">
+                                        {$item.title_itinerary}
+                                    </button>
+                                {else}
+                                    <button class="item_btn_itineraries" data-list="list_new_{$CruiseItineraryID}">
+                                        {$clsCruiseItinerary->getDuration($item.cruise_itinerary_id)}
+                                    </button>
+                                {/if}
+                            {/foreach}
+                            <!-- <button class="item_btn_itineraries active">2 days itinerary</button> -->
+                        </div>
+                        {if $arr_itinerary_day}
+                            {foreach from=$arr_itinerary_day key=key item=item}
+                                {assign var="CruiseItineraryID" value=$item.info[0]}
+                                {assign var="Child" value=$item.child}
+                                <div class="list_new d-flex flex-column list_new_{$CruiseItineraryID}">
+                                    {if $Child}
+                                        {foreach from=$Child key=k item=i}
+                                            {assign var="CruiseItineraryDayID" value=$i.cruise_itinerary_day_id}
+                                            {assign var="CruiseItineraryDayTitle" value=$clsCruiseItineraryDay->getTitle($CruiseItineraryDayID)}
+                                            {assign var="CruiseItineraryDayImage" value=$clsCruiseItineraryDay->getImage($CruiseItineraryDayID, 346, 240)}
+                                            {assign var="CruiseItineraryDayContent" value=$clsCruiseItineraryDay->getContent($CruiseItineraryDayID)}
+                                            <div class="item_new">
+                                                <div class="title_new d-flex justify-content-between align-items-center  cursor item_itineraries">
+                                                    <div class="title_itineraries d-flex align-items-center ">
+                                                        <div class="div_img img_new">
+                                                            <i class="fa-light fa-location-dot"></i>
+                                                        </div>
+                                                        <h3>{$CruiseItineraryDayTitle}</h3>
+                                                    </div>
+                                                    <div class="div_img">
+                                                        <i class="fa-light fa-angle-down img_arrow"></i>
+                                                        <i class="fa-light fa-angle-up img_arrow1"></i>
+                                                    </div>
                                                 </div>
-                                                <div class="title_iti">
-                                                    <h3 class="title_itineraty">{$title_cruise} {$lstItineraryCruise[i].number_day} {$core->get_Lang('days')} {if $meal_itinerary}({$meal_itinerary}){/if}</h3>
-                                                    {if $des_itinerary}<p class="destination_iti">{$des_itinerary}</p>{/if}
+                                                <div class="content_new">
+                                                    <div class="new justify-content-between">
+                                                        <div class="div_img">
+                                                            <img src="{$CruiseItineraryDayImage}" width="346" height="240" alt="{$CruiseItineraryDayTitle}">
+                                                        </div>
+                                                        <div class="content">{$CruiseItineraryDayContent}</div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <span class="show_more collapsed {$deviceType}" {if $deviceType ne 'phone'} data-bs-toggle="collapse" href="#collapse{$smarty.section.i.index}" {/if}>{if $deviceType eq 'phone'}<i class="fa fa-angle-down" aria-hidden="true"></i>{else}{$core->get_Lang('Show more')}{/if}</span>
-                                        </div>
-                                        <div id="collapse{$smarty.section.i.index}" class="item_body collapse" data-bs-parent="#accordion">
-                                            {section name=k loop=$number_day}
-                                                {assign var=lst_transport_id value=$clsCruiseItineraryDay->getOneField("transport",$lstDayItinerary[k].cruise_itinerary_day_id)}
-                                                {assign var=lstItineraryTransport value=$clsTransport->getAll("is_trash=0 and is_online=1 and transport_id in ($lst_transport_id) order by order_no ASC")}
-                                                <div class="item_day_itinerary">
-                                                    <div class="item_header_day collapsed d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#collapse{$smarty.section.i.index}{$smarty.section.k.index}">
-                                                        <span class="title_day">{$core->get_Lang('Day')} {$smarty.section.k.iteration}: {$clsCruiseItineraryDay->getTitle($lstDayItinerary[k].cruise_itinerary_day_id)}</span>
-                                                        <i class="fa fa-angle-down" aria-hidden="true"></i>
-                                                    </div>
-                                                    <div id="collapse{$smarty.section.i.index}{$smarty.section.k.index}" class="body_item_day_itinerary collapse tinymce_Content">
-                                                        {if $clsCruiseItineraryDay->checkShowImage($lstDayItinerary[k].cruise_itinerary_day_id)}
-                                                            <div class="row">
-                                                                <div class="col-lg-4 col-md-5 mb15_767">
-                                                                    <img class="img100" src="{$clsCruiseItineraryDay->getImage($lstDayItinerary[k].cruise_itinerary_day_id,384,256)}" alt="{$clsCruiseItineraryDay->getTitle($lstDayItinerary[k].cruise_itinerary_day_id)}" width="384" height="256"/>
-                                                                </div>
-                                                                <div class="col-lg-8 col-md-7">
-                                                                    {$clsCruiseItineraryDay->getContent($lstDayItinerary[k].cruise_itinerary_day_id)} 
-                                                                </div>
-                                                            </div>
-                                                        {else}
-                                                            {$clsCruiseItineraryDay->getContent($lstDayItinerary[k].cruise_itinerary_day_id)} 
-                                                        {/if}
-                                                    </div>
-                                                </div>
-                                            {/section}
-                                        </div>
-                                    </div>	
-                                {/if}
-                            {/section}
-                        </div>
-                    </section>	
-					{/if}
-					{if $oneTable.file_programme ne ""}
-                    <div class="box_download_file d-flex flex-wrap align-items-center justify-content-between">
-                        <div class="box_download_file_left">
-                            <h3 class="title_download_file">{$core->get_Lang('Want to read it later?')}</h3>
-                            <p class="text_download_file">{$core->get_Lang('Download the PDF document of this tour and start planning your tour offline')}</p>
-                        </div>
-                        <a href="{$oneTable.file_programme}" title="{$core->get_Lang('Download')}" class="btn_download_file" download>{$core->get_Lang('Download')}</a>
+                                        {/foreach}
+                                    {/if}
+                                </div>
+                            {/foreach}
+                        {/if}
                     </div>
-					{/if}
-                    {$clsISO->getBlock('filter_cabin_cruise')}
-					<section id="notes" class="notes_box section_box">
-						<h2 class="title_cruise_box_detail">{$core->get_Lang('Things to know')}</h2>
-						<div class="box_important_notes">
-							<div class="nav nav-pills {if $deviceType eq 'phone'}owl-carousel{else} flex-column {/if}" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-								{if $CruiseFacilities || $CruiseServices || $CruiseFaActivities}
-									<button class="nav-link {if !$checkActive}active{/if}" id="v-pills-facilities-tab" data-bs-toggle="pill" data-bs-target="#v-pills-facilities" type="button" role="tab" aria-controls="v-pills-facilities" aria-selected="true">{$core->get_Lang('Facilities')}</button>
-									{if !$checkActive}{assign var=checkActive value=1}{/if}
-								{/if}
-								{if $Inclusion}
-									<button class="nav-link {if !$checkActive}active{/if}" id="v-pills-Inclusion-tab" data-bs-toggle="pill" data-bs-target="#v-pills-Inclusion" type="button" role="tab" aria-controls="v-pills-Inclusion" aria-selected="false">{$core->get_Lang('Included')}</button>
-									{if !$checkActive}{assign var=checkActive value=1}{/if}
-								{/if}
-								{if $Exclusion}
-									<button class="nav-link {if !$checkActive}active{/if}" id="v-pills-Exclusion-tab" data-bs-toggle="pill" data-bs-target="#v-pills-Exclusion" type="button" role="tab" aria-controls="v-pills-Exclusion" aria-selected="false">{$core->get_Lang('Excluded')}</button>
-									{if !$checkActive}{assign var=checkActive value=1}{/if}
-								{/if}
-								{if $CruisePolicy}
-									<button class="nav-link {if !$checkActive}active{/if}" id="v-pills-CruisePolicy-tab" data-bs-toggle="pill" data-bs-target="#v-pills-CruisePolicy" type="button" role="tab" aria-controls="v-pills-CruisePolicy" aria-selected="false">{$core->get_Lang('Booking Cruise Policy')}</button>
-									{if !$checkActive}{assign var=checkActive value=1}{/if}
-								{/if}
-								{if $BookingPolicy}
-									<button class="nav-link {if !$checkActive}active{/if}" id="v-pills-BookingPolicy-tab" data-bs-toggle="pill" data-bs-target="#v-pills-BookingPolicy" type="button" role="tab" aria-controls="v-pills-BookingPolicy" aria-selected="false">{$core->get_Lang('Booking Policy')}</button>
-									{if !$checkActive}{assign var=checkActive value=1}{/if}
-								{/if}
-								{if $getCruiseChildPolicy}
-									<button class="nav-link {if !$checkActive}active{/if}" id="v-pills-ChildPolicy-tab" data-bs-toggle="pill" data-bs-target="#v-pills-ChildPolicy" type="button" role="tab" aria-controls="v-pills-ChildPolicy" aria-selected="false">{$core->get_Lang('Child Policy')}</button>
-									{if !$checkActive}{assign var=checkActive value=1}{/if}
-								{/if}
-							</div>
-							<div class="tab-content" id="v-pills-tabContent">
-								{if $CruiseFacilities || $CruiseServices || $CruiseFaActivities}
-									<div class="tab-pane fade {if !$checkActiveContent}show active{/if}" id="v-pills-facilities" role="tabpanel" aria-labelledby="v-pills-facilities-tab">
-										{if $CruiseFacilities}
-										<div class="box_cruise_facilities">
-											<label for="" class="lbl_title_facilities">{$core->get_Lang('Cruise Facilities')}</label>
-											<div class="row">
-												{section name=i loop=$CruiseFacilities}
-													<div class="col-md-4">
-														<div class="item_facilities">
-															{if $CruiseFacilities[i].image ne ''}
-																<img src="{$CruiseFacilities[i].image}" width="20" height="20" alt="{$CruiseFacilities[i].title}" class="icon_facilities">
-															{/if}
-															<span class="lbl_item_facilities">{$CruiseFacilities[i].title}</span>
-														</div>
-													</div>
-												{/section}
-											</div>
-											
-										</div>
-										{/if}
-										{if $CruiseServices}
-										<div class="box_cruise_facilities">
-											<label for="" class="lbl_title_facilities">{$core->get_Lang('Cruise Services')}</label>
-											<div class="row">
-												{section name=i loop=$CruiseServices}
-													<div class="col-md-4">
-														<div class="item_facilities">
-															{if $CruiseServices[i].image ne ''}
-																<img src="{$CruiseServices[i].image}" width="20" height="20" alt="{$CruiseServices[i].title}" class="icon_facilities">
-															{/if}
-															<span class="lbl_item_facilities">{$CruiseServices[i].title}</span>
-														</div>
-													</div>
-												{/section}
-											</div>
-										</div>
-										{/if}
-										{if $CruiseFaActivities}
-										<div class="box_cruise_facilities">
-											<label for="" class="lbl_title_facilities">{$core->get_Lang('Activities on Board')}</label>
-											<div class="row">
-												{section name=i loop=$CruiseFaActivities}
-                                                <div class="col-md-4">
-                                                    <div class="item_facilities">
-                                                        {if $CruiseFaActivities[i].image ne ''}
-                                                            <img src="{$CruiseFaActivities[i].image}" width="20" height="20" alt="{$CruiseFaActivities[i].title}" class="icon_facilities">
-                                                        {/if}
-                                                        <span class="lbl_item_facilities">{$CruiseFaActivities[i].title}</span>
-                                                    </div>
+                {/if}
+                <div class="collapse_content content_2_item" id="things_to_know">
+                    <div class="title d-flex justify-content-between align-items-end flex-wrap">
+                        <div class="d-flex flex-column ">
+                            <h2 class="title_2">{$core->get_Lang('Things to know')}</h2>
+                            <span class="span_thing_now">
+                                {$core->get_Lang('Centara Mirage Resort Mui Ne takes special requests.. Contact now!')}
+                            </span>
+                        </div>
+                        <a href="https://unikasia.vietiso.com/contact-us" class="d-flex align-items-center justify-content-center  button_contact">
+                            {$core->get_Lang('Contact')}
+                            <div class="div_img"><i class="fa-sharp fa-light fa-arrow-right" aria-hidden="true"></i></div>
+                        </a>
+                    </div>
+                    <div class="content d-flex">
+                        <div class="content_left">
+                            <div class="btn_thing_know active cursor d-flex align-items-center justify-content-start" data-class="unika_content_facility">
+                                <div class="div_img" data-name="facilities">
+                                    <i class="fa-light fa-tv"></i>
+                                </div>
+                                <span>{$core->get_Lang('Facilities')}</span>
+                            </div>
+                            <div class="btn_thing_know cursor d-flex align-items-center justify-content-start" data-class="unika_content_include">
+                                <div class="div_img" data-name="include">
+                                    <i class="fa-light fa-octagon-plus"></i>
+                                </div>
+                                <span>{$core->get_Lang('What’s include')}</span>
+                            </div>
+                            <div class="btn_thing_know cursor d-flex align-items-center justify-content-start" data-class="unika_content_exclude">
+                                <div class="div_img" data-name="exclude">
+                                    <i class="fa-light fa-octagon-xmark"></i>
+                                </div>
+                                <span>{$core->get_Lang('What’s exclude')}</span>
+                            </div>
+                            <div class="btn_thing_know  cursor d-flex align-items-center justify-content-start" data-class="unika_content_booking">
+                                <div class="div_img" data-name="policy">
+                                    <i class="fa-light fa-circle-info"></i>
+                                </div>
+                                <span>{$core->get_Lang('Booking cruise policy')}</span>
+                            </div>
+                            <div class="btn_thing_know cursor d-flex align-items-center justify-content-start" data-class="unika_content_booking_policy">
+                                <div class="div_img" data-name="facilities">
+                                    <i class="fa-light fa-calendar-check"></i>
+                                </div>
+                                <span>{$core->get_Lang('Booking policy')}</span>
+                            </div>
+                            <div class="btn_thing_know  cursor d-flex align-items-center justify-content-start" data-class="unika_content_child_policy">
+                                <div class="div_img" data-name="child">
+                                    <i class="fa-light fa-baby"></i>
+                                </div>
+                                <span>{$core->get_Lang('Child policy')}</span>
+                            </div>
+                        </div>
+                        <div class="content_right">
+                            {if $arr_facilities}
+                            <div class="content_right_item unika_content_facility active">
+                                {foreach from=$arr_facilities key=key item=item}
+                                    <div class="item_right d-flex justify-content-start align-items-center">
+                                        <div class="div_img"><img src="{$item.image}" alt="Icon"></div>
+                                        <span>{$item.title}</span>
+                                    </div>
+                                {/foreach}
+                            </div>
+                            {/if}
+                            <div class="content_right_item unika_content_include">
+                                <!-- <div class="item_right d-flex justify-content-start align-items-center ">
+                                    <div class="div_img">
+                                        <img src="images/teenyicons_tick.svg" alt="Icon">
+                                    </div>
+                                    <span>Transfer Hanoi - Halong - Hanoi (book in next step)</span>
+                                </div> -->
+                                {$clsCruise->getInclusion($cruise_id)}
+                            </div>
+                            <div class="content_right_item unika_content_exclude">
+                                <!-- <div class="item_right d-flex justify-content-start align-items-center ">
+                                    <div class="div_img">
+                                        <img src="images/teenyicons_tick.svg" alt="Icon">
+                                    </div>
+                                    <span>Transfer Hanoi - Halong - Hanoi (book in next step)</span>
+                                </div> -->
+                                {$clsCruise->getExclusion($cruise_id)}
+                            </div>
+                            <div class="content_right_item unika_content_booking">
+                                <!-- <div class="item_right d-flex justify-content-start align-items-center ">
+                                    <div class="div_img">
+                                        <img src="images/teenyicons_tick.svg" alt="Icon">
+                                    </div>
+                                    <span>Transfer Hanoi - Halong - Hanoi (book in next step)</span>
+                                </div> -->
+                                {$clsCruise->getCruisePolicy($cruise_id)}
+                            </div>
+                            <div class="content_right_item unika_content_booking_policy">
+                                <!-- <div class="item_right d-flex justify-content-start align-items-center ">
+                                    <div class="div_img">
+                                        <img src="images/teenyicons_tick.svg" alt="Icon">
+                                    </div>
+                                    <span>Transfer Hanoi - Halong - Hanoi (book in next step)</span>
+                                </div> -->
+                                {$clsCruise->getCruiseBookingPolicy($cruise_id)}
+                            </div>
+                            <div class="content_right_item unika_content_child_policy">
+                                <!-- <div class="item_right d-flex justify-content-start align-items-center ">
+                                    <div class="div_img">
+                                        <img src="images/teenyicons_tick.svg" alt="Icon">
+                                    </div>
+                                    <span>Transfer Hanoi - Halong - Hanoi (book in next step)</span>
+                                </div> -->
+                                {$clsCruise->getCruiseChildPolicy($cruise_id)}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="optional_extensions" class="content_2_item d-flex justify-content-center ">
+            <div class="container">
+                <div class=" optional_extensions ">
+                    <h2 class="title_2">{$core->get_Lang('Optional extensions')}</h2>
+                    <div class="content d-flex justify-content-between ">
+                        {if $arr_extension_pre}    
+                            <div class="item_content">
+                                <div class="title_right">{$core->get_Lang('PRE CRUISE EXTENSIONS')}</div>
+                                <div class="list_extensions d-flex flex-column ">
+                                    {foreach from=$arr_extension_pre key=key item=item}
+                                        {assign var="TourID" value=$item.tour_id}
+                                        {assign var="TourTitle" value=$clsTour->getTitle($TourID)}
+                                        {assign var="TourLink" value=$clsTour->getLink($TourID)}
+                                        <div class="item_extensions d-flex align-items-start ">
+                                            <a href="{$TourLink}" class="div_img img_extensions">
+                                                <img src="{$clsTour->getImage($TourID, 243, 168)}" width="243" height="168" alt="{$TourTitle}">
+                                            </a>
+                                            <div class="content_extensions d-flex justify-content-start align-items-start  flex-column">
+                                                <a href="{$TourLink}" class="title_extentions ellipsis_2" title="{$TourTitle}">
+                                                    {$TourTitle}
+                                                </a>
+                                                <div class="money_extentions">
+                                                    <span class="money_extention_1">{$core->get_Lang('Form')}</span>
+                                                    <span class="money_extention_2">{$core->get_Lang('US')}</span>
+                                                    <span class="money_extention_3">${$clsTour->getMinPrice($TourID)}</span>
                                                 </div>
-												{/section}
-											</div>
-										</div>
-										{/if}
-									</div>
-									{if !$checkActiveContent}{assign var=checkActiveContent value=1}{/if}
-								{/if}
-								{if $Inclusion}
-									<div class="tab-pane fade {if !$checkActiveContent}show active{/if}" id="v-pills-Inclusion" role="tabpanel" aria-labelledby="v-pills-Inclusion-tab">{$Inclusion}</div>
-									{if !$checkActiveContent}{assign var=checkActiveContent value=1}{/if}
-								{/if}
-								{if $Exclusion}
-									<div class="tab-pane fade {if !$checkActiveContent}show active{/if}" id="v-pills-Exclusion" role="tabpanel" aria-labelledby="v-pills-Exclusion-tab">{$Exclusion}</div>
-									{if !$checkActiveContent}{assign var=checkActiveContent value=1}{/if}
-								{/if}
-								{if $CruisePolicy}
-									<div class="tab-pane fade {if !$checkActiveContent}show active{/if}" id="v-pills-CruisePolicy" role="tabpanel" aria-labelledby="v-pills-CruisePolicy-tab">{$CruisePolicy}</div>
-									{if !$checkActiveContent}{assign var=checkActiveContent value=1}{/if}
-								{/if}
-								{if $BookingPolicy}
-									<div class="tab-pane fade {if !$checkActiveContent}show active{/if}" id="v-pills-BookingPolicy" role="tabpanel" aria-labelledby="v-pills-BookingPolicy-tab">{$BookingPolicy}</div>
-									{if !$checkActiveContent}{assign var=checkActiveContent value=1}{/if}
-								{/if}
-								{if $getCruiseChildPolicy}
-									<div class="tab-pane fade {if !$checkActiveContent}show active{/if}" id="v-pills-ChildPolicy" role="tabpanel" aria-labelledby="v-pills-ChildPolicy-tab">{$getCruiseChildPolicy}</div>
-									{if !$checkActiveContent}{assign var=checkActiveContent value=1}{/if}
-								{/if}
-							</div>
-						</div>
-					</section>
-					<section class="reviews_box section_box" id="review">
-						<h2 class="title_cruise_box_detail">{$core->get_Lang('Customer reviews')}</h2>
-						<div class="row align-items-center">
-							<div class="col-lg-3">
-								<div class="box_score">
-									<div class="score_number">{$ratingValue}</div>
-									<div class="score_text">
-										<p class="txt_score">{$textRateAvg}</p>
-										<p class="number_review">{$ratingCount} {$core->get_Lang('Reviews')} <a class="view_all_review btn_write_review btn_write_review_login" href="javascript:void(0);" title="{$core->get_Lang('Reviews')}">{$core->get_Lang('Reviews')}</a>
-										</p>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-3">
-								<div class="box_rate_score">
-									{if $lstReviewCruise.cruise_quality}
-										{math equation='x/10' x=$lstReviewCruise.cruise_quality assign=cruise_quality}
-									{else}
-										{assign var=cruise_quality value=0}
-									{/if}
-									<label for="" class="lbl_rate_score">{$core->get_Lang('Cruise quality')}</label>
-									<div class="d-flex flex-wrap justify-content-between align-items-center">
-										<div class="progress">
-											<div class="progress-bar" role="progressbar" aria-valuenow="{$cruise_quality}" aria-valuemin="0" aria-valuemax="100" style="width: {$lstReviewCruise.cruise_quality}%"></div>
-										</div>
-										<span>{$cruise_quality}</span>
-									</div>
-								</div>
-								<div class="box_rate_score">
-									{if $lstReviewCruise.staff_quality}
-										{math equation='x/10' x=$lstReviewCruise.staff_quality assign=staff_quality}
-									{else}
-										{assign var=staff_quality value=0}
-									{/if}
-									<label for="" class="lbl_rate_score">{$core->get_Lang('Staff quality')}</label>
-									<div class="d-flex flex-wrap justify-content-between align-items-center">
-										<div class="progress">
-											<div class="progress-bar" role="progressbar" aria-valuenow="{$staff_quality}" aria-valuemin="0" aria-valuemax="100" style="width: {$lstReviewCruise.staff_quality}%"></div>
-										</div>
-										<span>{$staff_quality}</span>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-3">
-								<div class="box_rate_score">
-									{if $lstReviewCruise.food_drink}
-										{math equation='x/10' x=$lstReviewCruise.food_drink assign=food_drink}
-									{else}
-										{assign var=food_drink value=0}
-									{/if}
-									<label for="" class="lbl_rate_score">{$core->get_Lang('Food/Drink')}</label>
-									<div class="d-flex flex-wrap justify-content-between align-items-center">
-										<div class="progress">
-											<div class="progress-bar" role="progressbar" aria-valuenow="{$food_drink}" aria-valuemin="0" aria-valuemax="100" style="width: {$lstReviewCruise.food_drink}%"></div>
-										</div>
-										<span>{$food_drink}</span>
-									</div>
-								</div>
-								<div class="box_rate_score">
-									{if $lstReviewCruise.entertainment}
-										{math equation='x/10' x=$lstReviewCruise.entertainment assign=entertainment}
-									{else}
-										{assign var=entertainment value=0}
-									{/if}
-									<label for="" class="lbl_rate_score">{$core->get_Lang('Entertainment')}</label>
-									<div class="d-flex flex-wrap justify-content-between align-items-center">
-										<div class="progress">
-											<div class="progress-bar" role="progressbar" aria-valuenow="{$entertainment}" aria-valuemin="0" aria-valuemax="100" style="width: {$lstReviewCruise.entertainment}%"></div>
-										</div>
-										<span>{$entertainment}</span>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-3">
-								<div class="box_rate_score">
-									{if $lstReviewCruise.cabin_quality}
-										{math equation='x/10' x=$lstReviewCruise.cabin_quality assign=cabin_quality}
-									{else}
-										{assign var=cabin_quality value=0}
-									{/if}
-									<label for="" class="lbl_rate_score">{$core->get_Lang('Cabin quality')}</label>
-									<div class="d-flex flex-wrap justify-content-between align-items-center">
-										<div class="progress">
-											<div class="progress-bar" role="progressbar" aria-valuenow="{$cabin_quality}" aria-valuemin="0" aria-valuemax="100" style="width: {$lstReviewCruise.cabin_quality}%"></div>
-										</div>
-										<span>{$cabin_quality}</span>
-									</div>
-								</div>
-								<div class="box_rate_score">
-									{if $lstReviewCruise.worth_the_money}
-										{math equation='x/10' x=$lstReviewCruise.worth_the_money assign=worth_the_money}
-									{else}
-										{assign var=worth_the_money value=0}
-									{/if}
-									<label for="" class="lbl_rate_score">{$core->get_Lang('Worth the money')}</label>
-									<div class="d-flex flex-wrap justify-content-between align-items-center">
-										<div class="progress">
-											<div class="progress-bar" role="progressbar" aria-valuenow="{$worth_the_money}" aria-valuemin="0" aria-valuemax="100" style="width: {$lstReviewCruise.worth_the_money}%"></div>
-										</div>
-										<span>{$worth_the_money}</span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="box_write_review">
-							<div class="clearfix mb20"></div>
-							{if $clsISO->getCheckActiveModulePackage($package_id,'member','default','default')}
-								{$core->getBlock('review_Star')}
-							{else}
-								{$core->getBlock('review_Star_No_Login')}
-							{/if}
-						</div>
-						{if $lstReview}
-							<div class="box_list_reviews owl-carousel">
-								{section name=i loop=$lstReview}
-									{assign var=reviews_content value=$clsReviews->getContent($lstReview[i].reviews_id,400,true,$lstReview[i])}
-									<div class="review_item">
-										<div class="top_item_review">
-											<div class="avatar">
-												<span>{$lstReview[i].fullname|truncate:1:"":true}</span>
-											</div>
-											<div class="info">
-												<p class="name">{$lstReview[i].fullname}</p>
-												<p class="country">{$clsCountry->getTitle($lstReview[i].country_id)}</p>
-											</div>
-										</div>
-										<div class="content_review content_review_short limit_3line">
-											{$clsReviews->getContent($lstReview[i].reviews_id,400,true,$lstReview[i])|html_entity_decode}
-										</div>
-										<div class="content_review content_review_full" style="display:none">
-											{$clsReviews->getContent($lstReview[i].reviews_id,400,false,$lstReview[i])|html_entity_decode}
-										</div>
-										<a data-bs-toggle="modal" data-bs-target="#mdReview" class="read_more_review">{$core->get_Lang('Read more')}</a>
-									</div>
-								{/section}
-							</div>
-						{/if}
-					</section>
-				</div>			
-			</div>	
-			{$core->getBlock('box_service_ad')}
-			{$core->getBlock('relateCruise')}
-		</div>
-	</div>
-</div><!--wapper_content-->
-<!-- Modal -->
-<div class="modal fade" id="mdReview" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-body">
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				<div class="box_content"></div>
-			</div>
-		</div>
-	</div>
-</div>
-<script>
-	var $cruise_id = '{$cruise_id}';
-	var txt_showMore = '{$core->get_Lang("Show more")}';
-	var txt_showLess = '{$core->get_Lang("Show less")}';
-	var map_la = '{$map_la}';
-	var map_lo = '{$map_lo}';
-	var cruise_id = '{$cruise_id}';
-	var cruise_itinerary_id = '{$cruise_itinerary_id}';
-</script>
+                                            </div>
+                                        </div>
+                                    {/foreach}
+                                </div>
+                            </div>
+                        {/if}
+                        {if $arr_extension_post}
+                        <div class="item_content">
+                            <div class="title_left">{$core->get_Lang('POST CRUISE EXTENSIONS')}</div>
+                            <div class="list_extensions d-flex flex-column ">
+                                {foreach from=$arr_extension_post key=key item=item}
+                                    {assign var="TourID" value=$item.tour_id}
+                                    {assign var="TourTitle" value=$clsTour->getTitle($TourID)}
+                                    {assign var="TourLink" value=$clsTour->getLink($TourID)}
+                                    <div class="item_extensions d-flex align-items-start ">
+                                        <a href="{$TourLink}" class="div_img img_extensions">
+                                            <img src="{$clsTour->getImage($TourID, 243, 168)}" width="243" height="168" alt="{$TourTitle}">
+                                        </a>
+                                        <div class="content_extensions d-flex justify-content-start align-items-start  flex-column">
+                                            <a href="{$TourLink}" class="title_extentions ellipsis_2" title="{$TourTitle}">
+                                                {$TourTitle}
+                                            </a>
+                                            <div class="money_extentions">
+                                                <span class="money_extention_1">{$core->get_Lang('Form')}</span>
+                                                <span class="money_extention_2">{$core->get_Lang('US')}</span>
+                                                <span class="money_extention_3">${$clsTour->getMinPrice($TourID)}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {/foreach}
+                            </div>
+                        </div>
+                        {/if}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="reviews" class="d-flex flex-column  align-items-center justify-content-center">
+            <div class="container">
+                <div class="unikasia_reviews d-flex flex-column align-items-center justify-content-center">
+                    <h2 class="title_2">{$core->get_Lang('Reviews')}</h2>
 
-{assign var=num_day_price value=$clsCruiseItinerary->getOneField('number_day',$cruise_id)}
-{assign var=priceDay value=$clsCruise->getTripPriceDay($cruise_id,$now_month,$num_day_price,$oneTable)}
-{assign var=price value=$clsCruise->getLTripPrice($cruise_id,$now_month,$num_day_price)|strip_tags}
+                    <div class="reviews d-flex flex-column align-items-center justify-content-center ">
+                        <div class="statistical d-flex align-items-center justify-content-between ">
+                            <div class="statistical_right d-flex align-items-center justify-content-center flex-column">
+                                <div id="chart"></div>
+                                <div class="content_statistical d-flex flex-column ">
+                                    <p class="number">4.8</p>
+                                    <span class="span_1">Wonderful</span>
+                                    <span class="span_2">(3 reviews)</span>
+                                </div>
+                            </div>
+                            <div class="statistical_left d-flex flex-column ">
+                                <div class="item_statiscal d-flex  justify-content-between align-items-center">
+                                    <p>Wonderful</p>
+                                    <div class="percent">
+                                        <div></div>
+                                    </div>
+                                    <span>10</span>
+                                </div>
+                                <div class="item_statiscal d-flex  justify-content-between align-items-center">
+                                    <p>Excellent</p>
+                                    <div class="percent">
+                                        <div></div>
+                                    </div>
+                                    <span>2</span>
+                                </div>
+                                <div class="item_statiscal d-flex  justify-content-between align-items-center">
+                                    <p>Good</p>
+                                    <div class="percent">
+                                        <div></div>
+                                    </div>
+                                    <span>0</span>
+                                </div>
+                                <div class="item_statiscal d-flex  justify-content-between align-items-center">
+                                    <p>Average</p>
+                                    <div class="percent">
+                                        <div></div>
+                                    </div>
+                                    <span>0</span>
+                                </div>
+                                <div class="item_statiscal d-flex  justify-content-between align-items-center">
+                                    <p>Bad</p>
+                                    <div class="percent">
+                                        <div></div>
+                                    </div>
+                                    <span>10</span>
+                                </div>
+                                <div class="btn_write_reviews d-flex justify-content-end ">
+                                    <button class="btn_write">Write reviews</button>
+                                </div>
+                            </div>
+                        </div>
+                        <form action="" class="unika_form_review">
+                            <div class="unika_form_content">
+                                <div class="unika_form_header">
+                                    <span class="title_form">
+                                        * Your rating is here:
+                                    </span>
+                                    <div class="unika_form_rating">
+                                        <span class="unika_rate_star active" data-value="1">
+                                            <i class="fa-solid fa-star"></i>
+                                        </span>
+                                        <span class="unika_rate_star active" data-value="2">
+                                            <i class="fa-solid fa-star"></i>
+                                        </span>
+                                        <span class="unika_rate_star active" data-value="3">
+                                            <i class="fa-solid fa-star"></i>
+                                        </span>
+                                        <span class="unika_rate_star active" data-value="4">
+                                            <i class="fa-solid fa-star"></i>
+                                        </span>
+                                        <span class="unika_rate_star active" data-value="5">
+                                            <i class="fa-solid fa-star"></i>
+                                        </span>
+                                        <input type="hidden" id="rates" name="unika_rates" class="unika_rating_input" value="5">
+                                    </div>
+                                </div>
+                                <div class="unika_form_body">
+                                    <div class="unika_body_item box_validate">
+                                        <input type="text" class="unika_item_input" name="unika_fullname" placeholder="* Full name">
+                                    </div>
+                                    <div class="unika_body_item box_validate">
+                                        <input type="text" class="unika_item_input" name="unika_title" placeholder="* Title of review">
+                                    </div>
+                                    <div class="unika_body_item box_validate">
+                                        <textarea name="unika_review" class="unika_item_textara" id="" placeholder="* Your review"></textarea>
+                                    </div>
+                                    <div class="unika_body_item">
+                                        <input type="submit" class="unika_item_submit" value="Submit your review">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="list_reviews width-100 d-flex flex-column ">
+
+                            <div class="item_reviews width-100 d-flex flex-column justify-content-start ">
+                                <div class="customer d-flex justify-content-start ">
+                                    <div class="div_img">
+                                        <img src="images/img_review.png" alt="Image">
+                                    </div>
+                                    <div class="d-flex flex-column align-items-start ">
+                                        <a href="#">Kittfinn</a>
+                                        <span class="">March 12, 2024</span>
+                                    </div>
+                                </div>
+                                <div class="rating d-flex justify-content-start align-items-center ">
+                                    <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
+                                    <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
+                                    <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
+                                    <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
+                                </div>
+                                <div class="title_reviews">
+                                    What a wonderful place to stay
+                                </div>
+                                <div class="content_reviews ellipsis_3">
+                                    My husband and I have just arrived home from the most fantastic 8 day stay at Turtle
+                                    Beach. I was a little worried about some of the reviews I read prior to going but I
+                                    had
+                                    no need to be concerned. . This hotel is a gem, the staff are wonderful, the food
+                                    was
+                                    delicious and there was always something to enjoy whatever your taste. Nicole, also
+                                    known as scrumptious made eggs any...
+                                </div>
+                                <button class="view_more ">
+                                    View more
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class=" d-flex justify-content-center">
+            <div class="container">
+                <div class=" interested d-flex justify-content-center  flex-column align-items-center">
+                    <h2 class="title_2">Maybe yo<span>u a</span>re interested</h2>
+                    <div class="list_intersted list_interested_2 swiper">
+                        <div class="swiper-wrapper">
+                            <div class="item_interested d-flex flex-column swiper-slide">
+                                <a href="#" class="div_img img_item">
+                                    <img src="images/interested1.png" alt="Image">
+                                </a>
+                                <div class="content_interested d-flex flex-column ">
+                                    <div class="d-flex flex-column content_interested_title">
+                                        <h3>
+                                            <a class=" ellipsis_2  title_interested" href="#">Waldschenke
+                                                Stendenitz Übernachten im Wald am See
+                                            </a>
+                                        </h3>
+                                        <div class="rating d-flex align-items-center ">
+                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
+                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
+                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
+                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between  align-items-start">
+                                        <div class="div_img img_interested">
+                                            <img src="images/location.svg" alt="Icon">
+                                        </div>
+                                        <div class="d-flex  ellipsis_3  txt_interested">
+                                            <span>Place to visit: </span>
+                                            Hanoi - Lan Ha Bay - Dark & Light Cave - Ao
+                                            Ech Area - Halong International Cruise Port - Hanoi
+                                        </div>
+                                    </div>
+                                    <div class="reviews d-flex align-items-center justify-content-start ">
+                                        <div class="count_reviews d-flex align-items-center justify-content-center ">
+                                            4.5
+                                        </div>
+                                        <span class="span_1">Very good</span>
+                                        <span class="span_2">(9 reviews)</span>
+                                    </div>
+                                    <div class="money_viwed d-flex justify-content-end align-items-end  flex-wrap">
+                                        <span class="money_viwed_span">Price per person from</span>
+                                        <div class="money_viwed_div">
+                                            US
+                                            <span>$650</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item_interested d-flex flex-column swiper-slide">
+                                <a href="#" class="div_img img_item">
+                                    <img src="images/interested1.png" alt="Image">
+                                </a>
+                                <div class="content_interested d-flex flex-column ">
+                                    <div class="d-flex flex-column content_interested_title">
+                                        <h3>
+                                            <a class=" ellipsis_2  title_interested" href="#">Waldschenke
+                                                Stendenitz Übernachten im Wald am See
+                                            </a>
+                                        </h3>
+                                        <div class="rating d-flex align-items-center ">
+                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
+                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
+                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
+                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between  align-items-start">
+                                        <div class="div_img img_interested">
+                                            <img src="images/location.svg" alt="Icon">
+                                        </div>
+                                        <div class="d-flex  ellipsis_3  txt_interested">
+                                            <span>Place to visit: </span>
+                                            Hanoi - Lan Ha Bay - Dark & Light Cave - Ao
+                                            Ech Area - Halong International Cruise Port - Hanoi
+                                        </div>
+                                    </div>
+                                    <div class="reviews d-flex align-items-center justify-content-start ">
+                                        <div class="count_reviews d-flex align-items-center justify-content-center ">
+                                            4.5
+                                        </div>
+                                        <span class="span_1">Very good</span>
+                                        <span class="span_2">(9 reviews)</span>
+                                    </div>
+                                    <div class="money_viwed d-flex justify-content-end align-items-end  flex-wrap">
+                                        <span class="money_viwed_span">Price per person from</span>
+                                        <div class="money_viwed_div">
+                                            US
+                                            <span>$650</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item_interested d-flex flex-column swiper-slide">
+                                <a href="#" class="div_img img_item">
+                                    <img src="images/interested1.png" alt="Image">
+                                </a>
+                                <div class="content_interested d-flex flex-column ">
+                                    <div class="d-flex flex-column content_interested_title">
+                                        <h3>
+                                            <a class=" ellipsis_2  title_interested" href="#">Waldschenke
+                                                Stendenitz Übernachten im Wald am See
+                                            </a>
+                                        </h3>
+                                        <div class="rating d-flex align-items-center ">
+                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
+                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
+                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
+                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between  align-items-start">
+                                        <div class="div_img img_interested">
+                                            <img src="images/location.svg" alt="Icon">
+                                        </div>
+                                        <div class="d-flex  ellipsis_3  txt_interested">
+                                            <span>Place to visit: </span>
+                                            Hanoi - Lan Ha Bay - Dark & Light Cave - Ao
+                                            Ech Area - Halong International Cruise Port - Hanoi
+                                        </div>
+                                    </div>
+                                    <div class="reviews d-flex align-items-center justify-content-start ">
+                                        <div class="count_reviews d-flex align-items-center justify-content-center ">
+                                            4.5
+                                        </div>
+                                        <span class="span_1">Very good</span>
+                                        <span class="span_2">(9 reviews)</span>
+                                    </div>
+                                    <div class="money_viwed d-flex justify-content-end align-items-end  flex-wrap">
+                                        <span class="money_viwed_span">Price per person from</span>
+                                        <div class="money_viwed_div">
+                                            US
+                                            <span>$650</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item_interested d-flex flex-column swiper-slide">
+                                <a href="#" class="div_img img_item">
+                                    <img src="images/interested1.png" alt="Image">
+                                </a>
+                                <div class="content_interested d-flex flex-column ">
+                                    <div class="d-flex flex-column content_interested_title">
+                                        <h3>
+                                            <a class=" ellipsis_2  title_interested" href="#">Waldschenke
+                                                Stendenitz Übernachten im Wald am See
+                                            </a>
+                                        </h3>
+                                        <div class="rating d-flex align-items-center ">
+                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
+                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
+                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
+                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between  align-items-start">
+                                        <div class="div_img img_interested">
+                                            <img src="images/location.svg" alt="Icon">
+                                        </div>
+                                        <div class="d-flex  ellipsis_3  txt_interested">
+                                            <span>Place to visit: </span>
+                                            Hanoi - Lan Ha Bay - Dark & Light Cave - Ao
+                                            Ech Area - Halong International Cruise Port - Hanoi
+                                        </div>
+                                    </div>
+                                    <div class="reviews d-flex align-items-center justify-content-start ">
+                                        <div class="count_reviews d-flex align-items-center justify-content-center ">
+                                            4.5
+                                        </div>
+                                        <span class="span_1">Very good</span>
+                                        <span class="span_2">(9 reviews)</span>
+                                    </div>
+                                    <div class="money_viwed d-flex justify-content-end align-items-end  flex-wrap">
+                                        <span class="money_viwed_span">Price per person from</span>
+                                        <div class="money_viwed_div">
+                                            US
+                                            <span>$650</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item_interested d-flex flex-column swiper-slide">
+                                <a href="#" class="div_img img_item">
+                                    <img src="images/interested1.png" alt="Image">
+                                </a>
+                                <div class="content_interested d-flex flex-column ">
+                                    <div class="d-flex flex-column content_interested_title">
+                                        <h3>
+                                            <a class=" ellipsis_2  title_interested" href="#">Waldschenke
+                                                Stendenitz Übernachten im Wald am See
+                                            </a>
+                                        </h3>
+                                        <div class="rating d-flex align-items-center ">
+                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
+                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
+                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
+                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between  align-items-start">
+                                        <div class="div_img img_interested">
+                                            <img src="images/location.svg" alt="Icon">
+                                        </div>
+                                        <div class="d-flex  ellipsis_3  txt_interested">
+                                            <span>Place to visit: </span>
+                                            Hanoi - Lan Ha Bay - Dark & Light Cave - Ao
+                                            Ech Area - Halong International Cruise Port - Hanoi
+                                        </div>
+                                    </div>
+                                    <div class="reviews d-flex align-items-center justify-content-start ">
+                                        <div class="count_reviews d-flex align-items-center justify-content-center ">
+                                            4.5
+                                        </div>
+                                        <span class="span_1">Very good</span>
+                                        <span class="span_2">(9 reviews)</span>
+                                    </div>
+                                    <div class="money_viwed d-flex justify-content-end align-items-end  flex-wrap">
+                                        <span class="money_viwed_span">Price per person from</span>
+                                        <div class="money_viwed_div">
+                                            US
+                                            <span>$650</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item_interested d-flex flex-column swiper-slide">
+                                <a href="#" class="div_img img_item">
+                                    <img src="images/interested1.png" alt="Image">
+                                </a>
+                                <div class="content_interested d-flex flex-column ">
+                                    <div class="d-flex flex-column content_interested_title">
+                                        <h3>
+                                            <a class=" ellipsis_2  title_interested" href="#">Waldschenke
+                                                Stendenitz Übernachten im Wald am See
+                                            </a>
+                                        </h3>
+                                        <div class="rating d-flex align-items-center ">
+                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
+                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
+                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
+                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between  align-items-start">
+                                        <div class="div_img img_interested">
+                                            <img src="images/location.svg" alt="Icon">
+                                        </div>
+                                        <div class="d-flex  ellipsis_3  txt_interested">
+                                            <span>Place to visit: </span>
+                                            Hanoi - Lan Ha Bay - Dark & Light Cave - Ao
+                                            Ech Area - Halong International Cruise Port - Hanoi
+                                        </div>
+                                    </div>
+                                    <div class="reviews d-flex align-items-center justify-content-start ">
+                                        <div class="count_reviews d-flex align-items-center justify-content-center ">
+                                            4.5
+                                        </div>
+                                        <span class="span_1">Very good</span>
+                                        <span class="span_2">(9 reviews)</span>
+                                    </div>
+                                    <div class="money_viwed d-flex justify-content-end align-items-end  flex-wrap">
+                                        <span class="money_viwed_span">Price per person from</span>
+                                        <div class="money_viwed_div">
+                                            US
+                                            <span>$650</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-button-next">
+                        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                    </div>
+                    <div class="swiper-button-prev">
+                        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center">
+            <div class="container">
+                <div class=" interested d-flex justify-content-center  flex-column align-items-center">
+                    <h2 class="title_2">Rece<span>ntl</span>y viewed</h2>
+                    <div class="list_intersted list_interested_1 swiper">
+                        <div class="swiper-wrapper">
+                            <div class="item_interested swiper-slide d-flex flex-column">
+                                <a href="#" class="div_img img_item">
+                                    <img src="images/interested1.png" alt="Image">
+                                </a>
+                                <div class="content_interested d-flex flex-column ">
+                                    <div class="d-flex flex-column content_interested_title">
+                                        <h3>
+                                            <a class=" ellipsis_2  title_interested" href="#">Waldschenke
+                                                Stendenitz Übernachten im Wald am See
+                                            </a>
+                                        </h3>
+                                        <div class="rating d-flex align-items-center ">
+                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
+                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
+                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
+                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between  align-items-start">
+                                        <div class="div_img img_interested">
+                                            <img src="images/location.svg" alt="Icon">
+                                        </div>
+                                        <div class="d-flex  ellipsis_3  txt_interested">
+                                            <span>Place to visit: </span>
+                                            Hanoi - Lan Ha Bay - Dark & Light Cave - Ao
+                                            Ech Area - Halong International Cruise Port - Hanoi
+                                        </div>
+                                    </div>
+                                    <div class="reviews d-flex align-items-center justify-content-start ">
+                                        <div class="count_reviews d-flex align-items-center justify-content-center ">
+                                            4.5
+                                        </div>
+                                        <span class="span_1">Very good</span>
+                                        <span class="span_2">(9 reviews)</span>
+                                    </div>
+                                    <div class="money_viwed d-flex justify-content-end align-items-end  flex-wrap">
+                                        <span class="money_viwed_span">Price per person from</span>
+                                        <div class="money_viwed_div">
+                                            US
+                                            <span>$650</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item_interested swiper-slide d-flex flex-column">
+                                <a href="#" class="div_img img_item">
+                                    <img src="images/interested1.png" alt="Image">
+                                </a>
+                                <div class="content_interested d-flex flex-column ">
+                                    <div class="d-flex flex-column content_interested_title">
+                                        <h3>
+                                            <a class=" ellipsis_2  title_interested" href="#">Waldschenke
+                                                Stendenitz Übernachten im Wald am See
+                                            </a>
+                                        </h3>
+                                        <div class="rating d-flex align-items-center ">
+                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
+                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
+                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
+                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between  align-items-start">
+                                        <div class="div_img img_interested">
+                                            <img src="images/location.svg" alt="Icon">
+                                        </div>
+                                        <div class="d-flex  ellipsis_3  txt_interested">
+                                            <span>Place to visit: </span>
+                                            Hanoi - Lan Ha Bay - Dark & Light Cave - Ao
+                                            Ech Area - Halong International Cruise Port - Hanoi
+                                        </div>
+                                    </div>
+                                    <div class="reviews d-flex align-items-center justify-content-start ">
+                                        <div class="count_reviews d-flex align-items-center justify-content-center ">
+                                            4.5
+                                        </div>
+                                        <span class="span_1">Very good</span>
+                                        <span class="span_2">(9 reviews)</span>
+                                    </div>
+                                    <div class="money_viwed d-flex justify-content-end align-items-end  flex-wrap">
+                                        <span class="money_viwed_span">Price per person from</span>
+                                        <div class="money_viwed_div">
+                                            US
+                                            <span>$650</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item_interested swiper-slide d-flex flex-column">
+                                <a href="#" class="div_img img_item">
+                                    <img src="images/interested1.png" alt="Image">
+                                </a>
+                                <div class="content_interested d-flex flex-column ">
+                                    <div class="d-flex flex-column content_interested_title">
+                                        <h3>
+                                            <a class=" ellipsis_2  title_interested" href="#">Waldschenke
+                                                Stendenitz Übernachten im Wald am See
+                                            </a>
+                                        </h3>
+                                        <div class="rating d-flex align-items-center ">
+                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
+                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
+                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
+                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between  align-items-start">
+                                        <div class="div_img img_interested">
+                                            <img src="images/location.svg" alt="Icon">
+                                        </div>
+                                        <div class="d-flex  ellipsis_3  txt_interested">
+                                            <span>Place to visit: </span>
+                                            Hanoi - Lan Ha Bay - Dark & Light Cave - Ao
+                                            Ech Area - Halong International Cruise Port - Hanoi
+                                        </div>
+                                    </div>
+                                    <div class="reviews d-flex align-items-center justify-content-start ">
+                                        <div class="count_reviews d-flex align-items-center justify-content-center ">
+                                            4.5
+                                        </div>
+                                        <span class="span_1">Very good</span>
+                                        <span class="span_2">(9 reviews)</span>
+                                    </div>
+                                    <div class="money_viwed d-flex justify-content-end align-items-end  flex-wrap">
+                                        <span class="money_viwed_span">Price per person from</span>
+                                        <div class="money_viwed_div">
+                                            US
+                                            <span>$650</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item_interested swiper-slide d-flex flex-column">
+                                <a href="#" class="div_img img_item">
+                                    <img src="images/interested1.png" alt="Image">
+                                </a>
+                                <div class="content_interested d-flex flex-column ">
+                                    <div class="d-flex flex-column content_interested_title">
+                                        <h3>
+                                            <a class=" ellipsis_2  title_interested" href="#">Waldschenke
+                                                Stendenitz Übernachten im Wald am See
+                                            </a>
+                                        </h3>
+                                        <div class="rating d-flex align-items-center ">
+                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
+                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
+                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
+                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between  align-items-start">
+                                        <div class="div_img img_interested">
+                                            <img src="images/location.svg" alt="Icon">
+                                        </div>
+                                        <div class="d-flex  ellipsis_3  txt_interested">
+                                            <span>Place to visit: </span>
+                                            Hanoi - Lan Ha Bay - Dark & Light Cave - Ao
+                                            Ech Area - Halong International Cruise Port - Hanoi
+                                        </div>
+                                    </div>
+                                    <div class="reviews d-flex align-items-center justify-content-start ">
+                                        <div class="count_reviews d-flex align-items-center justify-content-center ">
+                                            4.5
+                                        </div>
+                                        <span class="span_1">Very good</span>
+                                        <span class="span_2">(9 reviews)</span>
+                                    </div>
+                                    <div class="money_viwed d-flex justify-content-end align-items-end  flex-wrap">
+                                        <span class="money_viwed_span">Price per person from</span>
+                                        <div class="money_viwed_div">
+                                            US
+                                            <span>$650</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item_interested swiper-slide d-flex flex-column">
+                                <a href="#" class="div_img img_item">
+                                    <img src="images/interested1.png" alt="Image">
+                                </a>
+                                <div class="content_interested d-flex flex-column ">
+                                    <div class="d-flex flex-column content_interested_title">
+                                        <h3>
+                                            <a class=" ellipsis_2  title_interested" href="#">Waldschenke
+                                                Stendenitz Übernachten im Wald am See
+                                            </a>
+                                        </h3>
+                                        <div class="rating d-flex align-items-center ">
+                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
+                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
+                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
+                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between  align-items-start">
+                                        <div class="div_img img_interested">
+                                            <img src="images/location.svg" alt="Icon">
+                                        </div>
+                                        <div class="d-flex  ellipsis_3  txt_interested">
+                                            <span>Place to visit: </span>
+                                            Hanoi - Lan Ha Bay - Dark & Light Cave - Ao
+                                            Ech Area - Halong International Cruise Port - Hanoi
+                                        </div>
+                                    </div>
+                                    <div class="reviews d-flex align-items-center justify-content-start ">
+                                        <div class="count_reviews d-flex align-items-center justify-content-center ">
+                                            4.5
+                                        </div>
+                                        <span class="span_1">Very good</span>
+                                        <span class="span_2">(9 reviews)</span>
+                                    </div>
+                                    <div class="money_viwed d-flex justify-content-end align-items-end  flex-wrap">
+                                        <span class="money_viwed_span">Price per person from</span>
+                                        <div class="money_viwed_div">
+                                            US
+                                            <span>$650</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-button-next">
+                        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                    </div>
+                    <div class="swiper-button-prev">
+                        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
 {literal}
-<script type="application/ld+json">
-	{
-		"@context": "http://schema.org",
-		"@type": "Product",
-		"aggregateRating": {
-			"@type": "AggregateRating",
-			"ratingValue": "{/literal}{$ratingValue}{literal}",
-			"bestRating": "{/literal}{$bestRating}{literal}",
-			"reviewCount": "{/literal}{$ratingCount}{literal}"
-		},
-		"description": "{/literal}{$getAbout|strip_tags}{literal}",
-		"name": "{/literal}{$title_cruise}{literal}",
-		"image": "{/literal}{$DOMAIN_NAME}{$clsCruise->getImage($cruise_id,700,500,$oneTable)}{literal}",
-		"offers": {
-			"@type": "Offer",
-			"priceCurrency": "{/literal}{$clsProperty->getTitle($clsConfiguration->getValue('Currency'))}{literal}",
-			"price": "{/literal}{if $priceDay gt '0' and $price gt '0'}{$price}{elseif $priceDay gt '0' and $price eq '0'}{$priceDay}{elseif $priceDay eq '0' and $price gt '0'}{$price}{/if}{literal}",
-			"itemCondition": "new"
-		},
-		"review": {/literal}{$jsonReview}{literal}
-	}
-	
+<style>
+    .unika_cruise_detail .div_img {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+    .unika_cruise_detail .backcrump {
+        padding: 30px 0px;
+    }
+
+    .unika_cruise_detail .backcrump_txt {
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 24px;
+        color: #111D37;
+        padding-right: 24px;
+    }
+
+    .unika_cruise_detail .item_bacrump {
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 24px;
+        color: #FFA718;
+    }
+
+    .unika_cruise_detail .content_backcrump span {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 24px;
+        color: #111D37;
+    }
+
+    .unika_cruise_detail .content_backcrump {
+        gap: 8px;
+    }
+
+    .unika_cruise_detail .list_btn {
+        gap: 9px;
+    }
+
+    .unika_cruise_detail .cruise_information {
+        padding-top: 4px;
+        gap: 20px;
+    }
+
+    .unika_cruise_detail .cruise_star_rating {
+        gap: 12px;
+    }
+
+    .unika_cruise_detail .rating .div_img {
+        width: 24px;
+        height: 24px;
+    }
+
+    .unika_cruise_detail .cruise_medium {
+        gap: 8px;
+    }
+
+    .unika_cruise_detail .cruise_medium p {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 24px;
+        color: #111D37;
+    }
+
+    .unika_cruise_detail .price_contact {
+        gap: 13px;
+    }
+
+    .unika_cruise_detail .cruise_price_1 {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 20px;
+        color: #959AA4;
+        text-align: right;
+    }
+
+    .unika_cruise_detail .cruise_price {
+        color: #FFA718;
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 32px;
+        width: max-content;
+    }
+
+    .unika_cruise_detail .cruise_price span {
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 36px;
+        color: #FFA718;
+        padding-left: 5px;
+    }
+
+    .btn_content_1 {
+        width: 36px;
+        height: 36px;
+        border: unset;
+        border-radius: 8px;
+    }
+
+    .content_1 .title {
+        font-size: 32px;
+        line-height: 52px;
+
+    }
+
+    .unika_cruise_detail .button_contact {
+        width: 148px;
+        background: #FFA718;
+        height: 48px;
+        border-radius: 8px;
+        gap: 12px;
+        color: #FFFFFF;
+        transition: all .3s ease-in-out;
+        cursor: pointer;
+    }
+
+    .unika_cruise_detail .button_contact:hover {
+        background-color: #e88f00;
+    }
+
+    .unika_cruise_detail .count_star {
+        padding: 4px;
+        border-radius: 8px 8px 8px 0;
+        background: #004EA8;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #FFFFFF;
+        font-size: 16px;
+        line-height: 24px;
+        font-weight: 600;
+    }
+
+    .unika_cruise_detail .view {
+        color: #959aa4;
+        font-weight: 400;
+        line-height: 24px;
+    }
+
+    .unika_cruise_detail .show_all {
+        color: #3f6df6;
+        transition: all .3s ease-in-out;
+    }
+
+    .unika_cruise_detail .show_all:hover {
+        color: #FFA718;
+    }
+
+    .cruise_img {
+        border-radius: 8px;
+    }
+
+    .cruise_img_4 {
+        position: relative;
+    }
+
+    .cruise_shadow {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        gap: 8px;
+        border-radius: 8px;
+        background: url(../images/img_shadow.png) no-repeat;
+        background-size: 100%;
+    }
+
+    .content_left {
+        width: calc(100% - 437px);
+    }
+
+    .unika_cruise_detail .content_right {
+        padding: 24px;
+        border-radius: 8px;
+        height: fit-content;
+        gap: 16px;
+    }
+
+    .unika_cruise_detail .content_right .title {
+        font-size: 24px;
+        line-height: 36px;
+        color: #111D37;
+        font-weight: 600;
+    }
+
+    .unika_cruise_detail .content_right .content {
+        min-width: 337px;
+        background: #004EA8;
+        padding: 16px 24px;
+        border-radius: 8px;
+        gap: 8px;
+    }
+
+    .unika_cruise_detail .content_right .contact {
+        background: #FFA718;
+        width: 337px;
+        height: 48px;
+        border-radius: 8px;
+        color: #FFFFFF;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 24px;
+        transition: all .3s ease-in-out;
+    }
+
+    .unika_cruise_detail .content_right .contact:hover {
+        background: #e88f00;
+    }
+
+    .unika_detail_collapse {
+        height: fit-content;
+        gap: 32px;
+    }
+
+    .unika_cruise_detail .item_collapse {
+        cursor: pointer;
+        color: #959AA4;
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 32px;
+        width: max-content;
+        transition: all .3s ease-in-out;
+    }
+
+    .unika_cruise_detail .item_collapse:hover {
+        color: #FFA718;
+    }
+
+    .item_collapse.active {
+        color: #111D37;
+        padding-left: 6px;
+        border-left: 6px solid #FFA718;
+    }
+
+    #overview {
+        padding-top: 60px;
+    }
+
+    .information .div_img {
+        width: 20px;
+        height: 20px;
+    }
+
+    .unika_cruise_detail .information .txt {
+        padding-left: 26px;
+        padding-top: 6px;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 24px;
+        color: #434B5C;
+    }
+
+    .unika_cruise_detail .information {
+        padding-top: 24px;
+        padding-bottom: 48px;
+        gap: 16px;
+    }
+
+    .information .item {
+        max-width: calc(50% - 10px);
+    }
+
+    .collapse_content .name span {
+        font-size: 14px !important;
+        color: #434B5C;
+    }
+
+    .btn_itineraries {
+        padding: 24px 0;
+        gap: 16px;
+    }
+
+    .item_btn_itineraries {
+        border: 1px solid #FFA718;
+        border-radius: 8px;
+        background: #FFFFFF;
+        padding: 12px 16px;
+    }
+
+    .item_btn_itineraries.active {
+        background: #FFA718;
+        color: #FFFFFF;
+    }
+
+    .content_new .div_img {
+        width: 346px;
+        position: relative;
+        margin: 16px 0;
+    }
+
+    .content_new .content {
+        width: calc(100% - 378px);
+        padding: 16px 0 32px 0;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 24px;
+        color: var(--Neutral-1, #111D37);
+    }
+
+    .img_new {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #FFA718;
+    }
+
+    .infor p {
+        font-size: 18px;
+
+        width: calc(100% - 40px - 16px);
+    }
+
+    .content_new {
+        padding-left: 58px;
+        position: relative;
+        min-height: 20px;
+    }
+
+    .item_new::after {
+        content: '';
+        display: flex;
+        width: 94.3%;
+        right: 0;
+        justify-content: end;
+        border-top: 1px solid #D3DCE1;
+        bottom: 10px;
+        position: absolute;
+    }
+
+    .content_new::before {
+        content: '';
+    }
+
+    .content_new::before {
+        content: '';
+        border-left: 1px dashed #959AA4;
+        position: absolute;
+        height: 100%;
+        left: 20px;
+    }
+
+    .item_new {
+        position: relative;
+    }
+
+    .item_new:last-child .content_new::before {
+        display: none;
+    }
+
+    #things_to_know {
+        max-width: 1312px;
+        padding: 80px 0;
+    }
+
+    #things_to_know .content_left {
+        width: 220px;
+        border-right: 1px solid #D3DCE1;
+    }
+
+    #things_to_know .content_right {
+        width: calc(100% - 220px);
+        background: #FFFFFF;
+        overflow: scroll;
+        height: 463px;
+    }
+
+    #things_to_know .content_right::-webkit-scrollbar {
+        width: 3px;
+        height: 3px;
+        background-color: #F5F5F5;
+    }
+
+    #things_to_know .content_right::-webkit-scrollbar-thumb {
+        background-color: #cccccc;
+    }
+
+    #things_to_know .content {
+        border: 1px solid #D3DCE1;
+        border-radius: 8px;
+        margin-top: 21px;
+        max-width: 1312px;
+    }
+
+    .btn_thing_know {
+        padding: 24px;
+        border-bottom: 1px solid #D3DCE1;
+        gap: 6px;
+    }
+
+    .btn_thing_know:last-child {
+        border-bottom: unset;
+    }
+
+    .btn_thing_know.active {
+        background: #FFA718;
+    }
+
+    .btn_thing_know.active span {
+        color: #FFFFFF;
+    }
+
+    .btn_thing_know span {
+        text-align: left;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 24px;
+        color: #111D37;
+    }
+
+    #optional_extensions {
+        background: #FFF9F1;
+        border-radius: 40px 40px 0 0;
+    }
+
+    .item_content {
+        width: calc(50% - 16px);
+        padding-top: 40px;
+    }
+
+    .item_content .title_right,
+    .item_content .title_left {
+        padding: 8px 36px 8px 16px;
+        width: fit-content;
+        border-radius: 0 0 40px 0;
+        color: #FFFFFF;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 28px;
+    }
+
+    .title_right {
+        background: #13B97D;
+    }
+
+    .title_left {
+        background: #FF3930;
+    }
+
+    .list_extensions {
+        padding-top: 19px;
+    }
+
+    .img_extensions {
+        max-width: 243px;
+        min-width: 180px;
+        max-height: 168px;
+        border-radius: 8px;
+    }
+
+    .content_extensions {
+        width: max-content;
+        gap: 16px;
+    }
+
+    .reviews {
+        max-width: 868px;
+        width: 868px;
+        padding: 0 30px;
+    }
+
+    .statistical_right {
+        width: 198px;
+        height: 198px;
+        position: relative;
+    }
+
+    .statistical {
+        width: 100%;
+        background: #F7FAFC;
+        border-radius: 8px;
+        padding: 34px 36px;
+        height: fit-content;
+    }
+
+    .content_statistical p {
+        font-size: 48px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 64px;
+        color: var(--Primary, #FFA718);
+    }
+
+    .percent {
+        width: 66%;
+        border-radius: 80px;
+        background: #E2E8F0;
+        height: 8px;
+        position: relative;
+    }
+
+    .statistical_left {
+        width: calc(100% - 259px);
+        gap: 6px;
+    }
+
+    .item_statiscal {
+        width: 100%;
+        float: left;
+    }
+
+    .percent div {
+        width: 50%;
+        background: #FFA718;
+        height: 8px;
+        border-radius: 80px;
+    }
+
+    .item_statiscal p {
+        width: 75px;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 24px;
+        color: var(--Neutral-2, #434B5C);
+    }
+
+    .item_statiscal span {
+        width: 50px;
+        text-align: right;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 24px;
+        color: var(--Neutral-2, #434B5C);
+    }
+
+    .btn_write {
+        background: #F7FAFC;
+        border: unset;
+        color: #FFA718;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 28px;
+    }
+
+    .content_reviews {
+        color: #434B5C;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 24px;
+    }
+
+    .view_more {
+        width: fit-content;
+        background: #FFFFFF;
+        border: unset;
+    }
+
+    .item_reviews {
+        padding-bottom: 16px;
+        border-bottom: 1px solid #D3DCE1;
+        gap: 16px;
+    }
+
+    #reviews {
+        padding-top: 50px;
+        gap: 24px;
+    }
+
+    .btn_love div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        width: 20px;
+        height: 20px;
+    }
+
+    .img_item {
+        position: relative;
+        width: 100%;
+        border-radius: 8px;
+    }
+
+    .item_interested {
+        width: 100%;
+        gap: 12px;
+    }
+
+    .img_interested {
+        width: 20px;
+        height: 20px;
+    }
+
+    .txt_interested {
+        width: calc(100% - 25px);
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 20px;
+        color: var(--Neutral-2, #434B5C);
+    }
+
+    .count_reviews {
+        padding: 4px;
+        background: #004EA8;
+        color: #FFFFFF;
+        border-radius: 4px 4px 4px 0;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 20px;
+    }
+
+    .list_intersted {
+        float: left;
+        width: 100%;
+    }
+
+    .top_attractions_content {
+        border-radius: 40px 40px 0px 0px;
+        padding: 80px 0px;
+        padding-bottom: 132px;
+        background: #FFF9F1;
+        position: relative;
+    }
+
+    .top_attractions_item {
+        width: calc(50% - 20px);
+        height: 797px;
+    }
+
+    .img_top_attractions {
+        max-width: 257px;
+        position: relative;
+        border-radius: 8px;
+        min-width: 200px;
+    }
+
+    .content_attractions {
+        padding: 19px 20px 19px 20px;
+        border-radius: 8px;
+        background: #FFFFFF;
+        position: relative;
+        left: -10px;
+        gap: 8px;
+    }
+
+    .list_top_attractions {
+        position: relative;
+    }
+
+    .list_top_attractions::-webkit-scrollbar {
+        width: 0px;
+    }
+
+    .btn_top_attractions {
+        padding: 12px 42px;
+        background: #FFA718;
+        border-radius: 8px;
+        gap: 8px;
+        color: #FFFFFF;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 24px;
+        transition: all .3s ease-in-out;
+    }
+
+    .btn_top_attractions:hover {
+        background: #e88f00;
+    }
+
+    .item_sites {
+        position: relative;
+    }
+
+    .item_sites .div_img {
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    .item_sites img:hover {
+        object-fit: cover;
+        -moz-transform: scale(1.2);
+        -webkit-transform: scale(1.2);
+        transform: scale(1.2);
+    }
+
+    .content_site {
+        position: absolute;
+        bottom: -5px;
+        padding: 43px;
+        width: 100%;
+        background: linear-gradient(180deg, rgba(31, 36, 45, 0) 0%, #16181D 100%);
+        font-size: 24px;
+        line-height: 36px;
+        font-weight: 600;
+        color: var(--Neutral-6, #FFF);
+    }
+
+    .img_map {
+        height: 100%;
+    }
+
+    .optional_extensions {
+        padding: 48px 0px;
+    }
+
+    .interested,
+    .blogs {
+        padding: 80px 0px;
+        padding-bottom: 0;
+        gap: 32px;
+        position: relative;
+        float: left;
+        width: 100%;
+    }
+
+    .list_sites {
+        float: left;
+        width: 100%;
+    }
+
+    #things_to_know .item_right .div_img {
+        width: 24px;
+        height: 24px;
+    }
+
+    #things_to_know .item_right span {
+        width: calc(100% - 36px);
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 24px;
+        color: var(--Neutral-1, #111D37);
+    }
+
+    .overviews {
+        padding-bottom: 40px;
+    }
+
+    .cruise_title {
+        font-size: 32px;
+        line-height: 52px;
+        font-weight: 600;
+        color: #111D37;
+    }
+
+    .content_interested .reviews {
+        padding: 0;
+        width: 100%;
+        gap: 7px;
+    }
+
+    .btn_thing_know .div_img {
+        width: 24px;
+        height: 24px;
+    }
+
+    .content_new .new {
+        display: none;
+    }
+
+    .content_new .new.show {
+        display: flex;
+        align-items: start;
+    }
+
+    .img_arrow1 {
+        display: none;
+    }
+
+    .img_1 {
+        width: 67%;
+    }
+
+    .slick-track {
+        float: left;
+    }
+
+    .content_statistical {
+        position: absolute;
+        top: 50px;
+    }
+
+    .sites {
+        padding-top: 40px;
+        width: 100%;
+        background: #FFFFFF;
+        border-radius: 40px 40px 0px 0px;
+        gap: 48px;
+    }
+
+    /* css blog reviews */
+    .reviews2 {
+        float: left;
+        width: 100%;
+        max-width: 1312px;
+        padding-bottom: 80px;
+    }
+
+    .item_review {
+        width: 100%;
+        position: relative;
+    }
+
+    .img_review {
+        position: relative;
+    }
+
+    .content_review {
+        padding: 24px;
+        border-radius: 20px 20px 8px 8px;
+        position: relative;
+        margin-top: -24px;
+        background: #FFFFFF;
+        gap: 16px;
+    }
+
+    .img_review_author {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+    }
+
+    .content_author {
+        width: calc(100% - 48px - 11px);
+    }
+
+    .title_2,
+    .title_2 span {
+        font-size: 32px;
+        font-weight: 600;
+        line-height: 52px;
+        color: #111D37;
+        z-index: 0;
+    }
+
+    .unika_cruise_detail .title_2 span {
+        position: relative;
+    }
+
+    .unika_cruise_detail .title_2 span::after {
+        content: "";
+        position: absolute;
+        background-color: #ffa718;
+        z-index: -1;
+        height: 8px;
+        width: 100%;
+        left: 0;
+        bottom: 8px;
+    }
+
+    .unika_cruise_detail .information .item .name span,
+    .unika_cruise_detail .location .name span {
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        color: #434B5C;
+        margin-left: 6px;
+        line-height: 20px;
+    }
+
+    .unika_cruise_detail .content_right .content p {
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 24px;
+        color: #FFFFFF;
+    }
+
+    .unika_cruise_detail .content_right .content span {
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 16px;
+        color: #D3DCE1;
+    }
+
+    .unika_cruise_detail .content_right .content div {
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 33px;
+        color: #FFFFFF;
+    }
+
+    .unika_cruise_detail .content_right .content div span {
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 36px;
+        color: #FFFFFF;
+        margin-left: 6px;
+    }
+
+    .unika_cruise_detail .title_itineraries {
+        gap: 18px;
+    }
+
+    .unika_cruise_detail .title_itineraries h3 {
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 28px;
+        color: #111D37;
+        width: calc(100% - 24px - 18px);
+    }
+
+    .span_thing_now {
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 24px;
+        color: #959AA4;
+    }
+
+    .item_right {
+        gap: 12px;
+    }
+
+    .list_extensions {
+        gap: 24px;
+    }
+
+    .item_extensions {
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid var(--Neutral-5, #F0F0F0);
+        background: #FFF;
+    }
+
+    .list_extensions {
+        gap: 24px;
+    }
+
+    .item_extensions {
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid var(--Neutral-5, #F0F0F0);
+        background: #FFF;
+        gap: 24px;
+    }
+
+    .title_extentions {
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 30px;
+        color: #111D37;
+        transition: all .3s ease-in-out;
+    }
+
+    .title_extentions:hover {
+        color: #FFA718;
+    }
+
+    .money_extention_1 {
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 20px;
+        color: #959AA4;
+    }
+
+    .money_extention_2 {
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 28px;
+        color: #FFA718;
+        margin-left: 3px;
+    }
+
+    .money_extention_3 {
+        color: var(--Primary, #FFA718);
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 36px;
+        margin-left: 3px;
+    }
+
+    .content_statistical .span_1 {
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 24px;
+        color: var(--Neutral-1, #111D37);
+    }
+
+    .content_statistical .span_2 {
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 24px;
+        color: var(--Neutral-3, #959AA4);
+    }
+
+    .unika_cruise_detail .div_img {
+        transition: all .3s ease-in-out;
+        border-radius: 8px;
+    }
+
+    .unika_cruise_detail .div_img img:hover {
+        object-fit: cover;
+        -moz-transform: scale(1.1);
+        -webkit-transform: scale(1.1);
+        transform: scale(1.1);
+    }
+
+    .cruise_img_1 img,
+    .cruise_img_2 img,
+    .cruise_img_3 img,
+    .cruise_img_4 img {
+        height: 100%;
+        width: 100%;
+    }
+
+    .swiper {
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+    }
+
+    .swiper-slide {
+        text-align: center;
+        font-size: 18px;
+        background: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .swiper-slide img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    .swiper-button-next:after,
+    .swiper-button-prev:after {
+        display: none;
+    }
+
+    .list_reviews {
+        padding-top: 50px;
+        gap: 32px;
+    }
+
+    .list_reviews {
+        padding-top: 50px;
+        gap: 32px;
+    }
+
+    .customer {
+        gap: 15px;
+    }
+
+    .customer a {
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 24px;
+        color: var(--Neutral-1, #111D37);
+    }
+
+    .customer span {
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 24px;
+        color: var(--Neutral-3, #959AA4);
+    }
+
+    .item_reviews .rating .div_img {
+        width: 20px;
+        height: 20px;
+    }
+
+    .title_reviews {
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 28px;
+        color: var(--Neutral-1, #111D37);
+    }
+
+    .customer .div_img {
+        width: 51px;
+        height: 51px;
+        border-radius: 50%;
+    }
+
+    .view_more {
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 24px;
+        color: #FFA718;
+    }
+
+    .title_interested {
+        color: var(--Neutral-1, #111D37);
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 28px;
+        transition: all .3s ease-in-out;
+    }
+
+
+    .title_interested:hover {
+        color: #FFA718;
+    }
+
+    .content_interested {
+        gap: 12px;
+    }
+
+    .content_interested {
+        gap: 12px;
+    }
+
+    .unika_cruise_detail .content_interested .rating .div_img {
+        width: 16px;
+        height: 16px;
+    }
+
+    .content_interested_title {
+        gap: 4px;
+    }
+
+    .txt_interested span {
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 20px;
+        color: var(--Neutral-2, #434B5C);
+    }
+
+    .reviews .span_1 {
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 20px;
+        color: var(--Neutral-2, #434B5C);
+    }
+
+    .reviews .span_2 {
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        color: var(--Neutral-3, #959AA4);
+        line-height: 16px;
+    }
+
+    .money_viwed_span {
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 29px;
+        color: var(--Neutral-3, #959AA4);
+        margin-right: 6px;
+    }
+
+    .money_viwed_div {
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 28px;
+        color: var(--Primary, #FFA718);
+    }
+
+    .money_viwed_div span {
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 36px;
+        color: var(--Primary, #FFA718);
+        margin-left: 2px;
+    }
+
+    .title_blogs {
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 28px;
+        color: var(--Neutral-1, #111D37);
+        transition: all .3s ease-in-out;
+    }
+
+    .title_blogs:hover {
+        color: #FFA718;
+    }
+
+    .content_blogs {
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 24px;
+        color: var(--Neutral-1, #111D37);
+    }
+
+    .unika_ready_start {
+        background: url(https://unikasia.vietiso.com/isocms/templates/default/skin/images/hotel/Frames1.png) no-repeat, #FFA718;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .unika_start {
+        display: flex;
+        padding: 60px 0;
+        flex-direction: column;
+        max-width: 604px;
+        align-items: center;
+    }
+
+    .unika_title_ready {
+        font-size: 32px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 52px;
+        color: var(--Neutral-1, #111D37);
+        text-align: center;
+    }
+
+    .unika_content_ready {
+        padding-top: 5px;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 24px;
+        text-align: center;
+        color: var(--Neutral-2, #434B5C);
+    }
+
+    .unika_link_ready {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 20px;
+        border-radius: 8px;
+        background: var(--Neutral-1, #111D37);
+        max-width: 237px;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 24px;
+        color: #FFFFFF;
+        margin-top: 48px;
+        gap: 8px;
+        transition: all .3s ease-in-out;
+    }
+
+    .unika_link_ready:hover {
+        border: 1px solid white
+    }
+
+    .unika_social {
+        position: fixed;
+        top: 40%;
+        right: 15px;
+        z-index: 3;
+    }
+
+    .unika_social_icons {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .unika_social_icon {
+        color: #959AA4;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 40px;
+        background: #FFF;
+        box-shadow: 0px 12px 32px 0px rgba(125, 135, 158, 0.09);
+    }
+
+    .unika_social_icon:hover {
+        color: #FFA718;
+        box-shadow: 0px 12px 24px 0px rgba(255, 167, 24, 0.36);
+    }
+
+    .rating_reviews .div_img {
+        width: 18px;
+        height: 18px;
+    }
+
+    .unika_author_blogs {
+        gap: 10px;
+    }
+
+    .unika_content_author div {
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 24px;
+        color: var(--Neutral-1, #111D37);
+    }
+
+    .unika_content_author {
+        gap: 3px;
+    }
+
+    .unika_content_author span {
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 20px;
+        color: var(--Neutral-2, #434B5C);
+    }
+
+    .top_attractions {
+        background: #FFFFFF;
+    }
+
+    .unika_attractions {
+        gap: 50px;
+    }
+
+    .attractions {
+        gap: 39px;
+        height: max-content;
+    }
+
+    .img_top_attractions img {
+        height: 100%;
+    }
+
+    .content_attractions .title {
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 32px;
+        color: var(--Neutral-1, #111D37);
+        transition: all .3s ease-in-out;
+    }
+
+    .content_attractions .title:hover {
+        color: #FFA718;
+    }
+
+    .content_attractions .span {
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 24px;
+        color: var(--Neutral-2, #434B5C);
+        text-align: justify;
+    }
+
+    .content_attractions .link {
+        gap: 8px;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 24px;
+        color: var(--Primary, #FFA718);
+    }
+
+    .unika_img_map {
+        max-height: 797px;
+    }
+
+    .unika_also_like {
+        background: #FFF9F1;
+    }
+
+    .swiper-button-prev {
+        left: -5%;
+        top: 60%;
+        z-index: 2;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        fill: #FFF;
+        background: #FFFFFF;
+        border-radius: 50%;
+        filter: drop-shadow(0px 6px 18px rgba(0, 0, 0, 0.08));
+    }
+
+    .swiper-button-next {
+        right: -5%;
+        top: 60%;
+        z-index: 2;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        fill: #FFF;
+        background: #FFFFFF;
+        border-radius: 50%;
+        filter: drop-shadow(0px 6px 18px rgba(0, 0, 0, 0.08));
+    }
+
+    .unika_tailor_made {
+        position: fixed;
+        bottom: 0px;
+        transform: translate(-50%, -50%);
+        left: 50%;
+        z-index: 2;
+    }
+
+    .unika_link_tailor {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 9px;
+        background: #fff;
+        padding: 13px 15px 14px;
+        border-radius: 39.5px;
+        letter-spacing: 1.6px;
+        color: var(--Neutral-1, #111d37);
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 24px;
+        box-shadow: 0px 12px 32px 0px rgba(125, 135, 158, 0.09);
+    }
+
+    .unika_img_tailor {
+        width: 52px;
+        height: 52px;
+        background: #ffa718;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 100%;
+    }
+
+    .unika_form_review {
+        margin-top: 20px;
+        width: 100%;
+        display: none;
+    }
+
+    .unika_form_content {
+        border: 1px solid rgba(36, 107, 72, 0.12);
+        border-radius: 4px;
+        -moz-border-radius: 4px;
+        -webkit-border-radius: 4px;
+        -khtml-border-radius: 4px;
+    }
+
+    .unika_form_header {
+        padding: 20px 25px;
+        color: #FFA718;
+        background: rgba(255, 167, 24, 0.08);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .title_form {
+        color: #FFA718;
+        font-size: 16px;
+        line-height: 24px;
+        font-weight: 600;
+    }
+
+    .unika_rate_star {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 28px;
+        width: 28px;
+        color: #cccccc;
+        cursor: pointer;
+        border: 1px solid #DDD;
+        border-radius: 50%;
+    }
+
+    .unika_rate_star.active {
+        color: #F9D932;
+    }
+
+    .unika_form_rating {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        justify-content: start;
+    }
+
+    .unika_form_body {
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .unika_item_input {
+        width: 100%;
+        border: 1px solid #ccc;
+        height: 50px;
+        line-height: 50px;
+        padding: 0 15px;
+    }
+
+    .unika_item_textara {
+        width: 100%;
+        padding: 15px;
+        min-height: 120px;
+        border: 1px solid #ccc;
+    }
+
+    .unika_item_submit {
+        float: right;
+        background: #FFA718;
+        border: unset;
+        padding: 6px 40px;
+        border-radius: 4px;
+        color: #FFFFFF;
+        font-weight: 600;
+    }
+
+    .error {
+        padding-top: 5px;
+        font-size: 14px;
+        line-height: 20px;
+        color: red;
+    }
+
+    .cruise_img.img_1 img {
+        height: 100%;
+    }
+
+    .cruise_shadow span {
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 36px;
+        color: #FFFFFF;
+    }
+
+    .unika_detail_fixed.fixed {
+        position: fixed;
+        width: 100%;
+        top: 0;
+        left: 0;
+        background: #FFFFFF;
+        z-index: 4;
+        box-shadow: 0px 0px 5px 0px rgba(125, 135, 158);
+        padding: 0 10px;
+    }
+
+    .unika_detail_fixed_content.container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        padding: 10px 0;
+    }
+
+    .price_contact_fixed {
+        display: none;
+    }
+
+    .price_contact_fixed.active {
+        display: flex;
+    }
+
+    .unika_detail_fixed.fixed .unika_detail_collapse {
+        flex-wrap: nowrap !important;
+    }
+
+    .content_right_item {
+        display: none;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .content_right_item.active {
+        display: flex;
+    }
+
+    .item_top_attractions {
+        transition: all .3s ease-in-out;
+    }
+
+    .item_top_attractions:hover {
+        box-shadow: 0px 12px 24px 0px rgba(255, 167, 24, 0.36);
+    }
+
+    .top_attractions_item .swiper-slide {
+        background: unset;
+    }
+
+    .top_attractions_item .swiper-button-prev,
+    .top_attractions_item .swiper-button-next {
+        transform: translate(-50%, -50%) rotate(90deg);
+        left: 50%;
+        background: #FFFFFF;
+        z-index: 2;
+        fill: #FFF;
+        filter: drop-shadow(0px 6px 18px rgba(0, 0, 0, 0.08));
+    }
+
+    .top_attractions_item .swiper-button-prev {
+        top: 30px;
+        left: 50%;
+    }
+
+    .top_attractions_item .swiper-button-next {
+        bottom: -15px;
+        top: unset;
+    }
+
+    .fa-chevron-right:before,
+    .fa-chevron-left:before {
+        color: #434B5C;
+    }
+
+    .collapse_content .title {
+        gap: 15px;
+    }
+
+    .unikasia_reviews {
+        gap: 24px;
+    }
+
+    .unika_content_facility {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 0;
+    }
+
+    .content_facility_item {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        border-right: 1px solid #CCC;
+        padding: 24px;
+        border-bottom: 1px solid #CCC;
+        width: 48%;
+    }
+
+    .content_facility_item:nth-child(2n) {
+        border-right: unset;
+        padding-right: 0;
+    }
+
+    .unika_list_img {
+        display: grid;
+        gap: 11px;
+        padding: 32px 0;
+    }
+
+    .cruise_img_1 {
+        grid-column: 1 / 4;
+        grid-row: 1 / 5;
+    }
+
+    .cruise_img_2 {
+        grid-column: 4 / 6;
+        grid-row: 1 / 4;
+    }
+
+    .cruise_img_3 {
+        grid-column: 4;
+        grid-row: 4;
+    }
+
+    .cruise_img_4 {
+        grid-column: 5;
+        grid-row: 4;
+    }
+
+    .cruise_img_1 img {
+        height: 100%;
+    }
+
+    @media screen and (min-width: 1920px) {
+        .information .item {
+            max-width: calc(25% - 10px);
+        }
+    }
+
+    @media screen and (max-width: 1200px) {
+        .cruise_img_1 {
+            grid-column: 1/5;
+            grid-row: 1;
+        }
+
+        .cruise_img_2 {
+            grid-column: 1 / 5;
+            grid-row: 2;
+        }
+
+        .cruise_img_3 {
+            grid-column: 1/3;
+            grid-row: 3;
+        }
+
+        .cruise_img_4 {
+            grid-column: 3 / 5;
+            grid-row: 3;
+        }
+    }
+
+    @media screen and (max-width: 1025px) {
+        .item_extensions {
+            justify-content: start !important;
+            width: 100%;
+        }
+
+        .content_new .div_img,
+        .content_new .div_img img,
+        .content_new .content {
+            width: 100%;
+        }
+
+        .content_new .new {
+            flex-direction: column;
+        }
+
+        .attractions {
+            flex-direction: column;
+        }
+
+        .top_attractions_item {
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .optional_extensions .content {
+            flex-direction: column;
+        }
+
+        .item_content {
+            width: 100%;
+        }
+
+        .interested {
+            padding: 50px 0;
+            padding-bottom: 0;
+        }
+
+        .overviews {
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .content_left {
+            width: 100%;
+        }
+
+    }
+
+    @media screen and (max-width: 991px) {
+        .unika_detail_collapse {
+            gap: 20px;
+        }
+
+        .unika_content_facility {
+            gap: 24px;
+            flex-direction: column;
+        }
+
+        .content_facility_item {
+            border-bottom: 1px solid #CCC;
+            border-right: unset;
+            width: 100%;
+            padding: 0 0 24px 0;
+        }
+
+        .unika_detail_fixed_content.container .item_collapse {
+            font-size: 16px;
+            line-height: 24px;
+        }
+
+        .unika_detail_fixed_content.container {
+            overflow-x: scroll;
+        }
+
+        .unika_detail_fixed_content.container::-webkit-scrollbar {
+            height: 3px;
+            background-color: #F5F5F5;
+        }
+
+        .unika_detail_fixed_content.container::-webkit-scrollbar-thumb {
+            background-color: #cccccc;
+        }
+
+        .reviews {
+            width: 100%;
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        .unika_tailor_made {
+            display: none;
+        }
+
+        .statistical {
+            flex-direction: column;
+        }
+
+        .content_new .new {
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .content_new .content {
+            width: 100%;
+        }
+
+        .content_new .div_img {
+            max-width: 100%;
+            width: auto;
+            height: fit-content;
+            border-radius: 8px;
+        }
+
+        .statistical_left {
+            width: 100%;
+        }
+
+        .reviews2 {
+            padding-bottom: 20px;
+        }
+
+        .top_attractions {
+            padding: 40px 0;
+        }
+
+        .top_attractions::after {
+            display: none;
+        }
+
+        .sites {
+            padding-top: 20px;
+        }
+
+        .cruise {
+            flex-wrap: wrap;
+        }
+
+        .img_1 {
+            width: 100%;
+        }
+
+        #overview {
+            padding-top: 30px;
+        }
+    }
+
+    @media screen and (max-width: 545px) {
+        .content_new {
+            padding-left: 35px;
+        }
+
+        .percent {
+            width: 33%;
+        }
+
+        .div_img.img_extensions img {
+            width: 100%;
+        }
+
+        #things_to_know .content {
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        #things_to_know .content_left {
+            display: flex;
+            overflow-x: scroll;
+            width: 100%;
+        }
+
+        #things_to_know .content_left::-webkit-scrollbar {
+            height: 3px;
+            background-color: #F5F5F5;
+        }
+
+        #things_to_know .content_left::-webkit-scrollbar-thumb {
+            background-color: #cccccc;
+        }
+
+        .btn_thing_know {
+            padding: 10px;
+            width: fit-content;
+            border-right: 1px solid #D3DCE1;
+        }
+
+        .btn_thing_know:last-child {
+            border-bottom: 1px solid #D3DCE1;
+            border-right: unset;
+        }
+
+        #things_to_know .content_right {
+            width: 100%;
+        }
+
+        .btn_thing_know span {
+            width: max-content;
+        }
+
+        .collapse {
+            gap: 20px;
+        }
+
+        .item_top_attractions {
+            flex-direction: column;
+        }
+
+        .content_attractions {
+            width: 100%;
+            left: 0;
+            top: -20px;
+        }
+
+        .img_top_attractions {
+            max-width: 100%;
+            width: auto;
+        }
+
+        .img_top_attractions img {
+            border-radius: 8px;
+            width: 100%;
+        }
+
+        .item_top_attractions {
+            max-width: 100%;
+        }
+
+        .item_extensions {
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .img_extensions {
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .content_extensions {
+            width: 100%;
+        }
+
+        #things_to_know {
+            padding: 20px 0;
+        }
+
+        #reviews,
+        .interested {
+            padding-top: 20px;
+        }
+
+        .unika_start {
+            padding: 60px 24px;
+        }
+
+        .unika_link_ready {
+            max-width: 100%;
+            width: 100%;
+        }
+
+        .unika_title_ready {
+            font-size: 24px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 36px;
+        }
+
+        .unika_content_ready {
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 20px;
+        }
+    }
+</style>
+{/literal}
+
+{literal}
+<script>
+    $(function() {
+        new Swiper(".list_interested_1", {
+            slidesPerView: 4,
+            spaceBetween: 32,
+            loop: true,
+            autoplay: {
+                delay: 2500,
+                disableOnInteraction: false,
+            },
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            breakpoints: {
+                0: {
+                    slidesPerView: 1,
+                },
+                500: {
+                    slidesPerView: 2,
+                },
+                768: {
+                    slidesPerView: 2,
+                },
+                992: {
+                    slidesPerView: 3,
+                },
+                1024: {
+                    slidesPerView: 4,
+                }
+            }
+        });
+
+        new Swiper(".list_interested_2", {
+            slidesPerView: 4,
+            spaceBetween: 32,
+            loop: true,
+            autoplay: {
+                delay: 2500,
+                disableOnInteraction: false,
+            },
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            breakpoints: {
+                0: {
+                    slidesPerView: 1,
+                },
+                500: {
+                    slidesPerView: 2,
+                },
+                768: {
+                    slidesPerView: 2,
+                },
+                992: {
+                    slidesPerView: 3,
+                },
+                1024: {
+                    slidesPerView: 4,
+                }
+            }
+        });
+
+        new Swiper(".unika_blogs", {
+            slidesPerView: 3,
+            spaceBetween: 36,
+            loop: true,
+            autoplay: {
+                delay: 2500,
+                disableOnInteraction: false,
+            },
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            breakpoints: {
+                0: {
+                    slidesPerView: 1,
+                },
+                768: {
+                    slidesPerView: 2,
+                },
+                991: {
+                    slidesPerView: 3,
+                }
+            }
+        });
+
+        new Swiper(".list_sites", {
+            slidesPerView: 4,
+            loop: true,
+            autoplay: {
+                delay: 2500,
+                disableOnInteraction: false,
+            },
+            breakpoints: {
+                0: {
+                    slidesPerView: 1,
+                },
+                511: {
+                    slidesPerView: 2,
+                },
+                768: {
+                    slidesPerView: 3,
+                },
+                1025: {
+                    slidesPerView: 4,
+                }
+            }
+        });
+
+        new Swiper('.unika_top_attractions', {
+            slidesPerView: 4.53,
+            spaceBetween: 24,
+            direction: 'vertical', // Make the swiper vertical
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            breakpoints: {
+                0: {
+                    slidesPerView: 2,
+                },
+                450: {
+                    slidesPerView: 1.75,
+                },
+                546: {
+                    slidesPerView: 4.53,
+                },
+            }
+        });
+
+        let $targetDiv = $('.unika_overview');
+        let targetOffset = $targetDiv.offset().top;
+        // console.log('targetOffset:', targetOffset)
+        $(window).on('scroll', function() {
+            let scrollTop = $(window).scrollTop();
+            // console.log('scrollTop:', scrollTop)
+            let fixed_content = $('.unika_detail_fixed_content');
+            let price_contact_fixed = $('.price_contact_fixed');
+
+            if (scrollTop >= targetOffset) {
+                $targetDiv.addClass('fixed');
+                fixed_content.addClass('container');
+                price_contact_fixed.addClass('active');
+                $('.unika_header').hide();
+            } else {
+                $targetDiv.removeClass('fixed');
+                fixed_content.removeClass('container');
+                price_contact_fixed.removeClass('active');
+                $('.unika_header').show();
+            }
+        })
+
+        $(document)
+            .on('click', '.item_collapse', function() {
+                $('.item_collapse').removeClass('active');
+                $(this).addClass('active');
+            })
+            .on('click', '.btn_thing_know', function() {
+                $('.btn_thing_know').each(function() {
+                    let name = $(this).find('.div_img').attr('data-name');
+                    $(this).removeClass('active');
+                    $(this).find('img').attr('src', `images/${name}.svg`);
+                });
+
+                let name = $(this).find('.div_img').attr('data-name');
+                $(this).find('img').attr('src', `images/${name}1.svg`);
+                $(this).addClass('active');
+            })
+            .on('click', '.item_itineraries', function() {
+                let self = $(this).parents('.item_new');
+                if (self.find('.new').hasClass('show')) {
+                    self.find('.new').removeClass('show');
+                    self.find('.img_arrow1').hide();
+                    self.find('.img_arrow').show();
+                } else {
+                    self.find('.new').addClass('show');
+                    self.find('.img_arrow1').show();
+                    self.find('.img_arrow').hide();
+                }
+            })
+            .on('click', '.item_btn_itineraries', function() {
+                $('.item_btn_itineraries').removeClass('active');
+                $(this).addClass('active');
+            })
+            .on('click', '.btn_write', function() {
+                $('.unika_form_review').slideToggle();
+            })
+            .on('click', '.unika_rate_star', function() {
+                let value = $(this).attr('data-value');
+                $('.unika_rating_input').val(value);
+                $('.unika_rate_star').each(function() {
+                    let value_star = $(this).attr('data-value');
+                    if (value_star > value) {
+                        $(this).removeClass('active');
+                    } else {
+                        $(this).addClass('active');
+                    }
+                })
+            })
+            .on('click', '.btn_thing_know', function() {
+                let data_class = $(this).attr('data-class');
+                $('.content_right_item').removeClass('active');
+                $(`.${data_class}`).addClass('active');
+            })
+
+        let options = {
+            series: [90, 10],
+            chart: {
+                type: 'donut',
+                height: '100%'
+            },
+            plotOptions: {
+                pie: {
+                    startAngle: -90,
+                    endAngle: 90,
+                    offsetY: 10,
+                    expandOnClick: false, // Vô hiệu hóa hiệu ứng mở rộng khi click
+                    donut: {
+                        size: '80%', // Điều chỉnh kích thước của donut
+                        labels: {
+                            show: false
+                        }
+                    }
+                }
+            },
+            stroke: {
+                width: 0, // Chiều rộng của viền giữa các phần
+                colors: undefined // Màu của viền giữa các phần, undefined để sử dụng màu nền
+            },
+            fill: {
+                colors: ['#FFBA55', '#E2E8F0'] // Màu sắc cho từng phần
+            },
+            grid: {
+                padding: {
+                    bottom: -10
+                }
+            },
+            legend: {
+                show: false // Ẩn phần chú thích
+            },
+            dataLabels: {
+                enabled: false // Ẩn phần trăm
+            },
+            tooltip: {
+                enabled: false, // Tắt tooltip khi hover vào biểu đồ,
+            },
+            states: {
+                normal: {
+                    filter: {
+                        type: 'none',
+                        value: 0,
+                    }
+                },
+                hover: {
+                    filter: {
+                        type: 'none',
+                        value: 0,
+                    }
+                },
+                active: {
+                    filter: {
+                        type: 'none',
+                        value: 0,
+                    }
+                },
+            },
+            responsive: [{
+                breakpoint: 480,
+                options: {
+                    chart: {
+                        width: 200
+                    },
+                    legend: {
+                        position: 'bottom',
+                        show: false // Ẩn phần chú thích cho màn hình nhỏ
+                    }
+                }
+            }]
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chart"), options);
+        chart.render();
+
+        // validate form
+        $('.unika_form_review').validate({
+            errorPlacement: function(error, element) {
+                error.appendTo(element.parents(".box_validate"));
+                error.wrap("<span class='errors'>");
+                element.parents('.box_validate').addClass('validate_input');
+            },
+            highlight: function(element) {
+                $(element).parents('.box_validate').addClass('validate_input')
+                $(element).addClass('form-control-danger')
+            },
+            success: function(label, element) {
+                $(element).parents('.box_validate').removeClass('validate_input')
+                $(element).removeClass('form-control-danger')
+                label.parents('.errors').remove();
+            },
+            ignore: [],
+            debug: false,
+            rules: {
+                unika_fullname: "required",
+                unika_title: "required",
+                unika_review: "required",
+            },
+            messages: {
+                unika_fullname: "Please enter your name!",
+                unika_title: "Please enter title!",
+                unika_review: "Please enter your review!",
+            },
+            submitHandler: function() {
+                alert('Success');
+            }
+        });
+    })
 </script>
 {/literal}
-<script src="{$URL_JS}/jquerycruise.js?v={$upd_version}"></script>

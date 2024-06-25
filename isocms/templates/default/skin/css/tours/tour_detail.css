@@ -434,7 +434,7 @@
     width: 100%;
 }
 
-.nav-item {
+.list_class_tour .nav-item {
     margin-right: 15px;
 }
 
@@ -595,7 +595,6 @@
 
 #itinerary .meal_stay {
     margin-top: 24px;
-    margin-bottom: 32px;
 }
 
 #itinerary .title_meal,  #itinerary .title_stay{
@@ -609,6 +608,7 @@
     max-height: 557px;
     border-radius: 8px;
     overflow: hidden;
+    margin-top: 32px;
 }
 #itinerary .itinerary_img img{
     width: 100%;

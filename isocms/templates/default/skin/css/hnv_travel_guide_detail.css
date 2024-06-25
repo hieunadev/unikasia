@@ -220,15 +220,20 @@
     width: 100%;
     float: left;
 }
-
+.tag-link a {
+    transition: all 0.3s ease-in-out;
+}
+.tag-link:hover a {
+    color: #ffa718;
+}
 @media screen and (max-width: 991px) {
     .guide_detail_body .des_travel_guide_side .form_search_guide,
     .guide_detail_body .des_travel_guide_side .des_travel_guide_category,
-    .guide_detail_body .des_travel_guide_side .des_travel_guide_country_tour{
+    .guide_detail_body .des_travel_guide_side .des_travel_guide_country_tour {
         display: none;
     }
 
-    .unika_mobile_travel_guide_content{
+    .unika_mobile_travel_guide_content {
         padding-top: 24px;
     }
 }

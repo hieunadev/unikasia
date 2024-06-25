@@ -24,6 +24,9 @@ function getFrame($country_id = null)
                 'image' => array(
                     'name' => $core->get_Lang('Image cover')
                 ),
+                'shortText' => array(
+                    'name' => $core->get_Lang('Short text')
+                ),
                 'des_gallery' => array(
                     'name' => $core->get_Lang('Gallery')
                 ),
@@ -317,6 +320,7 @@ function default_ajSaveMainStep()
         'upd_date' => time()
     ];
     #
+
     if ($currentstep == 'basic') {
         $title = Input::post('title');
         $title = html_entity_decode($title);

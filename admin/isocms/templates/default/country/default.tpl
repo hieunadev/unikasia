@@ -1,6 +1,6 @@
 <div class="page_container">
 	<div class="page-title d-flex">
-        <div class="title">
+		<div class="title">
 			<h2>{$core->get_Lang('Countries List')} <div class="info_module" data-toggle="tooltip" data-placement="right" title="Chức năng quản lý danh sách các {$core->get_Lang('Countries List')} trong hệ thống isoCMS">i</div>
 			</h2>
 			<p>{$number_all} {$core->get_Lang('Countries List')}</p>
@@ -8,7 +8,7 @@
 		<div class="button_right">
 			<a class="btn btn-main btn-addnew add_new_country" title="{$core->get_Lang('Add country')}">{$core->get_Lang('Add country')}</a>
 		</div>
-    </div>
+	</div>
 	<div class="container-fluid">
 		<div class="wrap">
 			<div class="filter_box">
@@ -26,11 +26,11 @@
 						</a>
 					</div>
 					<div class="fr group_buttons full_width_767 text_right mt10_767">
-                        <a href="{$PCMS_URL}/?mod={$mod}{$pUrl}" class="btn btn-warning btnNew"> <i class="icon-folder-open icon-white"></i> <span>{$core->get_Lang('all')} ({$number_all})</span> </a>
-                        <a href="{$PCMS_URL}/?mod={$mod}{$pUrl}&type_list=Trash" class="btn btn-danger btnNew"> <i class="icon-warning-sign icon-white"></i> <span>{$core->get_Lang('trash')} ({$number_trash})</span> </a>
-                    </div>
-				</form>	
-			</div>			
+						<a href="{$PCMS_URL}/?mod={$mod}{$pUrl}" class="btn btn-warning btnNew"> <i class="icon-folder-open icon-white"></i> <span>{$core->get_Lang('all')} ({$number_all})</span> </a>
+						<a href="{$PCMS_URL}/?mod={$mod}{$pUrl}&type_list=Trash" class="btn btn-danger btnNew"> <i class="icon-warning-sign icon-white"></i> <span>{$core->get_Lang('trash')} ({$number_trash})</span> </a>
+					</div>
+				</form>
+			</div>
 			<div class="statistical mb5">
 				<table width="100%" border="0" cellpadding="3" cellspacing="0">
 					<tr>
@@ -65,8 +65,9 @@
 						<tbody id="SortAble">
 							{section name=i loop=$allItem}
 							{assign var = country_id value = $allItem[i].country_id}
-							<tr style="cursor:move" id="order_{$country_id}" class="{cycle values="row1,row2"}" >
-								<td class="check_40 has-checkbox text-center"><input name="p_key[]" class="chkitem el-checkbox" type="checkbox" value="{$country_id}" /></td></td>
+							<tr id="order_{$country_id}" class="{cycle values=" row1,row2"}">
+								<td class="check_40 has-checkbox text-center"><input name="p_key[]" class="chkitem el-checkbox" type="checkbox" value="{$country_id}" /></td>
+								</td>
 								<td class="index hiden767" data-title="ID"><span>{$country_id}</span></td>
 								<td class="text-left name_service">
 									<span class="title" title="{if $clsClassTable->getOneField('is_online',$country_id) eq 0}{$core->get_Lang('Country PRIVATE')}{/if}">{$clsClassTable->getTitle($country_id)}</span>
@@ -111,7 +112,7 @@
 											{if $allItem[i].is_trash eq '0'}
 											<li><a title="{$core->get_Lang('view')}" target="_blank" href="{$DOMAIN_NAME}{$clsClassTable->getLink($country_id)}"><i class="icon-eye-open"></i> {$core->get_Lang('view')}</a></li>
 											<li><a title="{$core->get_Lang('edit')}" href="{$PCMS_URL}/country/insert/{$country_id}/overview"><i class="icon-edit"></i> {$core->get_Lang('edit')}</a></li>
-											<li><a title="{$core->get_Lang('trash')}" href="{$PCMS_URL}/?mod={$mod}&act=trash&country_id={$core->encryptID($country_id)}{$pUrl}"><i class="icon-trash "></i>  {$core->get_Lang('trash')}</a></li>
+											<li><a title="{$core->get_Lang('trash')}" href="{$PCMS_URL}/?mod={$mod}&act=trash&country_id={$core->encryptID($country_id)}{$pUrl}"><i class="icon-trash "></i> {$core->get_Lang('trash')}</a></li>
 											{else}
 											<li><a title="{$core->get_Lang('restore')}" href="{$PCMS_URL}/?mod={$mod}&act=restore&country_id={$core->encryptID($country_id)}{$pUrl}"><i class="icon-refresh"></i> {$core->get_Lang('restore')}</a></li>
 											<li><a title="{$core->get_Lang('delete')}" href="{$PCMS_URL}/?mod={$mod}&act=delete&country_id={$core->encryptID($country_id)}{$pUrl}"><i class="icon-remove"></i> {$core->get_Lang('delete')}</a></li>
@@ -122,7 +123,9 @@
 							</tr>
 							{/section}
 						</tbody>
-						{else}<tr><td colspan="15">{$core->get_Lang('nodata')}!</td></tr>{/if}
+						{else}<tr>
+							<td colspan="15">{$core->get_Lang('nodata')}!</td>
+						</tr>{/if}
 					</table>
 				</div>
 			</div>
@@ -134,35 +137,35 @@
 <script type="text/javascript">
 	var $boxID = "";
 	var $cat_id = '{$cat_id}';
-	var $city_id= '{$city_id}';
-	var $departure_point_id= '{$departure_point_id}';
-	var $is_set= '{$is_set}';
+	var $city_id = '{$city_id}';
+	var $departure_point_id = '{$departure_point_id}';
+	var $is_set = '{$is_set}';
 	var $recordPerPage = '{$recordPerPage}';
 	var $currentPage = '{$currentPage}';
 </script>
 <script type="text/javascript" src="{$URL_THEMES}/country/jquery.country.js?v={$upd_version}"></script>
 {literal}
 <script type="text/javascript">
-	$("#SortAble").sortable({
-		opacity: 0.8,
-		cursor: 'move',
-		start: function(){
-			vietiso_loading(1);
-		},
-		stop: function(){
-			vietiso_loading(0);
-		},
-		update: function(){
-			var recordPerPage = $recordPerPage;
-			var currentPage = $currentPage;
-			var order = $(this).sortable("serialize")+'&update=update'+'&recordPerPage='+recordPerPage+'&currentPage='+currentPage;
-			$.post(path_ajax_script+"/index.php?mod=country&act=ajUpdPosSortCountry", order,
+	// $("#SortAble").sortable({
+	// 	opacity: 0.8,
+	// 	cursor: 'move',
+	// 	start: function(){
+	// 		vietiso_loading(1);
+	// 	},
+	// 	stop: function(){
+	// 		vietiso_loading(0);
+	// 	},
+	// 	update: function(){
+	// 		var recordPerPage = $recordPerPage;
+	// 		var currentPage = $currentPage;
+	// 		var order = $(this).sortable("serialize")+'&update=update'+'&recordPerPage='+recordPerPage+'&currentPage='+currentPage;
+	// 		$.post(path_ajax_script+"/index.php?mod=country&act=ajUpdPosSortCountry", order,
 
-			function(html){
-				vietiso_loading(0);
-				location.href = REQUEST_URI;
-			});
-		}
-	});
+	// 		function(html){
+	// 			vietiso_loading(0);
+	// 			location.href = REQUEST_URI;
+	// 		});
+	// 	}
+	// });
 </script>
 {/literal}

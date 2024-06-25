@@ -485,7 +485,9 @@
 								<button data-key="{$shortText_country}" data-label="{$core->get_Lang('Short text')}" type="button" title="Thêm mô tả" onclick="open_texthelp(this, event)" class="btn btn-xs btn-default"><i class="fa fa-plus-circle"></i></button>
 								{/if}
 							</h3>
-							<textarea style="width:100%" table_id="{$pvalTable}" name="iso-intro" class="textarea_intro_editor" data-column="iso-intro" id="textarea_intro_editor_intro_{$now}" cols="255" rows="2">{$oneItem.intro}</textarea>
+							<textarea style="width:100%" table_id="{$pvalTable}" name="intro" id="intro_{time()}" class="textarea_intro_editor_simple" data-column="iso-intro" cols="255" rows="2">
+								{$oneItem.intro}
+							</textarea>
 							{literal}
 							<script>
 								$(".showdate").datepicker({

@@ -71,10 +71,10 @@
 <script>
     $(document).ready(function() {
         $(".city-title").click(function(event) {
-            event.preventDefault(); // Ngăn chặn hành động mặc định của thẻ <a>
-            var cityTitle = $(this).attr("title"); // Lấy giá trị thuộc tính title
+            event.preventDefault();
+            var cityTitle = $(this).attr("title");
             var newSrc = "https://maps.google.it/maps?q=" + encodeURIComponent(cityTitle) + "&output=embed";
-            $("#city-map").attr("src", newSrc); // Thay đổi thuộc tính src của iframe
+            $("#city-map").attr("src", newSrc);
         });
     });
 </script>

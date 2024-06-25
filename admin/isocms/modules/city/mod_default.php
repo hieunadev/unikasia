@@ -311,7 +311,9 @@ function default_ajSaveMainStep()
 		'user_id_update' => addslashes($core->_SESS->user_id),
 		'upd_date' => time()
 	];
+
 	if ($currentstep == 'basic') {
+
 		$title = Input::post('title');
 		$title = html_entity_decode($title);
 		$slug = $core->replaceSpace($title);
@@ -333,6 +335,7 @@ function default_ajSaveMainStep()
 		}
 		$arr_update['list_month_id']	= 	$list_month_id;
 		#
+		$arr_update['title'] = $title;
 		$arr_update['slug'] = $slug;
 		foreach ($_POST as $key => $val) {
 			$tmp = explode('-', $key);
@@ -739,6 +742,7 @@ function default_ajActionNewCity()
 	$assign_list["clsCity"] = $clsCity;
 	$tp = Input::post('tp');
 	$is_day_trip = Input::post('is_day_trip', 0);
+	// $clsISO->dd($_POST);
 
 	$city_id = $clsCity->getMaxId();
 	$title_voucher_new = $core->get_Lang('New City') . ' ' . $city_id;

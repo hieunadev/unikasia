@@ -111,22 +111,22 @@
                             <div class="item">
                                 <div class="des_item">
                                     <div class="des_item_image">
-                                        <a href="{$clsCity->getLink($city_id)}" title="{$clsCity->getTitle($city_id)}">
+                                        <a href="{$clsCity->getLink2($city_id)}" title="{$clsCity->getTitle($city_id)}">
                                             <img src="{$clsCity->getImage($city_id, 424, 315)}" alt="{$clsCity->getTitle($city_id)}" width="424" height="315" loading="lazy" />
                                         </a>
                                     </div>
                                     <div class="info">
-                                        <h3><a href="{$clsCity->getLink($city_id)}" title="{$clsCity->getTitle($city_id)}">{$clsCity->getTitle($city_id)}</a></h3>
+                                        <h3><a href="{$clsCity->getLink2($city_id)}" title="{$clsCity->getTitle($city_id)}">{$clsCity->getTitle($city_id)}</a></h3>
                                         <p class="map">
-                                            <i class="fas fa-map-marker-alt"></i>{$clsCity->getTitle($city_id)}, Vietnam
+                                            <i class="fas fa-map-marker-alt"></i> {$clsCountry->getTitle($country_id)}
                                         </p>
                                         <div class="description">
                                             {$clsCity->getIntro($city_id)}
                                         </div>
                                     </div>
                                     <div class="btn_link_act">
-                                        <a href="{$clsCity->getLink($city_id)}" title="{$clsCity->getTitle($city_id)}">
-                                            <span class="btn_mobile">SEE DETAILS</span>
+                                        <a href="{$clsCity->getLink2($city_id)}" title="{$clsCity->getTitle($city_id)}">
+                                            <span class="btn_mobile">{$core->get_Lang('SEE DETAILS')}</span>
                                             <i class="fa-solid fa-arrow-right-long"></i>
                                         </a>
                                     </div>
@@ -180,7 +180,7 @@
                                         | {$clsBlogCategory->getTitle($cat_id)}
                                     </div>
                                     <a href="{$clsBlog->getLink($blog_id)}" class="trvs_item_blog_link" title="{$clsBlog->getTitle($blog_id)}">
-                                        LEARN MORE <i class="fa-sharp fa-regular fa-arrow-right"></i>
+                                        {$core->get_Lang('LEARN MORE')} <i class="fa-sharp fa-regular fa-arrow-right"></i>
                                     </a>
                                 </div>
                             </div>
@@ -211,7 +211,7 @@
                                         | {$clsBlogCategory->getTitle($cat_id)}
                                     </div>
                                     <a href="{$clsBlog->getLink($blog_id)}" class="trvs_item_blog_link" title="{$clsBlog->getTitle($blog_id)}">
-                                        LEARN MORE <i class="fa-sharp fa-regular fa-arrow-right"></i>
+                                        {$core->get_Lang('LEARN MORE')} <i class="fa-sharp fa-regular fa-arrow-right"></i>
                                     </a>
                                 </div>
                                 <div class="trvs_item_blog_image order-1 order-md-2">
@@ -242,7 +242,7 @@
                                         | {$clsBlogCategory->getTitle($cat_id)}
                                     </div>
                                     <a href="{$clsBlog->getLink($blog_id)}" class="trvs_item_blog_link" title="{$clsBlog->getTitle($blog_id)}">
-                                        LEARN MORE <i class="fa-sharp fa-regular fa-arrow-right"></i>
+                                        {$core->get_Lang('LEARN MORE')} <i class="fa-sharp fa-regular fa-arrow-right"></i>
                                     </a>
                                 </div>
                             </div>
@@ -255,6 +255,7 @@
             </div>
         </div>
     </div>
+    {if $list_guide}
     <div class="trvs_travel_file">
         <div class="container">
             <div class="trvs_travel_file_title">
@@ -265,70 +266,31 @@
             </div>
             <div class="trvs_travel_file_content">
                 <div class="owl-carousel owl-theme trvs_travel_file_carousel">
+                    {foreach from=$list_guide key=key item=item}
+                    {assign var="GuideID" value=$item.guide_id}
+                    {assign var="GuideTitle" value=$clsGuide->getTitle($GuideID)}
+                    {assign var="GuideLink" value=$clsGuide->getLink2($GuideID)}
                     <div class="item">
                         <div class="trvs_travel_file_item">
                             <div class="trvs_travel_file_image">
-                                <a href="#" title="TRAVEL FILE">
-                                    <img src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="TRAVEL FILE" width="405" height="352" loading="lazy" />
+                                <a href="{$GuideLink}" title="{$GuideTitle}">
+                                    <img src="{$clsGuide->getImage($GuideID, 405, 352)}" alt="{$GuideTitle}" width="405" height="352" loading="lazy" />
                                 </a>
                             </div>
                             <div class="trvs_travel_file_intro">
-                                <h3><a href="#" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit. ">Lorem ipsum dolor sit amet, consectetur adipiscing elit. </a></h3>
+                                <h3><a href="{$GuideLink}" title="{$GuideTitle}">{$GuideTitle}</a></h3>
                                 <div class="description">
-                                    Pulvinar ut molestie imperdiet sed hendrerit maecenas. Amet consectetur pellentesque morbi
+                                    {$clsGuide->getIntro($GuideID)}
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="item">
-                        <div class="trvs_travel_file_item">
-                            <div class="trvs_travel_file_image">
-                                <a href="#" title="TRAVEL FILE">
-                                    <img src="https://images.unsplash.com/photo-1715348019723-66f8d6fb4c26?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzOXx8fGVufDB8fHx8fA%3D%3D" alt="TRAVEL FILE" width="405" height="352" loading="lazy" />
-                                </a>
-                            </div>
-                            <div class="trvs_travel_file_intro">
-                                <h3><a href="#" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit. ">Lorem ipsum dolor sit amet, consectetur adipiscing elit. </a></h3>
-                                <div class="description">
-                                    Pulvinar ut molestie imperdiet sed hendrerit maecenas. Amet consectetur pellentesque morbi
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="trvs_travel_file_item">
-                            <div class="trvs_travel_file_image">
-                                <a href="#" title="TRAVEL FILE">
-                                    <img src="https://images.unsplash.com/photo-1716847214815-973025e97173?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0fHx8ZW58MHx8fHx8" alt="TRAVEL FILE" width="405" height="352" loading="lazy" />
-                                </a>
-                            </div>
-                            <div class="trvs_travel_file_intro">
-                                <h3><a href="#" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit. ">Lorem ipsum dolor sit amet, consectetur adipiscing elit. </a></h3>
-                                <div class="description">
-                                    Pulvinar ut molestie imperdiet sed hendrerit maecenas. Amet consectetur pellentesque morbi
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="trvs_travel_file_item">
-                            <div class="trvs_travel_file_image">
-                                <a href="#" title="TRAVEL FILE">
-                                    <img src="https://images.unsplash.com/photo-1716843140994-77c602d00186?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0NHx8fGVufDB8fHx8fA%3D%3D" alt="TRAVEL FILE" width="405" height="352" loading="lazy" />
-                                </a>
-                            </div>
-                            <div class="trvs_travel_file_intro">
-                                <h3><a href="#" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit. ">Lorem ipsum dolor sit amet, consectetur adipiscing elit. </a></h3>
-                                <div class="description">
-                                    Pulvinar ut molestie imperdiet sed hendrerit maecenas. Amet consectetur pellentesque morbi
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {/foreach}
                 </div>
             </div>
         </div>
     </div>
+    {/if}
     {$core->getBlock('why_choose_us')}
     {$core->getBlock('customer_review')}
     <div class="trvs_faq">
@@ -380,7 +342,7 @@
 </section>
 
 <script>
-    var country_id={$country_id};
+    var country_id = '{$country_id}';
 </script>
 {literal}
 <script>
@@ -497,13 +459,13 @@
 
             $.ajax({
                 type: "POST",
-                url: path_ajax_script+"/index.php?mod=tour&act=ajWhenToGo",
+                url: path_ajax_script + "/index.php?mod=tour&act=ajWhenToGo",
                 data: {
-                    country_id: country_id, // Giá trị của country_id
-                    month_id: clickedMonthId // Giá trị của clickedMonthId
+                    country_id: country_id,
+                    month_id: clickedMonthId
                 },
                 // dataType: "dataType",
-                success: function (response) {
+                success: function(response) {
                     $(".owl_when_vn").hide();
                     $(".tab_destination .container").html(response);
 
@@ -537,8 +499,6 @@
                     }
                 }
             });
-            console.log(country_id);
-            console.log(clickedMonthId);
         });
     });
 </script>

@@ -233,52 +233,72 @@ function default_ajLoadFormAddProperty(){
 	$type = $_POST['type'];
     $style = '';
     if ($type != "HotelFacilities") $style = 'style="display:none"';
-	$html = '
+    if ($type == "HotelCategory") {
+        $html = '
 		<div class="headPop headPop2">
 			<a href="javascript:void();" title="Đóng" class="closeEv close_pop">&nbsp;</a>
-			<h3>'.$core->get_Lang('Add New').' '.$clsProperty->getTextByType($type).'</h3> 
+			<h3>' . $core->get_Lang('Add New Hotel Cateogry') . '</h3> 
 		</div>
 		<table class="form" cellpadding="3" cellspacing="3">
 			<tr>
-				<td class="fieldarea span20" style="text-align:right"><strong>'.$core->get_Lang('title').'</strong></td>
+				<td class="fieldarea span20" style="text-align:right"><strong>' . $core->get_Lang('title') . '</strong></td>
 				<td class="fieldarea">
-					<input placeholder="'.$core->get_Lang('Enter name of').' '.$core->get_Lang($type).'" type="text" name="title" id="title" class="required fontLarge form-control full text"/>
+					<input placeholder="' . $core->get_Lang('Enter name of') . ' ' . $core->get_Lang($type) . '" type="text" name="title" id="title" class="required fontLarge form-control full text"/>
+				</td>
+			</tr>
+		</table>
+		<div class="modal-footer"> 
+			<button class="btn btn-primary submitClick" id="clickSubmitHotelProperty" property_id="0">' . $core->get_Lang('Submit') . '</button> 
+			<button class="btn btn-warning clickToClose close_pop" data-dismiss="modal" aria-hidden="true">' . $core->get_Lang('Close') . '</button> 
+		</div>';
+    } else {
+        $html = '
+		<div class="headPop headPop2">
+			<a href="javascript:void();" title="Đóng" class="closeEv close_pop">&nbsp;</a>
+			<h3>' . $core->get_Lang('Add New') . ' ' . $clsProperty->getTextByType($type) . '</h3> 
+		</div>
+		<table class="form" cellpadding="3" cellspacing="3">
+			<tr>
+				<td class="fieldarea span20" style="text-align:right"><strong>' . $core->get_Lang('title') . '</strong></td>
+				<td class="fieldarea">
+					<input placeholder="' . $core->get_Lang('Enter name of') . ' ' . $core->get_Lang($type) . '" type="text" name="title" id="title" class="required fontLarge form-control full text"/>
 				</td>
 			</tr>
 			<tr style="display:none">
 				<td class="fieldarea">
 					<select class="slb" id="type">
-						'.$clsProperty->getSelectByType($type).'
+						' . $clsProperty->getSelectByType($type) . '
 					</select>
 				</td>
 			</tr>
-            <tr '.$style.'>
-                <td class="fieldarea span15" style="text-align:right"><strong>'.$core->get_Lang('Category').'</strong></td>
+            <tr ' . $style . '>
+                <td class="fieldarea span15" style="text-align:right"><strong>' . $core->get_Lang('Category') . '</strong></td>
                 <td class="fieldarea">
                     <select class="slb" id="cat_id" name="cat_id">
-                        '.$clsHotelProperty->getSelectByHotelCat().'
+                        ' . $clsHotelProperty->getSelectByHotelCat() . '
                     </select>
                 </td>
             </tr>
 			<tr>
-				<td class="fieldarea" style="text-align:right"><strong>'.$core->get_Lang('Image icon').'</strong></td>
+				<td class="fieldarea" style="text-align:right"><strong>' . $core->get_Lang('Image icon') . '</strong></td>
 				<td class="fieldarea">
-					<img class="isoman_img_pop" id="isoman_show_image" src="'.$clsProperty->getOneField('image',$property_id).'" width="40" height="40" />
-					<input type="hidden" id="isoman_hidden_image" value="'.$clsProperty->getOneField('image',$property_id).'">
-					<input style="width:70% !important;float:left;margin-left:4px;" class="form-control" type="text" id="isoman_url_image" name="image" value="'.$clsProperty->getOneField('image',$property_id).'"><a style="float:left; margin-left:4px; margin-top:-4px;" href="#" class="ajOpenDialog" isoman_for_id="image" isoman_val="'.$clsProperty->getOneField('image',$property_id).'" isoman_name="image"><img src="'.URL_IMAGES.'/general/folder-32.png" border="0" title="Open" alt="Open"></a>
+					<img class="isoman_img_pop" id="isoman_show_image" src="' . $clsProperty->getOneField('image', $property_id) . '" width="40" height="40" />
+					<input type="hidden" id="isoman_hidden_image" value="' . $clsProperty->getOneField('image', $property_id) . '">
+					<input style="width:70% !important;float:left;margin-left:4px;" class="form-control" type="text" id="isoman_url_image" name="image" value="' . $clsProperty->getOneField('image', $property_id) . '"><a style="float:left; margin-left:4px; margin-top:-4px;" href="#" class="ajOpenDialog" isoman_for_id="image" isoman_val="' . $clsProperty->getOneField('image', $property_id) . '" isoman_name="image"><img src="' . URL_IMAGES . '/general/folder-32.png" border="0" title="Open" alt="Open"></a>
 				</td>
 			</tr>
 			<tr style="display:none">
-				<td class="fieldarea" style="text-align:right"><strong>'.$core->get_Lang('Short text').'</strong></td>
+				<td class="fieldarea" style="text-align:right"><strong>' . $core->get_Lang('Short text') . '</strong></td>
 				<td class="fieldarea">
-					<textarea class="textarea full" rows="5" name="intro">'.$clsProperty->getIntro($property_id).'</textarea>
+					<textarea class="textarea full" rows="5" name="intro">' . $clsProperty->getIntro($property_id) . '</textarea>
 				</td>
 			</tr>
 		</table>
 		<div class="modal-footer"> 
-			<button class="btn btn-primary submitClick" id="clickSubmitProperty" property_id="0">'.$core->get_Lang('Submit').'</button> 
-			<button class="btn btn-warning clickToClose close_pop" data-dismiss="modal" aria-hidden="true">'.$core->get_Lang('Close').'</button> 
+			<button class="btn btn-primary submitClick" id="clickSubmitProperty" property_id="0">' . $core->get_Lang('Submit') . '</button> 
+			<button class="btn btn-warning clickToClose close_pop" data-dismiss="modal" aria-hidden="true">' . $core->get_Lang('Close') . '</button> 
 		</div>';
+    }
 	echo($html);die();
 }
 function default_ajLoadFormEditProperty(){
@@ -290,67 +310,99 @@ function default_ajLoadFormEditProperty(){
 	$type = $_POST['type'];
 	$oneItem = $clsProperty->getOne($property_id);
 	#
-	$html = '
+
+    if ($type == "HotelCategory") {
+        $html = '
+        <div class="headPop headPop2">
+            <a href="javascript:void();" title="Đóng" class="closeEv close_pop">&nbsp;</a>
+            <h3 id="myModalLabel">' . $core->get_Lang('Edit Hotel Category') . '</h3> 
+        </div>
+        <table class="form" cellpadding="3" cellspacing="3">
+            <tr>
+                <td class="fieldarea span15" style="text-align:right"><strong>' . $core->get_Lang('title') . '</strong></td>
+                <td class="fieldarea">
+                    <input type="text" id="title" name="title" value="' . $clsHotelProperty->getTitle($property_id) . '" class="fontLarge form-control full text">
+                </td>
+            </tr>
+        </table>
+        <div class="modal-footer"> 
+            <button class="btn btn-primary submitClick" id="clickSubmitHotelProperty" property_id="' . $property_id . '">
+                ' . $core->get_Lang('Submit') . '
+            </button> 
+            <button class="btn btn-warning clickToClose" data-dismiss="modal" aria-hidden="true">' . $core->get_Lang('Close') . '</button> 
+        </div>';
+    } else {
+        $html = '
 	<div class="headPop headPop2">
 		<a href="javascript:void();" title="Đóng" class="closeEv close_pop">&nbsp;</a>
-		<h3 id="myModalLabel">'.$core->get_Lang('Edit').' '.$clsProperty->getTextByType($type).'</h3> 
+		<h3 id="myModalLabel">' . $core->get_Lang('Edit') . ' ' . $clsProperty->getTextByType($type) . '</h3> 
 	</div>
 	<table class="form" cellpadding="3" cellspacing="3">
 		<tr>
-			<td class="fieldarea span15" style="text-align:right"><strong>'.$core->get_Lang('title').'</strong></td>
+			<td class="fieldarea span15" style="text-align:right"><strong>' . $core->get_Lang('title') . '</strong></td>
 			<td class="fieldarea">
-				<input type="text" id="title" name="title" value="'.$clsProperty->getTitle($property_id).'" class="fontLarge form-control full text">
+				<input type="text" id="title" name="title" value="' . $clsProperty->getTitle($property_id) . '" class="fontLarge form-control full text">
 			</td>
 		</tr>
 		<tr style="display:none">
 			<td class="fieldarea">
 				<select class="slb" id="type">
-					'.$clsProperty->getSelectByType($clsProperty->getOneField('type',$property_id)).'
+					' . $clsProperty->getSelectByType($clsProperty->getOneField('type', $property_id)) . '
 				</select>
 			</td>
 		</tr>
 		<tr>
-			<td class="fieldarea span15" style="text-align:right"><strong>'.$core->get_Lang('Category').'</strong></td>
+			<td class="fieldarea span15" style="text-align:right"><strong>' . $core->get_Lang('Category') . '</strong></td>
 			<td class="fieldarea">
 				<select class="slb" id="cat_id" name="cat_id">
-					'.$clsHotelProperty->getSelectByHotelCat($oneItem["cat_id"]).'
+					' . $clsHotelProperty->getSelectByHotelCat($oneItem["cat_id"]) . '
 				</select>
 			</td>
 		</tr>
 		<tr>
-			<td class="fieldarea" style="text-align:right"><strong>'.$core->get_Lang('Image icon').'</strong></td>
+			<td class="fieldarea" style="text-align:right"><strong>' . $core->get_Lang('Image icon') . '</strong></td>
 			<td class="fieldarea">
-				<img class="isoman_img_pop" id="isoman_show_image" src="'.$clsProperty->getOneField('image',$property_id).'" />
-				<input type="hidden" id="isoman_hidden_image" value="'.$clsProperty->getOneField('image',$property_id).'">
-				<input class="form-control" style="width:70% !important;float:left;margin-left:4px;" type="text" id="isoman_url_image" name="image" value="'.$clsProperty->getOneField('image',$property_id).'"><a style="float:left; margin-left:4px; margin-top:-4px;" href="#" class="ajOpenDialog" isoman_for_id="image" isoman_val="'.$clsProperty->getOneField('image',$property_id).'" isoman_name="image"><img src="'.URL_IMAGES.'/general/folder-32.png" border="0" title="Open" alt="Open"></a>
+				<img class="isoman_img_pop" id="isoman_show_image" src="' . $clsProperty->getOneField('image', $property_id) . '" />
+				<input type="hidden" id="isoman_hidden_image" value="' . $clsProperty->getOneField('image', $property_id) . '">
+				<input class="form-control" style="width:70% !important;float:left;margin-left:4px;" type="text" id="isoman_url_image" name="image" value="' . $clsProperty->getOneField('image', $property_id) . '"><a style="float:left; margin-left:4px; margin-top:-4px;" href="#" class="ajOpenDialog" isoman_for_id="image" isoman_val="' . $clsProperty->getOneField('image', $property_id) . '" isoman_name="image"><img src="' . URL_IMAGES . '/general/folder-32.png" border="0" title="Open" alt="Open"></a>
 			</td>
 		</tr>
 		<tr style="display:none">
-			<td class="fieldarea" style="text-align:right"><strong>'.$core->get_Lang('Short text').'</strong></td>
+			<td class="fieldarea" style="text-align:right"><strong>' . $core->get_Lang('Short text') . '</strong></td>
 			<td class="fieldarea">
-				<textarea class="textarea full" rows="5" name="intro">'.$clsProperty->getIntro($property_id).'</textarea>
+				<textarea class="textarea full" rows="5" name="intro">' . $clsProperty->getIntro($property_id) . '</textarea>
 			</td>
 		</tr>
 	</table>
 	<div class="modal-footer"> 
-		<button class="btn btn-primary submitClick" id="clickSubmitProperty" property_id="'.$property_id.'">
-			'.$core->get_Lang('Submit').'
+		<button class="btn btn-primary submitClick" id="clickSubmitProperty" property_id="' . $property_id . '">
+			' . $core->get_Lang('Submit') . '
 		</button> 
-		<button class="btn btn-warning clickToClose" data-dismiss="modal" aria-hidden="true">'.$core->get_Lang('Close').'</button> 
+		<button class="btn btn-warning clickToClose" data-dismiss="modal" aria-hidden="true">' . $core->get_Lang('Close') . '</button> 
 	</div>';
+    }
 	echo($html);die();
 }
 function default_ajDeleteProperty(){
 	global $core,$_LANG_ID;
 	$user_id = $core->_USER['user_id'];
 	#
+
 	$clsProperty = new Property();
+	$clsHotelProperty = new HotelProperty();
 	$property_id = $_POST['property_id'];
+	$type = $_POST['type'];
+
+    if ($type == "HotelCategory") {
+        $clsHotelProperty->deleteOne($property_id);
+        return;
+    }
+
 	$clsProperty->deleteOne($property_id);
 	echo(1); die();
 }
 function default_ajSubmitProperty(){
-	global $core,$_LANG_ID;
+	global $core,$_LANG_ID, $clsISO;
 	$user_id = $core->_USER['user_id'];
 	#
 	
@@ -360,11 +412,11 @@ function default_ajSubmitProperty(){
 	$titlePost = addslashes($_POST['title']);
 	$introPost = addslashes($_POST['intro']);
 	$slugPost = $core->replaceSpace($titlePost);
-	$cat_id = $_POST['cat_id'] ?? 0;
+	$cat_id = !empty($_POST['cat_id']) ? $_POST["cat_id"] : 0;
 	$type = $_POST['type'];
 	#
 	if(intval($property_id)==0){
-		$res = $clsProperty->getAll("$slug='$slugPost' and type='$type' limit 0,1");
+		$res = $clsProperty->getAll("slug='$slugPost' and type='$type' limit 0,1");
 		if(!empty($res)){
 			echo('EXIST'); die();
 		}else{
@@ -376,11 +428,13 @@ function default_ajSubmitProperty(){
 			$max_id=$clsProperty->getMaxId();
 			$f="property_id,title,slug,image,intro,order_no,type, cat_id";
 			$v="'$max_id','$titlePost','$slugPost','$image','$introPost','1','$type', '$cat_id'";
+            $clsProperty->setDebug(1);
 			if($clsProperty->insertOne($f,$v)){
 				echo('IN_SUCCESS'); die();
 			}else{
 				echo('ERROR'); die();
 			}
+            die();
 		}
 	}else{
 		$set = "title='$titlePost',slug='$slugPost',image='$image', cat_id=$cat_id";
@@ -390,6 +444,33 @@ function default_ajSubmitProperty(){
 		}else{
 			echo('ERROR'); die();
 		}
+	}
+}
+function default_ajSubmitHotelProperty(){
+	global $core,$_LANG_ID;
+	#
+	$clsHotelProperty = new HotelProperty();
+	$property_id = $_POST['property_id'] ?? 0;
+	$title = addslashes($_POST['title']);
+	$type = $_POST['type'] ?? "";
+	#
+
+	if(intval($property_id)==0){
+        $max_id=$clsHotelProperty->getMaxId();
+        $f="hotel_property_id,title,type,is_online";
+        $v="'$max_id','$title','$type', '1'";
+        if($clsHotelProperty->insertOne($f,$v)){
+            echo('IN_SUCCESS'); die();
+        }else{
+            echo('ERROR'); die();
+        }
+	}else{
+        $set = "title='$title'";
+        if($clsHotelProperty->updateOne($property_id,$set)){
+            echo('UP_SUCCESS'); die();
+        }else{
+            echo('ERROR'); die();
+        }
 	}
 }
 function default_ajUpdatePropertyFavorite(){

@@ -304,6 +304,7 @@ class Reviews extends dbBasic{
         $clsTour = new Tour();
         $clsCruise = new Cruise();
         $clsVoucher = new Voucher();
+		$clsHotel = new Hotel();
         $one=$this->getOne($pvalTable);
         if($one['type']=='tour'){
             return DOMAIN_NAME.$clsTour->getLink($one['table_id']);
@@ -311,6 +312,8 @@ class Reviews extends dbBasic{
             return DOMAIN_NAME.$clsCruise->getLink($one['table_id']);
         }elseif($one['type']=='voucher'){
             return DOMAIN_NAME.$clsVoucher->getLink($one['table_id']);
+        }elseif($one['type']=='hotel'){
+            return DOMAIN_NAME.$clsHotel->getLink($one['table_id']);
         }
     }
 	 function getTextByType($selected = '') {
@@ -528,9 +531,12 @@ class Reviews extends dbBasic{
 	}
     function sendMail($email,$mes,$type){
         global $core, $clsISO, $clsConfiguration,$_LANG_ID,$email_template_review_tour_id,$email_template_review_cruise_id,$email_template_review_stay_id;
-;
+		
         #
         $clsEmailTemplate = new EmailTemplate();
+		$clsTour = new Tour();
+        $clsHotel = new Hotel();
+
         #
         if($type =='tour'){
             $email_template_id=$email_template_review_tour_id;
