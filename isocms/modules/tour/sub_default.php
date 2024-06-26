@@ -2478,6 +2478,8 @@ function default_cat()
 	$assign_list['clsMonthCountry'] = $clsMonthCountry;
 	$clsGuide = new Guide();
 	$assign_list['clsGuide'] = $clsGuide;
+	$clsGuideCat = new GuideCat();
+	$assign_list['clsGuideCat'] = $clsGuideCat;
 	#
 	$show = isset($_GET['show']) ? $_GET['show'] : '';
 	$assign_list['show'] = $show;
@@ -2558,8 +2560,16 @@ function default_cat()
 	}
 	#
 	$cond3  =   'is_trash = 0 AND is_online = 1';
-	// Lấy list travel guide by country
-	$list_guide	=	$clsGuide->getAll($cond3 . " AND country_id = $country_id" . $order_by . " LIMIT 10", $clsGuide->pkey);
+	// List guide category
+	$arr_guide_cat	=	$clsGuideCat->getAll($cond3 . $order_by, "$clsGuideCat->pkey, title");
+	$list_guide_cat = 	[];
+	foreach ($arr_guide_cat as $item) {
+		$list_guide_cat[$item['title']] = $item['guidecat_id'];
+	}
+	// ID của Travel File
+	$guide_cat_id	=	$list_guide_cat['Travel File'];
+	// Lấy list travel file by country (danh mục guide trong country)
+	$list_guide		=	$clsGuide->getAll($cond3 . " AND country_id = " . $country_id . " AND (cat_id = '" . $guide_cat_id . "' OR list_cat_id LIKE '%|" . $guide_cat_id . "|%')" . $order_by . " LIMIT 10", $clsGuide->pkey);
 	$smarty->assign('list_guide', $list_guide);
 	#
 	/* =============Title & Description Page================== */

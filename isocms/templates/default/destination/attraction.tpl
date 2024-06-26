@@ -72,7 +72,7 @@
                                         </div>
                                     </div>
                                     <div class="col-12 col-lg-3">
-                                        <div class="att_exciting_trip_item_detail">    
+                                        <div class="att_exciting_trip_item_detail">
                                             <div class="unika_att_exciting">
                                                 <div class="att_exciting_trip_item_date">
                                                     {if $item.duration_custom}
@@ -113,7 +113,7 @@
                             </a>
                         </div>
                         <div class="att_list_hotel_content">
-                            <div class="row">
+                            <div class="row justify-content-center">
                                 {foreach from=$list_hotel key=key item=item}
                                 {assign var="HotelID" value=$item.hotel_id}
                                 {assign var="HotelTitle" value=$clsHotel->getTitle($HotelID)}
@@ -149,7 +149,7 @@
                                                     {$clsHotel->getAddress($HotelID)}
                                                 </div>
                                             </div>
-                                            <div class="att_hotel_content_item_rate ellipsis_1_line">
+                                            <div class="att_hotel_content_item_rate">
                                                 <div class="number">{$clsReviews->getReviews($HotelID, 'avg_point', 'hotel')}</div>
                                                 <div class="title">{$clsReviews->getReviews($HotelID, 'txt_review', 'hotel')}</div>
                                                 <div class="total">({$clsReviews->getReviews($HotelID, '', 'hotel')} reviews)</div>

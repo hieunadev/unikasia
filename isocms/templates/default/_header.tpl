@@ -5,7 +5,7 @@
                 <div class="container">
                     <div id="unika_header_top">
                         <div class="unika_header_top_left">
-                            <span>Who knows Asia better than us? We are his children, we live there!</span>
+                            <span>{$core->get_Lang("Who knows Asia better than us? We are his children, we live there")}!</span>
                         </div>
                         <div class="unika_header_top_right">
                             <div class="unika_header_top_right_email">

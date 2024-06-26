@@ -298,4 +298,113 @@
 		echo date('d/m/Y',1697216400),'||',$end_date,'||';
 		echo date('d/m/Y',$end_date);die();*/
 	}
+
+if($_GET['dev']==1){
+//	die('xx');
+	/*$clsTour = new MonthCountry();
+	$oneTable = $dbconn->GetAll("SHOW COLUMNS FROM ".$clsTour->tbl);
+	//$clsISO->pre($oneTable);die();
+	$lstTour = $clsTour->getAll("1");
+	//$clsISO->pre($lstTour);die();
+	if(!empty($lstTour)){
+		foreach($lstTour as $k=>$oneTour){
+			$tour_id_new = $clsTour->getMaxId();
+			$ins = array(
+				$oneTable[0]['Field']	=> $tour_id_new,
+			);
+			for($i=1;$i<count($oneTable);$i++){
+				if($oneTable[$i]['Field']=="lang_id"){
+					$ins[$oneTable[$i]['Field']] = 'fr';
+				}else{
+					$ins[$oneTable[$i]['Field']] = $oneTour[$oneTable[$i]['Field']];
+				}
+			}
+			$clsTour->insert($ins);
+		}
+	}*/
+	/*$clsBlog = new Blog();
+	$oneTable = $dbconn->GetAll("SHOW COLUMNS FROM ".$clsBlog->tbl);
+	//$clsISO->pre($oneTable);die();
+	$lst = $clsBlog->getAll("1");
+	//$clsISO->pre($lst);die();
+	if(!empty($lst)){
+		foreach($lst as $k=>$one){
+			$_id_new = $clsBlog->getMaxId();
+			$ins = array(
+				$oneTable[0]['Field']	=> $_id_new,
+			);
+			for($i=1;$i<count($oneTable);$i++){
+				if($oneTable[$i]['Field']=="lang_id"){
+					$ins[$oneTable[$i]['Field']] = 'fr';
+				}else{
+					$ins[$oneTable[$i]['Field']] = $one[$oneTable[$i]['Field']];
+				}
+			}
+			$clsBlog->insert($ins);
+		}
+	}*/
+	/*$clsGuide = new Guide();
+	$oneTable = $dbconn->GetAll("SHOW COLUMNS FROM ".$clsGuide->tbl);
+	//$clsISO->pre($oneTable);die();
+	$lst = $clsGuide->getAll("1");
+	//$clsISO->pre($lst);die();
+	if(!empty($lst)){
+		foreach($lst as $k=>$one){
+			$_id_new = $clsGuide->getMaxId();
+			$ins = array(
+				$oneTable[0]['Field']	=> $_id_new,
+			);
+			for($i=1;$i<count($oneTable);$i++){
+				if($oneTable[$i]['Field']=="lang_id"){
+					$ins[$oneTable[$i]['Field']] = 'fr';
+				}else{
+					$ins[$oneTable[$i]['Field']] = $one[$oneTable[$i]['Field']];
+				}
+			}
+			$clsGuide->insert($ins);
+		}
+	}*/
+	/*$clsTestimonial = new Testimonial();
+	$oneTable = $dbconn->GetAll("SHOW COLUMNS FROM ".$clsTestimonial->tbl);
+	//$clsISO->pre($oneTable);die();
+	$lst = $clsTestimonial->getAll("1");
+	//$clsISO->pre($lst);die();
+	if(!empty($lst)){
+		foreach($lst as $k=>$one){
+			$_id_new = $clsTestimonial->getMaxId();
+			$ins = array(
+				$oneTable[0]['Field']	=> $_id_new,
+			);
+			for($i=1;$i<count($oneTable);$i++){
+				if($oneTable[$i]['Field']=="lang_id"){
+					$ins[$oneTable[$i]['Field']] = 'fr';
+				}else{
+					$ins[$oneTable[$i]['Field']] = $one[$oneTable[$i]['Field']];
+				}
+			}
+			$clsTestimonial->insert($ins);
+		}
+	}*/
+	/*$clsNews = new News();
+	$oneTable = $dbconn->GetAll("SHOW COLUMNS FROM ".$clsNews->tbl);
+	//$clsISO->pre($oneTable);die();
+	$lst = $clsNews->getAll("1");
+	//$clsISO->pre($lst);die();
+	if(!empty($lst)){
+		foreach($lst as $k=>$one){
+			$_id_new = $clsNews->getMaxId();
+			$ins = array(
+				$oneTable[0]['Field']	=> $_id_new,
+			);
+			for($i=1;$i<count($oneTable);$i++){
+				if($oneTable[$i]['Field']=="lang_id"){
+					$ins[$oneTable[$i]['Field']] = 'fr';
+				}else{
+					$ins[$oneTable[$i]['Field']] = $one[$oneTable[$i]['Field']];
+				}
+			}
+			$clsNews->insert($ins);
+		}
+	}*/
+}
 ?> 

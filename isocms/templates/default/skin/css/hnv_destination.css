@@ -320,10 +320,10 @@ body {
     max-height: 72px;
     overflow: hidden;
 }
-/* .des_travel_style_content .owl-stage-outer {
-    display: flex;
-    justify-content: center;
-} */
+.des_travel_style_content .owl-stage-outer {
+    /* display: flex;
+    justify-content: center; */
+}
 .des_travel_style_content .owl-item.active {
     padding-bottom: 55px;
 }

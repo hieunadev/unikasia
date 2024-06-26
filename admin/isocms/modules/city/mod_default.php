@@ -24,9 +24,9 @@ function getFrame($city_id = null)
 				//'gmap' => array(
 				//	'name' => $core->get_Lang('Gmap')
 				//),
-				'banner' => array(
-					'name' => $core->get_Lang('Banner')
-				)
+				// 'banner' => array(
+				// 	'name' => $core->get_Lang('Banner')
+				// )
 			)
 		),
 	);

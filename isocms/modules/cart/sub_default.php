@@ -178,7 +178,7 @@ function default_default(){
 	$cartSessionCruise= vnSessionGetVar('BookingCruise_'.$_LANG_ID);
 	$cartSessionCruise = $cartSessionCruise[$_LANG_ID];
 //	$clsISO->pre($cartSessionCruise);die();
-	
+//	$clsBooking->sendEmailBookingCart(57);
 	$cartSessionHotel= vnSessionGetVar('BookingHotel_'.$_LANG_ID);
 	$cartSessionHotel = $cartSessionHotel[$_LANG_ID];
 
@@ -202,7 +202,7 @@ function default_default(){
 			$list_tour_room_id = str_replace("|",",",trim($list_tour_room_id,"|"));
 			$list_service_id = str_replace("|",",",trim($list_service_id,"|"));
 			$lstRoom = $clsTourProperty->getAll("is_trash=0 and is_online=1 and type='TOURROOM' and tour_property_id IN (".$list_tour_room_id.")",$clsTourProperty->pkey.',title');
-			$lstAddOnService = $clsAddOnService->getAll("is_trash = 0 and is_online=1 and addonservice_id IN ($list_service_id) order by order_no", "title, price, extra");
+			$lstAddOnService = $clsAddOnService->getAll("is_trash = 0 and is_online=1 and addonservice_id IN ($list_service_id) order by order_no", "addonservice_id,title, price, extra");
 
 			$assign_list['lstRoom'] = unserialize(html_entity_decode($value['str_list_room']));
 			$assign_list['list_room_id'] = $value["list_room_id"];
@@ -597,7 +597,7 @@ function default_book(){
 			$booking_code = $clsBooking->generateBookingCode($booking_id,'Tour');
 			#
 			$full_name=$first_name.' '.$last_name;
-			$f="booking_id,title,contact_name,full_name,country_id,phone,email";
+			$f="booking_id,title,contact_name,full_name,country_id,phone,address,email";
 			$f.= ",clsTable,booking_code,cart_store,booking_store,booking_type,reg_date,ip_booking,totalgrand,deposit,balance,price_promotion,note";
 			$POST = array();
 			foreach($_POST as $k=>$v){
@@ -616,6 +616,7 @@ function default_book(){
 			$email=Input::post('email','');
 			$totalFinal=Input::post('totalFinal',0);
 			$customer_note=Input::post('note','');
+			$address=Input::post('address','');
 
 			$v="'$booking_id'
 			,'".$title."'
@@ -623,6 +624,7 @@ function default_book(){
 			,'".$fullname."'
 			,'".$country_id."'
 			,'".$telephone."'
+			,'".$address."'
 			,'".$email."'
 			,'Tour'
 			,'$booking_code'

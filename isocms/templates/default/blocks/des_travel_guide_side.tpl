@@ -120,8 +120,15 @@
                                 </div>
                                 <div class="des_travel_guide_exciting_trip_detail">
                                     <div class="box_left">
-                                        <p>From</p>
-                                        <span class="price_type">US</span> <span class="price">${$item.min_price}</span>
+                                        <p>From 
+                                            {if $clsTour->getDiscount($tourID)}
+                                                <span class="price_old">${$item.min_price}</span>
+                                            {/if}
+                                        </p>
+                                        <span class="price_type">US</span> 
+                                        <span class="price">
+                                            ${$clsTour->getPriceAfterDiscount($tourID)}
+                                        </span>
                                     </div>
                                     <div class="box_right">
                                         <a href="{$clsTour->getLink($tourID)}" title="{$clsTour->getTitle($tourID)}">View tour <i class="fa-light fa-arrow-right"></i></a>
@@ -158,7 +165,9 @@
                         <div class="row">
                             <div class="col-4 col-sm-3 col-md-12 col-lg-4">
                                 <a href="{$MostBlogLink}" title="{$MostBlogTitle}">
-                                    <img src="{$MostBlogImage}" width="83" height="83" alt="{$MostBlogTitle}">
+                                    <div class="des_travel_guide_most_read_item_image">
+                                        <img src="{$MostBlogImage}" width="83" height="83" alt="{$MostBlogTitle}">
+                                    </div>
                                 </a>
                             </div>
                             <div class="col-8 col-sm-9 col-md-12 col-lg-8">
@@ -459,9 +468,17 @@
     .des_travel_guide_most_read_item {
         margin-bottom: 24px;
     }
-    .des_travel_guide_most_read_item img {
+    .des_travel_guide_most_read_item_image {
+        overflow: hidden;
+        border-radius: 8px;
+    }
+    .des_travel_guide_most_read_item_image img {
         width: 100%;
         border-radius: 4px;
+        transition: all .3s ease-in-out;
+    }
+    .des_travel_guide_most_read_item_image img:hover {
+        scale: 1.2;
     }
     .des_travel_guide_most_read_item h3 {
         color: var(--Neutral-1, #111D37);
@@ -470,6 +487,12 @@
         font-style: normal;
         font-weight: 500;
         line-height: 20px;
+    }
+    .des_travel_guide_most_read_item h3 a {
+        transition: all .3s ease-in-out;
+    }
+    .des_travel_guide_most_read_item h3:hover a {
+        color: #FFA718;
     }
     .des_travel_guide_exciting_trip_image {
         border-radius: 8px;
@@ -486,6 +509,11 @@
     .destination_attraction_body .des_travel_guide_category {
         margin-bottom: 32px;
     }
+    .price_old {
+        color:#959AA4;
+        text-decoration:line-through;
+        font-size: 18px;
+    }
     @media (max-width: 1200px) {
         .des_travel_guide_exciting_trip_detail .box_left {
             display: ruby;
@@ -497,11 +525,9 @@
     }
     @media (min-width: 992px) and (max-width: 1199px) {}
     @media (min-width: 768px) and (max-width: 991px) {
-        .des_travel_guide_most_read_item img {
-            width: unset;
-            height: auto;
-            margin-bottom: 7px;
-        }
+        .des_travel_guide_most_read_item .row {
+            gap: 7px;
+        }  
         /*van css new*/
         .guide_cat_body .des_travel_guide_exciting_trip_content {
             display: none;

@@ -12,7 +12,8 @@
 </div>
 <div class="container-fluid">
     <div class="page-title">	
-        <h2>{$core->get_Lang('tailorproperty')} <select id="slb_Type" class="slbHighlight"> {$clsClassTable->getSelectByType($type)}</select></h2>
+        <h2>{$core->get_Lang('tailorproperty')} 
+		<select id="slb_Type" class="slbHighlight"> {$clsClassTable->getSelectByType($type)}</select></h2>
         <p>{$core->get_Lang('systemmanagementtailorproperty')}</p>
     </div>
     <form id="forums" method="post" action="">

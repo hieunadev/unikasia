@@ -1264,10 +1264,10 @@ function default_cat()
     $pkeyTable = $clsClassTable->pkey;
     $assign_list["clsClassTable"] = $clsClassTable;
     $assign_list["pkeyTable"] = $pkeyTable;
-
+    #
     $pUrl = '&country_id=' . $country_id;
     $assign_list["pUrl"] = $pUrl;
-
+    #
     $classTable = "GuideCat";
     $clsClassTable = new $classTable;
     $tableName = $clsClassTable->tbl;
@@ -1286,21 +1286,17 @@ function default_cat()
         if (isset($_POST['cat_id']) && intval($_POST['cat_id']) > 0) {
             $link .= '&cat_id=' . $_POST['cat_id'];
         }
-
         if (isset($_POST['keyword']) && !empty($_POST['keyword'])) {
             $link .= '&keyword=' . $_POST['keyword'];
         }
         header('location: ' . PCMS_URL . '/?mod=' . $mod . '&act=' . $act . $link);
     }
-
-
     /*List all item*/
     $cond = "1=1";
     if (intval($country_id) > 0) {
         $cond .= " and country_id='$country_id'";
         $pUrl .= '&country_id=' . $country_id;
     }
-
     #Filter By Keyword
     if (isset($_GET['keyword']) && !empty($_GET['keyword'])) {
         $keyword = $core->replaceSpace($_GET['keyword']);
@@ -1332,11 +1328,10 @@ function default_cat()
     $assign_list['recordPerPage'] = $recordPerPage;
     $assign_list['totalPage'] = $totalPage;
     $assign_list['currentPage'] = $currentPage;
-
+    #
     $stt = ($currentPage - 1) * $recordPerPage;
     $assign_list['stt'] = $stt;
-
-
+    #
     $listPageNumber =  array();
     for ($i = 1; $i <= $totalPage; $i++) {
         $listPageNumber[] = $i;
@@ -1361,17 +1356,23 @@ function default_cat()
     $assign_list['link_page_current_2'] = $link_page_current_2;
     #-------End Page Divide-----------------------------------------------------------
     $allItem = $clsClassTable->getAll($cond . " order by " . $orderBy . $limit);
-
-
     $assign_list["allItem"] = $allItem;
-
-    //Action
+    #--Action
     $action = isset($_GET['action']) ? $_GET['action'] : '';
     if ($action == 'Trash') {
-        $string = isset($_GET['guidecat_id']) ? ($_GET['guidecat_id']) : '';
-        $guidecat_id = intval($core->decryptID($string));
-        $pUrl = '';
-        if ($string == '' && $guidecat_id == 0) {
+        // List guide category
+        $arr_guidecat   =   [];
+        foreach ($allItem as $item) {
+            $arr_guidecat[$item['title']]   =   $item['guidecat_id'];
+        }
+        // ID của Travel File
+        $guide_cat_trvf_id    =    $arr_guidecat['Travel File'];
+        #
+        $string         =   isset($_GET['guidecat_id']) ? ($_GET['guidecat_id']) : '';
+        $guidecat_id    =   intval($core->decryptID($string));
+        $pUrl           =   '';
+        #
+        if (($string == '' && $guidecat_id == 0) || ($guidecat_id == $guide_cat_trvf_id)) {
             header('location:' . PCMS_URL . '/index.php?admin&mod=' . $mod . '&act=' . $act . $pUrl . '&message=NotPermission');
             exit();
         }

@@ -30,7 +30,7 @@
                 <h2 class="txt_detailhotel">{$clsTour->getTitle($tour_id)}</h2>
                 <div class="txt_numbpricetour">
                     {if $oneItem.min_price}
-                    <p class="txt_numbtour">From US <span class="under_numbprice">${$oneItem.min_price}</span> <span
+                    <p class="txt_numbtour">From US {if $clsTour->getDiscount($tour_id)}<span class="under_numbprice">${$oneItem.min_price}</span> {/if}<span
                                 class="number_pricetour">${$clsTour->getPriceAfterDiscount($tour_id)}</span> /pax </p>
                     {else}
                         <span class="number_pricetour">Contact</span>
@@ -124,7 +124,7 @@
                     <div class="price_button">
                         <div class="txt_numbpricetour">
                             {if $oneItem.min_price}
-                            <p class="txt_numbtour">From US <span class="under_numbprice">${$oneItem.min_price}</span> <span
+                            <p class="txt_numbtour">From US {if $clsTour->getDiscount($tour_id)}<span class="under_numbprice">${$oneItem.min_price}</span>{/if} <span
                                         class="number_pricetour">${$clsTour->getPriceAfterDiscount($tour_id)}</span> /pax </p>
                             {else}
                                 <span class="number_pricetour">Contact</span>
@@ -521,7 +521,7 @@
                                 <div class="intro_recent_view_tour">{$lstRelateTour[i].overview|html_entity_decode}</div>
                                 <div class="d-flex justify-content-between align-items-center" style="margin-top: 20px">
                                     {if $lstRelateTour[i].min_price}
-                                    <div class="from_price"><p class="from_txtp">From <span class="text-decoration-line-through">${$lstRelateTour[i].min_price}</span></p> <span
+                                    <div class="from_price"><p class="from_txtp">From {if $clsTour->getDiscount($lstRelateTour[i].tour_id)}<span class="text-decoration-line-through">${$lstRelateTour[i].min_price}</span>{/if}</p> <span
                                                 class="txt_price">US
                                             <h3 class="txt_numbprice"> ${$clsTour->getPriceAfterDiscount($lstRelateTour[i].tour_id)}</h3> </span>
                                     </div>
@@ -575,7 +575,7 @@
                                 <div class="intro_recent_view_tour">{$lstTourRecent[i].overview|html_entity_decode}</div>
                                 <div class="d-flex justify-content-between align-items-center" style="margin-top: 40px">
                                     {if $lstTourRecent[i].min_price}
-                                    <div class="from_price"><p class="from_txtp">From <span class="text-decoration-line-through">${$lstTourRecent[i].min_price}</span></p> <span
+                                    <div class="from_price"><p class="from_txtp">From {if $clsTour->getDiscount($lstTourRecent[i].tour_id)}<span class="text-decoration-line-through">${$lstTourRecent[i].min_price}</span>{/if}</p> <span
                                                 class="txt_price">US
 												<h3 class="txt_numbprice"> ${$clsTour->getPriceAfterDiscount($lstTourRecent[i].tour_id)}</h3> </span></div>
                                     {else}
@@ -615,7 +615,7 @@
                 <div class="col-lg-6 d-flex flex-column justify-content-center txt_readylets">
                     <h2 class="txtready">{$clsConfiguration->getValue('TitleVideoPerfect_'|cat:$_LANG_ID)|html_entity_decode}</h2>
                     <div class="txtcomt">{$clsConfiguration->getValue('IntroVideoPerfect_'|cat:$_LANG_ID)|html_entity_decode}</div>
-                    <a href="/customised" class="btn readyToStart-btn">{$core->get_Lang('LET’S PLAN YOUR TRIP')}
+                    <a href="{$clsTour->getLink2('', 1)}" class="btn readyToStart-btn">{$core->get_Lang('LET’S PLAN YOUR TRIP')}
                         <img class="ms-2"
                              src="https://unikasia.vietiso.com/isocms/templates/default/skin/images/hotel/ArrowRight.svg"
                              alt="error">

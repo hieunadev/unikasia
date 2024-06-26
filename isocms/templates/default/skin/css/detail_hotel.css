@@ -1323,7 +1323,8 @@ form .departure_day:hover {
 
 
 
-.sec_relate_box .owl-carousel .owl-item img {
+.sec_relate_box .owl-carousel .owl-item img,
+.recently_hotel .owl-carousel .owl-item img {
     width: unset;
 }
 
@@ -1362,6 +1363,36 @@ form .departure_day:hover {
     font-weight: 600;
     line-height: 52px;
     position: sticky;
+    display: block !important;
+}
+
+/* .recently_hotel {
+    margin-bottom: 32px;
+    max-width: 326px;
+}
+    */
+
+.recently_hotel .img_hotel {
+    /* max-width: 200px; */
+    overflow: hidden;
+    border-radius: 8px;
+}
+    
+
+.recently_hotel .img_hotel img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+} 
+
+.box_body_title a {
+    color:  #111D37;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 28px; /* 155.556% */
+    margin-top: 12px;
 }
 
 /*
@@ -1885,7 +1916,7 @@ p.price {
     margin-top: 20px;
 }
 
-.pagination a {
+/* .pagination a {
     padding: 5px 10px;
     margin: 0 5px;
     border: 1px solid #ccc;
@@ -1896,6 +1927,26 @@ p.price {
 .pagination a.active {
     background-color: #333;
     color: #fff;
+} */
+
+div.stay-pagination .pagination .current.page {
+    color: #000000;
+    font-size: 16px;
+    font-weight: 600;
+    background-color: rgba(255, 167, 24, 0.2);
+    border-radius: 3px;
+}
+
+div.stay-pagination .pagination .page {
+    color: var(--Neutral-4, #D3DCE1);
+    font-size: 16px;
+    font-weight: 400;
+    border: none;
+}
+
+div.stay-pagination .pagination .page.next, .page.prev {
+    color: #000000 !important;
+    font-weight: 600 !important;
 }
 
 .facilities_item:not(:has(img)) {

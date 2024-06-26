@@ -74,8 +74,8 @@
             <div class="box_filter_body">
                 <div class="filter_list_item nsdt_filter-price-hotel">
                     <div class="price-hotel-items">
-                        <input type="text" id="price_0" class="price-hotel-itemMin" name="min_price" value="${$min_price}">
-                        <input type="text" id="price_1" class="price-hotel-itemMax" name="max_price" value="${$max_price}">
+                        <div class="price-hotel"><span>$</span><input type="text" id="price_0" class="price-hotel-itemMin" name="min_price" value="{$min_price}"></div>
+                        <div class="price-hotel"><span>$</span><input type="text" id="price_1" class="price-hotel-itemMax" name="max_price" value="{$max_price}"></div>
                     </div>
                     <div id="slider-3"></div>
                 </div>
@@ -170,6 +170,10 @@
                 $('#search_hotel_left').submit();
             }
         });
+    });
+
+    $(".price-hotel-itemMin, .price-hotel-itemMax").change(function(){
+        $('#search_hotel_left').submit();
     });
 
     $(".filter_cities").find(".checkSizeFilter:gt(4)").hide();

@@ -11,6 +11,7 @@
 }
 .att_content img {
     width: 100%;
+    object-fit: cover;
 }
 
 .att_exciting_trip {
@@ -26,8 +27,19 @@
     font-weight: 600;
     line-height: 52px;
     margin-bottom: 10px;
+    position: relative;
+    z-index: 0;
 }
-
+.att_exciting_trip_title h2::before {
+    content: "";
+    position: absolute;
+    background-color: #ffa718;
+    z-index: -1;
+    height: 8px;
+    width: 11%;
+    left: 0;
+    bottom: 15px;
+}
 .att_exciting_trip_item {
     display: flex;
     padding: 12px;
@@ -245,6 +257,18 @@
     font-style: normal;
     font-weight: 600;
     line-height: 52px;
+    position: relative;
+    z-index: 0;
+}
+.att_list_hotel_title h2::before {
+    content: "";
+    position: absolute;
+    background-color: #ffa718;
+    z-index: -1;
+    height: 8px;
+    width: 65%;
+    left: 0;
+    bottom: 15px;
 }
 
 .att_list_hotel_title a {
@@ -356,6 +380,18 @@
     font-style: normal;
     font-weight: 600;
     line-height: 52px;
+    position: relative;
+    z-index: 0;
+}
+.att_list_placetogo_title h2::before {
+    content: "";
+    position: absolute;
+    background-color: #ffa718;
+    z-index: -1;
+    height: 8px;
+    width: 45%;
+    left: 0;
+    bottom: 15px;
 }
 
 .att_list_placetogo_title a {
@@ -409,6 +445,18 @@
     font-style: normal;
     font-weight: 600;
     line-height: 52px;
+    position: relative;
+    z-index: 0;
+}
+.att_list_cuisine_title h2::before {
+    content: "";
+    position: absolute;
+    background-color: #ffa718;
+    z-index: -1;
+    height: 8px;
+    width: 55%;
+    left: 0;
+    bottom: 15px;
 }
 
 .att_list_cuisine_title a {
@@ -457,7 +505,7 @@
     text-overflow: ellipsis;
 }
 
-.destination_attraction_body .att_cuisine_item_title h3{
+.destination_attraction_body .att_cuisine_item_title h3 {
     display: -webkit-box;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
@@ -551,9 +599,10 @@
     color: #ffa718;
 }
 .ellipsis_1_line {
-    white-space: nowrap;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
     overflow: hidden;
-    text-overflow: ellipsis;
 }
 .ellipsis_2_line {
     display: -webkit-box;

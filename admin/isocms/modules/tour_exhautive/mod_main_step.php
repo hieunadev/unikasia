@@ -333,6 +333,14 @@ function default_ajSaveMainStep()
 	if ($currentstep == 'generalinformation') {
 		$cat_id		= 	Input::post('cat_id', 0);
 		$country_id = 	Input::post('iso-country_id', 0);
+
+		// if ($clsClassTable->checkExist($country_id, $cat_id)) {
+		// 	$msg = '_EXIST';
+		// 	// Output
+		// 	echo $msg;
+		// 	die();
+		// }
+
 		$arr_update = 	[
 			'cat_id' 			=> 	$cat_id,
 			'country_id' 		=> 	$country_id,

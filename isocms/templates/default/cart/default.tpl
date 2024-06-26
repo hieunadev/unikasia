@@ -72,7 +72,7 @@
 
 			<div class="container">
 		<div class="d-flex justify-content-center main-container">
-			<form action="/en/shopping-cart/booking.html" class="booking_content d-flex  justify-content-between" method="POST" id="formBooking">
+			<form action="/{$_LANG_ID}/shopping-cart/booking.html" class="booking_content d-flex  justify-content-between" method="POST" id="formBooking">
 				<div class="booking_left d-flex flex-column align-items-center ">
 					<div class="information_services item_booking_content">
 						<div class="title_booking ">
@@ -146,14 +146,16 @@
 												<span class="item_checkbox_title title">{$clsTourProperty->getTitle($lstRoom[i].room_id)}</span>
 												<div class="item_checkbox_money">US <span>${$lstRoom[i].price_room}</span></div>
 											</div>
-											<input type="checkbox" name="checkbox_room" {if $lstRoom[i].number_room} checked {/if}>
+											<input type="checkbox" name="checkbox_room[]" {if $lstRoom[i].number_room} checked {/if} value="{$lstRoom[i].room_id}">
 											<span class="checkmark"></span>
 										</label>
+										<input type="hidden" name="price_room[]" value="{$lstRoom[i].price_room}">
 										<div class="calc_distribution lst_room number align-items-center {if $lstRoom[i].number_room}active{/if}"
 											 data-class="amount_double_room_{$lstRoom[i].room_id}">
 											<div class="minus item_calc_dis cursor"></div>
 											<span contenteditable="true" class="value value_distribution"
 												  name="value_distribution" onpaste="return false" data-price="{$lstRoom[i].price_room}">{if $lstRoom[i].number_room}{$lstRoom[i].number_room}{else}1{/if}</span>
+											<input type="hidden" name="amount_room_id[]" value="0">
 											<div class="plus item_calc_dis cursor active"></div>
 										</div>
 									</div>
@@ -178,7 +180,7 @@
 											<span class="item_checkbox_title title">{$lstAddOnService[i].title}</span>
 											<div class="item_checkbox_money">US <span>${$lstAddOnService[i].price}</span></div>
 										</div>
-										<input type="checkbox">
+										<input type="checkbox" name="service_id[]" value="{$lstAddOnService[i].addonservice_id}">
 										<span class="checkmark"></span>
 									</label>
 									<div class="calc_distribution number align-items-center"
@@ -186,6 +188,7 @@
 										<div class="minus item_calc_dis cursor"></div>
 										<span contenteditable="true" class="value" onpaste="return false"
 											  data-price="{if $lstAddOnService[i].extra gt 0} {$lstAddOnService[i].price} {else} 0 {/if}">0</span>
+										<input type="hidden" name="amount_service_id[]" value="0">
 										<div class="plus item_calc_dis cursor active"></div>
 									</div>
 								</div>
@@ -397,7 +400,6 @@
 				<input type="hidden" name="booking" value="booking">
 				<input type="hidden" name="totalgrand" id="totalgrand" value="{$clsISO->formatPrice($totalGrand)}">
 				<input type="hidden" name="deposit" id="price_deposit" value="{$clsISO->formatPrice($totalPriceDeposit)}">
-				<input type="hidden" id="price_deposit" value="{$clsISO->formatPrice($totalRemaining)}">
 				<input type="hidden" id="deposit" value="{$item.deposit}">
 				<input type="hidden" id="total_price_adults" value="{$item.total_price_adults}">
 				<input type="hidden" id="total_price_child" value="{if $item.total_price_child}{$item.total_price_child}{else}0{/if}">

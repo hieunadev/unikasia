@@ -127,7 +127,7 @@
 								<button data-key="{$shortText_city}" data-label="{$core->get_Lang('Short text')}" type="button" title="Thêm mô tả" onclick="open_texthelp(this, event)" class="btn btn-xs btn-default"><i class="fa fa-plus-circle"></i></button>
 								{/if}
 							</h3>
-							<textarea style="width:100%" table_id="{$pvalTable}" name="iso-intro" class="textarea_intro_editor " data-column="iso-intro" id="textarea_intro_editor_overview_{$now}" cols="255" rows="2">{$oneItem.intro}</textarea>
+							<textarea style="width:100%" table_id="{$pvalTable}" name="iso-intro" class="textarea_intro_editor" data-column="iso-intro" id="textarea_intro_editor_intro_{$now}" cols="255" rows="2">{$oneItem.intro}</textarea>
 							{literal}
 							<script>
 								$(".showdate").datepicker({
@@ -145,7 +145,7 @@
 								<button data-key="{$longText_city}" data-label="{$core->get_Lang('Long text')}" type="button" title="Thêm mô tả" onclick="open_texthelp(this, event)" class="btn btn-xs btn-default"><i class="fa fa-plus-circle"></i></button>
 								{/if}
 							</h3>
-							<textarea style="width:100%" table_id="{$pvalTable}" name="iso-content" class="textarea_intro_editor" data-column="iso-content" id="textarea_intro_editor_overview_{$now}" cols="255" rows="2">{$oneItem.content}</textarea>
+							<textarea style="width:100%" table_id="{$pvalTable}" name="iso-content" class="textarea_intro_editor" data-column="iso-content" id="textarea_intro_editor_content_{$now}" cols="255" rows="2">{$oneItem.content}</textarea>
 							{literal}
 							<script>
 								$(".showdate").datepicker({
@@ -395,29 +395,29 @@
 		</div>
 	</div>
 </form>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 	var list_check_target = {
 		$list_check_target
 	};
-</script>
+</script> -->
 {literal}
 <script>
-	if ($('.textarea_intro_editor').length > 0) {
-		$('.textarea_intro_editor').each(function() {
-			var $_this = $(this);
-			var $editorID = $_this.attr('id');
-			$('#' + $editorID).isoTextArea();
-		});
-	}
+	// if ($('.textarea_intro_editor').length > 0) {
+	// 	$('.textarea_intro_editor').each(function() {
+	// 		var $_this = $(this);
+	// 		var $editorID = $_this.attr('id');
+	// 		$('#' + $editorID).isoTextArea();
+	// 	});
+	// }
 	$('.toggle-row').click(function() {
 		$(this).closest('tr').toggleClass('open_tr');
 	});
-	$.each(list_check_target, function(i, val) {
-		if (val.status == 1) {
-			$('#step_' + val.key).closest('li').removeAttr('class').addClass("check_success");
-		} else {
-			$('#step_' + val.key).closest('li').removeAttr('class').addClass("check_caution");
-		}
-	});
+	// $.each(list_check_target, function(i, val) {
+	// 	if (val.status == 1) {
+	// 		$('#step_' + val.key).closest('li').removeAttr('class').addClass("check_success");
+	// 	} else {
+	// 		$('#step_' + val.key).closest('li').removeAttr('class').addClass("check_caution");
+	// 	}
+	// });
 </script>
 {/literal}

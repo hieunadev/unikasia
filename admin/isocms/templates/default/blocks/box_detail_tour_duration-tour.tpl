@@ -44,7 +44,7 @@
 							
 						</label>
 						<script>
-							var message_confirm = '{$core->get_Lang("You need to delete the tour itinerary")}';
+							var message_confirm = '{$core->get_Lang("You need to edit the tour itinerary")}';
 						</script>
 						{literal}
 						<script type="text/javascript">

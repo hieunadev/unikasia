@@ -266,7 +266,7 @@
             <div class="row">
                 <div class="col-lg-5 col-md-5 col-sm-8 d-flex flex-column justify-content-center">
                     <h2 class="txt_pertrip txt_underline">{$clsConfiguration->getValue('TitlePerfectTrip_'|cat:$_LANG_ID)|html_entity_decode}</h2>
-                    <p>Let's contact your back </p>
+                    <p>{$core->get_Lang("Let's contact your back")}</p>
                     <div class="contact-txtico">
                         <a href="mailto:{$clsConfiguration->getValue('CompanyEmail')}">
                             <img src="{$URL_IMAGES}/home/1.icomail.png" alt="iconmail">{$clsConfiguration->getValue('CompanyEmail')}
@@ -311,8 +311,7 @@
             <div class="row">
                 <div class="col-lg-6 position-relative">
                     <a class="position-relative" href="{$clsConfiguration->getValue('LinkVideoPerfect_'|cat:$_LANG_ID)}" data-fancybox="gallery">
-                        <img class="videoplaypic" src="{$clsConfiguration->getValue('ThumbnailYoutube_'|cat:$_LANG_ID)}" alt="videopic" width="588"
-                                          height="330">
+                        <div class="videoplaypic_div"><img class="videoplaypic" src="{$clsConfiguration->getValue('ThumbnailYoutube_'|cat:$_LANG_ID)}" alt="videopic"></div>
                         <div class="icon-play">
                             <i class="fa-solid fa-play" id="icon"></i>
                             <span class="wave_1"></span>
@@ -323,9 +322,9 @@
                 <div class="col-lg-6 d-flex flex-column justify-content-center txt_readylets">
                     <h2 class="txtready">{$clsConfiguration->getValue('TitleVideoPerfect_'|cat:$_LANG_ID)|html_entity_decode}</h2>
                     <div class="txtcomt">{$clsConfiguration->getValue('IntroVideoPerfect_'|cat:$_LANG_ID)|html_entity_decode}</div>
-                    <a href="/tailor-made-tour" class="btn readyToStart-btn">{$core->get_Lang('LET’S PLAN YOUR TRIP')}
+                    <div><a href="/tailor-made-tour" class="btn readyToStart-btn">{$core->get_Lang('LET’S PLAN YOUR TRIP')}
                         <img class="ms-2" src="https://unikasia.vietiso.com/isocms/templates/default/skin/images/hotel/ArrowRight.svg" alt="error">
-                    </a>
+                    </a></div>
                 </div>
             </div>
         </div>

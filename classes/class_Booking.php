@@ -2531,7 +2531,7 @@ error_reporting(E_ALL);*/
 				$discount_id=$item['discount_id'];
 				$title_package =$clsVoucher->getTitle($item['voucher_id']);
 				$number_ticket= $item['number_voucher'];
-//				print_r($number_adult);die();
+
 				$priceVoucher =$clsVoucher->getPriceVoucher($item['voucher_id']);
 				
 				$price =$clsVoucher->getPriceOrigin($item['voucher_id']);
@@ -2886,7 +2886,8 @@ error_reporting(E_ALL);*/
 		
 		$clsTourOption = new TourOption();
 		$clsAddOnService = new AddOnService();
-		
+		$clsTourProperty = new TourProperty();
+
 
 		$clsPromotion = new Promotion();
 		
@@ -2900,7 +2901,7 @@ error_reporting(E_ALL);*/
 		$TotalGrandBook = $oneItem['totalgrand'];
 		$booking_store = unserialize($oneItem['booking_store']);
 		$booking_code=$oneItem['booking_code'];
-		//print_r($booking_store); die();
+
 		/* HTML_BOOKING_INFO */
 		
 		$email_template_id=$email_template_book_tour_id;
@@ -2980,8 +2981,6 @@ error_reporting(E_ALL);*/
 					</span>
 				</span>
 			</div>';
-
-
 				$html.='<div style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-family: arial, sans-serif; font-size: 14px; color: #000000;" data-mce-style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-family: arial, sans-serif; font-size: 14px; color: #000000;">
 				<span style="color: #2e3543;" data-mce-style="color: #2e3543;">
 					<span style="font-size: 14px;" data-mce-style="font-size: 14px;">
@@ -3036,6 +3035,42 @@ error_reporting(E_ALL);*/
 					</span>
 				</span>
 			</div>';
+                if (!empty($cartSessionContact_Info['amount_room_id'])) {
+                    $rooms = array_map(null, $cartSessionContact_Info["checkbox_room"], $cartSessionContact_Info["price_room"], $cartSessionContact_Info["amount_room_id"]);
+
+                    $rooms = array_map(function($room) {
+                        return array(
+                            'checkbox_room' => $room[0],
+                            'price_room' => $room[1],
+                            'amount_room_id' => $room[2]
+                        );
+                    }, $rooms);
+                    foreach ($rooms as $k=>$v) {
+                        $txt_room .= "\n" . $v["price_room"] . "$" . " x " . $v["amout_room_id"] . " " . $clsTourProperty->getTitle($v["checkbox_room"]);
+                    }
+                    $html.='<div style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-family: arial, sans-serif; font-size: 14px; color: #000000;" data-mce-style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-family: arial, sans-serif; font-size: 14px; color: #000000;">
+                        <span style="color: #2e3543;" data-mce-style="color: #2e3543;">
+                            <span style="font-size: 14px;" data-mce-style="font-size: 14px;">
+                                <span style="font-size: 16px;" data-mce-style="font-size: 16px;">
+                                    <span style="font-weight: 600; background: transparent; font-size: inherit;" data-mce-style="font-weight: 600; background: transparent; font-size: inherit;">|| '.$core->get_Lang('List Room').'</span>: '. "\n" .$txt_room.'</span>
+                            </span>
+                        </span>
+                    </div>';
+                }
+                if (!empty($cartSessionContact_Info['service_id'])) {
+                    $services = array_combine($cartSessionContact_Info['service_id'], $cartSessionContact_Info['amount_service_id']);
+                    foreach ($services as $k=>$v) {
+                        $txt_services .= "\n" . $clsAddOnService->getPrice($k) . "$" . " x " . $v . " " . $clsAddOnService->getTitle($k);
+                    }
+                    $html.='<div style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-family: arial, sans-serif; font-size: 14px; color: #000000;" data-mce-style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-family: arial, sans-serif; font-size: 14px; color: #000000;">
+                        <span style="color: #2e3543;" data-mce-style="color: #2e3543;">
+                            <span style="font-size: 14px;" data-mce-style="font-size: 14px;">
+                                <span style="font-size: 16px;" data-mce-style="font-size: 16px;">
+                                    <span style="font-weight: 600; background: transparent; font-size: inherit;" data-mce-style="font-weight: 600; background: transparent; font-size: inherit;">|| '.$core->get_Lang('Other Services').'</span>: '. "\n" .$txt_services.'</span>
+                            </span>
+                        </span>
+                    </div>';
+                }
 				/*$html.='<div style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-family: arial, sans-serif; font-size: 14px; color: #000000;" data-mce-style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-family: arial, sans-serif; font-size: 14px; color: #000000;">
 				<span style="color: #2e3543;" data-mce-style="color: #2e3543;">
 					<span style="font-size: 14px;" data-mce-style="font-size: 14px;">
@@ -3118,7 +3153,7 @@ error_reporting(E_ALL);*/
 				<p><strong>'.$core->get_Lang('Contact Information').'</strong></p>';
 				$html .= '
 				<p><strong>'.$core->get_Lang('Full Name').':</strong> '.$cartSessionContact_Info['title_'.$item['tour_id_z']].' '.$cartSessionContact_Info['fullname_'.$item['tour_id_z']].'</p>';
-				$html .= '<p><strong>'.$core->get_Lang('Phone number').':</strong> '.$cartSessionContact_Info['telephone_'.$item['tour_id_z']].'</p>';
+				$html .= '<p><strong>'.$core->get_Lang('Phone number').':</strong> '.$cartSessionContact_Info['phone_'.$item['tour_id_z']].'</p>';
 				$html .= '<p><strong>'.$core->get_Lang('Email').':</strong> '.$cartSessionContact_Info['email_'.$item['tour_id_z']].'</p>';
 				$html .= '<p><strong>'.$core->get_Lang('Birthday').':</strong> '.$cartSessionContact_Info['birthday_'.$item['tour_id_z']].'</p>';
 				$html .= '<p><strong>'.$core->get_Lang('Address').':</strong> '.$cartSessionContact_Info['address_'.$item['tour_id_z']].'</p>';
@@ -3505,6 +3540,7 @@ error_reporting(E_ALL);*/
         $html.='<p><strong>'.$core->get_Lang('Payment Status').':</strong> '.$core->get_Lang('UnPaid').'</p>';
 	
 		#---
+        $CompanyAddress ='CompanyAddress_'.$_LANG_ID;
 		$header_email = $clsEmailTemplate->getHeader($email_template_id);
 		$body_email = $clsEmailTemplate->getContent($email_template_id);
 		$footer_email = $clsEmailTemplate->getFooter($email_template_id);
@@ -3526,8 +3562,8 @@ error_reporting(E_ALL);*/
 		$message = str_replace('[%CUSTOMER_FULLNAME%]',$cartSessionContact_Info['title'].' '.$cartSessionContact_Info['fullname'],$message);
 		$message = str_replace('[%CUSTOMER_ADDRESS%]',$cartSessionContact_Info['address'],$message);
 		$message = str_replace('[%CUSTOMER_COUNTRY%]',$clsCountry->getTitle($cartSessionContact_Info['country_id']),$message);
-		$message = str_replace('[%CUSTOMER_PHONE%]',$cartSessionContact_Info['telephone'],$message);
-		$message = str_replace('[%CUSTOMER_BIRTHDAY%]',$cartSessionContact_Info['birthday'],$message);
+		$message = str_replace('[%CUSTOMER_PHONE%]',$cartSessionContact_Info['phone'],$message);
+//		$message = str_replace('[%CUSTOMER_BIRTHDAY%]',$cartSessionContact_Info['birthday'],$message);
 
 		$message = str_replace('[%NUMBER_GUEST%]',$number_of_guest,$message);
 		$message = str_replace('[%REQUEST%]',$cartSessionContact_Info['note'],$message);

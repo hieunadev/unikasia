@@ -258,12 +258,27 @@
     <script>
 
         $(".btn-close").click(function(){
-
             $(this).closest('.mapModal').remove();
-
         });
 
+        $(".box_body-check").each(function() {
+            $(this).find("li:lt(2)").show();
+            $(this).find("li:gt(1)").hide();
+        });
 
+        $(document).on('click', '.box_body-service-item', function() {
+            let unika_icon_more = $(this).parents('.box_body-service').find('.hotel_icon_more');
+            if (unika_icon_more.hasClass('active')) {
+                unika_icon_more.removeClass('active');
+            } else {
+                unika_icon_more.addClass('active');
+            }
+        })
+            .on('click', function(event) {
+                if (!$(event.target).closest('.hotel_icon_more').length && !$(event.target).closest('.box_body-service-item').length) {
+                    $('.hotel_icon_more').removeClass('active');
+                }
+            })
 
         function toggleShorted(_this, e){
 
@@ -333,7 +348,6 @@
 
         const toggleBtn = document.querySelector('.toggle-btn');
 
-        console.log(textContainer.scrollHeight, textContainer.offsetHeight)
         if (textContainer.scrollHeight > (textContainer.offsetHeight + 45)) {
 
             toggleBtn.style.display = 'block';

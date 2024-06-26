@@ -1,5 +1,4 @@
 <?php
-
 class Category_Country extends dbBasic
 {
 	function __construct()
@@ -32,19 +31,22 @@ class Category_Country extends dbBasic
 		$res = $this->getAll("category_country_id = '$category_country_id' LIMIT 0,1");
 		return !empty($res) ? 1 : 0;
 	}
+	function checkExist($country_id, $cat_id)
+	{
+		$res = $this->getAll("country_id='$country_id' AND cat_id='$cat_id' limit 0,1", $this->pkey);
+		return (!empty($res)) ? 1 : 0;
+	}
 	function getTitle($pvalTable)
 	{
 		$one = $this->getOne($pvalTable, 'title');
 		return html_entity_decode($one['title']);
 	}
-
 	function getMetaDescription($pvalTable)
 	{
 		global $_LANG_ID;
 		$one = $this->getOne($pvalTable, 'intro');
 		return html_entity_decode($one['intro']);
 	}
-
 	function getIntro($pvalTable)
 	{
 		$one = $this->getOne($pvalTable, 'intro');
@@ -55,7 +57,6 @@ class Category_Country extends dbBasic
 		global $dbconn, $core;
 		$one = $this->getOne($pvalTable, 'intro');
 		$string = $one['intro'];
-
 		if ($truncate == true) {
 			if (strlen($string) < $limit) {
 				return html_entity_decode($string);
@@ -86,7 +87,6 @@ class Category_Country extends dbBasic
 			$one = $this->getOne($pvalTable, 'content');
 		}
 		$string = $one['content'];
-
 		if ($truncate == true) {
 			if (strlen($string) < $limit) {
 				return html_entity_decode($string);
@@ -118,7 +118,6 @@ class Category_Country extends dbBasic
 			return date('D, d/m/Y', $one['reg_date']);
 		return '';
 	}
-
 	function getImage($pvalTable, $w, $h)
 	{
 		global $clsISO;
@@ -140,7 +139,6 @@ class Category_Country extends dbBasic
 		$url_image = $oneTable['image'];
 		return $clsISO->tripslashUrl($url_image);
 	}
-
 	function getBannerImage($pvalTable, $w, $h)
 	{
 		global $clsISO;
@@ -159,7 +157,6 @@ class Category_Country extends dbBasic
 		$oneTable = $this->getOne($pval, "link_banner");
 		return $oneTable['link_banner'];
 	}
-
 	function getBannerUrl($pval)
 	{
 		$oneTable = $this->getOne($pval, "image_banner");
@@ -178,12 +175,10 @@ class Category_Country extends dbBasic
 		$clsCountry = new Country();
 		$clsCity = new City();
 		$clsGuideCat = new GuideCat();
-
 		$oneTable = $this->getOne($pvalTable, 'country_id,city_id');
 		$country_id = $oneTable['country_id'];
 		$city_id = $oneTable['city_id'];
 		$info_type = 'TEXT';
-
 		if ($info_type == 'TEXT') {
 			//$link = '/'.$clsCountry->getSlug($country_id).'-travel-guide';
 			//$link = '/travel-guide';
@@ -239,7 +234,6 @@ class Category_Country extends dbBasic
 	{
 		return '';
 	}
-
 	function getChild($category_country_id)
 	{
 		$ret = $this->getAll("is_trash=0 and parent_id='$category_country_id' order by order_no asc");
@@ -288,7 +282,6 @@ class Category_Country extends dbBasic
 	{
 		$clsCountry = new Country();
 		$clsCity = new City();
-
 		$html = '<option value="0">-- Danh mục gốc </option>';
 		if (intval($country_id) > 0) {
 			$html = '<option value="' . $parent_id . '">-- ' . $clsCountry->getTitle($country_id) . ' </option>';
@@ -442,7 +435,6 @@ class Category_Country extends dbBasic
 		// $clsISO->dump($cat);
 		// // $clsISO->dump($country_id);
 		// die;
-
 		$clsTourCategory	=	new TourCategory;
 		$cond	= 	"is_trash = 0 AND is_online = 1";
 		#

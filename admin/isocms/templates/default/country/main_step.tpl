@@ -10,7 +10,7 @@
 
 						<div class="inpt_tour">
 							<label class="col-form-label" for="title">
-								{$core->get_Lang('Main Image')} ({$core->get_Lang('Standard image size')}: 1200x800)
+								{$core->get_Lang('Main Image')} ({$core->get_Lang('Standard image size')}: 621x385)
 							</label>
 							<div class="fieldarea">
 								<div class="row">
@@ -26,7 +26,7 @@
 						</div>
 						<div class="inpt_tour">
 							<label class="col-form-label" for="title">
-								{$core->get_Lang('Sub Image')} ({$core->get_Lang('Standard image size')}: 480x698)
+								{$core->get_Lang('Sub Image')} ({$core->get_Lang('Standard image size')}: 344x434)
 							</label>
 							<div class="fieldarea">
 								<div class="row">
@@ -338,19 +338,19 @@
 										<div class="drop_gallery" onClick="loadHelp(this)">
 											<div class="filedrop full" onClick="file_explorer(this,event);" ondrop="file_drop(this,event)" toid="selectFile" toel="isoman_show_image_hotel_sub" data-options='{ldelim}"openFrom":"image_hotel_sub","clsTable":"Country", "table_id":"{$pvalTable}","toId":"isoman_show_image_hotel_sub" {rdelim}' ondragover="return false">
 												<h3>{$core->get_Lang('Drop files to upload')}</h3>
-												<p>{$core->get_Lang('Size')} (WxH=1920x791)<br />
+												<p>{$core->get_Lang('Size')} (WxH=166x261)<br />
 													{$core->get_Lang('File formats supported')}: .png,.jpg,.jpeg</p>
 												<button type="button" class="btn btn-upload">{if $oneItem.image}Thay ảnh{else}Tải ảnh lên{/if}</button>
 											</div>
 											<input class="hidden" id="selectFile" type="file" data-options='{ldelim}"openFrom":"image_hotel_sub","clsTable":"Country", "table_id":"{$pvalTable}","toId":"isoman_show_image_hotel_sub"{rdelim}' name="image_hotel_sub">
 
-											<input type="hidden" value="{$oneItem.image_hotel_sub}" name="image_hotel_sub" id="image_hotel_sub" />
-											<a table_id="{$pvalTable}" isoman_multiple="0" isoman_callback='isoman_callback({ldelim}"openFrom":"image_hotel_sub", "clsTable":"Country", "pvalTable":"{$pvalTable}","toField":"image_hotel_sub","toId":"isoman_show_image_hotel_sub"{rdelim})' class="btn-upload-2 ajOpenDialog" isoman_for_id="image_hotel_sub" isoman_name="image_hotel_sub">{$clsISO->makeIcon('folder-o', $core->get_Lang('From library'))}</a>
+											<input type="hidden" value="{$oneItem.image_hotel_sub}" name="iso-image_hotel_sub" id="image_hotel_sub" />
+											<a table_id="{$pvalTable}" isoman_multiple="0" isoman_callback='isoman_callback({ldelim}"openFrom":"image_hotel_sub", "clsTable":"Country", "pvalTable":"{$pvalTable}","toField":"iso-image_hotel_sub","toId":"isoman_show_image_hotel_sub"{rdelim})' class="btn-upload-2 ajOpenDialog" isoman_for_id="image_hotel_sub" isoman_name="image_hotel_sub">{$clsISO->makeIcon('folder-o', $core->get_Lang('From library'))}</a>
 											<div class="text_help" hidden="">{$clsConfiguration->getValue($banner_slide)|html_entity_decode}</div>
 										</div>
 									</div>
 									<div class="col-xs-12 col-md-8">
-										<img class="img-responsive radius-3" id="isoman_show_image_hotel_sub" src="{$oneItem.image_hotel_sub}" onerror="this.src='{$URL_IMAGES}/none_image.png'" alt="{$core->get_Lang('image_hotel_sub')}" style="width:100%; height:250px;object-fit: contain" />
+										<img class="img-responsive radius-3" id="isoman_show_image_hotel_sub" src="{$oneItem.image_hotel_sub}" onerror="this.src='{$URL_IMAGES}/none_image.png'" alt="{$core->get_Lang('image_hotel_sub')}" style="width:100%; height:261px;object-fit: contain" />
 									</div>
 								</div>
 							</div>

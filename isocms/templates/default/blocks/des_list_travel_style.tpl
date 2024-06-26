@@ -4,14 +4,14 @@
             <h2>
                 {if $mod eq 'tour' && $act eq 'cat'}
                 {$clsCountry->getTitle($country_id)}
-                {$clsConfiguration->getValue('TrvsTravelCountryTitle')|html_entity_decode}
+                {$clsConfiguration->getValue('TrvsTravelCountryTitle_'|cat:$_LANG_ID)|html_entity_decode}
                 {else}
                 {$clsConfiguration->getOutTeam('TravelStyleTitle')}
                 {/if}
             </h2>
             <div class="des_travel_style_description">
                 {if $mod eq 'tour' && $act eq 'cat'}
-                {$clsConfiguration->getValue('TrvsTravelCountryDescription')|html_entity_decode}
+                {$clsConfiguration->getValue('TrvsTravelCountryDescription_'|cat:$_LANG_ID)|html_entity_decode}
                 {else}
                 {$clsConfiguration->getOutTeam('TravelStyleDescription')}
                 {/if}

@@ -92,7 +92,7 @@
             </div>
         </div>
     </div>
-    {*{$core->getBlock('customer_review')}*}
+    {$core->getBlock('customer_review')}
     <div class="des_gallery">
         <div class="container-fluid">
             <div class="des_gallery_title">
@@ -125,9 +125,6 @@
 <script>
     var country_id = "{$country_id}";
     var city_id = "{$city_id}";
-</script>
-
-<script>
     Fancybox.bind("[data-fancybox]", {});
 </script>
 

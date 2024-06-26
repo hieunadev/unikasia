@@ -2,7 +2,7 @@
 <div class="page_container crde_page_container">
     <div class="unika_cruise_detail">
         {$core->getBlock('des_nav_breadcrumb')}
-        <div class="d-flex justify-content-center">
+        <div class="unikasia_cruise_detail d-flex justify-content-center">
             <div class="container">
                 <div class="d-flex justify-content-between align-items-center  flex-wrap">
                     <h1 class="cruise_title ">
@@ -16,11 +16,11 @@
                     <div class="d-flex flex-column cruise_star_rating ">
                         <div class="rating d-flex align-items-center ">
                             {if $cruise_info.star_number >= 3}
-                            {section name=i loop=$cruise_info.star_number}
-                            <div class="div_img">
-                                <i class="fa-sharp fa-solid fa-star"></i>
-                            </div>
-                            {/section}
+                                {section name=i loop=$cruise_info.star_number}
+                                    <div class="div_img">
+                                        <i class="fa-sharp fa-solid fa-star"></i>
+                                    </div>
+                                {/section}
                             {/if}
                         </div>
                         <div class="cruise_medium d-flex  align-items-center flex-wrap">
@@ -35,10 +35,10 @@
                             <span class="cruise_price_1">from</span>
                             <div class="cruise_price">
                                 {if $clsCruiseItinerary->getMinPriceItinerary($CruiseID) eq 0}
-                                {$core->get_Lang('Contact')}
+                                    {$core->get_Lang('Contact')}
                                 {else}
-                                US
-                                <span>$ {$clsCruiseItinerary->getMinPriceItinerary($CruiseID)}</span>
+                                    {$core->get_Lang('US')}
+                                    <span>$ {$clsCruiseItinerary->getMinPriceItinerary($CruiseID)}</span>
                                 {/if}
                             </div>
                         </div>
@@ -51,16 +51,16 @@
                     </div>
                 </div>
                 {if $arr_cruise_gallery}
-                    <div class="cruise unika_list_img">
-                        {foreach from=$arr_cruise_gallery key=key item=item}
-                            {assign var="CruiseGalID" value=$item.cruise_image_id}
-                            {assign var="CruiseGalTitle" value=$clsCruiseImage->getTitle($CruiseGalID)}
-                            {assign var="CruiseGalImage" value=$clsCruiseImage->getImage($CruiseGalID, 742, 491)}
-                            <a href="{$CruiseGalImage}" data-fancybox="gallery" class="div_img cruise_img cruise_img_{$key+1}">
-                                <img src="{$CruiseGalImage}" alt="{$CruiseGalTitle}" width="742" height="491">
-                            </a>
-                        {/foreach}
-                        <!-- <a href="images/img2.png" data-fancybox="gallery" class="div_img cruise_img cruise_img_2">
+                <div class="cruise unika_list_img">
+                    {foreach from=$arr_cruise_gallery key=key item=item}
+                        {assign var="CruiseGalID" value=$item.cruise_image_id}
+                        {assign var="CruiseGalTitle" value=$clsCruiseImage->getTitle($CruiseGalID)}
+                        {assign var="CruiseGalImage" value=$clsCruiseImage->getImage($CruiseGalID, 742, 491)}
+                        <a href="{$CruiseGalImage}" data-fancybox="gallery" class="div_img cruise_img cruise_img_{$key+1}">
+                            <img src="{$CruiseGalImage}" alt="{$CruiseGalTitle}" width="742" height="491">
+                        </a>
+                    {/foreach}
+                    <!-- <a href="images/img2.png" data-fancybox="gallery" class="div_img cruise_img cruise_img_2">
                             <img src="images/img2.png" alt="Image">
                         </a>
                         <a href="images/img3.png" data-fancybox="gallery" class="div_img cruise_img cruise_img_3">
@@ -75,11 +75,11 @@
                                 </div>
                             </div>
                         </a> -->
-                    </div>
+                </div>
                 {/if}
             </div>
         </div>
-        <div class="d-flex justify-content-center unika_overview">
+        <div class="d-flex justify-content-center unika_overview" id="overview">
             <div class="container">
                 <div class="d-flex  justify-content-between overviews content_2_item">
                     <div class="content_left">
@@ -106,26 +106,30 @@
                                     <div class="d-flex justify-content-between flex-column ">
                                         <span class="cruise_price_1">from</span>
                                         <div class="cruise_price">
-                                            US
-                                            <span>$1250</span>
+                                            {if $clsCruiseItinerary->getMinPriceItinerary($CruiseID) eq 0}
+                                                {$core->get_Lang('Contact')}
+                                            {else}
+                                                {$core->get_Lang('US')}
+                                                <span>$ {$clsCruiseItinerary->getMinPriceItinerary($CruiseID)}</span>
+                                            {/if}
                                         </div>
                                     </div>
                                     <a href="https://unikasia.vietiso.com/contact-us" class="d-flex align-items-center justify-content-center button_contact">
                                         Contact
                                         <div class="div_img">
-                                            <img src="images/btn_contact.svg" alt="Icon">
+                                            <i class="fa-sharp fa-light fa-arrow-right" aria-hidden="true"></i>
                                         </div>
                                     </a>
                                 </div>
                             </div>
                         </div>
-                        <div class="unika_collapse_content overview" id="overview">
+                        <div class="unika_collapse_content overview" >
                             <h2 class="title_2">
                                 O<span>verv</span>iew
                             </h2>
                             <div class="information d-flex flex-column ">
-                                <div class="d-flex justify-content-between  flex-wrap">
-                                    <div class="item d-flex  flex-column">
+                                <div class="unika_item_information d-flex justify-content-between flex-wrap">
+                                    <div class="item d-flex flex-column">
                                         <div class="name d-flex  align-items-start">
                                             <div class="div_img">
                                                 <i class="fa-light fa-calendar-days"></i>
@@ -192,7 +196,7 @@
                         <div class="content  d-flex flex-column">
                             <p>{$core->get_Lang('Avg price per person')}</p>
                             <div class="d-flex align-items-end">
-                                US
+                                {$core->get_Lang('US')}
                                 <span>$1250</span>
                             </div>
                             <span>{$core->get_Lang('Price includes room for 2 pax')}</span>
@@ -201,38 +205,42 @@
                     </div>
                 </div>
                 {if $arr_itinerary}
-                    <div class="collapse_content content_2_item" id="itineraries">
-                        <div class="title_2">{$core->get_Lang('Itineraries')}</div>
-                        <div class="btn_itineraries d-flex align-items-center flex-wrap">
-                            {foreach from=$arr_itinerary key=key item=item}
-                                {assign var="CruiseItineraryID" value=$item.cruise_itinerary_id}
-                                {if $item.title_itinerary ne ''}
-                                    <button class="item_btn_itineraries" data-list="list_new_{$CruiseItineraryID}">
-                                        {$item.title_itinerary}
-                                    </button>
-                                {else}
-                                    <button class="item_btn_itineraries" data-list="list_new_{$CruiseItineraryID}">
-                                        {$clsCruiseItinerary->getDuration($item.cruise_itinerary_id)}
-                                    </button>
-                                {/if}
-                            {/foreach}
-                            <!-- <button class="item_btn_itineraries active">2 days itinerary</button> -->
-                        </div>
-                        {if $arr_itinerary_day}
-                            {foreach from=$arr_itinerary_day key=key item=item}
-                                {assign var="CruiseItineraryID" value=$item.info[0]}
-                                {assign var="Child" value=$item.child}
-                                <div class="list_new d-flex flex-column list_new_{$CruiseItineraryID}">
+                <div class="collapse_content content_2_item" id="itineraries">
+                    <div class="title_2">{$core->get_Lang('Itineraries')}</div>
+                    <div class="btn_itineraries d-flex align-items-center flex-wrap">
+                        {foreach from=$arr_itinerary key=key item=item}
+                            {assign var="CruiseItineraryID" value=$item.cruise_itinerary_id}
+                            {if $item.title_itinerary ne ''}
+                                <button class="item_btn_itineraries {if $key eq 0} active {/if}" data-list="unika_list_itineraries_{$CruiseItineraryID}">
+                                    {$item.title_itinerary}
+                                </button>
+                            {else}
+                                <button class="item_btn_itineraries {if $key eq 0} active {/if}" data-list="unika_list_itineraries_{$CruiseItineraryID}">
+                                    {$clsCruiseItinerary->getDuration($item.cruise_itinerary_id)}
+                                </button>
+                            {/if}
+                        {/foreach}
+                        <!-- <button class="item_btn_itineraries active">2 days itinerary</button> -->
+                    </div>
+                    {if $arr_itinerary_day}
+                        {foreach from=$arr_itinerary_day key=key item=item}
+                            {assign var="CruiseItineraryID" value=$item.info[0]}
+                            {assign var="Child" value=$item.child}
+                            <div class="unika_list_itineraries {if $key eq 0 } active {/if} unika_list_itineraries_{$CruiseItineraryID}">
+                                <div class="list_new  d-flex flex-column">
                                     {if $Child}
                                         {foreach from=$Child key=k item=i}
                                             {assign var="CruiseItineraryDayID" value=$i.cruise_itinerary_day_id}
-                                            {assign var="CruiseItineraryDayTitle" value=$clsCruiseItineraryDay->getTitle($CruiseItineraryDayID)}
-                                            {assign var="CruiseItineraryDayImage" value=$clsCruiseItineraryDay->getImage($CruiseItineraryDayID, 346, 240)}
-                                            {assign var="CruiseItineraryDayContent" value=$clsCruiseItineraryDay->getContent($CruiseItineraryDayID)}
+                                            {assign var="CruiseItineraryDayTitle"
+                                            value=$clsCruiseItineraryDay->getTitle($CruiseItineraryDayID)}
+                                            {assign var="CruiseItineraryDayImage"
+                                            value=$clsCruiseItineraryDay->getImage($CruiseItineraryDayID, 346, 240)}
+                                            {assign var="CruiseItineraryDayContent"
+                                            value=$clsCruiseItineraryDay->getContent($CruiseItineraryDayID)}
                                             <div class="item_new">
                                                 <div class="title_new d-flex justify-content-between align-items-center  cursor item_itineraries">
                                                     <div class="title_itineraries d-flex align-items-center ">
-                                                        <div class="div_img img_new">
+                                                        <div class="itineraries_fa">
                                                             <i class="fa-light fa-location-dot"></i>
                                                         </div>
                                                         <h3>{$CruiseItineraryDayTitle}</h3>
@@ -254,9 +262,10 @@
                                         {/foreach}
                                     {/if}
                                 </div>
-                            {/foreach}
-                        {/if}
-                    </div>
+                            </div>
+                        {/foreach}
+                    {/if}
+                </div>
                 {/if}
                 <div class="collapse_content content_2_item" id="things_to_know">
                     <div class="title d-flex justify-content-between align-items-end flex-wrap">
@@ -268,43 +277,44 @@
                         </div>
                         <a href="https://unikasia.vietiso.com/contact-us" class="d-flex align-items-center justify-content-center  button_contact">
                             {$core->get_Lang('Contact')}
-                            <div class="div_img"><i class="fa-sharp fa-light fa-arrow-right" aria-hidden="true"></i></div>
+                            <div class="div_img"><i class="fa-sharp fa-light fa-arrow-right" aria-hidden="true"></i>
+                            </div>
                         </a>
                     </div>
                     <div class="content d-flex">
                         <div class="content_left">
                             <div class="btn_thing_know active cursor d-flex align-items-center justify-content-start" data-class="unika_content_facility">
-                                <div class="div_img" data-name="facilities">
+                                <div class="thing_now_icon" data-name="facilities">
                                     <i class="fa-light fa-tv"></i>
                                 </div>
                                 <span>{$core->get_Lang('Facilities')}</span>
                             </div>
                             <div class="btn_thing_know cursor d-flex align-items-center justify-content-start" data-class="unika_content_include">
-                                <div class="div_img" data-name="include">
+                                <div class="thing_now_icon" data-name="include">
                                     <i class="fa-light fa-octagon-plus"></i>
                                 </div>
                                 <span>{$core->get_Lang('What’s include')}</span>
                             </div>
                             <div class="btn_thing_know cursor d-flex align-items-center justify-content-start" data-class="unika_content_exclude">
-                                <div class="div_img" data-name="exclude">
+                                <div class="thing_now_icon" data-name="exclude">
                                     <i class="fa-light fa-octagon-xmark"></i>
                                 </div>
                                 <span>{$core->get_Lang('What’s exclude')}</span>
                             </div>
                             <div class="btn_thing_know  cursor d-flex align-items-center justify-content-start" data-class="unika_content_booking">
-                                <div class="div_img" data-name="policy">
+                                <div class="thing_now_icon" data-name="policy">
                                     <i class="fa-light fa-circle-info"></i>
                                 </div>
                                 <span>{$core->get_Lang('Booking cruise policy')}</span>
                             </div>
                             <div class="btn_thing_know cursor d-flex align-items-center justify-content-start" data-class="unika_content_booking_policy">
-                                <div class="div_img" data-name="facilities">
+                                <div class="thing_now_icon" data-name="facilities">
                                     <i class="fa-light fa-calendar-check"></i>
                                 </div>
                                 <span>{$core->get_Lang('Booking policy')}</span>
                             </div>
                             <div class="btn_thing_know  cursor d-flex align-items-center justify-content-start" data-class="unika_content_child_policy">
-                                <div class="div_img" data-name="child">
+                                <div class="thing_now_icon" data-name="child">
                                     <i class="fa-light fa-baby"></i>
                                 </div>
                                 <span>{$core->get_Lang('Child policy')}</span>
@@ -314,56 +324,26 @@
                             {if $arr_facilities}
                             <div class="content_right_item unika_content_facility active">
                                 {foreach from=$arr_facilities key=key item=item}
-                                    <div class="item_right d-flex justify-content-start align-items-center">
-                                        <div class="div_img"><img src="{$item.image}" alt="Icon"></div>
-                                        <span>{$item.title}</span>
-                                    </div>
+                                <div class="item_right d-flex justify-content-start align-items-center">
+                                    <div class="div_img"><img src="{$item.image}" alt="Icon"></div>
+                                    <span>{$item.title}</span>
+                                </div>
                                 {/foreach}
                             </div>
                             {/if}
                             <div class="content_right_item unika_content_include">
-                                <!-- <div class="item_right d-flex justify-content-start align-items-center ">
-                                    <div class="div_img">
-                                        <img src="images/teenyicons_tick.svg" alt="Icon">
-                                    </div>
-                                    <span>Transfer Hanoi - Halong - Hanoi (book in next step)</span>
-                                </div> -->
                                 {$clsCruise->getInclusion($cruise_id)}
                             </div>
                             <div class="content_right_item unika_content_exclude">
-                                <!-- <div class="item_right d-flex justify-content-start align-items-center ">
-                                    <div class="div_img">
-                                        <img src="images/teenyicons_tick.svg" alt="Icon">
-                                    </div>
-                                    <span>Transfer Hanoi - Halong - Hanoi (book in next step)</span>
-                                </div> -->
                                 {$clsCruise->getExclusion($cruise_id)}
                             </div>
                             <div class="content_right_item unika_content_booking">
-                                <!-- <div class="item_right d-flex justify-content-start align-items-center ">
-                                    <div class="div_img">
-                                        <img src="images/teenyicons_tick.svg" alt="Icon">
-                                    </div>
-                                    <span>Transfer Hanoi - Halong - Hanoi (book in next step)</span>
-                                </div> -->
                                 {$clsCruise->getCruisePolicy($cruise_id)}
                             </div>
                             <div class="content_right_item unika_content_booking_policy">
-                                <!-- <div class="item_right d-flex justify-content-start align-items-center ">
-                                    <div class="div_img">
-                                        <img src="images/teenyicons_tick.svg" alt="Icon">
-                                    </div>
-                                    <span>Transfer Hanoi - Halong - Hanoi (book in next step)</span>
-                                </div> -->
                                 {$clsCruise->getCruiseBookingPolicy($cruise_id)}
                             </div>
                             <div class="content_right_item unika_content_child_policy">
-                                <!-- <div class="item_right d-flex justify-content-start align-items-center ">
-                                    <div class="div_img">
-                                        <img src="images/teenyicons_tick.svg" alt="Icon">
-                                    </div>
-                                    <span>Transfer Hanoi - Halong - Hanoi (book in next step)</span>
-                                </div> -->
                                 {$clsCruise->getCruiseChildPolicy($cruise_id)}
                             </div>
                         </div>
@@ -376,32 +356,32 @@
                 <div class=" optional_extensions ">
                     <h2 class="title_2">{$core->get_Lang('Optional extensions')}</h2>
                     <div class="content d-flex justify-content-between ">
-                        {if $arr_extension_pre}    
-                            <div class="item_content">
-                                <div class="title_right">{$core->get_Lang('PRE CRUISE EXTENSIONS')}</div>
-                                <div class="list_extensions d-flex flex-column ">
-                                    {foreach from=$arr_extension_pre key=key item=item}
-                                        {assign var="TourID" value=$item.tour_id}
-                                        {assign var="TourTitle" value=$clsTour->getTitle($TourID)}
-                                        {assign var="TourLink" value=$clsTour->getLink($TourID)}
-                                        <div class="item_extensions d-flex align-items-start ">
-                                            <a href="{$TourLink}" class="div_img img_extensions">
-                                                <img src="{$clsTour->getImage($TourID, 243, 168)}" width="243" height="168" alt="{$TourTitle}">
+                        {if $arr_extension_pre}
+                        <div class="item_content">
+                            <div class="title_right">{$core->get_Lang('PRE CRUISE EXTENSIONS')}</div>
+                            <div class="list_extensions d-flex flex-column ">
+                                {foreach from=$arr_extension_pre key=key item=item}
+                                    {assign var="TourID" value=$item.tour_id}
+                                    {assign var="TourTitle" value=$clsTour->getTitle($TourID)}
+                                    {assign var="TourLink" value=$clsTour->getLink($TourID)}
+                                    <div class="item_extensions d-flex align-items-start ">
+                                        <a href="{$TourLink}" class="div_img img_extensions">
+                                            <img src="{$clsTour->getImage($TourID, 243, 168)}" width="243" height="168" alt="{$TourTitle}">
+                                        </a>
+                                        <div class="content_extensions d-flex justify-content-start align-items-start  flex-column">
+                                            <a href="{$TourLink}" class="title_extentions ellipsis_2" title="{$TourTitle}">
+                                                {$TourTitle}
                                             </a>
-                                            <div class="content_extensions d-flex justify-content-start align-items-start  flex-column">
-                                                <a href="{$TourLink}" class="title_extentions ellipsis_2" title="{$TourTitle}">
-                                                    {$TourTitle}
-                                                </a>
-                                                <div class="money_extentions">
-                                                    <span class="money_extention_1">{$core->get_Lang('Form')}</span>
-                                                    <span class="money_extention_2">{$core->get_Lang('US')}</span>
-                                                    <span class="money_extention_3">${$clsTour->getMinPrice($TourID)}</span>
-                                                </div>
+                                            <div class="money_extentions">
+                                                <span class="money_extention_1">{$core->get_Lang('Form')}</span>
+                                                <span class="money_extention_2">{$core->get_Lang('US')}</span>
+                                                <span class="money_extention_3">${$clsTour->getMinPrice($TourID)}</span>
                                             </div>
                                         </div>
-                                    {/foreach}
-                                </div>
+                                    </div>
+                                {/foreach}
                             </div>
+                        </div>
                         {/if}
                         {if $arr_extension_post}
                         <div class="item_content">
@@ -446,47 +426,47 @@
                                 <div class="content_statistical d-flex flex-column ">
                                     <p class="number">4.8</p>
                                     <span class="span_1">Wonderful</span>
-                                    <span class="span_2">(3 reviews)</span>
+                                    <span class="span_2">(3 {$core->get_Lang('reviews')})</span>
                                 </div>
                             </div>
                             <div class="statistical_left d-flex flex-column ">
                                 <div class="item_statiscal d-flex  justify-content-between align-items-center">
-                                    <p>Wonderful</p>
+                                    <p>{$core->get_Lang('Wonderful')}</p>
                                     <div class="percent">
                                         <div></div>
                                     </div>
                                     <span>10</span>
                                 </div>
                                 <div class="item_statiscal d-flex  justify-content-between align-items-center">
-                                    <p>Excellent</p>
+                                    <p>{$core->get_Lang('Excellent')}</p>
                                     <div class="percent">
                                         <div></div>
                                     </div>
                                     <span>2</span>
                                 </div>
                                 <div class="item_statiscal d-flex  justify-content-between align-items-center">
-                                    <p>Good</p>
+                                    <p>{$core->get_Lang('Good')}</p>
                                     <div class="percent">
                                         <div></div>
                                     </div>
                                     <span>0</span>
                                 </div>
                                 <div class="item_statiscal d-flex  justify-content-between align-items-center">
-                                    <p>Average</p>
+                                    <p>{$core->get_Lang('Average')}</p>
                                     <div class="percent">
                                         <div></div>
                                     </div>
                                     <span>0</span>
                                 </div>
                                 <div class="item_statiscal d-flex  justify-content-between align-items-center">
-                                    <p>Bad</p>
+                                    <p>{$core->get_Lang('Bad')}</p>
                                     <div class="percent">
                                         <div></div>
                                     </div>
                                     <span>10</span>
                                 </div>
                                 <div class="btn_write_reviews d-flex justify-content-end ">
-                                    <button class="btn_write">Write reviews</button>
+                                    <button class="btn_write">{$core->get_Lang('Write reviews')}</button>
                                 </div>
                             </div>
                         </div>
@@ -494,24 +474,15 @@
                             <div class="unika_form_content">
                                 <div class="unika_form_header">
                                     <span class="title_form">
-                                        * Your rating is here:
+                                        * {$core->get_Lang('Your rating is here')}:
                                     </span>
                                     <div class="unika_form_rating">
-                                        <span class="unika_rate_star active" data-value="1">
-                                            <i class="fa-solid fa-star"></i>
-                                        </span>
-                                        <span class="unika_rate_star active" data-value="2">
-                                            <i class="fa-solid fa-star"></i>
-                                        </span>
-                                        <span class="unika_rate_star active" data-value="3">
-                                            <i class="fa-solid fa-star"></i>
-                                        </span>
-                                        <span class="unika_rate_star active" data-value="4">
-                                            <i class="fa-solid fa-star"></i>
-                                        </span>
-                                        <span class="unika_rate_star active" data-value="5">
-                                            <i class="fa-solid fa-star"></i>
-                                        </span>
+                                        {section name=i loop=5}
+                                            {assign var="iteration" value=$smarty.section.i.iteration}
+                                            <span class="unika_rate_star active" data-value="{$iteration}">
+                                                <i class="fa-solid fa-star"></i>
+                                            </span>
+                                        {/section}
                                         <input type="hidden" id="rates" name="unika_rates" class="unika_rating_input" value="5">
                                     </div>
                                 </div>
@@ -553,7 +524,7 @@
                                 <div class="title_reviews">
                                     What a wonderful place to stay
                                 </div>
-                                <div class="content_reviews ellipsis_3">
+                                <div class="content_reviews">
                                     My husband and I have just arrived home from the most fantastic 8 day stay at Turtle
                                     Beach. I was a little worried about some of the reviews I read prior to going but I
                                     had
@@ -562,9 +533,6 @@
                                     delicious and there was always something to enjoy whatever your taste. Nicole, also
                                     known as scrumptious made eggs any...
                                 </div>
-                                <button class="view_more ">
-                                    View more
-                                </button>
                             </div>
 
                         </div>
@@ -572,529 +540,264 @@
                 </div>
             </div>
         </div>
-        <div class=" d-flex justify-content-center">
-            <div class="container">
-                <div class=" interested d-flex justify-content-center  flex-column align-items-center">
-                    <h2 class="title_2">Maybe yo<span>u a</span>re interested</h2>
-                    <div class="list_intersted list_interested_2 swiper">
-                        <div class="swiper-wrapper">
-                            <div class="item_interested d-flex flex-column swiper-slide">
-                                <a href="#" class="div_img img_item">
-                                    <img src="images/interested1.png" alt="Image">
-                                </a>
-                                <div class="content_interested d-flex flex-column ">
-                                    <div class="d-flex flex-column content_interested_title">
-                                        <h3>
-                                            <a class=" ellipsis_2  title_interested" href="#">Waldschenke
-                                                Stendenitz Übernachten im Wald am See
-                                            </a>
-                                        </h3>
-                                        <div class="rating d-flex align-items-center ">
-                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
-                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
-                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
-                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
+        {if $list_related_cruise}    
+            <div class=" d-flex justify-content-center">
+                <div class="container">
+                    <div class=" interested d-flex justify-content-center  flex-column align-items-center">
+                        <h2 class="title_2">{$core->get_Lang('Maybe you are interested')}</h2>
+                        <div class="list_intersted list_interested_2 swiper">
+                            <div class="swiper-wrapper">
+                                {foreach from=$list_related_cruise key=key item=item}
+                                    {assign var="relatedCruiseID" value=$item.cruise_id}
+                                    {assign var="relatedCruiseTitle" value=$clsCruise->getTitle($relatedCruiseID)}
+                                    {assign var="relatedCruiseLink" value=$clsCruise->getLink2($relatedCruiseID)}
+                                    <div class="item_interested d-flex flex-column swiper-slide">
+                                        <a href="{$relatedCruiseLink}" class="div_img img_item" title="{$relatedCruiseTitle}">
+                                            <img src="{$clsCruise->getImage($relatedCruiseID, 296, 200)}" width="296" height="200" alt="{$relatedCruiseTitle}">
+                                        </a>
+                                        <div class="content_interested d-flex flex-column ">
+                                            <div class="d-flex flex-column content_interested_title">
+                                                <h3>
+                                                    <a class=" ellipsis_2 title_interested" href="{$relatedCruiseLink}" title="{$relatedCruiseTitle}">
+                                                        {$relatedCruiseTitle}
+                                                    </a>
+                                                </h3>
+                                                <div class="rating d-flex align-items-center ">
+                                                    {if $cruise_info.star_number >= 3}
+                                                        {section name=i loop=$cruise_info.star_number}
+                                                            <div class="div_img">
+                                                                <i class="fa-sharp fa-solid fa-star"></i>
+                                                            </div>
+                                                        {/section}
+                                                    {/if}
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-between  align-items-start">
+                                                <div class="div_img img_interested">
+                                                    <i class="fa-sharp fa-solid fa-location-dot"></i>
+                                                </div>
+                                                <div class="d-flex  ellipsis_3  txt_interested">
+                                                    <span>{$core->get_Lang('Place to visit')}: </span>
+                                                    {$clsCruise->getPlaceVisit($relatedCruiseID)}
+                                                </div>
+                                            </div>
+                                            <div class="reviews d-flex align-items-center justify-content-start ">
+                                                <div class="count_reviews d-flex align-items-center justify-content-center ">
+                                                    {$clsReviews->getReviews($relatedCruiseID, 'avg_point', 'cruise')}
+                                                </div>
+                                                <span class="span_1">
+                                                    {$clsReviews->getReviews($relatedCruiseID, 'txt_review', 'cruise')}
+                                                </span>
+                                                <span class="span_2">
+                                                    ({$clsReviews->getReviews($relatedCruiseID, '', 'cruise')} {$core->get_Lang('reviews')})
+                                                </span>
+                                            </div>
+                                            <div class="money_viwed d-flex justify-content-end align-items-end  flex-wrap">
+                                                <span class="money_viwed_span">{$core->get_Lang('Price per person from')}</span>
+                                                <div class="money_viwed_div">
+                                                    {if $clsCruiseItinerary->getMinPriceItinerary($relatedCruiseID) eq 0}
+                                                        {$core->get_Lang('Contact')}
+                                                    {else}
+                                                        {$core->get_Lang('US')}
+                                                        <span>$ {$clsCruiseItinerary->getMinPriceItinerary($relatedCruiseID)}</span>
+                                                    {/if}
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="d-flex justify-content-between  align-items-start">
-                                        <div class="div_img img_interested">
-                                            <img src="images/location.svg" alt="Icon">
-                                        </div>
-                                        <div class="d-flex  ellipsis_3  txt_interested">
-                                            <span>Place to visit: </span>
-                                            Hanoi - Lan Ha Bay - Dark & Light Cave - Ao
-                                            Ech Area - Halong International Cruise Port - Hanoi
-                                        </div>
-                                    </div>
-                                    <div class="reviews d-flex align-items-center justify-content-start ">
-                                        <div class="count_reviews d-flex align-items-center justify-content-center ">
-                                            4.5
-                                        </div>
-                                        <span class="span_1">Very good</span>
-                                        <span class="span_2">(9 reviews)</span>
-                                    </div>
-                                    <div class="money_viwed d-flex justify-content-end align-items-end  flex-wrap">
-                                        <span class="money_viwed_span">Price per person from</span>
-                                        <div class="money_viwed_div">
-                                            US
-                                            <span>$650</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item_interested d-flex flex-column swiper-slide">
-                                <a href="#" class="div_img img_item">
-                                    <img src="images/interested1.png" alt="Image">
-                                </a>
-                                <div class="content_interested d-flex flex-column ">
-                                    <div class="d-flex flex-column content_interested_title">
-                                        <h3>
-                                            <a class=" ellipsis_2  title_interested" href="#">Waldschenke
-                                                Stendenitz Übernachten im Wald am See
-                                            </a>
-                                        </h3>
-                                        <div class="rating d-flex align-items-center ">
-                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
-                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
-                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
-                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-between  align-items-start">
-                                        <div class="div_img img_interested">
-                                            <img src="images/location.svg" alt="Icon">
-                                        </div>
-                                        <div class="d-flex  ellipsis_3  txt_interested">
-                                            <span>Place to visit: </span>
-                                            Hanoi - Lan Ha Bay - Dark & Light Cave - Ao
-                                            Ech Area - Halong International Cruise Port - Hanoi
-                                        </div>
-                                    </div>
-                                    <div class="reviews d-flex align-items-center justify-content-start ">
-                                        <div class="count_reviews d-flex align-items-center justify-content-center ">
-                                            4.5
-                                        </div>
-                                        <span class="span_1">Very good</span>
-                                        <span class="span_2">(9 reviews)</span>
-                                    </div>
-                                    <div class="money_viwed d-flex justify-content-end align-items-end  flex-wrap">
-                                        <span class="money_viwed_span">Price per person from</span>
-                                        <div class="money_viwed_div">
-                                            US
-                                            <span>$650</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item_interested d-flex flex-column swiper-slide">
-                                <a href="#" class="div_img img_item">
-                                    <img src="images/interested1.png" alt="Image">
-                                </a>
-                                <div class="content_interested d-flex flex-column ">
-                                    <div class="d-flex flex-column content_interested_title">
-                                        <h3>
-                                            <a class=" ellipsis_2  title_interested" href="#">Waldschenke
-                                                Stendenitz Übernachten im Wald am See
-                                            </a>
-                                        </h3>
-                                        <div class="rating d-flex align-items-center ">
-                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
-                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
-                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
-                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-between  align-items-start">
-                                        <div class="div_img img_interested">
-                                            <img src="images/location.svg" alt="Icon">
-                                        </div>
-                                        <div class="d-flex  ellipsis_3  txt_interested">
-                                            <span>Place to visit: </span>
-                                            Hanoi - Lan Ha Bay - Dark & Light Cave - Ao
-                                            Ech Area - Halong International Cruise Port - Hanoi
-                                        </div>
-                                    </div>
-                                    <div class="reviews d-flex align-items-center justify-content-start ">
-                                        <div class="count_reviews d-flex align-items-center justify-content-center ">
-                                            4.5
-                                        </div>
-                                        <span class="span_1">Very good</span>
-                                        <span class="span_2">(9 reviews)</span>
-                                    </div>
-                                    <div class="money_viwed d-flex justify-content-end align-items-end  flex-wrap">
-                                        <span class="money_viwed_span">Price per person from</span>
-                                        <div class="money_viwed_div">
-                                            US
-                                            <span>$650</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item_interested d-flex flex-column swiper-slide">
-                                <a href="#" class="div_img img_item">
-                                    <img src="images/interested1.png" alt="Image">
-                                </a>
-                                <div class="content_interested d-flex flex-column ">
-                                    <div class="d-flex flex-column content_interested_title">
-                                        <h3>
-                                            <a class=" ellipsis_2  title_interested" href="#">Waldschenke
-                                                Stendenitz Übernachten im Wald am See
-                                            </a>
-                                        </h3>
-                                        <div class="rating d-flex align-items-center ">
-                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
-                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
-                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
-                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-between  align-items-start">
-                                        <div class="div_img img_interested">
-                                            <img src="images/location.svg" alt="Icon">
-                                        </div>
-                                        <div class="d-flex  ellipsis_3  txt_interested">
-                                            <span>Place to visit: </span>
-                                            Hanoi - Lan Ha Bay - Dark & Light Cave - Ao
-                                            Ech Area - Halong International Cruise Port - Hanoi
-                                        </div>
-                                    </div>
-                                    <div class="reviews d-flex align-items-center justify-content-start ">
-                                        <div class="count_reviews d-flex align-items-center justify-content-center ">
-                                            4.5
-                                        </div>
-                                        <span class="span_1">Very good</span>
-                                        <span class="span_2">(9 reviews)</span>
-                                    </div>
-                                    <div class="money_viwed d-flex justify-content-end align-items-end  flex-wrap">
-                                        <span class="money_viwed_span">Price per person from</span>
-                                        <div class="money_viwed_div">
-                                            US
-                                            <span>$650</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item_interested d-flex flex-column swiper-slide">
-                                <a href="#" class="div_img img_item">
-                                    <img src="images/interested1.png" alt="Image">
-                                </a>
-                                <div class="content_interested d-flex flex-column ">
-                                    <div class="d-flex flex-column content_interested_title">
-                                        <h3>
-                                            <a class=" ellipsis_2  title_interested" href="#">Waldschenke
-                                                Stendenitz Übernachten im Wald am See
-                                            </a>
-                                        </h3>
-                                        <div class="rating d-flex align-items-center ">
-                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
-                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
-                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
-                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-between  align-items-start">
-                                        <div class="div_img img_interested">
-                                            <img src="images/location.svg" alt="Icon">
-                                        </div>
-                                        <div class="d-flex  ellipsis_3  txt_interested">
-                                            <span>Place to visit: </span>
-                                            Hanoi - Lan Ha Bay - Dark & Light Cave - Ao
-                                            Ech Area - Halong International Cruise Port - Hanoi
-                                        </div>
-                                    </div>
-                                    <div class="reviews d-flex align-items-center justify-content-start ">
-                                        <div class="count_reviews d-flex align-items-center justify-content-center ">
-                                            4.5
-                                        </div>
-                                        <span class="span_1">Very good</span>
-                                        <span class="span_2">(9 reviews)</span>
-                                    </div>
-                                    <div class="money_viwed d-flex justify-content-end align-items-end  flex-wrap">
-                                        <span class="money_viwed_span">Price per person from</span>
-                                        <div class="money_viwed_div">
-                                            US
-                                            <span>$650</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item_interested d-flex flex-column swiper-slide">
-                                <a href="#" class="div_img img_item">
-                                    <img src="images/interested1.png" alt="Image">
-                                </a>
-                                <div class="content_interested d-flex flex-column ">
-                                    <div class="d-flex flex-column content_interested_title">
-                                        <h3>
-                                            <a class=" ellipsis_2  title_interested" href="#">Waldschenke
-                                                Stendenitz Übernachten im Wald am See
-                                            </a>
-                                        </h3>
-                                        <div class="rating d-flex align-items-center ">
-                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
-                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
-                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
-                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-between  align-items-start">
-                                        <div class="div_img img_interested">
-                                            <img src="images/location.svg" alt="Icon">
-                                        </div>
-                                        <div class="d-flex  ellipsis_3  txt_interested">
-                                            <span>Place to visit: </span>
-                                            Hanoi - Lan Ha Bay - Dark & Light Cave - Ao
-                                            Ech Area - Halong International Cruise Port - Hanoi
-                                        </div>
-                                    </div>
-                                    <div class="reviews d-flex align-items-center justify-content-start ">
-                                        <div class="count_reviews d-flex align-items-center justify-content-center ">
-                                            4.5
-                                        </div>
-                                        <span class="span_1">Very good</span>
-                                        <span class="span_2">(9 reviews)</span>
-                                    </div>
-                                    <div class="money_viwed d-flex justify-content-end align-items-end  flex-wrap">
-                                        <span class="money_viwed_span">Price per person from</span>
-                                        <div class="money_viwed_div">
-                                            US
-                                            <span>$650</span>
-                                        </div>
-                                    </div>
-                                </div>
+                                {/foreach}
                             </div>
                         </div>
-                    </div>
-                    <div class="swiper-button-next">
-                        <i class="fa fa-chevron-right" aria-hidden="true"></i>
-                    </div>
-                    <div class="swiper-button-prev">
-                        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                        <div class="swiper-button-next">
+                            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                        </div>
+                        <div class="swiper-button-prev">
+                            <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="d-flex justify-content-center">
-            <div class="container">
-                <div class=" interested d-flex justify-content-center  flex-column align-items-center">
-                    <h2 class="title_2">Rece<span>ntl</span>y viewed</h2>
-                    <div class="list_intersted list_interested_1 swiper">
-                        <div class="swiper-wrapper">
-                            <div class="item_interested swiper-slide d-flex flex-column">
-                                <a href="#" class="div_img img_item">
-                                    <img src="images/interested1.png" alt="Image">
-                                </a>
-                                <div class="content_interested d-flex flex-column ">
-                                    <div class="d-flex flex-column content_interested_title">
-                                        <h3>
-                                            <a class=" ellipsis_2  title_interested" href="#">Waldschenke
-                                                Stendenitz Übernachten im Wald am See
-                                            </a>
-                                        </h3>
-                                        <div class="rating d-flex align-items-center ">
-                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
-                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
-                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
-                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
+        {/if}
+        {if $arr_recent_view}
+            <div class="d-flex justify-content-center">
+                <div class="container">
+                    <div class=" interested d-flex justify-content-center  flex-column align-items-center">
+                        <h2 class="title_2">{$core->get_Lang('Recently viewed')}</h2>
+                        <div class="list_intersted list_interested_1 swiper">
+                            <div class="swiper-wrapper">
+                                {foreach from=$arr_recent_view key=key item=item}
+                                    {assign var="recentCruiseID" value=$item}
+                                    {assign var="recentCruiseTitle" value=$clsCruise->getTitle($recentCruiseID)}
+                                    {assign var="recentCruiseLink" value=$clsCruise->getLink2($recentCruiseID)}
+                                    <div class="item_interested d-flex flex-column swiper-slide">
+                                        <a href="{$recentCruiseLink}" class="div_img img_item" title="{$recentCruiseTitle}">
+                                            <img src="{$clsCruise->getImage($recentCruiseID, 296, 200)}" width="296" height="200" alt="{$recentCruiseTitle}">
+                                        </a>
+                                        <div class="content_interested d-flex flex-column ">
+                                            <div class="d-flex flex-column content_interested_title">
+                                                <h3>
+                                                    <a class=" ellipsis_2 title_interested" href="{$recentCruiseLink}" title="{$recentCruiseTitle}">
+                                                        {$recentCruiseTitle}
+                                                    </a>
+                                                </h3>
+                                                <div class="rating d-flex align-items-center ">
+                                                    {if $cruise_info.star_number >= 3}
+                                                        {section name=i loop=$cruise_info.star_number}
+                                                            <div class="div_img">
+                                                                <i class="fa-sharp fa-solid fa-star"></i>
+                                                            </div>
+                                                        {/section}
+                                                    {/if}
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-between  align-items-start">
+                                                <div class="div_img img_interested">
+                                                    <i class="fa-sharp fa-solid fa-location-dot"></i>
+                                                </div>
+                                                <div class="d-flex  ellipsis_3  txt_interested">
+                                                    <span>{$core->get_Lang('Place to visit')}: </span>
+                                                    {$clsCruise->getPlaceVisit($recentCruiseID)}
+                                                </div>
+                                            </div>
+                                            <div class="reviews d-flex align-items-center justify-content-start ">
+                                                <div class="count_reviews d-flex align-items-center justify-content-center ">
+                                                    {$clsReviews->getReviews($recentCruiseID, 'avg_point', 'cruise')}
+                                                </div>
+                                                <span class="span_1">
+                                                    {$clsReviews->getReviews($recentCruiseID, 'txt_review', 'cruise')}
+                                                </span>
+                                                <span class="span_2">
+                                                    ({$clsReviews->getReviews($recentCruiseID, '', 'cruise')} {$core->get_Lang('reviews')})
+                                                </span>
+                                            </div>
+                                            <div class="money_viwed d-flex justify-content-end align-items-end  flex-wrap">
+                                                <span class="money_viwed_span">{$core->get_Lang('Price per person from')}</span>
+                                                <div class="money_viwed_div">
+                                                    {if $clsCruiseItinerary->getMinPriceItinerary($recentCruiseID) eq 0}
+                                                        {$core->get_Lang('Contact')}
+                                                    {else}
+                                                        {$core->get_Lang('US')}
+                                                        <span>$ {$clsCruiseItinerary->getMinPriceItinerary($recentCruiseID)}</span>
+                                                    {/if}
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="d-flex justify-content-between  align-items-start">
-                                        <div class="div_img img_interested">
-                                            <img src="images/location.svg" alt="Icon">
-                                        </div>
-                                        <div class="d-flex  ellipsis_3  txt_interested">
-                                            <span>Place to visit: </span>
-                                            Hanoi - Lan Ha Bay - Dark & Light Cave - Ao
-                                            Ech Area - Halong International Cruise Port - Hanoi
-                                        </div>
-                                    </div>
-                                    <div class="reviews d-flex align-items-center justify-content-start ">
-                                        <div class="count_reviews d-flex align-items-center justify-content-center ">
-                                            4.5
-                                        </div>
-                                        <span class="span_1">Very good</span>
-                                        <span class="span_2">(9 reviews)</span>
-                                    </div>
-                                    <div class="money_viwed d-flex justify-content-end align-items-end  flex-wrap">
-                                        <span class="money_viwed_span">Price per person from</span>
-                                        <div class="money_viwed_div">
-                                            US
-                                            <span>$650</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item_interested swiper-slide d-flex flex-column">
-                                <a href="#" class="div_img img_item">
-                                    <img src="images/interested1.png" alt="Image">
-                                </a>
-                                <div class="content_interested d-flex flex-column ">
-                                    <div class="d-flex flex-column content_interested_title">
-                                        <h3>
-                                            <a class=" ellipsis_2  title_interested" href="#">Waldschenke
-                                                Stendenitz Übernachten im Wald am See
-                                            </a>
-                                        </h3>
-                                        <div class="rating d-flex align-items-center ">
-                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
-                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
-                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
-                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-between  align-items-start">
-                                        <div class="div_img img_interested">
-                                            <img src="images/location.svg" alt="Icon">
-                                        </div>
-                                        <div class="d-flex  ellipsis_3  txt_interested">
-                                            <span>Place to visit: </span>
-                                            Hanoi - Lan Ha Bay - Dark & Light Cave - Ao
-                                            Ech Area - Halong International Cruise Port - Hanoi
-                                        </div>
-                                    </div>
-                                    <div class="reviews d-flex align-items-center justify-content-start ">
-                                        <div class="count_reviews d-flex align-items-center justify-content-center ">
-                                            4.5
-                                        </div>
-                                        <span class="span_1">Very good</span>
-                                        <span class="span_2">(9 reviews)</span>
-                                    </div>
-                                    <div class="money_viwed d-flex justify-content-end align-items-end  flex-wrap">
-                                        <span class="money_viwed_span">Price per person from</span>
-                                        <div class="money_viwed_div">
-                                            US
-                                            <span>$650</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item_interested swiper-slide d-flex flex-column">
-                                <a href="#" class="div_img img_item">
-                                    <img src="images/interested1.png" alt="Image">
-                                </a>
-                                <div class="content_interested d-flex flex-column ">
-                                    <div class="d-flex flex-column content_interested_title">
-                                        <h3>
-                                            <a class=" ellipsis_2  title_interested" href="#">Waldschenke
-                                                Stendenitz Übernachten im Wald am See
-                                            </a>
-                                        </h3>
-                                        <div class="rating d-flex align-items-center ">
-                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
-                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
-                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
-                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-between  align-items-start">
-                                        <div class="div_img img_interested">
-                                            <img src="images/location.svg" alt="Icon">
-                                        </div>
-                                        <div class="d-flex  ellipsis_3  txt_interested">
-                                            <span>Place to visit: </span>
-                                            Hanoi - Lan Ha Bay - Dark & Light Cave - Ao
-                                            Ech Area - Halong International Cruise Port - Hanoi
-                                        </div>
-                                    </div>
-                                    <div class="reviews d-flex align-items-center justify-content-start ">
-                                        <div class="count_reviews d-flex align-items-center justify-content-center ">
-                                            4.5
-                                        </div>
-                                        <span class="span_1">Very good</span>
-                                        <span class="span_2">(9 reviews)</span>
-                                    </div>
-                                    <div class="money_viwed d-flex justify-content-end align-items-end  flex-wrap">
-                                        <span class="money_viwed_span">Price per person from</span>
-                                        <div class="money_viwed_div">
-                                            US
-                                            <span>$650</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item_interested swiper-slide d-flex flex-column">
-                                <a href="#" class="div_img img_item">
-                                    <img src="images/interested1.png" alt="Image">
-                                </a>
-                                <div class="content_interested d-flex flex-column ">
-                                    <div class="d-flex flex-column content_interested_title">
-                                        <h3>
-                                            <a class=" ellipsis_2  title_interested" href="#">Waldschenke
-                                                Stendenitz Übernachten im Wald am See
-                                            </a>
-                                        </h3>
-                                        <div class="rating d-flex align-items-center ">
-                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
-                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
-                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
-                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-between  align-items-start">
-                                        <div class="div_img img_interested">
-                                            <img src="images/location.svg" alt="Icon">
-                                        </div>
-                                        <div class="d-flex  ellipsis_3  txt_interested">
-                                            <span>Place to visit: </span>
-                                            Hanoi - Lan Ha Bay - Dark & Light Cave - Ao
-                                            Ech Area - Halong International Cruise Port - Hanoi
-                                        </div>
-                                    </div>
-                                    <div class="reviews d-flex align-items-center justify-content-start ">
-                                        <div class="count_reviews d-flex align-items-center justify-content-center ">
-                                            4.5
-                                        </div>
-                                        <span class="span_1">Very good</span>
-                                        <span class="span_2">(9 reviews)</span>
-                                    </div>
-                                    <div class="money_viwed d-flex justify-content-end align-items-end  flex-wrap">
-                                        <span class="money_viwed_span">Price per person from</span>
-                                        <div class="money_viwed_div">
-                                            US
-                                            <span>$650</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item_interested swiper-slide d-flex flex-column">
-                                <a href="#" class="div_img img_item">
-                                    <img src="images/interested1.png" alt="Image">
-                                </a>
-                                <div class="content_interested d-flex flex-column ">
-                                    <div class="d-flex flex-column content_interested_title">
-                                        <h3>
-                                            <a class=" ellipsis_2  title_interested" href="#">Waldschenke
-                                                Stendenitz Übernachten im Wald am See
-                                            </a>
-                                        </h3>
-                                        <div class="rating d-flex align-items-center ">
-                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
-                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
-                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
-                                            <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-between  align-items-start">
-                                        <div class="div_img img_interested">
-                                            <img src="images/location.svg" alt="Icon">
-                                        </div>
-                                        <div class="d-flex  ellipsis_3  txt_interested">
-                                            <span>Place to visit: </span>
-                                            Hanoi - Lan Ha Bay - Dark & Light Cave - Ao
-                                            Ech Area - Halong International Cruise Port - Hanoi
-                                        </div>
-                                    </div>
-                                    <div class="reviews d-flex align-items-center justify-content-start ">
-                                        <div class="count_reviews d-flex align-items-center justify-content-center ">
-                                            4.5
-                                        </div>
-                                        <span class="span_1">Very good</span>
-                                        <span class="span_2">(9 reviews)</span>
-                                    </div>
-                                    <div class="money_viwed d-flex justify-content-end align-items-end  flex-wrap">
-                                        <span class="money_viwed_span">Price per person from</span>
-                                        <div class="money_viwed_div">
-                                            US
-                                            <span>$650</span>
-                                        </div>
-                                    </div>
-                                </div>
+                                {/foreach}
                             </div>
                         </div>
-                    </div>
-                    <div class="swiper-button-next">
-                        <i class="fa fa-chevron-right" aria-hidden="true"></i>
-                    </div>
-                    <div class="swiper-button-prev">
-                        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                        <div class="swiper-button-next">
+                            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                        </div>
+                        <div class="swiper-button-prev">
+                            <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-
+        {/if}
+        {$core->getBlock('customer_review')}
+        {$core->getBlock('top_attraction')}
+        {$core->getBlock('also_like')}
     </div>
 </div>
+
 {literal}
 <style>
+    .ellipsis_3 {
+        display: -webkit-box !important;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: left;
+    }
+
+    .height_72 {
+        height: 72px;
+    }
+
+    .content_right_item li {
+        color: var(--Neutral-1, #111D37);
+        font-family: "SF Pro Display";
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 24px;
+    }
+    
+    .unikasia_cruise_detail{
+        padding-top: 32px
+    }
+
+    .unika_cruise_detail {
+        padding-top: 30px;
+    }
+
+    .unika_content_include li::marker,
+    .unika_content_exclude li::marker {
+        content: '';
+    }
+
+    .unika_content_include li::before {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        content: '\f00c';
+        font-family: "Font Awesome 6 Pro";
+        color: #13B97D;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        border: 1px solid #13B97D;
+        position: relative;
+    }
+
+    .unika_content_exclude li::before {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        content: '\f00d';
+        font-family: "Font Awesome 6 Pro";
+        color: #FF4D00;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        border: 1px solid #FF4D00;
+        position: relative;
+    }
+
+    .unika_content_include li,
+    .unika_content_exclude li {
+        display: flex;
+        gap: 12px;
+    }
+
+    .content_right_item ul {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .thing_now_icon {
+        font-size: 20px;
+        width: 24px;
+        text-align: center;
+        color: #004EA8;
+    }
+
+    .btn_thing_know.active .thing_now_icon {
+        color: #FFFFFF;
+    }
+
+    .unika_list_itineraries{
+        display: none;
+    }
+
+    .unika_list_itineraries.active{
+        display: block;
+    }
+
     .unika_cruise_detail .div_img {
         display: flex;
         align-items: center;
@@ -1160,6 +863,7 @@
         font-weight: 400;
         line-height: 24px;
         color: #111D37;
+        margin: 0;
     }
 
     .unika_cruise_detail .price_contact {
@@ -1276,6 +980,7 @@
         border-radius: 8px;
         height: fit-content;
         gap: 16px;
+        background: var(--Accent-1, #FFF9F1);
     }
 
     .unika_cruise_detail .content_right .title {
@@ -1335,7 +1040,11 @@
         border-left: 6px solid #FFA718;
     }
 
-    #overview {
+    #overview{
+        padding-top: 20px;
+    }
+
+    .overview {
         padding-top: 60px;
     }
 
@@ -1360,9 +1069,15 @@
         gap: 16px;
     }
 
-    .information .item {
-        max-width: calc(50% - 10px);
+    .unika_item_information{
+        gap: 15px;
     }
+
+    .information .item {
+        max-width: max-content;
+    }
+
+    .information d-flex flex-column 
 
     .collapse_content .name span {
         font-size: 14px !important;
@@ -1465,8 +1180,8 @@
     #things_to_know .content_right {
         width: calc(100% - 220px);
         background: #FFFFFF;
-        overflow: scroll;
-        height: 463px;
+        overflow-y: scroll;
+        max-height: 390px;
     }
 
     #things_to_know .content_right::-webkit-scrollbar {
@@ -1487,9 +1202,10 @@
     }
 
     .btn_thing_know {
-        padding: 24px;
+        padding: 16px 24px;
         border-bottom: 1px solid #D3DCE1;
         gap: 6px;
+        cursor: pointer;
     }
 
     .btn_thing_know:last-child {
@@ -1516,6 +1232,7 @@
     #optional_extensions {
         background: #FFF9F1;
         border-radius: 40px 40px 0 0;
+        padding-top: 30px;
     }
 
     .item_content {
@@ -1662,7 +1379,7 @@
     }
 
     #reviews {
-        padding-top: 50px;
+        padding-top: 70px;
         gap: 24px;
     }
 
@@ -1835,8 +1552,8 @@
         color: var(--Neutral-1, #111D37);
     }
 
-    .overviews {
-        padding-bottom: 40px;
+    #itineraries{
+        padding-top: 80px;
     }
 
     .cruise_title {
@@ -1995,7 +1712,22 @@
     }
 
     .unika_cruise_detail .title_itineraries {
+        width: 100%;
         gap: 18px;
+        cursor: pointer;
+    }
+
+    .itineraries_fa {
+        width: 40px;
+        font-size: 20px;
+        height: 40px;
+        text-align: center;
+        color: #FFFFFF;
+        background: #FFA718;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .unika_cruise_detail .title_itineraries h3 {
@@ -2107,6 +1839,7 @@
         -moz-transform: scale(1.1);
         -webkit-transform: scale(1.1);
         transform: scale(1.1);
+        transition: all .3s ease-in-out;
     }
 
     .cruise_img_1 img,
@@ -2677,8 +2410,6 @@
 
     .content_right_item {
         display: none;
-        flex-direction: column;
-        gap: 12px;
     }
 
     .content_right_item.active {
@@ -2733,7 +2464,11 @@
     .unika_content_facility {
         flex-direction: row;
         flex-wrap: wrap;
-        gap: 0;
+        gap: 10px;
+    }
+
+    .unika_content_facility .item_right {
+        width: calc(100% / 3 - 10px);
     }
 
     .content_facility_item {
@@ -2860,6 +2595,10 @@
     }
 
     @media screen and (max-width: 991px) {
+        .unikasia_cruise_detail{
+            padding-top: 0px
+        }
+
         .unika_detail_collapse {
             gap: 20px;
         }
@@ -2867,6 +2606,10 @@
         .unika_content_facility {
             gap: 24px;
             flex-direction: column;
+        }
+
+        .unika_content_facility .item_right {
+            width: 100%;
         }
 
         .content_facility_item {
@@ -3093,18 +2836,18 @@
         new Swiper(".list_interested_1", {
             slidesPerView: 4,
             spaceBetween: 32,
-            loop: true,
-            autoplay: {
-                delay: 2500,
-                disableOnInteraction: false,
-            },
+            loop: false,
+            // autoplay: {
+            //     delay: 3500,
+            //     disableOnInteraction: false,
+            // },
             navigation: {
                 nextEl: ".swiper-button-next",
                 prevEl: ".swiper-button-prev",
             },
             breakpoints: {
                 0: {
-                    slidesPerView: 1,
+                    slidesPerView: 1.3,
                 },
                 500: {
                     slidesPerView: 2,
@@ -3124,18 +2867,18 @@
         new Swiper(".list_interested_2", {
             slidesPerView: 4,
             spaceBetween: 32,
-            loop: true,
-            autoplay: {
-                delay: 2500,
-                disableOnInteraction: false,
-            },
+            loop: false,
+            // autoplay: {
+            //     delay: 3500,
+            //     disableOnInteraction: false,
+            // },
             navigation: {
                 nextEl: ".swiper-button-next",
                 prevEl: ".swiper-button-prev",
             },
             breakpoints: {
                 0: {
-                    slidesPerView: 1,
+                    slidesPerView: 1.3,
                 },
                 500: {
                     slidesPerView: 2,
@@ -3152,91 +2895,22 @@
             }
         });
 
-        new Swiper(".unika_blogs", {
-            slidesPerView: 3,
-            spaceBetween: 36,
-            loop: true,
-            autoplay: {
-                delay: 2500,
-                disableOnInteraction: false,
-            },
-            navigation: {
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
-            },
-            breakpoints: {
-                0: {
-                    slidesPerView: 1,
-                },
-                768: {
-                    slidesPerView: 2,
-                },
-                991: {
-                    slidesPerView: 3,
-                }
-            }
-        });
+        let targetDivFixed = $('.unika_detail_fixed');
+        let unika_image = $('.unika_cruise_detail .unika_list_img').height();
+        let fixed_content = $('.unika_detail_fixed_content');
+        let price_contact_fixed = $('.price_contact_fixed');
+        let cruise_information  = $('.cruise_information ').height();
 
-        new Swiper(".list_sites", {
-            slidesPerView: 4,
-            loop: true,
-            autoplay: {
-                delay: 2500,
-                disableOnInteraction: false,
-            },
-            breakpoints: {
-                0: {
-                    slidesPerView: 1,
-                },
-                511: {
-                    slidesPerView: 2,
-                },
-                768: {
-                    slidesPerView: 3,
-                },
-                1025: {
-                    slidesPerView: 4,
-                }
-            }
-        });
-
-        new Swiper('.unika_top_attractions', {
-            slidesPerView: 4.53,
-            spaceBetween: 24,
-            direction: 'vertical', // Make the swiper vertical
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            },
-            breakpoints: {
-                0: {
-                    slidesPerView: 2,
-                },
-                450: {
-                    slidesPerView: 1.75,
-                },
-                546: {
-                    slidesPerView: 4.53,
-                },
-            }
-        });
-
-        let $targetDiv = $('.unika_overview');
-        let targetOffset = $targetDiv.offset().top;
-        // console.log('targetOffset:', targetOffset)
-        $(window).on('scroll', function() {
+        $(window).on('scroll', function () {
             let scrollTop = $(window).scrollTop();
-            // console.log('scrollTop:', scrollTop)
-            let fixed_content = $('.unika_detail_fixed_content');
-            let price_contact_fixed = $('.price_contact_fixed');
-
-            if (scrollTop >= targetOffset) {
-                $targetDiv.addClass('fixed');
+            console.log('scrollTop:', scrollTop)
+            if (scrollTop >= (unika_image + cruise_information + 60)) {
+                targetDivFixed.addClass('fixed');
                 fixed_content.addClass('container');
                 price_contact_fixed.addClass('active');
                 $('.unika_header').hide();
             } else {
-                $targetDiv.removeClass('fixed');
+                targetDivFixed.removeClass('fixed');
                 fixed_content.removeClass('container');
                 price_contact_fixed.removeClass('active');
                 $('.unika_header').show();
@@ -3294,6 +2968,21 @@
                 let data_class = $(this).attr('data-class');
                 $('.content_right_item').removeClass('active');
                 $(`.${data_class}`).addClass('active');
+            })
+            .on('click', '.item_btn_itineraries', function(){
+                let data_class = $(this).attr('data-list');
+                $('.unika_list_itineraries').removeClass('active');
+                $(`.${data_class}`).addClass('active');
+            })
+            .on('click', '.unika_view_more', function () {
+                let content_reviews = $(this).parents('.item_reviews').find('.content_reviews');
+                if (content_reviews.hasClass('ellipsis_3')) {
+                    content_reviews.removeClass('ellipsis_3 height_72');
+                    $(this).text('View less');
+                } else {
+                    content_reviews.addClass('ellipsis_3 height_72');
+                    $(this).text('View less');
+                }
             })
 
         let options = {
@@ -3403,9 +3092,33 @@
                 unika_review: "Please enter your review!",
             },
             submitHandler: function() {
-                alert('Success');
+                $.ajax({
+                type: "POST",
+                url: "",
+                beforeSend: function (xhr) {
+                    $('.unika_item_submit').val("Processing...").prop('disabled', true);
+                },
+                success: function (res) {
+                    $('.unika_item_submit').val("Submit your review").prop('disabled', false);
+                    alert("Successfully! Please check email!");
+                },
+                error: function () {
+                    console.error("Fail");
+                }
+            });
             }
         });
+
+        //View more, view less Reviews
+        $('.content_reviews').each(function () {
+            let height = $(this).height();
+            if (height > 72) {
+                $(this).addClass('ellipsis_3 height_72');
+
+                let item_reviews = $(this).parents('.item_reviews');
+                item_reviews.append(`<button class="view_more unika_view_more"> View more </button>`);
+            }
+        })
     })
 </script>
 {/literal}

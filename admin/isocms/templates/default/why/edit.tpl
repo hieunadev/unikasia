@@ -48,7 +48,7 @@
             </div>
             <div class="row-span">
                 <div class="fieldlabel bold"><strong>{$core->get_Lang('Icon')}</strong> <span class="color_r">*</span>
-                    <p style="margin-top: -1.5rem">({$core->get_Lang('Size')} WxH=40x40)</p>
+                    <p style="margin-top: -1.5rem">({$core->get_Lang('Size')} WxH=48x48)</p>
                 </div>
                 <div class="fieldarea">
                     <img class="isoman_img_pop" id="isoman_show_image" src="{$clsClassTable->getOneField('image',$pvalTable)}" style="width:32px" height="32px" />

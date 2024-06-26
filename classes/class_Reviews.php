@@ -534,8 +534,7 @@ class Reviews extends dbBasic{
 		
         #
         $clsEmailTemplate = new EmailTemplate();
-		$clsTour = new Tour();
-        $clsHotel = new Hotel();
+        $clsTour = new Tour();
 
         #
         if($type =='tour'){
@@ -547,6 +546,8 @@ class Reviews extends dbBasic{
 		else{
             $email_template_id=$email_template_review_cruise_id;
         }
+
+        $table_id = $this->getOneField('table_id', $this->getMaxId() - 1);
         #
         header('Content-Type: text/html; charset=utf-8');
         $message = $clsEmailTemplate->getContent($email_template_id);
@@ -555,7 +556,8 @@ class Reviews extends dbBasic{
         $message = str_replace('[%CUSTOMER_EMAIL%]',$email,$message);
         $message = str_replace('[%CUSTOMER_MES%]',$mes,$message);
         $message = str_replace('[%CUSTOMER_FULLNAME%]',$email,$message);
-        
+        $message = str_replace('[%TOUR_TITLE%]',$clsTour->getTitle($table_id),$message);
+
         
         $message = str_replace('[%COMPANY_HOTLINE%]',$clsConfiguration->getValue('CompanyHotline'),$message);
         $message = str_replace('[%COMPANY_EMAIL%]',$clsConfiguration->getValue('CompanyEmail'),$message);
@@ -600,16 +602,17 @@ class Reviews extends dbBasic{
 
         return 1;
     }
-    function getReviews($id, $act='', $type='') {
+    function getReviews($id, $act='', $type='tour') {
         global $dbconn;
-        $cond = " is_trash = 0 and is_online = 1 and";
+        $cond = " is_trash = 0 and is_online = 1";
         $txtReview = ['Bad', 'Average', 'Good', 'Excellent', 'Wonderful'];
 
         if (!empty($type)) {
-            $cond   .=  ' AND type = "'.$type.'"';
+            $cond   .=  ' and type = "'.$type.'"';
         }
-        $countReview = $this->countItem("$cond table_id = $id");
-        $sqlAverageRate = "SELECT AVG(rates) FROM $this->tbl WHERE $cond table_id = $id";
+
+        $countReview = $this->countItem("$cond and table_id = $id");
+        $sqlAverageRate = "SELECT AVG(rates) FROM $this->tbl WHERE $cond and table_id = $id";
         $averageRate = round($dbconn->GetOne($sqlAverageRate), 1);
         $index = round( $averageRate - 1);
 

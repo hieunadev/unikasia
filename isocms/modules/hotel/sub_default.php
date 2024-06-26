@@ -235,6 +235,15 @@ function default_default()
 	$assign_list['prevLink'] = $prevLink;
 	$assign_list['nextLink'] = $nextLink;
 
+	if (isset($_COOKIE['recent_view_hotel'])) {
+		$recent_view_hotel = json_decode($_COOKIE['recent_view_hotel'], true);
+		if (!empty($recent_view_hotel)) {
+			$ids = implode(',', array_map('intval', $recent_view_hotel));
+			$lstHotelRecent = $clsHotel->getAll("hotel_id IN ($ids)");
+			$assign_list["lstHotelRecent"] = $lstHotelRecent;
+		}
+	}
+
 
 	/* =============Title & Description Page================== */
 	$title_page = $core->get_Lang('Stay') . ' | ' . PAGE_NAME;
@@ -1115,20 +1124,6 @@ function default_detail()
 
 	//	$lstHotelLeft = "$clsHotelImage->getAll($clsHotelImage->getAll($order_by. "is_trash=0 and table_id='$hotel_id' and image <> '' ",$clsHotelImage->pkey.',image,title');)"
 
-	if (isset($_COOKIE['recent_posts'])) {
-		$recent_posts = json_decode($_COOKIE['recent_posts'], true);
-
-		if (!empty($recent_posts)) {
-			$ids = implode(',', array_map('intval', $recent_posts));
-
-			$cond1 = "hotel_id IN ($ids)";
-			$limit = " LIMIT 3";
-			$lstHotelRecent = $clsHotel->getAll("$cond1 $limit");
-			$assign_list["lstHotelRecent"] = $lstHotelRecent;
-		}
-	}
-
-
 	$oneItem = $clsHotel->getOne($hotel_id);
 
 	$assign_list['oneItem'] = $oneItem;
@@ -1273,7 +1268,7 @@ function default_detail()
 	}
 
 
-	$listProterty_id = $clsHotel->getOne($hotel_id, list_HotelFacilities)[0];
+	$listProterty_id = $clsHotel->getOne($hotel_id, 'list_HotelFacilities')[0];
 	$string = trim($listProterty_id, '|');
 	$array = explode('|', $string);
 	$result = implode(',', $array);
@@ -1339,6 +1334,63 @@ function default_detail()
 	$assign_list["filteredListImage"] = $filteredListImage;
 
 
+	if (!empty($_GET['hotel_id'])) {
+		$post_id = intval($_GET['hotel_id']);
+		if (isset($_COOKIE['recent_view_hotel'])) {
+			$recent_view_hotel = json_decode($_COOKIE['recent_view_hotel'], true);
+		} else {
+			$recent_view_hotel = array();
+		}
+		if (!in_array($post_id, $recent_view_hotel)) {
+			$recent_view_hotel[] = $post_id;
+		}
+
+		setcookie('recent_view_hotel', json_encode($recent_view_hotel), time() + (86400), "/");
+	}
+
+	if (isset($_COOKIE['recent_view_hotel'])) {
+		$recent_view_hotel = json_decode($_COOKIE['recent_view_hotel'], true);
+		if (!empty($recent_view_hotel)) {
+			$ids = implode(',', array_map('intval', $recent_view_hotel));
+			$lstHotelRecent = $clsHotel->getAll("hotel_id IN ($ids)");
+			$assign_list["lstHotelRecent"] = $lstHotelRecent;
+		}
+	}
+
+
+	$cond = "is_trash=0 and";
+
+		$clsPagination = new Pagination();
+		$assign_list["clsPagination"] = $clsPagination;
+	
+		$lnk = $_SERVER['REQUEST_URI'];
+		if (isset($_GET['page'])) {
+			$tmp = explode('&', $lnk);
+			$n = count($tmp) - 1;
+			$la_it = '&' . $tmp[$n];
+			$str_len = -strlen($la_it);
+			$link_page = substr($lnk, 0, $str_len);
+		} else {
+			$link_page = $lnk;
+		}
+	
+		$recordPerPage = 3;
+		$currentPage = isset($_GET['page']) ? intval($_GET['page']) : 1;
+		$totalItem = $clsReviews->getAll("$cond  type ='hotel' and  is_online = 1 and table_id = $hotel_id", $clsReviews->pkey);
+		$totalRecord = $totalItem ? count($totalItem) : 0;
+		$assign_list['totalRecord'] = $totalRecord;
+	
+		$config = array(
+			'total'	=> $totalRecord,
+			'number_per_page'	=> $recordPerPage,
+			'current_page'	=> $currentPage,
+			'link'	=> str_replace('.html', '/', $link_page),
+			'link_page'	=> $link_page
+		);
+	
+		$clsPagination->initianize($config);
+		$page_view = $clsPagination->create_links();
+		$assign_list["page_view"] = $page_view;
 
 	/*=============Title & Description Page==================*/
 	$title_page = $clsHotel->getTitle($hotel_id, $oneItem);

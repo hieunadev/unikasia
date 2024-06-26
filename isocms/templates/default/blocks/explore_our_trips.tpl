@@ -2,7 +2,7 @@
     <div class="container">
         <h2 class="txtourtrip txt_underline">
             {if $mod eq 'tour' && $act eq 'cat'}
-            {$clsConfiguration->getValue('TrvsTourTitle')|html_entity_decode}
+            {$clsConfiguration->getValue('TrvsTourTitle_'|cat:$_LANG_ID)|html_entity_decode}
             {$clsTourCategory->getTitle($cat_id)}
             <span style="text-decoration: underline;">trip in</span>
             {$clsCountry->getTitle($country_id)}
@@ -12,7 +12,7 @@
         </h2>
         <div class="txtexper">
             {if $mod eq 'tour' && $act eq 'cat'}
-            {$clsConfiguration->getValue('TrvsTourDescription')|html_entity_decode}
+            {$clsConfiguration->getValue('TrvsTourDescription_'|cat:$_LANG_ID)|html_entity_decode}
             {else}
             {$clsConfiguration->getValue('IntroExploreTrips_'|cat:$_LANG_ID)|html_entity_decode}
             {/if}
@@ -76,7 +76,7 @@
                 {assign var="linktour" value=$clsTourCategory->getLink(0, '', '', $country_id)}
                 {/if}
                 <a href="{$linktour}" class="btn btn-exploremore btn-hover-home" title="Explore More">
-                    Explore More <i class="fa-solid fa-right-long" style="color: #ffffff; margin-left: 8px;"></i>
+                    {$core->get_Lang('Explore More')} <i class="fa-solid fa-right-long" style="color: #ffffff; margin-left: 8px;"></i>
                 </a>
             </div>
         </div>

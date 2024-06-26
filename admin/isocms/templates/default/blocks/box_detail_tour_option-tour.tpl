@@ -97,6 +97,7 @@
 					<div class="form-group inpt_tour">
 						<label class="col-form-label">{$core->get_Lang('Departure time')} <span class="required_red">*</span></label>
 						<div id="departureTime" onClick="loadHelp(this)">
+							<span class="check_all_select fr" style="margin-bottom:10px;cursor: pointer">{$core->get_Lang('Select all')}</span>
 							<select name="month_id[]" id="month_id" class="full-width chosen-select required" multiple="multiple">
 								{assign var = selected value = $oneItem.list_month_id}
 								{$clsMonth->getSelectMultiMonth($selected,0)}

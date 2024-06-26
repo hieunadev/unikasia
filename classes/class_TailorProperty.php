@@ -1,34 +1,39 @@
 <?php
-class TailorProperty extends dbBasic {
-    function __construct() {
+class TailorProperty extends dbBasic
+{
+    function __construct()
+    {
         $this->pkey = "tailor_property_id";
-        $this->tbl = DB_PREFIX."tailor_property";
+        $this->tbl = DB_PREFIX . "tailor_property";
     }
-	function getTitle($pvalTable,$one=null){
-		if(!isset($one['title'])){
-			$one=$this->getOne($pvalTable);	
-		}		
-		return $one['title'];
-	}
-	function getListType() {
-		global $core;
-		#
+    function getTitle($pvalTable, $one = null)
+    {
+        if (!isset($one['title'])) {
+            $one = $this->getOne($pvalTable);
+        }
+        return $one['title'];
+    }
+    function getListType()
+    {
+        global $core;
+        #
         $listType = array();
-		$listType['_TRANSPORT'] = $core->get_Lang('Transport');
-		$listType['_LANGUAGE'] = $core->get_Lang('Language');
-		$listType['_BREAKFAST'] = $core->get_Lang('Breakfast');
-		$listType['_LUNCH'] = $core->get_Lang('Lunch');
-		$listType['_DINNER'] = $core->get_Lang('Dinner');
-		$listType['_HOTEL_CLASS'] = $core->get_Lang('Hotel Class');
-		//$listType['_ROOM_CLASS'] = $core->get_Lang('Room Class');
-		//$listType['_DURATION'] = $core->get_Lang('Duration');
+        $listType['_TRANSPORT'] = $core->get_Lang('Transport');
+        $listType['_ARRIVAL_AIRPORT'] = $core->get_Lang('Arrival Airport');
+        $listType['_TOUR_GUIDE'] = $core->get_Lang('Tour guide preference');
+        $listType['_MEALS'] = $core->get_Lang('Meals');
+        $listType['_ACCOMMODATIONS'] = $core->get_Lang('Accommodations');
+        // $listType['_HOTEL_CLASS'] = $core->get_Lang('Hotel Class');
+        #
         return $listType;
     }
-	function getTextByType($selected = '') {
+    function getTextByType($selected = '')
+    {
         $lstType = $this->getListType();
         return $lstType[$selected];
     }
-    function getSelectByType($selected = '') {
+    function getSelectByType($selected = '')
+    {
         global $core;
         #
         $lstType = $this->getListType();
@@ -39,40 +44,42 @@ class TailorProperty extends dbBasic {
         }
         return $html;
     }
-	function getSelectByProperty($type, $selected = '') {
+    function getSelectByProperty($type, $selected = '')
+    {
         global $core;
         #
-        $all = $this->getAll("is_trash=0 and type='$type' order by order_no ASC",$this->pkey.',title');
-		
-		if($type =='_BREAKFAST'){
-        	$html = '<option value="">-- ' . $core->get_Lang('Breakfast') . ' --</option>';
-		}
-		else if($type =='_LUNCH'){
-			$html = '<option value="">-- ' . $core->get_Lang('Lunch') . ' --</option>';
-		}
-		else if($type =='_DINNER'){
-			$html = '<option value="">-- ' . $core->get_Lang('Dinner') . ' --</option>';
-		}
-		else{
-        	$html = '<option value="">-- ' . $core->get_Lang('select') . ' --</option>';
-		}
+        $all = $this->getAll("is_trash=0 and type='$type' order by order_no ASC", $this->pkey . ',title');
+
+        if ($type == '_TRANSPORT') {
+            $html = '<option value="">-- ' . $core->get_Lang('Arrival Airport') . ' --</option>';
+        } elseif ($type == '_ARRIVAL_AIRPORT') {
+            $html = '<option value="">-- ' . $core->get_Lang('Arrival Airport') . ' --</option>';
+        } else if ($type == '_TOUR_GUIDE') {
+            $html = '<option value="">-- ' . $core->get_Lang('Tour guide preference') . ' --</option>';
+        } else if ($type == '_MEALS') {
+            $html = '<option value="">-- ' . $core->get_Lang('Meals') . ' --</option>';
+        } else if ($type == '_ACCOMMODATIONS') {
+            $html = '<option value="">-- ' . $core->get_Lang('Accommodations') . ' --</option>';
+        }
         if (!empty($all)) {
             $i = 0;
             foreach ($all as $item) {
                 $selected_index = ($selected == $item[$this->pkey]) ? 'selected="selected"' : '';
-                $html.='<option value="' . $item[$this->pkey] . '" ' . $selected_index . '>' . $this->getTitle($item[$this->pkey],$item) . '</option>';
+                $html .= '<option value="' . $item[$this->pkey] . '" ' . $selected_index . '>' . $this->getTitle($item[$this->pkey], $item) . '</option>';
                 ++$i;
             }
         }
         return $html;
     }
-	function getListByProperty($type) {
-		global $core;
+    function getListByProperty($type)
+    {
+        global $core;
         #
-		$res = $this->getAll("is_trash=0 and type='$type' order by order_no ASC",$this->pkey.',title');
-		return !empty($res)?$res:'';
-	}
-	function makeOption($cat_id = 0, $type = '', $selectedid = "", $level = 0, &$arrHtml) {
+        $res = $this->getAll("is_trash=0 and type='$type' order by order_no ASC", $this->pkey . ',title');
+        return !empty($res) ? $res : '';
+    }
+    function makeOption($cat_id = 0, $type = '', $selectedid = "", $level = 0, &$arrHtml)
+    {
         global $dbconn;
         $cond = "is_trash=0 and parent_id='" . $cat_id . "'";
         if ($type != '') {
@@ -92,7 +99,8 @@ class TailorProperty extends dbBasic {
             return "";
         }
     }
-    function getListOption($selected = '') {
+    function getListOption($selected = '')
+    {
         global $core;
         #
         $arrOptionsCategory = array();
@@ -105,7 +113,8 @@ class TailorProperty extends dbBasic {
         }
         return $html;
     }
-	function checkPropertyAround($pvalTable, $property_id) {
+    function checkPropertyAround($pvalTable, $property_id)
+    {
         $clsHotelRoom = new HotelRoom();
         $oneItem = $clsHotelRoom->getOne($pvalTable);
         $str = $oneItem['list_RoomFacilities'];
@@ -118,4 +127,3 @@ class TailorProperty extends dbBasic {
         return 0;
     }
 }
-?>

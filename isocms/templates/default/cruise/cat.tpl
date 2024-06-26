@@ -68,11 +68,11 @@
                                         <div class="value_ranges d-flex justify-content-between flex-wrap align-items-center  width-100">
                                             <div class="item_value">
                                                 <span>$</span>
-                                                <input type="numeric" pattern="[0-9]*" id="min_price" name="min_price" value="{$min_price}">
+                                                <input inputmode="numeric" pattern="[0-9]*" id="min_price" name="min_price" value="{$min_price}">
                                             </div>
                                             <div class="item_value">
                                                 <span>$</span>
-                                                <input type="numeric" pattern="[0-9]*" id="max_price" name="max_price" value="{$max_price}" />
+                                                <input inputmode="numeric" pattern="[0-9]*" id="max_price" name="max_price" value="{$max_price}" />
                                             </div>
                                         </div>
                                         <input type="text" id="price">

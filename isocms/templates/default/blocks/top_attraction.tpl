@@ -1,35 +1,35 @@
 <section class="top-attractions">
     <div class="container">
-        <h2 class="txt_title_attractions d-flex justify-content-center">{$clsConfiguration->getOutTeam('TopDestinationTitle')} <p>&#160;{if $clsCountry->getTitle($country_id)}  {$clsCountry->getTitle($country_id)} {else}South East Asia {/if}</p>
+        <h2 class="txt_title_attractions d-flex justify-content-center">{$clsConfiguration->getOutTeam('TopDestinationTitle')} <p>&#160;{if $clsCountry->getTitle($country_id)} {$clsCountry->getTitle($country_id)} {else}South East Asia {/if}</p>
         </h2>
         <div class="row">
             <div class="col-12 col-sm-12 col-md-12 col-lg-6">
                 <div class="list-holidays">
                     {section name=i loop=$listSelected}
-                        <div class="holiday">
-                            <div class="hnv_item_holiday">
-                                <div class="row">
-                                    <div class="col-12 col-sm-12 col-md-5 col-lg-5">
-                                        <a href="{$clsCity->getLink($listSelected[i].city_id)}" title="{$clsCity->getTitle($listSelected[i].city_id)}">
-                                            <div class="hnv_item_image_holiday">
-                                                <img class="img_holiday" src="{$clsCity->getImage($listSelected[i].city_id, 257, 158)}" onerror="this.src='{$URL_IMAGES}/none_image.png'" width="257" height="158">
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="col-12 col-sm-12 col-md-7 col-lg-7">
-                                        <div class="content_holiday">
-                                            <h3 class="title_hodiday pb-0">
-                                                <a class="txt-hover-home  city-title" href="{$clsCity->getLink($listSelected[i].city_id)}" title="{$clsCity->getTitle($listSelected[i].city_id)}">
-                                                    {$clsCity->getTitle($listSelected[i].city_id)} Holidays
-                                                </a>
-                                            </h3>
-                                            <p class="txt_holiday pb-0">{$clsISO->limit_textIso($clsCity->getIntro($listSelected[i].city_id)|html_entity_decode, 15)}</p>
-                                            <p class="txt_detail_holiday pb-0">{$clsTourDestination->countTourByCity($listSelected[i].city_id)} tours from USD ${$clsTourDestination->getMinPriceByCity($listSelected[i].city_id)}</p>
+                    <div class="holiday">
+                        <div class="hnv_item_holiday">
+                            <div class="row">
+                                <div class="col-12 col-sm-12 col-md-5 col-lg-5">
+                                    <a href="{$clsCity->getLink($listSelected[i].city_id)}" title="{$clsCity->getTitle($listSelected[i].city_id)}">
+                                        <div class="hnv_item_image_holiday">
+                                            <img class="img_holiday" src="{$clsCity->getImage($listSelected[i].city_id, 257, 158)}" onerror="this.src='{$URL_IMAGES}/none_image.png'" width="257" height="158">
                                         </div>
+                                    </a>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-7 col-lg-7">
+                                    <div class="content_holiday">
+                                        <h3 class="title_hodiday pb-0">
+                                            <a class="txt-hover-home  city-title" href="{$clsCity->getLink($listSelected[i].city_id)}" title="{$clsCity->getTitle($listSelected[i].city_id)}">
+                                                {$clsCity->getTitle($listSelected[i].city_id)} Holidays
+                                            </a>
+                                        </h3>
+                                        <p class="txt_holiday pb-0">{$clsISO->limit_textIso($clsCity->getIntro($listSelected[i].city_id)|html_entity_decode, 15)}</p>
+                                        <p class="txt_detail_holiday pb-0">{$clsTourDestination->countTourByCity($listSelected[i].city_id)} tours from USD ${$clsTourDestination->getMinPriceByCity($listSelected[i].city_id)}</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
                     {/section}
                 </div>
             </div>
@@ -38,8 +38,8 @@
             </div>
         </div>
         <div class="btn-attraction text-center mt-5">
-            <button class="btn txt_btn">Explore all attractions
-                <img class="ms-2" src="{$URL_IMAGES}/arrow_right.png" alt="">
+            <button class="btn txt_btn">{$core->get_Lang('Explore all attractions')}
+                <i class="fa-light fa-arrow-right ms-2"></i>
             </button>
         </div>
     </div>

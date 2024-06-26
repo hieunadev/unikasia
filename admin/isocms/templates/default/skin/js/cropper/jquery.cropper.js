@@ -113,6 +113,7 @@ function upload_file_picker(file, params) {
                 ) {
                     var aspectRatio = 1920 / 400;
                 }
+                if (params.openFrom == "image_hotel_sub") var aspectRatio = 166 / 261;
             } else if (params.clsTable == "City") {
                 var aspectRatio = 295 / 168;
                 if (
@@ -333,6 +334,14 @@ function upload_file_picker(file, params) {
                                                     "isoman_show_image_hotel"
                                                 ) {
                                                     $("#image_hotel").val(
+                                                        $.trim(s[1])
+                                                    );
+                                                }
+                                                if (
+                                                    params.toId ==
+                                                    "isoman_show_image_hotel_sub"
+                                                ) {
+                                                    $("#image_hotel_sub").val(
                                                         $.trim(s[1])
                                                     );
                                                 }

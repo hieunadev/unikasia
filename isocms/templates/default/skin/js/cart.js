@@ -66,8 +66,8 @@ $(function () {
 
         let data_class = class_number.attr("data-class");
         let class_parent = number_travelers.attr("data-class");
-
         if (value > 0) {
+            $(self).prev().val(value);
             if ($(`.${class_parent}`).find(`.${data_class}`).length > 0) {
                 $(`.${data_class}`).text(value);
             } else {
@@ -133,7 +133,8 @@ $(function () {
         $('.remaining_booking').text(`US $${remaining_booking}`);
         $('.payment_amount').text(`${deposit_booking}`);
         $('.totalFinal').val(`${deposit_booking}`);
-        $('#totalgrand').val(`${deposit_booking}`);
+        $('#totalgrand').val(`${total}`);
+        $('#price_deposit').val(`${deposit_booking}`);
     }
 
     $(document)

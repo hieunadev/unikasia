@@ -3,6 +3,7 @@
 {assign var=CompanyName value=CompanyName_|cat:$_LANG_ID}
 {assign var=CompanyAddress1 value=CompanyAddress1_|cat:$_LANG_ID}
 {assign var = DescriptionZoneFooter value = DescriptionZoneFooter_|cat:$_LANG_ID}
+
 <div class="unika_footer">
     <div class="container">
         <div class="unika_footer_1 d-flex">
@@ -13,7 +14,7 @@
                     </a>
                 </div>
                 <form action="" class="unika_search">
-                    <input type="email" class="unika_input_search" name="email" id="email" placeholder="Enter your mail">
+                    <input type="email" class="unika_input_search" name="email" id="email" placeholder="{$core->get_Lang('Enter your mail')}" required>
                     <input type="button" class="unika_btn_search" value="Submit">
                 </form>
                 <div class="unika_1_left_link d-flex flex-column">
@@ -151,8 +152,8 @@
                     <img src="{$clsConfiguration->getValue('FooterLogo')}" alt="Logo" width="150" height="56">
                 </a>
                 <div class="unika_footer_2_txt d-flex flex-column">
-                    <span>International tour operator approved by the National Tourism Administration in Vietnam.</span>
-                    <span>LICENCE N°: 01 - 02 /TCDL-GP LHQT</span>
+                    <span>{$core->get_Lang("International tour operator approved by the National Tourism Administration in Vietnam")}.</span>
+                    <span>LICENCE N°: {$clsConfiguration->getValue('GPKD')}</span>
                 </div>
             </div>
             <div class="unika_footer_2_right">
@@ -220,15 +221,18 @@
 <script>
     var msg_success = "{$core->get_Lang('Send email successfully. Please check!')}"
     var msg_fail = "{$core->get_Lang('Send email fail. Please sent again!')}"
+    var msg_error = "{$core->get_Lang('Please enter your email')}"
 </script>
 {literal}
     <script>
         $(".unika_btn_search").click(function() {
             let data = {email: $("#email").val()};
+            if ($("#email").val() == "") {
+                alert(msg_error)
+                return;
+            }
             $.post(path_ajax_script+'/index.php?mod=home&act=ajSubmitSubscribe', data)
-                .done(function(res) {
-                    alert(res);
-                })
+                .done(function(res) { alert(res); })
         });
     </script>
 {/literal}

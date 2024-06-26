@@ -49,10 +49,8 @@ if (isset($_POST['search_hotel_left']) &&  $_POST['search_hotel_left'] == 'searc
     $city = isset($_POST['city']) ? $_POST['city'] : null;
     $price_range = array();
 
-    $min_price = !empty($_POST["min_price"]) ? html_entity_decode($_POST["min_price"]) : "";
-    $max_price = !empty($_POST["max_price"]) ? html_entity_decode($_POST["max_price"]) : "";
-    $min_price_value = substr($min_price, 1);
-    $max_price_value = substr($max_price, 1);
+    $min_price_value = !empty($_POST["min_price"]) ? html_entity_decode($_POST["min_price"]) : "";
+    $max_price_value = !empty($_POST["max_price"]) ? html_entity_decode($_POST["max_price"]) : "";
 
     $price_range = isset($_POST['price_range']) ? $_POST['price_range'] : null;
     $smarty->assign('price_range', $price_range);

@@ -32,7 +32,7 @@ $smarty->assign('clsBlog', $clsBlog);
 #	
 $show   =   isset($_GET['show']) ? $_GET['show'] : '';
 $smarty->assign('show', $show);
-#
+#   
 $cond   =   ' is_trash = 0 AND is_online = 1';
 $order1 =   ' ORDER BY order_no ASC';
 $order2 =   ' ORDER BY rand()';

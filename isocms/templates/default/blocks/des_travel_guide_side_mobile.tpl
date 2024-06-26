@@ -1,4 +1,3 @@
-{*van code new*}
 <div class="unika_sort_filter">
     <div class="unika_btn_sort_filter">Sort & filter</div>
 </div>
@@ -18,7 +17,39 @@
             </div>
         </form>
         <div class="des_travel_guide_category">
-            <div class="des_travel_guide_category_title">
+            {if $show eq 'attractionCountry'}
+                <div class="des_travel_guide_category_title">
+                    <h2>{$clsCity->getTitle($city_id)}</h2>
+                </div>
+                <div class="des_travel_guide_category_list">
+                    {if $list_tour}
+                        <a href="javascript:void(0);" data-target=".scroll_exciting_trip" title="{$core->get_Lang('Exciting trip')}">
+                            {$core->get_Lang('Exciting trip')}
+                        </a>
+                    {/if}
+                    {if $list_hotel}
+                        <a href="javascript:void(0);" data-target=".scroll_hotel" title="{$core->get_Lang('Hotel')}">
+                            {$core->get_Lang('Hotel')}
+                        </a>
+                    {/if}
+                    {if $list_blog}
+                        <a href="javascript:void(0);" data-target=".scroll_place_to_go" title="{$core->get_Lang('Place to go')}">
+                            {$core->get_Lang('Place to go')}
+                        </a>
+                    {/if}
+                    {if $list_cuisine}
+                        <a href="javascript:void(0);" data-target=".scroll_cuisine" title="{$core->get_Lang('Cuisine')}">
+                            {$core->get_Lang('Cuisine')}
+                        </a>
+                    {/if}
+                    {if $list_culture}
+                        <a href="javascript:void(0);" data-target=".scroll_culture" title="{$core->get_Lang('Culture')}">
+                            {$core->get_Lang('Culture')}
+                        </a>
+                    {/if}
+                </div>
+            {/if}
+            <!-- <div class="des_travel_guide_category_title">
                 <h2>Vietnam</h2>
             </div>
             <div class="des_travel_guide_category_list">
@@ -26,14 +57,13 @@
                 <a href="https://unikasia.vietiso.com/en/guides/vietnam/cuisine-c23" title="Cuisine">Cuisine</a>
                 <a href="https://unikasia.vietiso.com/en/guides/vietnam/top-attractions-c2" title="Top Attractions">Top Attractions</a>
                 <a href="https://unikasia.vietiso.com/en/guides/vietnam/travel-file-c28" title="Travel File">Travel File</a>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>
 
 {literal}
 <script>
-    //van code new
     $(document)
         .on('click', '.unika_sort_filter', function() {
             $('.unika_mobile_travel_guide').slideToggle();
@@ -47,8 +77,5 @@
                 "z-index": 3
             });
         })
-    //van code new
 </script>
 {/literal}
-
-{*van code new*}

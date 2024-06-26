@@ -166,7 +166,7 @@ function default_getMainFormStep()
     //ini_set('display_errors', '1');
     //ini_set('display_startup_errors', '1');
     //error_reporting(E_ALL);
-    global $smarty, $assign_list, $_frontIsLoggedin_user_id, $core, $clsISO, $clsProperty, $clsUser, $_company_iom_id, $dbconn, $nextstep, $clsConfiguration, $mod, $package_id, $pvalTable;
+    global $smarty, $assign_list, $_LANG_ID,$_frontIsLoggedin_user_id, $core, $clsISO, $clsProperty, $clsUser, $_company_iom_id, $dbconn, $nextstep, $clsConfiguration, $mod, $package_id, $pvalTable;
     $clsCountry = new Country();
     $smarty->assign('clsClassTable', $clsCountry);
     #
@@ -291,7 +291,7 @@ function default_getMainFormStep()
     $sql    =   "SELECT default_month_country.*, default_month.title
                 FROM default_month_country
                 INNER JOIN default_month ON default_month_country.month_id = default_month.month_id
-                WHERE default_month_country.lang_id = ''
+                WHERE default_month_country.lang_id = '$_LANG_ID'
                     AND default_month_country.is_trash = 0
                     AND default_month_country.is_online = 1
                     AND default_month_country.country_id = $table_id";

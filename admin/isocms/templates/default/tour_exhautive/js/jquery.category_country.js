@@ -183,6 +183,10 @@ $().ready(function () {
                     dataType: "html",
                     success: function (html) {
                         $Core.util.toggleIndicatior(0);
+                        if(html.indexOf('_EXIST') >= 0) {
+                            alertify.error(insert_error_exist);
+                            return false;
+                        }
                         if (nextstep !== "_last" && nextstep !== "_first") {
                             // console.log(2);
                             loadMainFormStep(table_id, nextstep);

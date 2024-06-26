@@ -173,7 +173,13 @@
 						<legend>{$core->get_Lang("Photo $k")}</legend>
 						<div class="row-span">
 							<div class="fieldlabel">{$core->get_Lang("Choose pic")}
-								<p style="margin-top: -1.5rem;">{$core->get_Lang("Size")} (WxH=1600x460)</p>
+								<p style="margin-top: -1.5rem;">{$core->get_Lang("Size")} (WxH=
+									{if $k == 1}
+										734x431
+									{else}
+										359x309
+									{/if}
+									)</p>
 							</div>
 							<div class="fieldarea">
 								{assign var = TripPhoto value = TripPhoto|cat:$k|cat:_|cat:$_LANG_ID}

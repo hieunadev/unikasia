@@ -1176,6 +1176,7 @@ function default_detail()
 	#
 	$cond		=	"is_trash = 0 AND is_online = 1";
 	$order_by	=	" ORDER BY order_no ASC";
+	$limit		=	" LIMIT 10";
 	#
 	// Tất cả thông tin cruise
 	$cruise_info	=	$clsCruise->getOne($cruise_id);
@@ -1226,6 +1227,22 @@ function default_detail()
 	// List cruise post extension
 	$arr_extension_post	=	$clsCruiseExtension->getAll("is_trash = 0 AND cruise_id = $cruise_id AND type = '_POST' $order_by", "tour_id");
 	$smarty->assign('arr_extension_post', $arr_extension_post);
+	#
+	// List cruise related
+	$cond_related	=	$cond;
+	$cond_related	.=	" AND cruise_id <> $cruise_id";
+	$list_related_cruise	=	$clsCruise->getAll($cond_related . $order_by . $limit, "$clsCruise->pkey, star_number");
+	$smarty->assign('list_related_cruise', $list_related_cruise);
+	#
+	// Set recent view
+	$clsISO->setRecentView($cruise_id, 'cruise');
+	#
+	// Get recent view
+	$arr_recent_view	=	$clsISO->getRecentView('cruise', 10);
+	$smarty->assign('arr_recent_view', $arr_recent_view);
+
+
+
 
 
 

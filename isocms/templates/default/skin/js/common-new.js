@@ -175,68 +175,69 @@ $(document).ready(function () {
         }
     });
     // JS Click Detail
-    var clickedDetails = JSON.parse(sessionStorage.getItem('clickedDetails')) || [];
-    var maxItemsToShow = 4;
-    function updateClickedDetails() {
-        var clickedDetailsContainer = $(".clicked-details");
-        clickedDetailsContainer.empty();
-        var reversedClickedDetails = clickedDetails.slice().reverse();
-        if (clickedDetails.length > 0) {
-            $(".recentlyViewed").show();
-        } else {
-            $(".recentlyViewed").hide();
-        }
-        $.each(reversedClickedDetails.slice(0, maxItemsToShow), function (index, detail) {
-            var detailElement = $(detail);
-            var wrapperDiv = $("<div>").addClass("revVier");
-            detailElement.wrapAll(wrapperDiv);
-            clickedDetailsContainer.append(detailElement.parent());
-        });
-    }
-    $(".box_hotel_item").click(function () {
-        var clickedDetail = $(this).html();
-        if (clickedDetails.indexOf(clickedDetail) === -1) {
-            clickedDetails.push(clickedDetail);
-            updateClickedDetails();
-            sessionStorage.setItem('clickedDetails', JSON.stringify(clickedDetails));
-            // Kiểm tra và hiển thị nút "Xem thêm" khi có hơn 3 phần tử
-            if (clickedDetails.length > 4) {
-                $(".btnShowViewed").show();
-                $('.clicked-details').toggleClass("mbReviews", false);
-            } else {
-                $('.clicked-details').toggleClass("mbReviews", true);
-            }
-        }
-    });
-    $(".btnShowViewed").click(function () {
-        maxItemsToShow = clickedDetails.length;
-        updateClickedDetails();
-        updateShowMoreButton();
-    });
-    $(".btnNoneViewed").click(function () {
-        maxItemsToShow = 3;
-        updateClickedDetails();
-        updateShowMoreButton();
-    });
-    function updateShowMoreButton() {
-        var btnShowViewed = $(".btnShowViewed");
-        var btnNoneViewed = $(".btnNoneViewed");
-        if (clickedDetails.length <= 3) {
-            btnShowViewed.hide();
-            btnNoneViewed.hide();
-        } else {
-            if (maxItemsToShow === 3) {
-                btnShowViewed.show();
-                btnNoneViewed.hide();
-            } else {
-                btnShowViewed.hide();
-                btnNoneViewed.show();
-            }
-        }
-    }
-    if (clickedDetails.length <= 3) {
-        $(".btnShowViewed").hide();
-    }
-    updateClickedDetails();
-    updateShowMoreButton();
+    
+    // var clickedDetails = JSON.parse(sessionStorage.getItem('clickedDetails')) || [];
+    // var maxItemsToShow = 4;
+    // function updateClickedDetails() {
+    //     var clickedDetailsContainer = $(".clicked-details");
+    //     clickedDetailsContainer.empty();
+    //     var reversedClickedDetails = clickedDetails.slice().reverse();
+    //     if (clickedDetails.length > 0) {
+    //         $(".recentlyViewed").show();
+    //     } else {
+    //         $(".recentlyViewed").hide();
+    //     }
+    //     $.each(reversedClickedDetails.slice(0, maxItemsToShow), function (index, detail) {
+    //         var detailElement = $(detail);
+    //         var wrapperDiv = $("<div>").addClass("revVier");
+    //         detailElement.wrapAll(wrapperDiv);
+    //         clickedDetailsContainer.append(detailElement.parent());
+    //     });
+    // }
+    // $(".box_hotel_item").click(function () {
+    //     var clickedDetail = $(this).html();
+    //     if (clickedDetails.indexOf(clickedDetail) === -1) {
+    //         clickedDetails.push(clickedDetail);
+    //         updateClickedDetails();
+    //         sessionStorage.setItem('clickedDetails', JSON.stringify(clickedDetails));
+    //         // Kiểm tra và hiển thị nút "Xem thêm" khi có hơn 3 phần tử
+    //         if (clickedDetails.length > 4) {
+    //             $(".btnShowViewed").show();
+    //             $('.clicked-details').toggleClass("mbReviews", false);
+    //         } else {
+    //             $('.clicked-details').toggleClass("mbReviews", true);
+    //         }
+    //     }
+    // });
+    // $(".btnShowViewed").click(function () {
+    //     maxItemsToShow = clickedDetails.length;
+    //     updateClickedDetails();
+    //     updateShowMoreButton();
+    // });
+    // $(".btnNoneViewed").click(function () {
+    //     maxItemsToShow = 3;
+    //     updateClickedDetails();
+    //     updateShowMoreButton();
+    // });
+    // function updateShowMoreButton() {
+    //     var btnShowViewed = $(".btnShowViewed");
+    //     var btnNoneViewed = $(".btnNoneViewed");
+    //     if (clickedDetails.length <= 3) {
+    //         btnShowViewed.hide();
+    //         btnNoneViewed.hide();
+    //     } else {
+    //         if (maxItemsToShow === 3) {
+    //             btnShowViewed.show();
+    //             btnNoneViewed.hide();
+    //         } else {
+    //             btnShowViewed.hide();
+    //             btnNoneViewed.show();
+    //         }
+    //     }
+    // }
+    // if (clickedDetails.length <= 3) {
+    //     $(".btnShowViewed").hide();
+    // }
+    // updateClickedDetails();
+    // updateShowMoreButton();
 });
