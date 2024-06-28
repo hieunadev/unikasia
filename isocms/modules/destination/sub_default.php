@@ -184,6 +184,8 @@ function default_attraction()
     $smarty->assign('clsGuide', $clsGuide);
     $clsGuideCat    =   new GuideCat();
     $smarty->assign('clsGuideCat', $clsGuideCat);
+    $clsGuideCatStore   =   new GuideCatStore();
+    $smarty->assign('clsGuideCatStore', $clsGuideCatStore);
     #
     $show   =   isset($_GET['show']) ? $_GET['show'] : '';
     if ($show === 'attractionCountry') {
@@ -199,6 +201,7 @@ function default_attraction()
         }
     }
     $smarty->assign('country_id', $country_id);
+    $smarty->assign('country_slug', $country_slug);
     $smarty->assign('city_id', $city_id);
     #
     $cond       =   "is_trash = 0 AND is_online = 1";
@@ -208,46 +211,33 @@ function default_attraction()
     $limit2     =   " LIMIT 4";
     $limit3     =   " LIMIT 10";
     #
-    // List guide category
-    $arr_guide_cat  =   $clsGuideCat->getAll($cond . $order_by1, "guidecat_id, title");
-    $list_guide_cat =   [];
-    foreach ($arr_guide_cat as $item) {
-        $list_guide_cat[$item[0]] = $item[1];
-    }
-    $list_guide_cat =   array_flip($list_guide_cat);
-    #
     if (!empty($country_id) && !empty($city_id)) {
         $cond_tour  =   $cond;
         $cond_tour  .=  " AND tour_id IN (SELECT tour_id FROM default_tour_destination WHERE country_id = $country_id AND city_id = $city_id)";
         #
         $cond_hotel =   $cond;
         $cond_hotel .=  " AND country_id = $country_id AND city_id = $city_id";
-        #
-        $cond_blog  =   $cond;
-        $cond_blog  .=  " AND blog_id IN (SELECT blog_id FROM default_blog_destination WHERE country_id = $country_id AND city_id = $city_id)";
-        #
-        $cuisine_id     =   $list_guide_cat['Cuisine'];
-        $cond_cuisine   =   $cond;
-        $cond_cuisine   .=  " AND country_id = $country_id AND city_id = $city_id AND (cat_id = '$cuisine_id' OR list_cat_id LIKE '%|$cuisine_id|%')";
-        #
-        $culture_id     =   $list_guide_cat['Culture'];
-        $cond_culture   =   $cond;
-        $cond_culture   .=  " AND country_id = $country_id AND city_id = $city_id AND (cat_id = '$culture_id' OR list_cat_id LIKE '%|$culture_id|%')";
     }
-    $list_tour  =   $clsTour->getAll($cond_tour . $order_by2);
+    $list_tour  =   $clsTour->getAll($cond_tour . $order_by2 . $limit3);
     $smarty->assign('list_tour', $list_tour);
     #
     $list_hotel =   $clsHotel->getAll($cond_hotel . $order_by2 . $limit, $clsHotel->pkey);
     $smarty->assign('list_hotel', $list_hotel);
     #
-    $list_blog  =   $clsBlog->getAll($cond_blog . $order_by2 . $limit2, $clsBlog->pkey);
-    $smarty->assign('list_blog', $list_blog);
-    #
-    $list_cuisine   =   $clsGuide->getAll($cond_cuisine . $order_by2 . $limit3, $clsGuide->pkey);
-    $smarty->assign('list_cuisine', $list_cuisine);
-    #
-    $list_culture   =   $clsGuide->getAll($cond_culture . $order_by2 . $limit3, $clsGuide->pkey);
-    $smarty->assign('list_culture', $list_culture);
+    // List guidecat country
+    $sql    =   "SELECT default_guidecat.guidecat_id, default_guidecat.title 
+                FROM default_guidecat
+                INNER JOIN default_guidecat_store ON default_guidecat_store.guidecat_id = default_guidecat.guidecat_id 
+                WHERE default_guidecat_store.is_trash = 0 
+                    AND default_guidecat_store.is_online = 1 
+                    AND default_guidecat_store.country_id = $country_id
+                ORDER BY default_guidecat.order_no ASC";
+    $list_guide_country =   $dbconn->GetAll($sql);
+    foreach ($list_guide_country as $key => $item) {
+        $list_guide =   $clsGuide->getAll($cond . ' AND cat_id = ' . $item['guidecat_id'] . $order_by1 . $limit3, $clsGuide->pkey);
+        $list_guide_country[$key]['list_guide'] =   $list_guide;
+    }
+    $smarty->assign('list_guide_country', $list_guide_country);
     #
     $clsISO->setRecentView($city_id, 'attraction');
     #

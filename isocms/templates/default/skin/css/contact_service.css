@@ -127,10 +127,11 @@
     /*gap: 20px;*/
 }
 
-.item_content {
+.tour_new_contact_body .item_content {
     border-bottom: 1px solid #D3DCE1;
     gap: 16px;
-    padding: 0 20px 15px
+    padding: 0 20px 15px;
+    width: unset
 }
 
 .span_title {
@@ -242,6 +243,7 @@
     width: 100%;
     max-width: 100%;
     transition: transform 0.3s ease-in-out;
+    border-radius: 8px;
 }
 @media screen and (max-width: 1175px) {
     .information-3,

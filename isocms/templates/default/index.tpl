@@ -147,6 +147,9 @@
     <!-- Cruise list -->
     <link rel="stylesheet" href="{$URL_CSS}/hnv_cruise_list.css?v={$upd_version}">
     <link rel="preload" href="{$URL_CSS}/hnv_cruise_list.css?v={$upd_version}">
+     <!-- Cruise Detail -->
+    <link rel="stylesheet" href="{$URL_CSS}/hnv_cruise_detail.css?v={$upd_version}">
+    <link rel="preload" href="{$URL_CSS}/hnv_cruise_detail.css?v={$upd_version}">
     <!-- Top Attraction -->
     <link rel="stylesheet" href="{$URL_CSS}/hnv_attraction_top.css?v={$upd_version}">
     <link rel="preload" href="{$URL_CSS}/hnv_attraction_top.css?v={$upd_version}">
@@ -206,10 +209,11 @@
     <script src="{$URL_JS}/makepop.js?v={$upd_version}"></script>
     <script src="{$URL_JS}/jquery.countdown.min.js?v={$upd_version}"></script>
     <script src="{$URL_JS}/jquery.lockfixed.js?v={$upd_version}"></script>
-    <script src="{$URL_JS}/swiper.min.js?v={$upd_version}"></script>
+    <script src="{$URL_JS}/swiper.min.js?v={$upd_version}"></script> 
     <script src="{$URL_JS}/jquery.ui.touch-punch.min.js?v={$upd_version}"></script>
     {/if}
 
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 
 

@@ -4751,7 +4751,7 @@ function default_tailor()
 	$assign_list["listType"] = $listType;
 	$type = isset($_GET['type']) ? $_GET['type'] : '';
 	if ($type == '') {
-		header('location: ' . PCMS_URL . '/?mod=' . $mod . '&act=tailor&type=_TRANSPORT');
+		header('location: ' . PCMS_URL . '/?mod=' . $mod . '&act=tailor&type=_ARRIVAL_AIRPORT');
 		exit();
 	}
 	$assign_list["type"] = $type;

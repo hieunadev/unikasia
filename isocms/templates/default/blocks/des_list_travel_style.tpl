@@ -6,14 +6,14 @@
                 {$clsCountry->getTitle($country_id)}
                 {$clsConfiguration->getValue('TrvsTravelCountryTitle_'|cat:$_LANG_ID)|html_entity_decode}
                 {else}
-                {$clsConfiguration->getOutTeam('TravelStyleTitle')}
+                {$clsConfiguration->getValue('TravelStyleTitle_'|cat:$_LANG_ID)|html_entity_decode}
                 {/if}
             </h2>
             <div class="des_travel_style_description">
                 {if $mod eq 'tour' && $act eq 'cat'}
                 {$clsConfiguration->getValue('TrvsTravelCountryDescription_'|cat:$_LANG_ID)|html_entity_decode}
                 {else}
-                {$clsConfiguration->getOutTeam('TravelStyleDescription')}
+                {$clsConfiguration->getValue('TravelStyleDescription_'|cat:$_LANG_ID)|html_entity_decode}
                 {/if}
             </div>
         </div>

@@ -108,61 +108,61 @@
                         {/if}
 
                         <section class="recently_hotel">
-        {if $lstHotelRecent}
-        <div class="txt_recentlyhotel">
-                <h2 class="recentlyViewed" style="display:block;">{$core->get_Lang('Recently viewed')}</h2>
-                <div class="sec_recently_box-slide owl-carousel_overview6 owl-carousel">
-                    {section name=i loop=$lstHotelRecent}
-                    <div class="recently_hotel">
-                        <div class="img_hotel">
-                            <a class="photo" href="{$clsHotel->getLink($lstHotelRecent[i].hotel_id)}">
-                                <img class="img-responsive img100" src="{$lstHotelRecent[i].image}" alt="{$lstHotelRecent[i].title}" />
-                            </a>
-                        </div>
-                        <div class="box_item_body">
-                            <div class="box_left_body">
-                                <h3 class="box_body_title">
-                                    <a class="text-decoration-none txt-hover-home" href="{$clsHotel->getLink($lstHotelRecent[i].hotel_id)}" title="{$lstHotelRecent[i].title}">{$lstHotelRecent[i].title}</a>
-                                    <div class="star_hotel">
-                                        {$clsHotel->getStarNumber($lstHotelRecent[i].hotel_id)}
-                                    </div>
-                                </h3>
-                                <div class="box_body-hotel">
-                                    <img src="{$URL_IMAGES}/hotel/iconHome.svg" alt="error">
-                                    <p style="margin: 0">{$clsHotel->getTypeHotel($lstHotelRecent[i].hotel_id)}</p>
+                            {if $lstHotelRecent}
+                            <div class="txt_recentlyhotel">
+                                <h2 class="recentlyViewed" style="display:block;">{$core->get_Lang('Recently viewed')}</h2>
+                                <div class="sec_recently_box-slide owl-carousel_overview6 owl-carousel">
+                                    {section name=i loop=$lstHotelRecent}
+                                    <div class="recently_hotel">
+                                        <div class="img_hotel">
+                                            <a class="photo" href="{$clsHotel->getLink($lstHotelRecent[i].hotel_id)}">
+                                                <img class="img-responsive img100" src="{$lstHotelRecent[i].image}" alt="{$lstHotelRecent[i].title}" />
+                                            </a>
+                                        </div>
+                                        <div class="box_item_body">
+                                            <div class="box_left_body">
+                                                <h3 class="box_body_title">
+                                                    <a class="text-decoration-none txt-hover-home" href="{$clsHotel->getLink($lstHotelRecent[i].hotel_id)}" title="{$lstHotelRecent[i].title}">{$lstHotelRecent[i].title}</a>
+                                                    <div class="star_hotel">
+                                                        {$clsHotel->getStarNumber($lstHotelRecent[i].hotel_id)}
+                                                    </div>
+                                                </h3>
+                                                <div class="box_body-hotel">
+                                                    <img src="{$URL_IMAGES}/hotel/iconHome.svg" alt="error">
+                                                    <p style="margin: 0">{$clsHotel->getTypeHotel($lstHotelRecent[i].hotel_id)}</p>
 
-                                </div>
-                                <div class="address">
-                                    <div class="box_body_adress">
-                                        <img src="{$URL_IMAGES}/hotel/address.svg" alt="error">
-                                        <p>{$clsHotel->getAddress($lstHotelRecent[i].hotel_id)}</p>
+                                                </div>
+                                                <div class="address">
+                                                    <div class="box_body_adress">
+                                                        <img src="{$URL_IMAGES}/hotel/address.svg" alt="error">
+                                                        <p>{$clsHotel->getAddress($lstHotelRecent[i].hotel_id)}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="txt_score-review">
+                                                    <div class="border_score">
+                                                        <p class="numb_scorestay">{$clsReviews->getReviews($lstHotelRecent[i].hotel_id, 'avg_point', 'hotel')}</p>
+                                                    </div>
+                                                    <div class="txt_reviewsquality">
+                                                        <p class="txt_qualityreview">{$clsReviews->getReviews($lstHotelRecent[i].hotel_id, 'txt_review', 'hotel')}
+                                                            <span class="txt_reviews">({$clsReviews->getReviews($lstHotelRecent[i].hotel_id, '', 'hotel')} {$core->get_Lang('reviews')})</span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="des_list_hotel_item_price">
+                                                    <span class="des_price_title">Avg price per night</span>
+                                                    <span class="des_price_show_text">US</span>
+                                                    <span class="des_price_show_number">${$clsHotel->getPriceAvg($lstHotelRecent[i].hotel_id)}</span>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
+                                    {/section}
                                 </div>
-                                <div class="txt_score-review">
-                                    <div class="border_score">
-                                        <p class="numb_scorestay">{$clsReviews->getReviews($lstHotelRecent[i].hotel_id, 'avg_point', 'hotel')}</p>
-                                    </div>
-                                    <div class="txt_reviewsquality">
-                                        <p class="txt_qualityreview">{$clsReviews->getReviews($lstHotelRecent[i].hotel_id, 'txt_review', 'hotel')}
-                                            <span class="txt_reviews">({$clsReviews->getReviews($lstHotelRecent[i].hotel_id, '', 'hotel')} {$core->get_Lang('reviews')})</span>
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="des_list_hotel_item_price">
-                                    <span class="des_price_title">Avg price per night</span>
-                                    <span class="des_price_show_text">US</span>
-                                    <span class="des_price_show_number">${$clsHotel->getPriceAvg($lstHotelRecent[i].hotel_id)}</span>
-                                </div>
+
                             </div>
-                        </div>
-                    </div>
-                    {/section}
-                </div>
+                            {/if}
 
-            </div>
-        {/if}
-
-    </section>
+                        </section>
 
 
 
@@ -170,72 +170,137 @@
                 </div>
 
             </div>
-            <div class="reviewViewed">
-                {$core->getBlock('customer_review')}
-            </div>
+           
+            
         </div>
     </div>
 </div>
-        {$core->getBlock('top_attraction')}
-        {$core->getBlock('also_like')}
+{$core->getBlock('customer_review')}
+{$core->getBlock('top_attraction')}
+{$core->getBlock('also_like')}
 
 </div>
 
-<style> 
-.recently_hotel .owl-carousel .owl-item img {
-    width: unset;
-}
+<style>
+    .recently_hotel .owl-carousel .owl-item .box_left_body img {
+        width: unset;
+    }
+
     .recently_hotel .recentlyViewed {
-    text-align: center;
-    margin-top: 93px;
-    color: #111D37;
-    text-align: center;
-    font-size: 32px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 52px;
-    position: sticky;
-    display: block !important;
-}
+        color: var(--Neutral-1, #111D37);
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 36px;
+        /* 150% */
+        position: sticky;
+        display: block !important;
+    }
 
-.recently_hotel .img_hotel {
-    /* max-width: 200px; */
-    overflow: hidden;
-    border-radius: 8px;
-}
-    
+    .recently_hotel .img_hotel {
+        /* max-width: 200px; */
+        overflow: hidden;
+        border-radius: 8px;
+    }
 
-.recently_hotel .img_hotel img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-} 
 
-.box_body_title a {
-    color:  #111D37;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 28px; /* 155.556% */
-    margin-top: 12px;
-}
+    .recently_hotel .img_hotel img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
 
-.box_body_adress p {
-    color: #434B5C;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 20px;
-    margin-bottom: 0;
-}
+    /* .box_body_title {
+        margin-top: 12px;
+    } */
 
-.address .box_body_adress {
-    display: flex;
-    align-items: flex-start;
-    gap: 0 6px;
-}
+    .box_body_title a {
+        color: #111D37;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 28px;
+        /* 155.556% */
+    }
 
+    .box_body_adress p {
+        color: #434B5C;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 20px;
+        margin-bottom: 0;
+    }
+
+    .address .box_body_adress {
+        display: flex;
+        align-items: flex-start;
+        gap: 0 6px;
+    }
+
+    .txt_score-review {
+        display: flex;
+        align-items: center;
+        margin-bottom: 12px;
+        /* margin-top: 12px; */
+    }
+
+    .border_score {
+        position: relative;
+        width: 32px;
+        height: 32px;
+        flex-shrink: 0;
+        border-radius: 8px 8px 8px 0px;
+        background: var(--Accent-2, #004EA8);
+        margin-right: 10px;
+    }
+
+    .numb_scorestay {
+        color: #FFF;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 24px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .txt_reviewsquality {
+        display: flex;
+        align-items: center;
+    }
+
+    .txt_qualityreview {
+        margin: 0;
+        color: #111D37;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 24px;
+    }
+
+    .txt_qualityreview .txt_reviews {
+        color: #959AA4;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 16px;
+    }
+
+    .owl-prev.disabled,
+    .owl-next.disabled {
+        display: none !important;
+    }
+
+    .img_hotel .img-responsive:hover {
+        object-fit: cover;
+        -moz-transform: scale(1.1);
+        -webkit-transform: scale(1.1);
+        transform: scale(1.1);
+    }
 </style>
 
 
@@ -267,70 +332,55 @@
         })
 
 
-        document.addEventListener("DOMContentLoaded", function() {
-    const revVierContainer = document.querySelector('.revVier');
-    const mapModalElement = revVierContainer.querySelector('.mapModal');
+    document.addEventListener("DOMContentLoaded", function() {
+        const revVierContainer = document.querySelector('.revVier');
+        const mapModalElement = revVierContainer.querySelector('.mapModal');
 
-    if (mapModalElement) {
-        mapModalElement.remove();
-    } else {
-        console.warn("Không tìm thấy phần tử modal mapModal bên trong revVier.");
-    }
-});
+        if (mapModalElement) {
+            mapModalElement.remove();
+        } else {
+            console.warn("Không tìm thấy phần tử modal mapModal bên trong revVier.");
+        }
+    });
 
-$('.owl-carousel_overview6').owlCarousel({
+    $('.owl-carousel_overview6').owlCarousel({
 
-items: 3,
-margin: 32,
+        items: 3,
+        margin: 32,
 
-loop: false,
+        loop: false,
 
-nav: true,
+        nav: true,
 
-dots: false,
+        dots: false,
 
-autoplay: false,
+        smartSpeed: 1000,
 
-autoplayTimeout: 3000,
+        navText: ["<i class='fa fa-chevron-left fa-2xl'></i>", "<i class='fa fa-chevron-right fa-2xl'></i>"],
 
-smartSpeed: 1000,
+        responsive: {
 
-navText: ["<i class='fa fa-chevron-left fa-2xl'></i>", "<i class='fa fa-chevron-right fa-2xl'></i>"],
+            0: {
 
-responsive: {
+                items: 1
 
-    0: {
+            },
 
-        items: 1
+            600: {
 
-    },
+                items: 2
 
-    600: {
+            },
 
-        items: 2
+            1000: {
 
-    },
+                items: 3
 
-    1000: {
+            }
 
-        items: 3
+        }
 
-    }
-
-}
-
-}).on('changed.owl.carousel', function(event) {
-// Kiểm tra xem carousel có đang ở trạng thái "disabled" (không thể chuyển tiếp) hay không
-const isDisabled = $(this).hasClass('owl-carousel owl-theme owl-loaded owl-drag'); // Kiểm tra các class mặc định của Owl Carousel
-
-// Ẩn nút "next" nếu carousel đang ở trạng thái "disabled"
-$('.owl-next').toggle(!isDisabled);
-});
-
-
-
-
-
+    })
 </script>
 {/literal}
 

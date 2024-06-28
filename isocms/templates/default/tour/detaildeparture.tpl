@@ -92,7 +92,11 @@
                                 <p class="excluding_explore">Excluding international flights</p>
                                 <div class="d-flex flex-column align-items-center">
                                     <div class="d-flex flex-column flex-sm-row justify-content-center" style="gap: 16px; width: 100%">
-                                        <button class="btn btn-request-book btn-hover-home">Request a quote</button>
+                                        <form action="" method="post">
+                                            <input type="hidden" name="tour_id" value="{$tour_id}">
+                                            <input type="hidden" name="ContactTour" value="ContactTour">
+                                            <button class="btn btn-request-book btn-hover-home" type="submit">{$core->get_Lang("Request a quote")}</button>
+                                        </form>
                                         <button class="btn btn-request-book btn-hover-home nav-link" data-target=".section_price">Book it now</button>
                                     </div>
                                     {if $oneItem.file_programme}
@@ -888,7 +892,7 @@
 
             $(document).on('click', '.page', function(e) {
                 e.preventDefault();
-                $('.list_reviews').html('<div class="lazy_loading text-center"><img src="path/to/lazy_load_100.svg" alt="Loading..."></div>');
+                $('.list_reviews').html('<div class="lazy_loading text-center"><img src="{/literal}{$URL_IMAGES}/icon/lazy_load_100.svg{literal}" alt="Loading..."></div>');
                 let $page = $(this).text()
                 if ($(this).hasClass('next') || $(this).hasClass('prev')) {
                     $page = $(this).attr('title')

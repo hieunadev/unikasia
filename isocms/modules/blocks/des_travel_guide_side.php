@@ -2,7 +2,7 @@
 // ini_set('display_errors', '1');
 // ini_set('display_startup_errors', '1');
 // error_reporting(E_ALL);
-global $core, $smarty, $clsISO, $assign_list, $deviceType;
+global $core, $smarty, $clsISO, $assign_list, $deviceType, $dbconn;
 #
 $smarty->assign('clsISO', $clsISO);
 $smarty->assign('deviceType', $deviceType);
@@ -134,16 +134,8 @@ if ($show === 'GuideCat') {
         $cond_hotel =   $cond;
         $cond_hotel .=  " AND country_id = $country_id AND city_id = $city_id";
         #
-        $cond_blog  =   $cond;
-        $cond_blog  .=  " AND blog_id IN (SELECT blog_id FROM default_blog_destination WHERE country_id = $country_id AND city_id = $city_id)";
-        #
-        $cuisine_id     =   $list_guide_cat['Cuisine'];
-        $cond_cuisine   =   $cond;
-        $cond_cuisine   .=  " AND country_id = $country_id AND city_id = $city_id AND (cat_id = '$cuisine_id' OR list_cat_id LIKE '%|$cuisine_id|%')";
-        #
-        $culture_id     =   $list_guide_cat['Culture'];
-        $cond_culture   =   $cond;
-        $cond_culture   .=  " AND country_id = $country_id AND city_id = $city_id AND (cat_id = '$culture_id' OR list_cat_id LIKE '%|$culture_id|%')";
+        $cond_guide  =   $cond;
+        $cond_guide .=  " AND country_id = $country_id AND city_id = $city_id";
     }
     // Exciting trip
     $list_tour  =   $clsTour->getAll($cond_tour . $order_by2);
@@ -153,18 +145,18 @@ if ($show === 'GuideCat') {
     $list_hotel =   $clsHotel->getAll($cond_hotel . $order_by2 . $limit, $clsHotel->pkey);
     $smarty->assign('list_hotel', $list_hotel);
     #
-    // Place to go
-    $list_blog  =   $clsBlog->getAll($cond_blog . $order_by2 . $limit2, $clsBlog->pkey);
-    $smarty->assign('list_blog', $list_blog);
+    // List guide category
+    $sql    =   "SELECT default_guidecat.guidecat_id, default_guidecat.title 
+                FROM default_guidecat
+                INNER JOIN default_guidecat_store ON default_guidecat_store.guidecat_id = default_guidecat.guidecat_id 
+                WHERE default_guidecat_store.is_trash = 0 
+                    AND default_guidecat_store.is_online = 1 
+                    AND default_guidecat_store.country_id = $country_id
+                ORDER BY default_guidecat.order_no ASC";
+    $list_guide_country =   $dbconn->GetAll($sql);
+    $smarty->assign('list_guide_country', $list_guide_country);
     #
-    // Cuisine
-    $list_cuisine   =   $clsGuide->getAll($cond_cuisine . $order_by2 . $limit3, $clsGuide->pkey);
-    $smarty->assign('list_cuisine', $list_cuisine);
-    #
-    // Culture
-    $list_culture   =   $clsGuide->getAll($cond_culture . $order_by2 . $limit3, $clsGuide->pkey);
-    $smarty->assign('list_culture', $list_culture);
-    // Most read
-    $most_list_blog =   $clsBlog->getAll($cond_blog . $order_by3 . $limit4, $clsBlog->pkey);
-    $smarty->assign('most_list_blog', $most_list_blog);
+    // Most read guide
+    $most_list_guide    =   $clsGuide->getAll($cond_guide . $order_by3 . $limit4, $clsGuide->pkey);
+    $smarty->assign('most_list_guide', $most_list_guide);
 }

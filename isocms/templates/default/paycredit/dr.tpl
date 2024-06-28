@@ -38,12 +38,16 @@
 		border:1px solid #DDD;
 		background:#FFF;
 	}
-	body{
-		padding:76px 0 0 0;
-	}
 	.holder-text{
 		margin:20px 0px;
 		line-height:40px;
 	}
 </style>
+    <script>
+        $(window).scroll(function() {
+            requestAnimationFrame(function() {
+                $('.unika_header').removeClass('unika_header_2');
+            });
+        });
+    </script>
 {/literal}

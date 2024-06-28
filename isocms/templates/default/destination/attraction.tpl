@@ -1,3 +1,4 @@
+<!-- Bắt buộc ko format code để tránh lỗi hiển thị -->
 <section class="page_container att_page_container">
     {$core->getBlock('des_nav_breadcrumb')}
     <div class="att_main">
@@ -137,15 +138,15 @@
                                                     {$clsHotel->getStarNumber($HotelID)}
                                                 </div>
                                             </div>
-                                            <div class="att_hotel_content_item_type ellipsis_1_line">
+                                            <div class="att_hotel_content_item_type">
                                                 <div class="icon"><i class="fa-sharp fa-light fa-house"></i></div>
-                                                <div class="description">
+                                                <div class="description ellipsis_1_line">
                                                     {$clsHotel->getTypeHotel($HotelID)}
                                                 </div>
                                             </div>
-                                            <div class="att_hotel_content_item_place ellipsis_1_line">
+                                            <div class="att_hotel_content_item_place">
                                                 <div class="icon"><i class="fa-sharp fa-solid fa-location-dot"></i></div>
-                                                <div class="description">
+                                                <div class="description ellipsis_1_line">
                                                     {$clsHotel->getAddress($HotelID)}
                                                 </div>
                                             </div>
@@ -159,7 +160,7 @@
                                                 <span class="price_title">{$core->get_Lang('US')}</span>
                                                 <span class="price_number">
                                                     {if $clsHotel->getPriceAvg($HotelID)}
-                                                    ${$clsHotel->getPriceAvg($HotelID)}
+                                                    $<span>{$clsHotel->getPriceAvg($HotelID)}</span>
                                                     {else}
                                                     {$core->get_Lang('Contact us')}
                                                     {/if}
@@ -173,157 +174,118 @@
                         </div>
                     </div>
                     {/if}
-                    {if $list_blog}
-                    <div class="att_list_placetogo scroll_place_to_go">
-                        <div class="att_list_placetogo_title">
-                            <h2>{$core->get_Lang('Place to go')} {$clsCity->getTitle($city_id)}</h2>
-                            <a href="#" title="{$core->get_Lang('Place to go')} {$clsCity->getTitle($city_id)}" class="top_att_btn_exploremore">
-                                {$core->get_Lang('Explore more')} <i class="fa-sharp fa-light fa-arrow-right"></i>
-                            </a>
-                        </div>
-                        <div class="att_list_placetogo_content">
-                            <div class="row">
-                                <div class="col-12 col-sm-12 col-md-5 col-lg-6">
-                                    <div class="box_left">
-                                        {foreach from=$list_blog key=key item=item}
-                                        {if $key == 0}
-                                        {assign var="BlogID" value=$item.blog_id}
-                                        {assign var="BlogTitle" value=$clsBlog->getTitle($BlogID)}
-                                        {assign var="BlogLink" value=$clsBlog->getLink($BlogID)}
-                                        {assign var="BlogImage" value=$clsBlog->getImage($BlogID, 405, 250)}
-                                        {assign var="BlogIntro" value=$clsBlog->getIntro($BlogID)}
-                                        <div class="att_list_placetogo_item">
-                                            <a href="{$BlogLink}" title="{$BlogTitle}">
-                                                <div class="att_list_placetogo_item_image">
-                                                    <img src="{$BlogImage}" width="405" height="250" alt="{$BlogTitle}">
+                    {if $list_guide_country}
+                        {foreach from=$list_guide_country key=key item=item}
+                            {if $item.title eq 'Places To Go'}
+                                <div class="att_list_placetogo scroll_guide_{$item.guidecat_id}">
+                                    <div class="att_list_placetogo_title">
+                                        <h2>{$core->get_Lang('Place to go')} {$clsCity->getTitle($city_id)}</h2>
+                                        <a href="{$clsGuide->getLinkGuideCat($country_slug, $clsGuideCat->getSlug($item.guidecat_id), $item.guidecat_id)}" title="{$core->get_Lang('Place to go')} {$clsCity->getTitle($city_id)}" class="top_att_btn_exploremore">
+                                            {$core->get_Lang('Explore more')} <i class="fa-sharp fa-light fa-arrow-right"></i>
+                                        </a>
+                                    </div>
+                                    <div class="att_list_placetogo_content">
+                                        <div class="row">
+                                            <div class="col-12 col-sm-12 col-md-5 col-lg-6">
+                                                <div class="box_left">
+                                                    {foreach from=$item.list_guide key=k item=i}
+                                                        {if $k == 0}
+                                                            {assign var="PlaceToGoID" value=$i.guide_id}
+                                                            {assign var="PlaceToGoTitle" value=$clsGuide->getTitle($PlaceToGoID)}
+                                                            {assign var="PlaceToGoLink" value=$clsGuide->getLink2($PlaceToGoID)}
+                                                            {assign var="PlaceToGoImage" value=$clsGuide->getImage($PlaceToGoID, 405, 250)}
+                                                            {assign var="PlaceToGoIntro" value=$clsGuide->getIntro($PlaceToGoID)}
+                                                            <div class="att_list_placetogo_item">
+                                                                <a href="{$PlaceToGoLink}" title="{$PlaceToGoTitle}">
+                                                                    <div class="att_list_placetogo_item_image">
+                                                                        <img src="{$PlaceToGoImage}" width="405" height="250" alt="{$PlaceToGoTitle}">
+                                                                    </div>
+                                                                </a>
+                                                                <div class="att_list_placetogo_item_title">
+                                                                    <h3 class="ellipsis_1_line"><a href="{$PlaceToGoLink}" title="{$PlaceToGoTitle}">{$PlaceToGoTitle}</a></h3>
+                                                                </div>
+                                                                <div class="att_list_placetogo_item_description ellipsis_3_line">
+                                                                    {$PlaceToGoIntro}
+                                                                </div>
+                                                            </div>
+                                                        {/if}
+                                                    {/foreach}
                                                 </div>
-                                            </a>
-                                            <div class="att_list_placetogo_item_title">
-                                                <h3 class="ellipsis_1_line"><a href="{$BlogLink}" title="{$BlogTitle}">{$BlogTitle}</a></h3>
                                             </div>
-                                            <div class="att_list_placetogo_item_description ellipsis_3_line">
-                                                {$BlogIntro}
+                                            <div class="col-12 col-sm-12 col-md-7 col-lg-6">
+                                                <div class="box_right">
+                                                    {foreach from=$item.list_guide key=k item=i}
+                                                    {if $k > 0 && $k < 4}
+                                                    {assign var="PlaceToGoID" value=$i.guide_id}
+                                                    {assign var="PlaceToGoTitle" value=$clsGuide->getTitle($PlaceToGoID)}
+                                                    {assign var="PlaceToGoLink" value=$clsGuide->getLink2($PlaceToGoID)}
+                                                    {assign var="PlaceToGoImage" value=$clsGuide->getImage($PlaceToGoID, 145, 90)}
+                                                    {assign var="PlaceToGoIntro" value=$clsGuide->getIntro($PlaceToGoID)}
+                                                    <div class="att_list_placetogo_item">
+                                                        <div class="row">
+                                                            <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                                                                <a href="{$PlaceToGoLink}" title="{$PlaceToGoTitle}">
+                                                                    <div class="att_list_placetogo_item_image">
+                                                                        <img src="{$PlaceToGoImage}" width="145" height="90" alt="{$PlaceToGoTitle}">
+                                                                    </div>
+                                                                </a>
+                                                            </div>
+                                                            <div class="col-12 col-sm-12 col-md-8 col-lg-8">
+                                                                <div class="att_list_placetogo_item_title">
+                                                                    <h3 class="ellipsis_1_line"><a href="{$PlaceToGoLink}" title="{$PlaceToGoTitle}">{$PlaceToGoTitle}</a></h3>
+                                                                </div>
+                                                                <div class="att_list_placetogo_item_description ellipsis_3_line">
+                                                                    {$PlaceToGoIntro}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    {/if}
+                                                    {/foreach}
+                                                </div>
                                             </div>
                                         </div>
-                                        {/if}
-                                        {/foreach}
                                     </div>
                                 </div>
-                                <div class="col-12 col-sm-12 col-md-7 col-lg-6">
-                                    <div class="box_right">
-                                        {foreach from=$list_blog key=key item=item}
-                                        {if $key > 0}
-                                        {assign var="BlogID" value=$item.blog_id}
-                                        {assign var="BlogTitle" value=$clsBlog->getTitle($BlogID)}
-                                        {assign var="BlogLink" value=$clsBlog->getLink($BlogID)}
-                                        {assign var="BlogImage" value=$clsBlog->getImage($BlogID, 145, 90)}
-                                        {assign var="BlogIntro" value=$clsBlog->getIntro($BlogID)}
-                                        <div class="att_list_placetogo_item">
-                                            <div class="row">
-                                                <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-                                                    <a href="{$BlogLink}" title="{$BlogTitle}">
+                            {else}
+                                <div class="att_list_cuisine scroll_guide_{$item.guidecat_id}">
+                                    <div class="att_list_cuisine_title">
+                                        <h2>{$core->get_Lang({$item.title})} {$clsCity->getTitle($city_id)}</h2>
+                                        <a href="{$clsGuide->getLinkGuideCat($country_slug, $clsGuideCat->getSlug($item.guidecat_id), $item.guidecat_id)}" title="{$core->get_Lang('Cuisine')} {$clsCity->getTitle($city_id)}" class="top_att_btn_exploremore">
+                                            {$core->get_Lang('Explore more')} <i class="fa-sharp fa-light fa-arrow-right"></i>
+                                        </a>
+                                    </div>
+                                    <div class="att_list_cuisine_content">
+                                        <div class="owl-carousel owl-theme att_cuisine_list_item">
+                                            {foreach from=$item.list_guide key=k item=i}
+                                            {assign var="GuideCuisineID" value=$i.guide_id}
+                                            {assign var="GuideCuisineTitle" value=$clsGuide->getTitle($GuideCuisineID)}
+                                            {assign var="GuideCuisineLink" value=$clsGuide->getLink2($GuideCuisineID)}
+                                            {assign var="GuideCuisineImage" value=$clsGuide->getImage($GuideCuisineID, 292, 216)}
+                                            {assign var="GuideCuisineIntro" value=$clsGuide->getIntro($GuideCuisineID)}
+                                            <div class="item" data-merge="1">
+                                                <div class="att_cuisine_item">
+                                                    <a href="{$GuideCuisineLink}" title="{$GuideCuisineTitle}">
                                                         <div class="att_list_placetogo_item_image">
-                                                            <img src="{$BlogImage}" width="145" height="90" alt="{$BlogTitle}">
+                                                            <img src="{$GuideCuisineImage}" alt="{$GuideCuisineTitle}" width="292" height="216" loading="lazy" />
                                                         </div>
                                                     </a>
-                                                </div>
-                                                <div class="col-12 col-sm-12 col-md-8 col-lg-8">
-                                                    <div class="att_list_placetogo_item_title">
-                                                        <h3 class="ellipsis_1_line"><a href="{$BlogLink}" title="{$BlogTitle}">{$BlogTitle}</a></h3>
+                                                    <div class="att_cuisine_item_intro">
+                                                        <div class="att_cuisine_item_title">
+                                                            <h3 class="ellipsis_1_line"><a href="{$GuideCuisineLink}" title="{$GuideCuisineTitle}">{$GuideCuisineTitle}</a></h3>
+                                                        </div>
+                                                        <div class="att_cuisine_item_description ellipsis_4_line">
+                                                            {$GuideCuisineIntro}
+                                                        </div>
                                                     </div>
-                                                    <div class="att_list_placetogo_item_description ellipsis_3_line">
-                                                        {$BlogIntro}
-                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        {/if}
-                                        {/foreach}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {/if}
-                    {if $list_cuisine}
-                    <div class="att_list_cuisine scroll_cuisine">
-                        <div class="att_list_cuisine_title">
-                            <h2>{$core->get_Lang('Cuisine')} {$clsCity->getTitle($city_id)}</h2>
-                            <a href="#" title="{$core->get_Lang('Cuisine')} {$clsCity->getTitle($city_id)}" class="top_att_btn_exploremore">
-                                {$core->get_Lang('Explore more')} <i class="fa-sharp fa-light fa-arrow-right"></i>
-                            </a>
-                        </div>
-                        <div class="att_list_cuisine_content">
-                            <div class="owl-carousel owl-theme att_cuisine_list_item">
-                                {foreach from=$list_cuisine key=key item=item}
-                                {assign var="GuideCuisineID" value=$item.guide_id}
-                                {assign var="GuideCuisineTitle" value=$clsGuide->getTitle($GuideCuisineID)}
-                                {assign var="GuideCuisineLink" value=$clsGuide->getLink($GuideCuisineID)}
-                                {assign var="GuideCuisineImage" value=$clsGuide->getImage($GuideCuisineID, 292, 216)}
-                                {assign var="GuideCuisineIntro" value=$clsGuide->getIntro($GuideCuisineID)}
-                                <div class="item" data-merge="1">
-                                    <div class="att_cuisine_item">
-                                        <a href="{$GuideCuisineLink}" title="{$GuideCuisineTitle}">
-                                            <div class="att_list_placetogo_item_image">
-                                                <img src="{$GuideCuisineImage}" alt="{$GuideCuisineTitle}" width="292" height="216" loading="lazy" />
-                                            </div>
-                                        </a>
-                                        <div class="att_cuisine_item_intro">
-                                            <div class="att_cuisine_item_title">
-                                                <h3 class="ellipsis_1_line"><a href="{$GuideCuisineLink}" title="{$GuideCuisineTitle}">{$GuideCuisineTitle}</a></h3>
-                                            </div>
-                                            <div class="att_cuisine_item_description ellipsis_4_line">
-                                                {$GuideCuisineIntro}
-                                            </div>
+                                            {/foreach}
                                         </div>
                                     </div>
                                 </div>
-                                {/foreach}
-                            </div>
-                        </div>
-                    </div>
-                    {/if}
-                    {if $list_culture}
-                    <div class="att_list_travel_guide scroll_culture">
-                        <div class="att_list_cuisine_title">
-                            <h2>{$core->get_Lang('Culture')} {$clsCity->getTitle($city_id)}</h2>
-                            <a href="#" title="{$core->get_Lang('Culture')} {$clsCity->getTitle($city_id)}" class="top_att_btn_exploremore">
-                                {$core->get_Lang('Explore more')} <i class="fa-sharp fa-light fa-arrow-right"></i>
-                            </a>
-                        </div>
-                        <div class="att_list_cuisine_content">
-                            <div class="owl-carousel owl-theme att_travel_guide_list_item">
-                                {foreach from=$list_culture key=key item=item}
-                                {assign var="GuideCultureID" value=$item.guide_id}
-                                {assign var="GuideCultureTitle" value=$clsGuide->getTitle($GuideCultureID)}
-                                {assign var="GuideCultureLink" value=$clsGuide->getLink($GuideCultureID)}
-                                {assign var="GuideCultureImage" value=$clsGuide->getImage($GuideCultureID, 292, 216)}
-                                {assign var="GuideCultureIntro" value=$clsGuide->getIntro($GuideCultureID)}
-                                <div class="item" data-merge="1">
-                                    <div class="att_cuisine_item">
-                                        <a href="{$GuideCultureLink}" title="{$GuideCultureTitle}">
-                                            <div class="att_cuisine_item_image">
-                                                <img src="{$GuideCultureImage}" alt="{$GuideCultureTitle}" width="292" height="216" loading="lazy" />
-                                            </div>
-                                        </a>
-                                        <div class="att_cuisine_item_intro">
-                                            <div class="att_cuisine_item_title">
-                                                <h3 class="ellipsis_1_line">
-                                                    <a href="{$GuideCultureLink}" title="{$GuideCultureTitle}">
-                                                        {$GuideCultureTitle}
-                                                    </a>
-                                                </h3>
-                                            </div>
-                                            <div class="att_cuisine_item_description ellipsis_4_line">
-                                                {$GuideCultureIntro}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                {/foreach}
-                            </div>
-                        </div>
-                    </div>
+                            {/if}
+                        {/foreach}
                     {/if}
                 </div>
                 <div class="col-12 col-sm-12 col-md-3">

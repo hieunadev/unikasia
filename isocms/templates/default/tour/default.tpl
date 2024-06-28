@@ -37,7 +37,7 @@
     <section id="breadcrumb-tour">
         <div class="container ps-0">
             <div class="d-flex">
-                <span class="Vietnam txt_youarehere">{$core->get_Lang("You are here")}: </span>
+                <span class="Vietnam txt_youarehere">{$core->get_Lang("You are here")}</span>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item active" aria-current="page"><a href="/">{$core->get_Lang("Home")}</a></li>
                     {if $country_id}

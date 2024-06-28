@@ -138,7 +138,8 @@
         padding: 0;
     }
 
-    .guide_detail_body .trvgd_header_intro {
+    .guide_detail_body .trvgd_header_intro,
+    .destination_attraction_body .trvgd_header_intro {
         padding-top: 138px;
     }
 

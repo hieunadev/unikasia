@@ -292,7 +292,7 @@
                                                                 {if $clsCruiseItinerary->getMinPriceItinerary($CruiseID) eq 0}
                                                                 {$core->get_Lang('Contact')}
                                                                 {else}
-                                                                US $ {$clsCruiseItinerary->getMinPriceItinerary($CruiseID)}
+                                                                {$core->get_Lang('US')} ${$clsCruiseItinerary->getMinPriceItinerary($CruiseID)}
                                                                 {/if}
                                                             </span>
                                                         </div>

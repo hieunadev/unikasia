@@ -199,12 +199,15 @@
                                 <p class="txt_fromnum">{$core->get_Lang('from')}</p>
                                 <p class="txt_txtus">{$core->get_Lang('US')} <span class="txt_numbus ms-1">${$clsHotel->getPriceAvg($hotel_id)}</span></p>
                             </div>
-
-
+                            
                             <div class="btn_contactus">
-                                <a href="{$PCMS_URL}contact-us.html" alt="contactus" title="contactus">
-                                    <button class="btn btn_viewtour">{$core->get_Lang('Contact')} <i class="fa-regular fa-arrow-right" style="color: #ffffff;"></i>
-                                    </button>
+                                <a href="" alt="contactus" title="contactus">
+                                    <form action="" method="post">
+                                        <input type="hidden" name="hotel_id" value="{$hotel__id}">
+                                        <input type="hidden" name="ContactHotel" value="ContactHotel">
+                                        <button class="btn btn_viewtour">{$core->get_Lang('Contact')} <i class="fa-regular fa-arrow-right" style="color: #ffffff;"></i>
+                                        </button>
+                                    </form>
                                 </a>
                             </div>
                         </div>
@@ -411,7 +414,7 @@
                                 {section name = i loop=$lstTour}
                                 <div class="item_content">
                                     <div class="list_extensions d-flex flex-direction-column">
-                                        <div class="item_extensions d-flex justify-content-between align-items-start">
+                                        <div class="item_extensions d-flex align-items-start">
                                             <div class="div_img img_extensions">
                                                 <img src="{$clsTour->getImage($lstTour[i].tour_id,243,168,$arrTour)}" alt="Image">
                                             </div>
@@ -421,9 +424,11 @@
                                                         {$lstTour[i].title}</p>
                                                 </a>
                                                 <div class="money">
-                                                    <span class="txt_money_from">{$core->get_Lang('Form')}</span>
-                                                    <span class="txt_money_text">{$core->get_Lang('US')}</span>
+                                                    <span class="txt_money_from me-1">{$core->get_Lang('From')}</span>
+                                                    {if $clsTour->getDiscount($lstTour[i].tour_id)}
                                                     <span class="under_numbprice">${$lstTour[i].min_price}</span>
+                                                    {/if}
+                                                    <span class="txt_money_text">{$core->get_Lang('US')}</span>
                                                     <span class="txt_money_number">${$clsTour->getPriceAfterDiscount($lstTour[i].tour_id)}</span>
                                                 </div>
                                             </div>
@@ -649,15 +654,10 @@
 
                                     {assign var=numStars value=$lstReviews[i].rates}
 
-                                    <div class="avatar_custom" style="background-color:
+                                    <div class="avatar_custom" style="background-color: {$lstReviews[i].bg_color}">
 
-                                    {php}
-
-                                    $bg_colors = ['#F5F5F5', '#E0F7FA', '#FFF8E1', '#E8F5E9', '#FCE4EC', '#FFFDE7', '#F3E5F5'];
-
-                                    echo $bg_colors[array_rand($bg_colors)];
-
-                                    {/php}">{strtoupper(substr($lstReviews[i].fullname, 0, 2))}</div>
+                                    {strtoupper(substr($lstReviews[i].fullname, 0, 2))}
+                                </div>
 
                                     <div class="name_reviewer">
 
@@ -822,6 +822,8 @@
 
 
 <script>
+    var $hotel_id = '{$hotel__id}'
+
     if ($('.unika_header').hasClass('unika_header_2')) {
         $('.unika_header').removeClass('unika_header_2');
     }
@@ -1188,6 +1190,7 @@
                 page: $page,
                 table_id: $hotel_id
             };
+
             $('html, body').scrollTop($(".list_reviews").offset().top - 200);
             $.post(path_ajax_script + '/index.php?mod=hotel&act=ajaxReviews', data)
                 .done(function(res) {
@@ -1200,6 +1203,37 @@
                             toggleButton.hide();
                         }
                     });
+                    $('.view_more_review').click(function() {
+
+                        var moreText = $(this).prev('.content_review');
+
+
+
+                        if (moreText.hasClass('expanded')) {
+
+                            moreText.removeClass('expanded');
+
+                            $(this).text('View More');
+
+                            moreText.css({
+                                'max-height': '72px'
+                            });
+
+                        } else {
+
+                            moreText.addClass('expanded');
+
+                            $(this).text('View Less');
+
+                            moreText.css({
+                                'max-height': moreText[0].scrollHeight + 'px',
+                                '-webkit-line-clamp': 'unset'
+                            });
+
+                        }
+
+                    });
+
                 });
         });
     })

@@ -11,6 +11,7 @@
 }
 .att_content img {
     width: 100%;
+    height: auto;
     object-fit: cover;
 }
 
@@ -192,6 +193,7 @@
 
 .att_exciting_trip_item_price_new span {
     font-size: 24px;
+    font-weight: 600;
 }
 
 .att_exciting_trip_item_detail a {
@@ -286,7 +288,6 @@
 
 .att_hotel_content_item img {
     border-radius: 8px;
-    margin-bottom: 12px;
 }
 
 .att_hotel_content_item_intro {
@@ -361,6 +362,9 @@
 .att_hotel_content_item_detail .price_number {
     color: var(--Primary, #ffa718);
     font-size: 24px;
+}
+.att_hotel_content_item_detail .price_number span {
+    font-weight: 600;
 }
 .att_list_placetogo {
     margin-bottom: 33px;
@@ -568,14 +572,15 @@
 .att_list_placetogo_item_image img,
 .att_cuisine_item_image img {
     width: 100%;
+    height: auto;
     object-fit: cover;
     transition: all 0.3s ease-in-out;
 }
-.att_exciting_trip_item_image img:hover,
-.des_travel_guide_most_read_item_image img:hover,
-.att_hotel_content_item_image img:hover,
-.att_list_placetogo_item_image img:hover,
-.att_cuisine_item_image img:hover {
+.att_exciting_trip_item_image:hover img,
+.des_travel_guide_most_read_item_image:hover img,
+.att_hotel_content_item_image:hover img,
+.att_list_placetogo_item_image:hover img,
+.att_cuisine_item_image:hover img {
     scale: 1.2;
 }
 .att_exciting_trip_item_image,
@@ -583,6 +588,7 @@
 .att_hotel_content_item_image,
 .att_list_placetogo_item_image,
 .att_cuisine_item_image {
+    margin-bottom: 12px;
     overflow: hidden;
     border-radius: 8px;
 }

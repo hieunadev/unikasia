@@ -2,7 +2,7 @@
 <div class="des_travel_guide_side">
     {if $deviceType eq 'computer'}
         {if $show ne 'topAttractionCountry'}
-            <form action="" method="GET" class="form_search_guide">
+            <form action="" method="post" class="form_search_guide">
                 <div class="des_travel_guide_search">
                     <button class="btn_search_guide"><i class="fa-light fa-magnifying-glass"></i></button>
                     <input type="text" name="keyword" class="keyword_search_guide" placeholder="Search">
@@ -43,21 +43,19 @@
                                 {$core->get_Lang('Hotel')}
                             </a>
                         {/if}
-                        {if $list_blog}
-                            <a href="javascript:void(0);" data-target=".scroll_place_to_go" title="{$core->get_Lang('Place to go')}">
-                                {$core->get_Lang('Place to go')}
-                            </a>
-                        {/if}
-                        {if $list_cuisine}
-                            <a href="javascript:void(0);" data-target=".scroll_cuisine" title="{$core->get_Lang('Cuisine')}">
-                                {$core->get_Lang('Cuisine')}
-                            </a>
-                        {/if}
-                        {if $list_culture}
-                            <a href="javascript:void(0);" data-target=".scroll_culture" title="{$core->get_Lang('Culture')}">
-                                {$core->get_Lang('Culture')}
-                            </a>
-                        {/if}
+                        {if $list_guide_country}
+                            {foreach from=$list_guide_country key=key item=item}
+                                {if $item.title eq 'Places To Go'}
+                                    <a href="javascript:void(0);" data-target=".scroll_guide_{$item.guidecat_id}" title="{$core->get_Lang($item.title)}">
+                                        {$core->get_Lang($item.title)}
+                                    </a>
+                                {else}
+                                    <a href="javascript:void(0);" data-target=".scroll_guide_{$item.guidecat_id}" title="{$core->get_Lang($item.title)}">
+                                        {$core->get_Lang($item.title)}
+                                    </a>
+                                {/if}
+                            {/foreach}
+                        {/if}    
                     </div>
                 {/if}
             </div>
@@ -150,28 +148,28 @@
             </div>
         </div>
     {elseif $mod eq 'destination' && $act eq 'attraction'}
-        {if $most_list_blog}
+        {if $most_list_guide}
         <div class="des_travel_guide_most_read">
             <div class="des_travel_guide_most_read_title">
                 <h2>{$core->get_Lang('MOST READ')}</h2>
             </div>
             <div class="des_travel_guide_most_read_content">
-                {foreach from=$most_list_blog key=key item=item}
-                    {assign var="MostBlogID" value=$item.blog_id}
-                    {assign var="MostBlogTitle" value=$clsBlog->getTitle($MostBlogID)}
-                    {assign var="MostBlogLink" value=$clsBlog->getLink($MostBlogID)}
-                    {assign var="MostBlogImage" value=$clsBlog->getImage($MostBlogID, 83, 83)}
+                {foreach from=$most_list_guide key=key item=item}
+                    {assign var="MostGuideID" value=$item.guide_id}
+                    {assign var="MostGuideTitle" value=$clsGuide->getTitle($MostGuideID)}
+                    {assign var="MostGuideLink" value=$clsGuide->getLink2($MostGuideID)}
+                    {assign var="MostGuideImage" value=$clsGuide->getImage($MostGuideID, 83, 83)}
                     <div class="des_travel_guide_most_read_item">
                         <div class="row">
                             <div class="col-4 col-sm-3 col-md-12 col-lg-4">
-                                <a href="{$MostBlogLink}" title="{$MostBlogTitle}">
+                                <a href="{$MostGuideLink}" title="{$MostGuideTitle}">
                                     <div class="des_travel_guide_most_read_item_image">
-                                        <img src="{$MostBlogImage}" width="83" height="83" alt="{$MostBlogTitle}">
+                                        <img src="{$MostGuideImage}" width="83" height="83" alt="{$MostGuideTitle}">
                                     </div>
                                 </a>
                             </div>
                             <div class="col-8 col-sm-9 col-md-12 col-lg-8">
-                                <h3><a href="{$MostBlogLink}" title="{$MostBlogTitle}">{$MostBlogTitle}</a></h3>
+                                <h3><a href="{$MostGuideLink}" title="{$MostGuideTitle}">{$MostGuideTitle}</a></h3>
                             </div>
                         </div>
                     </div>
@@ -561,21 +559,41 @@
 {/literal}
 
 <script>
-    var country_id = '{$country_id}';
-    var country_slug = '{$country_slug}';
     var lang_id = '{$_LANG_ID}';
+    var country_id = '{$country_id}';
+    // var country_slug = '{$country_slug}';
+
+    console.log(lang_id);
+    console.log(country_id);
+    // console.log(country_slug);
+
 </script>
 
 {literal}
 <script>
     $(document).ready(function() {
         // Form search guide
-        $('.form_search_guide').on('submit', function(e) {
-            e.preventDefault();
+        // $('.form_search_guide').on('submit', function(e) {
+        //     e.preventDefault();
+        //     var keyword = $('.keyword_search_guide').val();
+        //     var pretty_keyword = keyword.replace(/\s/g, '+');
+        //     var newUrl = '/' + lang_id + '/search-guide/' + country_slug + '/' + pretty_keyword;
+        //     window.location.href = newUrl;
+        // });
+
+        $('.btn_search_guide').click(function(e) {
+            e.preventDefault(); 
             var keyword = $('.keyword_search_guide').val();
-            var pretty_keyword = keyword.replace(/\s/g, '+');
-            var newUrl = '/' + lang_id + '/search-guide/' + country_slug + '/' + pretty_keyword;
-            window.location.href = newUrl;
+            console.log(keyword);
+            $.post('/index.php?mod=guide&act=search', 
+                { 
+                    keyword: keyword,
+                    lang_id: lang_id,
+                    country_id: country_id
+                }, 
+                function(data) {
+                console.log(data); 
+            });
         });
 
         // Click đến phần tử có data-target tương ứng

@@ -6,9 +6,9 @@
     <div class="des_list_hotel">
         <div class="container">
             <div class="des_list_hotel_title">
-                <h2>{$clsConfiguration->getOutTeam('HotelTitle')}</h2>
+                <h2>{$clsConfiguration->getValue('HotelTitle_'|cat:$_LANG_ID)|html_entity_decode}</h2>
                 <div class="des_list_hotel_description">
-                    {$clsConfiguration->getOutTeam('HotelDescription')}
+                    {$clsConfiguration->getValue('HotelDescription_'|cat:$_LANG_ID)|html_entity_decode}
                 </div>
             </div>
             <div class="des_list_hotel_content">
@@ -60,9 +60,9 @@
     <div class="des_our_team">
         <div class="container">
             <div class="des_our_team_title">
-                <h2>{$clsConfiguration->getOutTeam('OurTeamTitle')}</h2>
+                <h2>{$clsConfiguration->getValue('OurTeamTitle_'|cat:$_LANG_ID)|html_entity_decode}</h2>
                 <div class="des_our_team_description">
-                    {$clsConfiguration->getOutTeam('OurTeamDescription')}
+                    {$clsConfiguration->getValue('OurTeamDescription_'|cat:$_LANG_ID)|html_entity_decode}
                 </div>
             </div>
             <div class="des_our_team_content">
@@ -76,12 +76,12 @@
                         <div class="col-sm-12 col-md-4 col-lg-3">
                             <div class="des_our_team_item">
                                 <div class="des_our_team_item_img">
-                                    <img src="{$clsConfiguration->getImage('OurTeamStepIcon_'|cat:$key, 48, 48)}" width="48" height="48" alt="{$clsConfiguration->getOutTeam('OurTeamStepTitle_'|cat:$key)}">
+                                    <img src="{$clsConfiguration->getImage('OurTeamStepIcon'|cat:$key|cat:'_'|cat:$_LANG_ID, 48, 48)}" width="48" height="48" alt="{$clsConfiguration->getOutTeam('OurTeamStepTitle_'|cat:$key)}">
                                 </div>
                                 <div class="des_our_team_item_info">
-                                    <h3>{$clsConfiguration->getOutTeam('OurTeamStepTitle_'|cat:$key)}</h3>
-                                    <div class="des_our_team_item_description">
-                                        {$clsConfiguration->getOutTeam('OutTeamStepDescription_'|cat:$key)}
+                                    <h3 class="ellipsis_1">{$clsConfiguration->getOutTeam('OurTeamStepTitle'|cat:$key|cat:'_'|cat:$_LANG_ID)}</h3>
+                                    <div class="des_our_team_item_description ellipsis_3">
+                                        {$clsConfiguration->getOutTeam('OutTeamStepDescription'|cat:$key|cat:'_'|cat:$_LANG_ID)}
                                     </div>
                                 </div>
                             </div>
@@ -96,7 +96,7 @@
     <div class="des_gallery">
         <div class="container-fluid">
             <div class="des_gallery_title">
-                <h2>{$clsCountry->getTitle($country_id)} {$clsConfiguration->getOutTeam('GalleryTitle')}</h2>
+                <h2>{$clsCountry->getTitle($country_id)} {$clsConfiguration->getValue('GalleryTitle_'|cat:$_LANG_ID)|html_entity_decode}</h2>
             </div>
             <div class="des_gallery_content">
                 <div class="owl-carousel owl-theme des_gallery_list">

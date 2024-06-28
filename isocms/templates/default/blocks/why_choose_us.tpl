@@ -34,14 +34,21 @@
         const itemCount = $owl.children().length;
 
         $owl.owlCarousel({
-            items: 3,
             loop: itemCount > 3,
             margin: 16,
             nav: false,
             autoplay: itemCount > 3,
             autoplayTimeout: 3000,
             autoplayHoverPause: true,
-            dots: false
+            dots: false,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 3
+                }
+            }
         });
     });
 </script>

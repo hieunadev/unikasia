@@ -23,7 +23,8 @@ function default_default(){
     $countries = array_map(function($country) {
         return [
             'country_id' => $country['country_id'],
-            'slug' => $country['slug']
+            'slug' => $country['slug'],
+            'title' => $country['title'],
         ];
     }, $lstCountryMap);
     $assign_list["countries"] = $countries;

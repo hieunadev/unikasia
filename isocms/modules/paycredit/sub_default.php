@@ -388,8 +388,10 @@ function default_dr(){
 			}
 			unset($lstAll);
 		}*/
+     
 		$oneBilling = $clsBilling->getByCond("vpc_MerchTxnRef='$vpc_MerchTxnRef'");
 		$billing_id = $oneBilling['billing_id'];
+
 		if(intval($billing_id)==0){
 			header('Location: /');
 			exit();

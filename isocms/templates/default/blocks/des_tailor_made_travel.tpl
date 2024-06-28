@@ -109,8 +109,8 @@
                 <div class="des_travel_style_dream">
                     <div class="des_group_dream">
                         <div class="des_dream_rec">
-                            <p>{$core->get_Lang('Are you already dreaming? so entrust us with your dream!')}</p>
-                            <a href="{$clsTour->getLink2(0, 1)}" title="Ask">ASK FOR A QUOTE <i class="fa-solid fa-arrow-right-long"></i></a>
+                            <p>{$clsConfiguration->getValue('TrvsTailorMadeTourTitle_'|cat:$_LANG_ID)|html_entity_decode}</p>
+                            <a href="{$clsTour->getLink2(0, 1)}" title="Ask">{$core->get_Lang('ASK FOR A QUOTE')} <i class="fa-solid fa-arrow-right-long"></i></a>
                         </div>
                     </div>
                 </div>
@@ -229,7 +229,7 @@
     }
 
     .des_group_dream .des_dream_rec {
-        //max-width: 879.048px;
+        max-width: 879.048px;
         height: 91px;
         border: solid 2px var(--Neutral-4, #d3dce1);
         border-radius: 5px;

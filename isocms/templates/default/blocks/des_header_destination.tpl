@@ -8,8 +8,8 @@
                 <div class="des_header_info ellipsis_2_line">
                     {$clsCountry->getHeaderDescription($country_id)}
                 </div>
-                <a href="#" title="{$core->get_Lang('Create your trip to Vietnam')}" class="des_header_link">
-                    {$core->get_Lang('Create your trip to Vietnam')} <i class="fa-sharp fa-regular fa-arrow-right"></i>
+                <a href="#" title="{$core->get_Lang('Create your trip to')} {$info_country.title}" class="des_header_link">
+                    {$core->get_Lang('Create your trip to')} {$info_country.title}<i class="fa-sharp fa-regular fa-arrow-right"></i>
                 </a>
             </div>
         </div>

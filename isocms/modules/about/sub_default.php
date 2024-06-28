@@ -420,7 +420,6 @@ echo $html;
 	/*=============Content Page==================*/
 }
 function default_contact2(){
-
     global $assign_list, $_CONFIG, $core, $dbconn, $mod, $act, $title_page,$description_page,$keyword_page;
     global $clsISO, $_LANG_ID, $_lang, $extLang, $_frontIsLoggedin_user_id,$lstCountryEx;
     #

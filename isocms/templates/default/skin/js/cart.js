@@ -270,10 +270,16 @@ $(function () {
             nationality: {
                 "select2-required": true
             },
-            email: "required",
+            email: {
+                required: true,
+                email: true
+            },
             phone: {
                 required: true,
-                phoneVN: true
+                phoneVN: true,
+            },
+            'g-recaptcha-response': {
+                required: true
             }
         },
         messages:{
@@ -288,14 +294,25 @@ $(function () {
             },
             fullname: "Please enter your full name!",
             nationality: "Please select nationality!",
-            email: "Please enter your email!",
+            email: {
+                required: "Please enter your email",
+                email: "Please enter a valid email address"
+            },
             phone: {
                 required: "Please enter your phone number!",
                 phoneVN: "Please enter a valid phone number!"
+            },
+            'g-recaptcha-response': {
+                required: "Please complete the reCAPTCHA"
             }
         },
         submitHandler: function () {
-            return true;
+            if (grecaptcha.getResponse() === "") {
+                alert("Please complete the reCAPTCHA");
+                return false;
+            } else {
+                return true;
+            }
         }
     });
 });

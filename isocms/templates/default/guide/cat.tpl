@@ -23,18 +23,14 @@
                             <div class="col-12 col-sm-12 col-md-6 col-lg-4">
                                 <div class="des_travel_guide_item">
                                     <div class="des_travel_guide_image">
-                                        <img src="{$clsGuide->getImage($guide_id, 292, 219)}"
-                                            alt="{$clsGuide->getTitle($guide_id)}" width="292" height="219">
-                                        <a href="{$clsGuide->getLink2($guide_id)}" class="des_travel_guide_link"
-                                            title="{$clsGuide->getTitle($guide_id)}">
-                                            SEE DETAILS <i class="fa-sharp fa-regular fa-arrow-right"
-                                                aria-hidden="true"></i>
+                                        <img src="{$clsGuide->getImage($guide_id, 292, 219)}" alt="{$clsGuide->getTitle($guide_id)}" width="292" height="219">
+                                        <a href="{$clsGuide->getLink2($guide_id)}" class="des_travel_guide_link" title="{$clsGuide->getTitle($guide_id)}">
+                                            SEE DETAILS <i class="fa-sharp fa-regular fa-arrow-right" aria-hidden="true"></i>
                                         </a>
                                     </div>
                                     <div class="des_travel_guide_intro">
                                         <div class="des_travel_guide_title">
-                                            <h3><a href="{$clsGuide->getLink2($guide_id)}"
-                                                    title="{$clsGuide->getTitle($guide_id)}">{$clsGuide->getTitle($guide_id)}</a>
+                                            <h3><a href="{$clsGuide->getLink2($guide_id)}" title="{$clsGuide->getTitle($guide_id)}">{$clsGuide->getTitle($guide_id)}</a>
                                             </h3>
                                         </div>
                                         <div class="des_travel_guide_place">
@@ -48,6 +44,8 @@
                                 </div>
                             </div>
                             {/foreach}
+                            {else}
+                            <h2 style="margin-bottom: 100px;">{$core->get_Lang('No data')}</h2>
                             {/if}
                         </div>
                     </div>
@@ -68,18 +66,14 @@
                                 {assign var="guideID" value=$item}
                                 <div class="item des_travel_guide_item" data-merge="1">
                                     <div class="des_travel_guide_image">
-                                        <img src="{$clsGuide->getImage($guideID, 292, 219)}"
-                                            alt="{$clsGuide->getTitle($guideID)}" width="292" height="219">
-                                        <a href="{$clsGuide->getLink2($guideID)}" class="des_travel_guide_link"
-                                            title="{$clsGuide->getTitle($guideID)}">
-                                            SEE DETAILS <i class="fa-sharp fa-regular fa-arrow-right"
-                                                aria-hidden="true"></i>
+                                        <img src="{$clsGuide->getImage($guideID, 292, 219)}" alt="{$clsGuide->getTitle($guideID)}" width="292" height="219">
+                                        <a href="{$clsGuide->getLink2($guideID)}" class="des_travel_guide_link" title="{$clsGuide->getTitle($guideID)}">
+                                            SEE DETAILS <i class="fa-sharp fa-regular fa-arrow-right" aria-hidden="true"></i>
                                         </a>
                                     </div>
                                     <div class="des_travel_guide_intro">
                                         <div class="des_travel_guide_title">
-                                            <h3><a href="{$clsGuide->getLink2($guideID)}"
-                                                    title="{$clsGuide->getTitle($guideID)}">{$clsGuide->getTitle($guideID)}</a>
+                                            <h3><a href="{$clsGuide->getLink2($guideID)}" title="{$clsGuide->getTitle($guideID)}">{$clsGuide->getTitle($guideID)}</a>
                                             </h3>
                                         </div>
                                         <div class="des_travel_guide_place">
@@ -108,13 +102,11 @@
                     <div class="des_travel_guide_exciting_trip_item">
                         <div class="des_travel_guide_exciting_trip_image">
                             <a href="{$clsTour->getLink($tourID)}" title="{$clsTour->getTitle($tourID)}">
-                                <img src="{$clsTour->getImage($tourID, 296, 200)}" alt="{$clsTour->getTitle($tourID)}"
-                                    width="296" height="200">
+                                <img src="{$clsTour->getImage($tourID, 296, 200)}" alt="{$clsTour->getTitle($tourID)}" width="296" height="200">
                             </a>
                         </div>
                         <div class="des_travel_guide_exciting_trip_item_title">
-                            <h3><a href="{$clsTour->getLink($tourID)}"
-                                    title="{$clsTour->getTitle($tourID)}">{$clsTour->getTitle($tourID)}</a></h3>
+                            <h3><a href="{$clsTour->getLink($tourID)}" title="{$clsTour->getTitle($tourID)}">{$clsTour->getTitle($tourID)}</a></h3>
                         </div>
                         <div class="des_travel_guide_exciting_trip_item_content">
                             <div class="des_travel_guide_exciting_trip_rate">
@@ -132,8 +124,7 @@
                                 <i class="fa-light fa-location-dot"></i>
                                 Place: {$clsTourDestination->getByCountry($tourID, 'city')}
                                 {if $clsTourDestination->getByCountry($tourID) > 0}
-                                <button type="button" class="tooltips_tour" data-bs-toggle="tooltip"
-                                    title="{$clsTourDestination->getByCountry($tourID, 'other_city')}">+{$clsTourDestination->getByCountry($tourID)}</button>
+                                <button type="button" class="tooltips_tour" data-bs-toggle="tooltip" title="{$clsTourDestination->getByCountry($tourID, 'other_city')}">+{$clsTourDestination->getByCountry($tourID)}</button>
                                 {/if}
                             </div>
                             <div class="des_travel_guide_exciting_trip_description">
@@ -145,8 +136,7 @@
                                     <span class="price_type">US</span> <span class="price">${$item.min_price}</span>
                                 </div>
                                 <div class="box_right">
-                                    <a href="{$clsTour->getLink($tourID)}" title="{$clsTour->getTitle($tourID)}">View tour <i
-                                            class="fa-light fa-arrow-right"></i></a>
+                                    <a href="{$clsTour->getLink($tourID)}" title="{$clsTour->getTitle($tourID)}">View tour <i class="fa-light fa-arrow-right"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -165,37 +155,37 @@
 
 {literal}
 <script>
-if ($('.trvg_list_guidecat_carousel').length > 0) {
-    var $owl = $('.trvg_list_guidecat_carousel');
-    $owl.owlCarousel({
-        lazyLoad: true,
-        loop: false,
-        margin: 37,
-        nav: false,
-        navText: ["<i class='fa-solid fa-angle-left'></i>", "<i class='fa-solid fa-angle-right'></i>"],
-        dots: false,
-        // autoplay: false,
-        // autoplayTimeout:3000,	
-        // animateOut: 'fadeOut',
-        // animateIn: 'fadeIn',
-        merge: true,
-        autoHeight: true,
-        responsiveClass: true,
-        responsive: {
-            0: {
-                items: 1.3,
-                nav: false,
-            },
-            600: {
-                items: 3
-            },
-            1000: {
-                items: 3
+    if ($('.trvg_list_guidecat_carousel').length > 0) {
+        var $owl = $('.trvg_list_guidecat_carousel');
+        $owl.owlCarousel({
+            lazyLoad: true,
+            loop: false,
+            margin: 37,
+            nav: false,
+            navText: ["<i class='fa-solid fa-angle-left'></i>", "<i class='fa-solid fa-angle-right'></i>"],
+            dots: false,
+            // autoplay: false,
+            // autoplayTimeout:3000,	
+            // animateOut: 'fadeOut',
+            // animateIn: 'fadeIn',
+            merge: true,
+            autoHeight: true,
+            responsiveClass: true,
+            responsive: {
+                0: {
+                    items: 1.3,
+                    nav: false,
+                },
+                600: {
+                    items: 3
+                },
+                1000: {
+                    items: 3
+                }
             }
-        }
-    });
-}
- if ($('.gui_exciting_trip').length > 0) {
+        });
+    }
+    if ($('.gui_exciting_trip').length > 0) {
         var $owl = $('.gui_exciting_trip');
         $owl.owlCarousel({
             lazyLoad: true,

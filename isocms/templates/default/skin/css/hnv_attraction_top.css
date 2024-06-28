@@ -12,3 +12,67 @@
 .destination_topattraction_body .des_travel_guide_exciting_trip {
     margin-top: unset;
 }
+@media (min-width: 1400px) {
+}
+@media (min-width: 1200px) and (max-width: 1399px) {
+    .des_travel_guide_link {
+        padding: 12px 20px;
+        border-radius: 8px;
+        border: 1px solid var(--Primary, #ffa718);
+        color: #ffa718 !important;
+        position: absolute;
+        top: 50%;
+        left: 40px;
+        right: 40px;
+        transform: translateY(-50%);
+        display: none;
+        transition: all 0.3s ease-in-out;
+    }
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+    .des_travel_guide_link {
+        padding: 12px 20px;
+        border-radius: 8px;
+        border: 1px solid var(--Primary, #ffa718);
+        color: #ffa718 !important;
+        position: absolute;
+        top: 50%;
+        left: 20px;
+        right: 20px;
+        transform: translateY(-50%);
+        display: none;
+        transition: all 0.3s ease-in-out;
+    }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+}
+@media (min-width: 576px) and (max-width: 767px) {
+    .des_travel_guide_link {
+        padding: 12px 20px;
+        border-radius: 8px;
+        border: 1px solid var(--Primary, #ffa718);
+        color: #ffa718 !important;
+        position: absolute;
+        top: 50%;
+        left: 150px;
+        right: 150px;
+        transform: translateY(-50%);
+        display: none;
+        transition: all 0.3s ease-in-out;
+    }
+}
+@media (max-width: 575px) {
+    .des_travel_guide_link {
+        padding: 12px 20px;
+        border-radius: 8px;
+        border: 1px solid var(--Primary, #ffa718);
+        color: #ffa718 !important;
+        position: absolute;
+        top: 50%;
+        left: 60px;
+        right: 60px;
+        transform: translateY(-50%);
+        display: none;
+        transition: all 0.3s ease-in-out;
+    }
+}

@@ -396,12 +396,12 @@ class Tour extends dbBasic
 	{
 		global $extLang, $_LANG_ID, $clsISO;
 		if ($tour_customize == 1) {
-			return PCMS_URL . 'tailor-made-tour';
+			return $extLang . '/tailor-made-tour';
 		} else {
 			if (!empty($slug_country)) {
-				return PCMS_URL . 'tour/' . $slug_country;
+				return $extLang . '/tour/' . $slug_country;
 			} else {
-				return PCMS_URL . 'tour';
+				return $extLang . '/tour';
 			}
 		}
 	}

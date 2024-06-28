@@ -1,7 +1,7 @@
 <!-- Bắt buộc không format code để tránh lỗi -->
 <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
     <div class="container d-flex">
-        <span class="breadcrumb-item des_breadcrumb_title">You are here:</span>
+        <span class="breadcrumb-item des_breadcrumb_title">{$core->get_Lang('You are here')}:</span>
         <ol class="breadcrumb des_breadcrumb">
             <li class="breadcrumb-item des_breadcrumb_link">
                 <a href="/" title="{$core->get_Lang('Home')}">{$core->get_Lang('Home')}</a>
@@ -36,17 +36,31 @@
                 <li class="breadcrumb-item active des_breadcrumb_active" aria-current="page">
                     {$core->get_Lang('Cruise')}
                 </li>
+            {elseif $show eq 'CruiseDetail'}
+                <li class="breadcrumb-item des_breadcrumb_link">
+                    <a href="{$clsISO->getLink('cruise')}" title="{$core->get_Lang('Cruise')}">
+                        {$core->get_Lang('Cruise')}
+                    </a>
+                </li>
+                <li class="breadcrumb-item des_breadcrumb_link">
+                    <a href="javascript:void(0);" class="cancel_link">
+                        {$clsCruiseCat->getTitle($cruise_cat_id)}
+                    </a>
+                </li>
+                <li class="breadcrumb-item active des_breadcrumb_active" aria-current="page">
+                    {$clsCruise->getTitle($cruise_id)}
+                </li>
             {elseif $show eq 'attractionCountry'}
                 <li class="breadcrumb-item des_breadcrumb_link">
                     <a href="javascript:void(0);" class="cancel_link">{$core->get_Lang('Destinations')}</a>
                 </li>
                 <li class="breadcrumb-item des_breadcrumb_link">
-                    <a href="javascript:void(0);" class="cancel_link">
+                    <a href="{$clsCountry->getLink($country_id)}" title="{$core->get_Lang($clsCountry->getTitle($country_id))} {$core->get_Lang('Destination')}">
                         {$core->get_Lang($clsCountry->getTitle($country_id))}
                     </a>
                 </li>
                 <li class="breadcrumb-item des_breadcrumb_link">
-                    <a href="javascript:void(0);" class="cancel_link">{$core->get_Lang('Top attraction')}</a>
+                    <a href="{$clsCityStore->getLink($country_id)}" title="{$core->get_Lang($clsCountry->getTitle($country_id))} {$core->get_Lang('Top attraction')}">{$core->get_Lang('Top attraction')}</a>
                 </li>
                 <li class="breadcrumb-item active des_breadcrumb_active" aria-current="page">
                     {$core->get_Lang($clsCity->getTitle($city_id))}

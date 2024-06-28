@@ -1,0 +1,2069 @@
+.ellipsis_3 {
+    display: -webkit-box !important;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+}
+
+.height_72 {
+    height: 72px;
+}
+
+.content_right_item li {
+    color: var(--Neutral-1, #111d37);
+    font-family: "SF Pro Display";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+.unikasia_cruise_detail {
+    padding-top: 32px;
+}
+
+.unika_cruise_detail {
+    padding-top: 30px;
+}
+
+.unika_content_include li::marker,
+.unika_content_exclude li::marker {
+    content: "";
+}
+
+.unika_content_include li::before {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    content: "\f00c";
+    font-family: "Font Awesome 6 Pro";
+    color: #13b97d;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 1px solid #13b97d;
+    position: relative;
+}
+
+.unika_content_exclude li::before {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    content: "\f00d";
+    font-family: "Font Awesome 6 Pro";
+    color: #ff4d00;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 1px solid #ff4d00;
+    position: relative;
+}
+
+.unika_content_include li,
+.unika_content_exclude li {
+    display: flex;
+    gap: 12px;
+}
+
+.content_right_item ul {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.thing_now_icon {
+    font-size: 20px;
+    width: 24px;
+    text-align: center;
+    color: #004ea8;
+}
+
+.btn_thing_know.active .thing_now_icon {
+    color: #ffffff;
+}
+
+.unika_list_itineraries {
+    display: none;
+}
+
+.unika_list_itineraries.active {
+    display: block;
+}
+
+.unika_cruise_detail .div_img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.unika_cruise_detail .backcrump {
+    padding: 30px 0px;
+}
+
+.unika_cruise_detail .backcrump_txt {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    color: #111d37;
+    padding-right: 24px;
+}
+
+.unika_cruise_detail .item_bacrump {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    color: #ffa718;
+}
+
+.unika_cruise_detail .content_backcrump span {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    color: #111d37;
+}
+
+.unika_cruise_detail .content_backcrump {
+    gap: 8px;
+}
+
+.unika_cruise_detail .list_btn {
+    gap: 9px;
+}
+
+.unika_cruise_detail .cruise_information {
+    padding-top: 4px;
+    gap: 20px;
+}
+
+.unika_cruise_detail .cruise_star_rating {
+    gap: 12px;
+}
+
+.unika_cruise_detail .rating .div_img {
+    width: 24px;
+    height: 24px;
+}
+
+.unika_cruise_detail .cruise_medium {
+    gap: 8px;
+}
+
+.unika_cruise_detail .cruise_medium p {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    color: #111d37;
+    margin: 0;
+}
+
+.unika_cruise_detail .price_contact {
+    gap: 13px;
+}
+
+.unika_cruise_detail .cruise_price_1 {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #959aa4;
+    text-align: right;
+}
+
+.unika_cruise_detail .cruise_price {
+    color: #ffa718;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 32px;
+    width: max-content;
+}
+
+.unika_cruise_detail .cruise_price span {
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 36px;
+    color: #ffa718;
+    padding-left: 5px;
+}
+
+.btn_content_1 {
+    width: 36px;
+    height: 36px;
+    border: unset;
+    border-radius: 8px;
+}
+
+.content_1 .title {
+    font-size: 32px;
+    line-height: 52px;
+}
+
+.unika_cruise_detail .button_contact {
+    width: 148px;
+    background: #ffa718;
+    height: 48px;
+    border-radius: 8px;
+    gap: 12px;
+    color: #ffffff;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.unika_cruise_detail .button_contact:hover {
+    background-color: #e88f00;
+}
+
+.unika_cruise_detail .count_star {
+    padding: 4px;
+    border-radius: 8px 8px 8px 0;
+    background: #004ea8;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 600;
+}
+
+.unika_cruise_detail .view {
+    color: #959aa4;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+.unika_cruise_detail .show_all {
+    color: #3f6df6;
+    transition: all 0.3s ease-in-out;
+}
+
+.unika_cruise_detail .show_all:hover {
+    color: #ffa718;
+}
+
+.cruise_img {
+    border-radius: 8px;
+}
+
+.cruise_img.hidden {
+    display: none !important;
+}
+
+.cruise_img_4 {
+    position: relative;
+}
+
+.cruise_shadow {
+    position: absolute;
+    gap: 8px;
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+    /* width: 100%;
+    height: 100%; 
+    background: url(../images/img_shadow.png) no-repeat; 
+    background-size: 100%;  */
+}
+.cruise_shadow:hover span,
+.cruise_shadow:hover .fa-images {
+    color: #ffa718;
+}
+.content_left {
+    width: calc(100% - 437px);
+}
+
+.unika_cruise_detail .content_right {
+    padding: 24px;
+    border-radius: 8px;
+    height: fit-content;
+    gap: 16px;
+    background: var(--Accent-1, #fff9f1);
+}
+
+.unika_cruise_detail .content_right .title {
+    font-size: 24px;
+    line-height: 36px;
+    color: #111d37;
+    font-weight: 600;
+}
+
+.unika_cruise_detail .content_right .content {
+    min-width: 337px;
+    background: #004ea8;
+    padding: 16px 24px;
+    border-radius: 8px;
+    gap: 8px;
+}
+
+.unika_cruise_detail .content_right .contact {
+    background: #ffa718;
+    width: 337px;
+    height: 48px;
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px;
+    transition: all 0.3s ease-in-out;
+}
+
+.unika_cruise_detail .content_right .contact:hover {
+    background: #e88f00;
+}
+
+.unika_detail_collapse {
+    height: fit-content;
+    gap: 32px;
+}
+
+.unika_cruise_detail .item_collapse {
+    cursor: pointer;
+    color: #959aa4;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 32px;
+    width: max-content;
+    transition: all 0.3s ease-in-out;
+}
+
+.unika_cruise_detail .item_collapse:hover {
+    color: #ffa718;
+}
+
+.item_collapse.active {
+    color: #111d37;
+    padding-left: 6px;
+    border-left: 6px solid #ffa718;
+}
+
+#overview {
+    padding-top: 20px;
+}
+
+.overview {
+    padding-top: 60px;
+}
+
+.information .div_img {
+    width: 20px;
+    height: 20px;
+}
+
+.unika_cruise_detail .information .txt {
+    padding-left: 26px;
+    padding-top: 6px;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px;
+    color: #434b5c;
+}
+
+.unika_cruise_detail .information {
+    padding-top: 24px;
+    padding-bottom: 48px;
+    gap: 16px;
+}
+
+.unika_item_information {
+    gap: 15px;
+}
+
+.information .item {
+    max-width: max-content;
+}
+
+.information d-flex flex-column .collapse_content .name span {
+    font-size: 14px !important;
+    color: #434b5c;
+}
+
+.btn_itineraries {
+    padding: 24px 0;
+    gap: 16px;
+}
+
+.item_btn_itineraries {
+    border: 1px solid #ffa718;
+    border-radius: 8px;
+    background: #ffffff;
+    padding: 12px 16px;
+}
+
+.item_btn_itineraries.active {
+    background: #ffa718;
+    color: #ffffff;
+}
+
+.content_new .div_img {
+    width: 346px;
+    position: relative;
+    margin: 16px 0;
+}
+
+.content_new .content {
+    width: calc(100% - 378px);
+    padding: 16px 0 32px 0;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    color: var(--Neutral-1, #111d37);
+}
+
+.img_new {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #ffa718;
+}
+
+.infor p {
+    font-size: 18px;
+
+    width: calc(100% - 40px - 16px);
+}
+
+.content_new {
+    padding-left: 58px;
+    position: relative;
+    min-height: 20px;
+}
+
+.item_new::after {
+    content: "";
+    display: flex;
+    width: 94.3%;
+    right: 0;
+    justify-content: end;
+    border-top: 1px solid #d3dce1;
+    bottom: 10px;
+    position: absolute;
+}
+
+.content_new::before {
+    content: "";
+}
+
+.content_new::before {
+    content: "";
+    border-left: 1px dashed #959aa4;
+    position: absolute;
+    height: 100%;
+    left: 20px;
+}
+
+.item_new {
+    position: relative;
+}
+
+.item_new:last-child .content_new::before {
+    display: none;
+}
+
+#things_to_know {
+    max-width: 1312px;
+    padding-top: 80px;
+}
+
+#things_to_know .content_left {
+    width: 220px;
+    border-right: 1px solid #d3dce1;
+}
+
+#things_to_know .content_right {
+    width: calc(100% - 220px);
+    background: #ffffff;
+    overflow-y: scroll;
+    max-height: 390px;
+}
+
+#things_to_know .content_right::-webkit-scrollbar {
+    width: 3px;
+    height: 3px;
+    background-color: #f5f5f5;
+}
+
+#things_to_know .content_right::-webkit-scrollbar-thumb {
+    background-color: #cccccc;
+}
+
+#things_to_know .content {
+    border: 1px solid #d3dce1;
+    border-radius: 8px;
+    margin-top: 21px;
+    max-width: 1312px;
+}
+
+.btn_thing_know {
+    padding: 16px 24px;
+    border-bottom: 1px solid #d3dce1;
+    gap: 6px;
+    cursor: pointer;
+}
+
+.btn_thing_know:last-child {
+    border-bottom: unset;
+}
+
+.btn_thing_know.active {
+    background: #ffa718;
+}
+
+.btn_thing_know.active span {
+    color: #ffffff;
+}
+
+.btn_thing_know span {
+    text-align: left;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px;
+    color: #111d37;
+}
+
+#optional_extensions {
+    background: #fff9f1;
+    border-radius: 40px 40px 0 0;
+    padding-top: 30px;
+}
+
+.item_content {
+    width: calc(50% - 16px);
+    padding-top: 40px;
+}
+
+.item_content .title_right,
+.item_content .title_left {
+    padding: 8px 36px 8px 16px;
+    width: fit-content;
+    border-radius: 0 0 40px 0;
+    color: #ffffff;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 28px;
+}
+
+.title_right {
+    background: #13b97d;
+}
+
+.title_left {
+    background: #ff3930;
+}
+
+.list_extensions {
+    padding-top: 19px;
+}
+
+.img_extensions {
+    max-width: 243px;
+    min-width: 180px;
+    max-height: 168px;
+    border-radius: 8px;
+    width: 100%;
+}
+
+.content_extensions {
+    width: max-content;
+    gap: 16px;
+}
+
+.unika_reviews_1 {
+    max-width: 868px;
+    width: 868px;
+    padding: 0 30px;
+}
+
+.statistical_right {
+    width: 198px;
+    height: 198px;
+    position: relative;
+}
+
+.statistical {
+    width: 100%;
+    background: #f7fafc;
+    border-radius: 8px;
+    padding: 34px 36px;
+    height: fit-content;
+}
+
+.content_statistical p {
+    font-size: 48px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 64px;
+    color: var(--Primary, #ffa718);
+}
+
+.percent {
+    width: 66%;
+    border-radius: 80px;
+    background: #e2e8f0;
+    height: 8px;
+    position: relative;
+}
+
+.statistical_left {
+    width: calc(100% - 259px);
+    gap: 6px;
+}
+
+.item_statiscal {
+    width: 100%;
+    float: left;
+}
+
+.percent div {
+    width: 50%;
+    background: #ffa718;
+    height: 8px;
+    border-radius: 80px;
+}
+
+.item_statiscal p {
+    width: 75px;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px;
+    color: var(--Neutral-2, #434b5c);
+}
+
+.item_statiscal span {
+    width: 50px;
+    text-align: right;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    color: var(--Neutral-2, #434b5c);
+}
+
+.btn_write {
+    background: #f7fafc;
+    border: unset;
+    color: #ffa718;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 28px;
+}
+
+.content_reviews {
+    color: #434b5c;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+.view_more {
+    width: fit-content;
+    background: #ffffff;
+    border: unset;
+}
+
+.item_reviews {
+    padding-bottom: 16px;
+    border-bottom: 1px solid #d3dce1;
+    gap: 16px;
+}
+
+#reviews {
+    padding-top: 70px;
+    gap: 24px;
+}
+
+.btn_love div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    width: 20px;
+    height: 20px;
+}
+
+.img_item {
+    position: relative;
+    width: 100%;
+    border-radius: 8px;
+}
+
+.item_interested {
+    width: 100%;
+    gap: 12px;
+}
+
+.img_interested {
+    width: 20px;
+    height: 20px;
+}
+
+.txt_interested {
+    width: calc(100% - 25px);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    color: var(--Neutral-2, #434b5c);
+}
+
+.count_reviews {
+    padding: 4px;
+    background: #004ea8;
+    color: #ffffff;
+    border-radius: 4px 4px 4px 0;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
+}
+
+.list_intersted {
+    float: left;
+    width: 100%;
+}
+
+.item_sites {
+    position: relative;
+}
+
+.item_sites .div_img {
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.item_sites img:hover {
+    object-fit: cover;
+    -moz-transform: scale(1.2);
+    -webkit-transform: scale(1.2);
+    transform: scale(1.2);
+}
+
+.content_site {
+    position: absolute;
+    bottom: -5px;
+    padding: 43px;
+    width: 100%;
+    background: linear-gradient(180deg, rgba(31, 36, 45, 0) 0%, #16181d 100%);
+    font-size: 24px;
+    line-height: 36px;
+    font-weight: 600;
+    color: var(--Neutral-6, #fff);
+}
+
+.img_map {
+    height: 100%;
+}
+
+.optional_extensions {
+    padding: 48px 0px;
+}
+
+.interested,
+.blogs {
+    padding: 80px 0px;
+    padding-bottom: 0;
+    gap: 32px;
+    position: relative;
+    float: left;
+    width: 100%;
+}
+
+.list_sites {
+    float: left;
+    width: 100%;
+}
+
+#things_to_know .item_right .div_img {
+    width: 24px;
+    height: 24px;
+}
+
+#things_to_know .item_right span {
+    width: calc(100% - 36px);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    color: var(--Neutral-1, #111d37);
+}
+
+#itineraries {
+    padding-top: 80px;
+}
+
+.cruise_title {
+    font-size: 32px;
+    line-height: 52px;
+    font-weight: 600;
+    color: #111d37;
+}
+
+.content_interested .unika_reviews_1 {
+    padding: 0;
+    width: 100%;
+    gap: 7px;
+}
+
+.btn_thing_know .div_img {
+    width: 24px;
+    height: 24px;
+}
+
+.content_new .new {
+    display: none;
+}
+
+.content_new .new.show {
+    display: flex;
+    align-items: start;
+}
+
+.img_arrow1 {
+    display: none;
+}
+
+.img_1 {
+    width: 67%;
+}
+
+.slick-track {
+    float: left;
+}
+
+.content_statistical {
+    position: absolute;
+    top: 50px;
+}
+
+.sites {
+    padding-top: 40px;
+    width: 100%;
+    background: #ffffff;
+    border-radius: 40px 40px 0px 0px;
+    gap: 48px;
+}
+
+/* css blog reviews */
+.unika_reviews_1 {
+    float: left;
+    width: 100%;
+    max-width: 1312px;
+    padding-bottom: 80px;
+}
+
+.item_review {
+    width: 100%;
+    position: relative;
+}
+
+.img_review {
+    position: relative;
+}
+
+.content_review {
+    padding: 24px;
+    border-radius: 20px 20px 8px 8px;
+    position: relative;
+    margin-top: -24px;
+    background: #ffffff;
+    gap: 16px;
+}
+
+.img_review_author {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+}
+
+.content_author {
+    width: calc(100% - 48px - 11px);
+}
+
+.title_2 {
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 52px;
+    color: #111d37;
+    z-index: 0;
+    position: relative;
+}
+
+.unika_cruise_detail .title_2 span {
+    position: relative;
+}
+
+.unika_cruise_detail .title_2 span::after {
+    content: "";
+    position: absolute;
+    background-color: #ffa718;
+    z-index: -1;
+    height: 8px;
+    width: 100%;
+    left: 0;
+    bottom: 8px;
+}
+
+.unika_cruise_detail .information .item .name span,
+.unika_cruise_detail .location .name span {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    color: #434b5c;
+    margin-left: 6px;
+    line-height: 20px;
+}
+
+.unika_cruise_detail .content_right .content p {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    color: #ffffff;
+}
+
+.unika_cruise_detail .content_right .content span {
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px;
+    color: #d3dce1;
+}
+
+.unika_cruise_detail .content_right .content div {
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 33px;
+    color: #ffffff;
+}
+
+.unika_cruise_detail .content_right .content div span {
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 36px;
+    color: #ffffff;
+    margin-left: 6px;
+}
+
+.unika_cruise_detail .title_itineraries {
+    width: 100%;
+    gap: 18px;
+    cursor: pointer;
+}
+
+.itineraries_fa {
+    width: 40px;
+    font-size: 20px;
+    height: 40px;
+    text-align: center;
+    color: #ffffff;
+    background: #ffa718;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.unika_cruise_detail .title_itineraries h3 {
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 28px;
+    color: #111d37;
+    width: calc(100% - 24px - 18px);
+}
+
+.span_thing_now {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    color: #959aa4;
+}
+
+.item_right {
+    gap: 12px;
+}
+
+.list_extensions {
+    gap: 24px;
+}
+
+.item_extensions {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid var(--Neutral-5, #f0f0f0);
+    background: #fff;
+}
+
+.list_extensions {
+    gap: 24px;
+}
+
+.item_extensions {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid var(--Neutral-5, #f0f0f0);
+    background: #fff;
+    gap: 24px;
+}
+
+.title_extentions {
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 30px;
+    color: #111d37;
+    transition: all 0.3s ease-in-out;
+}
+
+.title_extentions:hover {
+    color: #ffa718;
+}
+
+.money_extention_1 {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    color: #959aa4;
+}
+
+.money_extention_2 {
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 28px;
+    color: #ffa718;
+    margin-left: 3px;
+}
+
+.money_extention_3 {
+    color: var(--Primary, #ffa718);
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 36px;
+    margin-left: 3px;
+}
+
+.content_statistical .span_1 {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    color: var(--Neutral-1, #111d37);
+}
+
+.content_statistical .span_2 {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    color: var(--Neutral-3, #959aa4);
+}
+
+.unika_cruise_detail .div_img {
+    transition: all 0.3s ease-in-out;
+    border-radius: 8px;
+}
+
+.unika_cruise_detail .div_img img:hover {
+    object-fit: cover;
+    -moz-transform: scale(1.2);
+    -webkit-transform: scale(1.2);
+    transform: scale(1.2);
+    transition: all 0.3s ease-in-out;
+}
+.unika_cruise_detail .cruise_img_4 img:hover {
+    -moz-transform: unset;
+    -webkit-transform: unset;
+    transform: unset;
+}
+.cruise_img_1 img,
+.cruise_img_2 img,
+.cruise_img_3 img,
+.cruise_img_4 img {
+    height: 100%;
+    width: 100%;
+}
+
+.cruise_img_4 .unika_img_shadow {
+    filter: brightness(50%);
+}
+
+.swiper {
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+    display: none;
+}
+
+.list_reviews {
+    padding-top: 50px;
+    gap: 32px;
+}
+
+.list_reviews {
+    padding-top: 50px;
+    gap: 32px;
+}
+
+.customer {
+    gap: 15px;
+}
+
+.customer a {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px;
+    color: var(--Neutral-1, #111d37);
+}
+
+.customer span {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    color: var(--Neutral-3, #959aa4);
+}
+
+.item_reviews .rating .div_img {
+    width: 20px;
+    height: 20px;
+}
+
+.title_reviews {
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 28px;
+    color: var(--Neutral-1, #111d37);
+}
+
+.customer .div_img {
+    width: 51px;
+    height: 51px;
+    border-radius: 50%;
+}
+
+.view_more {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    color: #ffa718;
+}
+
+.title_interested {
+    color: var(--Neutral-1, #111d37);
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 28px;
+    transition: all 0.3s ease-in-out;
+}
+
+.title_interested:hover {
+    color: #ffa718;
+}
+
+.customersay {
+    margin-top: 100px;
+}
+
+.cruise_shadow i {
+    color: #ffffff;
+}
+
+.content_interested {
+    gap: 12px;
+    width: 100%;
+}
+
+.content_interested {
+    gap: 12px;
+}
+
+.unika_cruise_detail .content_interested .rating .div_img {
+    width: 16px;
+    height: 16px;
+}
+
+.content_interested_title {
+    gap: 4px;
+}
+
+.txt_interested span {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+    color: var(--Neutral-2, #434b5c);
+}
+
+.unika_reviews_1 .span_1 {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
+    color: var(--Neutral-2, #434b5c);
+}
+
+.unika_reviews_1 .span_2 {
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    color: var(--Neutral-3, #959aa4);
+    line-height: 16px;
+}
+
+.money_viwed_span {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 29px;
+    color: var(--Neutral-3, #959aa4);
+    margin-right: 6px;
+}
+
+.money_viwed_div {
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 28px;
+    color: var(--Primary, #ffa718);
+}
+
+.money_viwed_div span {
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 36px;
+    color: var(--Primary, #ffa718);
+    margin-left: 2px;
+}
+
+.title_blogs {
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 28px;
+    color: var(--Neutral-1, #111d37);
+    transition: all 0.3s ease-in-out;
+}
+
+.title_blogs:hover {
+    color: #ffa718;
+}
+
+.content_blogs {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    color: var(--Neutral-1, #111d37);
+}
+
+.unika_ready_start {
+    background: url(https://unikasia.vietiso.com/isocms/templates/default/skin/images/hotel/Frames1.png)
+            no-repeat,
+        #ffa718;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.unika_start {
+    display: flex;
+    padding: 60px 0;
+    flex-direction: column;
+    max-width: 604px;
+    align-items: center;
+}
+
+.unika_title_ready {
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 52px;
+    color: var(--Neutral-1, #111d37);
+    text-align: center;
+}
+
+.unika_content_ready {
+    padding-top: 5px;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px;
+    text-align: center;
+    color: var(--Neutral-2, #434b5c);
+}
+
+.unika_link_ready {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 20px;
+    border-radius: 8px;
+    background: var(--Neutral-1, #111d37);
+    max-width: 237px;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px;
+    color: #ffffff;
+    margin-top: 48px;
+    gap: 8px;
+    transition: all 0.3s ease-in-out;
+}
+
+.unika_link_ready:hover {
+    border: 1px solid white;
+}
+
+.unika_social {
+    position: fixed;
+    top: 40%;
+    right: 15px;
+    z-index: 3;
+}
+
+.unika_social_icons {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.unika_social_icon {
+    color: #959aa4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 40px;
+    background: #fff;
+    box-shadow: 0px 12px 32px 0px rgba(125, 135, 158, 0.09);
+}
+
+.unika_social_icon:hover {
+    color: #ffa718;
+    box-shadow: 0px 12px 24px 0px rgba(255, 167, 24, 0.36);
+}
+
+.rating_reviews .div_img {
+    width: 18px;
+    height: 18px;
+}
+
+.unika_author_blogs {
+    gap: 10px;
+}
+
+.unika_content_author div {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px;
+    color: var(--Neutral-1, #111d37);
+}
+
+.unika_content_author {
+    gap: 3px;
+}
+
+.unika_content_author span {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    color: var(--Neutral-2, #434b5c);
+}
+
+.unika_img_map {
+    max-height: 797px;
+}
+
+.unika_also_like {
+    background: #fff9f1;
+}
+
+.swiper-button-prev {
+    left: -5%;
+    top: 60%;
+    z-index: 2;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    fill: #fff;
+    background: #ffffff;
+    border-radius: 50%;
+    filter: drop-shadow(0px 6px 18px rgba(0, 0, 0, 0.08));
+}
+
+.swiper-button-next {
+    right: -5%;
+    top: 60%;
+    z-index: 2;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    fill: #fff;
+    background: #ffffff;
+    border-radius: 50%;
+    filter: drop-shadow(0px 6px 18px rgba(0, 0, 0, 0.08));
+}
+
+.unika_tailor_made {
+    position: fixed;
+    bottom: 0px;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    z-index: 2;
+}
+
+.unika_link_tailor {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    background: #fff;
+    padding: 13px 15px 14px;
+    border-radius: 39.5px;
+    letter-spacing: 1.6px;
+    color: var(--Neutral-1, #111d37);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px;
+    box-shadow: 0px 12px 32px 0px rgba(125, 135, 158, 0.09);
+}
+
+.unika_img_tailor {
+    width: 52px;
+    height: 52px;
+    background: #ffa718;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+}
+
+.unika_form_review {
+    margin-top: 20px;
+    width: 100%;
+    display: none;
+}
+
+.unika_form_content {
+    border: 1px solid rgba(36, 107, 72, 0.12);
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -khtml-border-radius: 4px;
+}
+
+.unika_form_header {
+    padding: 20px 25px;
+    color: #ffa718;
+    background: rgba(255, 167, 24, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.title_form {
+    color: #ffa718;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 600;
+}
+
+.unika_rate_star {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 28px;
+    width: 28px;
+    color: #cccccc;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+}
+
+.unika_rate_star.active {
+    color: #f9d932;
+}
+
+.unika_form_rating {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: start;
+}
+
+.unika_form_body {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.unika_item_input {
+    width: 100%;
+    border: 1px solid #ccc;
+    height: 50px;
+    line-height: 50px;
+    padding: 0 15px;
+}
+
+.unika_item_textara {
+    width: 100%;
+    padding: 15px;
+    min-height: 120px;
+    border: 1px solid #ccc;
+}
+
+.unika_item_submit {
+    float: right;
+    background: #ffa718;
+    border: unset;
+    padding: 6px 40px;
+    border-radius: 4px;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.error {
+    padding-top: 5px;
+    font-size: 14px;
+    line-height: 20px;
+    color: red;
+}
+
+.cruise_img.img_1 img {
+    height: 100%;
+}
+
+.cruise_shadow span {
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 36px;
+    color: #ffffff;
+}
+
+.unika_detail_fixed.fixed {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background: #ffffff;
+    z-index: 4;
+    box-shadow: 0px 0px 5px 0px rgba(125, 135, 158);
+    padding: 0 10px;
+}
+
+.unika_detail_fixed_content.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 10px 0;
+}
+
+.price_contact_fixed {
+    display: none;
+}
+
+.price_contact_fixed.active {
+    display: flex;
+}
+
+.unika_detail_fixed.fixed .unika_detail_collapse {
+    flex-wrap: nowrap !important;
+}
+
+.content_right_item {
+    display: none;
+}
+
+.fa-chevron-right:before,
+.fa-chevron-left:before {
+    color: #434b5c;
+}
+
+.collapse_content .title {
+    gap: 15px;
+}
+
+.unikasia_reviews {
+    gap: 24px;
+}
+
+.content_right_item.active {
+    display: flex;
+    flex-direction: column;
+}
+
+.content_right_item.active.unika_content_facility {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.unika_content_facility .item_right {
+    width: calc(100% / 3 - 10px);
+}
+
+.content_facility_item {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    border-right: 1px solid #ccc;
+    padding: 24px;
+    border-bottom: 1px solid #ccc;
+    width: 48%;
+}
+
+.content_facility_item:nth-child(2n) {
+    border-right: unset;
+    padding-right: 0;
+}
+
+.unika_list_img {
+    display: grid;
+    gap: 11px;
+    padding: 32px 0;
+}
+
+.cruise_img_1 {
+    grid-column: 1 / 4;
+    grid-row: 1 / 5;
+}
+
+.cruise_img_2 {
+    grid-column: 4 / 6;
+    grid-row: 1 / 4;
+}
+
+.cruise_img_3 {
+    grid-column: 4;
+    grid-row: 4;
+}
+
+.cruise_img_4 {
+    grid-column: 5;
+    grid-row: 4;
+}
+
+.cruise_img_1 img {
+    height: 100%;
+}
+
+.unika_title_overview::after {
+    content: "";
+    width: 65px;
+    height: 8px;
+    background: #ffa718;
+    position: absolute;
+    border: 0;
+    left: 18px;
+    bottom: 14px;
+    z-index: -1;
+}
+
+.unika_title_itineraties::after {
+    content: "";
+    width: 65px;
+    height: 8px;
+    background: #ffa718;
+    position: absolute;
+    border: 0;
+    left: 15px;
+    bottom: 14px;
+    z-index: -1;
+}
+
+.unika_title_thing::after {
+    content: "";
+    width: 143px;
+    height: 8px;
+    background: #ffa718;
+    position: absolute;
+    border: 0;
+    left: 18px;
+    bottom: 14px;
+    z-index: -1;
+}
+
+.unika_title_optional::after {
+    content: "";
+    width: 143px;
+    height: 8px;
+    background: #ffa718;
+    position: absolute;
+    border: 0;
+    left: 18px;
+    bottom: 14px;
+    z-index: -1;
+}
+
+.unika_title_reviews::after {
+    content: "";
+    width: 46px;
+    height: 8px;
+    background: #ffa718;
+    position: absolute;
+    border: 0;
+    left: 18px;
+    bottom: 14px;
+    z-index: -1;
+}
+
+.unika_title_interested::after {
+    content: "";
+    width: 46px;
+    height: 8px;
+    background: #ffa718;
+    position: absolute;
+    border: 0;
+    left: 120px;
+    bottom: 14px;
+    z-index: -1;
+}
+
+.unika_title_recently::after {
+    content: "";
+    width: 46px;
+    height: 8px;
+    background: #ffa718;
+    position: absolute;
+    border: 0;
+    left: 70px;
+    bottom: 14px;
+    z-index: -1;
+}
+.btn_contact_cruise {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 20px;
+    color: #fff;
+    border-radius: 8px;
+    background: #ffa718;
+    border: none;
+    transition: all 0.3s ease-in-out;
+}
+.btn_contact_cruise:hover {
+    background: #e88f00;
+}
+@media screen and (min-width: 1920px) {
+    .information .item {
+        max-width: calc(25% - 10px);
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .cruise_img_1 {
+        grid-column: 1/5;
+        grid-row: 1;
+    }
+
+    .cruise_img_2 {
+        grid-column: 1 / 5;
+        grid-row: 2;
+    }
+
+    .cruise_img_3 {
+        grid-column: 1/3;
+        grid-row: 3;
+    }
+
+    .cruise_img_4 {
+        grid-column: 3 / 5;
+        grid-row: 3;
+    }
+}
+
+@media screen and (max-width: 1025px) {
+    .item_extensions {
+        justify-content: start !important;
+        width: 100%;
+    }
+
+    .content_new .div_img,
+    .content_new .div_img img,
+    .content_new .content {
+        width: 100%;
+    }
+
+    .content_new .new {
+        flex-direction: column;
+    }
+
+    .optional_extensions .content {
+        flex-direction: column;
+    }
+
+    .item_content {
+        width: 100%;
+    }
+
+    .interested {
+        padding: 50px 0;
+        padding-bottom: 0;
+    }
+
+    .overviews {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .content_left {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 991px) {
+    .unikasia_cruise_detail {
+        padding-top: 0px;
+    }
+
+    .unika_detail_collapse {
+        gap: 20px;
+    }
+
+    .unika_content_facility {
+        gap: 24px;
+        flex-direction: column;
+    }
+
+    .unika_content_facility .item_right {
+        width: 100%;
+    }
+
+    .content_facility_item {
+        border-bottom: 1px solid #ccc;
+        border-right: unset;
+        width: 100%;
+        padding: 0 0 24px 0;
+    }
+
+    .unika_detail_fixed_content.container .item_collapse {
+        font-size: 16px;
+        line-height: 24px;
+    }
+
+    .unika_detail_fixed_content.container {
+        overflow-x: scroll;
+    }
+
+    .unika_detail_fixed_content.container::-webkit-scrollbar {
+        height: 3px;
+        background-color: #f5f5f5;
+    }
+
+    .unika_detail_fixed_content.container::-webkit-scrollbar-thumb {
+        background-color: #cccccc;
+    }
+
+    .unika_reviews_1 {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .unika_tailor_made {
+        display: none;
+    }
+
+    .statistical {
+        flex-direction: column;
+    }
+
+    .content_new .new {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .content_new .content {
+        width: 100%;
+    }
+
+    .content_new .div_img {
+        max-width: 100%;
+        width: auto;
+        height: fit-content;
+        border-radius: 8px;
+    }
+
+    .statistical_left {
+        width: 100%;
+    }
+
+    .unika_reviews_1 {
+        padding-bottom: 20px;
+    }
+
+    .sites {
+        padding-top: 20px;
+    }
+
+    .cruise {
+        flex-wrap: wrap;
+    }
+
+    .img_1 {
+        width: 100%;
+    }
+
+    #overview {
+        padding-top: 30px;
+    }
+}
+
+@media screen and (max-width: 545px) {
+    .content_new {
+        padding-left: 35px;
+    }
+
+    .percent {
+        width: 33%;
+    }
+
+    .div_img.img_extensions img {
+        width: 100%;
+    }
+
+    #things_to_know .content {
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    #things_to_know .content_left {
+        display: flex;
+        overflow-x: scroll;
+        width: 100%;
+    }
+
+    #things_to_know .content_left::-webkit-scrollbar {
+        height: 3px;
+        background-color: #f5f5f5;
+    }
+
+    #things_to_know .content_left::-webkit-scrollbar-thumb {
+        background-color: #cccccc;
+    }
+
+    .btn_thing_know {
+        padding: 10px;
+        width: fit-content;
+        border-right: 1px solid #d3dce1;
+    }
+
+    .btn_thing_know:last-child {
+        border-bottom: 1px solid #d3dce1;
+        border-right: unset;
+    }
+
+    #things_to_know .content_right {
+        width: 100%;
+    }
+
+    .btn_thing_know span {
+        width: max-content;
+    }
+
+    .collapse {
+        gap: 20px;
+    }
+
+    .item_extensions {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .img_extensions {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .content_extensions {
+        width: 100%;
+    }
+
+    #things_to_know {
+        padding: 20px 0;
+    }
+
+    #reviews,
+    .interested {
+        padding-top: 20px;
+    }
+
+    .unika_start {
+        padding: 60px 24px;
+    }
+
+    .unika_link_ready {
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .unika_title_ready {
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 36px;
+    }
+
+    .unika_content_ready {
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 20px;
+    }
+}

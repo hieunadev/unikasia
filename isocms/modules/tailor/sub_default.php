@@ -85,35 +85,7 @@ function default_default()
 	$assign_list['listTravelStyle'] = $listTravelStyle;
 	unset($listTravelStyle);
 
-	//    Form Book Tour
-	$lstVisitorType = $clsTourProperty->getAll("is_trash=0 and type='VISITORTYPE' order by order_no asc", $clsTourProperty->pkey);
-	$assign_list["lstVisitorType"] = $lstVisitorType;
-	$list_age_child = $clsTourOption->getAll(" tour_property_height='0' AND tour_property_id='" . $age_type_id . "' AND tour_property_age='" . $child_type_id . "'", $clsTourOption->pkey . ',title');
-	$assign_list['list_age_child'] = $list_age_child;
-	$getSelectChild = $getSelectInfant = "";
-	$child_visitor_type = $infant_visitor_type = "";
 
-	if ($oneItem['visitorage_child'] != '') {
-		$getSelectChild = $clsTourOption->getSelectBySizeGroup($child_type_id, "VISITORAGETYPE");
-		$textSizeGroupChild = $clsTourOption->getTextSelectBySizeGroup($child_type_id, "VISITORAGETYPE");
-		$child_visitor_type = $age_type_id;
-	} elseif ($oneItem['visitorheight_child'] != '') {
-		$getSelectChild = $clsTourOption->getSelectBySizeGroup($child_type_id, "VISITORHEIGHTTYPE");
-		$textSizeGroupChild = $clsTourOption->getTextSelectBySizeGroup($child_type_id, "VISITORHEIGHTTYPE");
-		$child_visitor_type = $height_type_id;
-	}
-	if ($oneItem['visitorage_infant'] != '') {
-		$getSelectInfant = $clsTourOption->getSelectBySizeGroup($infant_type_id, "VISITORAGETYPE");
-		$infant_visitor_type = $age_type_id;
-	} elseif ($oneItem['visitorheight_infant'] != '') {
-		$getSelectInfant = $clsTourOption->getSelectBySizeGroup($infant_type_id, "VISITORHEIGHTTYPE");
-		$infant_visitor_type = $height_type_id;
-	}
-
-	$assign_list['child_visitor_type'] = $child_visitor_type;
-	$assign_list['infant_visitor_type'] = $infant_visitor_type;
-	$assign_list['getSelectChild'] = $getSelectChild;
-	$assign_list['getSelectInfant'] = $getSelectInfant;
 	$lstAdultSizeGroup = $oneItem['adult_group_size'];
 	$lstAdultSize = array();
 
@@ -125,33 +97,6 @@ function default_default()
 			}
 		}
 	}
-
-	$lastAdultSize = end($lstAdultSize);
-	$max_adult = $clsTourOption->getOneField('number_to', $lastAdultSize);
-	$assign_list["max_adult"] = $max_adult ?? 1;
-	$lstChildSizeGroup = $oneItem['child_group_size'];
-	$lstChildSize = array();
-	if ($lstChildSizeGroup != '' && $lstChildSizeGroup != '0') {
-		$TMP = $clsISO->getArrayByTextSlash($lstChildSizeGroup);
-		//        $TMP = explode(',',$lstChildSizeGroup);
-		for ($i = 0; $i < count($TMP); $i++) {
-			if (!in_array($TMP[$i], $lstChildSize)) {
-				$lstChildSize[] = $TMP[$i];
-			}
-		}
-	}
-	$max_child = $clsTourOption->getAll('tour_option_id IN (' . implode(',', $lstChildSize) . ')', "max(number_to) as max");
-	$max_child = (isset($max_child[0])) ? $max_child[0]['max'] : 0;
-	$max_child = !empty($max_child) ? $max_child : 0;
-	$assign_list["max_child"] = $max_child;
-	$tourcat_id = $oneItem['cat_id'];
-	$assign_list["tourcat_id"] = $tourcat_id;
-	$oneCat = $clsTourCategory->getOne($tourcat_id, 'parent_id');
-	$oneParent = $clsTourCategory->getOne($oneCat['parent_id'], $clsTourCategory->pkey . ',title,slug');
-	$assign_list["oneParent"] = $oneParent;
-	$max_infant = $clsTourOption->getAll('tour_option_id IN (' . implode(',', $lstInfantSize) . ')', "max(number_to) as max");
-	$max_infant = (isset($max_infant[0])) ? $max_infant[0]['max'] : 0;
-	$assign_list["max_infant"] = $max_infant;
 }
 function default_isocustomize()
 {
@@ -312,10 +257,10 @@ function default_customize()
 	if (!empty($lstCountryExDB)) {
 		for ($i = 0, $total = count($lstCountryExDB); $i < $total; $i++) {
 			$lstCountryEx[] = array(
-				'country_id'	=> $lstCountryExDB[$i][$clsCountryEx->pkey],
-				'title'			=> $clsCountryEx->getTitle($lstCountryExDB[$i][$clsCountryEx->pkey], $lstCountryExDB[$i]),
-				'link'			=> $clsCountryEx->getLink($lstCountryExDB[$i][$clsCountryEx->pkey], '', $lstCountryExDB[$i]),
-				'intro'			=> $clsCountryEx->getIntro($lstCountryExDB[$i][$clsCountryEx->pkey], '', false, $lstCountryExDB[$i]),
+				'country_id' => $lstCountryExDB[$i][$clsCountryEx->pkey],
+				'title' => $clsCountryEx->getTitle($lstCountryExDB[$i][$clsCountryEx->pkey], $lstCountryExDB[$i]),
+				'link' => $clsCountryEx->getLink($lstCountryExDB[$i][$clsCountryEx->pkey], '', $lstCountryExDB[$i]),
+				'intro' => $clsCountryEx->getIntro($lstCountryExDB[$i][$clsCountryEx->pkey], '', false, $lstCountryExDB[$i]),
 
 				$clsCountryEx->pkey => $lstCountryExDB[$i][$clsCountryEx->pkey]
 			);
@@ -353,25 +298,25 @@ function default_customize()
 	#
 	$errMsg = '';
 	if (isset($_POST['plantrip']) && $_POST['plantrip'] == 'plantrip') {
-		$name 				= Input::post('name', '');
+		$name = Input::post('name', '');
 		$assign_list['name'] = $name;
-		$email 				= Input::post('email', '');
+		$email = Input::post('email', '');
 		$assign_list['email'] = $email;
-		$phone 				= Input::post('phone', '');
+		$phone = Input::post('phone', '');
 		$assign_list['phone'] = $phone;
-		$country__id 		= Input::post('country__id', '');
+		$country__id = Input::post('country__id', '');
 		$assign_list['country__id'] = $country__id;
-		$please 			= Input::post('please', '');
+		$please = Input::post('please', '');
 		$assign_list['please'] = $please;
-		$adult_simple 		= Input::post('adult_simple', '');
+		$adult_simple = Input::post('adult_simple', '');
 		$assign_list['number_adult'] = $adult_simple;
-		$children_simple 	= Input::post('children_simple', '');
+		$children_simple = Input::post('children_simple', '');
 		$assign_list['number_child'] = $children_simple;
-		$number_room 		= Input::post('number_room', '');
+		$number_room = Input::post('number_room', '');
 		$assign_list['number_room'] = $number_room;
 		/*if($title==''){
-			$assign_list['errMsgTitle'] = $core->get_Lang('Title is required');
-		}*/
+																								$assign_list['errMsgTitle'] = $core->get_Lang('Title is required');
+																							}*/
 		$check = true;
 		if ($name == '') {
 			$assign_list['errMsgFullname'] = $core->get_Lang('Fullname is required');
@@ -497,7 +442,6 @@ function default_ajaxGetCityDestination()
 	echo ($html . '$$$$' . $htmlCity);
 	die();
 }
-
 function default_getCityDestination()
 {
 	global $assign_list, $_CONFIG, $core, $dbconn, $mod, $act, $_LANG_ID, $title_page, $description_page, $keyword_page, $clsISO;
@@ -527,5 +471,143 @@ function default_getCityDestination()
 		$html .= '</div>';
 	}
 	echo $html;
+	die();
+}
+
+function default_ajaxTailorMadeTour()
+{
+	global $clsISO, $smarty, $core;
+
+	$clsTailorMadeTour = new TailorMadeTour();
+	$clsTailorTourCity = new TailorTourCity();
+
+	$dataPost = isset($_POST) ? $_POST : [];
+	$data = [
+		'result' => false,
+		'text' => 'Sent a tailor-made tour',
+	];
+	$ip_log = $_SERVER['REMOTE_ADDR'];
+
+	$timeSended = $clsTailorMadeTour->checkRegDate($ip_log);
+
+	// Lấy thời gian hiện tại (Unix timestamp)
+	$current_time = time();
+
+	// Số giây của n phút
+	$minutes = 5 * 60;
+	if (!$clsISO->checkGoogleReCAPTCHA()) {
+		$data = [
+			'result' => false,
+			'text' => 'Captcha validation',
+		];
+	}
+	$clsISO->pre($clsISO->checkGoogleReCAPTCHA());
+
+	// if ($current_time - $timeSended > $minutes && $clsISO->checkGoogleReCAPTCHA()) {
+	// if ($current_time - $timeSended > $minutes) {
+	if (!empty($dataPost)) {
+		$tailor_made_tour_id = $clsTailorMadeTour->getMaxId();
+
+		$order_no = $clsTailorMadeTour->getMaxOrderNo();
+		$reg_date = time();
+		$upd_date = time();
+		$is_trash = 0;
+		$is_online = 0;
+		$date_string = $dataPost['arrival_date'];
+		$timestamp = strtotime($date_string);
+		$arrival_date = date('Y-m-d', $timestamp);
+		$dataTailor = [];
+
+		$type_room = isset($dataPost['type_room']) ? '|' . implode('|', $dataPost['type_room']) . '|' : '';
+		$destination_country = isset($dataPost['destination_country']) ? '|' . implode('|', $dataPost['destination_country']) . '|' : '';
+
+		$list_city = isset($dataPost['destinations']) ? $dataPost['destinations'] : [];
+
+		$dataTailor['tailor_made_tour_id'] = $tailor_made_tour_id;
+		$dataTailor['title'] = $dataPost['title'];
+		$dataTailor['name'] = $dataPost['name'];
+		$dataTailor['nationality'] = $dataPost['nationality'];
+		$dataTailor['email'] = $dataPost['email'];
+		$dataTailor['phone'] = $dataPost['phone'];
+		$dataTailor['social_media'] = $dataPost['social_media'];
+		$dataTailor['arrival_date'] = $arrival_date;
+		$dataTailor['duration'] = $dataPost['duration'];
+		$dataTailor['budget'] = $dataPost['budget'];
+		$dataTailor['arrival_airport'] = $dataPost['arrival_airport'];
+		$dataTailor['tour_guide'] = $dataPost['tour_guide'];
+		$dataTailor['adult'] = $dataPost['adult'];
+		$dataTailor['children'] = $dataPost['children'];
+		$dataTailor['infant'] = $dataPost['infant'];
+		$dataTailor['travel_style'] = $dataPost['travel_style'];
+		$dataTailor['meals'] = $dataPost['meals'];
+		$dataTailor['suitable'] = $dataPost['suitable'];
+		$dataTailor['accommodation'] = $dataPost['accommodation'];
+		$dataTailor['special'] = $dataPost['special'];
+		$dataTailor['type_room'] = $type_room;
+		$dataTailor['destinations'] = $destination_country;
+		$dataTailor['order_no'] = $order_no;
+		$dataTailor['reg_date'] = $reg_date;
+		$dataTailor['upd_date'] = $upd_date;
+		$dataTailor['is_trash'] = $is_trash;
+		$dataTailor['is_online'] = $is_online;
+		$dataTailor['ip_send'] = $ip_log;
+
+		$insertTailor = $clsTailorMadeTour->insert($dataTailor);
+
+		if ($insertTailor) {
+			if (!empty($list_city)) {
+				$list_id = [];
+				foreach ($list_city as $key => $city) {
+
+					$other = isset($city['text']) ? $city['text'] : '';
+
+					unset($city["text"]);
+					$lCity = '|' . implode('|', $city) . '|';
+
+					$tailor_made_city_id = $clsTailorTourCity->getMaxId();
+
+					$order_no = $clsTailorTourCity->getMaxOrderNo();
+					$dataCity = [];
+					$dataCity['tailor_tour_city_id'] = $tailor_made_city_id;
+					$dataCity['tailor_made_tour_id'] = $tailor_made_tour_id;
+					$dataCity['country_id'] = $key;
+					$dataCity['cities'] = $lCity;
+					$dataCity['other'] = $other;
+					$dataCity['order_no'] = $order_no;
+					$dataCity['reg_date'] = $reg_date;
+					$dataCity['upd_date'] = $upd_date;
+					$dataCity['is_trash'] = $is_trash;
+					$dataCity['is_online'] = $is_online;
+					$list_id[] = $tailor_made_city_id;
+					$insert_city = $clsTailorTourCity->insert($dataCity);
+					if ($insert_city) {
+						$dataTailor['tailor_city'][] = $tailor_made_city_id;
+					}
+				}
+
+
+				$dataTailor['tailor_city'] = $list_id;
+				$data = [
+					'result' => true,
+					'text' => 'Success',
+				];
+
+				$clsTailorMadeTour->sendMail($dataTailor);
+			} else {
+				$data = [
+					'result' => false,
+					'text' => 'Error',
+				];
+			}
+		}
+	} else {
+		$data = [
+			'result' => false,
+			'text' => 'Empty',
+		];
+	}
+	// }
+
+	echo json_encode($data);
 	die();
 }

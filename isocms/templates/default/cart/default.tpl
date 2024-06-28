@@ -1,5 +1,12 @@
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css">
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+{literal}
+	<style>
+		label.error {
+			color: red;
+		}
+	</style>
+	{/literal}
 <div class="unika_booking">
 	<div class="head_booking">
 		<div class="head d-flex justify-content-between align-items-center flex-wrap">
@@ -76,19 +83,19 @@
 				<div class="booking_left d-flex flex-column align-items-center ">
 					<div class="information_services item_booking_content">
 						<div class="title_booking ">
-							Information Services
+							{$core->get_Lang("Information Services")}
 						</div>
 						<div class="content d-flex flex-column ">
 							<div class="unika_travel d-flex justify-content-between align-items-start  flex-wrap">
 								<div class="item_input d-flex flex-column  box_validate">
-									<label for="travel_date">Travel date*</label>
+									<label for="travel_date">{$core->get_Lang("Travel date")}*</label>
 									<input type="text" id="travel_date" name="travel_date" class="travel_input input_start"
 										   data-class="value_travel_date" value="{$clsISO->converTimeToText5($departure_date)}">
 									{assign var="numberOfDays" value=$clsTour->getNumberDay($item.tour_id_z)}
 									<input type="hidden" class="days_booking" value="{$numberOfDays - 1}">
 								</div>
 								<div class="item_input d-flex flex-column ">
-									<label for="end_date">End Date</label>
+									<label for="end_date">{$core->get_Lang("End Date")}</label>
 									<input type="text" id="end_date" class="input_end" data-class="value_end_date" disabled>
 								</div>
 							</div>
@@ -149,7 +156,6 @@
 											<input type="checkbox" name="checkbox_room[]" {if $lstRoom[i].number_room} checked {/if} value="{$lstRoom[i].room_id}">
 											<span class="checkmark"></span>
 										</label>
-										<input type="hidden" name="price_room[]" value="{$lstRoom[i].price_room}">
 										<div class="calc_distribution lst_room number align-items-center {if $lstRoom[i].number_room}active{/if}"
 											 data-class="amount_double_room_{$lstRoom[i].room_id}">
 											<div class="minus item_calc_dis cursor"></div>
@@ -159,6 +165,8 @@
 											<div class="plus item_calc_dis cursor active"></div>
 										</div>
 									</div>
+										<input type="hidden" name="price_room[]" value="{$lstRoom[i].price_room}">
+										<input type="hidden" name="room_id[]" value="{$lstRoom[i].room_id}">
 									{/section}
 								</div>
 							</div>
@@ -315,6 +323,12 @@
 							{/if}
 						</div>
 					</div>
+					<div class="g-recaptcha" id="g-recaptcha" data-sitekey="{$clsISO->getVar('reCAPTCHA_KEY')}"></div>
+					{if $errMsg ne ''}
+						<div id="error_recaptcha" class="error text_left">{$errMsg}</div>
+					{else}
+						<div id="error_recaptcha" class="error text_left"></div>
+					{/if}
 					<button class="btn_payment false d-flex align-items-center justify-content-center " type="submit">
 						Payment
 						<div class="div_img">
@@ -405,6 +419,7 @@
 				<input type="hidden" id="total_price_child" value="{if $item.total_price_child}{$item.total_price_child}{else}0{/if}">
 				<input type="hidden" id="total_price_infants" value="{if $item.total_price_infants}{$item.total_price_infants}{else}0{/if}">
 				<input type="hidden" name="totalFinal" class="totalFinal" value="{$totalPriceDeposit}">
+				<input type="hidden" name="duration_time" value="{$clsTour->getTripDurationx($tour_id)}">
 				<input type="hidden" name="exchange_rate" id="exchange_rate" value="{$_EXCHANGE_RATE}" />
 			</form>
 		</div>

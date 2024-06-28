@@ -535,6 +535,7 @@ class Reviews extends dbBasic{
         #
         $clsEmailTemplate = new EmailTemplate();
         $clsTour = new Tour();
+		$clsHotel = new Hotel();
 
         #
         if($type =='tour'){
@@ -557,6 +558,7 @@ class Reviews extends dbBasic{
         $message = str_replace('[%CUSTOMER_MES%]',$mes,$message);
         $message = str_replace('[%CUSTOMER_FULLNAME%]',$email,$message);
         $message = str_replace('[%TOUR_TITLE%]',$clsTour->getTitle($table_id),$message);
+        $message = str_replace('[%STAY_NAME%]',$clsHotel->getTitle($table_id),$message);
 
         
         $message = str_replace('[%COMPANY_HOTLINE%]',$clsConfiguration->getValue('CompanyHotline'),$message);

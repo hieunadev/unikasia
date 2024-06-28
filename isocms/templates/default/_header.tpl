@@ -12,16 +12,16 @@
                                 <div class="unika_div_img">
                                     <img src="https://unikasia.vietiso.com/isocms/templates/default/skin/images/home/Message.png" alt="ico_mail" class="img_icon">
                                 </div>
-                                <a href="mailto:info@hanoivoyage.com" title="info@hanoivoyage.com">
-                                    info@hanoivoyage.com
+                                <a href="mailto:{$clsConfiguration->getValue('CompanyEmail')}" title="{$clsConfiguration->getValue('CompanyEmail')}">
+                                    {$clsConfiguration->getValue('CompanyEmail')}
                                 </a>
                             </div>
                             <div class="unika_header_top_right_whapsapp">
                                 <div class="unika_div_img">
                                     <img src="https://unikasia.vietiso.com/isocms/templates/default/skin/images/home/Call.png" alt="ico_phone" class="img_icon">
                                 </div>
-                                <a href="tel:0983033966" title="0983033966">
-                                    Whatsapp: 0983033966
+                                <a href="tel:{$clsConfiguration->getValue('CompanyHotline')}" title="{$clsConfiguration->getValue('CompanyHotline')}">
+                                    Whatsapp: {$clsConfiguration->getValue('CompanyHotline')}
                                 </a>
                             </div>
                         </div>
@@ -183,15 +183,15 @@
                                                     <div class="unika_div_img">
                                                         <img src="images/header/phone.svg" alt="ico_phone" class="img_icon">
                                                     </div>
-                                                    <span class="text-white"> Whapsapp: 0983033966 </span>
+                                                    <span class="text-white"> Whapsapp: {$clsConfiguration->getValue('CompanyHotline')} </span>
                                                 </div>
                                             </a>
-                                            <a class="nav-link" href="mailto:info@hanoivoyage.com">
+                                            <a class="nav-link" href="mailto:{$clsConfiguration->getValue('CompanyEmail')}">
                                                 <div class="ul-item-unika d-flex align-items-center justify-content-center">
                                                     <div class="unika_div_img">
                                                         <img src="images/header/email.svg" alt="ico_mail" class="img_icon">
                                                     </div>
-                                                    <span class="text-white"> info@hanoivoyage.com </span>
+                                                    <span class="text-white"> {$clsConfiguration->getValue('CompanyEmail')} </span>
                                                 </div>
                                             </a>
                                         </div>

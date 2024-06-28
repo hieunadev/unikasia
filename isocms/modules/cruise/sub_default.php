@@ -1535,26 +1535,26 @@ function default_detail()
 	// }
 
 
-	// if (isset($_POST['ContactCruise']) &&  $_POST['ContactCruise'] == 'ContactCruise') {
-	// 	vnSessionDelVar('ContactCruise');
-	// 	vnSessionDelVar('ContactTour');
-	// 	vnSessionDelVar('ContactHotel');
-	// 	vnSessionDelVar('ContactVoucher');
-	// 	$cartSessionCruise = vnSessionGetVar('ContactCruise');
-	// 	if (empty($cartSessionCruise)) {
-	// 		$cartSessionCruise = array();
-	// 	}
-	// 	$assign_list["cartSessionCruise"] = $cartSessionCruise;
+	if (isset($_POST['ContactCruise']) &&  $_POST['ContactCruise'] == 'ContactCruise') {
+		vnSessionDelVar('ContactCruise');
+		vnSessionDelVar('ContactTour');
+		vnSessionDelVar('ContactHotel');
+		vnSessionDelVar('ContactVoucher');
+		$cartSessionCruise = vnSessionGetVar('ContactCruise');
+		if (empty($cartSessionCruise)) {
+			$cartSessionCruise = array();
+		}
+		$assign_list["cartSessionCruise"] = $cartSessionCruise;
 
-	// 	$link = $clsCruise->getLinkContact();
-	// 	$cartSessionCruise['CRUISE'][$cruise_id] = array();
-	// 	foreach ($_POST as $k => $v) {
-	// 		$cartSessionCruise['CRUISE'][$cruise_id][$k] = $v;
-	// 	}
-	// 	vnSessionSetVar('ContactCruise', $cartSessionCruise);
-	// 	header('location:' . $link);
-	// 	exit();
-	// }
+		$link = $clsCruise->getLinkContact();
+		$cartSessionCruise['CRUISE'][$cruise_id] = array();
+		foreach ($_POST as $k => $v) {
+			$cartSessionCruise['CRUISE'][$cruise_id][$k] = $v;
+		}
+		vnSessionSetVar('ContactCruise', $cartSessionCruise);
+		header('location:' . $link);
+		exit();
+	}
 
 	// /*=============Title & Description Page==================*/
 	// if ($show == 'Itinerary') {
@@ -1569,6 +1569,73 @@ function default_detail()
 	// $global_image_seo_page = $clsISO->getPageImageShare($cruise_id, 'Cruise', $oneTable);
 	// $assign_list["global_image_seo_page"] = $global_image_seo_page;
 	// /*=============Content Page==================*/
+}
+function default_ajSubmitFormReviewCruise()
+{
+	global $clsISO, $smarty, $core;
+	#
+	$clsReviews	=   new Reviews();
+	$smarty->assign('clsReviews', $clsReviews);
+	#
+	$data_review_cruise	= 	isset($_POST) ? $_POST : [];
+	#
+	if (!empty($data_review_cruise)) {
+		$table_id	=	$data_review_cruise['table_id'];
+		$type		=	$data_review_cruise['type'];
+		#
+		$ip_log = 	$_SERVER['REMOTE_ADDR'];
+		$data 	= 	[
+			'result'  	=>	false,
+			'text'		=>	''
+		];
+		#
+		if (isset($_SESSION['checkReviewCruise_' . $table_id . '_' . $type]) && $_SESSION['checkReviewCruise_' . $table_id . '_' . $type] == $ip_log) {
+			$data	= 	[
+				'result'  	=>	false,
+				'text'		=>	$core->get_Lang('Reviewed')
+			];
+		} else {
+			$reviews_id		=	$clsReviews->getMaxId();
+			$order_no		=	$clsReviews->getMaxOrderNo();
+			$review_date	=	time();
+			$reg_date		=	time();
+			$upd_date		=	time();
+			$is_trash		=	0;
+			$is_online		=	0;
+			#
+			$bg_colors 		= 	['#F5F5F5', '#E0F7FA', '#FFF8E1', '#E8F5E9', '#FCE4EC', '#FFFDE7', '#F3E5F5'];
+			$bg_color 		=  $bg_colors[array_rand($bg_colors)];
+			#
+			$data_review_cruise['reviews_id'] 	=	$reviews_id;
+			$data_review_cruise['order_no'] 	=	$order_no;
+			$data_review_cruise['review_date'] 	=	$review_date;
+			$data_review_cruise['reg_date'] 	=	$reg_date;
+			$data_review_cruise['upd_date'] 	=	$upd_date;
+			$data_review_cruise['is_trash'] 	=	$is_trash;
+			$data_review_cruise['is_online'] 	=	$is_online;
+			$data_review_cruise['bg_color'] 	=	$bg_color;
+			#
+			if ($clsReviews->insert($data_review_cruise)) {
+				$_SESSION['checkReviewCruise_' . $table_id . '_' . $type] = $ip_log;
+				$data	=	[
+					'result'  		=>	true,
+					'text'			=>	$core->get_Lang('Review success')
+				];
+			} else {
+				$data	= 	[
+					'result'  	=>	false,
+					'text'		=>	$core->get_Lang('Review error')
+				];
+			}
+		}
+	} else {
+		$data	= 	[
+			'result'  	=>	false,
+			'text'		=>	$core->get_Lang('Review empty')
+		];
+	}
+	echo json_encode($data);
+	die();
 }
 function _default_cat()
 {

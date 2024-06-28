@@ -26,13 +26,11 @@ function default_upload_image()
     $openFrom = Input::post('openFrom');
     $table_id = (int) Input::post('table_id', 0);
     $toField = ($openFrom == 'image_hotel_sub') ? Input::post('toField', 'image_hotel_sub') : Input::post('toField', 'image');
-
     if ($openFrom == "map_tour") $toField = "map_tour";
     // print_r($toField);die();
     $imgdata = Input::post('imgdata');
     $filename = Input::post('filename', "");
     if (!$filename) $filename = $clsISO->getUniqid() . '.jpg';
-
     #
     $msg = '_error';
     if (!empty($clsTable) && $table_id > 0 && !empty($imgdata)) {
@@ -92,7 +90,7 @@ function default_upload_image()
 	}
 	$clsClassTable = new $clsTable();
 	#
-	$image =''; 
+	$image ='';
 	if($imgdata){
 		$clsUploadFile = new UploadFile();
 		$image = $clsUploadFile->base642imagejpeg($imgdata,$filename,"/content");
@@ -111,11 +109,11 @@ function default_upload_image()
 			}
 			$msg = 'success';
 			$image = $image;
-			echo $image; die();	
+			echo $image; die();
 		}
 	}
 	// Return
-	echo $msg; die();	
+	echo $msg; die();
 } */
 function default_upload_gallery()
 {
@@ -130,7 +128,6 @@ function default_upload_gallery()
     $clsTableGal        =   Input::post('clsTableGal');
     $clsClassTableGal   =   new $clsTableGal();
     #
-
     if ($clsTableGal == "Voucher") {
         $clsClassTableGal = new Image();
     }
@@ -149,7 +146,6 @@ function default_upload_gallery()
             $clsUploadFile  =   new UploadFile();
             $image  =   $clsUploadFile->base642imagejpeg($imgdata, $filename, "/content");
         }
-
         if (!empty($image) && file_exists(ABSPATH . $image)) {
             $clsClassTableGal->setDebug(1);
             if ($clsClassTableGal->insert(array(
@@ -172,19 +168,34 @@ function default_upload_gallery()
         #
         foreach ($list_images as $key => $image) {
             if (!empty($image) && file_exists(ABSPATH . $image)) {
-                $arr_data   =   array(
-                    $clsClassTableGal->pkey =>  $clsClassTableGal->getMaxId(),
-                    'type'      =>  $clsTableGal,
-                    'table_id'  =>  $table_id,
-                    'image'     =>  $image,
-                    'title'     =>  '',
-                    'slug'      =>  '',
-                    'order_no'  =>  $clsClassTableGal->getMaxOrderNo(),
-                    'reg_date'  =>  time(),
-                    'is_trash'  =>  0,
-                    'is_online' =>  1,
-                    'lang_id'   =>  ''
-                );
+                if ($_LANG_ID != 'en') {
+                    $arr_data   =   array(
+                        $clsClassTableGal->pkey =>  $clsClassTableGal->getMaxId(),
+                        'type'      =>  $clsTableGal,
+                        'table_id'  =>  $table_id,
+                        'image'     =>  $image,
+                        'title'     =>  '',
+                        'slug'      =>  '',
+                        'order_no'  =>  $clsClassTableGal->getMaxOrderNo(),
+                        'reg_date'  =>  time(),
+                        'is_trash'  =>  0,
+                        'is_online' =>  1
+                    );
+                } else {
+                    $arr_data   =   array(
+                        $clsClassTableGal->pkey =>  $clsClassTableGal->getMaxId(),
+                        'type'      =>  $clsTableGal,
+                        'table_id'  =>  $table_id,
+                        'image'     =>  $image,
+                        'title'     =>  '',
+                        'slug'      =>  '',
+                        'order_no'  =>  $clsClassTableGal->getMaxOrderNo(),
+                        'reg_date'  =>  time(),
+                        'is_trash'  =>  0,
+                        'is_online' =>  1,
+                        'lang_id'   =>  ''
+                    );
+                }
                 if ($clsClassTableGal->insert($arr_data)) {
                     $msg    =   'success';
                 }
@@ -216,7 +227,6 @@ function default_upload_gallery()
 		$up = $clsUploadFile->base642imagejpeg($imgdata, $filename, "/content");
 	}
 	$clsClassTable = new $clsTableGallery();
-
 	if(!empty($up) && file_exists(ABSPATH.$up)){
 		if($clsClassTable->insert(array(
 			$clsClassTable->pkey => $clsClassTable->getMaxId(),

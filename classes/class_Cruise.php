@@ -372,7 +372,8 @@ class Cruise extends dbBasic
 	function getLinkContact()
 	{
 		global $_LANG_ID, $extLang;
-		return $extLang . '/cruise/enquiry.html';
+//		return $extLang . '/cruise/enquiry.html';
+		return $extLang . '/contact-us.html';
 	}
 	function getBuild($pvalTable)
 	{

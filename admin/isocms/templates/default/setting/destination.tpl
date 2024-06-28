@@ -15,6 +15,23 @@
     <div class="container-fluid">
         <form id="form_destination_setting" method="post" class="filterForm" action="">
             <fieldset>
+                <legend>{$core->get_Lang("List Tour")}</legend>
+                <div class="row-span">
+                    <div class="fieldlabel">{$core->get_Lang('Title')}</div>
+                    {assign var=DesTourTitle value=DesTourTitle_|cat:$_LANG_ID}
+                    <div class="fieldarea">
+                        <textarea style="width:100%" class="textarea_intro_editor_simple" name="iso-{$DesTourTitle}" id="DesTourTitle" cols="255" rows="2">{$clsConfiguration->getValue($DesTourTitle)}</textarea>
+                    </div>
+                </div>
+                <div class="row-span">
+                    <div class="fieldlabel">{$core->get_Lang('Description')}</div>
+                    {assign var=DesTourDescription value=DesTourDescription_|cat:$_LANG_ID}
+                    <div class="fieldarea">
+                        <textarea style="width:100%" class="textarea_intro_editor_simple" name="iso-{$DesTourDescription}" id="DesTourDescription" cols="255" rows="2">{$clsConfiguration->getValue($DesTourDescription)}</textarea>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
                 <legend>{$core->get_Lang("List Travel Style")}</legend>
                 <div class="row-span">
                     <div class="fieldlabel">{$core->get_Lang('Title')}</div>

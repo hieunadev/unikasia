@@ -235,6 +235,7 @@ $().ready(function(){
 				}
 			}
 		}
+		console.log(checkPublic);
 		if(!checkPublic){
 			alert($_this.attr("title")+" "+alertMsgPreview);
 		}else{

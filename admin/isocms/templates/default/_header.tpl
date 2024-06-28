@@ -68,7 +68,7 @@
 		<li><a class="ClickSiteHelp hidden767" href="javascript:void(0);" mod_page="{$mod}" act_page="{$act}" area_page="">{$core->get_Lang('Help')}</a></li>
 	</ul>
 	<div class="header_right">
-		{assign var=listLang value=$clsISO->getListLangAdmin()}
+		{assign var=listLang value=$clsISO->getListLang()}
 		<div class="lang_menu">
 			<a class="dropdown-toggle color_333" data-toggle="dropdown">
 				<i class="flag flag-20 flag-20-{$_LANG_ID}"></i> {$_LANG_ID} <i class="fa fa-angle-down" aria-hidden="true"></i>

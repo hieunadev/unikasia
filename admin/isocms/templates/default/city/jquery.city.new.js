@@ -27,7 +27,6 @@ $().ready(function() {
 		}
 	});
 	$_document.on('change', '.slb_Country_Id', function (ev) {
-		console.log(1);
 		var $_this = $(this),
 			$_toId = $_this.attr('toId'),
 			$_country_id = $_this.val(),
@@ -68,7 +67,6 @@ $().ready(function() {
 		var is_online = $_this.data('val');
 		var text_last = $_this.data('text_last');
 		var text = $_this.text();
-		console.log(text_last);
 		var adata = {};
 		adata['clsTable'] = $_this.data('clstable');
 		adata['pkey'] = $_this.data('pkey');
@@ -216,7 +214,6 @@ $().ready(function() {
 });
 
 function loadMainFormStep(table_id,currentstep){
-	console.log(table_id,currentstep);
 	$Core.util.toggleIndicatior(1);
 	var $_adata = {"table_id":table_id,'currentstep':currentstep};
 	$.post(path_ajax_script+'/index.php?mod='+mod+'&act=getMainFormStep', $_adata, function(html){
@@ -302,7 +299,6 @@ function parentDropdownToggle(e){
 }
 function checkAll(e){
 	var chkitem = $(e).closest('.fill_data_box').find('.chkitem');
-	console.log(chkitem);
 	if($(e).is(':checked')){
 		chkitem.attr('checked', true);
 		chkitem.closest('tr').addClass('hightlight');
@@ -313,3 +309,8 @@ function checkAll(e){
 		setList();
 	}
 }
+$_document.on('click','.check_all_select',function(ev){
+    console.log('sss');
+    $(this).closest(".form-group").find("select option:not([value='0'])").attr("selected","selected");
+    $(this).closest(".form-group").find("select").trigger("chosen:updated");
+});

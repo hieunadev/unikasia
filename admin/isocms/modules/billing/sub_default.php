@@ -31,6 +31,7 @@ function default_default(){
 		header('location: '.PCMS_URL.'/'.$link);
 	}
 	/**/
+
 	$clsBooking = new Booking();
 	$assign_list["clsBooking"] = $clsBooking;
 	#
@@ -60,7 +61,7 @@ function default_default(){
 		$cond.=" and status=2";
 	}
 	$orderBy = "order by reg_date desc";
-	
+
 	#-------Page Divide---------------------------------------------------------------
 	$recordPerPage 	= 20;
 	$currentPage = isset($_GET["page"])? $_GET["page"] : 1;
@@ -94,6 +95,7 @@ function default_default(){
 		if($tmp[0]!='page'&&$tmp[0]!='type_list')
 			$link_page_current_2 .= ($i==0)?'?'.$lst_query_string[$i]:'&'.$lst_query_string[$i];
 	}
+
 	$assign_list['link_page_current_2'] = $link_page_current_2;
 	#-------End Page Divide-----------------------------------------------------------
 	$listItem = $clsClassTable->getAll($cond." ".$orderBy.$limit); //print_r($cond); die();

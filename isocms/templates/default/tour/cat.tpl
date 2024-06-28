@@ -16,7 +16,7 @@
                     </div>
                     <div class="intro">
                         <h2 class="title_home_box">
-                            {$clsConfiguration->getValue('TrvsWhyTitle')|html_entity_decode}
+                            {$clsConfiguration->getValue('TrvsWhyTitle_'|cat:$_LANG_ID)|html_entity_decode}
                             <div class="title_home_box_data">
                                 {$clsTourCategory->getTitle($cat_id)} IN
                                 {$clsCountry->getTitle($country_id)}
@@ -66,11 +66,11 @@
         <div class="container">
             <div class="header_home_box">
                 <h2 class="title_home_box">
-                    {$clsConfiguration->getValue('TrvsWhenToGoTitle')|html_entity_decode}
+                    {$clsConfiguration->getValue('TrvsWhenToGoTitle_'|cat:$_LANG_ID)|html_entity_decode}
                     {$clsCountry->getTitle($country_id)}
                 </h2>
                 <div class="description text-center">
-                    {$clsConfiguration->getValue('TrvsWhenToGoDescription_1')|html_entity_decode}
+                    {$clsConfiguration->getValue('TrvsWhenToGoDescription_1_'|cat:$_LANG_ID)|html_entity_decode}
                 </div>
             </div>
             <div class="content_home_box">
@@ -98,8 +98,8 @@
                     <div class="tab_content_month hnv_hide" data-monthid="{$month_id}">{$clsMonthCountry->getIntro($month_country_id)}</div>
                     {/foreach}
                     {/if}
-                    <a href="#" title="LEARN MORE" class="view_more">
-                        View more <i class="fa-solid fa-arrow-right-long"></i>
+                    <a href="#" title="{$core->get_Lang('View more')}" class="view_more">
+                        {$core->get_Lang('View more')} <i class="fa-solid fa-arrow-right-long"></i>
                     </a>
                 </div>
                 <div class="tab_destination">
@@ -137,8 +137,20 @@
                         </div>
                     </div>
                 </div>
-                <div class="when_vn_map">
+                <div class="when_map" style="display:none" data-showmap="vietnam">
                     <img src="{$URL_IMAGES}/destination/when_vn_map.png" alt="vector" width="422" height="826" loading="lazy" />
+                </div>
+                <div class="when_map" style="display:none" data-showmap="cambodia">
+                    <img src="{$URL_IMAGES}/destination/when_ca_map.png" alt="vector" width="634" height="511" loading="lazy" />
+                </div>
+                <div class="when_map" style="display:none" data-showmap="laos">
+                    <img src="{$URL_IMAGES}/destination/when_la_map.png" alt="vector" width="634" height="765" loading="lazy" />
+                </div>
+                <div class="when_map" style="display:none" data-showmap="myanmar">
+                    <img src="{$URL_IMAGES}/destination/when_my_map.png" alt="vector" width="390" height="826" loading="lazy" />
+                </div>
+                <div class="when_map" style="display:none" data-showmap="thailand">
+                    <img src="{$URL_IMAGES}/destination/when_tl_map.png" alt="vector" width="445" height="826" loading="lazy" />
                 </div>
             </div>
         </div>
@@ -147,7 +159,7 @@
         <div class="container">
             <div class="trvs_list_blog_title">
                 <h2>
-                    {$clsConfiguration->getValue('TrvsBlogTitle')|html_entity_decode}
+                    {$clsConfiguration->getValue('TrvsBlogTitle_'|cat:$_LANG_ID)|html_entity_decode}
                     {$clsCountry->getTitle($country_id)}
                 </h2>
             </div>
@@ -260,7 +272,7 @@
         <div class="container">
             <div class="trvs_travel_file_title">
                 <h2>
-                    {$clsConfiguration->getValue('TrvsTravelGuideTitle')|html_entity_decode}
+                    {$clsConfiguration->getValue('TrvsTravelGuideTitle_'|cat:$_LANG_ID)|html_entity_decode}
                     <span>{$clsCountry->getTitle($country_id)}</span>
                 </h2>
             </div>
@@ -301,7 +313,7 @@
                         <div class="trvs_faq_list">
                             <div class="header_trvs_faq">
                                 <h2 class="title_trvs_faq">
-                                    {$clsConfiguration->getValue('TrvsFAQTitle')|html_entity_decode}
+                                    {$clsConfiguration->getValue('TrvsFAQTitle_'|cat:$_LANG_ID)|html_entity_decode}
                                     to <span>{$clsCountry->getTitle($country_id)}</span>
                                 </h2>
                             </div>
@@ -343,6 +355,7 @@
 
 <script>
     var country_id = '{$country_id}';
+    var country_slug = "{$country_slug}";
 </script>
 {literal}
 <script>
@@ -499,6 +512,15 @@
                     }
                 }
             });
+        });
+    });
+
+    $(document).ready(function() {
+        $(".when_map").each(function() {
+            var showMapValue = $(this).data("showmap");
+            if (showMapValue === country_slug) {
+                $(this).show();
+            }
         });
     });
 </script>

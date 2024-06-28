@@ -18,11 +18,12 @@ class TailorProperty extends dbBasic
         global $core;
         #
         $listType = array();
-        $listType['_TRANSPORT'] = $core->get_Lang('Transport');
+        // $listType['_TRANSPORT'] = $core->get_Lang('Transport');
         $listType['_ARRIVAL_AIRPORT'] = $core->get_Lang('Arrival Airport');
         $listType['_TOUR_GUIDE'] = $core->get_Lang('Tour guide preference');
         $listType['_MEALS'] = $core->get_Lang('Meals');
         $listType['_ACCOMMODATIONS'] = $core->get_Lang('Accommodations');
+        $listType['_ROOM_CLASS'] = $core->get_Lang('Type room');
         // $listType['_HOTEL_CLASS'] = $core->get_Lang('Hotel Class');
         #
         return $listType;

@@ -257,6 +257,13 @@ class Country extends dbBasic
         }
         return $oDataTable['blog_description'];
     }
+    function getMapLink($country_id, $oDataTable = null)
+    {
+        if (!isset($oDataTable['map_link'])) {
+            $oDataTable = $this->getOne($country_id, 'map_link');
+        }
+        return $oDataTable['map_link'];
+    }
     function getBlogImage($pvalTable, $w, $h)
     {
         global $clsISO;

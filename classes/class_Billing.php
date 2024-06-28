@@ -26,8 +26,9 @@ class Billing extends dbBasic {
 			$deposit =$deposit;
 		}
 		$charges = $booking_store['surcharge_value_post']? $booking_store['surcharge_value_post']:0;
-		$exchange_rate = $booking_store['exchange_rate']?$booking_store['exchange_rate']:0;
-		
+//		$exchange_rate = $booking_store['exchange_rate']?$booking_store['exchange_rate']:0;
+		$exchange_rate = $clsISO->getRateVCB('USD');
+
 		if($_LANG_ID=='vn'){
 			$totalgrandVND = $totalgrand;
 			$depositVND = $deposit;
@@ -79,7 +80,8 @@ class Billing extends dbBasic {
 			'is_deposit'	=> $is_deposit,
 			'reg_date'		=> time(),
 			'ip_billing'	=> $_SERVER['REMOTE_ADDR'],
-			'vnp_TxnRef'	=> $billing_id
+			'vnp_TxnRef'	=> $billing_id,
+			'vpc_MerchTxnRef'	=> date('YmdHis') . rand()
 		);
 //		print_r($insert);die('xxx');
 		if($this->insert($insert)){
@@ -225,7 +227,7 @@ class Billing extends dbBasic {
 		global $clsISO, $core, $dbconn;
 		$billing_method = $this->getOneField('billing_method',$billing_id);
 		if($billing_method==PAYMENT_ONEPAY_ATM){
-			$vpc_AdditionData  = $this->getOneField('vpc_AdditionData',$billing_id);
+			$vpc_AdditionData  = $this->getOneField('vpc_Card',$billing_id);
 			$bank = array(
 				'970436'		=>	'VCB',
 				'970415'		=>	'Vietinbank',

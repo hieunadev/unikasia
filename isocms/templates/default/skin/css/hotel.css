@@ -1540,11 +1540,17 @@ ul {
 }
 
 .box_body-hotel {
-    margin: 12px 0 12px;
+    /* margin: 12px 0 12px; */
     display: flex;
     align-items: center;
     gap: 0 6px;
 
+}
+
+.box_left_body {
+    gap: 12px;
+    display: flex;
+    flex-direction: column;
 }
 
 .box_body-service {

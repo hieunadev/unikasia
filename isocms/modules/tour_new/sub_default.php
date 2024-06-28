@@ -1041,7 +1041,6 @@ function default_loadTextDayItinerary(){
 function default_contact(){
     	ini_set('display_errors',1);
 error_reporting(E_ERROR & ~E_STRICT);//E_ALL
-
     global $assign_list, $_CONFIG, $core, $dbconn, $mod, $act, $title_page,$description_page,$keyword_page;
     global $clsISO, $_LANG_ID, $_lang, $extLang, $_frontIsLoggedin_user_id,$lstCountryEx;
     #
@@ -1070,7 +1069,6 @@ error_reporting(E_ERROR & ~E_STRICT);//E_ALL
     
     $cartSessionHotel= vnSessionGetVar('ContactHotel');
     $assign_list["cartSessionHotel"] = $cartSessionHotel;
-   
     
     $cartSessionTour= vnSessionGetVar('ContactTour');
     $oneItem = reset($cartSessionTour["TOUR"]);
@@ -1144,15 +1142,14 @@ error_reporting(E_ERROR & ~E_STRICT);//E_ALL
             $current_date = date('m/d/Y');
             $current_time = strtotime($current_date);
             $target_id = $tour_id?$tour_id:0;
-            
-            if(!empty($cartSessionTour)){
-                $array_booking=array_merge($cartSessionTour,$_POST);
+            if(!empty($cartSessionTour["TOUR"])){
+                $array_booking=array_merge($oneItem,$_POST);
                 $type='Tour';
-            }elseif(!empty($cartSessionHotel)){
-                $array_booking=array_merge($cartSessionHotel,$_POST);
+            }elseif(!empty($cartSessionHotel["HOTEL"])){
+                $array_booking=array_merge(reset($cartSessionHotel["HOTEL"]),$_POST);
                 $type='Hotel';
-            }elseif(!empty($cartSessionCruise)){
-                $array_booking=array_merge($cartSessionCruise,$_POST);
+            }elseif(!empty($cartSessionCruise["CRUISE"])){
+                $array_booking=array_merge($cartSessionCruise["CRUISE"],$_POST);
                 $type='Cruise';
             }elseif(!empty($cartSessionVoucher)){
                 $array_booking=array_merge($cartSessionVoucher,$_POST);
@@ -1206,6 +1203,7 @@ error_reporting(E_ERROR & ~E_STRICT);//E_ALL
             $assign_list["errMsg"] = $errMsg;
         }
     }
+
     /*=============Title & Description Page==================*/
     $title_page = $core->get_Lang('contactus').' | '.PAGE_NAME;
     $assign_list["title_page"] = $title_page;

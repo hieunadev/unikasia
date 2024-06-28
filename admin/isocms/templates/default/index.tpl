@@ -129,7 +129,7 @@
 					setTimeout(() => {
 						loginAgain();
 					}, 300000);
-				}); 
+				});
 			}
 		</script>
 		{/literal}

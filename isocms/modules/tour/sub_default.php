@@ -391,7 +391,10 @@ function default_detaildeparture()
 	}
 
 	if (isset($_POST['ContactTour']) &&  $_POST['ContactTour'] == 'ContactTour') {
-		vnSessionDelVar('ContactTour');
+        vnSessionDelVar('ContactCruise');
+        vnSessionDelVar('ContactHotel');
+        vnSessionDelVar('ContactTour');
+        vnSessionDelVar('ContactVoucher');
 		$cartSessionService = vnSessionGetVar('ContactTour');
 		if (empty($cartSessionService)) {
 			$cartSessionService = array();
@@ -402,7 +405,6 @@ function default_detaildeparture()
 		foreach ($_POST as $k => $v) {
 			$cartSessionService['TOUR'][$tour_id][$k] = $v;
 		}
-		//$clsISO->print_pre($cartSessionService);die();
 		vnSessionSetVar('ContactTour', $cartSessionService);
 		header('location:' . $link);
 		exit();
@@ -491,16 +493,7 @@ function default_ajaxReviews()
 	$cond = "is_trash = 0 and ";
 	$clsPagination = new Pagination();
 
-	$lnk = $_SERVER['REQUEST_URI'];
-	if (isset($_GET['page'])) {
-		$tmp = explode('&', $lnk);
-		$n = count($tmp) - 1;
-		$la_it = '&' . $tmp[$n];
-		$str_len = -strlen($la_it);
-		$link_page = substr($lnk, 0, $str_len);
-	} else {
-		$link_page = $lnk;
-	}
+	$link_page = $_SERVER['REQUEST_URI'];
 
 	$recordPerPage = 3;
 	$currentPage = isset($_POST['page']) ? intval($_POST['page']) : 1;
@@ -2500,10 +2493,11 @@ function default_cat()
 	$smarty->assign('oneItem', $oneItem);
 	#
 	if ($show == 'CatCountry') {
-		$slug_country 	= 	$_GET['slug_country'];
-		$country_id 	=	$clsCountry->getBySlug($slug_country);
-		$smarty->assign('country_id', $country_id);
+		$country_slug 	= 	$_GET['slug_country'] ?? '';
+		$country_id 	=	$clsCountry->getBySlug($country_slug);
 	}
+	$smarty->assign('country_id', $country_id);
+	$smarty->assign('country_slug', $country_slug);
 	#
 	$cond	=	'is_trash = 0 AND is_online = 1';
 	if (!empty($cat_id) && !empty($country_id)) {
@@ -2527,7 +2521,7 @@ function default_cat()
 	$sql_month_country	=   "SELECT " . DB_PREFIX . "month_country.*, default_month.title, default_month.alias
 							FROM " . DB_PREFIX . "month_country
 							INNER JOIN default_month ON default_month_country.month_id = default_month.month_id
-							WHERE default_month_country.lang_id = '' 
+							WHERE default_month_country.lang_id = '" . $_LANG_ID . "' 
 								AND default_month_country.is_trash = 0 
 								AND default_month_country.is_online = 1 
 								AND default_month_country.country_id = $country_id";
@@ -2544,8 +2538,6 @@ function default_cat()
 							AND (list_month_id LIKE '%|" . $current_month . "|%')";
 	$arr_month_city =   $dbconn->getAll($sql_month_city);
 	$smarty->assign('arr_month_city', $arr_month_city);
-	#
-	// $clsISO->dump($arr_month_city);
 	#
 	// Lấy title_cat làm thẻ meta title
 	$title_cat	= 	$oneItem['title'];

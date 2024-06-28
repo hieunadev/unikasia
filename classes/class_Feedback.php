@@ -261,13 +261,12 @@ class Feedback extends dbBasic{
 		$one = $this->getOne($feedback_id);
 		$feedback_store = unserialize($one['feedback_store']);
 		$birthday = date('d/m/Y',$one['birthday']);
-
-//        $feedback_store = reset($feedback_store["TOUR"]);
         $type_feedback=$one['type'];
+//        ISO::pre($feedback_store);die();
         if($type_feedback=='Tour'){
             $clsTour=new Tour();
 
-            $tour_id=$feedback_store['tour_id_z'];
+            $tour_id=$feedback_store['tour_id_z'] ?? $feedback_store['tour_id'];
             $check_in=$feedback_store['check_in_book_z'];
             $departure_date =$clsISO->getStrToTime($feedback_store['check_in_book_z']);
             $end_date =$clsTour->getEndDate($departure_date,$tour_id);
@@ -277,8 +276,7 @@ class Feedback extends dbBasic{
             
             $End=$clsTour->getEndCityAround($tour_id,1);
             $End.=', '.$clsISO->converTimeToText5($end_date);
-    
-            
+
             $number_guest=$feedback_store['number_adults_z'].' '.$core->get_Lang('Adult(s)');
             if($feedback_store['number_child_z']>0 ){
                 $number_guest.=$feedback_store['number_child_z'].' '.$core->get_Lang('Child');
@@ -290,16 +288,29 @@ class Feedback extends dbBasic{
             $room=$feedback_store['room'];
             
             $HTML_SERVICE='';
-            $HTML_SERVICE.='<p style="font-size: 30px;font-weight: bold;">'.$core->get_Lang('Tour').": ".$clsTour->getTitle($tour_id).'</p>';
-            $HTML_SERVICE.='<p>'.$core->get_Lang('Departing').': <span style="font-weight: bold;">'.$Departing.'<span></p>';
-            $HTML_SERVICE.='<p>'.$core->get_Lang('End').': <span style="font-weight: bold;">'.$End.'<span></p>';
-            $HTML_SERVICE.='<p>'.$core->get_Lang('Traveler').': <span style="font-weight: bold;">'.$number_guest.'<span></p>';
+            $HTML_SERVICE.='<p style="font-weight: bold;">'.$core->get_Lang('Tour').": ".$clsTour->getTitle($tour_id).'</p>';
+            if (!empty($feedback_store['tour_id_z'])) {
+                $arr_price_child = unserialize(html_entity_decode($feedback_store['str_price_child']));
+                $str_child = "<ul>";
+                if ($feedback_store["number_adults_z"]) {
+                    $str_child .=  "<li>" . $feedback_store["number_adults_z"] . " x " . $core->get_Lang('Adults') . "</li>";
+                }
+                if ($feedback_store["number_child_z"]) {
+                    $str_child .= "<li>" . $feedback_store["number_child_z"] . " x " . $core->get_Lang('Children'). "</li>";
+                }
+                if ($feedback_store["number_infants_z"]) {
+                    $str_child .= "<li>" . $feedback_store["number_infants_z"] . " x " .  $core->get_Lang('Infants'). "</li>";
+                }
+                $str_child .= "</ul>";
+                $HTML_SERVICE .= '<p>' . $core->get_Lang('Departing') . ': <span style="font-weight: bold;">' . $Departing . '<span></p>';
+                $HTML_SERVICE .= '<p>' . $core->get_Lang('End') . ': <span style="font-weight: bold;">' . $End . '<span></p>';
+                $HTML_SERVICE .= '<p>' . $core->get_Lang('Participants') . ': <span style="font-weight: bold;">' . $str_child . '<span></p>';
+            }
+
+            $HTML_SERVICE.='<p>'.$core->get_Lang('From').': <span style="font-weight: bold;">$'.$feedback_store["total_price_z"].'<span></p>';
         }elseif($type_feedback=='Hotel'){
             $clsHotel=new Hotel();
             $clsHotelRoom=new HotelRoom();
-            
-           
-            
             $hotel_id=$feedback_store['hotel_id'];
             $check_in=$feedback_store['check_in'];
             $check_in=$_LANG_ID=='vn'?date('d/m/Y',$check_in):date('m/d/Y',$check_in);
@@ -309,24 +320,17 @@ class Feedback extends dbBasic{
             if($feedback_store['number_child']>0 ){
                 $number_guest.=$feedback_store['number_child'].' '.$core->get_Lang('Child');
             }
-            $number_room=$feedback_store['number_room'];
-            $room=$feedback_store['room'];
             
             $HTML_SERVICE='';
-            $HTML_SERVICE.='<p style="font-size: 30px;font-weight: bold;">'.$core->get_Lang('Hotel').": ".$clsHotel->getTitle($hotel_id).'</p>';
-            $HTML_SERVICE.='<p>'.$core->get_Lang('Check In').': <span style="font-weight: bold;">'.$check_in.'<span></p>';
-            $HTML_SERVICE.='<p>'.$core->get_Lang('Check Out').': <span style="font-weight: bold;">'.$check_out.'<span></p>';
-            $HTML_SERVICE.='<p>'.$core->get_Lang('Traveler').': <span style="font-weight: bold;">'.$number_guest.'<span></p>';
-            foreach($room as $item){
-                $HTML_SERVICE.='<p>'.$core->get_Lang('Room name').': <span style="font-weight: bold;">'.$clsHotelRoom->getTitle($item['hotel_room_id']).'<span> x <span style="font-weight: bold;">'.$item['number_room'].'<span></p>';
-            }
+            $HTML_SERVICE.='<p style="font-weight: bold;">'.$core->get_Lang('Hotel').": ".$clsHotel->getTitle($hotel_id).'</p>';
+            $HTML_SERVICE.='<p>'.$core->get_Lang('From').': <span style="font-weight: bold;">$'.$clsHotel->getPriceAvg($hotel_id).'<span></p>';
         }elseif($type_feedback=='Cruise'){
             $clsCruise=new Cruise();
             $clsCruiseCabin=new CruiseCabin();
             $clsCruiseItinerary=new CruiseItinerary();
 			$clsCruiseService = new CruiseService();
 			
-            $cruise_id=$feedback_store['cruise_id'];
+            $cruise_id=$feedback_store[0]['cruise_id'];
             $cruise_itinerary_id=$feedback_store['cruise_itinerary_id'];
             $departure_date=$feedback_store['departure_date'];
             $departure_date=$clsISO->converTimeToText5($departure_date);
@@ -340,71 +344,14 @@ class Feedback extends dbBasic{
             }
             
             $HTML_SERVICE='';
-            $HTML_SERVICE.='<p style="font-size: 22px;font-weight: bold;margin: 0 0 10px">'.$core->get_Lang('Cruise').": <a href=".DOMAIN_NAME.$clsCruise->getLink($cruise_id)." title=".$clsCruise->getTitle($cruise_id).">".$clsCruise->getTitle($cruise_id).'<a/></p>';
+            $HTML_SERVICE.='<p style="font-weight: bold;margin: 0 0 10px">'.$core->get_Lang('Cruise').": <span title=".$clsCruise->getTitle($cruise_id).">".$clsCruise->getTitle($cruise_id).'<span/></p>';
             /*$HTML_SERVICE.='<p>'.$core->get_Lang('Itinerary').': <span style="font-weight: bold;">'.$clsCruiseItinerary->getNumberDay($feedback_store['cruise_itinerary_id']).'<span></p>';
             $HTML_SERVICE.='<p>'.$core->get_Lang('Departure date').': <span style="font-weight: bold;">'.$departure_date.'<span></p>';*/
             if($feedback_store['cruise_cabin_id']){
                 $HTML_SERVICE.='<p style="padding-left:20px;margin:0 0 10px;font-size: 20px;font-weight: bold">'.$core->get_Lang('Cabin name').': <span style="font-weight: bold;">'.$clsCruiseCabin->getTitle($feedback_store['cruise_cabin_id']).'<span> x <span style="font-weight: bold;">'.$feedback_store['number_cabin'].'<span></p>';
             }
-			
-			if(!empty($feedback_store['compare_price'])){
-                $compare_price=$feedback_store['compare_price'];
-                foreach($compare_price as $key=>$item){
-                    $HTML_SERVICE .= '<div style="padding-left:20px;margin-bottom:10px">
-                        <p style="font-weight:bold;margin:0">'.$core->get_Lang('Cabin').' '.($key+1).': '.$item->bed_type.'</p>
-                        <p style="padding-left:20px;margin:0">
-                        '.$core->get_Lang('Adult').' '.$item->number_adult.' x '.$item->txt_price_adult.'</p>';
-                    if($item->number_child){
-                        foreach ($item->lst_child as $k => $v){
-                            if($v->number_child){
-                                $HTML_SERVICE .= '<p style="padding-left:20px;margin:0">'.$core->get_Lang('Children').' '.$v->number_child.' ('.$v->str_age.' '.$core->get_Lang('age').') x '.$v->txt_price_child.'</p>';
-                            }
-                        }
-                    }
-                    
-                    if($item->is_extra_bed==1){
-                        $HTML_SERVICE.='<p style="padding-left:20px;margin:0">
-                        '.$core->get_Lang('Extra Bed').' '.$item->txt_price_extra_bed.'</p>';
-                    }
-                    
-                    
-                    $HTML_SERVICE .= '</div>';
-                }
-            }
-			if(!empty($feedback_store['total_number_service'])){
-				$HTML_SERVICE.='<p style="padding-left:20px;margin:0 0 10px;font-size: 20px;font-weight: bold">'.$core->get_Lang('Addon services').'</p><div style="padding-left:20px;margin-bottom:10px">';
-				foreach($feedback_store['cruise_service'] as $key=> $value){
-                    if($value['number']){
-                        if($_LANG_ID=='vn'){
-                            $HTML_SERVICE .= '<p style="padding-left:20px;margin:0">'.$value['number'].' x '.$clsCruiseService->getTitle($value['cruise_service_id']).' '.$clsISO->formatPriceText($value['price']).$clsISO->getRate().'</p>';
-                        }else{
-                            $HTML_SERVICE .= '<p style="padding-left:20px;margin:0">'.$value['number'].' x '.$clsCruiseService->getTitle($value['cruise_service_id']).' '.$clsISO->getRate().$clsISO->formatPriceText($value['price']).'</p>';
-                        }
-                        
-                    }
-				}
-				$HTML_SERVICE .= '</div>';
-				
-			}
-			if($feedback_store['check_contact_total'] == 0){
-				if($_LANG_ID == 'vn'){
-					$HTML_SERVICE.='<p style="padding-left:20px;font-weight:700">'.$core->get_Lang('Total price').': ';
-					if($feedback_store['is_promotion'] == 1){
-						$HTML_SERVICE.='<del style="font-size:15px;font-weight:400">'.$clsISO->formatPrice($feedback_store["total_price"] + $feedback_store["total_price_service"]).$clsISO->getRate().'</del>';
-					}
-					$HTML_SERVICE.='<span style="font-weight: bold; font-size:20px;    color:red;margin-left:5px">'.$clsISO->formatPrice($feedback_store["total_price_promotion"] + $feedback_store["total_price_service"]).$clsISO->getRate().'</p>';
-				}else{
-					$HTML_SERVICE.='<p style="padding-left:20px;font-weight:700">'.$core->get_Lang('Total price').': ';
-					if($feedback_store['is_promotion'] == 1){
-						$HTML_SERVICE.='<del style="font-size:15px;font-weight:400">'.$clsISO->getRate().$clsISO->formatPrice($feedback_store["total_price"] + $feedback_store["total_price_service"]).'</del>';
-					}
-					$HTML_SERVICE.='<span style="font-weight: bold; font-size:20px;    color:red;margin-left:5px">'.$clsISO->getRate().$clsISO->formatPrice($feedback_store["total_price_promotion"] + $feedback_store["total_price_service"]).'</p>';
-				}
-				
-			}
-			
-			
-            
+            $HTML_SERVICE.='<span style="font-weight: bold;">Contact<span>';
+
         }elseif($type_feedback=='Voucher'){
             $voucher_id = $feedback_store['voucher_id'];
 			$clsVoucher = new Voucher();
@@ -415,6 +362,7 @@ class Feedback extends dbBasic{
 		$company_logo = $clsConfiguration->getValue('CompanyLogo');
 		
 		$CompanyAddress ='CompanyAddress_'.$_LANG_ID;
+        $address = $feedback_store['address'] . ", " . $feedback_store['city'] . ", " . $feedback_store['nationality'] . ", " . $feedback_store['country'];
 		/* Replace Info */
 		$check_open_mail = DOMAIN_NAME.'/check_open_email/'.$feedback_id;
 		
@@ -435,8 +383,8 @@ class Feedback extends dbBasic{
 		$message = str_replace('[%CUSTOMER_COUNTRY%]',$clsCountry->getTitle($feedback_store['country_id']),$message);
 		$message = str_replace('[%CUSTOMER_CITY%]',$clsCity->getTitle($feedback_store['city_id']),$message);
 		$message = str_replace('[%CUSTOMER_PHONE%]',$feedback_store['phone'],$message);
-		$message = str_replace('[%CUSTOMER_ADDRESS%]',$feedback_store['address'],$message);
-		$message = str_replace('[%CUSTOMER_REQUEST%]',$feedback_store['Comments'],$message);
+		$message = str_replace('[%CUSTOMER_ADDRESS%]',$address,$message);
+		$message = str_replace('[%CUSTOMER_REQUEST%]',$feedback_store['comment'],$message);
 		$message = str_replace('[%COMPANY_EMAIL%]',$clsConfiguration->getValue('CompanyEmail'),$message);
 		$message = str_replace('[%COMPANY_NAME%]',$clsConfiguration->getValue('CompanyName_'.$_LANG_ID),$message);
 		$message = str_replace('[%COMPANY_ADDRESS%]',$clsConfiguration->getValue($CompanyAddress),$message); 
@@ -458,7 +406,7 @@ class Feedback extends dbBasic{
 		}
 		$message_open_email_= '<img alt="" src="'.$check_open_mail.'" width="1" height="1" border="0" style="display:none"/>';
 		$message_open_email=$message.$message_open_email;
-		
+
 		#- Update Booking HTML
 		$this->updateOne($feedback_id,"feedback_html='".addslashes(trim($message))."'");
 		

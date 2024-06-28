@@ -20,7 +20,7 @@ function default_doLogin()
 }
 function default_loginAgain()
 {
-	global $assign_list, $_CONFIG, $_SITE_ROOT, $mod;
+	global $assign_list, $_CONFIG, $_SITE_ROOT, $mod,$clsISO;
 	global $core, $clsModule, $clsButtonNav;
 	doLoginAgain($core->_SESS->user_id);
 	#

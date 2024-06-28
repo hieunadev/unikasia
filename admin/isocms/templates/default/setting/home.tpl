@@ -251,3 +251,14 @@
 	var $type = 'WhyUsHomePage';
 	var $target_id = '0';
 </script>
+{literal}
+	<script>
+		$(document).ready(function() {
+			$(document).on('paste', function (e) {
+				e.preventDefault();
+				var text = (e.originalEvent.clipboardData || window.clipboardData).getData('text');
+				document.execCommand('insertText', false, text);
+			});
+		});
+	</script>
+{/literal}

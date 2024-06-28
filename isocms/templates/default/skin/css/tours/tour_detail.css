@@ -1,36 +1,3 @@
-/* Header */
-/*.tour_detaildeparture_body #header_fixed {
-    box-shadow: rgba(125, 135, 158, 0.09) 0px 12px 32px 0px;
-}
-.tour_detaildeparture_body .txt_header1 {
-    background-color: #111D37;
-}
-
-.tour_detaildeparture_body .border-bottom {
-    border-bottom: none !important;
-}
-
-.tour_detaildeparture_body .text-light .img_logo_voyages_2 {
-    display: unset !important;
-}
-
-.tour_detaildeparture_body .text-light .img_logo_voyages_1 {
-    display: none !important;
-}
-
-.tour_detaildeparture_body .txt_dropdown {
-    color: rgb(17, 29, 55) !important;
-}
-
-.tour_detaildeparture_body .drop_down {
-    background-color: rgb(240, 240, 240);
-}
-
-.tour_detaildeparture_body .fa-angle-down {
-    --bs-text-opacity: 1;
-    color: rgba(var(--bs-secondary-rgb),var(--bs-text-opacity))!important;
-}*/
-
 /* Common */
 
 .error {
@@ -310,7 +277,7 @@
 
 .btn-request-book {
     max-width: 172px;
-    padding: 12px 20px;
+    padding: 12px 30px;
     justify-content: center;
     align-items: center;
     gap: 16px;

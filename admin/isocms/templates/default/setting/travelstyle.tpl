@@ -15,17 +15,27 @@
     <div class="container-fluid">
         <form id="form_destination_setting" method="post" class="filterForm" action="">
             <fieldset>
+                <legend>{$core->get_Lang("Text tailormade tour")}</legend>
+                <div class="row-span">
+                    <div class="fieldlabel">{$core->get_Lang('Title')}</div>
+                    {assign var=TrvsTailorMadeTourTitle value=TrvsTailorMadeTourTitle_|cat:$_LANG_ID}
+                    <div class="fieldarea">
+                        <textarea style="width:100%" class="textarea_intro_editor_simple" name="iso-{$TrvsTailorMadeTourTitle}" id="TrvsTailorMadeTourTitle" cols="255" rows="2">{$clsConfiguration->getValue($TrvsTailorMadeTourTitle)}</textarea>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
                 <legend>{$core->get_Lang("List tour")}</legend>
                 <div class="row-span">
                     <div class="fieldlabel">{$core->get_Lang('Title')}</div>
-                    {assign var=TrvsTourTitle value=TrvsTourTitle}
+                    {assign var=TrvsTourTitle value=TrvsTourTitle_|cat:$_LANG_ID}
                     <div class="fieldarea">
                         <textarea style="width:100%" class="textarea_intro_editor_simple" name="iso-{$TrvsTourTitle}" id="TrvsTourTitle" cols="255" rows="2">{$clsConfiguration->getValue($TrvsTourTitle)}</textarea>
                     </div>
                 </div>
                 <div class="row-span">
                     <div class="fieldlabel">{$core->get_Lang('Description')}</div>
-                    {assign var=TrvsTourDescription value=TrvsTourDescription}
+                    {assign var=TrvsTourDescription value=TrvsTourDescription_|cat:$_LANG_ID}
                     <div class="fieldarea">
                         <textarea style="width:100%" class="textarea_intro_editor_simple" name="iso-{$TrvsTourDescription}" id="TrvsTourDescription" cols="255" rows="2">{$clsConfiguration->getValue($TrvsTourDescription)}</textarea>
                     </div>
@@ -35,7 +45,7 @@
                 <legend>{$core->get_Lang("Why choose tour")}</legend>
                 <div class="row-span">
                     <div class="fieldlabel">{$core->get_Lang('Title')}</div>
-                    {assign var=TrvsWhyTitle value=TrvsWhyTitle}
+                    {assign var=TrvsWhyTitle value=TrvsWhyTitle_|cat:$_LANG_ID}
                     <div class="fieldarea">
                         <textarea style="width:100%" class="textarea_intro_editor_simple" name="iso-{$TrvsWhyTitle}" id="TrvsWhyTitle" cols="255" rows="2">{$clsConfiguration->getValue($TrvsWhyTitle)}</textarea>
                     </div>
@@ -52,14 +62,14 @@
                 <legend>{$core->get_Lang("Travel style by country")}</legend>
                 <div class="row-span">
                     <div class="fieldlabel">{$core->get_Lang('Title')}</div>
-                    {assign var=TrvsTravelCountryTitle value=TrvsTravelCountryTitle}
+                    {assign var=TrvsTravelCountryTitle value=TrvsTravelCountryTitle_|cat:$_LANG_ID}
                     <div class="fieldarea">
                         <textarea style="width:100%" class="textarea_intro_editor_simple" name="iso-{$TrvsTravelCountryTitle}" id="TrvsTravelCountryTitle" cols="255" rows="2">{$clsConfiguration->getValue($TrvsTravelCountryTitle)}</textarea>
                     </div>
                 </div>
                 <div class="row-span">
                     <div class="fieldlabel">{$core->get_Lang('Description')}</div>
-                    {assign var=TrvsTravelCountryDescription value=TrvsTravelCountryDescription}
+                    {assign var=TrvsTravelCountryDescription value=TrvsTravelCountryDescription_|cat:$_LANG_ID}
                     <div class="fieldarea">
                         <textarea style="width:100%" class="textarea_intro_editor_simple" name="iso-{$TrvsTravelCountryDescription}" id="TrvsTravelCountryDescription" cols="255" rows="2">{$clsConfiguration->getValue($TrvsTravelCountryDescription)}</textarea>
                     </div>
@@ -69,21 +79,21 @@
                 <legend>{$core->get_Lang("When to go")}</legend>
                 <div class="row-span">
                     <div class="fieldlabel">{$core->get_Lang('Title')}</div>
-                    {assign var=TrvsWhenToGoTitle value=TrvsWhenToGoTitle}
+                    {assign var=TrvsWhenToGoTitle value=TrvsWhenToGoTitle_|cat:$_LANG_ID}
                     <div class="fieldarea">
                         <textarea style="width:100%" class="textarea_intro_editor_simple" name="iso-{$TrvsWhenToGoTitle}" id="TrvsWhenToGoTitle" cols="255" rows="2">{$clsConfiguration->getValue($TrvsWhenToGoTitle)}</textarea>
                     </div>
                 </div>
                 <div class="row-span">
                     <div class="fieldlabel">{$core->get_Lang('Description 1')}</div>
-                    {assign var=TrvsWhenToGoDescription_1 value=TrvsWhenToGoDescription_1}
+                    {assign var=TrvsWhenToGoDescription_1 value=TrvsWhenToGoDescription_1_|cat:$_LANG_ID}
                     <div class="fieldarea">
                         <textarea style="width:100%" class="textarea_intro_editor_simple" name="iso-{$TrvsWhenToGoDescription_1}" id="TrvsWhenToGoDescription_1" cols="255" rows="2">{$clsConfiguration->getValue($TrvsWhenToGoDescription_1)}</textarea>
                     </div>
                 </div>
                 <div class="row-span">
                     <div class="fieldlabel">{$core->get_Lang('Description 2')}</div>
-                    {assign var=TrvsWhenToGoDescription_2 value=TrvsWhenToGoDescription_2}
+                    {assign var=TrvsWhenToGoDescription_2 value=TrvsWhenToGoDescription_2_|cat:$_LANG_ID}
                     <div class="fieldarea">
                         <textarea style="width:100%" class="textarea_intro_editor_simple" name="iso-{$TrvsWhenToGoDescription_2}" id="TrvsWhenToGoDescription_2" cols="255" rows="2">{$clsConfiguration->getValue($TrvsWhenToGoDescription_2)}</textarea>
                     </div>
@@ -93,7 +103,7 @@
                 <legend>{$core->get_Lang("List blog")}</legend>
                 <div class="row-span">
                     <div class="fieldlabel">{$core->get_Lang('Title')}</div>
-                    {assign var=TrvsBlogTitle value=TrvsBlogTitle}
+                    {assign var=TrvsBlogTitle value=TrvsBlogTitle_|cat:$_LANG_ID}
                     <div class="fieldarea">
                         <textarea style="width:100%" class="textarea_intro_editor_simple" name="iso-{$TrvsBlogTitle}" id="TrvsBlogTitle" cols="255" rows="2">{$clsConfiguration->getValue($TrvsBlogTitle)}</textarea>
                     </div>
@@ -103,7 +113,7 @@
                 <legend>{$core->get_Lang("List travel guide")}</legend>
                 <div class="row-span">
                     <div class="fieldlabel">{$core->get_Lang('Title')}</div>
-                    {assign var=TrvsTravelGuideTitle value=TrvsTravelGuideTitle}
+                    {assign var=TrvsTravelGuideTitle value=TrvsTravelGuideTitle_|cat:$_LANG_ID}
                     <div class="fieldarea">
                         <textarea style="width:100%" class="textarea_intro_editor_simple" name="iso-{$TrvsTravelGuideTitle}" id="TrvsTravelGuideTitle" cols="255" rows="2">{$clsConfiguration->getValue($TrvsTravelGuideTitle)}</textarea>
                     </div>
@@ -113,7 +123,7 @@
                 <legend>{$core->get_Lang("List FAQ")}</legend>
                 <div class="row-span">
                     <div class="fieldlabel">{$core->get_Lang('Title')}</div>
-                    {assign var=TrvsFAQTitle value=TrvsFAQTitle}
+                    {assign var=TrvsFAQTitle value=TrvsFAQTitle_|cat:$_LANG_ID}
                     <div class="fieldarea">
                         <textarea style="width:100%" class="textarea_intro_editor_simple" name="iso-{$TrvsFAQTitle}" id="TrvsFAQTitle" cols="255" rows="2">{$clsConfiguration->getValue($TrvsFAQTitle)}</textarea>
                     </div>
@@ -123,7 +133,7 @@
                 <legend>{$core->get_Lang("List other country")}</legend>
                 <div class="row-span">
                     <div class="fieldlabel">{$core->get_Lang('Title')}</div>
-                    {assign var=TrvsCountryTitle value=TrvsCountryTitle}
+                    {assign var=TrvsCountryTitle value=TrvsCountryTitle_|cat:$_LANG_ID}
                     <div class="fieldarea">
                         <textarea style="width:100%" class="textarea_intro_editor_simple" name="iso-{$TrvsCountryTitle}" id="TrvsCountryTitle" cols="255" rows="2">{$clsConfiguration->getValue($TrvsCountryTitle)}</textarea>
                     </div>

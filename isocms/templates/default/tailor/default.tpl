@@ -29,7 +29,7 @@
 
     </div>
 </section>
-<form id="unika_tailor_form" class="unika_tailor_form">
+<form id="unika_tailor_form" class="unika_tailor_form" method="POST" enctype="multipart/form-data" onsubmit="return false">
     <section class="input_informationtrip">
         <div class="travelinf">
             <div class="container">
@@ -52,7 +52,7 @@
                                 <label for="fullname" class="txtlabel">{$core->get_Lang('Full Name')}
                                     <span style="color:black"> *</span>
                                 </label>
-                                <input id="fullname" name="fullname" type="text"
+                                <input id="fullname" name="name" type="text"
                                     class="form-control select-input-inf required" value=""
                                     placeholder="Enter your name">
                             </div>
@@ -62,7 +62,7 @@
                                 <label for="nationality" class="txtlabel">{$core->get_Lang('Nationality')}
                                     <span style="color:black"> *</span>
                                 </label>
-                                <select name="country_id" id="nationality"
+                                <select name="nationality" id="nationality"
                                     class="tailor_select2 form-select select-input-inf required">
                                     <option value="" disabled selected hidden>-- {$core->get_Lang('Please Select')} --
                                     </option>
@@ -85,7 +85,7 @@
                                     <span style="color:black"> *</span>
                                 </label>
                                 <input id="phone" name="phone" type="text"
-                                    class="form-control select-input-inf required" value=""
+                                    class="unika_tailor_phone form-control select-input-inf required"
                                     placeholder="Enter your phone">
                             </div>
                         </div>
@@ -93,7 +93,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <label for="socialMedia" class="txtlabel">{$core->get_Lang('Social Media')}</label>
-                                <input type="text" class="form-control select-input-inf" id="socialMedia"
+                                <input type="text" class="form-control select-input-inf" id="socialMedia" name="social_media"
                                     placeholder="Facebook, Whatsapp, Zalo,..">
                             </div>
                         </div>
@@ -132,14 +132,14 @@
                                 <label for="duration" class="txtlabel">{$core->get_Lang('Duration')}</label>
                                 <p class="txt_smalltrip">{$core->get_Lang('in Days')}</p>
 
-                                <input type="duration" class="form-control select-input-inf" id="duration"
+                                <input type="duration" name="duration" class="duration form-control select-input-inf" id="duration"
                                     placeholder="Example: 7 Days">
                             </div>
                             <div class="col-md-4">
                                 <label for="bugetperson" class="txtlabel">{$core->get_Lang('Budget per person')}</label>
                                 <p class="txt_smalltrip">{$core->get_Lang('excluding international flights')}</p>
 
-                                <input type="budget" class="form-control select-input-inf" id="bugetperson"
+                                <input type="text" name="budget" class="form-control select-input-inf" id="bugetperson"
                                     placeholder="Example: 2.000$">
                             </div>
                         </div>
@@ -149,14 +149,14 @@
                                 <label for="arrival-airport" class="txtlabel">
                                     {$core->get_Lang('Arrival Airport')}
                                 </label>
-                                <select class="tailor_select2 form-select select-input-inf" id="arrival-airport">
+                                <select class="tailor_select2 form-select select-input-inf" name="arrival_airport" id="arrival-airport">
                                     {$clsTailorProperty->getSelectByProperty('_ARRIVAL_AIRPORT')}
                                 </select>
                             </div>
                             <div class="col-md-6">
                                 <label for="tourguide" class="txtlabel ">{$core->get_Lang('Tour guide
                                     preference')}</label>
-                                <select class="tailor_select2 form-select select-input-inf" id="tourguide">
+                                <select class="tailor_select2 form-select select-input-inf" name="tour_guide" id="tourguide">
                                     {$clsTailorProperty->getSelectByProperty('_TOUR_GUIDE')}
                                 </select>
                             </div>
@@ -173,7 +173,7 @@
                                     <div class="tailor_participant_txt">
                                         <div>
                                             <i class="fa-regular fa-user-vneck"></i>
-                                            <span class="tailor_participant_text"></span>
+                                            <span class="tailor_participant_text">1 Adults</span>
                                         </div>
                                         <i class="fa-light fa-chevron-down"></i>
                                     </div>
@@ -187,7 +187,7 @@
                                                     <div class="tailor_minus">
                                                         <i class="fa-regular fa-minus"></i>
                                                     </div>
-                                                    <input inputmode="numeric" pattern="[0-9]*" name="adults" value="0">
+                                                    <input inputmode="numeric" class="unika_inp_participant" pattern="[0-9]*" name="adult" value="0">
                                                     <div class="tailor_plus">
                                                         <i class="fa-regular fa-plus"></i>
                                                     </div>
@@ -201,7 +201,7 @@
                                                     <div class="tailor_minus">
                                                         <i class="fa-regular fa-minus"></i>
                                                     </div>
-                                                    <input inputmode="numeric" pattern="[0-9]*" name="adults" value="0">
+                                                    <input inputmode="numeric" class="unika_inp_participant" pattern="[0-9]*" name="children" value="0">
                                                     <div class="tailor_plus">
                                                         <i class="fa-regular fa-plus"></i>
                                                     </div>
@@ -215,7 +215,7 @@
                                                     <div class="tailor_minus">
                                                         <i class="fa-regular fa-minus"></i>
                                                     </div>
-                                                    <input inputmode="numeric" pattern="[0-9]*" name="adults" value="0">
+                                                    <input inputmode="numeric" class="unika_inp_participant" pattern="[0-9]*" name="infant" value="0">
                                                     <div class="tailor_plus">
                                                         <i class="fa-regular fa-plus"></i>
                                                     </div>
@@ -229,7 +229,7 @@
                                 <label for="travelstyles" class="txtlabel ">
                                     {$core->get_Lang('Travel Styles &amp; Activities')}
                                 </label>
-                                <select class="tailor_select2 form-select select-input-inf" id="travelstyles">
+                                <select class="tailor_select2 form-select select-input-inf" name="travel_style" id="travelstyles">
                                     <option value="">-- Travel Styles --</option>
                                     {section name=i loop=$listTravelStyle}
                                     {assign var=tourcat_id value=$listTravelStyle[i].tourcat_id}
@@ -245,14 +245,14 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <label for="meals" class="txtlabel">{$core->get_Lang('Meals')}</label>
-                                <select class="tailor_select2 form-select select-input-inf" id="tourguide">
+                                <select class="tailor_select2 form-select select-input-inf" id="meals" name="meals">
                                     {$clsTailorProperty->getSelectByProperty('_MEALS')}
                                 </select>
                             </div>
 
                             <div class="col-md-6">
                                 <label for="suitabletime" class="txtlabel">The most suitable time to reach you</label>
-                                <input type="suitable" class="form-control select-input-inf" id="suitabletime"
+                                <input type="text" name="suitable" class="form-control select-input-inf" id="suitabletime"
                                     placeholder="In the morning, the afternoon,... or at a specific time">
                             </div>
                         </div>
@@ -275,8 +275,8 @@
                                                     <label class="form-check-label unika_checkbox"
                                                         for="chkAccordion{$lstCountry[i].country_id}All">
                                                         {$lstCountry[i].title}
-                                                        <input class="form-check-input chkAll me-2 unika_check_all"
-                                                            type="checkbox" value=""
+                                                        <input class="form-check-input chkAll me-2 unika_check_all" 
+                                                            type="checkbox" value="{$lstCountry[i].country_id}" name="destination_country[]"
                                                             id="chkAccordion{$lstCountry[i].country_id}All">
                                                         <span class="checkmark"></span>
                                                     </label>
@@ -286,19 +286,18 @@
                                                 class="accordion-collapse collapse"
                                                 aria-labelledby="panelsStayOpen-heading{$lstCountry[i].country_id}">
                                                 <div class="accordion-body d-flex flex-wrap" style="gap:12px">
-                                                    {assign var=cities
-                                                    value=$clsCountryEx->getListCity($lstCountry[i].country_id)}
+                                                    {assign var=cities value=$clsCountryEx->getListCity($lstCountry[i].country_id)}
                                                     {section name=t loop=$cities}
                                                     <div class="form-check form-region mr-12">
                                                         <label class="unika_checkbox"
-                                                            for="chkAccordion{$lstCountry[t].country_id}Child{$smarty.section.t.index}">{$clsCity->getTitle($cities[t].city_id)}
-                                                            <input class="form-check-region" type="checkbox" value=""
-                                                                id="chkAccordion{$lstCountry[t].country_id}Child{$smarty.section.t.index}">
+                                                            for="chkAccordion{$lstCountry[i].country_id}Child{$cities[t].city_id}">{$clsCity->getTitle($cities[t].city_id)}
+                                                            <input class="form-check-region" name="destinations[{$lstCountry[i].country_id}][]" type="checkbox" value="{{$cities[t].city_id}}"
+                                                                id="chkAccordion{$lstCountry[i].country_id}Child{$cities[t].city_id}">
                                                             <span class="checkmark"></span>
                                                         </label>
                                                     </div>
                                                     {/section}
-                                                    <input type="txt-input-other" class="form-control select-input-inf"
+                                                    <input type="text" name="destinations[{$lstCountry[i].country_id}][text]" class="unika_city_txt form-control select-input-inf"
                                                         id="input-other" placeholder="Other">
                                                 </div>
                                             </div>
@@ -312,7 +311,7 @@
                                 <h3 class="txt_destinations">Accommodations preference</h3>
                                 <div class="select-checkbox-prefer">
                                     <label for="accommodations" class="txtlabel">Accommodations</label>
-                                    <select class="tailor_select2 form-select select-input-inf" id="accommodations">
+                                    <select class="tailor_select2 form-select select-input-inf" name="accommodation" id="accommodations">
                                         {$clsTailorProperty->getSelectByProperty('_ACCOMMODATIONS')}
                                     </select>
                                 </div>
@@ -320,29 +319,18 @@
                                     <p class="txt_roomtype" style="margin: 26px 0 8px 0">Type of room you prefer</p>
                                     <div class="checkbox-room">
                                         <div class="accordion-body d-flex flex-wrap">
+                                            {assign var=roomClass value=$clsTailorProperty->getListByProperty('_ROOM_CLASS')}
+                                            {section name=i loop=$roomClass}
                                             <div class="form-check form-region me-3">
-                                                <input class="form-check-room" type="checkbox" value=""
-                                                    id="chkAccordion5Room0">
-                                                <label for="chkAccordion1Room0">Single room</label>
+                                                <label class="unika_checkbox"
+                                                    for="unika_room_{$roomClass[i].tailor_property_id}">
+                                                    {$roomClass[i].title}
+                                                    <input class="type_room form-check-region" type="checkbox" name="type_room[]"
+                                                        id="unika_room_{$roomClass[i].tailor_property_id}" value="{$roomClass[i].tailor_property_id}">
+                                                    <span class="checkmark"></span>
+                                                </label>
                                             </div>
-
-                                            <div class="form-check form-region me-3">
-                                                <input class="form-check-room" type="checkbox" value=""
-                                                    id="chkAccordion5Room1">
-                                                <label for="chkAccordion1Room1">Double room with one large bed</label>
-                                            </div>
-
-                                            <div class="form-check form-region me-3">
-                                                <input class="form-check-room" type="checkbox" value=""
-                                                    id="chkAccordion5Room2">
-                                                <label for="chkAccordion1Room2">Double room with 2 beds</label>
-                                            </div>
-
-                                            <div class="form-check form-region me-3">
-                                                <input class="form-check-room" type="checkbox" value=""
-                                                    id="chkAccordion5Room3">
-                                                <label for="chkAccordion1Room3">Room for three people</label>
-                                            </div>
+                                            {/section}
                                         </div>
                                     </div>
                                 </div>
@@ -364,7 +352,7 @@
                     <div class="input_inf2">
                         <div class="row">
                             <div class="col-12">
-                                <textarea class="form-control input_txttravel" cols="255" rows="5"
+                                <textarea class="form-control input_txttravel" name="special" cols="255" rows="5"
                                     placeholder="Any must-see landmarks in your bucket list, desired accommodations, special food requirements, allergies…"
                                     name="notes" style="height: 152px;"></textarea>
                             </div>
@@ -389,43 +377,32 @@
                         go to your spam mailbox.
                     </p>
 
-                    <div class="g-recaptcha" data-sitekey="{$clsISO->getVar('reCAPTCHA_KEY')}"></div>
-                    {if $errMsg ne ''}
-                    <div id="error_recaptcha" class="error text_left">{$errMsg}</div>
-                    {else}
-                    <div id="error_recaptcha" class="error text_left"></div>
-                    {/if}
-
-                    <!-- <div class="g-recaptcha" data-sitekey="6LfH7cMpAAAAAAKENYh7nqX8XErSJ3kQIjNoN5KP" data-type="image"></div>
-          </div> -->
+                   <div class="g-recaptcha" id="g-recaptcha" data-sitekey="{$clsISO->getVar('reCAPTCHA_KEY')}"></div>
+							{if $errMsg ne ''}
+							<div id="error_recaptcha" class="error text_left">{$errMsg}</div>
+							{else}
+							<div id="error_recaptcha" class="error text_left"></div>
+							{/if}
 
                     <div class="btn_rqfQ text-center">
-                        <input type="hidden" name="plantrip" value="plantrip" />
-                        <input type="hidden" name="hidden_field" value="" />
-                        <button type="submit" class="btn btnrq" id="SubmitEnquiry">{$core->get_Lang('Request for
-                            Quotation')}</button>
+                        <button type="submit" class="btn btnrq" id="SubmitEnquiry">
+                            {$core->get_Lang('Request for Quotation')}
+                        </button>
                     </div>
 
                 </div>
             </div>
     </section>
 </form>
-<!-- <script src="https://www.google.com/recaptcha/api.js?fallback=true" async defer></script> -->
+
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 {literal}
 <script>
-    $(document).ready(function () {
-        $('.unika_header').removeClass('unika_header_2');
-
-        $(window).scroll(function () {
-            requestAnimationFrame(function () {
-                $('.unika_header').removeClass('unika_header_2');
-            });
-        });
-    });
-
-
     if ($('.wpcf7-datepicker').length) {
+        let dateNow = $.datepicker.formatDate("M d, yy", new Date())
+        $('.wpcf7-datepicker').val(dateNow);
+        
         $('.wpcf7-datepicker').datepicker({
             dateFormat: "MM d, yy",
             minDate: new Date()
@@ -461,6 +438,16 @@
     $(function () {
         $('.tailor_select2').select2();
 
+        $(document).ready(function () {
+            $('.unika_header').removeClass('unika_header_2');
+
+            $(window).scroll(function () {
+                requestAnimationFrame(function () {
+                    $('.unika_header').removeClass('unika_header_2');
+                });
+            });
+        });
+
         // validate form
         $('#unika_tailor_form').validate({
             errorPlacement: function (error, element) {
@@ -481,33 +468,69 @@
             debug: false,
             rules: {
                 title: "required",
-                fullname: "required",
-                country_id: "required",
-                email: "required",
+                name: "required",
+                nationality: "required",
+                email: {
+                    required: true,
+                    email: true
+                },
                 phone: "required",
+                recapcha: "required",
             },
             messages: {
                 title: msg_title_required,
-                fullname: msg_fullname_required,
-                country_id: msg_country_id_not_valid,
-                email: msg_email_required,
+                name: msg_fullname_required,
+                nationality: msg_country_id_not_valid,
+                email: {
+                    required: msg_email_required,
+                    email: msg_email_not_valid
+                },
                 phone: msg_phone_required,
+                recapcha: msg_recapcha,
             },
             submitHandler: function () {
-                // $.ajax({
-                //     type: "POST",
-                //     url: "",
-                //     beforeSend: function (xhr) {
-                //         $('.unika_item_submit').val("Processing...").prop('disabled', true);
-                //     },
-                //     success: function (res) {
-                //         $('#download_brochure').val("Submit your review");
-                //         alert("Successfully! Please check email!");
-                //     },
-                //     error: function () {
-                //         console.error("Fail");
-                //     }
-                // });
+                let formData = new FormData();
+                var recaptchaResponse = grecaptcha.getResponse();
+                console.log('recaptchaResponse:', recaptchaResponse)
+                $('#unika_tailor_form').find('input, select, textarea').each(function(){
+                    let name_val = $(this).attr('name');
+                    let value = $(this).val();
+                    let is_check_parents = $(this).parents('.accordion-item').find('.unika_check_all').prop('checked')
+                    if($(this).hasClass('form-check-region')){
+                        if($(this).prop('checked') && is_check_parents || $(this).hasClass('type_room') && $(this).prop('checked')){
+                            formData.append(name_val, value);
+                        }
+                    }else if($(this).hasClass('unika_check_all')){
+                        if($(this).prop('checked')){
+                            formData.append(name_val, value);
+                        }
+                    }else if($(this).hasClass('unika_city_txt')){
+                        if(value != '' && is_check_parents){
+                            formData.append(name_val, value);
+                        }
+                    }else{
+                        formData.append(name_val, value);
+                    }
+                })
+
+                $.ajax({
+                    type: "POST",
+                    url: "/index.php?mod="+mod+"&act=ajaxTailorMadeTour",
+                    data: formData,
+                    processData: false, 
+                    beforeSend: function (xhr) {
+                        $('.unika_item_submit').val("Processing...").prop('disabled', true);
+                    },
+                    contentType: false,
+                    success: function (res) {
+                        console.log('res:', res)
+                        console.log('res:', res['result'])
+                        alert("Successfully! Please check email!");
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.log('Lỗi:', textStatus, errorThrown);
+                    }
+                });
             }
         });
 
@@ -520,6 +543,7 @@
                 let accordion_collapse = $(this).parents('.accordion-item').find('.accordion-collapse');
                 if ($(this).hasClass('collapsed')) {
                     unika_check_all.prop('checked', false);
+                    accordion_collapse.find('.unika_city_txt').val('');
                     accordion_collapse.find('.form-region').removeClass('active');
                     accordion_collapse.find('input').prop('checked', false);
                 } else {
@@ -549,6 +573,7 @@
                 let inp_val = tailor_input.val();
                 inp_val = parseInt(inp_val) + 1;
                 tailor_input.val(inp_val);
+                participantText();
             })
             .on('click', '.tailor_minus', function () {
                 let tailor_input = $(this).parents('.tailor_participant_event').find('input');
@@ -556,8 +581,9 @@
                 inp_val = parseInt(inp_val) - 1;
                 inp_val = inp_val < 0 ? 0 : inp_val;
                 tailor_input.val(inp_val);
+                participantText();
             })
-            .on('keyup', '.tailor_participant_event input', function () {
+            .on('keyup', '.tailor_participant_event input, .duration', function () {
                 let inp_val = $(this).val();
                 inp_val = inp_val.replace(/^0+/, '');
 
@@ -565,13 +591,38 @@
                     inp_val = inp_val.replace(/[^0-9]/g, '').replace(/^0+/, '');
                 }
 
-                $(this).val(inp_val)
+                $(this).val(inp_val);
+                if($(this).hasClass('unika_inp_participant ')){
+                    participantText();
+                }
+            })
+            .on('keyup', '.unika_tailor_phone', function () {
+                let inp_val = $(this).val();
+
+                if (!/^\d*$/.test(inp_val)) {
+                    inp_val = inp_val.replace(/[^0-9]/g, '');
+                }
+
+                $(this).val(inp_val);
             })
 
-        function checkValidEmail(email) {
-            var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-            return regex.test(email);
+        function participantText(){
+            let html = '';
+            let length = $('.unika_inp_participant').length;
+
+            $('.unika_inp_participant').each(function(index, val){
+                let index_new = index + 1;
+                let name = $(this).attr('name');
+                let value = $(this).val();
+
+                if(value != 0){
+                    html += `${value} ${name} ${index_new == length ? '' : ', '} `
+                }
+            })
+
+            $('.tailor_participant_text').text(html);
         }
+
     });
 </script>
 {/literal}

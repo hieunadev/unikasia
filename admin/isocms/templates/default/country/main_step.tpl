@@ -69,6 +69,10 @@
 							<input class="input_text_form input-title required" data-table_id="{$pvalTable}" name="title" value="{$clsClassTable->getTitle($pvalTable)}" maxlength="255" type="text" onClick="loadHelp(this)" />
 							<div class="text_help" hidden="">{$clsConfiguration->getValue($title_country)|html_entity_decode}</div>
 						</div>
+						<div class="inpt_tour">
+							<label for="map_link">{$core->get_Lang('Map Link')} <span class="required_red">*</span></label>
+							<input class="input_text_form input-map_link required" data-table_id="{$pvalTable}" name="map_link" value="{$clsClassTable->getMapLink($pvalTable)}" maxlength="255" type="text" onClick="loadHelp(this)" />
+						</div>
 						{elseif $currentstep=='des_header'}
 						<div class="inpt_tour">
 							<label for="header_title">

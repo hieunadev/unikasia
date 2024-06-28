@@ -36,41 +36,41 @@
             <div class="unika_footer_1_right d-flex">
                 <div class="unika_footer_item d-flex flex-column">
                     <div class="unika_footer_title">
-                        HANOI VOYAGES
+                        {$core->get_Lang("HANOI VOYAGES")}
                     </div>
                     <div class="unika_footer_list_link flex-column">
                         <a href="#" class="unikasia_footer_link">
-                            About us
+                            {$core->get_Lang("About us")}
                         </a>
                         <a href="#" class="unikasia_footer_link">
-                            Tailor made travel
+                            {$core->get_Lang("Tailor made travel")}
                         </a>
                         <a href="#" class="unikasia_footer_link">
-                            Professional guarantees
+                            {$core->get_Lang("Professional guarantees")}
                         </a>
                         <a href="#" class="unikasia_footer_link">
-                            Contact
+                            {$core->get_Lang("Contact")}
                         </a>
                         <a href="#" class="unikasia_footer_link">
-                            Testimonials
+                            {$core->get_Lang("Testimonials")}
                         </a>
                         <a href="#" class="unikasia_footer_link">
-                            Our team
+                            {$core->get_Lang("Our team")}
                         </a>
                         <a href="#" class="unikasia_footer_link">
-                            Good reasons to choose us
+                            {$core->get_Lang("Good reasons to choose us")}
                         </a>
                         <a href="#" class="unikasia_footer_link">
-                            Recrutement
+                            {$core->get_Lang("Recrutement")}
                         </a>
                         <a href="#" class="unikasia_footer_link">
-                            Sitemap
+                            {$core->get_Lang("Sitemap")}
                         </a>
                     </div>
                 </div>
                 <div class="unika_footer_item d-flex flex-column">
                     <div class="unika_footer_title">
-                        DESTINATIONS
+                        {$core->get_Lang("DESTINATIONS")}
                     </div>
                     <div class="unika_footer_list_link flex-column">
                         <a href="#" class="unikasia_footer_link">
@@ -95,26 +95,26 @@
                 </div>
                 <div class="unika_footer_item d-flex flex-column">
                     <div class="unika_footer_title d-flex flex-column">
-                        OTHERS
+                        {$core->get_Lang("OTHERS")}
                     </div>
                     <div class="unika_footer_list_link flex-column">
                         <a href="#" class="unikasia_footer_link">
-                            Stay
+                            {$core->get_Lang("Stay")}
                         </a>
                         <a href="#" class="unikasia_footer_link">
-                            Cruise
+                            {$core->get_Lang("Cruise")}
                         </a>
                         <a href="#" class="unikasia_footer_link">
-                            Experiences
+                            {$core->get_Lang("Experiences")}
                         </a>
                         <a href="#" class="unikasia_footer_link">
-                            Blog
+                            {$core->get_Lang("Blog")}
                         </a>
                     </div>
                 </div>
             </div>
             <div class="unika_infor_mobile">
-                <a href="#" class="unikasia_travel">Unikasia Travel</a>
+                <a href="#" class="unikasia_travel">{$clsConfiguration->getValue($CompanyName)}</a>
                 <div class="unika_link_mobile">
                     <a href="#" class="unikasia_footer_link">
                         {assign var=CompanyAddress1 value=CompanyAddress1_|cat:$_LANG_ID}
@@ -191,7 +191,7 @@
         <div class="tailor_img_fixed">
             <img src="https://unikasia.vietiso.com/isocms/templates/default/skin/images/destination/hn_voyages.png" alt="">
         </div>
-        TAILOR-MADE TRAVEL
+        {$core->get_Lang("TAILOR-MADE TRAVEL")}
     </a>
 </div>
 <div id="icon-fixed">

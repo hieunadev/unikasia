@@ -1,6 +1,6 @@
 $().ready(function(){
 	loadCityChoice($country_id);
-	
+
 	$('#check_all').change(function(){
 		if($(this).is(':checked')){
 			$('.chkitem').attr('checked',true);

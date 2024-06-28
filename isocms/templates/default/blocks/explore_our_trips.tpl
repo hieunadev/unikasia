@@ -2,19 +2,19 @@
     <div class="container">
         <h2 class="txtourtrip txt_underline">
             {if $mod eq 'tour' && $act eq 'cat'}
-            {$clsConfiguration->getValue('TrvsTourTitle_'|cat:$_LANG_ID)|html_entity_decode}
-            {$clsTourCategory->getTitle($cat_id)}
-            <span style="text-decoration: underline;">trip in</span>
-            {$clsCountry->getTitle($country_id)}
+                {$clsConfiguration->getValue('TrvsTourTitle_'|cat:$_LANG_ID)|html_entity_decode}
+                {$clsTourCategory->getTitle($cat_id)}
+                <span style="text-decoration: underline;">trip in</span>
+                {$clsCountry->getTitle($country_id)}
             {else}
-            {$clsConfiguration->getValue('TitleExploreTrips_'|cat:$_LANG_ID)|html_entity_decode}
+                {$clsConfiguration->getValue('DesTourTitle_'|cat:$_LANG_ID)|html_entity_decode}
             {/if}
         </h2>
         <div class="txtexper">
             {if $mod eq 'tour' && $act eq 'cat'}
-            {$clsConfiguration->getValue('TrvsTourDescription_'|cat:$_LANG_ID)|html_entity_decode}
+                {$clsConfiguration->getValue('TrvsTourDescription_'|cat:$_LANG_ID)|html_entity_decode}
             {else}
-            {$clsConfiguration->getValue('IntroExploreTrips_'|cat:$_LANG_ID)|html_entity_decode}
+                {$clsConfiguration->getValue('DesTourDescription_'|cat:$_LANG_ID)|html_entity_decode}
             {/if}
         </div>
         <div class="row justify-content-center">
@@ -58,7 +58,7 @@
                                     <span class="txt_unit">US</span>
                                     <span class="numbprice">${$clsTour->getTripPriceNewPro2020($listTourExplore[i].tour_id,$smarty.now,0,'value')}</span>
                                     {else}
-                                    <span class="numbprice">Contact</span>
+                                    <span class="numbprice">{$core->get_Lang("Contact")}</span>
                                     {/if}
                                 </div>
                             </div>

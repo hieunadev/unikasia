@@ -2919,19 +2919,20 @@ error_reporting(E_ALL);*/
 		$cartSessionHotel= vnSessionGetVar('BookingHotel_'.$_LANG_ID);
 		
 		$cartSessionTour=$cartSessionTour[$_LANG_ID];
+
 		$cartSessionVoucher=$cartSessionVoucher[$_LANG_ID];
 		$cartSessionCruise=$cartSessionCruise[$_LANG_ID];
 		$cartSessionHotel=$cartSessionHotel[$_LANG_ID];
 	
 		$cartSessionContact_Info= vnSessionGetVar('ContactInfoBooking');
 		$assign_list['cartSessionContact_Info'] = $cartSessionContact_Info;
-	
+//	    $clsISO->pre($cartSessionContact_Info);die();
 	//$cartSessionContact_Info = array_merge($cartSessionContact_Info);
-	
+
 	if($cartSessionTour!=''){
 		$html='';
 		$total_price_booking= 0; 
-		$total_price_deposit= 0; 
+		$total_price_deposit= 0;
 //		echo "<pre>";
 //		var_dump($cartSessionTour);die;
 		foreach($cartSessionTour as $item){
@@ -2951,12 +2952,12 @@ error_reporting(E_ALL);*/
 				$total_price=$clsISO->formatPrice($item['total_price_z'] + $item['price_promotion']);
 				
 				$total_price_booking += $item['total_price_z']; 
-				$total_price_deposit += $item['price_deposit'];  
-				
+				$total_price_deposit += $item['price_deposit'];
 
 				$str_start_date=$clsISO->getStrToTime($item['check_in_book_z']);
 				$str_end_date=$clsTour->getEndDate($str_start_date,$item['tour_id_z']);
-				
+                $duration_time = $booking_store['duration_time'];
+
 				$html.='<div style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-family: arial, sans-serif; font-size: 14px; color: #000000;" data-mce-style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-family: arial, sans-serif; font-size: 14px; color: #000000;">
 				<span style="color: #2e3543;" data-mce-style="color: #2e3543;">
 					<span style="font-size: 14px;" data-mce-style="font-size: 14px;">
@@ -2965,14 +2966,14 @@ error_reporting(E_ALL);*/
 					</span>
 				</span>
 			</div>';
-				$html.='<div style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-family: arial, sans-serif; font-size: 14px; color: #000000;" data-mce-style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-family: arial, sans-serif; font-size: 14px; color: #000000;">
+				/*$html.='<div style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-family: arial, sans-serif; font-size: 14px; color: #000000;" data-mce-style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-family: arial, sans-serif; font-size: 14px; color: #000000;">
 				<span style="color: #2e3543;" data-mce-style="color: #2e3543;">
 					<span style="font-size: 14px;" data-mce-style="font-size: 14px;">
 						<span style="font-size: 16px;" data-mce-style="font-size: 16px;">
 							<span style="font-weight: 600; background: transparent; font-size: inherit;" data-mce-style="font-weight: 600; background: transparent; font-size: inherit;">|| '.$core->get_Lang('Tour Option').'</span>: '.$clsTourOption->getTitle($item['tour__class']).'</span>
 					</span>
 				</span>
-			</div>';
+			</div>';*/
 				$html.='<div style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-family: arial, sans-serif; font-size: 14px; color: #000000;" data-mce-style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-family: arial, sans-serif; font-size: 14px; color: #000000;">
 				<span style="color: #2e3543;" data-mce-style="color: #2e3543;">
 					<span style="font-size: 14px;" data-mce-style="font-size: 14px;">
@@ -2986,6 +2987,14 @@ error_reporting(E_ALL);*/
 					<span style="font-size: 14px;" data-mce-style="font-size: 14px;">
 						<span style="font-size: 16px;" data-mce-style="font-size: 16px;">
 							<span style="font-weight: 600; background: transparent; font-size: inherit;" data-mce-style="font-weight: 600; background: transparent; font-size: inherit;">|| '.$core->get_Lang('End Date').'</span>: '.$clsISO->converTimeToText5($str_end_date).'</span>
+					</span>
+				</span>
+			</div>';
+				$html.='<div style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-family: arial, sans-serif; font-size: 14px; color: #000000;" data-mce-style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-family: arial, sans-serif; font-size: 14px; color: #000000;">
+				<span style="color: #2e3543;" data-mce-style="color: #2e3543;">
+					<span style="font-size: 14px;" data-mce-style="font-size: 14px;">
+						<span style="font-size: 16px;" data-mce-style="font-size: 16px;">
+							<span style="font-weight: 600; background: transparent; font-size: inherit;" data-mce-style="font-weight: 600; background: transparent; font-size: inherit;">|| '.$core->get_Lang('Duration').'</span>: '.$duration_time.'</span>
 					</span>
 				</span>
 			</div>';
@@ -3035,42 +3044,6 @@ error_reporting(E_ALL);*/
 					</span>
 				</span>
 			</div>';
-                if (!empty($cartSessionContact_Info['amount_room_id'])) {
-                    $rooms = array_map(null, $cartSessionContact_Info["checkbox_room"], $cartSessionContact_Info["price_room"], $cartSessionContact_Info["amount_room_id"]);
-
-                    $rooms = array_map(function($room) {
-                        return array(
-                            'checkbox_room' => $room[0],
-                            'price_room' => $room[1],
-                            'amount_room_id' => $room[2]
-                        );
-                    }, $rooms);
-                    foreach ($rooms as $k=>$v) {
-                        $txt_room .= "\n" . $v["price_room"] . "$" . " x " . $v["amout_room_id"] . " " . $clsTourProperty->getTitle($v["checkbox_room"]);
-                    }
-                    $html.='<div style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-family: arial, sans-serif; font-size: 14px; color: #000000;" data-mce-style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-family: arial, sans-serif; font-size: 14px; color: #000000;">
-                        <span style="color: #2e3543;" data-mce-style="color: #2e3543;">
-                            <span style="font-size: 14px;" data-mce-style="font-size: 14px;">
-                                <span style="font-size: 16px;" data-mce-style="font-size: 16px;">
-                                    <span style="font-weight: 600; background: transparent; font-size: inherit;" data-mce-style="font-weight: 600; background: transparent; font-size: inherit;">|| '.$core->get_Lang('List Room').'</span>: '. "\n" .$txt_room.'</span>
-                            </span>
-                        </span>
-                    </div>';
-                }
-                if (!empty($cartSessionContact_Info['service_id'])) {
-                    $services = array_combine($cartSessionContact_Info['service_id'], $cartSessionContact_Info['amount_service_id']);
-                    foreach ($services as $k=>$v) {
-                        $txt_services .= "\n" . $clsAddOnService->getPrice($k) . "$" . " x " . $v . " " . $clsAddOnService->getTitle($k);
-                    }
-                    $html.='<div style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-family: arial, sans-serif; font-size: 14px; color: #000000;" data-mce-style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-family: arial, sans-serif; font-size: 14px; color: #000000;">
-                        <span style="color: #2e3543;" data-mce-style="color: #2e3543;">
-                            <span style="font-size: 14px;" data-mce-style="font-size: 14px;">
-                                <span style="font-size: 16px;" data-mce-style="font-size: 16px;">
-                                    <span style="font-weight: 600; background: transparent; font-size: inherit;" data-mce-style="font-weight: 600; background: transparent; font-size: inherit;">|| '.$core->get_Lang('Other Services').'</span>: '. "\n" .$txt_services.'</span>
-                            </span>
-                        </span>
-                    </div>';
-                }
 				/*$html.='<div style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-family: arial, sans-serif; font-size: 14px; color: #000000;" data-mce-style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-family: arial, sans-serif; font-size: 14px; color: #000000;">
 				<span style="color: #2e3543;" data-mce-style="color: #2e3543;">
 					<span style="font-size: 14px;" data-mce-style="font-size: 14px;">
@@ -3080,6 +3053,48 @@ error_reporting(E_ALL);*/
 				</span>
 			</div>';*/
 				}
+                if (!empty($cartSessionContact_Info['amount_room_id'])) {
+                    $rooms = array_map(null, $cartSessionContact_Info["amount_room_id"], $cartSessionContact_Info["price_room"], $cartSessionContact_Info["room_id"]);
+
+                    $rooms = array_map(function($room) {
+                        return array(
+                            'amount_room_id' => $room[0],
+                            'price_room' => $room[1],
+                            'room_id' => $room[2]
+                        );
+                    }, $rooms);
+                    $txt_room = "<ul>";
+                    foreach ($rooms as $v) {
+                        if ($v["amount_room_id"] > 0) {
+                            $txt_room .= "<li>" . $v["price_room"] . "$" . " x " . $v["amount_room_id"] . " " . $clsTourProperty->getTitle($v["room_id"]) . "</li>";
+                        }
+                    }
+                    $txt_room .= "</ul>";
+                    $html.='<div style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-family: arial, sans-serif; font-size: 14px; color: #000000;" data-mce-style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-family: arial, sans-serif; font-size: 14px; color: #000000;">
+                        <span style="color: #2e3543;" data-mce-style="color: #2e3543;">
+                            <span style="font-size: 14px;" data-mce-style="font-size: 14px;">
+                                <span style="font-size: 16px;" data-mce-style="font-size: 16px;">
+                                    <span style="font-weight: 600; background: transparent; font-size: inherit;" data-mce-style="font-weight: 600; background: transparent; font-size: inherit;">|| '.$core->get_Lang('Room').'</span>: '. "\n" .$txt_room.'</span>
+                            </span>
+                        </span>
+                    </div>';
+                }
+                if (!empty($cartSessionContact_Info['service_id'])) {
+                    $services = array_combine($cartSessionContact_Info['service_id'], $cartSessionContact_Info['amount_service_id']);
+                    $txt_services = "<ul>";
+                    foreach ($services as $k=>$v) {
+                        $txt_services .= "<li>" . $clsAddOnService->getPrice($k) . "$" . " x " . $v . " " . $clsAddOnService->getTitle($k) . "</li>";
+                    }
+                    $txt_services .= "</ul>";
+                    $html.='<div style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-family: arial, sans-serif; font-size: 14px; color: #000000;" data-mce-style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-family: arial, sans-serif; font-size: 14px; color: #000000;">
+                        <span style="color: #2e3543;" data-mce-style="color: #2e3543;">
+                            <span style="font-size: 14px;" data-mce-style="font-size: 14px;">
+                                <span style="font-size: 16px;" data-mce-style="font-size: 16px;">
+                                    <span style="font-weight: 600; background: transparent; font-size: inherit;" data-mce-style="font-weight: 600; background: transparent; font-size: inherit;">|| '.$core->get_Lang('Other Services').'</span>: '. "\n" .$txt_services.'</span>
+                            </span>
+                        </span>
+                    </div>';
+                }
 				if($promotion >0){
 					if($discount_type == 2){
 						$html.='<div style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-family: arial, sans-serif; font-size: 14px; color: #000000;" data-mce-style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-family: arial, sans-serif; font-size: 14px; color: #000000;">
@@ -3129,15 +3144,15 @@ error_reporting(E_ALL);*/
 					
 					$html.='</div>';
 				}
-				$html.='<div style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-family: arial, sans-serif; font-size: 14px; color: #000000;" data-mce-style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-family: arial, sans-serif; font-size: 14px; color: #000000;">
+				/*$html.='<div style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-family: arial, sans-serif; font-size: 14px; color: #000000;" data-mce-style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-family: arial, sans-serif; font-size: 14px; color: #000000;">
 				<span style="color: #2e3543;" data-mce-style="color: #2e3543;">
 					<span style="font-size: 14px;" data-mce-style="font-size: 14px;">
 						<span style="font-size: 16px;" data-mce-style="font-size: 16px;">
 							<span style="font-weight: 600; background: transparent; font-size: inherit;" data-mce-style="font-weight: 600; background: transparent; font-size: inherit;">|| '.$core->get_Lang('Total Price').'</span>: '.$total_price.$clsISO->getShortRate().'</span>
 					</span>
 				</span>
-			</div>';
-				if($deposit>0){
+			</div>';*/
+				/*if($deposit>0){
 				$html.='<div style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-family: arial, sans-serif; font-size: 14px; color: #000000;" data-mce-style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-family: arial, sans-serif; font-size: 14px; color: #000000;">
 					<span style="color: #2e3543;" data-mce-style="color: #2e3543;">
 						<span style="font-size: 14px;" data-mce-style="font-size: 14px;">
@@ -3146,9 +3161,9 @@ error_reporting(E_ALL);*/
 						</span>
 					</span>
 				</div>';
-				}
-				
+				}*/
 				if($cartSessionContact_Info['fullname_'.$item['tour_id_z']]!=''){
+
 				$html .= '
 				<p><strong>'.$core->get_Lang('Contact Information').'</strong></p>';
 				$html .= '
@@ -3160,7 +3175,7 @@ error_reporting(E_ALL);*/
 				$html .= '<p><strong>'.$core->get_Lang('Messager').':</strong> '.$cartSessionContact_Info['note_'.$item['tour_id_z']].'</p>';
 				}
 				$html .= '
-				<p><strong>'.$core->get_Lang('List of travelers (Inclusions: Full name, Birthday)').'</strong></p>
+				<p><strong>'.$core->get_Lang('3. Payment information').'</strong></p>
 				  ';
 				  for($i=1;$i<=$item['number_adults_z'];$i++) {
 					  if($cartSessionContact_Info['fullname_adult_'.$item['tour_id_z'].'_'.$i]!=''){
@@ -3495,13 +3510,16 @@ error_reporting(E_ALL);*/
 		$total_price_paynow=$total_price_booking+$total_price_booking_cruise+$total_price_booking_voucher+$total_price_booking_hotel-$total_price_discount_voucher-$totalPricePromotionHotel-$total_price_discount_cruise;
 	}
 //	var_dump($total_price_booking, $total_price_booking_cruise, $total_price_booking_voucher, $total_price_booking_hotel, $total_price_discount_voucher,$totalPricePromotionHotel,$total_price_discount_cruise);die;
-	$total_price=$total_price_booking+$total_price_booking_cruise+$total_price_booking_voucher+$total_price_booking_hotel-$total_price_discount_voucher-$totalPricePromotionHotel-$total_price_discount_cruise;
-	
+//	$total_price=$total_price_booking+$total_price_booking_cruise+$total_price_booking_voucher+$total_price_booking_hotel-$total_price_discount_voucher-$totalPricePromotionHotel-$total_price_discount_cruise;
+    $total_price_new = $cartSessionContact_Info["totalgrand"];
+    $total_deposit_new = $cartSessionContact_Info["deposit"];
+    $total_remaining_new = (int)$total_price_new - (int)$total_deposit_new;
+
 	$html.='<div style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-family: arial, sans-serif; font-size: 14px; color: #000000;" data-mce-style="font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; font-family: arial, sans-serif; font-size: 14px; color: #000000;">
 		<span style="color: #2e3543;" data-mce-style="color: #2e3543;">
 			<span style="font-size: 14px;" data-mce-style="font-size: 14px;">
 				<span style="font-size: 16px;" data-mce-style="font-size: 16px;">
-					<span style="font-weight: 600; background: transparent; font-size: inherit;" data-mce-style="font-weight: 600; background: transparent; font-size: inherit;">|| '.$core->get_Lang('Total Price Booking').'</span>: '.$clsISO->formatPrice($total_price).$clsISO->getShortRate().'</span>
+					<span style="font-weight: 600; background: transparent; font-size: inherit;" data-mce-style="font-weight: 600; background: transparent; font-size: inherit;">|| '.$core->get_Lang('Total Price Booking').'</span>: '.$clsISO->formatPrice($total_price_new).$clsISO->getShortRate().'</span>
 			</span>
 		</span>
 	</div>';
@@ -3511,7 +3529,7 @@ error_reporting(E_ALL);*/
 		<span style="color: #2e3543;" data-mce-style="color: #2e3543;">
 			<span style="font-size: 14px;" data-mce-style="font-size: 14px;">
 				<span style="font-size: 16px;" data-mce-style="font-size: 16px;">
-					<span style="font-weight: 600; background: transparent; font-size: inherit;" data-mce-style="font-weight: 600; background: transparent; font-size: inherit;">||| '.$core->get_Lang('Total Deposit Tour').'</span>: '.$clsISO->formatPrice($total_price_deposit).$clsISO->getShortRate().'</span>
+					<span style="font-weight: 600; background: transparent; font-size: inherit;" data-mce-style="font-weight: 600; background: transparent; font-size: inherit;">||| '.$core->get_Lang('Total Deposit Tour').'</span>: '.$clsISO->formatPrice($total_deposit_new).$clsISO->getShortRate().'</span>
 			</span>
 		</span>
 	</div>';
@@ -3522,7 +3540,7 @@ error_reporting(E_ALL);*/
 			<span style="color: #2e3543;" data-mce-style="color: #2e3543;">
 				<span style="font-size: 14px;" data-mce-style="font-size: 14px;">
 					<span style="font-size: 16px;" data-mce-style="font-size: 16px;">
-						<span style="font-weight: 600; background: transparent; font-size: inherit;" data-mce-style="font-weight: 600; background: transparent; font-size: inherit;">||| '.$core->get_Lang('Total Payment remaining').'</span>: '.$clsISO->formatPrice($total_price_remaining).$clsISO->getShortRate().'</span>
+						<span style="font-weight: 600; background: transparent; font-size: inherit;" data-mce-style="font-weight: 600; background: transparent; font-size: inherit;">||| '.$core->get_Lang('Total Payment remaining').'</span>: '.$clsISO->formatPrice($total_remaining_new).$clsISO->getShortRate().'</span>
 				</span>
 			</span>
 		</div>';
@@ -3532,7 +3550,7 @@ error_reporting(E_ALL);*/
 			<span style="color: #2e3543;" data-mce-style="color: #2e3543;">
 				<span style="font-size: 14px;" data-mce-style="font-size: 14px;">
 					<span style="font-size: 16px;" data-mce-style="font-size: 16px;">
-						<span style="font-weight: 600; background: transparent; font-size: inherit;" data-mce-style="font-weight: 600; background: transparent; font-size: inherit;">|| '.$core->get_Lang('Total Payment Now').'</span>: '.$clsISO->formatPrice($total_price_paynow).$clsISO->getShortRate().'</span>
+						<span style="font-weight: 600; background: transparent; font-size: inherit;" data-mce-style="font-weight: 600; background: transparent; font-size: inherit;">|| '.$core->get_Lang('Total Payment Now').'</span>: '.$clsISO->formatPrice($total_deposit_new).$clsISO->getShortRate().'</span>
 				</span>
 			</span>
 		</div>';
@@ -3541,6 +3559,7 @@ error_reporting(E_ALL);*/
 	
 		#---
         $CompanyAddress ='CompanyAddress_'.$_LANG_ID;
+        $address = $cartSessionContact_Info['address'] . ", " . $cartSessionContact_Info['city'] . ", " . $cartSessionContact_Info['nationality'];
 		$header_email = $clsEmailTemplate->getHeader($email_template_id);
 		$body_email = $clsEmailTemplate->getContent($email_template_id);
 		$footer_email = $clsEmailTemplate->getFooter($email_template_id);
@@ -3560,7 +3579,7 @@ error_reporting(E_ALL);*/
 		$message = str_replace('[%BOOKING_CODE_2019%]',$booking_id,$message);
 		$message = str_replace('[%CUSTOMER_EMAIL%]',$cartSessionContact_Info['email'],$message);
 		$message = str_replace('[%CUSTOMER_FULLNAME%]',$cartSessionContact_Info['title'].' '.$cartSessionContact_Info['fullname'],$message);
-		$message = str_replace('[%CUSTOMER_ADDRESS%]',$cartSessionContact_Info['address'],$message);
+		$message = str_replace('[%CUSTOMER_ADDRESS%]',$address,$message);
 		$message = str_replace('[%CUSTOMER_COUNTRY%]',$clsCountry->getTitle($cartSessionContact_Info['country_id']),$message);
 		$message = str_replace('[%CUSTOMER_PHONE%]',$cartSessionContact_Info['phone'],$message);
 //		$message = str_replace('[%CUSTOMER_BIRTHDAY%]',$cartSessionContact_Info['birthday'],$message);

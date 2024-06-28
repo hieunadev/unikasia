@@ -241,7 +241,8 @@ class Hotel extends dbBasic
 	function getLinkContact()
 	{
 		global $_LANG_ID, $extLang;
-		return $extLang . '/stay/enquiry.html';
+//		return $extLang . '/stay/enquiry.html';
+		return $extLang . '/contact-us.html';
 	}
 	function getMapLa($pvalTable)
 	{

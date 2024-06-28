@@ -1360,11 +1360,15 @@ class ISO
 		//tạo link kết nối
 		$api_url = reCAPTCHA_APIURL . '?secret=' . reCAPTCHA_SECRET . '&response=' . $site_key_post . '&remoteip=' . $remoteip;
 		//lấy kết quả trả về từ Google
+
 		$response = FALSE;
+		
 		if (function_exists('file_get_contents')) {
-			$response = file_get_contents($api_url);
+			$response = file_get_contents($api_url);	
 		}
+
 		if ($response === FALSE && function_exists('curl_init')) {
+		
 			$ch = curl_init();
 			curl_setopt($ch, CURLOPT_AUTOREFERER, TRUE);
 			curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -4113,9 +4117,9 @@ class ISO
 				while (($file = readdir($dh)) !== false) {
 					if (substr($file, -3) == 'php') {
 						$abc = str_replace('.php', '', $file);
-                        if ($abc != LANG_DEFAULT) {
-                            array_push($customClsArray, $abc);
-                        }
+						if (!in_array($abc, [LANG_DEFAULT, "vn", "es", "kr", "cn", "ru"])) {
+							array_push($customClsArray, $abc);
+						}
 					}
 				}
 				array_unshift($customClsArray, LANG_DEFAULT);
@@ -4393,7 +4397,7 @@ class ISO
 				return $extLang . '/du-lich-nuoc-ngoai/du-lich-';
 				break;
 			case 'cruise':
-				return '/' . $_LANG_ID . '/cruise/';
+				return '/' . $_LANG_ID . '/cruise';
 				break;
 			case 'hotel':
 				if ($_LANG_ID == 'en')

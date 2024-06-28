@@ -15,13 +15,13 @@
         <div class="info_button">
             <div class="toggle_opt btn_online action_tour">
                 {if $oneItem.is_online ne 1}
-                <a class="online_tour private_tour" data-clstable="Region" data-pkey="{$clsClassTable->pkey}" data-val="0" data-sourse_id="{$pvalTable}" data-text_last="{$core->get_Lang('Public')}">{$core->get_Lang('Private')}</a>
+                <a id="online_tour" class="online_tour private_tour" data-clstable="Region" data-pkey="{$clsClassTable->pkey}" data-val="0" data-sourse_id="{$pvalTable}" data-text_last="{$core->get_Lang('Public')}">{$core->get_Lang('Private')}</a>
                 {else}
-                <a class="online_tour" data-clstable="Region" data-pkey="{$clsClassTable->pkey}" data-val="1" data-sourse_id="{$pvalTable}" data-text_last="{$core->get_Lang('Private')}">{$core->get_Lang('Public')}</a>
+                <a id="online_tour" class="online_tour" data-clstable="Region" data-pkey="{$clsClassTable->pkey}" data-val="1" data-sourse_id="{$pvalTable}" data-text_last="{$core->get_Lang('Private')}">{$core->get_Lang('Public')}</a>
                 {/if}
             </div>
             <div class="action_tour btn_preview">
-                <a class="btn_preview_tour preview_tour_ex" {if $oneItem.is_trash eq 1}style="pointer-events: none;color: rgb(204, 204, 204);border-color: rgb(204, 204, 204);background-color: rgb(255, 255, 255);cursor: not-allowed;" {/if} href="{$clsClassTable->getLink($pvalTable)}" target="_blank" title="{$clsClassTable->getTitle($pvalTable)}">{$core->get_Lang('Preview')}</a>
+                <a class="btn_preview_tour preview_tour_ex" {if $oneItem.is_trash eq 1}style="pointer-events: none;color: rgb(204, 204, 204);border-color: rgb(204, 204, 204);background-color: rgb(255, 255, 255);cursor: not-allowed;" {/if} data-href="{$clsClassTable->getLink2($pvalTable)}" target="_blank" title="{$clsClassTable->getTitle($pvalTable)}">{$core->get_Lang('Preview')}</a>
             </div>
             <div class="action_tour btn_delete" id="is_delete_tour">
                 <a class="btn_preview_tour delete_tour_ex" type_btn="delete" href="{$PCMS_URL}/?mod={$mod}&act=delete&{$clsClassTable->pkey}={$core->encryptID($pvalTable)}{$pUrl}" title="{$clsClassTable->getTitle($pvalTable)}">{$core->get_Lang('Delete')}</a>

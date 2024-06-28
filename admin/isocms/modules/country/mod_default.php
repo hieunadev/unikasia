@@ -166,7 +166,7 @@ function default_getMainFormStep()
     //ini_set('display_errors', '1');
     //ini_set('display_startup_errors', '1');
     //error_reporting(E_ALL);
-    global $smarty, $assign_list, $_LANG_ID,$_frontIsLoggedin_user_id, $core, $clsISO, $clsProperty, $clsUser, $_company_iom_id, $dbconn, $nextstep, $clsConfiguration, $mod, $package_id, $pvalTable;
+    global $smarty, $assign_list, $_LANG_ID, $_frontIsLoggedin_user_id, $core, $clsISO, $clsProperty, $clsUser, $_company_iom_id, $dbconn, $nextstep, $clsConfiguration, $mod, $package_id, $pvalTable;
     $clsCountry = new Country();
     $smarty->assign('clsClassTable', $clsCountry);
     #
@@ -334,6 +334,10 @@ function default_ajSaveMainStep()
         }
         $arr_update['title'] = $title;
         $arr_update['slug'] = $slug;
+        #
+        $map_link = Input::post('map_link');
+        $arr_update['map_link'] = $map_link;
+        #
         foreach ($_POST as $key => $val) {
             $tmp = explode('-', $key);
             if ($tmp[0] == 'iso') {

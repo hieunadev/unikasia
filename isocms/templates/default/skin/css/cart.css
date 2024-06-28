@@ -756,10 +756,11 @@ img {}
     color: var(--Neutral-1, #111D37);
 }
 
-.item_content {
+.cart_default_body .item_content {
     padding-bottom: 12px;
     border-bottom: 1px solid #D3DCE1;
     gap: 16px;
+    width: 100% !important;
 }
 
 .span_title {

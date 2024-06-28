@@ -1,42 +1,35 @@
 <link rel="stylesheet" href="{$URL_CSS}/contact_service.css">
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-{assign var=item value=$cartSessionTour}
-{assign var=tour_id value=$cartSessionTour.tour_id_z}
-{assign var=departure_date value=$clsISO->getStrToTime($cartSessionTour.check_in_book_z)}
-{assign var=end_date value=$clsTour->getEndDate($departure_date,$tour_id)}
-{assign var=total_price value=($cartSessionTour.total_price_adults + $cartSessionTour.total_price_child + $cartSessionTour.total_price_infants + $total_price_room)}
 <div class="unika_contact_service">
     <div class="container">
         <div class="d-flex justify-content-center">
             <div class="container">
-                <div class="backcrump d-flex d-none flex-wrap">
+                <div class="backcrump d-flex flex-wrap">
                     <p class="backcrump_first">You are here:</p>
-                    <div class="content_backcrump d-flex align-items-center flex-wrap">
-                        <a href="#" class="backcrump_item">Home</a>
+                    <div class="content_backcrump d-flex flex-wrap">
+                        <a href="/" class="backcrump_item">Home</a>
                         <div class="div_img">
-                            <img src="images/backcrump.svg" alt="Icon">
+                            <img src="{$URL_IMAGES}/icon/backcrump.svg" alt="Icon">
                         </div>
-                        <a href="#" class="backcrump_item">Travel styles</a>
+                        {if $cartSessionTour}
+                        {assign var=tour_id value=$cartSessionTour.tour_id|default:$cartSessionTour.tour_id_z}
+                        <a href="/tour" class="backcrump_item">Tour</a>
                         <div class="div_img">
-                            <img src="images/backcrump.svg" alt="Icon">
+                            <img src="{$URL_IMAGES}/icon/backcrump.svg" alt="Icon">
                         </div>
-                        <a href="#" class="backcrump_item">Vietnam</a>
+                        <a href="#" class="backcrump_item">{$clsTour->getTitle($tour_id)}</a>
                         <div class="div_img">
-                            <img src="images/backcrump.svg" alt="Icon">
+                            <img src="{$URL_IMAGES}/icon/backcrump.svg" alt="Icon">
                         </div>
-                        <a href="#" class="backcrump_item">Honeymoon</a>
-                        <div class="div_img">
-                            <img src="images/backcrump.svg" alt="Icon">
-                        </div>
-                        <a href="#" class="backcrump_item">Highlights of Vietnam 10 days</a>
-                        <div class="div_img">
-                            <img src="images/backcrump.svg" alt="Icon">
-                        </div>
+                        {/if}
                         <p>Request</p>
                     </div>
                 </div>
                 <div class="contact_title ">
-                    Highlights of Vietnam 10 days
+                    {if $cartSessionTour}
+                    {assign var=tour_id value=$cartSessionTour.tour_id|default:$cartSessionTour.tour_id_z}
+                    {$clsTour->getTitle($tour_id)}
+                    {/if}
                 </div>
                 <div class="contact_content d-flex justify-content-between ">
                     <form action="" id="formContact" method="POST" class="contact_left d-flex flex-column align-items-center ">
@@ -89,7 +82,7 @@
                                 Your Special Requirements
                             </div>
                             <div class="content">
-                                <textarea class="content_special" name="" id="" placeholder="Any must-see landmarks in your bucket list, desired accommodations, special food requirements, allergies…"></textarea>
+                                <textarea class="content_special" name="comment" id="" placeholder="Any must-see landmarks in your bucket list, desired accommodations, special food requirements, allergies…"></textarea>
                             </div>
                         </div>
                         <div class="d-flex flex-column unika_note">
@@ -97,7 +90,7 @@
                                     *One of our Tailor-Made consultants will be in touch within 24 business hours.
                                 </span>
                             <span class="text-center ">
-                                    If you don't receive ourconfirmation email after 1 working day, please check your spam email. It may go to your spam mailbox.
+                                    If you don't receive our confirmation email after 1 working day, please check your spam email. It may go to your spam mailbox.
                                 </span>
                         </div>
                         <input type="hidden" name="plantrip" value="plantrip" />
@@ -106,7 +99,12 @@
                             Request for Quotation
                         </button>
                     </form>
-                    {if $tour_id}
+                    {if $cartSessionTour}
+                        {assign var=item value=$cartSessionTour}
+                        {assign var=tour_id value=$cartSessionTour.tour_id|default:$cartSessionTour.tour_id_z}
+                        {assign var=departure_date value=$clsISO->getStrToTime($cartSessionTour.check_in_book_z)}
+                        {assign var=end_date value=$clsTour->getEndDate($departure_date,$tour_id)}
+                        {assign var=total_price value=($cartSessionTour.total_price_adults + $cartSessionTour.total_price_child + $cartSessionTour.total_price_infants + $total_price_room)}
                     <div class="contact_right d-flex flex-column ">
                         <div class="summary d-flex flex-column  justify-content-start">
                             <div class="title ">Summary</div>
@@ -118,6 +116,7 @@
                             </a>
                             <div class="content d-flex flex-column ">
                                 <div class="item_content d-flex flex-column ">
+                                    {if $item.check_in_book_z}
                                     <div class="d-flex justify-content-between align-items-start ">
                                         <span class=" span_title">Travel Date:</span>
                                         <span class="span_content">{$clsISO->converTimeToText5($departure_date)}</span>
@@ -126,11 +125,13 @@
                                         <span class=" span_title">End Date:</span>
                                         <span class="span_content">{$clsISO->converTimeToText5($clsTour->getDueDate($tour_id, $departure_date))}</span>
                                     </div>
+                                    {/if}
                                     <div class="d-flex justify-content-between align-items-start ">
                                         <span class=" span_title">Duration:</span>
                                         <span class="span_content">{$clsTour->getTripDurationx($tour_id)}</span>
                                     </div>
                                 </div>
+                                {if $cartSessionTour.tour_id_z}
                                 <div class="item_content d-flex flex-column ">
                                     <div class="d-flex justify-content-between align-items-start ">
                                         <span class=" span_title">Participants:</span>
@@ -153,15 +154,78 @@
                                     </div>
                                     {/if}
                                 </div>
+                                {/if}
                             </div>
                             <div class="d-flex flex-column total_price">
                                 <div class="d-flex justify-content-between align-items-start ">
-                                    <span class="span_title span_total_price">Total price:</span>
+                                    <span class="span_title span_total_price">From:</span>
+                                    {if $cartSessionTour.tour_id_z}
                                     <span class="span_content span_bold">US ${$total_price}</span>
+                                    {elseif $cartSessionTour.tour_id}
+                                    <span class="span_content span_bold">US ${$clsTour->getPriceAfterDiscount($tour_id)}</span>
+                                    {else}
+                                    <span class="span_content span_bold">Contact</span>
+                                    {/if}
                                 </div>
                             </div>
                         </div>
                     </div>
+                    {/if}
+                    {if $cartSessionHotel}
+                    {foreach from=$cartSessionHotel item=item_hotel key=key_service}
+                    {assign var=cartSessionItemHotel value=$item_hotel}
+                    {if $cartSessionItemHotel}
+                        {foreach from=$cartSessionItemHotel item=item key=key}
+                        {assign var=hotel_id value=$item.hotel_id}
+                        {assign var=title_hotel value=$clsHotel->getTitle($hotel_id)}
+                        <div class="contact_right d-flex flex-column ">
+                            <div class="summary d-flex flex-column  justify-content-start">
+                                <div class="title ">Summary</div>
+                                <div class="div_img">
+                                    <img src="{$clsHotel->getImage($hotel_id,364,194)}" alt="Images">
+                                </div>
+                                <a href="{$clsHotel->getLink($hotel_id)}" class="title_content txt-hover-home">
+                                    {$title_hotel}
+                                </a>
+                                <div class="d-flex flex-column total_price">
+                                    <div class="d-flex justify-content-between align-items-start ">
+                                        <span class="span_title span_total_price">From:</span>
+                                        <span class="span_content span_bold">US ${$clsHotel->getPriceAvg($hotel_id)}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {/foreach}
+                        {/if}
+                        {/foreach}
+                    {/if}
+                    {if $cartSessionCruise}
+                    {foreach from=$cartSessionCruise item=item_cruise key=key_service}
+                    {assign var=cartSessionItemCruise value=$item_cruise}
+                    {if $cartSessionItemCruise}
+                        {foreach from=$cartSessionItemCruise item=item key=key}
+                        {assign var=cruise_id value=$item.cruise_id}
+                        {assign var=title_cruise value=$clsCruise->getTitle($cruise_id)}
+                        <div class="contact_right d-flex flex-column ">
+                            <div class="summary d-flex flex-column justify-content-start">
+                                <div class="title ">Summary</div>
+                                <div class="div_img">
+                                    <img src="{$clsCruise->getImage($cruise_id,364,194)}" alt="Images">
+                                </div>
+                                <a href="{$clsCruise->getLink($cruise_id)}" class="title_content txt-hover-home">
+                                    {$title_cruise}
+                                </a>
+                                <div class="d-flex flex-column total_price">
+                                    <div class="d-flex justify-content-between align-items-start ">
+                                        <span class="span_title span_total_price">From:</span>
+                                        <span class="span_content span_bold">Contact</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {/foreach}
+                        {/if}
+                        {/foreach}
                     {/if}
                 </div>
             </div>

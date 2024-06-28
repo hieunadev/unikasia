@@ -568,7 +568,7 @@ function default_book(){
 	$assign_list["listService"] = $listService;
 
 	#- Verify Captcha
-
+	$err_msg='';
 	vnSessionDelVar('ContactInfoBooking');
 	if(isset($_POST['booking']) && $_POST['booking']=='booking'){
 		$cartSessionContactInfo=array();
@@ -577,7 +577,7 @@ function default_book(){
 			$assign_list[$k] = $v;
 		}
 		vnSessionSetVar('ContactInfoBooking',$cartSessionContactInfo);
-		/*if(_ISOCMS_CAPTCHA=='IMG'){
+		if(_ISOCMS_CAPTCHA=='IMG'){
 			$security_code = isset($_POST["security_code"])? trim($_POST["security_code"]) : '';
 			$security_code = strtoupper($security_code);
 			if($security_code==''){
@@ -590,33 +590,36 @@ function default_book(){
 			if(!$clsISO->checkGoogleReCAPTCHA()){
 				$err_msg .= $core->get_Lang('Secure code not match').' <br />';
 			}
-		}*/
+		}
 
-		if(true){
+		if($err_msg==''){
 			$booking_id = $clsBooking->getMaxId();
 			$booking_code = $clsBooking->generateBookingCode($booking_id,'Tour');
 			#
-			$full_name=$first_name.' '.$last_name;
 			$f="booking_id,title,contact_name,full_name,country_id,phone,address,email";
 			$f.= ",clsTable,booking_code,cart_store,booking_store,booking_type,reg_date,ip_booking,totalgrand,deposit,balance,price_promotion,note";
 			$POST = array();
 			foreach($_POST as $k=>$v){
 				$POST[$k] = $v;
 			}
+
 			$cart_store=serialize($cartStore);
 
 			$cartSessionContactInfo= vnSessionGetVar('ContactInfoBooking');
 
 			$booking_store = serialize($cartSessionContactInfo);
+			
 			$title=Input::post('title','');
 			$fullname=Input::post('fullname','');
 			$country_id=Input::post('country_id',0);
 			$country_id=$country_id?$country_id:0;
 			$telephone=Input::post('phone','');
 			$email=Input::post('email','');
-			$totalFinal=Input::post('totalFinal',0);
 			$customer_note=Input::post('note','');
 			$address=Input::post('address','');
+			$totalDeposit=Input::post('deposit',0);
+			$totalGrand=Input::post('totalgrand',0);
+			$totalBalance = (int)$totalGrand - (int)$totalDeposit;
 
 			$v="'$booking_id'
 			,'".$title."'
@@ -633,8 +636,8 @@ function default_book(){
 			,'Tour','".time()."'
 			,'".$_SERVER['REMOTE_ADDR']."'
 			,'".$totalGrand."'
-			,'".$totalFinal."' 
-			,'".$totalRemaining."'
+			,'".$totalDeposit."' 
+			,'".$totalBalance."'
 			,'".$totalPricePromotion."'
 			,'".$customer_note."'";
 			
@@ -656,7 +659,7 @@ function default_book(){
 					$v.= ",'$agent_id'";
 				}
 			}
-//			$clsISO->print_pre($_POST['voucher_code'],true);die();
+
 			if($clsBooking->insertOne($f,$v)){
 				foreach($cartSessionService as $item){
 					$number_adult=$item['number_adults_z'];

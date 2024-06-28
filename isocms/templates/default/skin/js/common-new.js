@@ -114,7 +114,7 @@ $(document).ready(function () {
             }
         );
         // Các trang ko có menu trong
-        if ((mod === 'guide' && act === 'detail') || (mod === 'guide' && act === 'tag') || (mod === 'hotel' && act === 'detail') || (mod === 'blog' && act === 'detail') || (mod === 'tour' && act === 'detaildeparture') || (mod === 'about' && act === 'success') || (mod === 'tour_new' && act === 'contact') || (mod === 'destination' && act === 'attraction') || (mod === 'cruise' && act === 'detail')) {
+        if ((mod === 'guide' && act === 'detail') || (mod === 'guide' && act === 'tag') || (mod === 'hotel' && act === 'detail') || (mod === 'blog' && act === 'detail') || (mod === 'tour' && act === 'detaildeparture') || (mod === 'about' && act === 'success') || (mod === 'tour_new' && act === 'contact') || (mod === 'destination' && act === 'attraction') || (mod === 'cruise' && act === 'detail') || (mod === 'paycredit' && act === 'dr')) {
             if ($('.unika_header').hasClass('unika_header_2')) {
                 $('.unika_header').removeClass('unika_header_2');
             }
@@ -133,12 +133,12 @@ $(document).ready(function () {
                     }
                 }
             }
-            if ((mod === 'destination' && act === 'place') || (mod === 'tour' && act === 'cat') || (mod === 'guide' && act === 'cat')) {
+            if ((mod === 'destination' && act === 'place') || (mod === 'tour' && act === 'cat') || (mod === 'guide' && act === 'cat') || (mod === 'destination' && act === 'topattraction')) {
                 let isScrolled2 = $(this).scrollTop() >= 615;
                 $('.des_tailor_top').toggleClass('des_tailor_top_sticky', isScrolled2);
                 $('.des_tailor_top').css('top', isScrolled2 ? '0px' : '');
-                var elemTop = $('.bg-footer').offset().top;
-                var elemBottom = elemTop + $('.bg-footer').height();
+                var elemTop = $('.unika_footer').offset().top;
+                var elemBottom = elemTop + $('.unika_footer').height();
                 var viewportTop = $(window).scrollTop();
                 var viewportBottom = viewportTop + $(window).height();
                 if (elemBottom <= viewportBottom && elemTop >= viewportTop) {

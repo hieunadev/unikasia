@@ -1,7 +1,7 @@
 <div class="des_list_faq">
     <div class="container">
         <div class="des_list_faq_title">
-            <h2>{$clsConfiguration->getOutTeam('FAQTitle')}</h2>
+            <h2>{$clsConfiguration->getValue('FAQTitle_'|cat:$_LANG_ID)|html_entity_decode}</h2>
         </div>
         <div class="des_list_faq_content">
             <div class="accordion" id="accordion_destination">
