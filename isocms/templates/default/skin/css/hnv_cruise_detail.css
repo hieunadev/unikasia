@@ -466,6 +466,10 @@
     display: none;
 }
 
+.item_new:last-child .content_new.show::before {
+    display: block;
+}
+
 #things_to_know {
     max-width: 1312px;
     padding-top: 80px;
@@ -824,7 +828,7 @@
     display: none;
 }
 
-.content_new .new.show {
+.content_new.show .new {
     display: flex;
     align-items: start;
 }
@@ -979,7 +983,7 @@
 .unika_cruise_detail .title_itineraries h3 {
     font-size: 18px;
     font-style: normal;
-    font-weight: 500;
+    font-weight: 600;
     line-height: 28px;
     color: #111d37;
     width: calc(100% - 24px - 18px);
@@ -1222,6 +1226,7 @@
 .unika_cruise_detail .content_interested .rating .div_img {
     width: 16px;
     height: 16px;
+    font-size: 15px;
 }
 
 .content_interested_title {

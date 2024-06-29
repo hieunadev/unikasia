@@ -5,9 +5,9 @@
         <div class="breadcrumb_list">
             <div class="container">
                 <div class="breadcrumb">
-                    <h2 class="txt_youarehere">You are here:</h2>
+                    <h2 class="txt_youarehere">{$core->get_Lang("You are here")}:</h2>
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{PCMS_URL}" title="{$core->get_Lang('Home')}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{PCMS_URL}" title="{$core->get_Lang('Home')}">{$core->get_Lang("Home")}</a></li>
                         {if $clsCountry->getTitle($country_id)}
                         <li class="breadcrumb-item"><a href="{$clsCountry->getLink($country_id, 'tour')}"
                                                        title="{$core->get_Lang('Vietnam')}">{$clsCountry->getTitle($country_id)}</a>
@@ -30,17 +30,17 @@
                 <h2 class="txt_detailhotel">{$clsTour->getTitle($tour_id)}</h2>
                 <div class="txt_numbpricetour">
                     {if $oneItem.min_price}
-                    <p class="txt_numbtour">From US {if $clsTour->getDiscount($tour_id)}<span class="under_numbprice">${$oneItem.min_price}</span> {/if}<span
-                                class="number_pricetour">${$clsTour->getPriceAfterDiscount($tour_id)}</span> /pax </p>
+                    <p class="txt_numbtour">{$core->get_Lang('From')} US {if $clsTour->getDiscount($tour_id)}<span class="under_numbprice">${$oneItem.min_price}</span> {/if}<span
+                                class="number_pricetour">${$clsTour->getPriceAfterDiscount($tour_id)}</span> /{$core->get_Lang('pax')} </p>
                     {else}
-                        <span class="number_pricetour">Contact</span>
+                        <span class="number_pricetour">{$core->get_Lang("Contact")}</span>
                     {/if}
                 </div>
             </div>
 
             <div class="d-flex align-items-center score_reviewtour">
                 <span class="border_score">{$clsReviews->getReviews($tour_id, 'avg_point')}</span>
-                <span class="txt_score">{$clsReviews->getReviews($tour_id, 'txt_review')} </span> <span class="txt_reviewstour"> - {$clsReviews->getReviews($tour_id)} reviews</span>
+                <span class="txt_score">{$clsReviews->getReviews($tour_id, 'txt_review')} </span> <span class="txt_reviewstour"> - {$clsReviews->getReviews($tour_id)} {$core->get_Lang("reviews")}</span>
             </div>
 
             <div class="img_detailtour">
@@ -60,36 +60,36 @@
                             <div class="location-info">
                                 <p class="txt_location">
                                     <i class="fa-light fa-location-dot" style="color: #111d37;"></i>
-                                    Form {$clsTourDestination->getByCountry($tour_id, "startFinish_detail")}
+                                    {$core->get_Lang("From")} {$clsTourDestination->getByCountry($tour_id, "startFinish_detail")}
                                 </p>
                                 <p class="txt_location">
                                     <i class="fa-regular fa-clock-three" style="color: #111d37;"></i>
-                                    <span class="bold_txtlocation">Duration:</span>
+                                    <span class="bold_txtlocation">{$core->get_Lang("Duration")}:</span>
                                     {if $oneItem.duration_custom}
                                         {$oneItem.duration_custom}
                                     {else}
-                                        {$oneItem.number_day} {if $oneItem.number_day lt 2}day {else} days {/if}
+                                        {$oneItem.number_day} {if $oneItem.number_day lt 2}{$core->get_Lang("day")} {else} {$core->get_Lang("days")} {/if}
                                     {/if}
                                 </p>
                                 <p class="txt_location">
                                     <i class="fa-light fa-location-dot" style="color: #111d37;"></i>
-                                    <span class="bold_txtlocation">Place:</span> {$clsTourDestination->getByCountry($tour_id, 'all_city')}
+                                    <span class="bold_txtlocation">{$core->get_Lang("Place")}:</span> {$clsTourDestination->getByCountry($tour_id, 'all_city')}
                                 </p>
                                 <p class="txt_location">
                                     <i class="fa-solid fa-bell-concierge" style="color: #000111;"></i>
-                                    <span class="bold_txtlocation">Meals:</span> {$clsTourItinerary->getGoodMeal($tour_id)}
+                                    <span class="bold_txtlocation">{$core->get_Lang("Meals")}:</span> {$clsTourItinerary->getGoodMeal($tour_id)}
                                 </p>
                                 <p class="txt_location">
                                     <i class="fa-light fa-users" style="color: #111d37;"></i>
-                                    <span class="bold_txtlocation">Group size:</span> {$clsTourOption->getMinMaxGroupSizeAdult($tour_id)}
+                                    <span class="bold_txtlocation">{$core->get_Lang("Group size")}:</span> {$clsTourOption->getMinMaxGroupSizeAdult($tour_id)}
                                 </p>
                                 <p class="txt_location">
                                     <i class="fa-regular fa-circle-dot" style="color: #111d37;"></i>
-                                    <span class="bold_txtlocation">Operated in:</span> {$clsTourProperty->getListTourProperty($oneItem.list_tour_guide_id)}
+                                    <span class="bold_txtlocation">{$core->get_Lang("Operated in")}:</span> {$clsTourProperty->getListTourProperty($oneItem.list_tour_guide_id)}
                                 </p>
                             </div>
                             <div class="txt_button_excluing">
-                                <p class="excluding_explore">Excluding international flights</p>
+                                <p class="excluding_explore">{$core->get_Lang("Excluding international flights")}</p>
                                 <div class="d-flex flex-column align-items-center">
                                     <div class="d-flex flex-column flex-sm-row justify-content-center" style="gap: 16px; width: 100%">
                                         <form action="" method="post">
@@ -97,11 +97,11 @@
                                             <input type="hidden" name="ContactTour" value="ContactTour">
                                             <button class="btn btn-request-book btn-hover-home" type="submit">{$core->get_Lang("Request a quote")}</button>
                                         </form>
-                                        <button class="btn btn-request-book btn-hover-home nav-link" data-target=".section_price">Book it now</button>
+                                        <button class="btn btn-request-book btn-hover-home nav-link" data-target=".section_price">{$core->get_Lang("Book it now")}</button>
                                     </div>
                                     {if $oneItem.file_programme}
                                     <button type="button" class="btn btn-download" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                        Download itinerary
+                                        {$core->get_Lang("Download itinerary")}
                                     </button>
                                     {/if}
                                 </div>
@@ -117,21 +117,21 @@
             <div class="class-tour">
                 <div class="top-section container">
                     <ul class="nav list_nav">
-                        <li class="nav-item"><a class="nav-link active" data-target=".section_overview">Overview</a></li>
-                        <li class="nav-item"><a class="nav-link" data-target=".section_itinerary">Itinerary</a></li>
-                        <li class="nav-item"><a class="nav-link" data-target=".section_inclusion">Inclusion</a></li>
-                        <li class="nav-item"><a class="nav-link" data-target=".section_price">Price</a></li>
-                        <li class="nav-item"><a class="nav-link" data-target=".section_review_tour">Reviews</a></li>
-                        <li class="nav-item"><a class="nav-link" data-target=".des_list_faq">Q&As</a></li>
+                        <li class="nav-item"><a class="nav-link active" data-target=".section_overview">{$core->get_Lang("Overview")}</a></li>
+                        <li class="nav-item"><a class="nav-link" data-target=".section_itinerary">{$core->get_Lang("Itinerary")}</a></li>
+                        <li class="nav-item"><a class="nav-link" data-target=".section_inclusion">{$core->get_Lang("Inclusion")}</a></li>
+                        <li class="nav-item"><a class="nav-link" data-target=".section_price">{$core->get_Lang("Price")}</a></li>
+                        <li class="nav-item"><a class="nav-link" data-target=".section_review_tour">{$core->get_Lang("Reviews")}</a></li>
+                        <li class="nav-item"><a class="nav-link" data-target=".des_list_faq">{$core->get_Lang("Q&As")}</a></li>
                     </ul>
 
                     <div class="price_button">
                         <div class="txt_numbpricetour">
                             {if $oneItem.min_price}
-                            <p class="txt_numbtour">From US {if $clsTour->getDiscount($tour_id)}<span class="under_numbprice">${$oneItem.min_price}</span>{/if} <span
-                                        class="number_pricetour">${$clsTour->getPriceAfterDiscount($tour_id)}</span> /pax </p>
+                            <p class="txt_numbtour">{$core->get_Lang("From")} US {if $clsTour->getDiscount($tour_id)}<span class="under_numbprice">${$oneItem.min_price}</span>{/if} <span
+                                        class="number_pricetour">${$clsTour->getPriceAfterDiscount($tour_id)}</span> /{$core->get_Lang("pax")} </p>
                             {else}
-                                <span class="number_pricetour">Contact</span>
+                                <span class="number_pricetour">{$core->get_Lang("Contact")}</span>
                             {/if}
                             <button class="btn btn-inquirenow btn-hover-home nav-link" data-target=".section_price">{$core->get_Lang('Book now')}</button>
                         </div>
@@ -148,7 +148,7 @@
                     <div class="tab-pane active section_overview" id="overview">
                         <div class="txt_lovetrip d-flex">
                             <div class="txt_triplove_parent">
-                                <h2 class="txt_triplove">You will love this trip</h2>
+                                <h2 class="txt_triplove">{$core->get_Lang("You will love this trip")}</h2>
                             </div>
                             <div class="list_willlove">
                                 {$oneItem.love_trip|html_entity_decode}
@@ -162,7 +162,7 @@
 
         <div class="tab-pane section_itinerary" id="itinerary">
             <div class="container">
-                {if $oneItem.map_tour}<h2 class="txt_mapiti">Trip map &amp itinerary</h2>{/if}
+                {if $oneItem.map_tour}<h2 class="txt_mapiti">{$core->get_Lang("Trip map &amp itinerary")}</h2>{/if}
                 <div class="detail_tours">
                     <div class="detail_mapitine">
                         {if $oneItem.map_tour}
@@ -171,8 +171,8 @@
                         {/if}
                         <div class="daytour">
                             <div class="txtdaybyday">
-                                <h2 class="txt_daytours">Day by day itinerary</h2>
-                                <button class="btn btn-expand">Expand all</button>
+                                <h2 class="txt_daytours">{$core->get_Lang("Day by day itinerary")}</h2>
+                                <button class="btn btn-expand">{$core->get_Lang("Expand all")}</button>
                             </div>
                             <div class="accordion">
                                 <ul class="timeline">
@@ -185,14 +185,14 @@
                                                             data-bs-target="#collapse{$lstTourItinerary[i].tour_itinerary_id}"
                                                             aria-expanded="false"
                                                             aria-controls="collapse{$lstTourItinerary[i].tour_itinerary_id}">
-                                                        Day {$lstTourItinerary[i].day}: {$lstTourItinerary[i].title}
+                                                        {$core->get_Lang('Day')} {$lstTourItinerary[i].day}: {$lstTourItinerary[i].title}
                                                     </button>
                                                 </h2>
                                                 <div id="collapse{$lstTourItinerary[i].tour_itinerary_id}"
                                                      class="accordion-collapse collapse">
                                                     <div class="accordion-body">
                                                         {$lstTourItinerary[i].content|html_entity_decode}
-                                                        <div class="meal_stay">Meal: <span class="title_meal">{$clsTourItinerary->getTitleMeal($lstTourItinerary[i].tour_itinerary_id,'','only_title_meal')} </span>&#160; {if $lstTourItinerary[i].title_stay}| &#160; Stay: <span class="title_stay">{$lstTourItinerary[i].title_stay}</span>{/if}</div>
+                                                        <div class="meal_stay">{$core->get_Lang('Meal')}: <span class="title_meal">{$clsTourItinerary->getTitleMeal($lstTourItinerary[i].tour_itinerary_id,'','only_title_meal')} </span>&#160; {if $lstTourItinerary[i].title_stay}| &#160; {$core->get_Lang('Stay')}: <span class="title_stay">{$lstTourItinerary[i].title_stay}</span>{/if}</div>
                                                         {if $lstTourItinerary[i].image}<div class="itinerary_img"><img src="{$clsTourItinerary->getImage($lstTourItinerary[i].tour_itinerary_id,807,557)}" alt=""></div>{/if}
                                                     </div>
                                                 </div>
@@ -210,9 +210,9 @@
                                 <div class="details">
                                     <h3 class="txt_trevllingous">"{$core->get_Lang('TRAVELING IS OUR PASSION')}"</h3>
                                     <p class="txt_destravel">{$core->get_Lang('Let us help you plan an unforgettable trip!')}</p>
-                                    <p class="whatapps"><i class="fa-solid fa-phone"></i> Whatapps: 0983033966</p>
+                                    <p class="whatapps"><i class="fa-solid fa-phone"></i> {$core->get_Lang('Whatapps')}: 0983033966</p>
                                 </div>
-                                <a href="{$clsTour->getLink2(0,1)}" class="btn btn-tailor btn-hover-home">Tailor Made Tour</a>
+                                <a href="{$clsTour->getLink2(0,1)}" class="btn btn-tailor btn-hover-home">{$core->get_Lang('Tailor Made Tour')}</a>
                             </div>
                         </div>
                         <form id="form__avaiable" class="form__avaiable" action="" method="post">
@@ -260,18 +260,6 @@
                                                                 </div>
                                                                 <div class="box_age_child" id="box_age_child"></div>
                                                             </div>
-                                                            {*{section name=j loop=$list_age_child}
-                                                                <div class="box_age" {$max_child}>
-                                                                    <div class="right__inputTraveller">
-                                                                        <label>{$core->get_Lang('Children')} ({$list_age_child[j].title})</label>
-                                                                        <span class="ui-spinner ui-corner-all ui-widget ui-widget-content">
-																					<button class="ui-spinner-button ui-spinner-down unNumChild" type="button" _type="number_child" traveler_type_id="{$lstVisitorType[i].tour_property_id}" visitor_age_child_id="{$list_age_child[j].tour_option_id}">-</button>
-																					<input min-number="0" abc max-number="{$max_child}" type="number" class="ui-spinner-input number_child input_number find_select" tour_visitor_type_id="{$lstVisitorType[i].tour_property_id}" name="national_visitor{$lstVisitorType[i].tour_property_id}_{$list_age_child[j].tour_option_id}" id="national_visitor{$lstVisitorType[i].tour_property_id}" value="0" visitor_age_child_id="{$list_age_child[j].tour_option_id}" readonly/>
-																					<button class="ui-spinner-button ui-spinner-up upNumChild" type="button" _type="number_child" traveler_type_id="{$lstVisitorType[i].tour_property_id} "  visitor_age_child_id="{$list_age_child[j].tour_option_id}">+</button>
-																				</span>
-                                                                    </div>
-                                                                </div>
-                                                            {/section}*}
                                                         </li>
                                                     {/if}
                                                 {else}
@@ -322,67 +310,11 @@
                                 <input type="hidden" name="list_age_child" id="list_age_child" value="" />
                                 <input type="hidden" name="check_in_book" id="check_in_book" value="{$str_first_start_date}" />
                                 <input type="hidden" name="hidFind" value="hidAvaiable" />
-                                <button id="check_avaiable" class="check-btnn btn-hover-home btn_book_tour">Check Availability</button>
+                                <button id="check_avaiable" class="check-btnn btn-hover-home btn_book_tour">{$core->get_Lang("Check Availability")}</button>
                             </div>
                         </div>
                         </form>
                         <div id="TablePrice"></div>
-                        <div class="infor_pricetour d-none">
-                            <div class="container">
-                                <div class="txt_inf_locationtime">
-                                    <h3 class="txt_infprice">{$clsTour->getTitle($tour_id)}</h3>
-                                    <div class="location_daytime">
-                                        <p class="txt_location"><i class="fa-regular fa-location-dot"
-                                                                   style="color: #004ea8;"></i>Ha Noi
-                                            <span style="color:#D3DCE1"> |</span> <span class="txt_timedays"><i
-                                                        class="fa-solid fa-clock-three" style="color: #434b5c;"></i>10 Days 9 Nights</span>
-                                        </p>
-                                    </div>
-                                    <hr style="opacity: 0.1; background: #111D37">
-                                    <div class="type_price">
-                                        <div class="txt_price_type">
-                                            <p class="txt_typeprice">Customer Type</p>
-                                            <p class="txt_typeprice">Price</p>
-                                        </div>
-                                        <div class="row justify-content-between">
-                                            <div class="col-md-4">2 Adults</div>
-                                            <div class="col-md-4 text-center">x US $1250</div>
-                                            <div class="col-md-4 text-end">US <span class="bold_txtprice">$1250</span>
-                                            </div>
-                                        </div>
-                                        <div class="row justify-content-between">
-                                            <div class="col-md-4">1 Children (0-16age)</div>
-                                            <div class="col-md-4 text-center">x US $900</div>
-                                            <div class="col-md-4 text-end">US <span class="bold_txtprice">$900</span>
-                                            </div>
-                                        </div>
-
-                                        <hr style="opacity: 0.1; background: #111D37;">
-                                        <div class="price_total">
-                                            <p class="txt_typeprice">Total price:</p>
-                                            <p class="txt_monpr">US <span class="numb_pr">$3400</span></p>
-                                        </div>
-                                        <div class="txt_policy">
-                                            <p class="txt_regard">
-                                                Regarding cancellation conditions, please read our policy.  <a href="#"
-                                                                                                               style="color: #3F6DF6">Booking
-                                                    Policy</a></p>
-                                            <p class="txt_regard">You can reserve now & pay later with this tour
-                                                option.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="bg_btnbook">
-                                <div class="numbtxtbook">
-                                    <div class="price-wrapper"><h3 class="txt_numbus">US</h3>
-                                        <h2 class="txt_numbus2">$3400</h2>
-                                    </div>
-                                    <p class="txt_desus">All taxes and fees included</p>
-                                </div>
-                                <button class="btn txt_booking">Booking now</button>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -392,20 +324,20 @@
 
     <section class="bg_inclusion section_inclusion" id="inclusion">
         <div class="container">
-            <h2 class="txt_inclusions">Inclusions</h2>
+            <h2 class="txt_inclusions">{$core->get_Lang("Inclusions")}</h2>
             <div class="bg_inexclues">
                 <div class="included">
-                    <h3 class="txt_inborder">Included</h3>
+                    <h3 class="txt_inborder">{$core->get_Lang("Included")}</h3>
                     {$oneItem.inclusion|html_entity_decode}
                 </div>
                 <div class="excluded">
-                    <h3 class="txt_exborder">Excluded</h3>
+                    <h3 class="txt_exborder">{$core->get_Lang("Excluded")}</h3>
                     {$oneItem.exclusion|html_entity_decode}
                 </div>
             </div>
             <div class="booking_policy">
                 <div class="row">
-                    <div class="col-3"><h3 class="title_booking_policy">BOOKING POLICY</h3></div>
+                    <div class="col-3"><h3 class="title_booking_policy">{$core->get_Lang("BOOKING POLICY")}</h3></div>
                     <div class="col-9">{$oneItem.confirmation_policy|html_entity_decode}</div>
                 </div>
             </div>
@@ -470,11 +402,11 @@
                     </div>
                     <p class="title_review">{$lstReviews[i].title}</p>
                     <p class="content_review">{$lstReviews[i].content}</p>
-                    <p class="view_more_review">View more</p>
+                    <p class="view_more_review">{$core->get_Lang("View more")}</p>
                 </div>
             {/section}
             {else}
-                <div>Not reviews yet</div>
+                <div>{$core->get_Lang("Not reviews yet")}</div>
             {/if}
             {if $page_view}
             <div class="tour-pagination d-flex justify-content-center mt-5">
@@ -514,7 +446,7 @@
                                 <div class="d-flex align-items-center">
                                     <i class="fa-light fa-location-dot" style="color: #43485c;"
                                        aria-hidden="true"></i>
-                                    <span class="txt_placetours">Place: {$clsTourDestination->getByCountry($lstRelateTour[i].tour_id, 'city')}</span>
+                                    <span class="txt_placetours">{$core->get_Lang("Place")}: {$clsTourDestination->getByCountry($lstRelateTour[i].tour_id, 'city')}</span>
                                     {if $clsTourDestination->getByCountry($lstRelateTour[i].tour_id, 'other_city')}
                                         <button type="button" class="tooltips_tour" data-bs-toggle="tooltip"
                                                 title="{$clsTourDestination->getByCountry($lstRelateTour[i].tour_id, 'other_city')}">
@@ -525,16 +457,16 @@
                                 <div class="intro_recent_view_tour">{$lstRelateTour[i].overview|html_entity_decode}</div>
                                 <div class="d-flex justify-content-between align-items-center" style="margin-top: 20px">
                                     {if $lstRelateTour[i].min_price}
-                                    <div class="from_price"><p class="from_txtp">From {if $clsTour->getDiscount($lstRelateTour[i].tour_id)}<span class="text-decoration-line-through">${$lstRelateTour[i].min_price}</span>{/if}</p> <span
+                                    <div class="from_price"><p class="from_txtp">{$core->get_Lang("From")} {if $clsTour->getDiscount($lstRelateTour[i].tour_id)}<span class="text-decoration-line-through">${$lstRelateTour[i].min_price}</span>{/if}</p> <span
                                                 class="txt_price">US
                                             <h3 class="txt_numbprice"> ${$clsTour->getPriceAfterDiscount($lstRelateTour[i].tour_id)}</h3> </span>
                                     </div>
                                     {else}
-                                        <h3 class="txt_numbprice">Contact</h3>
+                                        <h3 class="txt_numbprice">{$core->get_Lang("Contact")}</h3>
                                     {/if}
                                     <a href="{$clsTour->getLink($lstRelateTour[i].tour_id)}" alt="tour"
                                        title="tour">
-                                        <button class="btn btn_viewtour btn-hover-home">View Tour <i
+                                        <button class="btn btn_viewtour btn-hover-home">{$core->get_Lang("View Tour")} <i
                                                     class="fa-regular fa-arrow-right" style="color: #ffffff;"
                                                     aria-hidden="true"></i></button>
                                     </a>
@@ -565,11 +497,11 @@
                                     <a class="txth_relatedtour txt-hover-home" href="{$clsTour->getLink($lstTourRecent[i].tour_id)}" alt="tour" title="tour">{$lstTourRecent[i].title}</a>
                                 </h3>
                                 <div class="d-flex align-items-center score_reviewtour"><span class="border_score">{$clsReviews->getReviews($lstTourRecent[i].tour_id, 'avg_point')}</span>
-                                    <span class="txt_score">{$clsReviews->getReviews($lstTourRecent[i].tour_id, 'txt_review')} </span> <span class="txt_reviewstour">- {$clsReviews->getReviews($lstTourRecent[i].tour_id)} views</span>
+                                    <span class="txt_score">{$clsReviews->getReviews($lstTourRecent[i].tour_id, 'txt_review')} </span> <span class="txt_reviewstour">- {$clsReviews->getReviews($lstTourRecent[i].tour_id)} {$core->get_Lang("views")}</span>
                                 </div>
                                 <div class="d-flex align-items-center">
                                     <i class="fa-light fa-location-dot" style="color: #43485c;" aria-hidden="true"></i>
-                                    <span class="txt_placetours">Place: {$clsTourDestination->getByCountry($lstTourRecent[i].tour_id, 'city')}</span>
+                                    <span class="txt_placetours">{$core->get_Lang("Place")}: {$clsTourDestination->getByCountry($lstTourRecent[i].tour_id, 'city')}</span>
                                     {if $clsTourDestination->getByCountry($lstTourRecent[i].tour_id, 'other_city')}
                                         <button type="button" class="tooltips_tour" data-bs-toggle="tooltip" title="{$clsTourDestination->getByCountry($lstTourRecent[i].tour_id, 'other_city')}">
                                             +{$clsTourDestination->getByCountry($lstTourRecent[i].tour_id)}
@@ -579,14 +511,14 @@
                                 <div class="intro_recent_view_tour">{$lstTourRecent[i].overview|html_entity_decode}</div>
                                 <div class="d-flex justify-content-between align-items-center" style="margin-top: 40px">
                                     {if $lstTourRecent[i].min_price}
-                                    <div class="from_price"><p class="from_txtp">From {if $clsTour->getDiscount($lstTourRecent[i].tour_id)}<span class="text-decoration-line-through">${$lstTourRecent[i].min_price}</span>{/if}</p> <span
+                                    <div class="from_price"><p class="from_txtp">{$core->get_Lang("From")} {if $clsTour->getDiscount($lstTourRecent[i].tour_id)}<span class="text-decoration-line-through">${$lstTourRecent[i].min_price}</span>{/if}</p> <span
                                                 class="txt_price">US
 												<h3 class="txt_numbprice"> ${$clsTour->getPriceAfterDiscount($lstTourRecent[i].tour_id)}</h3> </span></div>
                                     {else}
-                                        <h3 class="txt_numbprice">Contact</h3>
+                                        <h3 class="txt_numbprice">{$core->get_Lang("Contact")}</h3>
                                     {/if}
                                     <a href="{$clsTour->getLink($lstTourRecent[i].tour_id)}" alt="tour" title="tour">
-                                        <button class="btn btn_viewtour btn-hover-home">View Tour <i
+                                        <button class="btn btn_viewtour btn-hover-home">{$core->get_Lang("View Tour")} <i
                                                     class="fa-regular fa-arrow-right" style="color: #ffffff;"
                                                     aria-hidden="true"></i></button>
                                     </a>
@@ -603,7 +535,7 @@
     <section class="framevideotxt">
         <div class="container">
             <div class="row">
-                <div class="col-lg-6 position-relative">
+                <div class="col-lg-6 position-relative" style="max-width: 588px">
                     <a class="position-relative" href="{$clsConfiguration->getValue('LinkVideoPerfect_'|cat:$_LANG_ID)}"
                        data-fancybox="gallery">
                         <img class="videoplaypic" src="{$clsConfiguration->getValue('ThumbnailYoutube_'|cat:$_LANG_ID)}"
@@ -619,11 +551,11 @@
                 <div class="col-lg-6 d-flex flex-column justify-content-center txt_readylets">
                     <h2 class="txtready">{$clsConfiguration->getValue('TitleVideoPerfect_'|cat:$_LANG_ID)|html_entity_decode}</h2>
                     <div class="txtcomt">{$clsConfiguration->getValue('IntroVideoPerfect_'|cat:$_LANG_ID)|html_entity_decode}</div>
-                    <a href="{$clsTour->getLink2('', 1)}" class="btn readyToStart-btn">{$core->get_Lang('LET’S PLAN YOUR TRIP')}
+                    <div><a href="{$clsTour->getLink2('', 1)}" class="btn readyToStart-btn">{$core->get_Lang('LET’S PLAN YOUR TRIP')}
                         <img class="ms-2"
                              src="https://unikasia.vietiso.com/isocms/templates/default/skin/images/hotel/ArrowRight.svg"
                              alt="error">
-                    </a>
+                    </a></div>
                 </div>
             </div>
         </div>
@@ -634,17 +566,17 @@
             <div class="modal-content">
                 <form action="" method="post" enctype="multipart/form-data">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Download Brochure</h1>
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">{$core->get_Lang("Download Brochure")}</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <label for="exampleInputEmail1" class="form-label">Email address</label>
+                        <label for="exampleInputEmail1" class="form-label">{$core->get_Lang("Email address")}</label>
                         <input type="email" class="form-control" id="exampleInputEmail1" name="email" aria-describedby="emailHelp">
                         <input type="hidden" class="form-control" name="tour_id" value="{$tour_id}">
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button  id="download_brochure" type="button" class="btn btn-warning">Download brochure</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{$core->get_Lang("Close")}</button>
+                        <button  id="download_brochure" type="button" class="btn btn-warning">{$core->get_Lang("Download brochure")}</button>
                     </div>
                 </form>
             </div>
@@ -661,6 +593,8 @@
     var $_Collapse_all = '{$core->get_Lang("Collapse all")}';
     var $_View_more = '{$core->get_Lang("View more")}';
     var $_Less_more = '{$core->get_Lang("Less more")}';
+    var Expand = '{$core->get_Lang("Expand all")}';
+    var Collapse = '{$core->get_Lang("Collapse all")}';
     var $_LANG_ID = '{$_LANG_ID}';
     var Adults='{$core->get_Lang("Adults")}';
     var Adult='{$core->get_Lang("Adult")}';
@@ -719,11 +653,11 @@
                 const accordionCollapse = $(this).parents(".daytour").find(".accordion-collapse.collapse");
                 accordionCollapse.addClass('show');
                 if ($(this).hasClass('expand')) {
-                    $(this).removeClass('expand').text('Expand all');
+                    $(this).removeClass('expand').text(Expand);
                     accordionCollapse.removeClass('show');
                     $(this).parents(".daytour").find(".accordion-button").addClass('collapsed')
                 } else {
-                    $(this).addClass('expand').text('Collapse all');
+                    $(this).addClass('expand').text(Collapse);
                     accordionCollapse.addClass('show');
                     $(this).parents(".daytour").find(".accordion-button").removeClass('collapsed')
                 }

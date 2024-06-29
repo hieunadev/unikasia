@@ -75,16 +75,16 @@ function getFrame($country_id = null)
             )
         );
     }
-    // $frames['seo'] = array(
-    //     'name'    => $core->get_Lang('seosdvanced'),
-    //     'href_group'    => 'seo',
-    //     'icon'    => '',
-    //     'steps'    => array(
-    //         'seo' => array(
-    //             'name' =>  $core->get_Lang('seosdvanced')
-    //         )
-    //     )
-    // );
+    $frames['seo'] = array(
+        'name'    => $core->get_Lang('seosdvanced'),
+        'href_group'    => 'seo',
+        'icon'    => '',
+        'steps'    => array(
+            'seo' => array(
+                'name' =>  $core->get_Lang('seosdvanced')
+            )
+        )
+    );
     return $frames;
 }
 function default_insert()

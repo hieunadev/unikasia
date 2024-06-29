@@ -85,19 +85,19 @@
                     </div>
                 </div>
                 <div class="row-span">
-                    <div class="fieldlabel">{$core->get_Lang('Description 1')}</div>
+                    <div class="fieldlabel">{$core->get_Lang('Description')}</div>
                     {assign var=TrvsWhenToGoDescription_1 value=TrvsWhenToGoDescription_1_|cat:$_LANG_ID}
                     <div class="fieldarea">
                         <textarea style="width:100%" class="textarea_intro_editor_simple" name="iso-{$TrvsWhenToGoDescription_1}" id="TrvsWhenToGoDescription_1" cols="255" rows="2">{$clsConfiguration->getValue($TrvsWhenToGoDescription_1)}</textarea>
                     </div>
                 </div>
-                <div class="row-span">
+                {*<div class="row-span">
                     <div class="fieldlabel">{$core->get_Lang('Description 2')}</div>
                     {assign var=TrvsWhenToGoDescription_2 value=TrvsWhenToGoDescription_2_|cat:$_LANG_ID}
                     <div class="fieldarea">
                         <textarea style="width:100%" class="textarea_intro_editor_simple" name="iso-{$TrvsWhenToGoDescription_2}" id="TrvsWhenToGoDescription_2" cols="255" rows="2">{$clsConfiguration->getValue($TrvsWhenToGoDescription_2)}</textarea>
                     </div>
-                </div>
+                </div>*}
             </fieldset>
             <fieldset>
                 <legend>{$core->get_Lang("List blog")}</legend>

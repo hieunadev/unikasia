@@ -314,7 +314,7 @@ function default_search()
 	$assign_list["clsGuide"] 	= 	$clsGuide;
 	$clsPagination	= 	new Pagination();
 	#
-	if (!empty($_POST)) {
+	if (!empty($_POST) && $_POST['action'] === 'search_guide') {
 		$country_id		=	isset($_POST['country_id']) ? $_POST['country_id'] : 0;
 		$country_slug	=	$clsCountry->getSlug($country_id);
 		#
@@ -325,62 +325,63 @@ function default_search()
 		#
 		if (!empty($lang_id) && !empty($country_slug) && !empty($pretty_keyword)) {
 			$link_guide_search	=	'/' . $lang_id . '/search-guide/' . $country_slug . '/' . $pretty_keyword;
-			$clsISO->dd($link_guide_search);
-
-			header('Location: ' . trim($link_guide_search));
-		} else {
-			header('location:' . PCMS_URL);
-			exit();
+			echo	$link_guide_search;
+			die;
 		}
-	} else {
-		$country_slug 	= 	isset($_GET['slug_country']) ? $_GET['slug_country'] : '';
-		if (!empty($country_slug)) {
-			$country_id	= 	$clsCountry->getBySlug($country_slug);
-		}
-		$keyword 		= 	isset($_GET['keyword']) ? $_GET['keyword'] : '';
-		#
-		/** --- Code phân trang  --- **/
-		$cond	= 	"is_trash = 0 AND is_online = 1";
-		if (intval($country_id) > 0) {
-			$cond	.= 	" AND country_id = '$country_id'";
-			$assign_list["country_id"]	= 	$country_id;
-		}
-		if ($keyword != '') {
-			$cond	.= 	" AND (title LIKE '$keyword' OR slug LIKE '%" . $core->replaceSpace($keyword) . "%')";
-			$assign_list["keyword"]	= 	$keyword;
-			#
-			$pretty_keyword	=	str_replace(' ', '+', $keyword);
-		}
-		#
-		$order_by		= 	" ORDER BY order_no ASC";
-		$recordPerPage 	= 	12;
-		$currentPage 	= 	isset($_GET['page']) ? intval($_GET['page']) : 1;
-		$offset 		= 	($currentPage - 1) * $recordPerPage;
-		$limit 			= 	" LIMIT $offset,$recordPerPage";
-		#
-		$totalRecord 	= 	$clsGuide->getAll($cond) ? count($clsGuide->getAll($cond)) : 0;
-		$assign_list['totalRecord']	= 	$totalRecord;
-		#
-		$totalPage 		= 	ceil($totalRecord / $recordPerPage);
-		$assign_list['totalPage']	= 	$totalPage;
-		#
-		$list_guide 	= 	$clsGuide->getAll($cond . $order_by . $limit, $clsGuide->pkey);
-		$assign_list['list_guide'] 	= 	$list_guide;
-		unset($listHotel);
-		$link_page	= 	DOMAIN_URL . '/' . $_LANG_ID . '/search-guide/' . $country_slug . '/' . $pretty_keyword;
-		#
-		$config	= 	[
-			'total'				=> $totalRecord,
-			'number_per_page'	=> $recordPerPage,
-			'current_page'		=> $currentPage,
-			'link'				=> str_replace('.html', '/', $link_page),
-			'link_page'			=> $link_page
-		];
-		$clsPagination->initianize($config);
-		$page_view	= 	$clsPagination->create_links(false);
-		$assign_list['page_view']	= 	$page_view;
-		/** --- End of Code phân trang  --- **/
+		// else {
+		// 	echo	'/';
+		// 	die;
+		// }
 	}
+	#
+	$country_slug 	= 	isset($_GET['slug_country']) ? $_GET['slug_country'] : '';
+	if (!empty($country_slug)) {
+		$country_id	= 	$clsCountry->getBySlug($country_slug);
+	}
+	$keyword 		= 	isset($_GET['keyword']) ? $_GET['keyword'] : '';
+	#
+	/** --- Code phân trang  --- **/
+	$cond	= 	"is_trash = 0 AND is_online = 1";
+	if (intval($country_id) > 0) {
+		$cond	.= 	" AND country_id = '$country_id'";
+		$assign_list["country_id"]	= 	$country_id;
+	}
+	if ($keyword != '') {
+		$cond	.= 	" AND (title LIKE '$keyword' OR slug LIKE '%" . $core->replaceSpace($keyword) . "%')";
+		$assign_list["keyword"]	= 	$keyword;
+		#
+		$pretty_keyword	=	str_replace(' ', '+', $keyword);
+	}
+	#
+	$order_by		= 	" ORDER BY order_no ASC";
+	$recordPerPage 	= 	12;
+	$currentPage 	= 	isset($_GET['page']) ? intval($_GET['page']) : 1;
+	$offset 		= 	($currentPage - 1) * $recordPerPage;
+	$limit 			= 	" LIMIT $offset,$recordPerPage";
+	#
+	$totalRecord 	= 	$clsGuide->getAll($cond) ? count($clsGuide->getAll($cond)) : 0;
+	$assign_list['totalRecord']	= 	$totalRecord;
+	#
+	$totalPage 		= 	ceil($totalRecord / $recordPerPage);
+	$assign_list['totalPage']	= 	$totalPage;
+	#
+	$list_guide 	= 	$clsGuide->getAll($cond . $order_by . $limit, $clsGuide->pkey);
+	$assign_list['list_guide'] 	= 	$list_guide;
+	unset($listHotel);
+	$link_page	= 	DOMAIN_URL . '/' . $_LANG_ID . '/search-guide/' . $country_slug . '/' . $pretty_keyword;
+	#
+	$config	= 	[
+		'total'				=> $totalRecord,
+		'number_per_page'	=> $recordPerPage,
+		'current_page'		=> $currentPage,
+		'link'				=> str_replace('.html', '/', $link_page),
+		'link_page'			=> $link_page
+	];
+	$clsPagination->initianize($config);
+	$page_view	= 	$clsPagination->create_links(false);
+	$assign_list['page_view']	= 	$page_view;
+	/** --- End of Code phân trang  --- **/
+
 	#
 	/*=============Title & Description Page==================*/
 	$title_page 	= 	$core->get_Lang('resultsearch') . ' | ' . PAGE_NAME;

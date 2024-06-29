@@ -4,15 +4,16 @@ $(document).ready(function () {
             loop: true,
             margin: 33,
             dots: false,
-            nav: true,
             navText: ["<i class='fa fa-chevron-left'></i>", "<i class='fa fa-chevron-right'></i>"],
             responsiveClass: true,
             responsive: {
                 0: {
-                    items: 1
+                    items: 1.2,
+                    nav: false
                 },
                 600: {
-                    items: 3
+                    items: 3,
+                    nav: true
                 }
             }
         });
@@ -38,17 +39,19 @@ $(document).ready(function () {
     });
     $('#home_customer_reivews').owlCarousel({
         loop: true,
-        margin: 36,
         dots: false,
-        nav: true,
         navText: ["<i class='fa fa-chevron-left'></i>", "<i class='fa fa-chevron-right'></i>"], // Sử dụng các biểu tượng mũi tên của Font Awesome
         responsiveClass: true,
         responsive: {
             0: {
-                items: 1
+                items: 1.2,
+                nav: false,
+                margin: 24,
             },
             600: {
-                items: 3
+                items: 3,
+                nav: true,
+                margin: 36,
             }
         }
     });
@@ -57,7 +60,14 @@ $(document).ready(function () {
         margin: 0,
         nav: false,
         dots: false,
-        items: 4
+        responsive: {
+            0: {
+                items: 1
+            },
+            600: {
+                items: 4
+            }
+        }
     })
     //  JS New Header
     $(function () {

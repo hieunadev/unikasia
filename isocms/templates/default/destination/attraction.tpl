@@ -5,174 +5,176 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 col-sm-12 col-md-9">
-                    {$core->getBlock('des_travel_guide_side_mobile')}
+                    {if $deviceType ne 'computer'}
+                        {$core->getBlock('des_travel_guide_side_mobile')}
+                    {/if}
                     <div class="att_content">{$clsCity->getContent($city_id)}</div>
                     {if $list_tour}
-                    <div class="att_exciting_trip scroll_exciting_trip">
-                        <div class="att_exciting_trip_title">
-                            <h2>{$core->get_Lang('Exciting trip')}</h2>
-                        </div>
-                        <div class="att_exciting_trip_content">
-                            {foreach from=$list_tour key=key item=item}
-                            {assign var="TourID" value=$item.tour_id} {assign var="TourTitle" value=$clsTour->getTitle($TourID)}
-                            {assign var="TourLink" value=$clsTour->getLink($TourID)}
-                            {assign var="TourImage" value=$clsTour->getImage($TourID, 313, 216)}
-                            <div class="att_exciting_trip_item">
-                                <div class="row">
-                                    <div class="col-12 col-lg-4">
-                                        <a href="{$TourLink}" title="{$TourTitle}">
-                                            <div class="att_exciting_trip_item_image">
-                                                <img src="{$TourImage}" width="313" height="216" alt="{$TourTitle}">
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="col-12 col-lg-5">
-                                        <div class="att_exciting_trip_item_intro">
-                                            <div class="att_exciting_trip_item_title">
-                                                <h3 class="ellipsis_2_line">
-                                                    <a href="{$TourLink}" title="{$TourTitle}">
-                                                        {$TourTitle}
-                                                    </a>
-                                                </h3>
-                                            </div>
-                                            <div class="att_exciting_trip_item_rate">
-                                                <div class="number">{$clsReviews->getReviews($TourID, 'avg_point', 'tour')}</div>
-                                                <div class="title">{$clsReviews->getReviews($TourID, 'txt_review', 'tour')}</div>
-                                                <div class="total">- {$clsReviews->getReviews($TourID, '', 'tour')} reviews</div>
-                                            </div>
-                                            <div class="att_exciting_trip_item_description">
-                                                <div class="icon"><i class="fa-sharp fa-solid fa-quote-right"></i></div>
-                                                <div class="description ellipsis_2_line">
-                                                    {$clsTour->getTripOverview($TourID)}
-                                                </div>
-                                            </div>
-                                            <div class="att_exciting_trip_item_place">
-                                                <div class="icon"><i class="fa-sharp fa-light fa-location-dot"></i></div>
-                                                <div class="description ellipsis_1_line">
-                                                    {$core->get_Lang('Place')}:
-                                                    {$clsTourDestination->getByCountry($TourID, 'city')}
-                                                    {if $clsTourDestination->getByCountry($TourID, 'other_city')}
-                                                    <button type="button" class="tooltips_tour" data-bs-toggle="tooltip" title="{$clsTourDestination->getByCountry($TourID, 'other_city')}">+{$clsTourDestination->getByCountry($TourID)}</button>
-                                                    {/if}
-                                                </div>
-                                            </div>
-                                            <div class="att_exciting_trip_item_trip">
-                                                <div class="icon"><i class="fa-sharp fa-light fa-arrow-right-arrow-left"></i></div>
-                                                <div class="description ellipsis_1_line">
-                                                    {$core->get_Lang('Start/finish')}:
-                                                    {$clsTourDestination->getByCountry($TourID, "startFinish")}
-                                                </div>
-                                            </div>
-                                            <div class="att_exciting_trip_item_style">
-                                                <div class="icon"><i class="fa-sharp fa-light fa-calendar-range"></i></div>
-                                                <div class="description ellipsis_1_line">
-                                                    {$core->get_Lang('Travel style')}:
-                                                    {$clsTour->getListCatName($TourID)}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-lg-3">
-                                        <div class="att_exciting_trip_item_detail">
-                                            <div class="unika_att_exciting">
-                                                <div class="att_exciting_trip_item_date">
-                                                    {if $item.duration_custom}
-                                                    {$item.duration_custom}
-                                                    {else}
-                                                    {$item.number_day} {if $item.number_day lt 2}DAY {else} DAYS {/if}
-                                                    {/if}
-                                                </div>
-                                                <div class="unika_att_exciting_item">
-                                                    <div class="att_exciting_trip_item_price_old">
-                                                        {$core->get_Lang('From')}
-                                                        <span>${$item.min_price}</span>
-                                                    </div>
-                                                    <div class="att_exciting_trip_item_price_new">
-                                                        {$core->get_Lang('US')}
-                                                        <span>${$clsTour->getPriceAfterDiscount($TourID)}</span>
-                                                    </div>
-                                                </div>
-                                            </div>
+                        <div class="att_exciting_trip scroll_exciting_trip">
+                            <div class="att_exciting_trip_title">
+                                <h2>{$core->get_Lang('Exciting trip')}</h2>
+                            </div>
+                            <div class="att_exciting_trip_content">
+                                {foreach from=$list_tour key=key item=item}
+                                {assign var="TourID" value=$item.tour_id} {assign var="TourTitle" value=$clsTour->getTitle($TourID)}
+                                {assign var="TourLink" value=$clsTour->getLink($TourID)}
+                                {assign var="TourImage" value=$clsTour->getImage($TourID, 313, 216)}
+                                <div class="att_exciting_trip_item">
+                                    <div class="row">
+                                        <div class="col-12 col-lg-4">
                                             <a href="{$TourLink}" title="{$TourTitle}">
-                                                {$core->get_Lang('View tour')} <i class="fa-sharp fa-light fa-arrow-right"></i>
+                                                <div class="att_exciting_trip_item_image">
+                                                    <img src="{$TourImage}" width="313" height="216" alt="{$TourTitle}">
+                                                </div>
                                             </a>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                            {/foreach}
-                            <a href="javascript:void(0);" class="top_att_btn_viewmore">{$core->get_Lang('View more')}</a>
-                        </div>
-                    </div>
-                    {/if}
-                    {if $list_hotel}
-                    <div class="att_list_hotel scroll_hotel">
-                        <div class="att_list_hotel_title">
-                            <h2>{$core->get_Lang('Hotel')} {$clsCity->getTitle($city_id)}</h2>
-                            <a href="/stay/vietnam?city={$city_id}" title="{$core->get_Lang('Hotel')} {$clsCity->getTitle($city_id)}" class="top_att_btn_exploremore">
-                                {$core->get_Lang('Explore more')} <i class="fa-sharp fa-light fa-arrow-right"></i>
-                            </a>
-                        </div>
-                        <div class="att_list_hotel_content">
-                            <div class="row justify-content-center">
-                                {foreach from=$list_hotel key=key item=item}
-                                {assign var="HotelID" value=$item.hotel_id}
-                                {assign var="HotelTitle" value=$clsHotel->getTitle($HotelID)}
-                                {assign var="HotelLink" value=$clsHotel->getLink($HotelID)}
-                                {assign var="HotelImage" value=$clsHotel->getImage($HotelID, 296, 200)}
-                                <div class="col-12 col-sm-12 col-md-6 col-lg-4">
-                                    <div class="att_hotel_content_item">
-                                        <a href="{$HotelLink}" title="{$HotelTitle}">
-                                            <div class="des_travel_guide_most_read_item_image">
-                                                <img src="{$HotelImage}" width="296" height="200" alt="{$HotelTitle}">
-                                            </div>
-                                        </a>
-                                        <div class="att_hotel_content_item_intro">
-                                            <div class="att_hotel_content_item_title">
-                                                <h3 class="ellipsis_2_line">
-                                                    <a href="{$HotelLink}" title="{$HotelTitle}">
-                                                        {$HotelTitle}
-                                                    </a>
-                                                </h3>
-                                                <div class="att_hotel_content_item_star">
-                                                    {$clsHotel->getStarNumber($HotelID)}
+                                        <div class="col-12 col-lg-5">
+                                            <div class="att_exciting_trip_item_intro">
+                                                <div class="att_exciting_trip_item_title">
+                                                    <h3 class="ellipsis_2_line">
+                                                        <a href="{$TourLink}" title="{$TourTitle}">
+                                                            {$TourTitle}
+                                                        </a>
+                                                    </h3>
+                                                </div>
+                                                <div class="att_exciting_trip_item_rate">
+                                                    <div class="number">{$clsReviews->getReviews($TourID, 'avg_point', 'tour')}</div>
+                                                    <div class="title">{$clsReviews->getReviews($TourID, 'txt_review', 'tour')}</div>
+                                                    <div class="total">- {$clsReviews->getReviews($TourID, '', 'tour')} reviews</div>
+                                                </div>
+                                                <div class="att_exciting_trip_item_description">
+                                                    <div class="icon"><i class="fa-sharp fa-solid fa-quote-right"></i></div>
+                                                    <div class="description ellipsis_2_line">
+                                                        {$clsTour->getTripOverview($TourID)}
+                                                    </div>
+                                                </div>
+                                                <div class="att_exciting_trip_item_place">
+                                                    <div class="icon"><i class="fa-sharp fa-light fa-location-dot"></i></div>
+                                                    <div class="description ellipsis_1_line">
+                                                        {$core->get_Lang('Place')}:
+                                                        {$clsTourDestination->getByCountry($TourID, 'city')}
+                                                        {if $clsTourDestination->getByCountry($TourID, 'other_city')}
+                                                        <button type="button" class="tooltips_tour" data-bs-toggle="tooltip" title="{$clsTourDestination->getByCountry($TourID, 'other_city')}">+{$clsTourDestination->getByCountry($TourID)}</button>
+                                                        {/if}
+                                                    </div>
+                                                </div>
+                                                <div class="att_exciting_trip_item_trip">
+                                                    <div class="icon"><i class="fa-sharp fa-light fa-arrow-right-arrow-left"></i></div>
+                                                    <div class="description ellipsis_1_line">
+                                                        {$core->get_Lang('Start/finish')}:
+                                                        {$clsTourDestination->getByCountry($TourID, "startFinish")}
+                                                    </div>
+                                                </div>
+                                                <div class="att_exciting_trip_item_style">
+                                                    <div class="icon"><i class="fa-sharp fa-light fa-calendar-range"></i></div>
+                                                    <div class="description ellipsis_1_line">
+                                                        {$core->get_Lang('Travel style')}:
+                                                        {$clsTour->getListCatName($TourID)}
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="att_hotel_content_item_type">
-                                                <div class="icon"><i class="fa-sharp fa-light fa-house"></i></div>
-                                                <div class="description ellipsis_1_line">
-                                                    {$clsHotel->getTypeHotel($HotelID)}
+                                        </div>
+                                        <div class="col-12 col-lg-3">
+                                            <div class="att_exciting_trip_item_detail">
+                                                <div class="unika_att_exciting">
+                                                    <div class="att_exciting_trip_item_date">
+                                                        {if $item.duration_custom}
+                                                        {$item.duration_custom}
+                                                        {else}
+                                                        {$item.number_day} {if $item.number_day lt 2}DAY {else} DAYS {/if}
+                                                        {/if}
+                                                    </div>
+                                                    <div class="unika_att_exciting_item">
+                                                        <div class="att_exciting_trip_item_price_old">
+                                                            {$core->get_Lang('From')}
+                                                            <span>${$item.min_price}</span>
+                                                        </div>
+                                                        <div class="att_exciting_trip_item_price_new">
+                                                            {$core->get_Lang('US')}
+                                                            <span>${$clsTour->getPriceAfterDiscount($TourID)}</span>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="att_hotel_content_item_place">
-                                                <div class="icon"><i class="fa-sharp fa-solid fa-location-dot"></i></div>
-                                                <div class="description ellipsis_1_line">
-                                                    {$clsHotel->getAddress($HotelID)}
-                                                </div>
-                                            </div>
-                                            <div class="att_hotel_content_item_rate">
-                                                <div class="number">{$clsReviews->getReviews($HotelID, 'avg_point', 'hotel')}</div>
-                                                <div class="title">{$clsReviews->getReviews($HotelID, 'txt_review', 'hotel')}</div>
-                                                <div class="total">({$clsReviews->getReviews($HotelID, '', 'hotel')} reviews)</div>
-                                            </div>
-                                            <div class="att_hotel_content_item_detail">
-                                                <span class="info">{$core->get_Lang('Avg price per night')}</span>
-                                                <span class="price_title">{$core->get_Lang('US')}</span>
-                                                <span class="price_number">
-                                                    {if $clsHotel->getPriceAvg($HotelID)}
-                                                    $<span>{$clsHotel->getPriceAvg($HotelID)}</span>
-                                                    {else}
-                                                    {$core->get_Lang('Contact us')}
-                                                    {/if}
-                                                </span>
+                                                <a href="{$TourLink}" title="{$TourTitle}">
+                                                    {$core->get_Lang('View tour')} <i class="fa-sharp fa-light fa-arrow-right"></i>
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 {/foreach}
+                                <a href="javascript:void(0);" class="top_att_btn_viewmore">{$core->get_Lang('View more')}</a>
                             </div>
                         </div>
-                    </div>
+                    {/if}
+                    {if $list_hotel}
+                        <div class="att_list_hotel scroll_hotel">
+                            <div class="att_list_hotel_title">
+                                <h2>{$core->get_Lang('Hotel')} {$clsCity->getTitle($city_id)}</h2>
+                                <a href="/stay/vietnam?city={$city_id}" title="{$core->get_Lang('Hotel')} {$clsCity->getTitle($city_id)}" class="top_att_btn_exploremore">
+                                    {$core->get_Lang('Explore more')} <i class="fa-sharp fa-light fa-arrow-right"></i>
+                                </a>
+                            </div>
+                            <div class="att_list_hotel_content">
+                                <div class="row justify-content-center">
+                                    {foreach from=$list_hotel key=key item=item}
+                                    {assign var="HotelID" value=$item.hotel_id}
+                                    {assign var="HotelTitle" value=$clsHotel->getTitle($HotelID)}
+                                    {assign var="HotelLink" value=$clsHotel->getLink($HotelID)}
+                                    {assign var="HotelImage" value=$clsHotel->getImage($HotelID, 296, 200)}
+                                    <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+                                        <div class="att_hotel_content_item">
+                                            <a href="{$HotelLink}" title="{$HotelTitle}">
+                                                <div class="des_travel_guide_most_read_item_image">
+                                                    <img src="{$HotelImage}" width="296" height="200" alt="{$HotelTitle}">
+                                                </div>
+                                            </a>
+                                            <div class="att_hotel_content_item_intro">
+                                                <div class="att_hotel_content_item_title">
+                                                    <h3 class="ellipsis_2_line">
+                                                        <a href="{$HotelLink}" title="{$HotelTitle}">
+                                                            {$HotelTitle}
+                                                        </a>
+                                                    </h3>
+                                                    <div class="att_hotel_content_item_star">
+                                                        {$clsHotel->getStarNumber($HotelID)}
+                                                    </div>
+                                                </div>
+                                                <div class="att_hotel_content_item_type">
+                                                    <div class="icon"><i class="fa-sharp fa-light fa-house"></i></div>
+                                                    <div class="description ellipsis_1_line">
+                                                        {$clsHotel->getTypeHotel($HotelID)}
+                                                    </div>
+                                                </div>
+                                                <div class="att_hotel_content_item_place">
+                                                    <div class="icon"><i class="fa-sharp fa-solid fa-location-dot"></i></div>
+                                                    <div class="description ellipsis_1_line">
+                                                        {$clsHotel->getAddress($HotelID)}
+                                                    </div>
+                                                </div>
+                                                <div class="att_hotel_content_item_rate">
+                                                    <div class="number">{$clsReviews->getReviews($HotelID, 'avg_point', 'hotel')}</div>
+                                                    <div class="title">{$clsReviews->getReviews($HotelID, 'txt_review', 'hotel')}</div>
+                                                    <div class="total">({$clsReviews->getReviews($HotelID, '', 'hotel')} reviews)</div>
+                                                </div>
+                                                <div class="att_hotel_content_item_detail">
+                                                    <span class="info">{$core->get_Lang('Avg price per night')}</span>
+                                                    <span class="price_title">{$core->get_Lang('US')}</span>
+                                                    <span class="price_number">
+                                                        {if $clsHotel->getPriceAvg($HotelID)}
+                                                        $<span>{$clsHotel->getPriceAvg($HotelID)}</span>
+                                                        {else}
+                                                        {$core->get_Lang('Contact us')}
+                                                        {/if}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {/foreach}
+                                </div>
+                            </div>
+                        </div>
                     {/if}
                     {if $list_guide_country}
                         {foreach from=$list_guide_country key=key item=item}

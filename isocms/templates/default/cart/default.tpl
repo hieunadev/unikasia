@@ -324,11 +324,6 @@
 						</div>
 					</div>
 					<div class="g-recaptcha" id="g-recaptcha" data-sitekey="{$clsISO->getVar('reCAPTCHA_KEY')}"></div>
-					{if $errMsg ne ''}
-						<div id="error_recaptcha" class="error text_left">{$errMsg}</div>
-					{else}
-						<div id="error_recaptcha" class="error text_left"></div>
-					{/if}
 					<button class="btn_payment false d-flex align-items-center justify-content-center " type="submit">
 						Payment
 						<div class="div_img">

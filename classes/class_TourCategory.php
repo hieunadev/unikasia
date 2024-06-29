@@ -100,9 +100,9 @@ class TourCategory extends dbBasic
 			$slug_country	=	$clsCountry->getSlug($country_id);
 			#
 			if (empty($pvalTable)) {
-				return PCMS_URL . 'tour/' . $slug_country;
+				return $extLang . '/tour/' . $slug_country;
 			} else {
-				return PCMS_URL . 'tour/' . $slug_country . '&travel_style=' . $pvalTable;
+				return $extLang . '/tour/' . $slug_country . '&travel_style=' . $pvalTable;
 			}
 		}
 		if ($_LANG_ID == 'vn')

@@ -47,38 +47,31 @@ function default_place()
     $smarty->assign('gallery_country', $gallery_country);
     #
     /*=============Title & Description Page==================*/
-    $titleCity = '';
-    // Khai báo tạm để tránh gây lỗi code
-    $city_id    =   0;
-    $cityItem   =   0;
+    // $titleCity = '';
+    // // Khai báo tạm để tránh gây lỗi code
+    // $city_id    =   0;
+    // $cityItem   =   0;
+    // #
+    // if ($city_id) {
+    //     $titleCity = ' | ' . $clsCity->getTitle($city_id, $cityItem);
+    //     $place_id = $city_id;
+    //     $clsClassTable = 'City';
+    // } else {
+    //     $place_id = $country_id;
+    //     $clsClassTable = 'Country';
+    // }
     #
-    if ($city_id) {
-        $titleCity = ' | ' . $clsCity->getTitle($city_id, $cityItem);
-        $place_id = $city_id;
-        $clsClassTable = 'City';
-    } else {
-        $place_id = $country_id;
-        $clsClassTable = 'Country';
-    }
-    if ($_LANG_ID == 'vn') {
-        $title_page = $core->get_Lang('Du lịch nước ngoài') . ' | ' . $clsCountry->getTitle($country_id) . $titleCity . ' | ' . PAGE_NAME;
-    } else {
-        $title_page = $core->get_Lang('Destinations') . ' | ' . $clsCountry->getTitle($country_id) . $titleCity . ' | ' . PAGE_NAME;
-    }
-    #
-    $assign_list["title_page"] = $title_page;
+    $title_page = $clsCountry->getTitle($country_id);
     $description_page = $title_page;
     $assign_list["description_page"] = $description_page;
     $keyword_page = $title_page;
     $assign_list["keyword_page"] = $keyword_page;
-
-    /* =============Title & Description Page================== */
-    $title_page = $core->get_Lang('Destinations in') . ' ' . $title_page . ' | ' . PAGE_NAME;
-    $assign_list["title_page"] = $title_page;
-    $description_page = $clsISO->getMetaDescription($place_id, $clsClassTable);
-    $assign_list["description_page"] = $description_page;
-    $global_image_seo_page = $clsISO->getPageImageShare($place_id, $clsClassTable);
-    $assign_list["global_image_seo_page"] = $global_image_seo_page;
+    #
+    // $assign_list["title_page"] = $title_page;
+    // $description_page = $clsISO->getMetaDescription($place_id, $clsClassTable);
+    // $assign_list["description_page"] = $description_page;
+    // $global_image_seo_page = $clsISO->getPageImageShare($place_id, $clsClassTable);
+    // $assign_list["global_image_seo_page"] = $global_image_seo_page;
 }
 function default_topattraction()
 {
@@ -242,7 +235,7 @@ function default_attraction()
     $clsISO->setRecentView($city_id, 'attraction');
     #
     /* =============Title & Description Page================== */
-    $title_page =   $core->get_Lang('Attraction') . ' | ' . $clsCity->getTitle($city_id) . ' | ' . PAGE_NAME;
+    $title_page = $clsCity->getTitle($city_id) . ' | ' . PAGE_NAME;
     $assign_list["title_page"] = $title_page;
     $description_page = $clsISO->getMetaDescription($city_id, $clsCity);
     $assign_list["description_page"] = $description_page;

@@ -24,6 +24,7 @@ class TourDestination extends dbBasic
 
     function getByCountry($tour_id, $act = "place")
     {
+        global $core;
         $clsCity = new City();
         $rec = $this->getAll("is_trash=0 and tour_id='$tour_id' order by order_no", "country_id, city_id");
         $cities = array();
@@ -44,7 +45,7 @@ class TourDestination extends dbBasic
                 $rec = ($first_city_name == $last_city_name) ? $first_city_name : "$first_city_name/$last_city_name";
                 break;
             case "startFinish_detail":
-                $rec = '<span class="bold_txtlocation">' . $first_city_name . '</span> to <span class="bold_txtlocation">' . $last_city_name . '</span>';
+                $rec = '<span class="bold_txtlocation">' . $first_city_name . '</span> '. $core->get_Lang("to") .' <span class="bold_txtlocation">' . $last_city_name . '</span>';
                 break;
             case "city":
                 $rec = implode(' - ', $cities);

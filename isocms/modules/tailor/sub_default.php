@@ -315,8 +315,8 @@ function default_customize()
 		$number_room = Input::post('number_room', '');
 		$assign_list['number_room'] = $number_room;
 		/*if($title==''){
-																								$assign_list['errMsgTitle'] = $core->get_Lang('Title is required');
-																							}*/
+																									  $assign_list['errMsgTitle'] = $core->get_Lang('Title is required');
+																								  }*/
 		$check = true;
 		if ($name == '') {
 			$assign_list['errMsgFullname'] = $core->get_Lang('Fullname is required');
@@ -495,118 +495,111 @@ function default_ajaxTailorMadeTour()
 
 	// Số giây của n phút
 	$minutes = 5 * 60;
+
 	if (!$clsISO->checkGoogleReCAPTCHA()) {
 		$data = [
 			'result' => false,
 			'text' => 'Captcha validation',
 		];
 	}
-	$clsISO->pre($clsISO->checkGoogleReCAPTCHA());
 
-	// if ($current_time - $timeSended > $minutes && $clsISO->checkGoogleReCAPTCHA()) {
-	// if ($current_time - $timeSended > $minutes) {
-	if (!empty($dataPost)) {
-		$tailor_made_tour_id = $clsTailorMadeTour->getMaxId();
+	if ($current_time - $timeSended > $minutes && $clsISO->checkGoogleReCAPTCHA()) {
+		if (!empty($dataPost)) {
+			$tailor_made_tour_id = $clsTailorMadeTour->getMaxId();
 
-		$order_no = $clsTailorMadeTour->getMaxOrderNo();
-		$reg_date = time();
-		$upd_date = time();
-		$is_trash = 0;
-		$is_online = 0;
-		$date_string = $dataPost['arrival_date'];
-		$timestamp = strtotime($date_string);
-		$arrival_date = date('Y-m-d', $timestamp);
-		$dataTailor = [];
+			$order_no = $clsTailorMadeTour->getMaxOrderNo();
+			$reg_date = time();
+			$upd_date = time();
+			$is_trash = 0;
+			$is_online = 0;
+			$date_string = $dataPost['arrival_date'];
+			$timestamp = strtotime($date_string);
+			$arrival_date = date('Y-m-d', $timestamp);
+			$dataTailor = [];
 
-		$type_room = isset($dataPost['type_room']) ? '|' . implode('|', $dataPost['type_room']) . '|' : '';
-		$destination_country = isset($dataPost['destination_country']) ? '|' . implode('|', $dataPost['destination_country']) . '|' : '';
+			$type_room = isset($dataPost['type_room']) ? '|' . implode('|', $dataPost['type_room']) . '|' : '';
+			$destination_country = isset($dataPost['destination_country']) ? '|' . implode('|', $dataPost['destination_country']) . '|' : '';
 
-		$list_city = isset($dataPost['destinations']) ? $dataPost['destinations'] : [];
+			$list_city = isset($dataPost['destinations']) ? $dataPost['destinations'] : [];
 
-		$dataTailor['tailor_made_tour_id'] = $tailor_made_tour_id;
-		$dataTailor['title'] = $dataPost['title'];
-		$dataTailor['name'] = $dataPost['name'];
-		$dataTailor['nationality'] = $dataPost['nationality'];
-		$dataTailor['email'] = $dataPost['email'];
-		$dataTailor['phone'] = $dataPost['phone'];
-		$dataTailor['social_media'] = $dataPost['social_media'];
-		$dataTailor['arrival_date'] = $arrival_date;
-		$dataTailor['duration'] = $dataPost['duration'];
-		$dataTailor['budget'] = $dataPost['budget'];
-		$dataTailor['arrival_airport'] = $dataPost['arrival_airport'];
-		$dataTailor['tour_guide'] = $dataPost['tour_guide'];
-		$dataTailor['adult'] = $dataPost['adult'];
-		$dataTailor['children'] = $dataPost['children'];
-		$dataTailor['infant'] = $dataPost['infant'];
-		$dataTailor['travel_style'] = $dataPost['travel_style'];
-		$dataTailor['meals'] = $dataPost['meals'];
-		$dataTailor['suitable'] = $dataPost['suitable'];
-		$dataTailor['accommodation'] = $dataPost['accommodation'];
-		$dataTailor['special'] = $dataPost['special'];
-		$dataTailor['type_room'] = $type_room;
-		$dataTailor['destinations'] = $destination_country;
-		$dataTailor['order_no'] = $order_no;
-		$dataTailor['reg_date'] = $reg_date;
-		$dataTailor['upd_date'] = $upd_date;
-		$dataTailor['is_trash'] = $is_trash;
-		$dataTailor['is_online'] = $is_online;
-		$dataTailor['ip_send'] = $ip_log;
+			$dataTailor['tailor_made_tour_id'] = $tailor_made_tour_id;
+			$dataTailor['title'] = $dataPost['title'];
+			$dataTailor['name'] = $dataPost['name'];
+			$dataTailor['nationality'] = $dataPost['nationality'];
+			$dataTailor['email'] = $dataPost['email'];
+			$dataTailor['phone'] = $dataPost['phone'];
+			$dataTailor['social_media'] = $dataPost['social_media'];
+			$dataTailor['arrival_date'] = $arrival_date;
+			$dataTailor['duration'] = $dataPost['duration'];
+			$dataTailor['budget'] = $dataPost['budget'];
+			$dataTailor['arrival_airport'] = $dataPost['arrival_airport'];
+			$dataTailor['tour_guide'] = $dataPost['tour_guide'];
+			$dataTailor['adult'] = $dataPost['adult'];
+			$dataTailor['children'] = $dataPost['children'];
+			$dataTailor['infant'] = $dataPost['infant'];
+			$dataTailor['travel_style'] = $dataPost['travel_style'];
+			$dataTailor['meals'] = $dataPost['meals'];
+			$dataTailor['suitable'] = $dataPost['suitable'];
+			$dataTailor['accommodation'] = $dataPost['accommodation'];
+			$dataTailor['special'] = $dataPost['special'];
+			$dataTailor['type_room'] = $type_room;
+			$dataTailor['destinations'] = $destination_country;
+			$dataTailor['order_no'] = $order_no;
+			$dataTailor['reg_date'] = $reg_date;
+			$dataTailor['upd_date'] = $upd_date;
+			$dataTailor['is_trash'] = $is_trash;
+			$dataTailor['is_online'] = $is_online;
+			$dataTailor['ip_send'] = $ip_log;
 
-		$insertTailor = $clsTailorMadeTour->insert($dataTailor);
+			$insertTailor = $clsTailorMadeTour->insert($dataTailor);
 
-		if ($insertTailor) {
-			if (!empty($list_city)) {
-				$list_id = [];
-				foreach ($list_city as $key => $city) {
+			if ($insertTailor) {
+				if (!empty($list_city)) {
+					$list_id = [];
+					foreach ($list_city as $key => $city) {
 
-					$other = isset($city['text']) ? $city['text'] : '';
+						$other = isset($city['text']) ? $city['text'] : '';
 
-					unset($city["text"]);
-					$lCity = '|' . implode('|', $city) . '|';
+						unset($city["text"]);
+						$lCity = '|' . implode('|', $city) . '|';
 
-					$tailor_made_city_id = $clsTailorTourCity->getMaxId();
+						$tailor_made_city_id = $clsTailorTourCity->getMaxId();
 
-					$order_no = $clsTailorTourCity->getMaxOrderNo();
-					$dataCity = [];
-					$dataCity['tailor_tour_city_id'] = $tailor_made_city_id;
-					$dataCity['tailor_made_tour_id'] = $tailor_made_tour_id;
-					$dataCity['country_id'] = $key;
-					$dataCity['cities'] = $lCity;
-					$dataCity['other'] = $other;
-					$dataCity['order_no'] = $order_no;
-					$dataCity['reg_date'] = $reg_date;
-					$dataCity['upd_date'] = $upd_date;
-					$dataCity['is_trash'] = $is_trash;
-					$dataCity['is_online'] = $is_online;
-					$list_id[] = $tailor_made_city_id;
-					$insert_city = $clsTailorTourCity->insert($dataCity);
-					if ($insert_city) {
-						$dataTailor['tailor_city'][] = $tailor_made_city_id;
+						$order_no = $clsTailorTourCity->getMaxOrderNo();
+						$dataCity = [];
+						$dataCity['tailor_tour_city_id'] = $tailor_made_city_id;
+						$dataCity['tailor_made_tour_id'] = $tailor_made_tour_id;
+						$dataCity['country_id'] = $key;
+						$dataCity['cities'] = $lCity;
+						$dataCity['other'] = $other;
+						$dataCity['order_no'] = $order_no;
+						$dataCity['reg_date'] = $reg_date;
+						$dataCity['upd_date'] = $upd_date;
+						$dataCity['is_trash'] = $is_trash;
+						$dataCity['is_online'] = $is_online;
+						$list_id[] = $tailor_made_city_id;
+						$insert_city = $clsTailorTourCity->insert($dataCity);
+						if ($insert_city) {
+							$dataTailor['tailor_city'][] = $tailor_made_city_id;
+						}
 					}
+
+					$dataTailor['tailor_city'] = $list_id;
+					$data = [
+						'result' => true,
+						'text' => 'Success',
+					];
+
+					$clsTailorMadeTour->sendMail($dataTailor);
 				}
-
-
-				$dataTailor['tailor_city'] = $list_id;
-				$data = [
-					'result' => true,
-					'text' => 'Success',
-				];
-
-				$clsTailorMadeTour->sendMail($dataTailor);
-			} else {
-				$data = [
-					'result' => false,
-					'text' => 'Error',
-				];
 			}
+		} else {
+			$data = [
+				'result' => false,
+				'text' => 'Empty',
+			];
 		}
-	} else {
-		$data = [
-			'result' => false,
-			'text' => 'Empty',
-		];
 	}
-	// }
 
 	echo json_encode($data);
 	die();

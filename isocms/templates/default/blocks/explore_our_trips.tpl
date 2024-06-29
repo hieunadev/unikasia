@@ -2,21 +2,22 @@
     <div class="container">
         <h2 class="txtourtrip txt_underline">
             {if $mod eq 'tour' && $act eq 'cat'}
-                {$clsConfiguration->getValue('TrvsTourTitle_'|cat:$_LANG_ID)|html_entity_decode}
-                {$clsTourCategory->getTitle($cat_id)}
-                <span style="text-decoration: underline;">trip in</span>
-                {$clsCountry->getTitle($country_id)}
+            {$clsConfiguration->getValue('TrvsTourTitle_'|cat:$_LANG_ID)|html_entity_decode}
+            {$clsTourCategory->getTitle($cat_id)}
+            <span style="text-decoration: underline;">{$core->get_Lang('trip in')}</span>
+            {$clsCountry->getTitle($country_id)}
             {else}
-                {$clsConfiguration->getValue('DesTourTitle_'|cat:$_LANG_ID)|html_entity_decode}
+            {$clsConfiguration->getValue('DesTourTitle_'|cat:$_LANG_ID)|html_entity_decode}
             {/if}
         </h2>
         <div class="txtexper">
             {if $mod eq 'tour' && $act eq 'cat'}
-                {$clsConfiguration->getValue('TrvsTourDescription_'|cat:$_LANG_ID)|html_entity_decode}
+            {$clsConfiguration->getValue('TrvsTourDescription_'|cat:$_LANG_ID)|html_entity_decode}
             {else}
-                {$clsConfiguration->getValue('DesTourDescription_'|cat:$_LANG_ID)|html_entity_decode}
+            {$clsConfiguration->getValue('DesTourDescription_'|cat:$_LANG_ID)|html_entity_decode}
             {/if}
         </div>
+        {if $deviceType eq "computer"}
         <div class="row justify-content-center">
             {section name=i loop=$listTourExplore}
             <div class="col-xl-4 col-lg-5 col-md-6 col-sm-12">
@@ -26,7 +27,7 @@
                         {if $clsTour->getDiscount($listTourExplore[i].tour_id)}<div class="corner-badge">-{$clsTour->getDiscount($listTourExplore[i].tour_id)}%</div>{/if}
                         <div class="card-img-top card-img-top-view-detail">
                             <a href="{$clsTour->getLink($listTourExplore[i].tour_id)}" title="splendors of vietnam">
-                                <div class="card-img-top-view-detail-block">View details</div>
+                                <div class="card-img-top-view-detail-block">{$core->get_Lang('View details')}</div>
                             </a>
                         </div>
                     </div>
@@ -80,5 +81,8 @@
                 </a>
             </div>
         </div>
+        {else}
+
+        {/if}
     </div>
 </section>

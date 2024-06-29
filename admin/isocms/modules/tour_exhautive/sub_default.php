@@ -1772,7 +1772,6 @@ function default_ajSaveDataasdsad()
     $linkMeta = $clsTour->getLink($pvalTable);
     $allMeta = $clsMeta->getAll("config_link='{$linkMeta}'", $clsMeta->pkey);
     $meta_id = !empty($allMeta) ? $allMeta[0]['meta_id'] : 0;
-
     $result = array('result' => 'error');
     $value = '';
     if ($_POST) {

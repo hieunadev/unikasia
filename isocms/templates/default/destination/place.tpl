@@ -41,12 +41,16 @@
                                 <div class="des_list_hotel_item_rate">
                                     <span class="des_rate_number">{$clsReviews->getReviews($hotel_id, 'avg_point', 'hotel')}</span>
                                     <span class="des_rate_text">{$clsReviews->getReviews($hotel_id, 'txt_review', 'hotel')}</span>
-                                    <span class="des_rate_total">({$clsReviews->getReviews($hotel_id, '', 'hotel')} reviews)</span>
+                                    <span class="des_rate_total">({$clsReviews->getReviews($hotel_id, '', 'hotel')} $core->get_Lang('reviews'))</span>
                                 </div>
                                 <div class="des_list_hotel_item_price">
                                     <span class="des_price_title">{$core->get_Lang('Avg price per night')}</span>
+                                    {if $item.price_avg eq 0}
+                                    <span class="des_price_show_number">{$core->get_Lang('Contact')}</span>
+                                    {else}
                                     <span class="des_price_show_text">{$core->get_Lang('US')}</span>
                                     <span class="des_price_show_number">${$item.price_avg}</span>
+                                    {/if}
                                 </div>
                             </div>
                         </div>

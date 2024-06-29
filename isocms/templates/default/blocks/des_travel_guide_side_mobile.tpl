@@ -9,7 +9,7 @@
                 <i class="fa-sharp fa-light fa-xmark" aria-hidden="true"></i>
             </div>
         </div>
-        <form action="" method="GET" class="form_search_guide">
+        <form action="" method="POST" class="form_search_guide">
             <div class="des_travel_guide_search">
                 <button class="btn_search_guide"><i class="fa-light fa-magnifying-glass"></i></button>
                 <input type="text" name="keyword" class="keyword_search_guide" placeholder="Search">
@@ -18,36 +18,36 @@
         </form>
         <div class="des_travel_guide_category">
             {if $show eq 'attractionCountry'}
-                <div class="des_travel_guide_category_title">
-                    <h2>{$clsCity->getTitle($city_id)}</h2>
-                </div>
-                <div class="des_travel_guide_category_list">
-                    {if $list_tour}
-                        <a href="javascript:void(0);" data-target=".scroll_exciting_trip" title="{$core->get_Lang('Exciting trip')}">
-                            {$core->get_Lang('Exciting trip')}
-                        </a>
-                    {/if}
-                    {if $list_hotel}
-                        <a href="javascript:void(0);" data-target=".scroll_hotel" title="{$core->get_Lang('Hotel')}">
-                            {$core->get_Lang('Hotel')}
-                        </a>
-                    {/if}
-                    {if $list_blog}
-                        <a href="javascript:void(0);" data-target=".scroll_place_to_go" title="{$core->get_Lang('Place to go')}">
-                            {$core->get_Lang('Place to go')}
-                        </a>
-                    {/if}
-                    {if $list_cuisine}
-                        <a href="javascript:void(0);" data-target=".scroll_cuisine" title="{$core->get_Lang('Cuisine')}">
-                            {$core->get_Lang('Cuisine')}
-                        </a>
-                    {/if}
-                    {if $list_culture}
-                        <a href="javascript:void(0);" data-target=".scroll_culture" title="{$core->get_Lang('Culture')}">
-                            {$core->get_Lang('Culture')}
-                        </a>
-                    {/if}
-                </div>
+            <div class="des_travel_guide_category_title">
+                <h2>{$clsCity->getTitle($city_id)}</h2>
+            </div>
+            <div class="des_travel_guide_category_list">
+                {if $list_tour}
+                <a href="javascript:void(0);" data-target=".scroll_exciting_trip" title="{$core->get_Lang('Exciting trip')}">
+                    {$core->get_Lang('Exciting trip')}
+                </a>
+                {/if}
+                {if $list_hotel}
+                <a href="javascript:void(0);" data-target=".scroll_hotel" title="{$core->get_Lang('Hotel')}">
+                    {$core->get_Lang('Hotel')}
+                </a>
+                {/if}
+                {if $list_blog}
+                <a href="javascript:void(0);" data-target=".scroll_place_to_go" title="{$core->get_Lang('Place to go')}">
+                    {$core->get_Lang('Place to go')}
+                </a>
+                {/if}
+                {if $list_cuisine}
+                <a href="javascript:void(0);" data-target=".scroll_cuisine" title="{$core->get_Lang('Cuisine')}">
+                    {$core->get_Lang('Cuisine')}
+                </a>
+                {/if}
+                {if $list_culture}
+                <a href="javascript:void(0);" data-target=".scroll_culture" title="{$core->get_Lang('Culture')}">
+                    {$core->get_Lang('Culture')}
+                </a>
+                {/if}
+            </div>
             {/if}
             <!-- <div class="des_travel_guide_category_title">
                 <h2>Vietnam</h2>

@@ -250,7 +250,9 @@
                             <div class="unika_list_itineraries {if $key eq 0 } active {/if} unika_list_itineraries_{$CruiseItineraryID}">
                                 <div class="list_new  d-flex flex-column">
                                     {if $Child}
+                                        {assign var=countChild value=count($Child)}
                                         {foreach from=$Child key=k item=i}
+                                            {assign var="CruiseItineraryIDChild" value=$i.cruise_itinerary_id}
                                             {assign var="CruiseItineraryDayID" value=$i.cruise_itinerary_day_id}
                                             {assign var="CruiseItineraryDayTitle"
                                             value=$clsCruiseItineraryDay->getTitle($CruiseItineraryDayID)}
@@ -258,24 +260,55 @@
                                             value=$clsCruiseItineraryDay->getImage($CruiseItineraryDayID, 346, 240)}
                                             {assign var="CruiseItineraryDayContent"
                                             value=$clsCruiseItineraryDay->getContent($CruiseItineraryDayID)}
+
+                                            {assign var="txt_meal" value=""}
+                                            {if $i.meals ne ''}
+                                                {assign var="lst_meal" value=$clsCruiseProperty->getAll("is_trash=0 and type='MEAL' and cruise_property_id IN ("|cat:$i['meals']|cat:")", $clsCruiseProperty->pkey|cat:',title')}
+
+                                                {foreach from=$lst_meal key=k2 item=i2}
+                                                    {if $k2 > 0}
+                                                        {assign var="txt_meal" value=$txt_meal|cat:', '|cat:$i2['title']}
+                                                    {else}
+                                                        {assign var="txt_meal" value=$i2['title']}
+                                                    {/if}
+                                                {/foreach}
+                                            {/if}
                                             <div class="item_new">
                                                 <div class="title_new d-flex justify-content-between align-items-center  cursor item_itineraries">
                                                     <div class="title_itineraries d-flex align-items-center ">
                                                         <div class="itineraries_fa">
-                                                            <i class="fa-light fa-location-dot"></i>
+                                                            {if ($countChild-1 eq $k)}
+                                                                <i class="fa-sharp fa-solid fa-flag"></i>
+                                                            {else}
+                                                                <i class="fa-light fa-location-dot"></i>
+                                                            {/if}
                                                         </div>
-                                                        <h3>{$CruiseItineraryDayTitle}</h3>
+                                                        <h3>
+                                                            {$CruiseItineraryDayTitle} 
+                                                            {if $txt_meal}
+                                                                ({$txt_meal})
+                                                            {else}
+                                                                {$txt_meal}
+                                                            {/if}
+                                                        </h3>
                                                     </div>
                                                     <div class="div_img">
-                                                        <i class="fa-light fa-angle-down img_arrow"></i>
-                                                        <i class="fa-light fa-angle-up img_arrow1"></i>
+                                                        <div class="img_arrow">
+                                                            <i class="fa-light fa-angle-down"></i>
+                                                        </div>
+                                                        <div class="img_arrow1">
+                                                            <i class="fa-light fa-angle-up"></i>
+                                                        </div>
+                                                        
                                                     </div>
                                                 </div>
                                                 <div class="content_new">
                                                     <div class="new justify-content-between">
-                                                        <div class="div_img">
-                                                            <img src="{$CruiseItineraryDayImage}" width="346" height="240" alt="{$CruiseItineraryDayTitle}">
-                                                        </div>
+                                                        {if $i.image ne ''}
+                                                            <div class="div_img">
+                                                                <img src="{$CruiseItineraryDayImage}" width="346" height="240" alt="{$CruiseItineraryDayTitle}">
+                                                            </div> 
+                                                        {/if}
                                                         <div class="content">{$CruiseItineraryDayContent}</div>
                                                     </div>
                                                 </div>
@@ -842,12 +875,12 @@
             })
             .on('click', '.item_itineraries', function() {
                 let self = $(this).parents('.item_new');
-                if (self.find('.new').hasClass('show')) {
-                    self.find('.new').removeClass('show');
+                if (self.find('.content_new').hasClass('show')) {
+                    self.find('.content_new').removeClass('show');
                     self.find('.img_arrow1').hide();
                     self.find('.img_arrow').show();
                 } else {
-                    self.find('.new').addClass('show');
+                    self.find('.content_new').addClass('show');
                     self.find('.img_arrow1').show();
                     self.find('.img_arrow').hide();
                 }

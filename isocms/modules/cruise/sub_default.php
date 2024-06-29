@@ -1204,7 +1204,7 @@ function default_detail()
 	// List cruise itinerary day
 	$arr_itinerary_day	=	[];
 	foreach ($arr_itinerary as $row) {
-		$list_itinerary	=	$clsCruiseItineraryDay->getAll("is_trash = 0 AND cruise_itinerary_id = " . $row['cruise_itinerary_id'] . " ORDER BY order_no ASC", "cruise_itinerary_day_id, cruise_itinerary_id");
+		$list_itinerary	=	$clsCruiseItineraryDay->getAll("is_trash = 0 AND cruise_itinerary_id = " . $row['cruise_itinerary_id'] . " ORDER BY order_no ASC", "cruise_itinerary_day_id, cruise_itinerary_id, image, meals");
 		#
 		$arr_child  =   [];
 		foreach ($list_itinerary as $c) {

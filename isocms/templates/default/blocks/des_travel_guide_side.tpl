@@ -6,7 +6,7 @@
                 <div class="des_travel_guide_search">
                     <button class="btn_search_guide"><i class="fa-light fa-magnifying-glass"></i></button>
                     <input type="text" name="keyword" class="keyword_search_guide" placeholder="Search">
-                    <input type="hidden" value="search_guide">
+                    <input type="hidden" name="action" class="action" value="search_guide">
                 </div>
             </form>
             <div class="des_travel_guide_category">
@@ -561,12 +561,6 @@
 <script>
     var lang_id = '{$_LANG_ID}';
     var country_id = '{$country_id}';
-    // var country_slug = '{$country_slug}';
-
-    console.log(lang_id);
-    console.log(country_id);
-    // console.log(country_slug);
-
 </script>
 
 {literal}
@@ -584,15 +578,16 @@
         $('.btn_search_guide').click(function(e) {
             e.preventDefault(); 
             var keyword = $('.keyword_search_guide').val();
-            console.log(keyword);
+            var action = $('.action').val();
             $.post('/index.php?mod=guide&act=search', 
                 { 
                     keyword: keyword,
                     lang_id: lang_id,
-                    country_id: country_id
+                    country_id: country_id,
+                    action: action
                 }, 
-                function(data) {
-                console.log(data); 
+                function(res) {
+                    window.location.href = res;
             });
         });
 

@@ -10,7 +10,7 @@
                         <div class="unika_header_top_right">
                             <div class="unika_header_top_right_email">
                                 <div class="unika_div_img">
-                                    <img src="https://unikasia.vietiso.com/isocms/templates/default/skin/images/home/Message.png" alt="ico_mail" class="img_icon">
+                                    <i class="fa-light fa-envelope" style="color: #ffffff;"></i>
                                 </div>
                                 <a href="mailto:{$clsConfiguration->getValue('CompanyEmail')}" title="{$clsConfiguration->getValue('CompanyEmail')}">
                                     {$clsConfiguration->getValue('CompanyEmail')}
@@ -18,7 +18,7 @@
                             </div>
                             <div class="unika_header_top_right_whapsapp">
                                 <div class="unika_div_img">
-                                    <img src="https://unikasia.vietiso.com/isocms/templates/default/skin/images/home/Call.png" alt="ico_phone" class="img_icon">
+                                    <i class="fa-light fa-phone" style="color: #ffffff;"></i>
                                 </div>
                                 <a href="tel:{$clsConfiguration->getValue('CompanyHotline')}" title="{$clsConfiguration->getValue('CompanyHotline')}">
                                     Whatsapp: {$clsConfiguration->getValue('CompanyHotline')}
@@ -31,7 +31,7 @@
             <div class="unika_header_menu">
                 <div class="container">
                     <div class="unika_container">
-                        <a href="/" class="logo">
+                        <a href="{$extLang}" class="logo">
                             <img class="unika_img_logo_1" src="https://unikasia.vietiso.com/isocms/templates/default/skin/images/home/logo_header_2.png" alt="Logo" width="143" height="53">
                             <img class="unika_img_logo_2" src="https://unikasia.vietiso.com/uploads//Demo/image-6.png" alt="Logo" width="143" height="53">
                         </a>
@@ -181,7 +181,7 @@
                                             <a class="nav-link" href="tel:0983033966">
                                                 <div class="ul-item-unika d-flex align-items-center justify-content-center">
                                                     <div class="unika_div_img">
-                                                        <img src="images/header/phone.svg" alt="ico_phone" class="img_icon">
+                                                        <i class="fa-light fa-phone"></i>
                                                     </div>
                                                     <span class="text-white"> Whapsapp: {$clsConfiguration->getValue('CompanyHotline')} </span>
                                                 </div>
@@ -189,7 +189,7 @@
                                             <a class="nav-link" href="mailto:{$clsConfiguration->getValue('CompanyEmail')}">
                                                 <div class="ul-item-unika d-flex align-items-center justify-content-center">
                                                     <div class="unika_div_img">
-                                                        <img src="images/header/email.svg" alt="ico_mail" class="img_icon">
+                                                        <i class="fa-light fa-envelope"></i>
                                                     </div>
                                                     <span class="text-white"> {$clsConfiguration->getValue('CompanyEmail')} </span>
                                                 </div>

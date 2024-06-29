@@ -13,8 +13,8 @@
                 <hr style="opacity: 0.1; background: #111D37">
                 <div class="type_price">
                     <div class="txt_price_type">
-                        <p class="txt_typeprice">Customer Type</p>
-                        <p class="txt_typeprice">Price</p>
+                        <p class="txt_typeprice">{$core->get_Lang('Customer Type')}</p>
+                        <p class="txt_typeprice">{$core->get_Lang('Price')}</p>
                     </div>
                     <div class="row">
                         <div class="col-md-4">{$number_adults} {$core->get_Lang('Adults')}</div>
@@ -108,16 +108,15 @@
                     {/if}
                     <hr style="opacity: 0.1; background: #111D37;">
                     <div class="price_total">
-                        <p class="txt_typeprice">Total price:</p>
+                        <p class="txt_typeprice">{$core->get_Lang('Total price')}:</p>
                         <p class="txt_monpr">US <span class="numb_pr">${$total_price_promotion|number_format:0:".":","}</span></p>
                     </div>
                     <div class="txt_policy">
                         <p class="txt_regard">
-                            Regarding cancellation conditions, please read our policy.  <a href="#"
-                                                                                           style="color: #3F6DF6">Booking
-                                Policy</a></p>
-                        <p class="txt_regard">You can reserve now & pay later with this tour
-                            option.</p>
+                            {$core->get_Lang('Regarding cancellation conditions, please read our policy')}.<a href="#"
+                                                                                           style="color: #3F6DF6">{$core->get_Lang('Booking
+                                Policy')}</a></p>
+                        <p class="txt_regard">{$core->get_Lang('You can reserve now & pay later with this tour option')}.</p>
                     </div>
                 </div>
             </div>
@@ -127,7 +126,7 @@
                 <div class="price-wrapper"><h3 class="txt_numbus me-2">US </h3>
                     <h2 class="txt_numbus2"> ${$total_price_promotion|number_format:0:".":","}</h2>
                 </div>
-                <p class="txt_desus">All taxes and fees included</p>
+                <p class="txt_desus">{$core->get_Lang('All taxes and fees included')}</p>
             </div>
             <input type="hidden" name="tour_id_z" value="{$tour_id}" />
             <input type="hidden" name="discount_type" value="{$discount_type}" />

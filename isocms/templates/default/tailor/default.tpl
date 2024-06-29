@@ -173,7 +173,7 @@
                                     <div class="tailor_participant_txt">
                                         <div>
                                             <i class="fa-regular fa-user-vneck"></i>
-                                            <span class="tailor_participant_text">1 Adults</span>
+                                            <span class="tailor_participant_text"></span>
                                         </div>
                                         <i class="fa-light fa-chevron-down"></i>
                                     </div>
@@ -389,7 +389,6 @@
                             {$core->get_Lang('Request for Quotation')}
                         </button>
                     </div>
-
                 </div>
             </div>
     </section>
@@ -491,7 +490,7 @@
             submitHandler: function () {
                 let formData = new FormData();
                 var recaptchaResponse = grecaptcha.getResponse();
-                console.log('recaptchaResponse:', recaptchaResponse)
+
                 $('#unika_tailor_form').find('input, select, textarea').each(function(){
                     let name_val = $(this).attr('name');
                     let value = $(this).val();
@@ -519,13 +518,20 @@
                     data: formData,
                     processData: false, 
                     beforeSend: function (xhr) {
-                        $('.unika_item_submit').val("Processing...").prop('disabled', true);
+                        $('#SubmitEnquiry').text("Processing...").prop('disabled', true);
                     },
                     contentType: false,
+                    dataType: 'JSON',
                     success: function (res) {
-                        console.log('res:', res)
-                        console.log('res:', res['result'])
-                        alert("Successfully! Please check email!");
+                        if(res.result){
+                            alert("Successfully! Please check email!");
+                            $('#unika_tailor_form').find('input, select, textarea').each(function(){
+                                $(this).val('');
+                            })
+                        }else{
+                            alert(res.text);
+                        }     
+                        $('#SubmitEnquiry').text("Request for Quotation").prop('disabled', false);
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
                         console.log('Lỗi:', textStatus, errorThrown);

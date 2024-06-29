@@ -605,9 +605,14 @@ class Reviews extends dbBasic{
         return 1;
     }
     function getReviews($id, $act='', $type='tour') {
-        global $dbconn;
+        global $dbconn, $core;
         $cond = " is_trash = 0 and is_online = 1";
-        $txtReview = ['Bad', 'Average', 'Good', 'Excellent', 'Wonderful'];
+        $bad = $core->get_Lang('Bad');
+        $avg = $core->get_Lang('Average');
+        $good = $core->get_Lang('Good');
+        $excellent = $core->get_Lang('Excellent');
+        $wonderful = $core->get_Lang('Wonderful');
+        $txtReview = [$bad, $avg, $good, $excellent, $wonderful];
 
         if (!empty($type)) {
             $cond   .=  ' and type = "'.$type.'"';
@@ -620,7 +625,7 @@ class Reviews extends dbBasic{
 
         switch ($act) {
             case 'txt_review':
-                $rec = $txtReview[$index] ?? 'No review';
+                $rec = $txtReview[$index] ?? $core->get_Lang('No review');
                 break;
             case 'avg_point':
                 $rec = number_format($averageRate,1);

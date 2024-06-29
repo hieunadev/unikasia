@@ -98,7 +98,7 @@
                     <div class="tab_content_month hnv_hide" data-monthid="{$month_id}">{$clsMonthCountry->getIntro($month_country_id)}</div>
                     {/foreach}
                     {/if}
-                    <a href="#" title="{$core->get_Lang('View more')}" class="view_more">
+                    <a href="#" title="{$core->get_Lang('View more')}" class="trvs_view_more">
                         {$core->get_Lang('View more')} <i class="fa-solid fa-arrow-right-long"></i>
                     </a>
                 </div>

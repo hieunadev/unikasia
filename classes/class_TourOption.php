@@ -228,7 +228,7 @@ class TourOption extends dbBasic{
     }
 
     function getMinMaxGroupSizeAdult($tour_id) {
-        global $dbconn;
+        global $dbconn, $core;
 
         $clsTour = new Tour();
         $oneItem = $clsTour->getOne($tour_id);
@@ -243,7 +243,7 @@ class TourOption extends dbBasic{
         }
         $minValue = min($values);
         $maxValue = max($values);
-        return "Min $minValue, Max $maxValue";
+        return  $core->get_Lang("Min") . " $minValue, " . $core->get_Lang("Max") . " $maxValue";
     }
 }
 ?>

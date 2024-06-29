@@ -1,5 +1,5 @@
 <?php
-global $smarty, $clsISO, $core, $clsTable, $mod;
+global $smarty, $clsISO, $core, $clsTable, $mod ,$deviceType;
 #
 $clsTourStore       =   new TourStore();
 $smarty->assign('clsTourStore', $clsTourStore);

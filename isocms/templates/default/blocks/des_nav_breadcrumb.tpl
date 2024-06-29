@@ -78,7 +78,7 @@
                         <a href="{$clsCountry->getLink($country_id)}" title="{$core->get_Lang($clsCountry->getTitle($country_id))}">{$core->get_Lang($clsCountry->getTitle($country_id))}</a>
                     </li>
                     <li class="breadcrumb-item des_breadcrumb_link">
-                        <a href="javascript:void(0);" class="cancel_link">{$core->get_Lang($clsCountry->getTitle($country_id))} tour</a>
+                        <a href="javascript:void(0);" class="cancel_link">{$core->get_Lang($clsCountry->getTitle($country_id))} {$core->get_Lang('tour')}</a>
                     </li>
                     <li class="breadcrumb-item active des_breadcrumb_active" aria-current="page">
                         {$core->get_Lang($clsTourCategory->getTitle($cat_id))} in {$core->get_Lang($clsCountry->getTitle($country_id))}

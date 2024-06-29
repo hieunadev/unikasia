@@ -34,13 +34,13 @@
 			</a>
 		</li>
 		{/if}
-		{if $clsISO->getCheckActiveModulePackage($package_id,'property','activities','default')}
+{*		{if $clsISO->getCheckActiveModulePackage($package_id,'property','activities','default')}
 		<li class="{if $mod=='property' && ($act=='activities' || $act=='edit_activities')}current{/if}">
 			<a href="{$PCMS_URL}/?mod=property&act=activities" title="{$core->get_Lang('Type of activity')}">
 				<span class="text">{$core->get_Lang('Type of activity')}</span>
 			</a>
 		</li>
-		{/if}
+		{/if}*}
 
 		{if $clsISO->getCheckActiveModulePackage($package_id,'tour_exhautive','category_country','default')}
 		<li class="{if $mod=='tour_exhautive' && $act=='category_country'}current{/if}">
@@ -64,7 +64,7 @@
 			</a>
 		</li>
 		{/if}
-		{if $clsISO->getCheckActiveModulePackage($package_id,'tour_exhautive','property','default','TOUROPTION')}
+{*		{if $clsISO->getCheckActiveModulePackage($package_id,'tour_exhautive','property','default','TOUROPTION')}
 		<li class="{if $type=='TOUROPTION'}current{/if}">
 			<a href="{$PCMS_URL}/?mod=tour_exhautive&act=property&type=TOUROPTION" title="{$core->get_Lang('Price class')}">
 				<span class="text">{$core->get_Lang('Price class')}</span>
@@ -77,7 +77,7 @@
 				<span class="text">{$core->get_Lang('Market')}</span>
 			</a>
 		</li>
-		{/if}
+		{/if}*}
 		{if $clsISO->getCheckActiveModulePackage($package_id,'tour_exhautive','property','default','VISITORTYPE')}
 		<li class="{if $type=='VISITORTYPE'}current{/if}">
 			<a href="{$PCMS_URL}/?mod=tour_exhautive&act=property&type=VISITORTYPE">
@@ -85,13 +85,13 @@
 			</a>
 		</li>
 		{/if}
-		{if $clsISO->getCheckActiveModulePackage($package_id,'tour_exhautive','price_range','default')}
+{*		{if $clsISO->getCheckActiveModulePackage($package_id,'tour_exhautive','price_range','default')}
 		<li class="{if $mod=='tour_exhautive' && $act=='price_range'}current{/if}">
 			<a href="{$PCMS_URL}/?mod=tour_exhautive&act=price_range">
 				<span class="text">{$core->get_Lang('Price range')}</span>
 			</a>
 		</li>
-		{/if}
+		{/if}*}
 		{if $clsISO->getCheckActiveModulePackage($package_id,'tour_exhautive','property','default','SIZEGROUP')}
 		<li class="{if $type=='SIZEGROUP'}current{/if}">
 			<a href="{$PCMS_URL}/?mod=tour_exhautive&act=property&type=SIZEGROUP" title="{$core->get_Lang('Price for Groups')}">

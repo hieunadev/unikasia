@@ -15,7 +15,7 @@
                 </div>
                 <form action="" class="unika_search">
                     <input type="email" class="unika_input_search" name="email" id="email" placeholder="{$core->get_Lang('Enter your mail')}" required>
-                    <input type="button" class="unika_btn_search" value="Submit">
+                    <input type="button" class="unika_btn_search" value="{$core->get_Lang('Submit')}">
                 </form>
                 <div class="unika_1_left_link d-flex flex-column">
                     <a href="#" class="unikasia_travel">{$clsConfiguration->getValue($CompanyName)}</a>

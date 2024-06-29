@@ -264,7 +264,7 @@ body {
 
     /* margin-bottom: 24px !important; */
 }
-.trvs_when_vn .tab_content .view_more {
+.trvs_when_vn .tab_content .trvs_view_more {
     color: var(--Primary, #ffa718);
     text-align: center;
     font-family: "SF Pro Display";
@@ -279,7 +279,7 @@ body {
     justify-content: center;
     margin-top: 24px;
 }
-.trvs_when_vn .tab_content .view_more .fa-arrow-right-long {
+.trvs_when_vn .tab_content .trvs_view_more .fa-arrow-right-long {
     margin-left: 5px;
 }
 .trvs_when_vn .tab_destination {
@@ -418,6 +418,9 @@ body {
     right: 248.35px;
     opacity: 0.8;
     z-index: -1;
+}
+.when_map img {
+    opacity: 0.1;
 }
 .trvs_when_vn .tab_destination .owl-height {
     height: unset !important;
@@ -833,6 +836,22 @@ body {
 }
 .linkbooktour img {
     margin-left: 0 !important;
+}
+.pagefr .trvs_when_vn .title_home_box span,
+.pagefr .trvs_list_blog .trvs_list_blog_title span {
+    text-decoration: none !important;
+    position: relative;
+}
+.pagefr .trvs_when_vn .title_home_box span::after,
+.pagefr .trvs_list_blog .trvs_list_blog_title span::after {
+    content: "";
+    position: absolute;
+    background-color: #ffa718;
+    z-index: -1;
+    height: 8px;
+    width: 100%;
+    left: 0;
+    bottom: 8px;
 }
 /* van css new */
 @media screen and (max-width: 1170px) {

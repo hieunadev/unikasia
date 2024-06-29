@@ -5,9 +5,9 @@
         <div class="d-flex justify-content-center">
             <div class="container">
                 <div class="backcrump d-flex flex-wrap">
-                    <p class="backcrump_first">You are here:</p>
+                    <p class="backcrump_first">{$core->get_Lang("You are here")}:</p>
                     <div class="content_backcrump d-flex flex-wrap">
-                        <a href="/" class="backcrump_item">Home</a>
+                        <a href="/" class="backcrump_item">{$core->get_Lang("Home")}</a>
                         <div class="div_img">
                             <img src="{$URL_IMAGES}/icon/backcrump.svg" alt="Icon">
                         </div>
@@ -35,7 +35,7 @@
                     <form action="" id="formContact" method="POST" class="contact_left d-flex flex-column align-items-center ">
                         <div class="contact_information item_contact_content">
                             <div class="title_booking">
-                                Contact information
+                                {$core->get_Lang("Contact information")}
                             </div>
                             <div class="content d-flex flex-wrap align-items-start justify-content-start flex-wrap ">
                                 <div class="d-flex flex-column information-3  box_validate">
@@ -93,6 +93,7 @@
                                     If you don't receive our confirmation email after 1 working day, please check your spam email. It may go to your spam mailbox.
                                 </span>
                         </div>
+                        <div class="g-recaptcha" id="g-recaptcha" data-sitekey="{$clsISO->getVar('reCAPTCHA_KEY')}"></div>
                         <input type="hidden" name="plantrip" value="plantrip" />
                         <input type="hidden" name="hidden_field" value="" />
                         <button class="btn_request_quotation  " type="submit">
@@ -235,7 +236,85 @@
 <select class="form-select city d-none" aria-label="Default select example" >
     <option selected>Select City</option>
 </select>
+{literal}
+    <script>
+        const config = {
+            cUrl: 'https://api.countrystatecity.in/v1/countries',
+            ckey: 'NHhvOEcyWk50N2Vna3VFTE00bFp3MjFKR0ZEOUhkZlg4RTk1MlJlaA=='
+        }
 
+        const countrySelect = document.querySelector('.country'),
+            stateSelect = document.querySelector('.state'),
+            citySelect = document.querySelector('.city')
+
+        function loadCountries() {
+            let apiEndPoint = config.cUrl
+            fetch(apiEndPoint, {headers: {"X-CSCAPI-KEY": config.ckey}})
+                .then(Response => Response.json())
+                .then(data => {
+                    // console.log(data);
+
+                    data.forEach(country => {
+                        const option = document.createElement('option')
+                        option.value = country.iso2
+                        option.textContent = country.name
+                        countrySelect.appendChild(option)
+                    })
+                })
+                .catch(error => console.error('Error loading countries:', error))
+            stateSelect.disabled = true
+            citySelect.disabled = true
+            stateSelect.style.pointerEvents = 'none'
+            citySelect.style.pointerEvents = 'none'
+        }
+        function loadStates() {
+            stateSelect.disabled = false
+            citySelect.disabled = true
+            stateSelect.style.pointerEvents = 'auto'
+            citySelect.style.pointerEvents = 'none'
+
+            const selectedCountryCode = countrySelect.value
+            stateSelect.innerHTML = '<option value="">Select State</option>' // for clearing the existing states
+            citySelect.innerHTML = '<option value="">Select City</option>' // Clear existing city options
+
+            fetch(`${config.cUrl}/${selectedCountryCode}/states`, {headers: {"X-CSCAPI-KEY": config.ckey}})
+                .then(response => response.json())
+                .then(data => {
+                    // console.log(data);
+
+                    data.forEach(state => {
+                        const option = document.createElement('option')
+                        option.value = state.iso2
+                        option.textContent = state.name
+                        stateSelect.appendChild(option)
+                    })
+                })
+                .catch(error => console.error('Error loading countries:', error))
+        }
+
+
+        function loadCities() {
+            citySelect.disabled = false
+            citySelect.style.pointerEvents = 'auto'
+
+            const selectedCountryCode = countrySelect.value
+            const selectedStateCode = stateSelect.value
+
+            citySelect.innerHTML = '<option value="">Select City</option>' // Clear existing city options
+            fetch(`${config.cUrl}/${selectedCountryCode}/states/${selectedStateCode}/cities`, {headers: {"X-CSCAPI-KEY": config.ckey}})
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(city => {
+                        const option = document.createElement('option')
+                        option.value = city.iso2
+                        option.textContent = city.name
+                        citySelect.appendChild(option)
+                    })
+                })
+        }
+        window.onload = loadCountries
+    </script>
+{/literal}
 <script>
     var msg_fullname_required = "{$core->get_Lang('Your first name should not be empty')}!";
     var msg_phone_required = "{$core->get_Lang('Your telephone should not be empty')}!";
@@ -372,82 +451,6 @@
                     $('.unika_header').removeClass('unika_header_2');
                 });
             })
-
-            const config = {
-                cUrl: 'https://api.countrystatecity.in/v1/countries',
-                ckey: 'NHhvOEcyWk50N2Vna3VFTE00bFp3MjFKR0ZEOUhkZlg4RTk1MlJlaA=='
-            }
-
-            const countrySelect = document.querySelector('.country'),
-                stateSelect = document.querySelector('.state'),
-                citySelect = document.querySelector('.city')
-
-            function loadCountries() {
-                let apiEndPoint = config.cUrl
-                fetch(apiEndPoint, {headers: {"X-CSCAPI-KEY": config.ckey}})
-                    .then(Response => Response.json())
-                    .then(data => {
-                        // console.log(data);
-
-                        data.forEach(country => {
-                            const option = document.createElement('option')
-                            option.value = country.iso2
-                            option.textContent = country.name
-                            countrySelect.appendChild(option)
-                        })
-                    })
-                    .catch(error => console.error('Error loading countries:', error))
-                stateSelect.disabled = true
-                citySelect.disabled = true
-                stateSelect.style.pointerEvents = 'none'
-                citySelect.style.pointerEvents = 'none'
-            }
-            function loadStates() {
-                stateSelect.disabled = false
-                citySelect.disabled = true
-                stateSelect.style.pointerEvents = 'auto'
-                citySelect.style.pointerEvents = 'none'
-
-                const selectedCountryCode = countrySelect.value
-                stateSelect.innerHTML = '<option value="">Select State</option>' // for clearing the existing states
-                citySelect.innerHTML = '<option value="">Select City</option>' // Clear existing city options
-
-                fetch(`${config.cUrl}/${selectedCountryCode}/states`, {headers: {"X-CSCAPI-KEY": config.ckey}})
-                    .then(response => response.json())
-                    .then(data => {
-                        // console.log(data);
-
-                        data.forEach(state => {
-                            const option = document.createElement('option')
-                            option.value = state.iso2
-                            option.textContent = state.name
-                            stateSelect.appendChild(option)
-                        })
-                    })
-                    .catch(error => console.error('Error loading countries:', error))
-            }
-
-
-            function loadCities() {
-                citySelect.disabled = false
-                citySelect.style.pointerEvents = 'auto'
-
-                const selectedCountryCode = countrySelect.value
-                const selectedStateCode = stateSelect.value
-
-                citySelect.innerHTML = '<option value="">Select City</option>' // Clear existing city options
-                fetch(`${config.cUrl}/${selectedCountryCode}/states/${selectedStateCode}/cities`, {headers: {"X-CSCAPI-KEY": config.ckey}})
-                    .then(response => response.json())
-                    .then(data => {
-                        data.forEach(city => {
-                            const option = document.createElement('option')
-                            option.value = city.iso2
-                            option.textContent = city.name
-                            citySelect.appendChild(option)
-                        })
-                    })
-            }
-            window.onload = loadCountries
         })
     </script>
 {/literal}

@@ -3,7 +3,8 @@
         <div class="container">
             <div class="unika_attractions d-flex flex-column align-items-center justify-content-center ">
                 <h2 class="title_2">
-                    {$clsConfiguration->getOutTeam('TopDestinationTitle')}
+
+                    {$clsConfiguration->getOutTeam('TopDestinationTitle_'|cat:$_LANG_ID)}
                     <p>
                         {if $clsCountry->getTitle($country_id)}
                         {$clsCountry->getTitle($country_id)}
@@ -128,7 +129,7 @@
         height: 8px;
         width: 100%;
         left: 0;
-        bottom: 15px;
+        bottom: 7px;
     }
 
     .title_2,

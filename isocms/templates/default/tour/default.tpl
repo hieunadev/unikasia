@@ -1,32 +1,3 @@
-{literal}
-<style>
-    .destination_ul li {
-        margin: 0 0 5px;
-    }
-    .destination_ul li .d-flex .title_place {
-        font-size: 14px;
-        font-weight: 600;
-        display: flex;
-        flex-direction: column;
-    }
-    .destination_ul li .d-flex span.label_place {
-        display: flex;
-        flex-direction: column;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        padding: 5px;
-        width: auto;
-        min-width: 65px;
-        text-align: center;
-        margin-left: auto;
-        font-size: 14px;
-    }
-    .destination_ul li .d-flex span.label_place .text {
-        color: #EBA743;
-    }
-</style>
-{/literal}
-
 <main id="nah_list_tour">
     <section class="banner_tour">
         <img src="{$clsConfiguration->getValue('site_tour_banner')}" alt="">
@@ -51,9 +22,10 @@
     <section class="tour-packages">
         <div class="container">
             <div class="row">
-                <div class="col-3 ps-lg-0">
-                    <p class="sort-filter">Sort & filter</p>
-                    <form action="" method="post">
+                <div class="col-lg-3 col-12 px-0">
+                    <p class="sort-filter" onclick="openNav()">Sort & filter</p>
+                    <form action="" method="post" id="filter_tour">
+                        <div onclick="closeNav()" class="sort-filter-mobile d-lg-none d-flex"><i class="fa-solid fa-angle-left"></i><div class="tour_sort_filter"><p>Sort & filter</p></div></div>
                         <div class="destination">
                             <p class="txt_destination">{$core->get_Lang("Destinations")}</p>
                             <div class="filter-radio">
@@ -129,7 +101,7 @@
                         <input type="hidden" name="filter" value="filter">
                     </form>
                 </div>
-                <div class="col-9 pe-lg-0 list-tour-right">
+                <div class="col-lg-9 col-12 pe-lg-0 list-tour-right">
                     <div class="content-top">
                         <div class="txt_content">{$clsConfiguration->getValue(site_tour_intro_|cat:$_LANG_ID)|html_entity_decode}</div>
                     </div>
@@ -256,7 +228,7 @@
                     <h2 class="tailor-made_title">{$clsConfiguration->getValue('TitleListTour_'|cat:$_LANG_ID)}</h2>
                     <div class="content">{$clsConfiguration->getValue('ShortTextListTour_'|cat:$_LANG_ID)|html_entity_decode}</div>
                 </div>
-                <div class="col-3 center-div"><a class="btn-tailor btn-hover-home" href="{$clsTour->getLink2('', 1)}" target="_blank"><span>{$core->get_Lang("TAILOR MADE TOUR")}</span><i class="ms-2 fa fa-arrow-right" aria-hidden="true"></i></a></div>
+                <div class="col-3 center-div px-0"><a class="btn-tailor btn-hover-home" href="{$clsTour->getLink2('', 1)}" target="_blank"><span>{$core->get_Lang("TAILOR MADE TOUR")}</span><i class="ms-2 fa fa-arrow-right" aria-hidden="true"></i></a></div>
             </div>
         </div>
         <div class="overlay"></div>
@@ -268,12 +240,19 @@
 
 {literal}
 <script>
+    function openNav() {
+        document.getElementById("filter_tour").style.width = "100%";
+    }
+
+    function closeNav() {
+        document.getElementById("filter_tour").style.width = "0";
+    }
+
     $(document).ready(function(){
         $('.typeSearch').change(function() {
             $(this).closest('form').submit();
         });
-
-        $(".travel-styles").find(".form-check:gt(4)").hide();
+        $(".travel-style s").find(".form-check:gt(4)").hide();
         $(".departure-time").find(".form-check:gt(4)").hide();
         if ($(".travel-styles .form-check ").length <= 5) $(".travel-styles .view_more").hide();
         if ($(".departure-time .form-check ").length <= 5) $(".departure-time .view_more").hide();

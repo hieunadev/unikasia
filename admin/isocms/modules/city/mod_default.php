@@ -374,7 +374,6 @@ function default_ajSaveMainStep()
 		$clsClassTable->updateOne($table_id, $arr_update);
 	} else if ($currentstep == 'seo') {
 		$clsClassTable = new Meta();
-
 		$config_value_title = Input::post('config_value_title');
 		$meta_id = Input::post('meta_id');
 		$config_value_intro = Input::post('config_value_intro');
