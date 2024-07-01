@@ -26,7 +26,7 @@
 		</div>
 		<div class="row">
 			<div class="col-md-6">
-				<div class="overview_box_2 tour_info_re" id="tour_info_re">
+				{*<div class="overview_box_2 tour_info_re" id="tour_info_re">
 					<h2 class="d-flex justify-content-between">{$core->get_Lang('Cabin')}
 						<a class="link_open" data-step="cabin" data-panel="overview" data-route="{$PCMS}/admin/cruise/insert/{$pvalTable}/cabin/cabin"><i class="ico ico-view_link ico-view_link_head"></i></a>
 					</h2>
@@ -74,7 +74,7 @@
 						{/if}
 						
 					</div>
-				</div>
+				</div>*}
 				<div class="overview_box_2 tour_itinerary" id="tour_itinerary">
 					<h2 class="headeing d-flex justify-content-between align-items-center">
 						<span>{$core->get_Lang('Intinerary')}</span> 

@@ -202,8 +202,6 @@
         overflow: hidden;
         border-radius: 8px;
     }
-
-
     .recently_hotel .img_hotel img {
         width: 100%;
         height: 200px;

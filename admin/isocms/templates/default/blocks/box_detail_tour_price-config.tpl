@@ -17,8 +17,8 @@
 						</div>
 						<div id="slb_ContainerTourOption">
 							<select name="tour_option[]" id="tour_option" class="required chosen-select required" multiple="multiple">
-								{assign var = selected value = $oneItem.tour_option}
-								{$clsTourOption->makeSelectboxOption2(80,'TOUROPTION',0)}
+								{assign var = selected value = ($_LANG_ID == 'fr') ? 142 : 80}
+								{$clsTourOption->makeSelectboxOption2($selected,'TOUROPTION',0)}
 								{$selected}
 							</select>
 						</div>

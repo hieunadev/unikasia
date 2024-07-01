@@ -92,9 +92,9 @@
 							<th class="gridheader" style="white-space:nowrap; width: 150px;">
 								<strong>{$core->get_Lang('Phone Number')}</strong>
 							</th>
-							<!-- <th class="gridheader" style="">
+							<th class="gridheader" style="">
 								<strong>{$core->get_Lang('Status')}</strong>
-							</th> -->
+							</th>
 							<th class="gridheader" style="width: 80px;">
 								<strong>{$core->get_Lang('action')}</strong>
 							</th>
@@ -121,6 +121,15 @@
 							<td class="td_overflow" style="white-space:nowrap; text-align: center;">
 								{$item.phone}
 							</td>
+							<td class="td_overflow" style="white-space:nowrap; text-align: center;">
+								<a href="javascript:void(0);" class="SiteClickPublic" clsTable="TailorMadeTour" pkey="tailor_made_tour_id" sourse_id="{$item.tailor_made_tour_id}" rel="{$item.is_online}" title="{$core->get_Lang('Click to change status')}">
+									{if $item.is_online eq '1'}
+										<i class="fa fa-check-circle green"></i>
+									{else}
+										<i class="fa fa-minus-circle red"></i>
+									{/if}
+								</a>
+							</td>
 							<td style="vertical-align: top; text-align: right; white-space: nowrap; width:5%;text-align: center"> 
 								<div class="btn-group">
 									<button class="btn iso-button-standard dropdown-toggle" type="button" data-toggle="dropdown">
@@ -128,7 +137,7 @@
 									</button>
 									<ul class="dropdown-menu" style="right:0px !important">
 									   <li>
-											<a href="{$PCMS_URL}/?mod={$mod}&act=edit_tailor&action=booking_tailor&tailor_id={$core->encryptID($item.tailor_made_tour_id)}" title="{$core->get_Lang('view')}">
+											<a href="{$PCMS_URL}/?mod={$mod}&act=edit_tailor&action=booking_tailor&tailor_made_tour_id={$core->encryptID($item.tailor_made_tour_id)}" title="{$core->get_Lang('view')}">
 												<i class="icon-edit"></i> {$core->get_Lang('view')}
 											</a>
 										</li>

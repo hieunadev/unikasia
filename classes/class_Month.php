@@ -13,13 +13,14 @@ class Month extends dbBasic
     }
     function getSelectMultiMonth($selected = '', $is_prefix = true)
     {
-        global $core, $clsISO;
-        $lstMonth = $this->getAll("is_trash=0 and is_online=1");
+        global $core, $clsISO, $dbconn;
+
+        $lstMonth = $dbconn->getAll("SELECT * FROM `default_month` where lang_id = '' and is_trash=0 and is_online=1");
         $html = !$is_prefix ? '' : '<option value="0" disabled>-- ' . $core->get_Lang('Select Month') . ' --</option>';
         if (is_array($lstMonth) && count($lstMonth) > 0) {
             foreach ($lstMonth as $item) {
                 $_array = $this->getArray($selected);
-                $html .= '<option value="' . $item['month_id'] . '" ' . ($clsISO->checkItemInArray($item['month_id'], $_array) ? 'selected="selected"' : '') . '>' . $this->getTitle($item['month_id']) . '</option>';
+                $html .= '<option value="' . $item['month_id'] . '" ' . ($clsISO->checkItemInArray($item['month_id'], $_array) ? 'selected="selected"' : '') . '>' . $core->get_Lang($this->getTitle($item['month_id'])) . '</option>';
             }
             unset($lstMonth);
         }

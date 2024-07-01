@@ -31,7 +31,7 @@
             <div class="unika_header_menu">
                 <div class="container">
                     <div class="unika_container">
-                        <a href="{$extLang}" class="logo">
+                        <a href="{$HOMEPAGE_URL}" class="logo">
                             <img class="unika_img_logo_1" src="https://unikasia.vietiso.com/isocms/templates/default/skin/images/home/logo_header_2.png" alt="Logo" width="143" height="53">
                             <img class="unika_img_logo_2" src="https://unikasia.vietiso.com/uploads//Demo/image-6.png" alt="Logo" width="143" height="53">
                         </a>

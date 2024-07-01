@@ -162,7 +162,7 @@
 
         <div class="tab-pane section_itinerary" id="itinerary">
             <div class="container">
-                {if $oneItem.map_tour}<h2 class="txt_mapiti">{$core->get_Lang("Trip map &amp itinerary")}</h2>{/if}
+                {if $oneItem.map_tour}<h2 class="txt_mapiti">{$core->get_Lang("Trip map &amp; itinerary")}</h2>{/if}
                 <div class="detail_tours">
                     <div class="detail_mapitine">
                         {if $oneItem.map_tour}
@@ -209,7 +209,7 @@
                                 </div>
                                 <div class="details">
                                     <h3 class="txt_trevllingous">"{$core->get_Lang('TRAVELING IS OUR PASSION')}"</h3>
-                                    <p class="txt_destravel">{$core->get_Lang('Let us help you plan an unforgettable trip!')}</p>
+                                    <p class="txt_destravel">{$core->get_Lang('Let us help you plan an unforgettable trip')}!</p>
                                     <p class="whatapps"><i class="fa-solid fa-phone"></i> {$core->get_Lang('Whatapps')}: 0983033966</p>
                                 </div>
                                 <a href="{$clsTour->getLink2(0,1)}" class="btn btn-tailor btn-hover-home">{$core->get_Lang('Tailor Made Tour')}</a>
@@ -401,7 +401,7 @@
                         {/section}
                     </div>
                     <p class="title_review">{$lstReviews[i].title}</p>
-                    <p class="content_review">{$lstReviews[i].content}</p>
+                    <p class="content_reviews">{$lstReviews[i].content}</p>
                     <p class="view_more_review">{$core->get_Lang("View more")}</p>
                 </div>
             {/section}
@@ -803,7 +803,7 @@
                 });
             });
             $('.review').each(function() {
-                let moreText = $(this).find('.content_review');
+                let moreText = $(this).find('.content_reviews');
                 let toggleButton = $(this).find('.view_more_review');
 
                 if (moreText[0].scrollHeight <= 72) {
@@ -811,7 +811,7 @@
                 }
             });
             $(document).on('click', '.view_more_review', function() {
-                var moreText = $(this).prev('.content_review');
+                var moreText = $(this).prev('.content_reviews');
 
                 if (moreText.hasClass('expanded')) {
                     moreText.removeClass('expanded');
@@ -840,7 +840,7 @@
                     .done(function(res) {
                         $('.list_reviews').html(res);
                         $('.review').each(function() {
-                            let moreText = $(this).find('.content_review');
+                            let moreText = $(this).find('.content_reviews');
                             let toggleButton = $(this).find('.view_more_review');
 
                             if (moreText[0].scrollHeight <= 72) {
@@ -1272,9 +1272,10 @@
                     data : {"tour_id":$tour_id,"number_adults":$number_adults,"tour_property_id":tour_property_id},
                     dataType:'json',
                     success: function(json){
+                        console.log(json)
                         /*$(".number_child.input_number").attr('max-number',json.max_child);*/
                         $("#max_child").val(json.max_child);
-                        $(".number_infants.input_number").attr('max-number',json.max_infant);
+                        // $(".number_infants.input_number").attr('max-number',json.max_infant);
                         /*$(".number_child.input_number,.number_infants.input_number").val(0);
                         $("#box_age_child").html('');*/
                         getNumberPerson();

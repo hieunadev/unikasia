@@ -1145,3 +1145,9 @@
     text-decoration: none;
 }
 /** --- End of CSS backup cho Hiếu --- **/
+@media only screen and (max-width: 576px) {
+    #backTop {
+        right: 15px !important;
+        bottom: 15px !important;
+    }
+}

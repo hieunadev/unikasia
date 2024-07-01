@@ -11,9 +11,10 @@ switch ($mod) {
         break;
     default:
         $type = "HOME";
+        break;
 }
 
-if ($mod == "destination" && $act == "topattraction") {
+if (($mod == "destination" && $act == "topattraction") || $act == "detaildeparture") {
     $type = "HOME";
 }
 

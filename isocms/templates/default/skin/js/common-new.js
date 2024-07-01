@@ -2,18 +2,19 @@ $(document).ready(function () {
     if ($('#carousel_home_news').length) {
         $('#carousel_home_news').owlCarousel({
             loop: true,
-            margin: 33,
             dots: false,
             navText: ["<i class='fa fa-chevron-left'></i>", "<i class='fa fa-chevron-right'></i>"],
             responsiveClass: true,
             responsive: {
                 0: {
                     items: 1.2,
-                    nav: false
+                    nav: false,
+                    margin: 24
                 },
                 600: {
                     items: 3,
-                    nav: true
+                    nav: true,
+                    margin: 33
                 }
             }
         });
@@ -27,7 +28,7 @@ $(document).ready(function () {
         responsiveClass: true,
         responsive: {
             0: {
-                items: 1
+                items: 1.4
             },
             600: {
                 items: 2
@@ -55,6 +56,24 @@ $(document).ready(function () {
             }
         }
     });
+    $('#explore_our_trip').owlCarousel({
+        loop: false,
+        dots: false,
+        autoplay: true,
+        responsiveClass: true,
+        responsive: {
+            0: {
+                items: 1.2,
+                nav: false,
+                margin: 24,
+            },
+            600: {
+                items: 3,
+                nav: true,
+                margin: 36,
+            }
+        }
+    });
     $('#tour_alsoLike_owl').owlCarousel({
         loop: true,
         margin: 0,
@@ -62,13 +81,44 @@ $(document).ready(function () {
         dots: false,
         responsive: {
             0: {
-                items: 1
+                items: 1.2
             },
             600: {
                 items: 4
             }
         }
     })
+
+    if ($('#des_gallery_list').length > 0) {
+        $('#des_gallery_list').owlCarousel({
+            lazyLoad: true,
+            loop: false,
+            margin: 0,
+            nav: true,
+            navText: ["<i class='fa-solid fa-angle-left'></i>", "<i class='fa-solid fa-angle-right'></i>"],
+            dots: false,
+            // autoplay: false,
+            // autoplayTimeout:3000,
+            // animateOut: 'fadeOut',
+            // animateIn: 'fadeIn',
+            //merge: true,
+            //autoHeight: true,
+            //responsiveClass: true,
+            responsive: {
+                0: {
+                    items: 1.2,
+                    nav: false
+                },
+                600: {
+                    items: 3
+                },
+                1000: {
+                    items: 4
+                }
+            }
+        });
+    }
+
     //  JS New Header
     $(function () {
         let hoverTimeout;

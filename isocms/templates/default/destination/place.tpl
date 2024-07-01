@@ -103,7 +103,7 @@
                 <h2>{$clsCountry->getTitle($country_id)} {$clsConfiguration->getValue('GalleryTitle_'|cat:$_LANG_ID)|html_entity_decode}</h2>
             </div>
             <div class="des_gallery_content">
-                <div class="owl-carousel owl-theme des_gallery_list">
+                <div class="owl-carousel owl-theme des_gallery_list" id="des_gallery_list">
                     {if $gallery_country}
                     {foreach from=$gallery_country key=key item=item}
                     {assign var=country_image_id value=$item.country_image_id}
@@ -134,37 +134,6 @@
 
 {literal}
 <script>
-    if ($('.des_gallery_list').length > 0) {
-        var $owl = $('.des_gallery_list');
-        $owl.owlCarousel({
-            lazyLoad: true,
-            loop: false,
-            margin: 0,
-            nav: true,
-            navText: ["<i class='fa-solid fa-angle-left'></i>", "<i class='fa-solid fa-angle-right'></i>"],
-            dots: false,
-            // autoplay: false,
-            // autoplayTimeout:3000,	
-            // animateOut: 'fadeOut',
-            // animateIn: 'fadeIn',
-            merge: true,
-            autoHeight: true,
-            responsiveClass: true,
-            responsive: {
-                0: {
-                    items: 1.3,
-                    nav: false,
-                    margin: 15,
-                },
-                600: {
-                    items: 3
-                },
-                1000: {
-                    items: 4
-                }
-            }
-        });
-    }
 
     if ($('.des_list_hotel_carousel').length > 0) {
         var $owl = $('.des_list_hotel_carousel');

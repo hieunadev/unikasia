@@ -39,16 +39,16 @@
                         {$core->get_Lang("HANOI VOYAGES")}
                     </div>
                     <div class="unika_footer_list_link flex-column">
-                        <a href="#" class="unikasia_footer_link">
+                        <a href="{$clsISO->getLink('about')}" class="unikasia_footer_link">
                             {$core->get_Lang("About us")}
                         </a>
-                        <a href="#" class="unikasia_footer_link">
+                        <a href="{$clsISO->getLink('tailor')}" class="unikasia_footer_link">
                             {$core->get_Lang("Tailor made travel")}
                         </a>
                         <a href="#" class="unikasia_footer_link">
                             {$core->get_Lang("Professional guarantees")}
                         </a>
-                        <a href="#" class="unikasia_footer_link">
+                        <a href="{$clsISO->getLink('contact')}" class="unikasia_footer_link">
                             {$core->get_Lang("Contact")}
                         </a>
                         <a href="#" class="unikasia_footer_link">
@@ -73,23 +73,13 @@
                         {$core->get_Lang("DESTINATIONS")}
                     </div>
                     <div class="unika_footer_list_link flex-column">
-                        <a href="#" class="unikasia_footer_link">
-                            Travel to Vietnam
+                        {section name=i loop=$lstCountry}
+                        <a href="{$clsCountryEx->getLink($lstCountry[i].country_id, 'tour')}" class="unikasia_footer_link">
+                            {$core->get_Lang("Travel to")} {$lstCountry[i].title}
                         </a>
-                        <a href="#" class="unikasia_footer_link">
-                            Travel to Cambodia
-                        </a>
-                        <a href="#" class="unikasia_footer_link">
-                            Travel to Laos
-                        </a>
-                        <a href="#" class="unikasia_footer_link">
-                            Travel to Myanmar
-                        </a>
-                        <a href="#" class="unikasia_footer_link">
-                            Travel to Thailand
-                        </a>
-                        <a href="#" class="unikasia_footer_link">
-                            Travel to Thailand
+                        {/section}
+                        <a href="{$clsISO->getLink('tour')}" class="unikasia_footer_link">
+                            {$core->get_Lang("Combined travel")}
                         </a>
                     </div>
                 </div>
@@ -98,16 +88,16 @@
                         {$core->get_Lang("OTHERS")}
                     </div>
                     <div class="unika_footer_list_link flex-column">
-                        <a href="#" class="unikasia_footer_link">
+                        <a href="{$clsISO->getLink('hotel')}" class="unikasia_footer_link">
                             {$core->get_Lang("Stay")}
                         </a>
-                        <a href="#" class="unikasia_footer_link">
+                        <a href="{$clsISO->getLink('cruise')}" class="unikasia_footer_link">
                             {$core->get_Lang("Cruise")}
                         </a>
-                        <a href="#" class="unikasia_footer_link">
+                        <a href="{Guide::getLinkGuideCat('vietnam')}" class="unikasia_footer_link">
                             {$core->get_Lang("Experiences")}
                         </a>
-                        <a href="#" class="unikasia_footer_link">
+                        <a href="{$clsISO->getLink('blog')}" class="unikasia_footer_link">
                             {$core->get_Lang("Blog")}
                         </a>
                     </div>
@@ -148,7 +138,7 @@
         </div>
         <div class="unika_footer_2 d-flex justify-content-between">
             <div class="unika_footer_2_left d-flex align-items-center">
-                <a class="unika_logo_footer" href="/">
+                <a class="unika_logo_footer" href="{$HOMEPAGE_URL}">
                     <img src="{$clsConfiguration->getValue('FooterLogo')}" alt="Logo" width="150" height="56">
                 </a>
                 <div class="unika_footer_2_txt d-flex flex-column">

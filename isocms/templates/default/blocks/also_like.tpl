@@ -22,9 +22,9 @@
     </div>
 
     <div class="readyToStart">
-        <h2 class="readyToStart-title">{$core->get_Lang('READY TO START')}</h2>
+        <h2 class="readyToStart-title">{$clsConfiguration->getValue('TitleVideoPerfect_'|cat:$_LANG_ID)|html_entity_decode}</h2>
         <div class="txt-readyToStart">
-            <p class="readyToStart-txt">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam recusandae molestias eligendi natus maxime quia id hic a, voluptatem, doloribus voluptatum quibusdam neque aut consequuntur consequatur optio. Ab, accusantium, iste.</p>
+            <div class="readyToStart-txt">{$clsConfiguration->getValue('IntroVideoPerfect_'|cat:$_LANG_ID)|html_entity_decode}</div>
         </div>
         <div class="btn-readyToStart">
             <button class="readyToStart-btn"><a href="{$clsTour->getLink2('', 1)}" class="btn readyToStart-btn">{$core->get_Lang('PLAN YOUR TRIP')}

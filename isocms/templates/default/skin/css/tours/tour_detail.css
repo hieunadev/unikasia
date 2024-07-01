@@ -246,11 +246,9 @@
 
 .txt_location {
     color: #111D37;
-    font-family: "SF Pro Display";
     font-size: 16px;
-    
     font-weight: 400;
-    line-height: 24px; /* 150% */
+    line-height: 24px;
 }
 
 .txt_location i {
@@ -259,9 +257,7 @@
 
 .bold_txtlocation {
     color: #111D37;
-    font-family: "SF Pro Display";
     font-size: 16px;
-    
     font-weight: 600;
     line-height: 24px;
 }
@@ -269,7 +265,6 @@
 .excluding_explore {
     color: #13B97D;
     font-size: 16px;
-    
     font-weight: 400;
     line-height: 24px;
     text-align: center;
@@ -277,7 +272,7 @@
 
 .btn-request-book {
     max-width: 172px;
-    padding: 12px 30px;
+    padding: 12px 22px;
     justify-content: center;
     align-items: center;
     gap: 16px;
@@ -595,7 +590,6 @@
 }
 
 .daytour {
-    width: 842px;
     margin-top: 32px;
 }
 
@@ -1508,7 +1502,7 @@ ul.timeline .accordion-item .accordion-body img{
     font-weight: 500;
     line-height: 28px;
 }
-.list_reviews .content_review {
+.list_reviews .content_reviews {
     color: var(--Neutral-2, #434B5C);
     font-size: 16px;
     font-weight: 400;
@@ -1681,4 +1675,7 @@ ul.timeline .accordion-item .accordion-body img{
         align-items: unset;
         gap: 10px;
     }
+
+/*    trip map & itinerary */
+
 }

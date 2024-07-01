@@ -13,7 +13,7 @@
 			{/if}
 			<div class="nav_booking_item item2">
 				<p class="text">{$core->get_Lang('Tailor made tour')}</p>
-				<p class="number"><a href="{$PCMS_URL}/index.php?mod=booking&act=booking_tailor">{$clsISO->countTotal('Booking',"clsTable='Tailor'")}</a></p>
+				<p class="number"><a href="{$PCMS_URL}/index.php?mod=booking&act=booking_tailor">{$clsISO->countTotal('TailorMadeTour')}</a></p>
 			</div>
 			<div class="nav_booking_item item3">
 				<p class="text">{$core->get_Lang('Contact')}</p>

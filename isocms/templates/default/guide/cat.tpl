@@ -25,7 +25,7 @@
                                     <div class="des_travel_guide_image">
                                         <img src="{$clsGuide->getImage($guide_id, 292, 219)}" alt="{$clsGuide->getTitle($guide_id)}" width="292" height="219">
                                         <a href="{$clsGuide->getLink2($guide_id)}" class="des_travel_guide_link" title="{$clsGuide->getTitle($guide_id)}">
-                                            SEE DETAILS <i class="fa-sharp fa-regular fa-arrow-right" aria-hidden="true"></i>
+                                            {$core->get_Lang('SEE DETAILS')} <i class="fa-sharp fa-regular fa-arrow-right" aria-hidden="true"></i>
                                         </a>
                                     </div>
                                     <div class="des_travel_guide_intro">
@@ -68,7 +68,7 @@
                                     <div class="des_travel_guide_image">
                                         <img src="{$clsGuide->getImage($guideID, 292, 219)}" alt="{$clsGuide->getTitle($guideID)}" width="292" height="219">
                                         <a href="{$clsGuide->getLink2($guideID)}" class="des_travel_guide_link" title="{$clsGuide->getTitle($guideID)}">
-                                            SEE DETAILS <i class="fa-sharp fa-regular fa-arrow-right" aria-hidden="true"></i>
+                                            {$core->get_Lang('SEE DETAILS')} <i class="fa-sharp fa-regular fa-arrow-right" aria-hidden="true"></i>
                                         </a>
                                     </div>
                                     <div class="des_travel_guide_intro">

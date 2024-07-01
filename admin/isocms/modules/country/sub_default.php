@@ -599,8 +599,9 @@ function default_store()
 		$sql_select .= " and country_id='$country_id'";
 	}
 	$orderBy_selected = " order by order_no ASC";
-
+	// $clsCityStore->SetDebug(1);
 	$listSelected =  $clsCityStore->getAll($sql_select . $orderBy_selected);
+	// die;
 	$assign_list["listSelected"] = $listSelected;
 
 	//Action
@@ -816,7 +817,8 @@ function default_ajActionNewCountry()
 		#
 		// Thêm mới bản ghi vào bảng default_month_country
 		if (!empty($country_id)) {
-			$arr_month  =   $clsMonth->getAll("is_trash = 0 AND is_online = 1");
+			// $arr_month  =   $clsMonth->getAll("is_trash = 0 AND is_online = 1");
+			$arr_month  =   $dbconn->getAll("SELECT * FROM `default_month` WHERE lang_id = '' AND is_trash=0 AND is_online=1");
 			$list_month =   [];
 			foreach ($arr_month as $row) {
 				$list_month[$row['month_id']]   =   $row['title'];

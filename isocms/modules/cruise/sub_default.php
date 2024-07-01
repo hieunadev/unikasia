@@ -1160,6 +1160,8 @@ function default_detail()
 	$smarty->assign('clsCruiseExtension', $clsCruiseExtension);
 	$clsTour	=   new Tour();
 	$smarty->assign('clsTour', $clsTour);
+	$clsReviews	=   new Reviews();
+	$smarty->assign('clsReviews', $clsReviews);
 	#
 	$show   =   isset($_GET['show']) ? $_GET['show'] : '';
 	$smarty->assign('show', $show);
@@ -1204,7 +1206,7 @@ function default_detail()
 	// List cruise itinerary day
 	$arr_itinerary_day	=	[];
 	foreach ($arr_itinerary as $row) {
-		$list_itinerary	=	$clsCruiseItineraryDay->getAll("is_trash = 0 AND cruise_itinerary_id = " . $row['cruise_itinerary_id'] . " ORDER BY order_no ASC", "cruise_itinerary_day_id, cruise_itinerary_id, image, meals");
+		$list_itinerary	=	$clsCruiseItineraryDay->getAll("is_trash = 0 AND cruise_itinerary_id = " . $row['cruise_itinerary_id'] . " ORDER BY order_no ASC", "cruise_itinerary_day_id, cruise_itinerary_id, image, is_show_image, meals");
 		#
 		$arr_child  =   [];
 		foreach ($list_itinerary as $c) {
@@ -1240,23 +1242,35 @@ function default_detail()
 	// Get recent view
 	$arr_recent_view	=	$clsISO->getRecentView('cruise', 10);
 	$smarty->assign('arr_recent_view', $arr_recent_view);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	#
+	// Review cruise
+	$txtReview		= 	['Bad', 'Average', 'Good', 'Excellent', 'Wonderful'];
+	$validRates 	= 	[5, 4, 3, 2, 1];
+	$reviewProgress = 	[];
+	$countReview	= 	$clsReviews->countItem("$cond AND table_id = $cruise_id $order_by");
+	$sqlCountRate 	= 	"SELECT rates, ROUND(COUNT(rates) / $countReview * 100) AS count_percent, COUNT(rates) as count FROM default_reviews WHERE $cond and table_id = $cruise_id GROUP BY rates;";
+	$countRate		= 	$dbconn->GetAll($sqlCountRate);
+	$rateMap 		= 	array_column($countRate, null, 'rates');
+	foreach ($validRates as $rates) {
+		if (isset($rateMap[$rates])) {
+			$entry			= 	$rateMap[$rates];
+			$count_percent 	= 	$entry['count_percent'];
+			$count 			= 	$entry['count'];
+		} else {
+			$count_percent = $count = 0;
+		}
+		$reviewName	= 	$txtReview[$rates - 1];
+		$reviewProgress[] 	= 	[
+			'rates' 		=>	$rates,
+			'count' 		=>	$count,
+			'count_percent' =>	$count_percent,
+			'reviews' 		=>	$reviewName
+		];
+	}
+	$smarty->assign('reviewProgress', $reviewProgress);
+	// List review 
+	$list_review	= 	$clsReviews->getAll("$cond AND type = 'cruise' AND table_id = $cruise_id $order_by LIMIT 3");
+	$smarty->assign('list_review', $list_review);
 
 	// $clsTransport = new Transport();
 	// $assign_list["clsTransport"] = $clsTransport;
@@ -1581,6 +1595,8 @@ function default_ajSubmitFormReviewCruise()
 	#
 	if (!empty($data_review_cruise)) {
 		$table_id	=	$data_review_cruise['table_id'];
+		$email		=	$data_review_cruise['fullname'];
+		$message	=	$data_review_cruise['content'];
 		$type		=	$data_review_cruise['type'];
 		#
 		$ip_log = 	$_SERVER['REMOTE_ADDR'];
@@ -1614,13 +1630,22 @@ function default_ajSubmitFormReviewCruise()
 			$data_review_cruise['is_trash'] 	=	$is_trash;
 			$data_review_cruise['is_online'] 	=	$is_online;
 			$data_review_cruise['bg_color'] 	=	$bg_color;
+			$data_review_cruise['email'] 		=	$email;
 			#
 			if ($clsReviews->insert($data_review_cruise)) {
-				$_SESSION['checkReviewCruise_' . $table_id . '_' . $type] = $ip_log;
-				$data	=	[
-					'result'  		=>	true,
-					'text'			=>	$core->get_Lang('Review success')
-				];
+				$sendMail	=	$clsReviews->sendMail($email, $message, $type);
+				if ($sendMail) {
+					$_SESSION['checkReviewCruise_' . $table_id . '_' . $type] = $ip_log;
+					$data	=	[
+						'result'  		=>	true,
+						'text'			=>	$core->get_Lang('Review success')
+					];
+				} else {
+					$data	= 	[
+						'result'  	=>	false,
+						'text'		=>	$core->get_Lang('Send mail false')
+					];
+				}
 			} else {
 				$data	= 	[
 					'result'  	=>	false,

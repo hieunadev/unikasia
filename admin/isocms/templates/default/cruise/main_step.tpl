@@ -659,7 +659,7 @@
                         {$core->getBlock('box_detail_cruise_seotool')}
                         {elseif $currentstep=='about'}
                         <div class="service_left" style="margin-top:0px">
-                            <h3 class="title_box mb10">{$core->get_Lang('About')}
+                            <h3 class="title_box mb10">{$core->get_Lang('Overview')}
                                 {assign var= about_cruise value='about_cruise'}
                                 {assign var= help_first value=$about_cruise}
                                 {if $CHECKHELP eq 1}

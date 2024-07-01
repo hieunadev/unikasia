@@ -41,18 +41,16 @@ class TailorMadeTour extends dbBasic
         return explode('|', $string);
     }
 
-    function sendMail($data)
+    function sendMail($tailor_made_tour_id, $send = '')
     {
         global $core, $clsISO, $clsConfiguration, $_LANG_ID, $email_template_tailor_id;
         #
         $clsEmailTemplate = new EmailTemplate();
         $clsCountry = new _Country();
-        $clsCountryEx = new Country();
-        $clsTailorTourCity = new TailorTourCity();
-        $clsCity = new City();
         $clsTourCategory = new TourCategory();
         $clsTailorProperty = new TailorProperty();
         #
+        $data = $this->getOne($tailor_made_tour_id);
         $email_template_id = $email_template_tailor_id;
         $HTML_TAILOR_INFO = '';
         $customer_country = $clsCountry->getTitle($data['nationality']);
@@ -82,12 +80,7 @@ class TailorMadeTour extends dbBasic
         }
 
         if (($data['adult']) != 0 || ($data['children']) != 0 || ($data['infant']) != 0) {
-            $HTML_TAILOR_INFO .= '<br><strong>Participants:</strong> ';
-            $participants = '';
-            $participants .= ', ' . isset($data['adult']) . " Adults ";
-            $participants .= ', ' . isset($data['children']) . " Children ";
-            $participants .= ', ' . isset($data['infant']) . " Infants ";
-            $HTML_TAILOR_INFO .= trim($participants, ',');
+            $HTML_TAILOR_INFO .= '<br><strong>Participants:</strong> ' . $this->getParticipants($data['tailor_made_tour_id']);
         }
 
         if (($data['travel_style']) != '') {
@@ -111,36 +104,10 @@ class TailorMadeTour extends dbBasic
         }
 
         if (($data['type_room']) != '') {
-            $HTML_TAILOR_INFO .= '<br><strong>Type of room you prefer:</strong> ';
-            $type_room = $this->getArray($data['type_room']);
-            $textRoom = array_reduce($type_room, function ($carry, $item) use ($clsTailorProperty) {
-                $txt = $clsTailorProperty->getTitle($item);
-                $carry .= ", " . $txt;
-                return $carry;
-            }, "");
-            $HTML_TAILOR_INFO .= trim($textRoom, ',');
+            $HTML_TAILOR_INFO .= '<br><strong>Type of room you prefer:</strong> ' . $this->getTypeRoom($data['type_room']);
         }
 
-        if (is_array($data['tailor_city'])) {
-            foreach ($data['tailor_city'] as $key => $country) {
-                $oneCity = $clsTailorTourCity->getOne($country);
-
-                $nameCountry = $clsCountryEx->getTitle($oneCity['country_id']);
-
-                $HTML_TAILOR_INFO .= '<br><strong>' . $nameCountry . "</strong>";
-                $listCity = $this->getArray($oneCity['cities']);
-
-                $textCity = array_reduce($listCity, function ($carry, $item) use ($clsCity) {
-                    $txt = $clsCity->getTitle($item);
-                    $carry .= ", " . $txt;
-                    return $carry;
-                }, "");
-
-                if ($textCity != '') {
-                    $HTML_TAILOR_INFO .= ": " . trim($textCity, ',');
-                }
-            }
-        }
+        $HTML_TAILOR_INFO .= $this->renderTextDestinations($data['tailor_made_tour_id']);
 
         header('Content-Type: text/html; charset=utf-8');
         $header_email = $clsEmailTemplate->getHeader($email_template_id);
@@ -164,7 +131,7 @@ class TailorMadeTour extends dbBasic
         $message = str_replace('[%CUSTOMER_COUNTRY%]', $customer_country, $message);
         $message = str_replace('[%CUSTOMER_EMAIL%]', $data['email'], $message);
         $message = str_replace('[%CUSTOMER_PHONE%]', $data['phone'], $message);
-        $message = str_replace('[%PLEASE%]', '', $message);
+        $message = str_replace('Please: [%PLEASE%]', '', $message);
         $message = str_replace('[%HTML_TAILOR_INFO%]', $HTML_TAILOR_INFO, $message);
         #
         $message = str_replace('[%COMPANY_EMAIL%]', $clsConfiguration->getValue('CompanyEmail'), $message);
@@ -180,8 +147,13 @@ class TailorMadeTour extends dbBasic
         $to = $data['email'];
         $subject = $clsEmailTemplate->getSubject($email_template_id);
         $subject = str_replace('[%PAGE_NAME%]', PAGE_NAME, $subject);
-        $is_send_email = $clsISO->sendEmail($from, $to, $subject, $message, $owner);
-        return 1;
+
+        if ($send == 'send') {
+            $is_send_email = $clsISO->sendEmail($from, $to, $subject, $message, $owner);
+            return 1;
+        } else {
+            return $message;
+        }
     }
 
     function doDelete($tailor_id)
@@ -190,5 +162,96 @@ class TailorMadeTour extends dbBasic
         $clsTailorTourCity->deleteByCond("tailor_made_tour_id='$tailor_id'");
         $this->deleteOne($tailor_id);
         return 1;
+    }
+
+    function renderTextDestinations($tailor_id)
+    {
+        $clsCountry = new Country();
+        $clsTailorTourCity = new TailorTourCity();
+        $clsCity = new City();
+        $html = '';
+        $oneItem = $this->getOne($tailor_id);
+        $listCountry = $this->getArray($oneItem['destinations']);
+        foreach ($listCountry as $country) {
+            $html .= '<br> <strong>' . $clsCountry->getTitle($country) . '</strong>';
+            $listCity = $clsTailorTourCity->getAll("tailor_made_tour_id = $tailor_id AND country_id = $country ");
+            if ($listCity) {
+                $cities = $this->getArray($listCity[0]['cities']);
+                $textCity = array_reduce($cities, function ($carry, $item) use ($clsCity) {
+                    $txt = $clsCity->getTitle($item);
+                    $carry .= ", " . $txt;
+                    return $carry;
+                }, "");
+
+                $textCity .= $listCity[0]['other'] ? ", " . $listCity[0]['other'] : '';
+
+                if ($textCity != '') {
+                    $html .= "<strong>:</strong> " . trim($textCity, ',');
+                }
+            }
+        }
+
+        return $html;
+    }
+
+    function getParticipants($tailor_id)
+    {
+        $oneItem = $this->getOne($tailor_id);
+        $text = '';
+
+        if ($oneItem['adult'] != 0) {
+            $text .= $oneItem['adult'] . " " . ($oneItem['adult'] > 1 ? "adults, " : "adult, ");
+        }
+
+        if ($oneItem['children'] != 0) {
+            $text .= $oneItem['children'] . " children, ";
+        }
+
+        if ($oneItem['infant'] != 0) {
+            $text .= $oneItem['infant'] . " " . ($oneItem['infant'] > 1 ? "infants, " : "infant, ");
+        }
+
+        $text = rtrim($text, ", ");
+        return $text;
+    }
+
+    function getTypeRoom($type_room)
+    {
+
+        $text = '';
+        $clsTailorProperty = new TailorProperty();
+        $type_room = $this->getArray($type_room);
+        $textRoom = array_reduce($type_room, function ($carry, $item) use ($clsTailorProperty) {
+            $txt = $clsTailorProperty->getTitle($item);
+            $carry .= ", " . $txt;
+            return $carry;
+        }, "");
+
+        $text = trim($textRoom, ', ');
+
+        return $text;
+    }
+
+    function listValueCity($tailor_id)
+    {
+        global $clsISO;
+        $cities = [];
+        $clsTailorTourCity = new TailorTourCity();
+        $lstCity = $clsTailorTourCity->getAll("tailor_made_tour_id = " . $tailor_id, "cities");
+
+        foreach ($lstCity as $city) {
+            $array = $this->getArray($city['cities']);
+            $cities = array_merge($cities, $array);
+        }
+
+        return $cities;
+    }
+
+    function listOtherCity($tailor_id)
+    {
+        $clsTailorTourCity = new TailorTourCity();
+        $lstCity = $clsTailorTourCity->getAll("tailor_made_tour_id = " . $tailor_id, "country_id, other");
+
+        return $lstCity;
     }
 }

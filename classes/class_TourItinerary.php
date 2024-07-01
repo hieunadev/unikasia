@@ -336,6 +336,8 @@ class TourItinerary extends dbBasic{
     }
 
     function getGoodMeal($tour_id) {
+        global $core;
+
         $content = '';
         $rec = $this->getAll(" tour_id = $tour_id");
         $clsTourProperty = new TourProperty();
@@ -352,7 +354,7 @@ class TourItinerary extends dbBasic{
         }
         $arr = [];
         foreach ($count_values as $meal => $count) {
-            $arr[] = $count . " " . $clsTourProperty->getTitle($meal);
+            $arr[] = $count . " " . $core->get_Lang($clsTourProperty->getTitle($meal));
         }
         $content = implode(", ", $arr);
         return $content;

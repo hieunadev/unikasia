@@ -23,7 +23,7 @@ function getFrame($cruise_id = null)
 					'name' => $core->get_Lang('Image cover')
 				),
 				'about' => array(
-					'name' => $core->get_Lang('About')
+					'name' => $core->get_Lang('Overview')
 				),
 				/*'thingAbout' => array(
 					'name' => $core->get_Lang('Things about')

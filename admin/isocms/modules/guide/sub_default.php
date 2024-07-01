@@ -1611,7 +1611,7 @@ function default_category_country()
     /*List all item*/
     $inner_join =   " INNER JOIN default_guidecat ON default_guidecat.guidecat_id = default_guidecat_store.guidecat_id";
     $cond       =   " 1 = 1";
-    $cond2      =   " AND default_guidecat.is_trash = '0' AND default_guidecat.is_online = '1'";
+    $cond2      =   " AND default_guidecat.is_trash = '0' AND default_guidecat.is_online = '1' AND default_guidecat_store.lang_id = '$_LANG_ID'";
     $orderBy    =   " ORDER BY default_guidecat.order_no ASC";
     if (intval($country_id) > 0) {
         $cond   .=  " AND default_guidecat_store.country_id = '$country_id'";

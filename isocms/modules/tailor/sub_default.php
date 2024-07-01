@@ -6,6 +6,8 @@ function default_default()
 	global $assign_list, $_CONFIG, $core, $dbconn, $mod, $act, $title_page, $description_page, $keyword_page;
 	global $clsISO, $_LANG_ID, $_lang, $extLang, $_frontIsLoggedin_user_id, $adult_type_id, $child_type_id, $age_type_id, $height_type_id, $infant_type_id;
 
+	$clsConfiguration = new Configuration();
+	$assign_list["clsConfiguration"] = $clsConfiguration;
 
 	$clsTailorProperty = new TailorProperty();
 	$assign_list["clsTailorProperty"] = $clsTailorProperty;
@@ -84,19 +86,6 @@ function default_default()
 	$listTravelStyle = $clsTourCategory->getAll($cond_travel_style . $order_by_travel_style, $clsTourCategory->pkey);
 	$assign_list['listTravelStyle'] = $listTravelStyle;
 	unset($listTravelStyle);
-
-
-	$lstAdultSizeGroup = $oneItem['adult_group_size'];
-	$lstAdultSize = array();
-
-	if ($lstAdultSizeGroup != '' && $lstAdultSizeGroup != '0') {
-		$TMP = explode(',', $lstAdultSizeGroup);
-		for ($i = 0; $i < count($TMP); $i++) {
-			if (!in_array($TMP[$i], $lstAdultSize)) {
-				$lstAdultSize[] = $TMP[$i];
-			}
-		}
-	}
 }
 function default_isocustomize()
 {
@@ -494,7 +483,7 @@ function default_ajaxTailorMadeTour()
 	$current_time = time();
 
 	// Số giây của n phút
-	$minutes = 5 * 60;
+	$minutes = 1 * 60;
 
 	if (!$clsISO->checkGoogleReCAPTCHA()) {
 		$data = [
@@ -503,7 +492,8 @@ function default_ajaxTailorMadeTour()
 		];
 	}
 
-	if ($current_time - $timeSended > $minutes && $clsISO->checkGoogleReCAPTCHA()) {
+	if ((($current_time - $timeSended) > $minutes) && $clsISO->checkGoogleReCAPTCHA()) {
+
 		if (!empty($dataPost)) {
 			$tailor_made_tour_id = $clsTailorMadeTour->getMaxId();
 
@@ -555,7 +545,6 @@ function default_ajaxTailorMadeTour()
 
 			if ($insertTailor) {
 				if (!empty($list_city)) {
-					$list_id = [];
 					foreach ($list_city as $key => $city) {
 
 						$other = isset($city['text']) ? $city['text'] : '';
@@ -577,21 +566,22 @@ function default_ajaxTailorMadeTour()
 						$dataCity['upd_date'] = $upd_date;
 						$dataCity['is_trash'] = $is_trash;
 						$dataCity['is_online'] = $is_online;
-						$list_id[] = $tailor_made_city_id;
+
 						$insert_city = $clsTailorTourCity->insert($dataCity);
-						if ($insert_city) {
-							$dataTailor['tailor_city'][] = $tailor_made_city_id;
-						}
 					}
-
-					$dataTailor['tailor_city'] = $list_id;
-					$data = [
-						'result' => true,
-						'text' => 'Success',
-					];
-
-					$clsTailorMadeTour->sendMail($dataTailor);
 				}
+
+				$data = [
+					'result' => true,
+					'text' => 'Success',
+				];
+
+				$clsTailorMadeTour->sendMail($tailor_made_tour_id, 'send');
+			} else {
+				$data = [
+					'result' => false,
+					'text' => 'Error',
+				];
 			}
 		} else {
 			$data = [

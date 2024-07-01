@@ -115,8 +115,8 @@ function default_topattraction()
     #
     $type           =   "TOP";
     $cond           =   "is_trash = 0 AND country_id = '$country_id' AND type = '$type'";
-    // Thêm điều kiện check city_id
-    $cond           .=  " AND city_id IN (SELECT city_id FROM default_city WHERE lang_id = '' AND is_trash = 0 AND is_online = 1 AND country_id = '$country_id')";
+    // // Thêm điều kiện check city_id
+    // $cond           .=  " AND city_id IN (SELECT city_id FROM default_city WHERE lang_id = '' AND is_trash = 0 AND is_online = 1 AND country_id = '$country_id')";
     $order_by       =   " ORDER BY order_no ASC";
     $totalRecord    =   $clsCityStore->getAll($cond) ? count($clsCityStore->getAll($cond)) : 0;
     $link_page      =   $clsCityStore->getLink($country_id);
@@ -235,7 +235,7 @@ function default_attraction()
     $clsISO->setRecentView($city_id, 'attraction');
     #
     /* =============Title & Description Page================== */
-    $title_page = $clsCity->getTitle($city_id) . ' | ' . PAGE_NAME;
+    $title_page = $clsCity->getTitle($city_id);
     $assign_list["title_page"] = $title_page;
     $description_page = $clsISO->getMetaDescription($city_id, $clsCity);
     $assign_list["description_page"] = $description_page;

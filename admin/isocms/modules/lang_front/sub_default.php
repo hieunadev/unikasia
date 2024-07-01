@@ -73,6 +73,7 @@ $_FRONTLANG["'.str_replace('"','&quot;',$key[$i]).'"]="'.$val.'";';
 			}
 			$lang_content .= "
 ?>";
+
 			$core->writeFile($dir,$lang_content);
 			header('location: '.PCMS_URL.'/?mod='.$mod.'&act=edit&lang_id&lang_id='.$string.'&message=UpdateSuccess');
 		}
@@ -97,4 +98,72 @@ function default_delete(){
 		header('location: '.PCMS_URL.'/?admin&mod='.$mod.'&message=DeleteSuccess');
 	}
 }
+
+function default_ajAddLang() {
+    global $assign_list, $_CONFIG,  $_SITE_ROOT, $mod , $_LANG_ID, $act,$oneSetting,$core, $clsModule, $_loged_id;
+    #
+    $string = $_POST['lang_id'] ?? '';
+    $lang = $core->decryptID($string);
+    $dir = $_SERVER['DOCUMENT_ROOT'].'/lang/'.$lang.'.php';
+    $text = $_POST["text"] ?? "";
+    $array = explode(', ', $text);
+
+    $current_content = file($dir, FILE_IGNORE_NEW_LINES);
+    $keys = array_map(function($line) {
+        return preg_match('/\$_FRONTLANG\["([^"]+)"\]/', $line, $matches) ? $matches[1] : null;
+    }, $current_content);
+    $filtered_keys = array_filter($keys);
+    foreach ($array as $value) {
+        $value = trim($value);
+        if(!empty($value) && !in_array($value, $filtered_keys)) {
+            $content .= '$_FRONTLANG["' . $value . '"]="' . translate($value) . '";' . PHP_EOL;
+        }
+    }
+
+    if (count($current_content) >= 5) {
+        array_splice($current_content, 4, 0, $content);
+    } else {
+        while (count($current_content) < 4) {
+            $current_content[] = "";
+        }
+        $current_content[] = $content;
+    }
+    $file = fopen($dir, 'w');
+    if ($file) {
+        fwrite($file, implode("\n", $current_content));
+        fclose($file);
+    }
+    header('location: '.PCMS_URL.'/?mod='.$mod.'&act=edit&lang_id&lang_id='.$string.'&message=UpdateSuccess');
+}
+
+function translate($text)
+{
+    $curl = curl_init();
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => 'https://translate.googleapis.com/translate_a/single?client=gtx&dt=t',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => 'sl=en&tl=fr&q=' . urlencode($text),
+        CURLOPT_HTTPHEADER => array(
+            'Content-Type: application/x-www-form-urlencoded'
+        ),
+    ));
+    $response = curl_exec($curl);
+    curl_close($curl);
+
+    $sentencesArray = json_decode($response, true);
+    $sentences = "";
+    foreach ($sentencesArray[0] as $s) {
+        $sentences .= isset($s[0]) ? $s[0] : '';
+    }
+
+    return $sentences;
+}
+
+
 ?>

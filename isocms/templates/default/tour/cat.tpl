@@ -356,6 +356,7 @@
 <script>
     var country_id = '{$country_id}';
     var country_slug = "{$country_slug}";
+    var lang_id = "{$_LANG_ID}";
 </script>
 {literal}
 <script>
@@ -475,7 +476,8 @@
                 url: path_ajax_script + "/index.php?mod=tour&act=ajWhenToGo",
                 data: {
                     country_id: country_id,
-                    month_id: clickedMonthId
+                    month_id: clickedMonthId,
+                    lang_id: lang_id
                 },
                 // dataType: "dataType",
                 success: function(response) {

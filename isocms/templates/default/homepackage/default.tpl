@@ -4,7 +4,7 @@
             <h2 class="txthnvoyces txt_underline">{$clsConfiguration->getValue('TitleAgenceHyour_'|cat:$_LANG_ID)|html_entity_decode}</h2>
             <div class="txtdeschnvoyces">{$clsConfiguration->getValue('IntroAgenceHyour_'|cat:$_LANG_ID)|html_entity_decode}</div>
             <div class="btn_viewm text-center">
-                <a href="/tailor-made-tour" class="btn btn_startnow btn-hover-home">{$core->get_Lang("LET'S GO. START PLANNING NOW!")} <i class="fa-solid fa-right-long"
+                <a href="/tailor-made-tour" class="btn btn_startnow btn-hover-home">{$core->get_Lang("LET&#39;S GO. START PLANNING NOW&#33;")} <i class="fa-solid fa-right-long"
                                                                                       style="color: #ffffff; margin-left: 8px;"></i></a>
             </div>
         </div>
@@ -29,7 +29,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-4 col-12 px-0">
-                    <div class="container justify-content-start">
+                    <div class="container justify-content-start explore_our_mobile">
                         <h2 class="txt_travelstyle txt_underline">{$clsConfiguration->getValue('TitleCatTour_'|cat:$_LANG_ID)|html_entity_decode}</h2>
                         <div class="txt_intro_travelstyle">{$clsConfiguration->getValue('IntroCatTour_'|cat:$_LANG_ID)|html_entity_decode}</div>
                     </div>
@@ -234,6 +234,7 @@
     <section class="icontxtworks">
         <div class="container justify-content-center">
             <h2 class="txthowwork txt_underline">{$clsConfiguration->getValue('TitleHowItWork_'|cat:$_LANG_ID)|html_entity_decode}</h2>
+            {if $deviceType == "computer"}
             <div class="row text-center position-relative">
                 <img src="{$URL_IMAGES}/home/duong_day.svg" alt="round" class="img_line">
                 {section name=i loop=5 start=1}
@@ -250,6 +251,21 @@
                     </div>
                 {/section}
             </div>
+            {else}
+                <div id="how_it_work" class="owl-carousel">
+                    {section name=i loop=5 start=1}
+                    {assign var = k value = $smarty.section.i.index}
+                        <div class="icon-wrapper-txt text-center">
+                            <div class="rounded-circle icon-circle">
+                                <img class="img_howitwork" src="{$clsConfiguration->getValue('IconHowItWorkStep'|cat:$k|cat:_|cat:$_LANG_ID)}"
+                                     alt="Image">
+                            </div>
+                            <h3>{$clsConfiguration->getValue('TitleHowItWorkStep'|cat:$k|cat:_|cat:$_LANG_ID)|html_entity_decode}</h3>
+                            <div class="introhowitwork mt-4 px-4">{$clsConfiguration->getValue('IntroHowItWorkStep'|cat:$k|cat:_|cat:$_LANG_ID)|html_entity_decode}</div>
+                        </div>
+                    {/section}
+                </div>
+            {/if}
         </div>
         <img class="pattern-start" src="{$URL_IMAGES}/home/pattern1.png" alt="">
         <img class="pattern-end" src="{$URL_IMAGES}/home/pattern2.png" alt="">
@@ -335,6 +351,15 @@
         dots: false,
         nav: false
     })
+    if ($('#how_it_work').length) {
+        $('#how_it_work').owlCarousel({
+            loop: false,
+            margin: 12,
+            dots: false,
+            responsiveClass: true,
+            items: 1
+        });
+    }
     $("#header_fixed").css("position", "relative")
 
     let currentSelected = $('.des_country').first().data('country');

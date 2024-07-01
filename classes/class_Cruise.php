@@ -175,9 +175,9 @@ class Cruise extends dbBasic
 	}
 	function getPlaceVisit($pvalTable)
 	{
-		$one = $this->getOne($pvalTable, 'place_viste');
-		$place_viste = html_entity_decode($one['place_viste']);
-		return $place_viste;
+		global $clsISO;
+		$one_field		= 	$this->getOneField('place_visit', $pvalTable);
+		return $one_field;
 	}
 	function getImprotantNote($pvalTable, $one = null)
 	{
@@ -372,7 +372,7 @@ class Cruise extends dbBasic
 	function getLinkContact()
 	{
 		global $_LANG_ID, $extLang;
-//		return $extLang . '/cruise/enquiry.html';
+		//		return $extLang . '/cruise/enquiry.html';
 		return $extLang . '/contact-us.html';
 	}
 	function getBuild($pvalTable)

@@ -40,21 +40,21 @@
 							<img src="{$URL_IMAGES}/booking/choose_booking.svg" alt="Icon">
 						</div>
 						<span class="text_booking">
-							<a href="#" onclick="window.history.back(); return false;">Choose booking</a>
+							<a href="#" onclick="window.history.back(); return false;">{$core->get_Lang("Choose booking")}</a>
 						</span>
 					</div>
 					<div class="line1_booking"></div>
 					<div class="item_booking d-flex flex-column justify-content-start align-items-center ">
 						<div class="enter_info"></div>
 						<span class=" text_booking ">
-                                Enter info
+                                {$core->get_Lang("Enter info")}
                             </span>
 					</div>
 					<div class="line2_booking"></div>
 					<div class="item_booking d-flex flex-column justify-content-start align-items-center ">
 						<div class="payment"></div>
 						<span class=" text_booking text_booking_payment">
-                                Payment
+                                {$core->get_Lang("Payment")}
                             </span>
 					</div>
 				</div>
@@ -101,11 +101,11 @@
 							</div>
 							<div class="number_travelers d-flex flex-column  box_validate" data-class="participants">
                                     <span class="title_content">
-                                        Add the number of travelers to get the price of your trip
+                                        {$core->get_Lang("Add the number of travelers to get the price of your trip")}
                                     </span>
 								<div class="unika_number_travel d-flex align-items-center justify-content-between flex-wrap ">
 									<div class="item_travelers item_content_booking d-flex  align-items-center">
-										<span class="title">Adults</span>
+										<span class="title">{$core->get_Lang("Adults")}</span>
 										<div class="number d-flex " data-class="amount_adults">
 											<span
 													class="d-flex align-items-center value_travelers justify-content-center"
@@ -116,7 +116,7 @@
 									</div>
 									<div class="item_travelers item_content_booking d-flex ">
 										<div class="title d-flex flex-column">
-											<span>Children</span>
+											<span>{$core->get_Lang("Children")}</span>
 										</div>
 										<div class="number d-flex " data-class="amount_children">
 											<span
@@ -128,7 +128,7 @@
 									</div>
 									<div class="item_travelers item_content_booking d-flex ">
 										<div class="title d-flex flex-column">
-											<span>Infants</span>
+											<span>{$core->get_Lang("Infants")}</span>
 										</div>
 										<div class="number d-flex " data-class="amount_infants">
 											<span
@@ -142,7 +142,7 @@
 							{if $lstRoom}
 							<div class="distribution number_travelers d-flex flex-column  box_validate" data-class="room">
                                     <span class="title_content">
-                                        Distribution of travelers
+                                        {$core->get_Lang("Distribution of travelers")}
                                     </span>
 								<div class="d-flex flex-column ">
 									{section name=i loop=$lstRoom}
@@ -176,7 +176,7 @@
 					{if $lstAddOnService}
 					<div class="other_services item_booking_content number_travelers" data-class="other-services">
 						<div class="title_booking ">
-							Other Services
+							{$core->get_Lang("Other Services")}
 						</div>
 						<div class="content d-flex flex-column ">
 							<div class="distribution d-flex flex-column ">
@@ -207,49 +207,49 @@
 					{/if}
 					<div class="contact_information item_booking_content">
 						<div class="title_booking ">
-							Contact information
+							{$core->get_Lang("Contact information")}
 						</div>
 						<div class="content d-flex flex-wrap align-items-start justify-content-start flex-wrap ">
 							<div class="d-flex flex-column information-3  box_validate">
 								<label for="title">Title*</label>
 								<select class="select2" name="title" id="title">
-									<option value="">-- Please Select --</option>
+									<option value="">-- {$core->get_Lang("Please Select")} --</option>
 									<option value="Mr.">Mr.</option>
 									<option value="Mrs.">Mrs.</option>
 									<option value="Ms.">Ms.</option>
 								</select>
 							</div>
 							<div class="d-flex flex-column information-7  box_validate">
-								<label for="title">Full name*</label>
+								<label for="title">{$core->get_Lang("Full name")}*</label>
 								<input type="text" name="fullname" class="information_input" placeholder="Enter your name">
 							</div>
 							<div class="d-flex flex-column information-3  box_validate">
-								<label for="nationality">Nationality*</label>
+								<label for="nationality">{$core->get_Lang("Nationality")}*</label>
 								<select class="form-select country select2" name="nationality" id="nationality" aria-label="Default select example" onchange="loadStates()">
-									<option value="">-- Please Select --</option>
+									<option value="">-- {$core->get_Lang("Please Select")} --</option>
 								</select>
 							</div>
 							<div class="d-flex flex-column information-3  box_validate">
-								<label for="title">Email*</label>
+								<label for="title">{$core->get_Lang("Email")}*</label>
 								<input type="email" name="email" class="information_input" placeholder="Enter your email">
 							</div>
 							<div class="d-flex flex-column information-3  box_validate">
-								<label for="title">Phone number*</label>
+								<label for="title">{$core->get_Lang("Phone number")}*</label>
 								<input type="text" name="phone" class="information_input" placeholder="Enter your phone">
 							</div>
 							<div class="d-flex flex-column information-3 ">
-								<label for="city">City</label>
+								<label for="city">{$core->get_Lang("City")}</label>
 								<select class="form-select state select2" name="city" id="city" aria-label="Default select example" onchange="loadCities()">
-									<option value="">-- Please Select --</option>
+									<option value="">-- {$core->get_Lang("Please Select")} --</option>
 								</select>
 							</div>
 							<div class="d-flex flex-column information-7 ">
-								<label for="title">Address</label>
+								<label for="title">{$core->get_Lang("Address")}</label>
 								<input type="text" name="address" class="information_input"
 									   placeholder="Enter your address">
 							</div>
 							<label class="item_checkbox ">
-								I am participating in the trip
+								{$core->get_Lang("I am participating in the trip")}
 								<input type="checkbox" name="checkbox_trip">
 								<span class="checkmark"></span>
 							</label>
@@ -257,7 +257,7 @@
 					</div>
 					<div class="payment_methods item_booking_content">
 						<div class="title_booking ">
-							Payment methods
+							{$core->get_Lang("Payment methods")}
 						</div>
 						<div class="content d-flex flex-column ">
 							{if $clsConfiguration->getValue('SitePay_CashStatus_Mode') eq '1'}
@@ -325,7 +325,7 @@
 					</div>
 					<div class="g-recaptcha" id="g-recaptcha" data-sitekey="{$clsISO->getVar('reCAPTCHA_KEY')}"></div>
 					<button class="btn_payment false d-flex align-items-center justify-content-center " type="submit">
-						Payment
+						{$core->get_Lang("Payment")}
 						<div class="div_img">
 							<i class="fa-regular fa-arrow-right"></i>
 						</div>
@@ -333,7 +333,7 @@
 				</div>
 				<div class="booking_right d-flex flex-column ">
 					<div class="summary d-flex flex-column  justify-content-start">
-						<div class="title SF-Pro-Medium">Summary</div>
+						<div class="title SF-Pro-Medium">{$core->get_Lang("Summary")}</div>
 						<div class="div_img">
 							<img src="{$clsTour->getImage($item.tour_id_z, 364, 194)}" alt="Images">
 						</div>
@@ -343,43 +343,43 @@
 						<div class="booking_right_content d-flex flex-column ">
 							<div class="item_content d-flex flex-column ">
 								<div class="d-flex justify-content-between align-items-start ">
-									<span class=" span_title">Travel Date:</span>
+									<span class=" span_title">{$core->get_Lang("Travel Date")}:</span>
 									<span class="span_content value_travel_date">{$clsISO->converTimeToText5($departure_date)}</span>
 								</div>
 								<div class="d-flex justify-content-between align-items-start ">
-									<span class=" span_title">End Date:</span>
+									<span class=" span_title">{$core->get_Lang("End Date")}:</span>
 									<span class="span_content value_end_date"></span>
 								</div>
 								<div class="d-flex justify-content-between align-items-start ">
-									<span class=" span_title">Duration:</span>
+									<span class=" span_title">{$core->get_Lang("Duration")}:</span>
 									<span class="span_content duration">{$clsTour->getTripDurationx($tour_id)}</span>
 								</div>
 							</div>
 							<div class="item_content d-flex flex-column ">
 								<div class="d-flex justify-content-between align-items-start ">
-									<span class=" span_title">Participants:</span>
+									<span class=" span_title">{$core->get_Lang("Participants")}:</span>
 									<div class="participants span_content d-flex flex-column  align-items-end">
-										{if $number_adults_z}<span class="span_item"><span class="amount_adults">{$number_adults_z}</span> x Adults</span>{/if}
-										{if $number_child_z}<span class="span_item"><span class="amount_adults">{$number_child_z}</span> x Children</span>{/if}
-										{if $number_infants_z}<span class="span_item"><span class="amount_adults">{$number_infants_z}</span> x Infants</span>{/if}
+										{if $number_adults_z}<span class="span_item"><span class="amount_adults">{$number_adults_z}</span> x {$core->get_Lang("Adults")}</span>{/if}
+										{if $number_child_z}<span class="span_item"><span class="amount_adults">{$number_child_z}</span> x {$core->get_Lang("Children")}</span>{/if}
+										{if $number_infants_z}<span class="span_item"><span class="amount_adults">{$number_infants_z}</span> x {$core->get_Lang("Infants")}</span>{/if}
 									</div>
 								</div>
 								<div class="d-flex justify-content-between align-items-start ">
-									<span class=" span_title">Room:</span>
+									<span class=" span_title">{$core->get_Lang("Room")}:</span>
 									<div class="room span_content d-flex flex-column align-items-end">
 									</div>
 								</div>
 							</div>
 							<div class="item_content d-flex flex-column ">
 								<div class="d-flex justify-content-between align-items-start  width-100">
-									<span class=" span_title">Other services:</span>
+									<span class=" span_title">{$core->get_Lang("Other services")}:</span>
 									<div class="span_content d-flex flex-column  align-items-end other-services">
 									</div>
 								</div>
 							</div>
 							<div class="d-flex flex-column ">
 								<div class="d-flex justify-content-between align-items-start ">
-									<span class=" span_title">Total:</span>
+									<span class=" span_title">{$core->get_Lang("Total")}:</span>
 									<span class="span_content total_booking">US ${$totalGrand}</span>
 								</div>
 							</div>
@@ -388,19 +388,19 @@
 					<div class="subtotal d-flex flex-column ">
 						<div class="d-flex flex-column ">
 							<div class="d-flex justify-content-between align-items-start ">
-								<span class=" span_title">Deposit:</span>
+								<span class=" span_title">{$core->get_Lang("Deposit")}:</span>
 								<span class="span_content deposit_booking">US ${$totalPriceDeposit}</span>
 							</div>
 						</div>
 						<div class="d-flex flex-column">
 							<div class="d-flex justify-content-between align-items-start ">
-								<span class="span_title">Remaining:</span>
+								<span class="span_title">{$core->get_Lang("Remaining")}:</span>
 								<span class="span_content remaining_booking">US ${$totalRemaining}</span>
 							</div>
 						</div>
 						<div class="d-flex flex-column ">
 							<div class="d-flex justify-content-between align-items-start ">
-								<span class="span_title">Payment amount:</span>
+								<span class="span_title">{$core->get_Lang("Payment amount")}:</span>
 								<p class="txt_monpr">US <span class="span_content payment_amount">${$totalPriceDeposit}</span></p>
 							</div>
 						</div>

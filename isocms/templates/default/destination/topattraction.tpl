@@ -41,6 +41,8 @@
                                 </div>
                             </div>
                             {/foreach}
+                            {else}
+                            <p class="mb50">{$core->get_Lang('No data')}</p>
                             {/if}
                         </div>
                     </div>
@@ -114,12 +116,12 @@
                                     {$clsReviews->getReviews($tourID, 'txt_review', 'tour')}
                                 </div>
                                 <div class="des_travel_guide_exciting_trip_rate_total">
-                                    - {$clsReviews->getReviews($tourID, '', 'tour')} reviews
+                                    - {$clsReviews->getReviews($tourID, '', 'tour')} {$core->get_Lang('reviews')}
                                 </div>
                             </div>
                             <div class="des_travel_guide_exciting_trip_place">
                                 <i class="fa-light fa-location-dot"></i>
-                                Place: {$clsTourDestination->getByCountry($tourID, 'city')}
+                                {$core->get_Lang('Place')}: {$clsTourDestination->getByCountry($tourID, 'city')}
                                 {if $clsTourDestination->getByCountry($tourID) > 0}
                                 <button type="button" class="tooltips_tour" data-bs-toggle="tooltip" title="{$clsTourDestination->getByCountry($tourID, 'other_city')}">+{$clsTourDestination->getByCountry($tourID)}</button>
                                 {/if}
@@ -129,11 +131,11 @@
                             </div>
                             <div class="des_travel_guide_exciting_trip_detail">
                                 <div class="box_left">
-                                    <p>From</p>
-                                    <span class="price_type">US</span> <span class="price">${$item.min_price}</span>
+                                    <p>{$core->get_Lang('From')}</p>
+                                    <span class="price_type">{$core->get_Lang('US')}</span> <span class="price">${$item.min_price}</span>
                                 </div>
                                 <div class="box_right">
-                                    <a href="{$clsTour->getLink($tourID)}" title="{$clsTour->getTitle($tourID)}">View tour <i class="fa-light fa-arrow-right"></i></a>
+                                    <a href="{$clsTour->getLink($tourID)}" title="{$clsTour->getTitle($tourID)}">{$core->get_Lang('View tour')} <i class="fa-light fa-arrow-right"></i></a>
                                 </div>
                             </div>
                         </div>

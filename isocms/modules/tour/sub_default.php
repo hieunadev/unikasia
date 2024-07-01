@@ -2,7 +2,7 @@
 
 function default_default()
 {
-	global $assign_list, $clsISO, $core, $title_page, $description_page;
+	global $assign_list, $clsISO, $core, $title_page, $description_page, $deviceType, $dbconn;
 
 	$clsCountry = new Country();
 	$assign_list["clsCountry"] = $clsCountry;
@@ -144,7 +144,7 @@ function default_default()
 
 		$cond_lstCountry =  " $where_list_tour and tour_id IN (select tour_id from default_tour_destination where country_id = $country_id $cond_region $cond_city)";
 	}
-	$recordPerPage = 8;
+	$recordPerPage = ($deviceType === "phone") ? 4 : 8;
 	$currentPage = isset($_GET['page']) ? intval($_GET['page']) : 1;
 	$totalItem = $clsTour->getAll($cond_lstCountry, $clsTour->pkey);
 	$totalRecord = $totalItem ? count($totalItem) : 0;
@@ -177,7 +177,7 @@ function default_default()
 	$assign_list["lstRegion"] = $clsRegion->getAll("$where and country_id = $country_id", "region_id, title");
 	$assign_list["lstTour"] = $clsTour->getAll($cond_lstCountry . $order_by . $limit);
 	$assign_list["lstTourCat"] = $clsTourCat->getAll($where . $order_by);
-	$assign_list["lstMonth"] = $clsMonth->getAll($where);
+	$assign_list["lstMonth"] = $dbconn->getAll("Select * from default_month");
 	$assign_list["country_id"] = $country_id;
 	$assign_list["lstCountry"] = $lstCountry;
 	$assign_list['page_view'] = $page_view;
@@ -391,10 +391,10 @@ function default_detaildeparture()
 	}
 
 	if (isset($_POST['ContactTour']) &&  $_POST['ContactTour'] == 'ContactTour') {
-        vnSessionDelVar('ContactCruise');
-        vnSessionDelVar('ContactHotel');
-        vnSessionDelVar('ContactTour');
-        vnSessionDelVar('ContactVoucher');
+		vnSessionDelVar('ContactCruise');
+		vnSessionDelVar('ContactHotel');
+		vnSessionDelVar('ContactTour');
+		vnSessionDelVar('ContactVoucher');
 		$cartSessionService = vnSessionGetVar('ContactTour');
 		if (empty($cartSessionService)) {
 			$cartSessionService = array();
@@ -2531,7 +2531,7 @@ function default_cat()
 	$current_month	=	date("n", time());
 	$sql_month_city	=   "SELECT city_id
 						FROM " . DB_PREFIX . "city
-						WHERE lang_id = '' 
+						WHERE lang_id = '" . $_LANG_ID . "' 
 							AND is_trash = 0 
 							AND is_online = 1 
 							AND country_id = $country_id
@@ -2582,23 +2582,20 @@ function default_ajWhenToGo()
 	$clsCity = new City();
 	$assign_list['clsCity'] = $clsCity;
 	#
-	$country_id	=	isset($_POST['country_id']) ? $_POST['country_id'] : '';
-	$month_id	=	isset($_POST['month_id']) ? $_POST['month_id'] : '';
+	$country_id	=	isset($_POST['country_id']) ? $_POST['country_id'] : 0;
+	$month_id	=	isset($_POST['month_id']) ? $_POST['month_id'] : 0;
+	$lang_id	=	isset($_POST['lang_id']) ? $_POST['lang_id'] : '';
 	#
 	$html	=	'';
 	if (!empty($country_id) && !empty($month_id)) {
 		$sql_month_city	=   "SELECT city_id
 							FROM " . DB_PREFIX . "city
-							WHERE lang_id = '' 
+							WHERE lang_id = '$lang_id' 
 								AND is_trash = 0 
 								AND is_online = 1 
 								AND country_id = $country_id
 								AND (list_month_id LIKE '%|" . $month_id . "|%')";
-		// $clsISO->dump($sql_month_city);
-		// die;
 		$arr_month_city =   $dbconn->getAll($sql_month_city);
-		// $clsISO->dump($arr_month_city);
-		// die;
 		#
 		$html	.=	'<div class="owl-carousel owl-theme aj_owl_when_vn">';
 		foreach ($arr_month_city as $item) {

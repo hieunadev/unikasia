@@ -99,7 +99,7 @@
                                         {/section}
                                     </div>
                                 </div>
-                                <div class="item_sort_filter cruises_type d-flex flex-column  justify-content-start">
+                                <div class="item_sort_filter cruises_type d-flex flex-column justify-content-start">
                                     <div class="title_filter">
                                         {$core->get_Lang('Cruises type')}
                                     </div>

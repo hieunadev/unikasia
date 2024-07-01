@@ -508,7 +508,9 @@ function default_message()
 	}
 	#- End Create message payment online
 	//$listMessage = $clsConfiguration->getAll("setting like 'SiteMsg_%'");
+
 	$listMessage = $clsConfiguration->getAll("setting like 'SiteMsg_%_" . $_LANG_ID . "'");
+
 	$assign_list["listMessage"] = $listMessage;
 	//print_r($_LANG_ID); die();
 	#

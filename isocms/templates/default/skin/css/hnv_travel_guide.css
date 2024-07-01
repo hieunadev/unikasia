@@ -62,8 +62,8 @@ body {
     color: #ffa718 !important;
     position: absolute;
     top: 50%;
-    left: 60px;
-    right: 60px;
+    left: 40px;
+    right: 40px;
     transform: translateY(-50%);
     display: none;
     transition: all 0.3s ease-in-out;
@@ -250,6 +250,23 @@ body {
 }
 .destination_topattraction_body .customersay {
     background: #fff9f1;
+}
+@media (min-width: 1200px) and (max-width: 1399px) {
+    .guide_cat_body .des_travel_guide_link {
+        padding: 12px 20px;
+        border-radius: 8px;
+        border: 1px solid var(--Primary, #ffa718);
+        color: #ffa718 !important;
+        position: absolute;
+        top: 50%;
+        left: 20px;
+        right: 20px;
+        transform: translateY(-50%);
+        display: none;
+        transition: all 0.3s ease-in-out;
+    }
+}
+@media (min-width: 992px) and (max-width: 1199px) {
 }
 @media screen and (max-width: 991px) {
     .unika_sort_filter {

@@ -194,8 +194,11 @@
     height: 36px;
     border: unset;
     border-radius: 8px;
+    transition: all 0.3s ease-in-out;
 }
-
+.btn_content_1:hover {
+    background: #e1e1e1;
+}
 .content_1 .title {
     font-size: 32px;
     line-height: 52px;
@@ -719,6 +722,7 @@
     font-weight: 400;
     line-height: 20px;
     color: var(--Neutral-2, #434b5c);
+    height: 60px;
 }
 
 .count_reviews {
@@ -1000,30 +1004,17 @@
 .item_right {
     gap: 12px;
 }
-
 .list_extensions {
     gap: 24px;
 }
-
 .item_extensions {
-    padding: 12px;
-    border-radius: 8px;
-    border: 1px solid var(--Neutral-5, #f0f0f0);
-    background: #fff;
-}
-
-.list_extensions {
-    gap: 24px;
-}
-
-.item_extensions {
+    display: flex;
     padding: 12px;
     border-radius: 8px;
     border: 1px solid var(--Neutral-5, #f0f0f0);
     background: #fff;
     gap: 24px;
 }
-
 .title_extentions {
     font-size: 20px;
     font-style: normal;
@@ -1140,10 +1131,16 @@
     padding-top: 50px;
     gap: 32px;
 }
-
-.list_reviews {
-    padding-top: 50px;
-    gap: 32px;
+.list_reviews .avatar_custom {
+    border-radius: 50%;
+    width: 64px;
+    height: 64px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: black;
 }
 
 .customer {
@@ -1166,9 +1163,8 @@
     color: var(--Neutral-3, #959aa4);
 }
 
-.item_reviews .rating .div_img {
-    width: 20px;
-    height: 20px;
+.item_reviews .rating i {
+    color: #ffa718;
 }
 
 .title_reviews {
@@ -1227,6 +1223,7 @@
     width: 16px;
     height: 16px;
     font-size: 15px;
+    border-radius: unset !important;
 }
 
 .content_interested_title {
@@ -1803,6 +1800,9 @@
 }
 .btn_contact_cruise:hover {
     background: #e88f00;
+}
+.cruise_detail_body .alsoLike {
+    display: none;
 }
 @media screen and (min-width: 1920px) {
     .information .item {

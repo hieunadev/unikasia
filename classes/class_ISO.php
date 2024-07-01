@@ -4117,7 +4117,7 @@ class ISO
 				while (($file = readdir($dh)) !== false) {
 					if (substr($file, -3) == 'php') {
 						$abc = str_replace('.php', '', $file);
-						if (!in_array($abc, [LANG_DEFAULT, "vn", "es", "kr", "cn", "ru"])) {
+						if (!in_array($abc, [LANG_DEFAULT, "vn", "es", "kr",  "ru"])) {
 							array_push($customClsArray, $abc);
 						}
 					}
@@ -4282,8 +4282,11 @@ class ISO
 					return $extLang . '/diem-den';
 				return $extLang . '/destinations';
 				break;
+			case 'tour':
+				return $extLang . '/tour';
+				break;
 			case 'tailor':
-				return $extLang . '/customize-tour.html';
+				return $extLang . '/tailor-made-tour';
 				break;
 			case 'testimonial':
 				if ($_LANG_ID == 'vn')

@@ -4449,18 +4449,23 @@ function default_edit_tailor()
 	global $assign_list, $_CONFIG,  $_SITE_ROOT, $mod, $_LANG_ID, $act, $menu_current, $current_page;
 	global $core, $clsModule, $clsButtonNav, $oneCommon, $dbconn, $clsISO;
 	$assign_list["clsModule"] = $clsModule;
+	$assign_list["clsISO"] = $clsISO;
 	$user_id = $core->_USER['user_id'];
 	$clsUser = new User();
 	$assign_list['clsUser'] = $clsUser;
+	$clsCountry = new _Country();
+	$clsCountryEx = new Country();
+	$assign_list["clsCountry"] = $clsCountry;
+	$clsTailorProperty = new TailorProperty();
+	$assign_list["clsTailorProperty"] = $clsTailorProperty;
+	$clsTourCategory = new TourCategory();
+	$assign_list["clsTourCategory"] = $clsTourCategory;
 	#
 	$action = isset($_GET['action']) ? $_GET['action'] : '';
 	$assign_list["action"] = $action;
 
 	$message = isset($_GET['message']) ? $_GET['message'] : '';
 	$assign_list["message"] = $message;
-
-	$type = isset($_GET['type']) ? $_GET['type'] : '';
-	$assign_list["type"] = $type;
 
 	$classTable = "TailorMadeTour";
 
@@ -4471,11 +4476,164 @@ function default_edit_tailor()
 	$assign_list["clsClassTable"] = $clsClassTable;
 	$assign_list["pkeyTable"] = $pkeyTable;
 	#
-
+	$string = isset($_GET[$pkeyTable]) ? $_GET[$pkeyTable] : "";
+	$pvalTable = intval($core->decryptID($string));
+	if ($string != '' && $pvalTable == 0) {
+		header('location:' . PCMS_URL . '/index.php?&mod=' . $mod . '&message=notPermission');
+		exit();
+	}
+	$assign_list["pvalTable"] = $pvalTable;
 	#
+	$oneItem = $clsClassTable->getOne($pvalTable);
+	if (!$oneItem) {
+		header('location:' . PCMS_URL . '/index.php?&mod=' . $mod . '&act=list_booking' . '&message=notPermission');
+		exit();
+	}
 
 	$assign_list["oneItem"] = $oneItem;
 
-	$clsCountry = new _Country();
-	$assign_list["clsCountry"] = $clsCountry;
+	$assign_list["lstCountryRegion"] = json_encode($clsCountry->getAll("1=1 and is_trash=0 order by order_no ASC"));
+
+	//List travel style
+	$cond_travel_style = 'is_online = 1';
+	$order_by_travel_style = ' order by order_no asc';
+	$listTravelStyle = $clsTourCategory->getAll($cond_travel_style . $order_by_travel_style, $clsTourCategory->pkey . ', title');
+	$assign_list['listTravelStyle'] = json_encode($listTravelStyle);
+	unset($listTravelStyle);
+
+	$lstCountry	=	$clsCountryEx->getAll("is_trash = 0 AND is_online = 1 ORDER BY order_no ASC", "country_id, title");
+	foreach ($lstCountry as $key => $country) {
+		$city = $clsCountryEx->getListCity($country['country_id']);
+		$lstCountry[$key]['cities'] = $city;
+	}
+
+	$assign_list['lstCountry'] = json_encode($lstCountry);
+	unset($lstCountry);
+}
+
+function default_ajaxUpdateTailor()
+{
+	global $clsISO;
+	$clsTailorMadeTour = new TailorMadeTour();
+	$clsTailorTourCity = new TailorTourCity();
+
+	$data = [
+		'result' => 'flase',
+		'message' => 'Fail!!!!!!!',
+	];
+	$tailor_made_tour_id = $_POST['tailor_made_tour_id'];
+	$updateData = array();
+
+	if (isset($_POST['check_information']) || isset($_POST['check_preference']) || isset($_POST['check_special'])) {
+		$updateData = $_POST;
+		// $clsTailorMadeTour->setDeBug(1);
+		$update = $clsTailorMadeTour->update($tailor_made_tour_id, $updateData);
+		// die;
+		$mess = '';
+		if (isset($_POST['check_information'])) {
+			$mess = 'Update Customer Travel Information’s successful';
+		} else if (isset($_POST['check_preference'])) {
+			$mess = 'Update Customer Travel’s Preferences successful';
+		} else if (isset($_POST['check_special'])) {
+			$mess = 'Update Customer Special Requirements successful';
+		}
+
+		if ($update) {
+			$data = [
+				'result' => 'true',
+				'message' => $mess,
+			];
+		} else {
+			$data = [
+				'result' => 'false',
+				'message' => 'Update Fail',
+			];
+		}
+	} else if (isset($_POST['check_accommodations'])) {
+		$type_room = isset($_POST['type_room']) ? '|' . implode('|', $_POST['type_room']) . '|' : '';
+		$updateData = array(
+			'accommodation' => $_POST['accommodation'],
+			'type_room' => $type_room,
+		);
+		$update = $clsTailorMadeTour->update($tailor_made_tour_id, $updateData);
+		if ($update) {
+			$data = [
+				'result' => 'true',
+				'message' => 'Update Accommodations preference successful',
+			];
+		} else {
+			$data = [
+				'result' => 'false',
+				'message' => 'Update Fail',
+			];
+		}
+	} else if (isset($_POST['check_destinations'])) {
+		$clsTailorTourCity->deleteByCond("tailor_made_tour_id='$tailor_made_tour_id'");
+
+		$destination_country = isset($_POST['destination_country']) ? '|' . implode('|', $_POST['destination_country']) . '|' : '';
+		$updateData = array(
+			'destinations' => $destination_country,
+		);
+		$update = $clsTailorMadeTour->update($tailor_made_tour_id, $updateData);
+		if ($update) {
+			$list_city = isset($_POST['destinations']) ? $_POST['destinations'] : [];
+			if (!empty($list_city)) {
+				$list_id = [];
+				foreach ($list_city as $key => $city) {
+					$other = isset($city['text']) ? $city['text'] : '';
+
+					unset($city["text"]);
+					$lCity = '|' . implode('|', $city) . '|';
+					$lCity = str_replace(',', '|', $lCity);
+
+					$tailor_made_city_id = $clsTailorTourCity->getMaxId();
+
+					$order_no = $clsTailorTourCity->getMaxOrderNo();
+					$reg_date = time();
+					$upd_date = time();
+					$is_trash = 0;
+					$is_online = 0;
+					$dataCity = [];
+					$dataCity['tailor_tour_city_id'] = $tailor_made_city_id;
+					$dataCity['tailor_made_tour_id'] = $tailor_made_tour_id;
+					$dataCity['country_id'] = $key;
+					$dataCity['cities'] = $lCity;
+					$dataCity['other'] = $other;
+					$dataCity['order_no'] = $order_no;
+					$dataCity['reg_date'] = $reg_date;
+					$dataCity['upd_date'] = $upd_date;
+					$dataCity['is_trash'] = $is_trash;
+					$dataCity['is_online'] = $is_online;
+					$list_id[] = $tailor_made_city_id;
+
+					$insert_city = $clsTailorTourCity->insert($dataCity);
+
+					if ($insert_city) {
+						$data = [
+							'result' => 'true',
+							'message' => 'Update Destinations successful',
+						];
+					} else {
+						$data = [
+							'result' => 'false',
+							'message' => 'Fail 2!!!',
+						];
+					}
+				}
+			}
+
+			$data = [
+				'result' => 'true',
+				'message' => 'Update Destinations successful',
+			];
+		} else {
+			$data = [
+				'result' => 'false',
+				'message' => 'Update Destinations Fail',
+			];
+		}
+	}
+
+	echo json_encode($data);
+	die;
 }

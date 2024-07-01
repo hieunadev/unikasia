@@ -143,7 +143,7 @@ function upload_file_picker(file, params) {
 
                 var aspectRatio = 353 / 244;
 
-            } else if (params.clsTable == "CruiseImage") {
+            } else if (params.clsTableGal == "CruiseImage") {
 
                 if (params.openFrom == "gallery") {
 

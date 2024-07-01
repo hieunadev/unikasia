@@ -1577,6 +1577,7 @@ $_document.ready(function () {
 					$(this).addClass('error');
 					if($(this).hasClass('chosen-select') && $(this).attr('multiple') == 'multiple'){
 						$(this).next().addClass('error');
+						console.log($(this))
 					}
 					return false;
 					

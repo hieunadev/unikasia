@@ -3,7 +3,7 @@
     <div class="container">
         <div class="customerSayTitle">
             {if $mod eq "hotel" || $mod eq "stay" || $mod eq "blog" || $mod eq "tour" || $mod eq "cruise"}
-                <h2 class="txt_reviews">Reviews</h2>
+                <h2 class="txt_reviews">{$core->get_Lang("Reviews")}</h2>
             {else}
                 <h2 class="txtwhatsay txt_underline">{$clsConfiguration->getValue('TitleTestimonialsHome_'|cat:$_LANG_ID)|html_entity_decode}</h2>
             {/if}

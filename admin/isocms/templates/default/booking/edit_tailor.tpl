@@ -1,637 +1,851 @@
 <div class="container_booking" style="height: 100%">
-	<div class="content_head">
-		<a href="{$DOMAIN_NAME}/admin/index.php?mod=booking&act={$action}" class="d-flex align-items-center">
-			<div class="text_booking">
-				<p class="booking_name">{$oneItem.booking_code}</p>
-				<span class="status">{$core->get_Lang("Still unconfirmed service")}</span>
-			</div>
-		</a>
-		{*<a href="{$PCMS_URL}/?mod={$mod}&act=print&action={$action}&booking_id={$core->encryptID($pvalTable)}" class="btn-print fr">
-			<i class="fa fa-print"></i> {$core->get_Lang('print')}
-		</a>*}
-		
-	</div>
-	<div id="bookingTab" class="booking_tabs">
-		<ul>
-			<li><a href="javascript:void();">{$core->get_Lang('Tailor Made Tour')}</a></li>
-			<li><a href="javascript:void();">{$core->get_Lang('Confirmation Email')}</a></li>
-		</ul>
-	</div>
-	<div id="tab_content">
-		<div class="tabbox">
-			<div class="wrap">
-				<form id="unika_tailor_form" class="unika_tailor_form" method="POST" enctype="multipart/form-data" onsubmit="return false">
-					<div class="box_info">
-						<h3 class="txt_infotravel">{$core->get_Lang('Your Travel Information’s')}</h3>
-						<div class="form-group"> 
-							<label class="col-form-label text-bold">
-								Full name<span class="text-red">*</span>
-							</label> 
-							<select id="title" name="title" class="tailor_select2 form-control">
-								<option value="" disabled selected hidden>-- Please Select --</option>
-								{$clsISO->makeSelectTitle($title)}
-							</select>
-						</div>
+    <div class="content_head">
+        <a href="{$DOMAIN_NAME}/admin/index.php?mod=booking&act={$action}" class="d-flex align-items-center">
+            <div class="text_booking">
+                <p class="booking_name">{$oneItem.booking_code}</p>
+                <span class="status">{$core->get_Lang("Still unconfirmed service")}</span>
+            </div>
+        </a>
+        {*<a href="{$PCMS_URL}/?mod={$mod}&act=print&action={$action}&booking_id={$core->encryptID($pvalTable)}"
+            class="btn-print fr">
+            <i class="fa fa-print"></i> {$core->get_Lang('print')}
+        </a>*}
+
+    </div>
+    <div id="bookingTab" class="booking_tabs">
+        <ul>
+            <li class="item_booking_tab active" data-box="box01"><a>{$core->get_Lang('Tailor Made Tour')}</a></li>
+            <li class="item_booking_tab" data-box="box02"><a>{$core->get_Lang('Confirmation Email')}</a></li>
+        </ul>
+    </div>
+    <div id="tab_content">
+        <div class="tabbox box01">
+            <div class="wrap">
+                <div class="unika_admin_box">
+                    <h3>Customer Travel Information’s</h3>
+                    <p class="booking_item">
+                        <label class="bold600" for="">Title: </label>
+                        <span class="">{$oneItem.title}</span>
+                    </p>
+                    <p class="booking_item">
+                        <label class="bold600" for="">Full name: </label>
+                        <span class="">{$oneItem.name}</span>
+                    </p>
+                    <p class="booking_item">
+                        <label class="bold600" for="">Nationality: </label>
+                        <span class="">{$clsCountry->getTitle($oneItem.nationality)}</span>
+                    </p>
+                    <p class="booking_item">
+                        <label class="bold600" for="">Email: </label>
+                        <span class="">{$oneItem.email}</span>
+                    </p>
+                    <p class="booking_item">
+                        <label class="bold600" for="">Phone: </label>
+                        <span class="">{$oneItem.phone}</span>
+                    </p>
+                    {if $oneItem.social_media}
+                    <p class="booking_item">
+                        <label class="bold600" for="">Social Media: </label>
+                        <span class="">{$oneItem.social_media}</span>
+                    </p>
+                    {/if}
+                    <p class="contact_edit bgf9f9f9">
+                        <button class="unikasia_btn_edit" data-id="information" data-toggle="modal" data-target="#unikasia_form_edit">Edit</button>
+                    </p>
+                </div>
+                <div class="unika_admin_box">
+                    <h3>Customer Travel’s Preferences</h3>
+                    {if $oneItem.arrival_date}
+                    <p class="booking_item">
+                        <label class="bold600" for="">Travel Date: </label>
+                        <span class="">{$oneItem.arrival_date}</span>
+                    </p>
+                    {/if}
+                    {if $oneItem.duration}
+                    <p class="booking_item">
+                        <label class="bold600" for="">Duration: </label>
+                        <span class="">{$oneItem.duration}</span>
+                    </p>
+                    {/if}
+                    {if $oneItem.budget}
+                    <p class="booking_item">
+                        <label class="bold600" for="">Budget per person: </label>
+                        <span class="">{$oneItem.budget}</span>
+                    </p>
+                    {/if}
+                    {if $oneItem.arrival_airport}
+                    <p class="booking_item">
+                        <label class="bold600" for="">Arrival Airport: </label>
+                        <span class="">{$clsTailorProperty->getTitle($oneItem.arrival_airport)}</span>
+                    </p>
+                    {/if}
+                    {if $oneItem.tour_guide}
+                    <p class="booking_item">
+                        <label class="bold600" for="">Tour guide preference: </label>
+                        <span class="">{$clsTailorProperty->getTitle($oneItem.tour_guide)}</span>
+                    </p>
+                    {/if}
+                    {if $oneItem.adult || $oneItem.children || $oneItem.infant}
+                    <p class="booking_item">
+                        <label class="bold600" for="">Participants: </label>
+                        <span class="">{$clsClassTable->getParticipants($oneItem.tailor_made_tour_id)}</span>
+                    </p>
+                    {/if}
+                    {if $oneItem.travel_style}
+                    <p class="booking_item">
+                        <label class="bold600" for="">Travel Styles & Activities: </label>
+                        <span class="">{$clsTourCategory->getTitle($oneItem.travel_style)}</span>
+                    </p>
+                    {/if}
+                    {if $oneItem.meals}
+                    <p class="booking_item">
+                        <label class="bold600" for="">Meals: </label>
+                        <span class="">{$clsTailorProperty->getTitle($oneItem.meals)}</span>
+                    </p>
+                    {/if}
+                    {if $oneItem.suitable}
+                    <p class="booking_item">
+                        <label class="bold600" for="">The most suitable time to reach you: </label>
+                        <span class="">{$oneItem.suitable}</span>
+                    </p>
+                    {/if}
+                    <p class="contact_edit bgf9f9f9">
+                        <button class="unikasia_btn_edit" data-id="preference" data-toggle="modal" data-target="#unikasia_form_edit">Edit</button>
+                    </p>
+                </div>
+                <div class="unika_admin_box">
+                    <h3 style="padding: 0;">Destinations</h3>
+                    {if $oneItem.destinations}
+                    <p class="booking_item">
+                        <span class="">{$clsClassTable->renderTextDestinations($oneItem.tailor_made_tour_id)}</span>
+                    </p>
+                    {/if}
+                    <p class="contact_edit bgf9f9f9">
+                        <button class="unikasia_btn_edit" data-id="destinations" data-toggle="modal" data-target="#unikasia_form_edit">Edit</button>
+                    </p>
+                </div>
+                <div class="unika_admin_box">
+                    <h3>Accommodations preference</h3>
+                    {if $oneItem.accommodation}
+                    <p class="booking_item">
+                        <label class="bold600" for="">Accommodations: </label>
+                        <span class="">{$clsTailorProperty->getTitle($oneItem.accommodation)}</span>
+                    </p>
+                    {/if}
+                    {if $oneItem.type_room}
+                    <p class="booking_item">
+                        <label class="bold600" for="">Type of room: </label>
+                        <span class="">{$clsClassTable->getTypeRoom($oneItem.type_room)}</span>
+                    </p>
+                    {/if}
+                    <p class="contact_edit bgf9f9f9">
+                        <button class="unikasia_btn_edit" data-id="accommodations" data-toggle="modal" data-target="#unikasia_form_edit">Edit</button>
+                    </p>
+                </div>
+                <div class="unika_admin_box">
+                    <h3>Customer Special Requirements</h3>
+                    {if $oneItem.special}
+                    <p class="booking_item">
+                        <span class="">{$oneItem.special}</span>
+                    </p>
+                    {/if}
+                    <p class="contact_edit bgf9f9f9">
+                        <button class="unikasia_btn_edit" data-id="special" data-toggle="modal" data-target="#unikasia_form_edit">Edit</button>
+                    </p>
+                </div>
+            </div>
+        </div>
+		<div id="unikasia_form_edit" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+				<form id="unika_form_tailor" class="modal-content" method="POST" enctype="multipart/form-data" onsubmit="return false">
+					<div class="modal-header">
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						<input type="hidden" value="{$pvalTable}" name="tailor_made_tour_id">
+						<h4 class="modal-title">{$core->get_Lang("Edit Tailor Made Tour")}</h4>
 					</div>
-					<h3 class="txt_infotravel">{$core->get_Lang('Your Travel Information’s')}</h3>
-					<div class="form-group"> 
-						<label class="col-form-label text-bold">
-							Full name<span class="text-red">*</span>
-						</label> 
-						<input type="text" class="form-control required" value="Matsuda" name="full_name" placeholder=""> </div>
-					<section class="input_informationtrip">
-						<div class="travelinf">
-							<div class="container">
-								<div class="txt_inftravel">
-									
-
-									<div class="input_inf">
-										<div class="row">
-											<div class="col-md-4 box_validate">
-												<label for="title" class="txtlabel">{$core->get_Lang('Title')}
-													<span style="color:black">*</span>
-												</label>
-												
-											</div>
-											<div class="col-md-8 box_validate">
-												<label for="fullname" class="txtlabel">{$core->get_Lang('Full Name')}
-													<span style="color:black"> *</span>
-												</label>
-												<input id="fullname" name="name" type="text"
-													class="form-control select-input-inf required" value=""
-													placeholder="Enter your name">
-											</div>
-										</div>
-										<div class="row">
-											<div class="col-md-4 box_validate">
-												<label for="nationality" class="txtlabel">{$core->get_Lang('Nationality')}
-													<span style="color:black"> *</span>
-												</label>
-												<select name="nationality" id="nationality"
-													class="tailor_select2 form-select select-input-inf required">
-													<option value="" disabled selected hidden>-- {$core->get_Lang('Please Select')} --
-													</option>
-													{section name=i loop=$lstCountryRegion}
-													<option value="{$lstCountryRegion[i].country_id}">{$lstCountryRegion[i].title}
-													</option>
-													{/section}
-												</select>
-											</div>
-											<div class="col-md-4 box_validate">
-												<label for="email" class="txtlabel">{$core->get_Lang('Email')}
-													<span style="color:black"> *</span>
-												</label>
-												<input id="email" name="email" type="text"
-													class="form-control select-input-inf required" value=""
-													placeholder="Enter your mail">
-											</div>
-											<div class="col-md-4 box_validate">
-												<label for="phone" class="txtlabel">{$core->get_Lang('Phone Number')}
-													<span style="color:black"> *</span>
-												</label>
-												<input id="phone" name="phone" type="text"
-													class="unika_tailor_phone form-control select-input-inf required"
-													placeholder="Enter your phone">
-											</div>
-										</div>
-
-										<div class="row">
-											<div class="col-12">
-												<label for="socialMedia" class="txtlabel">{$core->get_Lang('Social Media')}</label>
-												<input type="text" class="form-control select-input-inf" id="socialMedia" name="social_media"
-													placeholder="Facebook, Whatsapp, Zalo,..">
-											</div>
-										</div>
-									</div>
-
-								</div>
-
-
-							</div>
-
-					</section>
-
-					<section class="input_informationtrip">
-						<div class="travelinf">
-							<div class="container">
-								<div class="txt_inftravel">
-									<h3 class="txt_infotravel">{$core->get_Lang('Your Travel’s Preferences')}</h3>
-
-									<div class="input_inf">
-										<div class="row">
-
-											<div class="col-md-4">
-												<label for="traveldate" class="txtlabel">{$core->get_Lang('Travel Date')}</label>
-												<p class="txt_smalltrip">{$core->get_Lang('approximately')}</p>
-												<div class="input-group">
-													<i class="fa-solid fa-calendar"></i>
-													<input type="text" class="form-control wpcf7-datepicker" autocomplete="off"
-														name="arrival_date" id="arrival_date" placeholder="Apr 1, 2024"
-														value='{$PostVal.arrival_date|date_format:"%b %e, %Y"}' />
-												</div>
-												<div id="error_arrival_date" class="error"></div>
-											</div>
-
-
-											<div class="col-md-4">
-												<label for="duration" class="txtlabel">{$core->get_Lang('Duration')}</label>
-												<p class="txt_smalltrip">{$core->get_Lang('in Days')}</p>
-
-												<input type="duration" name="duration" class="duration form-control select-input-inf" id="duration"
-													placeholder="Example: 7 Days">
-											</div>
-											<div class="col-md-4">
-												<label for="bugetperson" class="txtlabel">{$core->get_Lang('Budget per person')}</label>
-												<p class="txt_smalltrip">{$core->get_Lang('excluding international flights')}</p>
-
-												<input type="text" name="budget" class="form-control select-input-inf" id="bugetperson"
-													placeholder="Example: 2.000$">
-											</div>
-										</div>
-
-										<div class="row">
-											<div class="col-md-6">
-												<label for="arrival-airport" class="txtlabel">
-													{$core->get_Lang('Arrival Airport')}
-												</label>
-												<select class="tailor_select2 form-select select-input-inf" name="arrival_airport" id="arrival-airport">
-													{$clsTailorProperty->getSelectByProperty('_ARRIVAL_AIRPORT')}
-												</select>
-											</div>
-											<div class="col-md-6">
-												<label for="tourguide" class="txtlabel ">{$core->get_Lang('Tour guide
-													preference')}</label>
-												<select class="tailor_select2 form-select select-input-inf" name="tour_guide" id="tourguide">
-													{$clsTailorProperty->getSelectByProperty('_TOUR_GUIDE')}
-												</select>
-											</div>
-										</div>
-
-										<div class="row">
-											<div class="col-md-6">
-												<div class="choose-participants">
-													<div class="label_box">
-														<label for="participants" class="txtlabel">
-															{$core->get_Lang('Participants')}
-														</label>
-													</div>
-													<div class="tailor_participant_txt">
-														<div>
-															<i class="fa-regular fa-user-vneck"></i>
-															<span class="tailor_participant_text"></span>
-														</div>
-														<i class="fa-light fa-chevron-down"></i>
-													</div>
-													<div class="tailor_participants">
-														<div class="tailor_participant_content">
-															<div class="tailor_participant_item">
-																<div class="tailor_participant_item_txt">
-																	Adults
-																</div>
-																<div class="tailor_participant_event">
-																	<div class="tailor_minus">
-																		<i class="fa-regular fa-minus"></i>
-																	</div>
-																	<input inputmode="numeric" class="unika_inp_participant" pattern="[0-9]*" name="adult" value="0">
-																	<div class="tailor_plus">
-																		<i class="fa-regular fa-plus"></i>
-																	</div>
-																</div>
-															</div>
-															<div class="tailor_participant_item">
-																<div class="tailor_participant_item_txt">
-																	Children
-																</div>
-																<div class="tailor_participant_event">
-																	<div class="tailor_minus">
-																		<i class="fa-regular fa-minus"></i>
-																	</div>
-																	<input inputmode="numeric" class="unika_inp_participant" pattern="[0-9]*" name="children" value="0">
-																	<div class="tailor_plus">
-																		<i class="fa-regular fa-plus"></i>
-																	</div>
-																</div>
-															</div>
-															<div class="tailor_participant_item">
-																<div class="tailor_participant_item_txt">
-																	Infants
-																</div>
-																<div class="tailor_participant_event">
-																	<div class="tailor_minus">
-																		<i class="fa-regular fa-minus"></i>
-																	</div>
-																	<input inputmode="numeric" class="unika_inp_participant" pattern="[0-9]*" name="infant" value="0">
-																	<div class="tailor_plus">
-																		<i class="fa-regular fa-plus"></i>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="col-md-6">
-												<label for="travelstyles" class="txtlabel ">
-													{$core->get_Lang('Travel Styles &amp; Activities')}
-												</label>
-												<select class="tailor_select2 form-select select-input-inf" name="travel_style" id="travelstyles">
-													<option value="">-- Travel Styles --</option>
-													{section name=i loop=$listTravelStyle}
-													{assign var=tourcat_id value=$listTravelStyle[i].tourcat_id}
-													<option value="{$tourcat_id}">
-														{$clsTourCategory->getTitle($tourcat_id)}
-													</option>
-													{/section}
-
-												</select>
-
-											</div>
-										</div>
-										<div class="row">
-											<div class="col-md-6">
-												<label for="meals" class="txtlabel">{$core->get_Lang('Meals')}</label>
-												<select class="tailor_select2 form-select select-input-inf" id="meals" name="meals">
-													{$clsTailorProperty->getSelectByProperty('_MEALS')}
-												</select>
-											</div>
-
-											<div class="col-md-6">
-												<label for="suitabletime" class="txtlabel">The most suitable time to reach you</label>
-												<input type="text" name="suitable" class="form-control select-input-inf" id="suitabletime"
-													placeholder="In the morning, the afternoon,... or at a specific time">
-											</div>
-										</div>
-										<hr style="background: #D3DCE1;">
-
-										<div class="checkbox_destination">
-											<h3 class="txt_destinations">{$core->get_Lang('Destinations')}</h3>
-											<div class="list_checkboxtravel">
-												<div class="mt-3">
-													<div class="accordion" id="accordionPanelsStayOpenDestiantion">
-														{section name=i loop=$lstCountry}
-														<div class="accordion-item">
-															<div class="accordion-header"
-																id="panelsStayOpen-heading{$lstCountry[i].country_id}">
-																<div class="accordion-button collapsed" type="button"
-																	data-bs-toggle="collapse"
-																	data-bs-target="#panelsStayOpen-collapse{$lstCountry[i].country_id}"
-																	aria-expanded="false"
-																	aria-controls="panelsStayOpen-collapse{$lstCountry[i].country_id}">
-																	<label class="form-check-label unika_checkbox"
-																		for="chkAccordion{$lstCountry[i].country_id}All">
-																		{$lstCountry[i].title}
-																		<input class="form-check-input chkAll me-2 unika_check_all" 
-																			type="checkbox" value="{$lstCountry[i].country_id}" name="destination_country[]"
-																			id="chkAccordion{$lstCountry[i].country_id}All">
-																		<span class="checkmark"></span>
-																	</label>
-																</div>
-															</div>
-															<div id="panelsStayOpen-collapse{$lstCountry[i].country_id}"
-																class="accordion-collapse collapse"
-																aria-labelledby="panelsStayOpen-heading{$lstCountry[i].country_id}">
-																<div class="accordion-body d-flex flex-wrap" style="gap:12px">
-																	{assign var=cities value=$clsCountryEx->getListCity($lstCountry[i].country_id)}
-																	{section name=t loop=$cities}
-																	<div class="form-check form-region mr-12">
-																		<label class="unika_checkbox"
-																			for="chkAccordion{$lstCountry[i].country_id}Child{$cities[t].city_id}">{$clsCity->getTitle($cities[t].city_id)}
-																			<input class="form-check-region" name="destinations[{$lstCountry[i].country_id}][]" type="checkbox" value="{{$cities[t].city_id}}"
-																				id="chkAccordion{$lstCountry[i].country_id}Child{$cities[t].city_id}">
-																			<span class="checkmark"></span>
-																		</label>
-																	</div>
-																	{/section}
-																	<input type="text" name="destinations[{$lstCountry[i].country_id}][text]" class="unika_city_txt form-control select-input-inf"
-																		id="input-other" placeholder="Other">
-																</div>
-															</div>
-														</div>
-														{/section}
-													</div>
-												</div>
-											</div>
-											<hr style="background: #D3DCE1; margin: 24px 0 24px 0;">
-											<div class="prefence_acco">
-												<h3 class="txt_destinations">Accommodations preference</h3>
-												<div class="select-checkbox-prefer">
-													<label for="accommodations" class="txtlabel">Accommodations</label>
-													<select class="tailor_select2 form-select select-input-inf" name="accommodation" id="accommodations">
-														{$clsTailorProperty->getSelectByProperty('_ACCOMMODATIONS')}
-													</select>
-												</div>
-												<div class="checkbox_type">
-													<p class="txt_roomtype" style="margin: 26px 0 8px 0">Type of room you prefer</p>
-													<div class="checkbox-room">
-														<div class="accordion-body d-flex flex-wrap">
-															{assign var=roomClass value=$clsTailorProperty->getListByProperty('_ROOM_CLASS')}
-															{section name=i loop=$roomClass}
-															<div class="form-check form-region me-3">
-																<label class="unika_checkbox"
-																	for="unika_room_{$roomClass[i].tailor_property_id}">
-																	{$roomClass[i].title}
-																	<input class="type_room form-check-region" type="checkbox" name="type_room[]"
-																		id="unika_room_{$roomClass[i].tailor_property_id}" value="{$roomClass[i].tailor_property_id}">
-																	<span class="checkmark"></span>
-																</label>
-															</div>
-															{/section}
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-
-					</section>
-
-					<section class="input_informationtrip">
-						<div class="travelinf">
-							<div class="container">
-								<div class="txt_inftravel">
-									<h3 class="txt_infotravel">Your Special Requirements</h3>
-
-									<div class="input_inf2">
-										<div class="row">
-											<div class="col-12">
-												<textarea class="form-control input_txttravel" name="special" cols="255" rows="5"
-													placeholder="Any must-see landmarks in your bucket list, desired accommodations, special food requirements, allergies…"
-													name="notes" style="height: 152px;"></textarea>
-											</div>
-										</div>
-									</div>
-
-								</div>
-
-							</div>
-					</section>
-
-					<section class="input_informationtrip">
-						<div class="travelinf">
-							<div class="container">
-								<div class="txt_captcha_btn">
-									<div class="btn_rqfQ text-center">
-										<button type="submit" class="btn btnrq" id="SubmitEnquiry">
-											{$core->get_Lang('Request for Quotation')}
-										</button>
-									</div>
-								</div>
-							</div>
-					</section>
-				</form>
-			</div>
-		</div>
-		<div class="tabbox" style="display: none">
-			<div class="wrap">				
-				<div class="page-title">
-					<p class="title_box_email bold600">{$core->get_Lang('Email confirm')}</p>
-					<p class="text_email">({$core->get_Lang('Email automatically sent to customers when confirming the service')})</p>
-				</div>
-				<div class="clearfix"></div>
-				<form id="newitem" method="post" action="" enctype="multipart/form-data" class="validate-form">
-					<div class="row-field">
-						<div style="width: 100%;padding: 15px 22px 18px 20px;font-family: 'Segoe UI';background: #F1F1F1;font-weight: 400;color: #222222;">
-							<center style="width: 100%;height: 70px;background: #101A36;">
-								<div style="width: 100%;height: 100%;max-width: 650px;display: flex;justify-content: space-between;align-items:center;padding:0px 5px">
-									<a href="{$DOMAIN_NAME}{$extLang}" title="IsoCMS.com"><img width="109" height="54" src="{$URL_IMAGES}/logo_isocms_mail.png" alt="IsoCMS.com"></a>
-									<div style="text-align: right;color: #fff;">
-										<p style="margin: 0;font-weight: 400;font-size: 14px;line-height: 19px; color: #FFFFFF;">{$core->get_Lang('Booking Code')}: {$oneItem.booking_code}</p>
-										<p style="margin: 0;font-weight: 400;font-size: 14px;line-height: 19px; color: #FFFFFF;">{$core->get_Lang('Verification code')}: 12321321</p>
-									</div>
-								</div>
-							</center>
-							<!--<table style="width: 100%;max-width: 650px;">
-								<tr>
-									<td style="padding: 0">
-										<div style="background:#fff;border-top: 5px solid #32A923;border-radius: 5px 5px 0px 0px;text-align:center;margin-top: 30px;">
-											<div style="padding: 30px 30px 0px;">
-												<img width="35" height="35" src="{$URL_IMAGES}/icon/icon_tick_email.png" alt="tick" style="margin-bottom: 19px">
-												<h1 style="font-weight: 700;font-size: 21px;line-height: 28px;color: #32A923;margin-bottom: 34px;">{$core->get_Lang('Your service has been confirmed')}</h1>
-												<div style="text-align: left;">
-													<p style="font-size: 16px;line-height: 21px;margin-bottom: 17px;display: flow-root">{$core->get_Lang('Dear')} {$oneItem.full_name},</p>
-													{foreach from=$tour_cart_store item=item name=i}
-														{assign var=tour_id 		value=$item.tour_id_z}
-														{assign var=title 			value=$clsTour->getTitle($tour_id)}
-														{assign var=Depart_point 	value=$clsTour->getDepartureCity($tour_id)}
-														{if $clsTour->getTextdepartureCityEnd($tour_id) != ''}
-															{assign var=address 		value=$clsTour->getTextdepartureCityEnd($tour_id)}
-														{else}
-															{assign var=address 		value=$fullTextAddress}
-														{/if}
-														<p style="font-size: 16px;line-height: 21px;margin-bottom: 17px;display: flow-root"><img src="{$URL_IMAGES}/icon/icon_tick.png" alt="tick" style="margin-right: 16px;margin-right: 16px;float: left;margin-top: 6px;"><span style=" width: calc(100% - 29px); float: left; "><b>{$tour_id}: [{$Depart_point}-{$address}] {$title}</b> {$core->get_Lang('is departed from')} <b>{$Depart_point}</b> {$core->get_Lang('days')} <b>{$clsISO->converTimeToText7($item.check_in_book_z)}</b></span></p>
-														<p style="font-size: 16px;line-height: 21px;margin-bottom: 17px;display: flow-root"><img src="{$URL_IMAGES}/icon/icon_tick.png" alt="tick" style="margin-right: 16px;margin-right: 16px;float: left;margin-top: 6px;"><span style=" width: calc(100% - 29px); float: left; "><b>{$core->get_Lang('Payment')}</b> {$core->get_Lang('yours will be handled by')} isoCMS. {$core->get_Lang('The')} "<b>{$core->get_Lang('Contact Information')}</b>" {$core->get_Lang('section below will give you more information')}</span></p>
-														<p style="font-size: 16px;line-height: 21px;margin-bottom: 48px;display: flow-root"><img src="{$URL_IMAGES}/icon/icon_tick.png" alt="tick" style="margin-right: 16px;margin-right: 16px;float: left;margin-top: 6px;"><span style=" width: calc(100% - 29px); float: left; ">{$core->get_Lang('You can cancel for FREE until')} <b>{$clsISO->converTimeToText8($item.check_in_book_z,7,'')}</b></span></p>
-													{/foreach}
-												</div>
-											</div>
-											<div style="padding: 20px;background: rgba(245, 131, 33, 0.1);border-radius: 0px 0px 5px 5px;">
-												<p style="font-size: 13px;line-height: 18px;color: #666666;width: 100%;max-width: 400px;margin: auto;">{$core->get_Lang('To view, cancel, or modify your booking, use our easy self-service')}.</p>
-											</div>
-										</div>
-									</td>
-								</tr>
-								{foreach from=$tour_cart_store item=item name=i}
-									{assign var=tour_id 		value=$item.tour_id_z}
-									{assign var=title 			value=$clsTour->getTitle($tour_id)}
-									{assign var=Depart_point 	value=$clsTour->getDepartureCity($tour_id)}
-									{assign var=fullTextAddress value=$clsTour->getTextdepartureCityEnd($tour_id,'full')}
-									{assign var=tour_option  	value=$clsTourOption->getTitle($item.tour__class)}
-									{assign var=lstService  	value=$clsTour->getListService($tour_id)}
-									{if $clsTour->getTextdepartureCityEnd($tour_id) != ''}
-										{assign var=address 		value=$clsTour->getTextdepartureCityEnd($tour_id)}
-									{else}
-										{assign var=address 		value=$fullTextAddress}
-									{/if}
-									{if $item.price_deposit}
-										{assign var=price_deposit  	value=$item.price_deposit}
-									{else}
-										{assign var=price_deposit  	value=0}
-									{/if}
-									{math assign="balance" equation="x-y" x=$item.total_price_z y=$price_deposit}
-									
-									<tr>
-										<td style="padding: 0">
-											<div style="background:#fff;border-radius: 5px;margin-top: 20px;padding: 30px 30px 24px;">
-												<div style="padding-bottom: 20px;clear: both;height: 100%;display: flow-root;border-bottom: 1px solid rgba(0, 0, 0, 0.1);">
-													<a href="{$clsTour->getLink($tour_id)}" title="{$title}"><img width="128" height="85" src="{$clsTour->getImage($tour_id,128,85)}" alt="{$title}" style="margin-right: 20px;width: 20%;height: auto; max-width: 128px;float: left">
-													<h3 style=" overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; font-weight: 700; font-size: 18px; line-height: 24px; color: #222222; width: calc(80% - 20px);float:left">{$tour_id}: [{$Depart_point}-{$address}] {$title}</h3></a>
-												</div>
-												<div style=" padding: 20px 0px; border-bottom: 1px solid rgba(0, 0, 0, 0.1); display: flex; justify-content: space-between; font-size: 14px; line-height: 19px; ">
-													<div style=" width: 50%; border-right: 1px solid rgba(0, 0, 0, 0.1); ">
-														<p style=" font-weight: 600; margin-bottom: 10px; ">{$core->get_Lang('Departure')}</p>
-														<p style=" margin-bottom: 5px; ">{$clsTour->getListDeparturePoint($tour_id)}</p>
-														<p style=" margin: 0; ">{$clsISO->converTimeToText7($item.check_in_book_z)}</p>
-													</div>
-													<div style="text-align: right;width:50%">
-														<p style=" margin-bottom: 10px; font-weight: 600; ">{$core->get_Lang('End')}</p>
-														<p style=" margin-bottom: 5px; ">{$fullTextAddress}</p>
-														<p style=" margin: 0; ">{$clsISO->converTimeToText5($clsTour->getTextEndDate($item.check_in_book_z,$tour_id))}</p>
-													</div>
-												</div>
-												<div style=" padding: 20px 0px; border-bottom: 1px solid rgba(0, 0, 0, 0.1); display: flex; justify-content: space-between; font-size: 14px; line-height: 19px; ">
-													<p style=" margin: 0; ">{$core->get_Lang('Tour option')}</p>
-													<p style=" margin: 0; ">{$tour_option}</p>
-												</div>
-												<div style=" padding: 20px 0px; border-bottom: 1px solid rgba(0, 0, 0, 0.1); display: flex; justify-content: space-between; font-size: 14px; line-height: 19px; ">
-													<p style=" margin: 0; ">{$core->get_Lang('Duration')}</p>
-													<p style=" margin: 0; ">{$clsTour->getTripDuration($tour_id)}</p>
-												</div>
-												<div style=" padding: 20px 0px; border-bottom: 1px solid rgba(0, 0, 0, 0.1); display: flex; justify-content: space-between; font-size: 14px; line-height: 19px; ">
-													<div>
-														<p style=" margin: 0; ">{$core->get_Lang('Tourer')}</p>
-													</div>
-													<div>
-														{if $item.number_infants}<p style=" margin-bottom: 5px; ">{$item.number_infants} x {$core->get_Lang('Infants')}</p>{/if}
-														{if $item.number_child_z}<p style=" margin: 0; ">{$item.number_child_z} x {$core->get_Lang('Children')}</p>{/if}
-											
-													</div>
-												</div>
-												<div style=" padding: 20px 0px; border-bottom: 1px solid rgba(0, 0, 0, 0.1); display: flex; justify-content: space-between; font-size: 14px; line-height: 19px; ">
-													<div>
-														<p style=" margin: 0; ">{$core->get_Lang('Services bonus')}</p>
-													</div>
-													<div>
-														<p style=" margin: 0; ">
-															{if $lstService}
-																{foreach from=$lstService item=itemService name=i}
-																	{$clsAddOnService->getTitle($itemService)}</br>
-																{/foreach}
-															{/if}
-														</p>
-													</div>
-												</div>
-												<div style=" padding-top: 20px; display: flex; justify-content: space-between; font-size: 14px; line-height: 19px; ">
-													<div>
-														<p style=" margin: 0; ">{$core->get_Lang('Customer Contact')}</p>
-													</div>
-													<div style="text-align: right">
-														<p style=" font-weight: 600; margin-bottom: 10px; ">{$oneItem.full_name}</p>
-														<p style=" font-weight: 600; margin-bottom: 10px; ">{$oneItem.email}</p>
-														<p style=" font-weight: 600; margin-bottom: 0px;">{$oneItem.phone}</p>
-													</div>
-												</div>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<td style="padding: 0">
-											<h2 style=" font-weight: 700; font-size: 16px; line-height: 21px; color: #222222; margin-top: 20px; ">{$core->get_Lang('Payment Details')}</h2>
-											<div style="background:#fff;border-radius: 5px;text-align:center;margin-top: 18px;">
-												<div style="padding: 30px">
-													<p style="margin-bottom: 13px; display: flex; justify-content: space-between; font-size: 16px; line-height: 21px; ">
-														<span style=" margin: 0; ">{$core->get_Lang('Total price service')}</span>
-														<span style=" margin: 0; ">{$item.total_price_z|number_format:0:".":" "} đ</span>
-													</p>
-													<p style="margin-bottom: 13px; display: flex; justify-content: space-between; font-size: 16px; line-height: 21px; ">
-														<span style=" margin: 0; ">{$core->get_Lang('Deposit')} ({if $item.deposit}{$item.deposit}{else}0{/if}%)</span>
-														<span style=" margin: 0; ">{$item.price_deposit|number_format:0:".":" "} đ</span>
-													</p>
-													<p style="margin-bottom: 13px; display: flex; justify-content: space-between; font-size: 16px; line-height: 21px; ">
-														<span style=" margin: 0; ">{$core->get_Lang('Balance')}</span>
-														<span style=" margin: 0; ">{$balance|number_format:0:".":" "} đ</span>
-													</p>
-													<p style="margin-bottom: 13px; display: flex; justify-content: space-between; font-size: 16px; line-height: 21px; ">
-														<span style=" margin: 0; font-weight: 600">{$core->get_Lang('Total payment')}</span>
-														<span style=" margin: 0; font-weight: 600 ">{$item.price_deposit|number_format:0:".":" "} đ</span>
-													</p>
-												</div>
-												<div style="padding: 18px;background: #FFE62E;border-radius: 0px 0px 5px 5px;">
-													<p style="width: 100%;max-width: 440px;margin: auto;font-size: 14px;line-height: 20px;text-align: center;color: #222222;">{$core->get_Lang('You must pay')} <span style=" font-weight: 600; color: rgba(255, 0, 0, 1); ">{$balance|number_format:0:".":" "} đ</span> {$core->get_Lang('to us 1 day before departure')} ({$clsISO->converTimeToText8($item.check_in_book_z)})</p>
-												</div>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<td style="padding: 0">
-											<div style="background:#fff;border-radius: 5px;margin-top: 18px;padding: 30px;">
-												<h2 style=" font-weight: 700; font-size: 18px; line-height: 24px; color: #222222; margin-bottom: 20px; ">{$core->get_Lang('Customer support')}</h2>
-												<p style=" font-size: 15px; line-height: 24px; color: #222222; margin: 0; ">{$core->get_Lang('Using our convenient support mode, travelers can take action to resend confirmation, make a request, cancel a room or modify contact information')}.</p>
-												<div style=" display: flex; flex-wrap: wrap; justify-content: space-between; text-align: center; ">
-													<div style="min-width: 163px; width: 50%; margin-top: 33px; ">
-														<div style="width: 53px;height: 53px;margin: auto;margin-bottom: 10px;background: #FFE62E;border-radius: 50%;display: flex;align-items: center;justify-content: center;"><img src="{$URL_IMAGES}/icon/icon_mail_send.png" alt=""></div>
-														<p style=" width: 100%; max-width: 160px; margin: auto; font-weight: 600; font-size: 16px; line-height: 24px; text-align: center; color: #2B439F; margin-bottom: 10px; ">{$core->get_Lang('Share confirmation')}</p>
-														<p style=" width: 100%; max-width: 164px; margin: auto; font-size: 14px; line-height: 20px; text-align: center; color: #222222; ">{$core->get_Lang('Resend service confirmations to yourself or others')}</p>
-													</div>
-													<div style="min-width: 163px; width: 50%; margin-top: 33px; ">
-														<div style="width: 53px;height: 53px;margin: auto;margin-bottom: 10px;background: #FFE62E;border-radius: 50%;display: flex;align-items: center;justify-content: center;"><img src="{$URL_IMAGES}/icon/icon_story.png" alt=""></div>
-														<p style=" width: 100%; max-width: 160px; margin: auto; font-weight: 600; font-size: 16px; line-height: 24px; text-align: center; color: #2B439F; margin-bottom: 10px; ">{$core->get_Lang('Special requirements')}</p>
-														<p style=" width: 100%; max-width: 164px; margin: auto; font-size: 14px; line-height: 20px; text-align: center; color: #222222; ">{$core->get_Lang('Add some special requests for the best trip')}</p>
-													</div>
-													<div style="min-width: 163px; width: 50%; margin-top: 33px; ">
-														<div style="width: 53px;height: 53px;margin: auto;margin-bottom: 10px;background: #FFE62E;border-radius: 50%;display: flex;align-items: center;justify-content: center;"><img src="{$URL_IMAGES}/icon/icon_cancel_file.png" alt=""></div>
-														<p style=" width: 100%; max-width: 160px; margin: auto; font-weight: 600; font-size: 16px; line-height: 24px; text-align: center; color: #2B439F; margin-bottom: 10px; ">{$core->get_Lang('Cancel service')}</p>
-														<p style=" width: 100%; max-width: 164px; margin: auto; font-size: 14px; line-height: 20px; text-align: center; color: #222222; ">{$core->get_Lang('Cancel online service easily before')} {$clsISO->converTimeToText8($item.check_in_book_z,7,'')}</p>
-													</div>
-													<div style="min-width: 163px; width: 50%; margin-top: 33px; ">
-														<div style="width: 53px;height: 53px;margin: auto;margin-bottom: 10px;background: #FFE62E;border-radius: 50%;display: flex;align-items: center;justify-content: center;"><img src="{$URL_IMAGES}/icon/icon_contact_book.png" alt=""></div>
-														<p style=" width: 100%; max-width: 160px; margin: auto; font-weight: 600; font-size: 16px; line-height: 24px; text-align: center; color: #2B439F; margin-bottom: 10px; ">{$core->get_Lang('Contact Information')}</p>
-														<p style=" width: 100%; max-width: 164px; margin: auto; font-size: 14px; line-height: 20px; text-align: center; color: #222222; ">{$core->get_Lang('Change some contact information')}</p>
-													</div>
-												</div>
-											</div>
-										</td>
-									</tr>
-								{/foreach}
-								<tr>
-									<td style="padding: 0">
-									{assign var=CompanyAddress value=CompanyAddress_|cat:$_LANG_ID}
-										<div style="background:#fff;border-radius: 5px;margin-top: 18px;padding: 30px 30px 34px;">
-											<h2 style=" font-weight: 700; font-size: 18px; line-height: 24px; color: #222222; margin-bottom: 20px; ">{$core->get_Lang('Need more support information')}?</h2>
-											<p style=" font-size: 15px; line-height: 24px; color: #222222; margin-bottom: 20px; ">{$core->get_Lang('Let your hotline')} <b>{$clsConfiguration->getValue('CompanyHotline')}</b> {$core->get_Lang('always be within reach')}. {$core->get_Lang('You will need it if you want to contact our customer support')}.</p> 
-											<p style=" font-size: 15px; line-height: 24px; color: #222222; margin-bottom: 20px; ">{$core->get_Lang('Quickly learn the “how” in our content diverse FAQ library')}.</p>
-											<div style=" height: 46px; line-height: 46px; background: rgba(255, 230, 46, 0.2); border: 1px solid #FFE62E; text-align: center; ">
-												<a href="{$clsISO->getLink('faqs')}" title="{$core->get_Lang('Faqs')}" style=" font-weight: 600; font-size: 16px;color: #000000; ">{$core->get_Lang('Questions frequently')}</a>
-											</div>
-											
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td style="padding: 0">
-										<div style="border-radius: 5px;padding: 30px 30px 34px;">
-											<p style=" font-weight: 600; font-size: 14px; line-height: 19px; color: #555555; text-transform: uppercase; text-align: center; margin-bottom: 10px; ">{$core->get_Lang('Online tourism business plan')} - ISOCMS</p>
-											<div style=" font-weight: 400; font-size: 14px; line-height: 19px; text-align: center; color: #555555; ">
-												<p style=" margin-bottom: 5px; ">{$core->get_Lang('Phone')}: {$clsConfiguration->getValue('CompanyHotline')}</p>
-												<p style=" margin-bottom: 5px; ">{$core->get_Lang('Address')}: {$clsConfiguration->getValue($CompanyAddress)}</p>
-												<p style=" margin-bottom: 5px; ">{$core->get_Lang('Email')}: <a href="mailto:{$clsConfiguration->getValue('CompanyEmail')}" title="{$clsConfiguration->getValue('CompanyEmail')}">{$clsConfiguration->getValue('CompanyEmail')}</a></p>
-												<p style=" margin-bottom: 20px; ">{$core->get_Lang('Website')}: <a href="https://isocms.com" title="vietiso.com">https://isocms.com</a></p>
-											</div>
-											<div style=" text-align: center; ">
-												<a href="http://www.facebook.com/{$clsConfiguration->getValue('SiteFacebookLink')}" title="{$core->get_Lang('Facebook')}" style=" margin-right: 10px; "><img src="{$URL_IMAGES}/icon/icon_fb.png" alt="facebook"></a>
-												<a href="http://www.twitter.com/{$clsConfiguration->getValue('SiteTwitterLink')}" title="{$core->get_Lang('Twitter')}" style=" margin-right: 10px; "><img src="{$URL_IMAGES}/icon/icon_twiter.png" alt="twiter"></a>
-												<a href="http://www.youtube.com/{$clsConfiguration->getValue('SiteYoutubeLink')}" title="{$core->get_Lang('Youtube')}" style=" margin-right: 10px; "><img src="{$URL_IMAGES}/icon/icon_youtube.png" alt="{$core->get_Lang('Youtube')}"></a>
-											</div>
-										</div>
-									</td>
-								</tr>
-							</table>-->
-							{$oneItem.booking_html|html_entity_decode}
-						</div>
+					<div class="modal-body">
+						<p class="error" style="color: red;display: none"></p>
+						<div class="unikasia_body"></div>
+					</div>
+					<div class="modal-footer version-xs">
+						<button type="button" class="btn btn-default unika_close_modal">
+							{$core->get_Lang('Close')}
+						</button>
+						<button type="submit" class="btn btn-success submitTailorMadeTour">
+							{$core->get_Lang('Update')}
+						</button>
 					</div>
 				</form>
+
 			</div>
 		</div>
-	</div>
+        <div class="tabbox box02" style="display: none">
+            <div class="wrap">
+                <div class="page-title">
+                    <p class="title_box_email bold600">{$core->get_Lang('Email confirm')}</p>
+                    <p class="text_email">({$core->get_Lang('Email automatically sent to customers when confirming the
+                        service')})</p>
+                </div>
+                <div class="clearfix"></div>
+                <form id="newitem" method="post" action="" enctype="multipart/form-data" class="validate-form">
+                    <div class="row-field">
+                        {$clsClassTable->sendMail($oneItem['tailor_made_tour_id'])}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
-var text_price_min_error = "{$core->get_Lang('Price min')}";
-var text_price_max_error = "{$core->get_Lang('Price max')}";
-var text_price_error = "{$core->get_Lang('Amount must be greater than 0')}";
-var text_payment_term_error = "{$core->get_Lang('Payment term is required')}";
-var $booking_id = 	"{$pvalTable}";
-var comfirm_cancel_booking="{$core->get_Lang('Are you sure cancel booking?')}";
+let listNationality = `{$lstCountryRegion}`;
+let titleOption = `{$clsISO->makeSelectTitle($title)}`;
+let _ARRIVAL_AIRPORT = `{$clsTailorProperty->getSelectByProperty('_ARRIVAL_AIRPORT')}`;
+let listTravelStyle = `{$listTravelStyle}`;
+let _TOUR_GUIDE = `{$clsTailorProperty->getSelectByProperty('_TOUR_GUIDE')}`;
+let _MEALS = `{$clsTailorProperty->getSelectByProperty('_MEALS')}`;
+let _ACCOMMODATIONS = `{$clsTailorProperty->getSelectByProperty('_ACCOMMODATIONS')}`;
+let _ROOM_CLASS = `{json_encode($clsTailorProperty->getListByProperty('_ROOM_CLASS'))}`;
+let lstCountry = `{$lstCountry}`;
+let lstCitiesValue = `{json_encode($clsClassTable->listValueCity($oneItem['tailor_made_tour_id']))}`
+let lstCitiesOther = `{json_encode($clsClassTable->listOtherCity($oneItem['tailor_made_tour_id']))}`
+
+let title = "{$oneItem.title}";
+let name = "{$oneItem.name}";
+let nationality = "{$oneItem.nationality}";
+let email = "{$oneItem.email}";
+let phone = "{$oneItem.phone}";
+let arrival_date = "{$oneItem.arrival_date}";
+let social_media = "{$oneItem.social_media}";
+let duration = "{$oneItem.duration}";
+let budget = "{$oneItem.budget}";
+let arrival_airport = "{$oneItem.arrival_airport}";
+let tour_guide = "{$oneItem.tour_guide}";
+let adult = "{$oneItem.adult}";
+let children = "{$oneItem.children}";
+let infant = "{$oneItem.infant}";
+let travel_style = "{$oneItem.travel_style}";
+let meals = "{$oneItem.meals}";
+let suitable = "{$oneItem.suitable}";
+let participants = "{$clsClassTable->getParticipants($oneItem.tailor_made_tour_id)}";
+let accommodation = "{$oneItem.accommodation}";
+let type_room = `{json_encode($clsClassTable->getArray($oneItem.type_room))}`;
+let special = "{$oneItem.special}";
+let destinations = `{json_encode($clsClassTable->getArray($oneItem.destinations))}`;
 </script>
 {literal}
 <style type="text/css">
-.table-mce{margin:0 auto}
-td{ font-size:13px !important}
-.hidden { display:none !important}
+.item_booking_tab{
+	cursor: pointer;
+}
+
+.item_booking_tab.active{
+	background: rgba(245, 131, 33, 0.1);
+}
+
+.item_booking_tab.active a{
+	color: #f58321 !important;
+	font-weight: 700 !important;
+}
+
+.table-mce {
+    margin: 0 auto
+}
+
+td {
+    font-size: 13px !important
+}
+
+.hidden {
+    display: none !important
+}
+
+.select2 {
+	width: 100% !important;
+}
+
+.unika_row{
+	display: flex;
+	justify-content: space-between;
+}
+
+.unika_row .form-group{
+	width: 30%;
+}
+
+.form-region {
+    display: flex;
+    padding: 9px 10px;
+    align-items: center;
+    border-radius: 4px;
+    border: 1px solid #CCC;
+    background: #FBFBFB;
+    margin-top: 12px;
+	width: 40%;
+}
+
+.form-region label {
+    color: #111D37;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+	margin: 0;
+}
+
+.unika_checkbox {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    cursor: pointer;
+    font-size: 16px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+	margin-bottom: 10px;
+	line-height: 24px;
+}
+
+/* Hide the browser's default checkbox */
+.unika_checkbox input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 24px;
+  width: 24px;
+  border-radius: 4px;
+  border: 1px solid var(--Neutral-4, #D3DCE1);
+  background-color: #FFFFFF;
+}
+
+/* When the checkbox is checked, add a blue background */
+.unika_checkbox input:checked ~ .checkmark {
+  background-color: #FFA718;
+  border: 1px solid #FFA718;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.unika_checkbox input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.unika_checkbox .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.form-check-label .checkmark{
+  top: 5px;
+}
+
+.unika_type_room {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.unika_type_city {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+	padding-bottom: 15px;
+	gap: 15px;
+}
+
+.city_other{
+	margin-top: 15px;
+}
+
+.unika_option{
+	display: none;
+}
+
+.unika_option.active{
+	display: block;
+}
+
+label.error{
+	display: block !important;
+	font-size: 12px !important;
+    color: red;
+}
 </style>
 <script>
-	$('.tailor_select2').select2();
+	$(function(){
+		listNationality = JSON.parse(listNationality);
+		listTravelStyle = JSON.parse(listTravelStyle);
+		_ROOM_CLASS = JSON.parse(_ROOM_CLASS);
+		type_room = JSON.parse(type_room);
+		destinations = JSON.parse(destinations);
+		lstCountry = JSON.parse(lstCountry);
+		lstCitiesValue = JSON.parse(lstCitiesValue);
+		lstCitiesOther = JSON.parse(lstCitiesOther);
+
+		function renderTypeRoom(){
+			let html = '';
+			$.each(_ROOM_CLASS, function(index, item){
+				html += `
+					<div class="form-check form-region"> <label class="unika_checkbox" for="unika_room_${index}">
+						${item.title}
+						<input class="type_room form-check-region" type="checkbox" name="type_room[]" id="unika_room_${index}" value="${item.tailor_property_id}"> 
+						<span class="checkmark"></span> 
+						</label> 
+					</div>
+				`;
+			})
+
+			return html;
+		}
+
+		function renderOptionNationality(){
+			let html = '';
+			$.each(listNationality, function(index, item){
+				{
+				html += `
+					<option value="${item.country_id}">${item.title}</option>
+				`;
+			}
+			})
+
+			return html;
+		}
+
+		function renderTravelStyle(){
+			let html = '';
+			$.each(listTravelStyle, function(index, item){
+				{
+				html += `
+					<option value="${item.tourcat_id}">${item.title}</option>
+				`;
+			}
+			})
+
+			return html;
+		}
+
+		function renderInformation(){	
+			let html = `
+				<input name="check_information" type="hidden" class="form-control" value="1">
+				<div class="form-group box_validate"> 
+					<label class="col-form-label text-bold">
+						Title<span class="text-red">*</span>
+					</label> 
+					<select id="title" name="title" class="tailor_select2 form-control">
+						<option value="" disabled selected hidden>-- Please Select --</option>
+						${titleOption}
+					</select>
+				</div>
+				<div class="form-group box_validate"> 
+					<label class="col-form-label text-bold">
+						Full Name<span class="text-red">*</span>
+					</label> 
+					<input id="fullname" name="name" type="text" class="form-control" value="${name}" placeholder="Enter name">
+				</div>
+				<div class="form-group box_validate"> 
+					<label class="col-form-label text-bold">
+						Nationality <span class="text-red">*</span>
+					</label> 
+					<select id="nationality" name="nationality" class="nationality tailor_select2 form-control">
+						<option value="" disabled selected hidden>-- Please Select --</option>
+						${renderOptionNationality()}
+					</select>
+				</div>
+				<div class="form-group box_validate"> 
+					<label class="col-form-label text-bold">
+						Email<span class="text-red">*</span>
+					</label> 
+					<input id="email" name="email" type="text" class="form-control" value="${email}" placeholder="Enter email">
+				</div>
+				<div class="form-group box_validate"> 
+					<label class="col-form-label text-bold">
+						Phone<span class="text-red">*</span>
+					</label> 
+					<input id="phone" name="phone" type="text" class="form-control" value="${phone}" placeholder="Enter phone">
+				</div>
+				<div class="form-group"> 
+					<label class="col-form-label text-bold">
+						Social Media
+					</label> 
+					<input id="social_media" name="social_media" type="text" class="form-control" value="${social_media}" placeholder="Enter your name">
+				</div>
+			`;
+
+			$('.unikasia_body').html(html);
+			$("#title").val(title);
+			$('.nationality').val(nationality);
+		}
+		
+		function renderPreference(){
+			let html = `
+				<input name="check_preference" type="hidden" class="form-control" value="1">
+				<div class="form-group"> 
+					<label class="col-form-label text-bold">
+						Travel Date
+					</label> 
+					<input type="text" class="form-control arrival_date" value="${arrival_date}" name="arrival_date" placeholder="">
+				</div>
+				<div class="form-group"> 
+					<label class="col-form-label text-bold">
+						Duration
+					</label> 
+					<input id="duration" name="duration" type="text" class="duration form-control" value="${duration}" placeholder="Enter duration">
+				</div>
+				<div class="form-group"> 
+					<label class="col-form-label text-bold">
+						Budget per person
+					</label> 
+					<input id="budget" name="budget" type="text" class="budget form-control" value="${budget}" placeholder="Enter budget">
+				</div>
+				<div class="form-group"> 
+					<label class="col-form-label text-bold">
+						Arrival Airport
+					</label> 
+					<select id="arrival_airport" name="arrival_airport" class="arrival_airport tailor_select2 form-control">
+						${_ARRIVAL_AIRPORT}
+					</select>
+				</div>
+				<div class="form-group"> 
+					<label class="col-form-label text-bold">
+						Tour guide preference
+					</label> 
+					<select id="tour_guide" name="tour_guide" class="tour_guide tailor_select2 form-control">
+						${_TOUR_GUIDE}
+					</select>
+				</div>
+				<div class="form-group"> 
+					<label class="col-form-label text-bold">
+						Tour guide preference
+					</label> 
+					<select id="tour_guide" name="tour_guide" class="tour_guide tailor_select2 form-control">
+						${_TOUR_GUIDE}
+					</select>
+				</div>
+				<div class="form-group"> 
+					<label class="col-form-label text-bold">
+						Participants
+					</label> 
+					<div class="unika_row">
+						<div class="form-group"> 
+							<label class="col-form-label">
+								Adults
+							</label> 
+							<input type="number" class="form-control adult" value="${adult}" name="adult" placeholder="">
+						</div>
+						<div class="form-group"> 
+							<label class="col-form-label">
+								Children
+							</label> 
+							<input type="number" class="form-control children" value="${children}" name="children" placeholder="">
+						</div>
+						<div class="form-group"> 
+							<label class="col-form-label">
+								Infants
+							</label> 
+							<input type="number" class="form-control infant" value="${infant}" name="infant" placeholder="">
+						</div>
+					</div>
+				</div>
+				<div class="form-group"> 
+					<label class="col-form-label text-bold">
+						Travel Styles & Activities
+					</label> 
+					<select id="travel_style" name="travel_style" class="travel_style tailor_select2 form-control">
+						<option value="">-- Travel Styles --</option>
+						${renderTravelStyle()}
+					</select>
+				</div>
+				<div class="form-group"> 
+					<label class="col-form-label text-bold">
+						Meals
+					</label> 
+					<select id="meals" name="meals" class="meals tailor_select2 form-control">
+						${_MEALS}
+					</select>
+				</div>
+				<div class="form-group"> 
+					<label class="col-form-label text-bold">
+						The most suitable time to reach
+					</label> 
+					<input id="suitable" name="suitable" type="text" class="suitable form-control" value="${suitable}" placeholder="Enter suitable">
+				</div>
+			`;
+			
+			$('.unikasia_body').html(html);
+			$('.arrival_date').datepicker({
+				dateFormat: 'yy-mm-dd',
+				minDate: new Date()
+			});
+			$('.arrival_airport').val(arrival_airport);
+			$('.tour_guide').val(tour_guide);
+			$('.meals').val(meals);
+			$('.travel_style').val(travel_style);
+		}
+		
+		function renderAccommodations(){
+			let html = `
+				<input name="check_accommodations" type="hidden" class="form-control" value="1">
+				<div class="form-group"> 
+					<label class="col-form-label text-bold">
+						Arrival Airport
+					</label> 
+					<select id="accommodation" name="accommodation" class="accommodation tailor_select2 form-control">
+						${_ACCOMMODATIONS}
+					</select>
+				</div>
+				<div class="form-group"> 
+					<label class="col-form-label text-bold">
+						Type of room
+					</label> 
+					<div class="unika_type_room">
+						${renderTypeRoom()}	
+					</div>
+
+				</div>
+			`;
+			
+			$('.unikasia_body').html(html);
+			$('.accommodation').val(accommodation);
+			$('.type_room').each(function(){
+				let value = $(this).val();
+				if(type_room.includes(value)){
+					$(this).prop('checked', true);
+				}
+			})
+		}
+
+		function renderSpecial(){
+			let html = `
+				<input name="check_special" type="hidden" class="form-control" value="1">
+				<div class="form-group"> 
+					<textarea class="form-control input_txttravel" name="special" cols="255" rows="5" placeholder="Any must-see landmarks in your bucket list, desired accommodations, special food requirements, allergies…" style="height: 152px;">${special}</textarea>
+				</div>
+			`;
+
+			$('.unikasia_body').html(html);
+		}
+
+		function renderListCity(cities, country_id){
+			let html = '';
+			$.each(cities, function(index, item){
+				html += `
+					<option value="${item.city_id}">${item.title}</option>
+				`;
+			})
+
+			return html;
+		}
+
+		function renderDestinations(){
+			let html = '<input name="check_destinations" type="hidden" class="form-control" value="1">';
+			$.each(lstCountry, function(index, item){
+				html += `
+					<div class="form-group unika_form_group"> 
+						<label class="unika_checkbox" for="checkbox_parent_${index}">
+							${item.title}
+							<input class="form-check-region" name="destination_country[]" type="checkbox" value="${item.country_id}"
+								id="checkbox_parent_${index}">
+							<span class="checkmark"></span>
+						</label>
+						<div class="unika_option form-group">
+							<span class="check_all_select fr" style="margin-bottom:10px;cursor: pointer">Select all</span>
+							<select name="destinations[${item.country_id}][cities]" class="js-select2-multi form-control" multiple="multiple">
+								${renderListCity(item.cities, item.country_id)}
+							</select>
+							<input type="text" class="form-control unika_city_txt city_other city_other_${item.country_id}" value="" name="destinations[${item.country_id}][text]" placeholder="Other">	
+						</div>
+					</div>
+				`;
+			})
+
+			$('.unikasia_body').html(html);
+
+			$('.unika_checkbox input').each(function(){
+				let value = $(this).val();
+				if(destinations.includes(value)){
+					$(this).prop('checked', true);
+					$(this).parents('.unika_form_group').find('.unika_option').addClass('active');
+				}
+			})
+
+			
+			$('.js-select2-multi option').each(function(){
+				let value = $(this).attr('value');
+				if(lstCitiesValue.includes(value)){
+					$(this).prop('selected', true);
+				}
+			})
+
+			$(".js-select2-multi").select2({
+				placeholder: 'Select options',
+				closeOnSelect: false,
+				allowClear: true 
+			});
+
+			$.each(lstCitiesOther, function(index, item){
+				$(`.city_other_${item.country_id}`).val(item.other);
+			})
+		}
+
+		$(document)
+			.on('click', '.unika_close_modal', function(){
+				$('#unikasia_form_edit').modal('hide');
+			})
+			.on('click', '.unikasia_btn_edit', function(){
+				let data_id = $(this).attr('data-id');
+				if(data_id == 'information'){
+					renderInformation();
+				}else if(data_id == 'preference'){
+					renderPreference();
+				}else if(data_id == 'accommodations'){
+					renderAccommodations();
+				}else if(data_id == 'special'){
+					renderSpecial();
+				}else if(data_id == 'destinations'){
+					renderDestinations();
+				}
+		
+				$('.tailor_select2').select2();
+			})
+			.on('click', '.unika_checkbox', function(){
+				let unika_option = $(this).parents('.unika_form_group').find('.unika_option');
+				if($(this).find('input').prop('checked')){
+					unika_option.addClass('active');
+				}else{
+					unika_option.removeClass('active');
+				}
+			})
+			.on('click', '.item_booking_tab', function(){
+				$('.item_booking_tab').removeClass('active');
+				$('.tabbox').hide();
+				let data_box = $(this).attr('data-box');
+				$(`.${data_box}`).show();
+				$(this).addClass('active');
+			})
+			.on('click', '.check_all_select', function(){
+				let allOptions = $(this).parents('.unika_option').find('option');
+				allOptions.each(function() {
+					$(this).prop('selected', true);
+				});
+				$('.js-select2-multi').trigger('change');
+			})
+
+		$('#unika_form_tailor').validate({
+            errorPlacement: function (error, element) {
+                error.appendTo(element.parents(".box_validate"));
+                error.wrap("<span class='errors'>");
+                element.parents('.box_validate').addClass('validate_input');
+            },
+            highlight: function (element) {
+                $(element).parents('.box_validate').addClass('validate_input')
+                $(element).addClass('form-control-danger')
+            },
+            success: function (label, element) {
+                $(element).parents('.box_validate').removeClass('validate_input')
+                $(element).removeClass('form-control-danger')
+                label.parents('.errors').remove();
+            },
+            ignore: [],
+            debug: false,
+            rules: {
+                title: "required",
+                name: "required",
+                nationality: "required",
+                email: {
+                    required: true,
+                    email: true
+                },
+                phone: "required",
+                recapcha: "required",
+            },
+            messages: {
+                title: "Your title should not be empty",
+                name: "Your full name should not be empty",
+                nationality: "Please select country",
+                email: {
+                    required: "Your email should not be empty",
+                    email: "Please enter a valid email address"
+                },
+                phone: "Your telephone should not be empty",
+            },
+            submitHandler: function () {
+                let formData = new FormData();
+
+                $('#unika_form_tailor').find('input, select, textarea').each(function(){
+                    let name_val = $(this).attr('name');
+					if(name_val){
+						let value = $(this).val();
+						console.log('value', value)
+						let is_check_parents = $(this).parents('.unika_form_group').find('.unika_checkbox input').prop('checked')
+						if($(this).hasClass('form-check-region') || $(this).hasClass('js-select2-multi')  ){
+							if($(this).hasClass('type_room') && $(this).prop('checked')){
+								formData.append(name_val, value);
+							}else if(is_check_parents && value){
+								formData.append(name_val, value);
+							}
+						}else if($(this).hasClass('unika_check_all')){
+							if($(this).prop('checked')){
+								formData.append(name_val, value);
+							}
+						}else if($(this).hasClass('unika_city_txt')){
+							if(value != '' && is_check_parents){
+								formData.append(name_val, value);
+							}
+						}else{
+							formData.append(name_val, value);
+						}
+					}
+                    
+                })
+
+                $.ajax({
+                    type: "POST",
+                    url: path_ajax_script+"/index.php?mod=booking&act=ajaxUpdateTailor",
+                    data: formData,
+                    processData: false, 
+                    beforeSend: function (xhr) {
+                        // vietiso_loading(1);
+                    },
+                    contentType: false,
+                    dataType: 'JSON',
+                    success: function (res) {
+						console.log('res:', res)
+						vietiso_loading(0);
+						alert(res.message);
+                        if(res.result){
+                            window.location.reload();
+                        }   
+						
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.log('Lỗi:', textStatus, errorThrown);
+                    }
+                });
+            }
+        });
+	})
 </script>
 {/literal}

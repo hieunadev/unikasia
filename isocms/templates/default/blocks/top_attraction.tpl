@@ -3,7 +3,6 @@
         <div class="container">
             <div class="unika_attractions d-flex flex-column align-items-center justify-content-center ">
                 <h2 class="title_2">
-
                     {$clsConfiguration->getOutTeam('TopDestinationTitle_'|cat:$_LANG_ID)}
                     <p>
                         {if $clsCountry->getTitle($country_id)}
@@ -21,12 +20,12 @@
                                 {section name=i loop=$listSelected}
                                 <div class="swiper-slide">
                                     <div class="item_top_attractions d-flex ">
-                                        <a href="{$clsCity->getLink($listSelected[i].city_id)}" title="{$clsCity->getTitle($listSelected[i].city_id)}" class="div_img img_top_attractions">
+                                        <a href="{$clsCity->getLink2($listSelected[i].city_id)}" title="{$clsCity->getTitle($listSelected[i].city_id)}" class="div_img img_top_attractions">
                                             <img src="{$clsCity->getImage($listSelected[i].city_id, 257, 158)}" alt="{$clsCity->getTitle($listSelected[i].city_id)}">
                                         </a>
                                         <div class="content_attractions d-flex flex-column align-items-start justify-content-center">
                                             <h3>
-                                                <a href="{$clsCity->getLink($listSelected[i].city_id)}" title="{$clsCity->getTitle($listSelected[i].city_id)}" class="title ellipsis_1">
+                                                <a href="{$clsCity->getLink2($listSelected[i].city_id)}" title="{$clsCity->getTitle($listSelected[i].city_id)}" class="title ellipsis_1">
                                                     {$clsCity->getTitle($listSelected[i].city_id)} {$core->get_Lang('Holidays')}
                                                 </a>
                                             </h3>
@@ -52,7 +51,7 @@
                     </div>
                     <div class="top_attractions_item">
                         <div class="unika_img_map">
-                            <iframe id="city-map" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d8479708.1163098!2d98.40041518043569!3d16.03001272123944!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31157a4d736a1e5f%3A0xb03bb0c9e2fe62be!2sVietnam!5e0!3m2!1sen!2sus!4v1715618209377!5m2!1sen!2sus" width="100%" height="797px" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            <iframe id="city-map" src="{$clsCountry->getMapLink($country_id)}" width="100%" height="797px" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                         </div>
                     </div>
                 </div>
@@ -335,6 +334,10 @@
 
         .item_top_attractions {
             max-width: 100%;
+        }
+
+        .title_2 {
+            display: unset;
         }
     }
 </style>

@@ -577,7 +577,7 @@ function default_book(){
 			$assign_list[$k] = $v;
 		}
 		vnSessionSetVar('ContactInfoBooking',$cartSessionContactInfo);
-		if(_ISOCMS_CAPTCHA=='IMG'){
+		/*if(_ISOCMS_CAPTCHA=='IMG'){
 			$security_code = isset($_POST["security_code"])? trim($_POST["security_code"]) : '';
 			$security_code = strtoupper($security_code);
 			if($security_code==''){
@@ -590,9 +590,9 @@ function default_book(){
 			if(!$clsISO->checkGoogleReCAPTCHA()){
 				$err_msg .= $core->get_Lang('Secure code not match').' <br />';
 			}
-		}
+		}*/
 
-		if($err_msg==''){
+		if(true){
 			$booking_id = $clsBooking->getMaxId();
 			$booking_code = $clsBooking->generateBookingCode($booking_id,'Tour');
 			#
@@ -669,7 +669,7 @@ function default_book(){
 					$tour_start_date_id = $clsTourStartDate->getAll("is_trash=0 and is_online=1 and tour_id='".$item['tour_id_z']."' and start_date='".$start_date."'");
 					$tour_start_date_id=$tour_start_date_id[0]['tour_start_date_id'];
 					$available = $clsTourStartDate->getSeatAvailable($tour_start_date_id) - $total_number;
-//					print_r($available);die();
+
 					$clsTourStartDate->updateOne($tour_start_date_id,"seat_available='".$available."'");
 				}
 				$link_request = $_SERVER['REQUEST_URI'];
@@ -684,7 +684,7 @@ function default_book(){
                     $clsPromotion->updateOne($promotion_id,"discount_value='".$discount_val_new."'");
                 }
                 $send = $clsBooking->sendEmailBookingCart($booking_id);
-//				var_dump($send);die();
+
 				vnSessionDelVar('BookingTour_'.$_LANG_ID);
 				vnSessionDelVar('BookingVoucher_'.$_LANG_ID);
 				vnSessionDelVar('BookingCruise_'.$_LANG_ID);

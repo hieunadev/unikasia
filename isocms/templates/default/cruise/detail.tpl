@@ -8,8 +8,15 @@
                     <h1 class="cruise_title ">
                         {$clsCruise->getTitle($cruise_id)}
                     </h1>
-                    <div class="list_btn d-flex ">
-                        <button class="div_img btn_content_1"><i class="fa-light fa-share-nodes"></i></button>
+                    <div class="list_btn d-flex align-items-center">
+                        <div class="social-icon-share-blog" style="display: none;">
+                            <div class="sharethis-inline-share-buttons" data-image="{$DOMAIN_NAME}{$clsISO->getPageImageShare($guide_id,'Guide',$one)}" data-url="{$DOMAIN_NAME}{$curl}" data-title="{$guide_title}"></div>
+                            <script type="text/javascript" src="{$URL_JS}/jquery.sharer.js?v={$up_version}"></script>
+                            {assign var=link_share value=$curl}
+                            {assign var=title_share value=$guide_title}
+                            {$clsISO->getBlock('box_share',["link_share"=>$link_share,"title_share"=>$title_share])}
+                        </div>
+                        <button class="div_img btn_content_1" title="{$core->get_Lang('Share')}"><i class="fa-light fa-share-nodes"></i></button>
                     </div>
                 </div>
                 <div class="cruise_information d-flex justify-content-between align-items-end flex-wrap">
@@ -26,19 +33,21 @@
                         <div class="cruise_medium d-flex  align-items-center flex-wrap">
                             <div class="count_star">{$clsReviews->getReviews($cruise_id, 'avg_point', 'cruise')}</div>
                             <p>{$clsReviews->getReviews($cruise_id, 'txt_review', 'cruise')}</p>
-                            <span class="view">({$clsReviews->getReviews($cruise_id, '', 'cruise')} reviews)</span>
-                            <a href="#reviews" class="show_all">Show all reviews</a>
+                            <span class="view">({$clsReviews->getReviews($cruise_id, '', 'cruise')} {$core->get_Lang('reviews')})</span>
+                            <a href="#reviews" class="show_all">{$core->get_Lang('Show all reviews')}</a>
                         </div>
                     </div>
                     <div class="price_contact d-flex align-items-center justify-content-between ">
                         <div class="d-flex justify-content-between flex-column ">
-                            <span class="cruise_price_1">from</span>
+                            <span class="cruise_price_1">
+                                {$core->get_Lang('from')}
+                            </span>
                             <div class="cruise_price">
                                 {if $clsCruiseItinerary->getMinPriceItinerary($cruise_id) eq 0}
                                     {$core->get_Lang('Contact')}
                                 {else}
                                     {$core->get_Lang('US')}
-                                    <span>${$clsCruiseItinerary->getMinPriceItinerary($cruise_id)}</span>
+                                    <span class="receive_price">${$clsCruiseItinerary->getMinPriceItinerary($cruise_id)}</span>
                                 {/if}
                             </div>
                         </div>
@@ -105,13 +114,13 @@
                                 </div>
                                 <div class="price_contact price_contact_fixed align-items-center justify-content-between ">
                                     <div class="d-flex justify-content-between flex-column ">
-                                        <span class="cruise_price_1">from</span>
+                                        <span class="cruise_price_1">{$core->get_Lang('from')}</span>
                                         <div class="cruise_price">
                                             {if $clsCruiseItinerary->getMinPriceItinerary($cruise_id) eq 0}
                                                 {$core->get_Lang('Contact')}
                                             {else}
                                                 {$core->get_Lang('US')}
-                                                <span>$ {$clsCruiseItinerary->getMinPriceItinerary($cruise_id)}</span>
+                                                <span class="receive_price">${$clsCruiseItinerary->getMinPriceItinerary($cruise_id)}</span>
                                             {/if}
                                         </div>
                                     </div>
@@ -232,12 +241,14 @@
                     <div class="btn_itineraries d-flex align-items-center flex-wrap">
                         {foreach from=$arr_itinerary key=key item=item}
                             {assign var="CruiseItineraryID" value=$item.cruise_itinerary_id}
+                            {assign var="CruiseItineraryPrice" value=$clsCruiseItinerary->getPriceItinerary($CruiseItineraryID)}
+
                             {if $item.title_itinerary ne ''}
-                                <button class="item_btn_itineraries {if $key eq 0} active {/if}" data-list="unika_list_itineraries_{$CruiseItineraryID}">
+                                <button class="item_btn_itineraries {if $key eq 0} active {/if}" data-list="unika_list_itineraries_{$CruiseItineraryID}" data-price="${$CruiseItineraryPrice}">
                                     {$item.title_itinerary}
                                 </button>
                             {else}
-                                <button class="item_btn_itineraries {if $key eq 0} active {/if}" data-list="unika_list_itineraries_{$CruiseItineraryID}">
+                                <button class="item_btn_itineraries {if $key eq 0} active {/if}" data-list="unika_list_itineraries_{$CruiseItineraryID}" data-price="${$CruiseItineraryPrice}">
                                     {$clsCruiseItinerary->getDuration($item.cruise_itinerary_id)}
                                 </button>
                             {/if}
@@ -263,13 +274,13 @@
 
                                             {assign var="txt_meal" value=""}
                                             {if $i.meals ne ''}
-                                                {assign var="lst_meal" value=$clsCruiseProperty->getAll("is_trash=0 and type='MEAL' and cruise_property_id IN ("|cat:$i['meals']|cat:")", $clsCruiseProperty->pkey|cat:',title')}
+                                                {assign var="lst_meal" value=$clsCruiseProperty->getAll("is_trash=0 and type='MEAL' and cruise_property_id IN ("|cat:$i['meals']|cat:")", $clsCruiseProperty->pkey|cat:',symbol')}
 
                                                 {foreach from=$lst_meal key=k2 item=i2}
                                                     {if $k2 > 0}
-                                                        {assign var="txt_meal" value=$txt_meal|cat:', '|cat:$i2['title']}
+                                                        {assign var="txt_meal" value=$txt_meal|cat:', '|cat:$i2['symbol']}
                                                     {else}
-                                                        {assign var="txt_meal" value=$i2['title']}
+                                                        {assign var="txt_meal" value=$i2['symbol']}
                                                     {/if}
                                                 {/foreach}
                                             {/if}
@@ -278,7 +289,7 @@
                                                     <div class="title_itineraries d-flex align-items-center ">
                                                         <div class="itineraries_fa">
                                                             {if ($countChild-1 eq $k)}
-                                                                <i class="fa-sharp fa-solid fa-flag"></i>
+                                                                <i class="fa-sharp fa-light fa-flag"></i>
                                                             {else}
                                                                 <i class="fa-light fa-location-dot"></i>
                                                             {/if}
@@ -304,7 +315,7 @@
                                                 </div>
                                                 <div class="content_new">
                                                     <div class="new justify-content-between">
-                                                        {if $i.image ne ''}
+                                                        {if $i.image ne '' && $i.is_show_image eq '1'}
                                                             <div class="div_img">
                                                                 <img src="{$CruiseItineraryDayImage}" width="346" height="240" alt="{$CruiseItineraryDayTitle}">
                                                             </div> 
@@ -420,12 +431,14 @@
                         {if $arr_extension_pre}
                         <div class="item_content">
                             <div class="title_right">{$core->get_Lang('PRE CRUISE EXTENSIONS')}</div>
-                            <div class="list_extensions d-flex flex-column ">
+                            <div class="list_extensions d-flex flex-column list_extensions_pre">
                                 {foreach from=$arr_extension_pre key=key item=item}
                                     {assign var="TourID" value=$item.tour_id}
                                     {assign var="TourTitle" value=$clsTour->getTitle($TourID)}
                                     {assign var="TourLink" value=$clsTour->getLink($TourID)}
-                                    <div class="item_extensions d-flex align-items-start ">
+                                    {assign var="TourMinPrice" value=$clsTour->getMinPrice($TourID)}
+                                    {assign var="TourPriceAfterDiscount" value=$clsTour->getPriceAfterDiscount($TourID)}
+                                    <div class="item_extensions align-items-start">
                                         <a href="{$TourLink}" class="div_img img_extensions">
                                             <img src="{$clsTour->getImage($TourID, 243, 168)}" width="243" height="168" alt="{$TourTitle}">
                                         </a>
@@ -434,9 +447,14 @@
                                                 {$TourTitle}
                                             </a>
                                             <div class="money_extentions">
-                                                <span class="money_extention_1">{$core->get_Lang('Form')}</span>
+                                                <span class="money_extention_1">
+                                                    {$core->get_Lang('Form')}
+                                                    {if $clsTour->getDiscount($tourID)}
+                                                    <span class="price_old">${$TourMinPrice}</span>
+                                                    {/if}
+                                                </span>
                                                 <span class="money_extention_2">{$core->get_Lang('US')}</span>
-                                                <span class="money_extention_3">${$clsTour->getMinPrice($TourID)}</span>
+                                                <span class="money_extention_3">${$TourPriceAfterDiscount}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -447,12 +465,14 @@
                         {if $arr_extension_post}
                         <div class="item_content">
                             <div class="title_left">{$core->get_Lang('POST CRUISE EXTENSIONS')}</div>
-                            <div class="list_extensions d-flex flex-column ">
+                            <div class="list_extensions d-flex flex-column list_extensions_post">
                                 {foreach from=$arr_extension_post key=key item=item}
                                     {assign var="TourID" value=$item.tour_id}
                                     {assign var="TourTitle" value=$clsTour->getTitle($TourID)}
                                     {assign var="TourLink" value=$clsTour->getLink($TourID)}
-                                    <div class="item_extensions d-flex align-items-start ">
+                                    {assign var="TourMinPrice" value=$clsTour->getMinPrice($TourID)}
+                                    {assign var="TourPriceAfterDiscount" value=$clsTour->getPriceAfterDiscount($TourID)}
+                                    <div class="item_extensions align-items-start">
                                         <a href="{$TourLink}" class="div_img img_extensions">
                                             <img src="{$clsTour->getImage($TourID, 243, 168)}" width="243" height="168" alt="{$TourTitle}">
                                         </a>
@@ -461,9 +481,14 @@
                                                 {$TourTitle}
                                             </a>
                                             <div class="money_extentions">
-                                                <span class="money_extention_1">{$core->get_Lang('Form')}</span>
+                                                <span class="money_extention_1">
+                                                    {$core->get_Lang('Form')}
+                                                    {if $clsTour->getDiscount($tourID)}
+                                                    <span class="price_old">${$TourMinPrice}</span>
+                                                    {/if}
+                                                </span>
                                                 <span class="money_extention_2">{$core->get_Lang('US')}</span>
-                                                <span class="money_extention_3">${$clsTour->getMinPrice($TourID)}</span>
+                                                <span class="money_extention_3">${$TourPriceAfterDiscount}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -485,47 +510,22 @@
                             <div class="statistical_right d-flex align-items-center justify-content-center flex-column">
                                 <div id="chart"></div>
                                 <div class="content_statistical d-flex flex-column ">
-                                    <p class="number">4.8</p>
-                                    <span class="span_1">Wonderful</span>
-                                    <span class="span_2">(3 {$core->get_Lang('reviews')})</span>
+                                    {assign var=percent value=$clsReviews->getReviews($cruise_id, 'avg_point', 'cruise')/5*100}
+                                    <p class="number">{$clsReviews->getReviews($cruise_id, 'avg_point', 'cruise')}</p>
+                                    <span class="span_1">{$clsReviews->getReviews($cruise_id, 'txt_review', 'cruise')}</span>
+                                    <span class="span_2">({$clsReviews->getReviews($cruise_id, '', 'cruise')} {$core->get_Lang('reviews')})</span>
                                 </div>
                             </div>
                             <div class="statistical_left d-flex flex-column ">
-                                <div class="item_statiscal d-flex  justify-content-between align-items-center">
-                                    <p>{$core->get_Lang('Wonderful')}</p>
-                                    <div class="percent">
-                                        <div></div>
+                                {foreach from=$reviewProgress key=key item=item}
+                                    <div class="item_statiscal d-flex justify-content-between align-items-center">
+                                        <p>{$core->get_Lang($item.reviews)}</p>
+                                        <div class="percent">
+                                            <div style="width:{$item.count_percent}%"></div>
+                                        </div>
+                                        <span>{$item.count}</span>
                                     </div>
-                                    <span>10</span>
-                                </div>
-                                <div class="item_statiscal d-flex  justify-content-between align-items-center">
-                                    <p>{$core->get_Lang('Excellent')}</p>
-                                    <div class="percent">
-                                        <div></div>
-                                    </div>
-                                    <span>2</span>
-                                </div>
-                                <div class="item_statiscal d-flex  justify-content-between align-items-center">
-                                    <p>{$core->get_Lang('Good')}</p>
-                                    <div class="percent">
-                                        <div></div>
-                                    </div>
-                                    <span>0</span>
-                                </div>
-                                <div class="item_statiscal d-flex  justify-content-between align-items-center">
-                                    <p>{$core->get_Lang('Average')}</p>
-                                    <div class="percent">
-                                        <div></div>
-                                    </div>
-                                    <span>0</span>
-                                </div>
-                                <div class="item_statiscal d-flex  justify-content-between align-items-center">
-                                    <p>{$core->get_Lang('Bad')}</p>
-                                    <div class="percent">
-                                        <div></div>
-                                    </div>
-                                    <span>10</span>
-                                </div>
+                                {/foreach}
                                 <div class="btn_write_reviews d-flex justify-content-end ">
                                     <button class="btn_write">{$core->get_Lang('Write reviews')}</button>
                                 </div>
@@ -564,39 +564,37 @@
                             </div>
                         </form>
 
-                        <div class="list_reviews width-100 d-flex flex-column ">
-
-                            <!-- <div class="item_reviews width-100 d-flex flex-column justify-content-start ">
-                                <div class="customer d-flex justify-content-start ">
-                                    <div class="div_img">
-                                        <img src="images/img_review.png" alt="Image">
-                                    </div>
-                                    <div class="d-flex flex-column align-items-start ">
-                                        <a href="#">Kittfinn</a>
-                                        <span class="">March 12, 2024</span>
-                                    </div>
-                                </div>
-                                <div class="rating d-flex justify-content-start align-items-center ">
-                                    <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
-                                    <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
-                                    <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
-                                    <div class="div_img"><img src="images/star.svg" alt="Icon"></div>
-                                </div>
-                                <div class="title_reviews">
-                                    What a wonderful place to stay
-                                </div>
-                                <div class="content_reviews">
-                                    My husband and I have just arrived home from the most fantastic 8 day stay at Turtle
-                                    Beach. I was a little worried about some of the reviews I read prior to going but I
-                                    had
-                                    no need to be concerned. . This hotel is a gem, the staff are wonderful, the food
-                                    was
-                                    delicious and there was always something to enjoy whatever your taste. Nicole, also
-                                    known as scrumptious made eggs any...
-                                </div>
-                            </div> -->
-
-                        </div>
+                        {if $list_review}
+                            <div class="list_reviews width-100 d-flex flex-column ">
+                                {foreach from=$list_review key=key item=item}
+                                    <div class="item_reviews width-100 d-flex flex-column">
+                                        <div class="customer d-flex">
+                                            <div class="avatar_custom" style="background-color: {$item.bg_color}">{strtoupper(substr($item.fullname, 0, 2))}</div>
+                                            <div class="d-flex flex-column align-items-start ">
+                                                <a href="#">{$item.fullname}</a>
+                                                <span class="">{$item.review_date|date_format:"%d %b, %Y"}</span>
+                                            </div>
+                                        </div>
+                                        <div class="rating d-flex align-items-center">
+                                            {assign var=numStars value=$item.rates}
+                                            {assign var=remainingStars value = 5 - $numStars}
+                                            {section name=j loop=$numStars}
+                                                <i class="fa-solid fa-star"></i>
+                                            {/section}
+                                            {section name=k loop=$remainingStars}
+                                                <i class="fa-regular fa-star"></i>
+                                            {/section}
+                                        </div>
+                                        <div class="title_reviews">
+                                            {$item.title}
+                                        </div>
+                                        <div class="content_reviews">
+                                            {$item.content}
+                                        </div>
+                                    </div> 
+                                {/foreach}
+                            </div>
+                        {/if}
                     </div>
                 </div>
             </div>
@@ -758,18 +756,16 @@
             </div>
         {/if}
         {$core->getBlock('customer_review')}
-        {$core->getBlock('top_attraction')}
+        {*{$core->getBlock('top_attraction')}*}
         {$core->getBlock('also_like')}
     </div>
 </div>
 
-{literal}
-
-{/literal}
-
 <script>
     var cruise_id = '{$cruise_id}';
+    var percent = '{$percent}';
 </script>
+
 {literal}
 <script>
     $(function() {
@@ -843,7 +839,7 @@
 
         $(window).on('scroll', function () {
             let scrollTop = $(window).scrollTop();
-            console.log('scrollTop:', scrollTop)
+
             if (scrollTop >= (unika_image + cruise_information + 60)) {
                 targetDivFixed.addClass('fixed');
                 fixed_content.addClass('container');
@@ -925,8 +921,10 @@
                 }
             })
 
+        let percent_remain = 100 - percent;
+
         let options = {
-            series: [90, 10],
+            series: [parseInt(percent), parseInt(percent_remain)],
             chart: {
                 type: 'donut',
                 height: '100%'
@@ -1032,7 +1030,6 @@
                 unika_review: "Please enter your review!",
             },
             submitHandler: function(event) {
-
                 var rates = $('#unika_rates').val();
                 var fullname = $('#unika_fullname').val();
                 var title = $('#unika_title').val();
@@ -1055,7 +1052,6 @@
                         $('.unika_item_submit').val("Processing...").prop('disabled', true);
                     },
                     success: function (res) {
-                        console.log(res);
                         var rates = $('#unika_rates').val(5);
                         var fullname = $('#unika_fullname').val('');
                         var title = $('#unika_title').val('');
@@ -1084,6 +1080,62 @@
                 item_reviews.append(`<button class="view_more unika_view_more"> View more </button>`);
             }
         })
+
+        // Toggle box social-icon-share
+        $(".btn_content_1").click(function() {
+            $(".social-icon-share-blog").toggle();
+        });
+                
+        // View more/less PRE CRUISE EXTENSIONS 
+        var items = $('.list_extensions_pre .item_extensions');
+        if (items.length > 3) {
+            items.slice(3).hide();
+            var toggleButton = $('<span/>', {
+                text: 'View more',
+                class: 'view_more_type',
+                click: function() {
+                    var hiddenItems = $('.list_extensions_pre .item_extensions:hidden');
+                    if (hiddenItems.length > 0) {
+                        hiddenItems.show();
+                        $(this).text('View less');
+                    } else {
+                        items.slice(3).hide();
+                        $(this).text('View more');
+                    }
+                }
+            });
+            $('.list_extensions_pre').append(toggleButton);
+        }
+
+        // View more/less POST CRUISE EXTENSIONS 
+        var items = $('.list_extensions_post .item_extensions');
+        if (items.length > 3) {
+            items.slice(3).hide();
+            var toggleButton = $('<span/>', {
+                text: 'View more',
+                class: 'view_more_type',
+                click: function() {
+                    var hiddenItems = $('.list_extensions_post .item_extensions:hidden');
+                    if (hiddenItems.length > 0) {
+                        hiddenItems.show();
+                        $(this).text('View less');
+                    } else {
+                        items.slice(3).hide();
+                        $(this).text('View more');
+                    }
+                }
+            });
+            $('.list_extensions_post').append(toggleButton);
+        }
+
+        // Fill price 
+        $(document).on('click', '.item_btn_itineraries', function() {
+            // Lấy giá trị data-price
+            var price = $(this).data('price');
+console.log(price);
+            // Tìm tất cả các phần tử .receive_price và hiển thị giá trị
+            $('.receive_price').text(price);
+        });
     })
 </script>
 {/literal}
